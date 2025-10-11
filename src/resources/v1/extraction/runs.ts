@@ -1,0 +1,318 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import { APIResource } from '../../../core/resource';
+import * as FilesAPI from '../files/files';
+import { APIPromise } from '../../../core/api-promise';
+import { RequestOptions } from '../../../internal/request-options';
+import { path } from '../../../internal/utils/path';
+
+export class Runs extends APIResource {
+  /**
+   * Get Run
+   */
+  retrieve(
+    runID: string,
+    query: RunRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExtractRun> {
+    return this._client.get(path`/api/v1/extraction/runs/${runID}`, { query, ...options });
+  }
+
+  /**
+   * List Extract Runs
+   */
+  list(query: RunListParams, options?: RequestOptions): APIPromise<RunListResponse> {
+    return this._client.get('/api/v1/extraction/runs', { query, ...options });
+  }
+
+  /**
+   * Delete Extraction Run
+   */
+  delete(
+    runID: string,
+    params: RunDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v1/extraction/runs/${runID}`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
+   * Get Latest Run From Ui
+   */
+  retrieveLatestFromUi(
+    query: RunRetrieveLatestFromUiParams,
+    options?: RequestOptions,
+  ): APIPromise<ExtractRun | null> {
+    return this._client.get('/api/v1/extraction/runs/latest-from-ui', { query, ...options });
+  }
+}
+
+/**
+ * Additional parameters for the extraction agent.
+ */
+export interface ExtractConfig {
+  /**
+   * The mode to use for chunking the document.
+   */
+  chunk_mode?: 'PAGE' | 'SECTION';
+
+  /**
+   * Whether to cite sources for the extraction.
+   */
+  cite_sources?: boolean;
+
+  /**
+   * Whether to fetch confidence scores for the extraction.
+   */
+  confidence_scores?: boolean;
+
+  /**
+   * The extract model to use for data extraction. If not provided, uses the default
+   * for the extraction mode.
+   */
+  extract_model?:
+    | 'openai-gpt-4-1'
+    | 'openai-gpt-4-1-mini'
+    | 'openai-gpt-4-1-nano'
+    | 'openai-gpt-5'
+    | 'openai-gpt-5-mini'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite'
+    | 'gemini-2.5-pro'
+    | 'openai-gpt-4o'
+    | 'openai-gpt-4o-mini'
+    | null;
+
+  /**
+   * The extraction mode specified (FAST, BALANCED, MULTIMODAL, PREMIUM).
+   */
+  extraction_mode?: 'FAST' | 'BALANCED' | 'PREMIUM' | 'MULTIMODAL';
+
+  /**
+   * The extraction target specified.
+   */
+  extraction_target?: 'PER_DOC' | 'PER_PAGE';
+
+  /**
+   * Whether to use high resolution mode for the extraction.
+   */
+  high_resolution_mode?: boolean;
+
+  /**
+   * Whether to invalidate the cache for the extraction.
+   */
+  invalidate_cache?: boolean;
+
+  /**
+   * DEPRECATED: Whether to use fast mode for multimodal extraction.
+   */
+  multimodal_fast_mode?: boolean;
+
+  /**
+   * Number of pages to pass as context on long document extraction.
+   */
+  num_pages_context?: number | null;
+
+  /**
+   * Comma-separated list of page numbers or ranges to extract from (1-based, e.g.,
+   * '1,3,5-7,9' or '1-3,8-10').
+   */
+  page_range?: string | null;
+
+  /**
+   * The parse model to use for document parsing. If not provided, uses the default
+   * for the extraction mode.
+   */
+  parse_model?:
+    | 'openai-gpt-4o'
+    | 'openai-gpt-4o-mini'
+    | 'openai-gpt-4-1'
+    | 'openai-gpt-4-1-mini'
+    | 'openai-gpt-4-1-nano'
+    | 'openai-gpt-5'
+    | 'openai-gpt-5-mini'
+    | 'openai-gpt-5-nano'
+    | 'openai-text-embedding-3-small'
+    | 'openai-text-embedding-3-large'
+    | 'openai-whisper-1'
+    | 'anthropic-sonnet-3.5'
+    | 'anthropic-sonnet-3.5-v2'
+    | 'anthropic-sonnet-3.7'
+    | 'anthropic-sonnet-4.0'
+    | 'anthropic-sonnet-4.5'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-pro'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.0-flash-lite'
+    | 'gemini-2.5-flash-lite'
+    | 'gemini-1.5-flash'
+    | 'gemini-1.5-pro'
+    | null;
+
+  /**
+   * The priority for the request. This field may be ignored or overwritten depending
+   * on the organization tier.
+   */
+  priority?: 'low' | 'medium' | 'high' | 'critical' | null;
+
+  /**
+   * The system prompt to use for the extraction.
+   */
+  system_prompt?: string | null;
+
+  /**
+   * Whether to use reasoning for the extraction.
+   */
+  use_reasoning?: boolean;
+}
+
+/**
+ * Schema for an extraction run.
+ */
+export interface ExtractRun {
+  /**
+   * The id of the extraction run
+   */
+  id: string;
+
+  /**
+   * The config used for extraction
+   */
+  config: ExtractConfig;
+
+  /**
+   * The schema used for extraction
+   */
+  data_schema: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  };
+
+  /**
+   * The id of the extraction agent
+   */
+  extraction_agent_id: string;
+
+  /**
+   * The file that the extract was extracted from
+   */
+  file: FilesAPI.File;
+
+  /**
+   * Whether this extraction run was triggered from the UI
+   */
+  from_ui: boolean;
+
+  /**
+   * The id of the project that the extraction run belongs to
+   */
+  project_id: string;
+
+  /**
+   * The status of the extraction run
+   */
+  status: 'CREATED' | 'PENDING' | 'SUCCESS' | 'ERROR';
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * The data extracted from the file
+   */
+  data?:
+    | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
+    | Array<{ [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }>
+    | null;
+
+  /**
+   * The error that occurred during extraction
+   */
+  error?: string | null;
+
+  /**
+   * The metadata extracted from the file
+   */
+  extraction_metadata?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
+
+  /**
+   * The id of the job that the extraction run belongs to
+   */
+  job_id?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
+/**
+ * Schema for paginated extraction runs response.
+ */
+export interface RunListResponse {
+  /**
+   * The list of extraction runs
+   */
+  items: Array<ExtractRun>;
+
+  /**
+   * The maximum number of extraction runs returned
+   */
+  limit: number;
+
+  /**
+   * The number of extraction runs skipped
+   */
+  skip: number;
+
+  /**
+   * The total number of extraction runs
+   */
+  total: number;
+}
+
+export type RunDeleteResponse = unknown;
+
+export interface RunRetrieveParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface RunListParams {
+  extraction_agent_id: string;
+
+  limit?: number;
+
+  skip?: number;
+}
+
+export interface RunDeleteParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface RunRetrieveLatestFromUiParams {
+  extraction_agent_id: string;
+}
+
+export declare namespace Runs {
+  export {
+    type ExtractConfig as ExtractConfig,
+    type ExtractRun as ExtractRun,
+    type RunListResponse as RunListResponse,
+    type RunDeleteResponse as RunDeleteResponse,
+    type RunRetrieveParams as RunRetrieveParams,
+    type RunListParams as RunListParams,
+    type RunDeleteParams as RunDeleteParams,
+    type RunRetrieveLatestFromUiParams as RunRetrieveLatestFromUiParams,
+  };
+}
