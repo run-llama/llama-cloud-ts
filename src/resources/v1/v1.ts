@@ -65,6 +65,23 @@ import {
   ProjectUpsertParams,
   Projects,
 } from './projects';
+import * as RetrieversAPI from './retrievers';
+import {
+  CompositeRetrievalMode,
+  CompositeRetrievalResult,
+  ReRankConfig,
+  Retriever,
+  RetrieverCreate,
+  RetrieverCreateParams,
+  RetrieverListParams,
+  RetrieverListResponse,
+  RetrieverPipeline,
+  RetrieverRetrieveDirectParams,
+  RetrieverRetrieveParams,
+  RetrieverUpdateParams,
+  RetrieverUpsertParams,
+  Retrievers,
+} from './retrievers';
 import * as ValidateIntegrationsAPI from './validate-integrations';
 import {
   AzureOpenAIEmbeddingConfig,
@@ -196,19 +213,6 @@ import {
   RetrievalMode,
   SparseModelConfig,
 } from './pipelines/pipelines';
-import * as RetrieversAPI from './retrievers/retrievers';
-import {
-  Retriever,
-  RetrieverCreate,
-  RetrieverCreateParams,
-  RetrieverListParams,
-  RetrieverListResponse,
-  RetrieverPipeline,
-  RetrieverRetrieveDirectParams,
-  RetrieverUpdateParams,
-  RetrieverUpsertParams,
-  Retrievers,
-} from './retrievers/retrievers';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
@@ -1633,11 +1637,15 @@ export declare namespace V1 {
 
   export {
     Retrievers as Retrievers,
+    type CompositeRetrievalMode as CompositeRetrievalMode,
+    type CompositeRetrievalResult as CompositeRetrievalResult,
+    type ReRankConfig as ReRankConfig,
     type Retriever as Retriever,
     type RetrieverCreate as RetrieverCreate,
     type RetrieverPipeline as RetrieverPipeline,
     type RetrieverListResponse as RetrieverListResponse,
     type RetrieverCreateParams as RetrieverCreateParams,
+    type RetrieverRetrieveParams as RetrieverRetrieveParams,
     type RetrieverUpdateParams as RetrieverUpdateParams,
     type RetrieverListParams as RetrieverListParams,
     type RetrieverRetrieveDirectParams as RetrieverRetrieveDirectParams,

@@ -148,16 +148,20 @@ export {
 } from './projects';
 export {
   Retrievers,
+  type CompositeRetrievalMode,
+  type CompositeRetrievalResult,
+  type ReRankConfig,
   type Retriever,
   type RetrieverCreate,
   type RetrieverPipeline,
   type RetrieverListResponse,
   type RetrieverCreateParams,
+  type RetrieverRetrieveParams,
   type RetrieverUpdateParams,
   type RetrieverListParams,
   type RetrieverRetrieveDirectParams,
   type RetrieverUpsertParams,
-} from './retrievers/index';
+} from './retrievers';
 export { V1, type DeleteParams, type V1GetJobsResponse, type V1GetJobsParams } from './v1';
 export {
   ValidateIntegrations,
