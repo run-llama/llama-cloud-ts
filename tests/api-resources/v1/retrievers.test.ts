@@ -53,6 +53,32 @@ describe('resource retrievers', () => {
   });
 
   // Prism tests are disabled
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.v1.retrievers.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      query: 'x',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.v1.retrievers.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      query: 'x',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      mode: 'routing',
+      rerank_config: { top_n: 0, type: 'system_default' },
+      rerank_top_n: 0,
+    });
+  });
+
+  // Prism tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.v1.retrievers.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipelines: [

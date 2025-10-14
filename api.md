@@ -375,27 +375,23 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/v1/retrievers/retrievers.ts">Retriever</a></code>
-- <code><a href="./src/resources/v1/retrievers/retrievers.ts">RetrieverCreate</a></code>
-- <code><a href="./src/resources/v1/retrievers/retrievers.ts">RetrieverPipeline</a></code>
-- <code><a href="./src/resources/v1/retrievers/retrievers.ts">RetrieverListResponse</a></code>
+- <code><a href="./src/resources/v1/retrievers.ts">CompositeRetrievalMode</a></code>
+- <code><a href="./src/resources/v1/retrievers.ts">CompositeRetrievalResult</a></code>
+- <code><a href="./src/resources/v1/retrievers.ts">ReRankConfig</a></code>
+- <code><a href="./src/resources/v1/retrievers.ts">Retriever</a></code>
+- <code><a href="./src/resources/v1/retrievers.ts">RetrieverCreate</a></code>
+- <code><a href="./src/resources/v1/retrievers.ts">RetrieverPipeline</a></code>
+- <code><a href="./src/resources/v1/retrievers.ts">RetrieverListResponse</a></code>
 
 Methods:
 
-- <code title="post /api/v1/retrievers">client.v1.retrievers.<a href="./src/resources/v1/retrievers/retrievers.ts">create</a>({ ...params }) -> Retriever</code>
-- <code title="put /api/v1/retrievers/{retriever_id}">client.v1.retrievers.<a href="./src/resources/v1/retrievers/retrievers.ts">update</a>(retrieverID, { ...params }) -> Retriever</code>
-- <code title="get /api/v1/retrievers">client.v1.retrievers.<a href="./src/resources/v1/retrievers/retrievers.ts">list</a>({ ...params }) -> RetrieverListResponse</code>
-- <code title="delete /api/v1/retrievers/{retriever_id}">client.v1.retrievers.<a href="./src/resources/v1/retrievers/retrievers.ts">delete</a>(retrieverID) -> void</code>
-- <code title="post /api/v1/retrievers/retrieve">client.v1.retrievers.<a href="./src/resources/v1/retrievers/retrievers.ts">retrieveDirect</a>({ ...params }) -> CompositeRetrievalResult</code>
-- <code title="put /api/v1/retrievers">client.v1.retrievers.<a href="./src/resources/v1/retrievers/retrievers.ts">upsert</a>({ ...params }) -> Retriever</code>
-
-### Retrieve
-
-Types:
-
-- <code><a href="./src/resources/v1/retrievers/retrieve.ts">CompositeRetrievalMode</a></code>
-- <code><a href="./src/resources/v1/retrievers/retrieve.ts">CompositeRetrievalResult</a></code>
-- <code><a href="./src/resources/v1/retrievers/retrieve.ts">ReRankConfig</a></code>
+- <code title="post /api/v1/retrievers">client.v1.retrievers.<a href="./src/resources/v1/retrievers.ts">create</a>({ ...params }) -> Retriever</code>
+- <code title="post /api/v1/retrievers/{retriever_id}/retrieve">client.v1.retrievers.<a href="./src/resources/v1/retrievers.ts">retrieve</a>(retrieverID, { ...params }) -> CompositeRetrievalResult</code>
+- <code title="put /api/v1/retrievers/{retriever_id}">client.v1.retrievers.<a href="./src/resources/v1/retrievers.ts">update</a>(retrieverID, { ...params }) -> Retriever</code>
+- <code title="get /api/v1/retrievers">client.v1.retrievers.<a href="./src/resources/v1/retrievers.ts">list</a>({ ...params }) -> RetrieverListResponse</code>
+- <code title="delete /api/v1/retrievers/{retriever_id}">client.v1.retrievers.<a href="./src/resources/v1/retrievers.ts">delete</a>(retrieverID) -> void</code>
+- <code title="post /api/v1/retrievers/retrieve">client.v1.retrievers.<a href="./src/resources/v1/retrievers.ts">retrieveDirect</a>({ ...params }) -> CompositeRetrievalResult</code>
+- <code title="put /api/v1/retrievers">client.v1.retrievers.<a href="./src/resources/v1/retrievers.ts">upsert</a>({ ...params }) -> Retriever</code>
 
 ## Evals
 
