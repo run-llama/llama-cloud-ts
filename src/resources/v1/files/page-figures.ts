@@ -8,7 +8,7 @@ import { path } from '../../../internal/utils/path';
 
 export class PageFigures extends APIResource {
   /**
-   * Get File Page Figure
+   * Get a specific figure from a page of a file.
    */
   retrieve(
     figureName: string,
@@ -23,7 +23,7 @@ export class PageFigures extends APIResource {
   }
 
   /**
-   * List File Pages Figures
+   * List metadata for all figures from all pages of a file.
    */
   list(
     id: string,

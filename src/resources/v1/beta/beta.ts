@@ -22,15 +22,7 @@ import {
   APIKeys,
 } from './api-keys';
 import * as BatchesAPI from './batches';
-import {
-  Batch,
-  BatchCreateParams,
-  BatchListParams,
-  BatchListResponse,
-  BatchRetrieveParams,
-  BatchRetrieveResponse,
-  Batches,
-} from './batches';
+import { Batches } from './batches';
 import * as FilesAPI from './files';
 import { FileCreateParams, FileDeleteParams, FileQueryParams, FileQueryResponse, Files } from './files';
 import * as ParseConfigurationsAPI from './parse-configurations';
@@ -222,15 +214,7 @@ export declare namespace Beta {
     type APIKeyRetrieveAPIKeysParams as APIKeyRetrieveAPIKeysParams,
   };
 
-  export {
-    Batches as Batches,
-    type Batch as Batch,
-    type BatchRetrieveResponse as BatchRetrieveResponse,
-    type BatchListResponse as BatchListResponse,
-    type BatchCreateParams as BatchCreateParams,
-    type BatchRetrieveParams as BatchRetrieveParams,
-    type BatchListParams as BatchListParams,
-  };
+  export { Batches as Batches };
 
   export {
     type AgentData as AgentData,

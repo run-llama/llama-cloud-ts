@@ -44,16 +44,6 @@ export class Files extends APIResource {
   }
 
   /**
-   * Read File metadata objects.
-   */
-  list(
-    query: FileListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<FileListResponse> {
-    return this._client.get('/api/v1/files', { query, ...options });
-  }
-
-  /**
    * Delete the file from S3.
    */
   delete(
@@ -97,17 +87,6 @@ export class Files extends APIResource {
     options?: RequestOptions,
   ): APIPromise<PresignedURL> {
     return this._client.get(path`/api/v1/files/${id}/content`, { query, ...options });
-  }
-
-  /**
-   * Sync Files API against file contents uploaded via S3 presigned urls.
-   */
-  sync(
-    params: FileSyncParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<FileSyncResponse> {
-    const { organization_id, project_id } = params ?? {};
-    return this._client.put('/api/v1/files/sync', { query: { organization_id, project_id }, ...options });
   }
 
   /**
@@ -272,8 +251,6 @@ export interface PresignedURL {
   form_fields?: { [key: string]: string } | null;
 }
 
-export type FileListResponse = Array<File>;
-
 /**
  * Schema for a presigned URL with a file ID.
  */
@@ -299,15 +276,7 @@ export interface FileGeneratePresignedURLResponse {
   form_fields?: { [key: string]: string } | null;
 }
 
-export type FileSyncResponse = Array<File>;
-
 export interface FileRetrieveParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface FileListParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -379,12 +348,6 @@ export interface FileGeneratePresignedURLParams {
 export interface FileReadContentParams {
   expires_at_seconds?: number | null;
 
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface FileSyncParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -470,15 +433,11 @@ export declare namespace Files {
     type File as File,
     type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
-    type FileListResponse as FileListResponse,
     type FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse,
-    type FileSyncResponse as FileSyncResponse,
     type FileRetrieveParams as FileRetrieveParams,
-    type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGeneratePresignedURLParams as FileGeneratePresignedURLParams,
     type FileReadContentParams as FileReadContentParams,
-    type FileSyncParams as FileSyncParams,
     type FileUploadParams as FileUploadParams,
     type FileUploadFromURLParams as FileUploadFromURLParams,
   };

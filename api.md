@@ -208,18 +208,14 @@ Types:
 - <code><a href="./src/resources/v1/files/files.ts">File</a></code>
 - <code><a href="./src/resources/v1/files/files.ts">FileCreate</a></code>
 - <code><a href="./src/resources/v1/files/files.ts">PresignedURL</a></code>
-- <code><a href="./src/resources/v1/files/files.ts">FileListResponse</a></code>
 - <code><a href="./src/resources/v1/files/files.ts">FileGeneratePresignedURLResponse</a></code>
-- <code><a href="./src/resources/v1/files/files.ts">FileSyncResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v1/files/{id}">client.v1.files.<a href="./src/resources/v1/files/files.ts">retrieve</a>(id, { ...params }) -> File</code>
-- <code title="get /api/v1/files">client.v1.files.<a href="./src/resources/v1/files/files.ts">list</a>({ ...params }) -> FileListResponse</code>
 - <code title="delete /api/v1/files/{id}">client.v1.files.<a href="./src/resources/v1/files/files.ts">delete</a>(id, { ...params }) -> void</code>
 - <code title="put /api/v1/files">client.v1.files.<a href="./src/resources/v1/files/files.ts">generatePresignedURL</a>({ ...params }) -> FileGeneratePresignedURLResponse</code>
 - <code title="get /api/v1/files/{id}/content">client.v1.files.<a href="./src/resources/v1/files/files.ts">readContent</a>(id, { ...params }) -> PresignedURL</code>
-- <code title="put /api/v1/files/sync">client.v1.files.<a href="./src/resources/v1/files/files.ts">sync</a>({ ...params }) -> FileSyncResponse</code>
 - <code title="post /api/v1/files">client.v1.files.<a href="./src/resources/v1/files/files.ts">upload</a>({ ...params }) -> File</code>
 - <code title="put /api/v1/files/upload_from_url">client.v1.files.<a href="./src/resources/v1/files/files.ts">uploadFromURL</a>({ ...params }) -> File</code>
 
@@ -625,18 +621,6 @@ Methods:
 - <code title="get /api/v1/beta/api-keys">client.v1.beta.apiKeys.<a href="./src/resources/v1/beta/api-keys.ts">retrieveAPIKeys</a>({ ...params }) -> APIKeyRetrieveAPIKeysResponse</code>
 
 ### Batches
-
-Types:
-
-- <code><a href="./src/resources/v1/beta/batches.ts">Batch</a></code>
-- <code><a href="./src/resources/v1/beta/batches.ts">BatchRetrieveResponse</a></code>
-- <code><a href="./src/resources/v1/beta/batches.ts">BatchListResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/beta/batches">client.v1.beta.batches.<a href="./src/resources/v1/beta/batches.ts">create</a>({ ...params }) -> Batch</code>
-- <code title="get /api/v1/beta/batches/{batch_id}">client.v1.beta.batches.<a href="./src/resources/v1/beta/batches.ts">retrieve</a>(batchID, { ...params }) -> BatchRetrieveResponse</code>
-- <code title="get /api/v1/beta/batches">client.v1.beta.batches.<a href="./src/resources/v1/beta/batches.ts">list</a>({ ...params }) -> BatchListResponse</code>
 
 ### AgentData
 

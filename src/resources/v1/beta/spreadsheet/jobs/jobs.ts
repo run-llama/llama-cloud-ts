@@ -139,11 +139,23 @@ export namespace SpreadsheetJob {
 }
 
 /**
- * Configuration for spreadsheet parsing
+ * Configuration for spreadsheet parsing and table extraction
  */
 export interface SpreadsheetParsingConfig {
   /**
-   * The names of the sheets to parse. If empty, all sheets will be parsed.
+   * A1 notation of the range to extract a single table from. If None, the entire
+   * sheet is used.
+   */
+  extraction_range?: string | null;
+
+  /**
+   * Whether to include hidden cells when extracting tables from the spreadsheet.
+   */
+  include_hidden_cells?: boolean;
+
+  /**
+   * The names of the sheets to extract tables from. If empty, the default sheet is
+   * extracted.
    */
   sheet_names?: Array<string> | null;
 }

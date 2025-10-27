@@ -18,15 +18,7 @@ export {
   type AgentDataAggregateParams,
   type AgentDataSearchParams,
 } from './agent-data';
-export {
-  Batches,
-  type Batch,
-  type BatchRetrieveResponse,
-  type BatchListResponse,
-  type BatchCreateParams,
-  type BatchRetrieveParams,
-  type BatchListParams,
-} from './batches';
+export { Batches } from './batches';
 export {
   Beta,
   type BetaRetrieveQuotaManagementResponse,
