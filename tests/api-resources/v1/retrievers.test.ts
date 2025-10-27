@@ -53,10 +53,8 @@ describe('resource retrievers', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.v1.retrievers.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      query: 'x',
-    });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.v1.retrievers.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -67,15 +65,18 @@ describe('resource retrievers', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.v1.retrievers.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      query: 'x',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      mode: 'routing',
-      rerank_config: { top_n: 0, type: 'system_default' },
-      rerank_top_n: 0,
-    });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.v1.retrievers.retrieve(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamacloudProd.NotFoundError);
   });
 
   // Prism tests are disabled

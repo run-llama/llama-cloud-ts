@@ -23,6 +23,7 @@ import {
   RunDeleteResponse,
   RunListParams,
   RunListResponse,
+  RunRetrieveByJobParams,
   RunRetrieveLatestFromUiParams,
   RunRetrieveParams,
   Runs,
@@ -32,6 +33,7 @@ import {
   ExtractAgent,
   ExtractionAgentDeleteResponse,
   ExtractionAgentExtractionAgentsParams,
+  ExtractionAgentRetrieveByNameParams,
   ExtractionAgentRetrieveDefaultParams,
   ExtractionAgentRetrieveExtractionAgentsParams,
   ExtractionAgentRetrieveExtractionAgentsResponse,
@@ -154,6 +156,7 @@ export declare namespace Extraction {
     type RunRetrieveParams as RunRetrieveParams,
     type RunListParams as RunListParams,
     type RunDeleteParams as RunDeleteParams,
+    type RunRetrieveByJobParams as RunRetrieveByJobParams,
     type RunRetrieveLatestFromUiParams as RunRetrieveLatestFromUiParams,
   };
 
@@ -164,6 +167,7 @@ export declare namespace Extraction {
     type ExtractionAgentRetrieveExtractionAgentsResponse as ExtractionAgentRetrieveExtractionAgentsResponse,
     type ExtractionAgentUpdateParams as ExtractionAgentUpdateParams,
     type ExtractionAgentExtractionAgentsParams as ExtractionAgentExtractionAgentsParams,
+    type ExtractionAgentRetrieveByNameParams as ExtractionAgentRetrieveByNameParams,
     type ExtractionAgentRetrieveDefaultParams as ExtractionAgentRetrieveDefaultParams,
     type ExtractionAgentRetrieveExtractionAgentsParams as ExtractionAgentRetrieveExtractionAgentsParams,
   };

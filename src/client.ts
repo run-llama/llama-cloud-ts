@@ -16,13 +16,6 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  Parsing,
-  ParsingGetParsingHistoryResponse,
-  ParsingGetSupportedFileExtensionsResponse,
-  ParsingScreenshotParams,
-  ParsingUploadFileParams,
-} from './resources/parsing/parsing';
 import { DeleteParams, V1, V1GetJobsParams, V1GetJobsResponse } from './resources/v1/v1';
 import { V2alpha1 } from './resources/v2alpha1/v2alpha1';
 import { type Fetch } from './internal/builtin-types';
@@ -724,12 +717,10 @@ export class LlamacloudProd {
 
   v1: API.V1 = new API.V1(this);
   v2alpha1: API.V2alpha1 = new API.V2alpha1(this);
-  parsing: API.Parsing = new API.Parsing(this);
 }
 
 LlamacloudProd.V1 = V1;
 LlamacloudProd.V2alpha1 = V2alpha1;
-LlamacloudProd.Parsing = Parsing;
 
 export declare namespace LlamacloudProd {
   export type RequestOptions = Opts.RequestOptions;
@@ -742,12 +733,4 @@ export declare namespace LlamacloudProd {
   };
 
   export { V2alpha1 as V2alpha1 };
-
-  export {
-    Parsing as Parsing,
-    type ParsingGetParsingHistoryResponse as ParsingGetParsingHistoryResponse,
-    type ParsingGetSupportedFileExtensionsResponse as ParsingGetSupportedFileExtensionsResponse,
-    type ParsingScreenshotParams as ParsingScreenshotParams,
-    type ParsingUploadFileParams as ParsingUploadFileParams,
-  };
 }

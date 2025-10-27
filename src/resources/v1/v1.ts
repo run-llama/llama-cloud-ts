@@ -82,6 +82,8 @@ import {
   RetrieverUpsertParams,
   Retrievers,
 } from './retrievers';
+import * as TestAPI from './test';
+import { Test, TestStreamResponse } from './test';
 import * as ValidateIntegrationsAPI from './validate-integrations';
 import {
   AzureOpenAIEmbeddingConfig,
@@ -202,9 +204,7 @@ import {
   PipelineMetadataConfig,
   PipelineRetrieveFiles2Params,
   PipelineRetrieveFiles2Response,
-  PipelineRetrieveParams,
   PipelineRetrievePlaygroundSessionResponse,
-  PipelineRetrieveResponse,
   PipelineRetrieveStatusParams,
   PipelineType,
   PipelineUpdateParams,
@@ -236,6 +236,7 @@ export class V1 extends APIResource {
   billing: BillingAPI.Billing = new BillingAPI.Billing(this._client);
   extraction: ExtractionAPI.Extraction = new ExtractionAPI.Extraction(this._client);
   beta: BetaAPI.Beta = new BetaAPI.Beta(this._client);
+  test: TestAPI.Test = new TestAPI.Test(this._client);
 
   /**
    * Get jobs for a project.
@@ -1473,6 +1474,7 @@ V1.Auth = Auth;
 V1.Billing = Billing;
 V1.Extraction = Extraction;
 V1.Beta = Beta;
+V1.Test = Test;
 
 export declare namespace V1 {
   export {
@@ -1625,13 +1627,11 @@ export declare namespace V1 {
     type PresetRetrievalParams as PresetRetrievalParams,
     type RetrievalMode as RetrievalMode,
     type SparseModelConfig as SparseModelConfig,
-    type PipelineRetrieveResponse as PipelineRetrieveResponse,
     type PipelineListResponse as PipelineListResponse,
     type PipelineChatResponse as PipelineChatResponse,
     type PipelineRetrieveFiles2Response as PipelineRetrieveFiles2Response,
     type PipelineRetrievePlaygroundSessionResponse as PipelineRetrievePlaygroundSessionResponse,
     type PipelineCreateParams as PipelineCreateParams,
-    type PipelineRetrieveParams as PipelineRetrieveParams,
     type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineListParams as PipelineListParams,
     type PipelineChatParams as PipelineChatParams,
@@ -1694,4 +1694,6 @@ export declare namespace V1 {
     type BetaRetrieveQuotaManagementResponse as BetaRetrieveQuotaManagementResponse,
     type BetaRetrieveQuotaManagementParams as BetaRetrieveQuotaManagementParams,
   };
+
+  export { Test as Test, type TestStreamResponse as TestStreamResponse };
 }

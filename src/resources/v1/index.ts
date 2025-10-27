@@ -118,13 +118,11 @@ export {
   type PresetRetrievalParams,
   type RetrievalMode,
   type SparseModelConfig,
-  type PipelineRetrieveResponse,
   type PipelineListResponse,
   type PipelineChatResponse,
   type PipelineRetrieveFiles2Response,
   type PipelineRetrievePlaygroundSessionResponse,
   type PipelineCreateParams,
-  type PipelineRetrieveParams,
   type PipelineUpdateParams,
   type PipelineListParams,
   type PipelineChatParams,
@@ -162,6 +160,7 @@ export {
   type RetrieverRetrieveDirectParams,
   type RetrieverUpsertParams,
 } from './retrievers';
+export { Test, type TestStreamResponse } from './test';
 export { V1, type DeleteParams, type V1GetJobsResponse, type V1GetJobsParams } from './v1';
 export {
   ValidateIntegrations,

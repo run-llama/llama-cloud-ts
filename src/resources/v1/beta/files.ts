@@ -9,16 +9,16 @@ import { path } from '../../../internal/utils/path';
 
 export class Files extends APIResource {
   /**
-   * Upsert a file (create or update if exists) in the project.
+   * Create a new file in the project.
    *
-   * Args: file_create: File creation/update data project: Validated project from
-   * dependency db: Database session
+   * Args: file_create: File creation data project: Validated project from dependency
+   * db: Database session
    *
-   * Returns: The upserted file
+   * Returns: The created file
    */
   create(params: FileCreateParams, options?: RequestOptions): APIPromise<FilesFilesAPI.File> {
     const { organization_id, project_id, ...body } = params;
-    return this._client.put('/api/v1/beta/files', {
+    return this._client.post('/api/v1/beta/files', {
       query: { organization_id, project_id },
       body,
       ...options,

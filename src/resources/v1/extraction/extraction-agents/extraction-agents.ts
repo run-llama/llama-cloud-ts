@@ -61,6 +61,20 @@ export class ExtractionAgents extends APIResource {
   }
 
   /**
+   * Get Extraction Agent By Name
+   */
+  retrieveByName(
+    name: string,
+    query: ExtractionAgentRetrieveByNameParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExtractAgent> {
+    return this._client.get(path`/api/v1/extraction/extraction-agents/by-name/${name}`, {
+      query,
+      ...options,
+    });
+  }
+
+  /**
    * Get or create a default extraction agent for the current project. The default
    * agent has an empty schema and default configuration.
    */
@@ -177,6 +191,12 @@ export interface ExtractionAgentExtractionAgentsParams {
   project_id?: string | null;
 }
 
+export interface ExtractionAgentRetrieveByNameParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface ExtractionAgentRetrieveDefaultParams {
   organization_id?: string | null;
 
@@ -203,6 +223,7 @@ export declare namespace ExtractionAgents {
     type ExtractionAgentRetrieveExtractionAgentsResponse as ExtractionAgentRetrieveExtractionAgentsResponse,
     type ExtractionAgentUpdateParams as ExtractionAgentUpdateParams,
     type ExtractionAgentExtractionAgentsParams as ExtractionAgentExtractionAgentsParams,
+    type ExtractionAgentRetrieveByNameParams as ExtractionAgentRetrieveByNameParams,
     type ExtractionAgentRetrieveDefaultParams as ExtractionAgentRetrieveDefaultParams,
     type ExtractionAgentRetrieveExtractionAgentsParams as ExtractionAgentRetrieveExtractionAgentsParams,
   };

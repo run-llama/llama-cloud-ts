@@ -48,6 +48,17 @@ import {
   ParseConfigurationUpdateParseConfigurationsParams,
   ParseConfigurations,
 } from './parse-configurations';
+import * as DirectoriesAPI from './directories/directories';
+import {
+  Directories,
+  DirectoryCreateParams,
+  DirectoryCreateResponse,
+  DirectoryListParams,
+  DirectoryListResponse,
+  DirectoryRetrieveResponse,
+  DirectoryUpdateParams,
+  DirectoryUpdateResponse,
+} from './directories/directories';
 import * as SpreadsheetAPI from './spreadsheet/spreadsheet';
 import { Spreadsheet } from './spreadsheet/spreadsheet';
 import { APIPromise } from '../../../core/api-promise';
@@ -61,6 +72,7 @@ export class Beta extends APIResource {
   parseConfigurations: ParseConfigurationsAPI.ParseConfigurations =
     new ParseConfigurationsAPI.ParseConfigurations(this._client);
   spreadsheet: SpreadsheetAPI.Spreadsheet = new SpreadsheetAPI.Spreadsheet(this._client);
+  directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
 
   /**
    * Retrieve a paginated list of quota configurations with optional filtering.
@@ -195,6 +207,7 @@ Beta.Batches = Batches;
 Beta.Files = Files;
 Beta.ParseConfigurations = ParseConfigurations;
 Beta.Spreadsheet = Spreadsheet;
+Beta.Directories = Directories;
 
 export declare namespace Beta {
   export {
@@ -256,4 +269,15 @@ export declare namespace Beta {
   };
 
   export { Spreadsheet as Spreadsheet };
+
+  export {
+    Directories as Directories,
+    type DirectoryCreateResponse as DirectoryCreateResponse,
+    type DirectoryRetrieveResponse as DirectoryRetrieveResponse,
+    type DirectoryUpdateResponse as DirectoryUpdateResponse,
+    type DirectoryListResponse as DirectoryListResponse,
+    type DirectoryCreateParams as DirectoryCreateParams,
+    type DirectoryUpdateParams as DirectoryUpdateParams,
+    type DirectoryListParams as DirectoryListParams,
+  };
 }
