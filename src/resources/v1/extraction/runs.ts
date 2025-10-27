@@ -41,6 +41,17 @@ export class Runs extends APIResource {
   }
 
   /**
+   * Get Run By Job Id
+   */
+  retrieveByJob(
+    jobID: string,
+    query: RunRetrieveByJobParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExtractRun> {
+    return this._client.get(path`/api/v1/extraction/runs/by-job/${jobID}`, { query, ...options });
+  }
+
+  /**
    * Get Latest Run From Ui
    */
   retrieveLatestFromUi(
@@ -301,6 +312,12 @@ export interface RunDeleteParams {
   project_id?: string | null;
 }
 
+export interface RunRetrieveByJobParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface RunRetrieveLatestFromUiParams {
   extraction_agent_id: string;
 }
@@ -314,6 +331,7 @@ export declare namespace Runs {
     type RunRetrieveParams as RunRetrieveParams,
     type RunListParams as RunListParams,
     type RunDeleteParams as RunDeleteParams,
+    type RunRetrieveByJobParams as RunRetrieveByJobParams,
     type RunRetrieveLatestFromUiParams as RunRetrieveLatestFromUiParams,
   };
 }

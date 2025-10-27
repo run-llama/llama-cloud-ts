@@ -22,10 +22,10 @@ export class Organizations extends APIResource {
   users: UsersAPI.Users = new UsersAPI.Users(this._client);
 
   /**
-   * Upsert a new organization.
+   * Create a new organization.
    */
   create(body: OrganizationCreateParams, options?: RequestOptions): APIPromise<Organization> {
-    return this._client.put('/api/v1/organizations', { body, ...options });
+    return this._client.post('/api/v1/organizations', { body, ...options });
   }
 
   /**

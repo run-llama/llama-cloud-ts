@@ -9,7 +9,7 @@ import { path } from '../../../internal/utils/path';
 
 export class Documents extends APIResource {
   /**
-   * Batch create or update a document for a pipeline.
+   * Batch create documents for a pipeline.
    */
   create(
     pipelineID: string,
@@ -17,7 +17,7 @@ export class Documents extends APIResource {
     options?: RequestOptions,
   ): APIPromise<DocumentCreateResponse> {
     const { body } = params;
-    return this._client.put(path`/api/v1/pipelines/${pipelineID}/documents`, { body: body, ...options });
+    return this._client.post(path`/api/v1/pipelines/${pipelineID}/documents`, { body: body, ...options });
   }
 
   /**

@@ -30,13 +30,16 @@ export class AgentData extends APIResource {
   }
 
   /**
-   * Bulk delete agent data by query (deployment_name, collection, optional filters).
+   * Delete agent data by ID.
    */
-  delete(params: AgentDataDeleteParams, options?: RequestOptions): APIPromise<AgentDataDeleteResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/agent-data/:delete', {
+  delete(
+    itemID: string,
+    params: AgentDataDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentDataDeleteResponse> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v1/beta/agent-data/${itemID}`, {
       query: { organization_id, project_id },
-      body,
       ...options,
     });
   }
@@ -100,12 +103,7 @@ export interface AgentData {
   updated_at?: string | null;
 }
 
-/**
- * API response for bulk delete operation
- */
-export interface AgentDataDeleteResponse {
-  deleted_count: number;
-}
+export type AgentDataDeleteResponse = { [key: string]: string };
 
 export interface AgentDataAggregateResponse {
   /**
@@ -184,49 +182,9 @@ export interface AgentDataUpdateParams {
 }
 
 export interface AgentDataDeleteParams {
-  /**
-   * Body param: The agent deployment's name to delete data for
-   */
-  deployment_name: string;
-
-  /**
-   * Query param:
-   */
   organization_id?: string | null;
 
-  /**
-   * Query param:
-   */
   project_id?: string | null;
-
-  /**
-   * Body param: The logical agent data collection to delete from
-   */
-  collection?: string;
-
-  /**
-   * Body param: Optional filters to select which items to delete
-   */
-  filter?: { [key: string]: AgentDataDeleteParams.Filter } | null;
-}
-
-export namespace AgentDataDeleteParams {
-  /**
-   * API request model for a filter comparison operation.
-   */
-  export interface Filter {
-    eq?: number | string | (string & {}) | null;
-
-    gt?: number | string | (string & {}) | null;
-
-    gte?: number | string | (string & {}) | null;
-
-    includes?: Array<number | string | (string & {}) | null>;
-
-    lt?: number | string | (string & {}) | null;
-
-    lte?: number | string | (string & {}) | null;
-  }
 }
 
 export interface AgentDataAgentDataParams {

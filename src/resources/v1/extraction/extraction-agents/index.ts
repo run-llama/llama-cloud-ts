@@ -7,6 +7,7 @@ export {
   type ExtractionAgentRetrieveExtractionAgentsResponse,
   type ExtractionAgentUpdateParams,
   type ExtractionAgentExtractionAgentsParams,
+  type ExtractionAgentRetrieveByNameParams,
   type ExtractionAgentRetrieveDefaultParams,
   type ExtractionAgentRetrieveExtractionAgentsParams,
 } from './extraction-agents';

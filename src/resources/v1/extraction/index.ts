@@ -8,6 +8,7 @@ export {
   type ExtractionAgentRetrieveExtractionAgentsResponse,
   type ExtractionAgentUpdateParams,
   type ExtractionAgentExtractionAgentsParams,
+  type ExtractionAgentRetrieveByNameParams,
   type ExtractionAgentRetrieveDefaultParams,
   type ExtractionAgentRetrieveExtractionAgentsParams,
 } from './extraction-agents/index';
@@ -33,5 +34,6 @@ export {
   type RunRetrieveParams,
   type RunListParams,
   type RunDeleteParams,
+  type RunRetrieveByJobParams,
   type RunRetrieveLatestFromUiParams,
 } from './runs';

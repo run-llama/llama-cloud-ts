@@ -33,6 +33,16 @@ export {
   type BetaRetrieveQuotaManagementParams,
 } from './beta';
 export {
+  Directories,
+  type DirectoryCreateResponse,
+  type DirectoryRetrieveResponse,
+  type DirectoryUpdateResponse,
+  type DirectoryListResponse,
+  type DirectoryCreateParams,
+  type DirectoryUpdateParams,
+  type DirectoryListParams,
+} from './directories/index';
+export {
   Files,
   type FileQueryResponse,
   type FileCreateParams,

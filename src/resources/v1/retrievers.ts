@@ -21,19 +21,14 @@ export class Retrievers extends APIResource {
   }
 
   /**
-   * Retrieve data using a Retriever.
+   * Get a Retriever by ID.
    */
   retrieve(
     retrieverID: string,
-    params: RetrieverRetrieveParams,
+    query: RetrieverRetrieveParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CompositeRetrievalResult> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post(path`/api/v1/retrievers/${retrieverID}/retrieve`, {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+  ): APIPromise<Retriever> {
+    return this._client.get(path`/api/v1/retrievers/${retrieverID}`, { query, ...options });
   }
 
   /**
@@ -279,36 +274,9 @@ export interface RetrieverCreateParams {
 }
 
 export interface RetrieverRetrieveParams {
-  /**
-   * Body param: The query to retrieve against.
-   */
-  query: string;
-
-  /**
-   * Query param:
-   */
   organization_id?: string | null;
 
-  /**
-   * Query param:
-   */
   project_id?: string | null;
-
-  /**
-   * Body param: The mode of composite retrieval.
-   */
-  mode?: CompositeRetrievalMode;
-
-  /**
-   * Body param: The rerank configuration for composite retrieval.
-   */
-  rerank_config?: ReRankConfig;
-
-  /**
-   * @deprecated Body param: (use rerank_config.top_n instead) The number of nodes to
-   * retrieve after reranking over retrieved nodes from all retrieval tools.
-   */
-  rerank_top_n?: number | null;
 }
 
 export interface RetrieverUpdateParams {
