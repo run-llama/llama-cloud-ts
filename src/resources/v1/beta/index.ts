@@ -18,7 +18,6 @@ export {
   type AgentDataAggregateParams,
   type AgentDataSearchParams,
 } from './agent-data';
-export { Batches } from './batches';
 export {
   Beta,
   type BetaRetrieveQuotaManagementResponse,

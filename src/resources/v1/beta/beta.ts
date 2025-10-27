@@ -21,8 +21,6 @@ import {
   APIKeyRetrieveAPIKeysResponse,
   APIKeys,
 } from './api-keys';
-import * as BatchesAPI from './batches';
-import { Batches } from './batches';
 import * as FilesAPI from './files';
 import { FileCreateParams, FileDeleteParams, FileQueryParams, FileQueryResponse, Files } from './files';
 import * as ParseConfigurationsAPI from './parse-configurations';
@@ -58,7 +56,6 @@ import { RequestOptions } from '../../../internal/request-options';
 
 export class Beta extends APIResource {
   apiKeys: APIKeysAPI.APIKeys = new APIKeysAPI.APIKeys(this._client);
-  batches: BatchesAPI.Batches = new BatchesAPI.Batches(this._client);
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
   files: FilesAPI.Files = new FilesAPI.Files(this._client);
   parseConfigurations: ParseConfigurationsAPI.ParseConfigurations =
@@ -195,7 +192,6 @@ export interface BetaRetrieveQuotaManagementParams {
 }
 
 Beta.APIKeys = APIKeys;
-Beta.Batches = Batches;
 Beta.Files = Files;
 Beta.ParseConfigurations = ParseConfigurations;
 Beta.Spreadsheet = Spreadsheet;
@@ -213,8 +209,6 @@ export declare namespace Beta {
     type APIKeyAPIKeysParams as APIKeyAPIKeysParams,
     type APIKeyRetrieveAPIKeysParams as APIKeyRetrieveAPIKeysParams,
   };
-
-  export { Batches as Batches };
 
   export {
     type AgentData as AgentData,

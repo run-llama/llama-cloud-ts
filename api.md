@@ -620,8 +620,6 @@ Methods:
 - <code title="post /api/v1/beta/api-keys">client.v1.beta.apiKeys.<a href="./src/resources/v1/beta/api-keys.ts">apiKeys</a>({ ...params }) -> APIKey</code>
 - <code title="get /api/v1/beta/api-keys">client.v1.beta.apiKeys.<a href="./src/resources/v1/beta/api-keys.ts">retrieveAPIKeys</a>({ ...params }) -> APIKeyRetrieveAPIKeysResponse</code>
 
-### Batches
-
 ### AgentData
 
 Types:
