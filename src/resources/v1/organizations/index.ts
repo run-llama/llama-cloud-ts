@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Default, type DefaultCreateParams } from './default';
+export { Default } from './default';
 export {
   Organizations,
   type Organization,
@@ -20,5 +20,4 @@ export {
   type UserListResponse,
   type UserCreateParams,
   type UserDeleteParams,
-  type UserUpdateRemoveParams,
 } from './users/index';

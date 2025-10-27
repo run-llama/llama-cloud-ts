@@ -69,35 +69,4 @@ describe('resource users', () => {
       body: ['182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'],
     });
   });
-
-  // Prism tests are disabled
-  test.skip('updateRemove: only required params', async () => {
-    const responsePromise = client.v1.organizations.users.updateRemove(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      { body: [{}] },
-    );
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('updateRemove: required and optional params', async () => {
-    const response = await client.v1.organizations.users.updateRemove(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      {
-        body: [
-          {
-            email: 'dev@stainless.com',
-            project_id_list: ['182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'],
-            user_id: 'user_id',
-          },
-        ],
-      },
-    );
-  });
 });

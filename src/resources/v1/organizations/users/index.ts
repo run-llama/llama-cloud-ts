@@ -17,5 +17,4 @@ export {
   type UserListResponse,
   type UserCreateParams,
   type UserDeleteParams,
-  type UserUpdateRemoveParams,
 } from './users';

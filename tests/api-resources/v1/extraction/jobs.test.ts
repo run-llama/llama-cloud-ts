@@ -131,6 +131,14 @@ describe('resource jobs', () => {
         use_reasoning: true,
       },
       data_schema_override: { foo: { foo: 'bar' } },
+      webhook_configurations: [
+        {
+          webhook_events: ['extract.pending'],
+          webhook_headers: { foo: 'string' },
+          webhook_output_format: 'webhook_output_format',
+          webhook_url: 'webhook_url',
+        },
+      ],
     });
   });
 

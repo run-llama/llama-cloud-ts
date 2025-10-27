@@ -237,6 +237,11 @@ export interface JobBatchParams {
     | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
     | string
     | null;
+
+  /**
+   * Body param: The outbound webhook configurations
+   */
+  webhook_configurations?: Array<WebhookConfiguration> | null;
 }
 
 export interface JobFileParams {

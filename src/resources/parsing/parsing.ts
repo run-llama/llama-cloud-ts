@@ -178,6 +178,11 @@ export interface ParsingUploadFileParams {
   /**
    * Body param:
    */
+  aggressive_table_extraction?: boolean;
+
+  /**
+   * Body param:
+   */
   annotate_links?: boolean;
 
   /**
@@ -419,6 +424,11 @@ export interface ParsingUploadFileParams {
    * Body param:
    */
   job_timeout_in_seconds?: number;
+
+  /**
+   * Body param:
+   */
+  keep_page_separator_when_merging_tables?: boolean;
 
   /**
    * Body param:
