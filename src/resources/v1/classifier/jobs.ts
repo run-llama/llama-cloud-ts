@@ -107,6 +107,18 @@ export interface ClassifyJob {
    */
   created_at?: string | null;
 
+  effective_at?: string;
+
+  /**
+   * Error message for the latest job attempt, if any.
+   */
+  error_message?: string | null;
+
+  /**
+   * The job record ID associated with this status, if any.
+   */
+  job_record_id?: string | null;
+
   /**
    * The configuration for the parsing job
    */

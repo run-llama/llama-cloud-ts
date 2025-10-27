@@ -293,6 +293,8 @@ export interface AutoTransformConfig {
 export interface LlamaParseParameters {
   adaptive_long_table?: boolean | null;
 
+  aggressive_table_extraction?: boolean | null;
+
   annotate_links?: boolean | null;
 
   auto_mode?: boolean | null;
@@ -390,6 +392,8 @@ export interface LlamaParseParameters {
   job_timeout_extra_time_per_page_in_seconds?: number | null;
 
   job_timeout_in_seconds?: number | null;
+
+  keep_page_separator_when_merging_tables?: boolean | null;
 
   languages?: Array<ParsingAPI.ParserLanguages>;
 

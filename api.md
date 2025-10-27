@@ -160,7 +160,6 @@ Methods:
 
 Methods:
 
-- <code title="put /api/v1/organizations/default">client.v1.organizations.default.<a href="./src/resources/v1/organizations/default.ts">create</a>({ ...params }) -> Organization</code>
 - <code title="get /api/v1/organizations/default">client.v1.organizations.default.<a href="./src/resources/v1/organizations/default.ts">list</a>() -> Organization</code>
 
 ### Users
@@ -176,7 +175,6 @@ Methods:
 - <code title="put /api/v1/organizations/{organization_id}/users">client.v1.organizations.users.<a href="./src/resources/v1/organizations/users/users.ts">create</a>(organizationID, [ ...body ]) -> UserCreateResponse</code>
 - <code title="get /api/v1/organizations/{organization_id}/users">client.v1.organizations.users.<a href="./src/resources/v1/organizations/users/users.ts">list</a>(organizationID) -> UserListResponse</code>
 - <code title="delete /api/v1/organizations/{organization_id}/users/{member_user_id}">client.v1.organizations.users.<a href="./src/resources/v1/organizations/users/users.ts">delete</a>(memberUserID, [ ...body ]) -> void</code>
-- <code title="put /api/v1/organizations/{organization_id}/users/remove">client.v1.organizations.users.<a href="./src/resources/v1/organizations/users/users.ts">updateRemove</a>(organizationID, [ ...body ]) -> void</code>
 
 #### Roles
 

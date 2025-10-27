@@ -33,9 +33,9 @@ export class Billing extends APIResource {
     params: BillingCreateIntentAndCustomerSessionParams,
     options?: RequestOptions,
   ): APIPromise<BillingCreateIntentAndCustomerSessionResponse> {
-    const { plan_name, organization_id } = params;
+    const { organization_id, plan_name } = params;
     return this._client.post('/api/v1/billing/create-intent-and-customer-session', {
-      query: { plan_name, organization_id },
+      query: { organization_id, plan_name },
       ...options,
     });
   }
@@ -64,17 +64,19 @@ export type BillingDowngradePlanResponse = { [key: string]: 'success' };
 
 export interface BillingCreateCustomerPortalSessionParams {
   /**
+   * Query param:
+   */
+  organization_id: string;
+
+  /**
    * Body param:
    */
   return_url: string;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
 }
 
 export interface BillingCreateIntentAndCustomerSessionParams {
+  organization_id: string;
+
   plan_name:
     | 'free'
     | 'llama_parse'
@@ -87,8 +89,6 @@ export interface BillingCreateIntentAndCustomerSessionParams {
     | 'free_v1'
     | 'starter_v1'
     | 'pro_v1';
-
-  organization_id?: string | null;
 }
 
 export interface BillingDowngradePlanParams {

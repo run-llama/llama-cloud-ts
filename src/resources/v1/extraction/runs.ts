@@ -96,7 +96,7 @@ export interface ExtractConfig {
   /**
    * The extraction target specified.
    */
-  extraction_target?: 'PER_DOC' | 'PER_PAGE';
+  extraction_target?: 'PER_DOC' | 'PER_PAGE' | 'PER_TABLE_ROW';
 
   /**
    * Whether to use high resolution mode for the extraction.
@@ -145,6 +145,7 @@ export interface ExtractConfig {
     | 'anthropic-sonnet-3.7'
     | 'anthropic-sonnet-4.0'
     | 'anthropic-sonnet-4.5'
+    | 'anthropic-haiku-4.5'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-pro'
     | 'gemini-2.0-flash'

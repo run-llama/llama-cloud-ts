@@ -103,7 +103,8 @@ export namespace BetaRetrieveQuotaManagementResponse {
       | 'rate_limit_parse_concurrent_default'
       | 'rate_limit_concurrent_jobs_in_execution_default'
       | 'rate_limit_concurrent_jobs_in_execution_doc_ingest'
-      | 'limit_embedding_character';
+      | 'limit_embedding_character'
+      | 'limit_files_per_index';
 
     /**
      * The quota configuration value

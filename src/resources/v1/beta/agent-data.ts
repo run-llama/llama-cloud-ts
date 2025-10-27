@@ -95,6 +95,8 @@ export interface AgentData {
 
   created_at?: string | null;
 
+  project_id?: string | null;
+
   updated_at?: string | null;
 }
 

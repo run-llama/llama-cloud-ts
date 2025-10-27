@@ -41,6 +41,7 @@ describe('resource batches', () => {
       output_type: 'output_type',
       tool_data: {
         adaptive_long_table: true,
+        aggressive_table_extraction: true,
         annotate_links: true,
         auto_mode: true,
         auto_mode_configuration_json: 'auto_mode_configuration_json',
@@ -90,6 +91,7 @@ describe('resource batches', () => {
         is_formatting_instruction: true,
         job_timeout_extra_time_per_page_in_seconds: 0,
         job_timeout_in_seconds: 0,
+        keep_page_separator_when_merging_tables: true,
         languages: ['af'],
         layout_aware: true,
         markdown_table_multiline_header_separator: 'markdown_table_multiline_header_separator',

@@ -11,6 +11,7 @@ describe('resource billing', () => {
   // Prism tests are disabled
   test.skip('createCustomerPortalSession: only required params', async () => {
     const responsePromise = client.v1.billing.createCustomerPortalSession({
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       return_url: 'https://example.com',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -25,14 +26,17 @@ describe('resource billing', () => {
   // Prism tests are disabled
   test.skip('createCustomerPortalSession: required and optional params', async () => {
     const response = await client.v1.billing.createCustomerPortalSession({
-      return_url: 'https://example.com',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      return_url: 'https://example.com',
     });
   });
 
   // Prism tests are disabled
   test.skip('createIntentAndCustomerSession: only required params', async () => {
-    const responsePromise = client.v1.billing.createIntentAndCustomerSession({ plan_name: 'free' });
+    const responsePromise = client.v1.billing.createIntentAndCustomerSession({
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      plan_name: 'free',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -45,8 +49,8 @@ describe('resource billing', () => {
   // Prism tests are disabled
   test.skip('createIntentAndCustomerSession: required and optional params', async () => {
     const response = await client.v1.billing.createIntentAndCustomerSession({
-      plan_name: 'free',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      plan_name: 'free',
     });
   });
 

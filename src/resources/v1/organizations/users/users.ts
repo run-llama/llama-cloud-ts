@@ -52,24 +52,6 @@ export class Users extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
-
-  /**
-   * Remove a batch of users from an organization.
-   *
-   * @deprecated
-   */
-  updateRemove(
-    organizationID: string,
-    params: UserUpdateRemoveParams,
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { body } = params;
-    return this._client.put(path`/api/v1/organizations/${organizationID}/users/remove`, {
-      body: body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
-  }
 }
 
 /**
@@ -174,32 +156,6 @@ export interface UserDeleteParams {
   body?: Array<string> | null;
 }
 
-export interface UserUpdateRemoveParams {
-  body: Array<UserUpdateRemoveParams.Body>;
-}
-
-export namespace UserUpdateRemoveParams {
-  /**
-   * Schema for deleting a user's membership to an organization.
-   */
-  export interface Body {
-    /**
-     * The user's email address.
-     */
-    email?: string | null;
-
-    /**
-     * The project ids
-     */
-    project_id_list?: Array<string> | null;
-
-    /**
-     * The user's ID.
-     */
-    user_id?: string | null;
-  }
-}
-
 Users.Roles = Roles;
 Users.Projects = Projects;
 
@@ -210,7 +166,6 @@ export declare namespace Users {
     type UserListResponse as UserListResponse,
     type UserCreateParams as UserCreateParams,
     type UserDeleteParams as UserDeleteParams,
-    type UserUpdateRemoveParams as UserUpdateRemoveParams,
   };
 
   export {
