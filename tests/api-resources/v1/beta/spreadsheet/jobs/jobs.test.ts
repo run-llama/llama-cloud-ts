@@ -28,7 +28,12 @@ describe('resource jobs', () => {
       file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      config: { extraction_range: 'extraction_range', include_hidden_cells: true, sheet_names: ['string'] },
+      config: {
+        extraction_range: 'extraction_range',
+        generate_additional_metadata: true,
+        include_hidden_cells: true,
+        sheet_names: ['string'],
+      },
     });
   });
 
