@@ -770,6 +770,11 @@ export interface ParsingUploadFileParams {
   /**
    * Body param:
    */
+  presentation_out_of_bounds_content?: boolean;
+
+  /**
+   * Body param:
+   */
   preserve_layout_alignment_across_pages?: boolean;
 
   /**

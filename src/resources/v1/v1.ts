@@ -618,6 +618,8 @@ export namespace V1GetJobsResponse {
 
         premium_mode?: boolean | null;
 
+        presentation_out_of_bounds_content?: boolean | null;
+
         preserve_layout_alignment_across_pages?: boolean | null;
 
         preserve_very_small_text?: boolean | null;
@@ -1112,6 +1114,11 @@ export namespace V1GetJobsResponse {
          * Whether to use premiumMode pipeline.
          */
         premiumMode?: boolean;
+
+        /**
+         * If true, LlamaParse will extract out of bounds content in presentation slides.
+         */
+        presentationOutOfBoundsContent?: boolean;
 
         /**
          * Whether to preserve layout alignment across pages.
