@@ -30,10 +30,8 @@ export {
   type DirectoryUpdateResponse,
   type DirectoryListResponse,
   type DirectoryCreateParams,
-  type DirectoryRetrieveParams,
   type DirectoryUpdateParams,
   type DirectoryListParams,
-  type DirectoryDeleteParams,
 } from './directories/index';
 export {
   Files,
