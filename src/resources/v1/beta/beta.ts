@@ -43,8 +43,10 @@ import {
   Directories,
   DirectoryCreateParams,
   DirectoryCreateResponse,
+  DirectoryDeleteParams,
   DirectoryListParams,
   DirectoryListResponse,
+  DirectoryRetrieveParams,
   DirectoryRetrieveResponse,
   DirectoryUpdateParams,
   DirectoryUpdateResponse,
@@ -255,7 +257,9 @@ export declare namespace Beta {
     type DirectoryUpdateResponse as DirectoryUpdateResponse,
     type DirectoryListResponse as DirectoryListResponse,
     type DirectoryCreateParams as DirectoryCreateParams,
+    type DirectoryRetrieveParams as DirectoryRetrieveParams,
     type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryListParams as DirectoryListParams,
+    type DirectoryDeleteParams as DirectoryDeleteParams,
   };
 }

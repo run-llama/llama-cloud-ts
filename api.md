@@ -703,10 +703,10 @@ Types:
 Methods:
 
 - <code title="post /api/v1/beta/directories">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">create</a>({ ...params }) -> DirectoryCreateResponse</code>
-- <code title="get /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">retrieve</a>(directoryID) -> DirectoryRetrieveResponse</code>
+- <code title="get /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">retrieve</a>(directoryID, { ...params }) -> DirectoryRetrieveResponse</code>
 - <code title="patch /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">update</a>(directoryID, { ...params }) -> DirectoryUpdateResponse</code>
 - <code title="get /api/v1/beta/directories">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">list</a>({ ...params }) -> DirectoryListResponse</code>
-- <code title="delete /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">delete</a>(directoryID) -> void</code>
+- <code title="delete /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">delete</a>(directoryID, { ...params }) -> void</code>
 
 #### Files
 
