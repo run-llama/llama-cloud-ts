@@ -712,14 +712,14 @@ export interface Pipeline {
   id: string;
 
   embedding_config:
-    | Pipeline.ManagedOpenAIEmbeddingConfig
     | ValidateIntegrationsAPI.AzureOpenAIEmbeddingConfig
+    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | ValidateIntegrationsAPI.CohereEmbeddingConfig
     | ValidateIntegrationsAPI.GeminiEmbeddingConfig
     | ValidateIntegrationsAPI.HuggingFaceInferenceAPIEmbeddingConfig
+    | Pipeline.ManagedOpenAIEmbeddingConfig
     | ValidateIntegrationsAPI.OpenAIEmbeddingConfig
-    | ValidateIntegrationsAPI.VertexAIEmbeddingConfig
-    | ValidateIntegrationsAPI.BedrockEmbeddingConfig;
+    | ValidateIntegrationsAPI.VertexAIEmbeddingConfig;
 
   name: string;
 
@@ -877,12 +877,12 @@ export interface PipelineCreate {
 
   embedding_config?:
     | ValidateIntegrationsAPI.AzureOpenAIEmbeddingConfig
+    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | ValidateIntegrationsAPI.CohereEmbeddingConfig
     | ValidateIntegrationsAPI.GeminiEmbeddingConfig
     | ValidateIntegrationsAPI.HuggingFaceInferenceAPIEmbeddingConfig
     | ValidateIntegrationsAPI.OpenAIEmbeddingConfig
     | ValidateIntegrationsAPI.VertexAIEmbeddingConfig
-    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | null;
 
   /**
@@ -1194,12 +1194,12 @@ export interface PipelineCreateParams {
    */
   embedding_config?:
     | ValidateIntegrationsAPI.AzureOpenAIEmbeddingConfig
+    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | ValidateIntegrationsAPI.CohereEmbeddingConfig
     | ValidateIntegrationsAPI.GeminiEmbeddingConfig
     | ValidateIntegrationsAPI.HuggingFaceInferenceAPIEmbeddingConfig
     | ValidateIntegrationsAPI.OpenAIEmbeddingConfig
     | ValidateIntegrationsAPI.VertexAIEmbeddingConfig
-    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | null;
 
   /**
@@ -1267,12 +1267,12 @@ export interface PipelineUpdateParams {
 
   embedding_config?:
     | ValidateIntegrationsAPI.AzureOpenAIEmbeddingConfig
+    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | ValidateIntegrationsAPI.CohereEmbeddingConfig
     | ValidateIntegrationsAPI.GeminiEmbeddingConfig
     | ValidateIntegrationsAPI.HuggingFaceInferenceAPIEmbeddingConfig
     | ValidateIntegrationsAPI.OpenAIEmbeddingConfig
     | ValidateIntegrationsAPI.VertexAIEmbeddingConfig
-    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | null;
 
   /**

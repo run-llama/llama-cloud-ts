@@ -7,7 +7,7 @@ import { RequestOptions } from '../../internal/request-options';
 
 export class Parse extends APIResource {
   /**
-   * Upload File V2
+   * Upload File Multipart
    */
   uploadFile(
     params: ParseUploadFileParams | null | undefined = {},
