@@ -1,13 +1,29 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { APIKeys, type APIKey, type APIKeyCreate, type APIKeyType } from './api-keys';
-export { Auth } from './auth';
+export {
+  APIKeys,
+  type APIKey,
+  type APIKeyCreate,
+  type APIKeyType,
+  type APIKeyListResponse,
+  type APIKeyCreateParams,
+  type APIKeyListParams,
+} from './api-keys';
+export { Auth, type AuthReadSelfResponse } from './auth';
 export {
   Beta,
   type BetaRetrieveQuotaManagementResponse,
   type BetaRetrieveQuotaManagementParams,
 } from './beta/index';
-export { Billing } from './billing/index';
+export {
+  Billing,
+  type BillingCreateCustomerPortalSessionResponse,
+  type BillingCreateIntentAndCustomerSessionResponse,
+  type BillingDowngradePlanResponse,
+  type BillingCreateCustomerPortalSessionParams,
+  type BillingCreateIntentAndCustomerSessionParams,
+  type BillingDowngradePlanParams,
+} from './billing/index';
 export { Classifier } from './classifier/index';
 export {
   DataSinks,
@@ -145,6 +161,7 @@ export { V1, type DeleteParams, type V1GetJobsResponse, type V1GetJobsParams } f
 export {
   ValidateIntegrations,
   type AzureOpenAIEmbeddingConfig,
+  type BaseConnectionValidation,
   type BedrockEmbeddingConfig,
   type CloudAstraDBVectorStore,
   type CloudAzStorageBlobDataSource,
@@ -172,4 +189,7 @@ export {
   type HuggingFaceInferenceAPIEmbeddingConfig,
   type OpenAIEmbeddingConfig,
   type VertexAIEmbeddingConfig,
+  type ValidateIntegrationValidateDataSinkConnectionParams,
+  type ValidateIntegrationValidateDataSourceConnectionParams,
+  type ValidateIntegrationValidateEmbeddingConnectionParams,
 } from './validate-integrations';

@@ -40,12 +40,8 @@ export class Directories extends APIResource {
   /**
    * Retrieve a directory by its identifier.
    */
-  retrieve(
-    directoryID: string,
-    query: DirectoryRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<DirectoryRetrieveResponse> {
-    return this._client.get(path`/api/v1/beta/directories/${directoryID}`, { query, ...options });
+  retrieve(directoryID: string, options?: RequestOptions): APIPromise<DirectoryRetrieveResponse> {
+    return this._client.get(path`/api/v1/beta/directories/${directoryID}`, options);
   }
 
   /**
@@ -53,15 +49,10 @@ export class Directories extends APIResource {
    */
   update(
     directoryID: string,
-    params: DirectoryUpdateParams,
+    body: DirectoryUpdateParams,
     options?: RequestOptions,
   ): APIPromise<DirectoryUpdateResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.patch(path`/api/v1/beta/directories/${directoryID}`, {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    return this._client.patch(path`/api/v1/beta/directories/${directoryID}`, { body, ...options });
   }
 
   /**
@@ -77,14 +68,8 @@ export class Directories extends APIResource {
   /**
    * Permanently delete a directory.
    */
-  delete(
-    directoryID: string,
-    params: DirectoryDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { organization_id, project_id } = params ?? {};
+  delete(directoryID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/v1/beta/directories/${directoryID}`, {
-      query: { organization_id, project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -323,30 +308,14 @@ export interface DirectoryCreateParams {
   description?: string | null;
 }
 
-export interface DirectoryRetrieveParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export interface DirectoryUpdateParams {
   /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Updated description for the directory.
+   * Updated description for the directory.
    */
   description?: string | null;
 
   /**
-   * Body param: Updated name for the directory.
+   * Updated name for the directory.
    */
   name?: string | null;
 }
@@ -367,12 +336,6 @@ export interface DirectoryListParams {
   project_id?: string | null;
 }
 
-export interface DirectoryDeleteParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 Directories.Files = Files;
 
 export declare namespace Directories {
@@ -382,10 +345,8 @@ export declare namespace Directories {
     type DirectoryUpdateResponse as DirectoryUpdateResponse,
     type DirectoryListResponse as DirectoryListResponse,
     type DirectoryCreateParams as DirectoryCreateParams,
-    type DirectoryRetrieveParams as DirectoryRetrieveParams,
     type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryListParams as DirectoryListParams,
-    type DirectoryDeleteParams as DirectoryDeleteParams,
   };
 
   export {

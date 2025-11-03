@@ -26,8 +26,6 @@ describe('resource files', () => {
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.v1.beta.directories.files.retrieve('directory_file_id', {
       directory_id: 'directory_id',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -49,8 +47,6 @@ describe('resource files', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.v1.beta.directories.files.update('directory_file_id', {
       directory_id: 'directory_id',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       display_name: 'display_name',
       unique_id: 'x',
     });
@@ -79,10 +75,8 @@ describe('resource files', () => {
           display_name_contains: 'display_name_contains',
           file_id: 'file_id',
           include_deleted: true,
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           page_size: 0,
           page_token: 'page_token',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           unique_id: 'unique_id',
         },
         { path: '/_stainless_unknown_path' },
@@ -108,8 +102,6 @@ describe('resource files', () => {
   test.skip('delete: required and optional params', async () => {
     const response = await client.v1.beta.directories.files.delete('directory_file_id', {
       directory_id: 'directory_id',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -129,8 +121,6 @@ describe('resource files', () => {
   test.skip('add: required and optional params', async () => {
     const response = await client.v1.beta.directories.files.add('directory_id', {
       file_id: 'file_id',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       display_name: 'display_name',
       unique_id: 'unique_id',
     });

@@ -17,11 +17,8 @@ export class Files extends APIResource {
     params: FileRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<FileRetrieveResponse> {
-    const { directory_id, ...query } = params;
-    return this._client.get(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
-      query,
-      ...options,
-    });
+    const { directory_id } = params;
+    return this._client.get(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, options);
   }
 
   /**
@@ -36,9 +33,8 @@ export class Files extends APIResource {
     params: FileUpdateParams,
     options?: RequestOptions,
   ): APIPromise<FileUpdateResponse> {
-    const { directory_id, organization_id, project_id, ...body } = params;
+    const { directory_id, ...body } = params;
     return this._client.patch(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
-      query: { organization_id, project_id },
       body,
       ...options,
     });
@@ -64,9 +60,8 @@ export class Files extends APIResource {
    * the directory_file_id first.
    */
   delete(directoryFileID: string, params: FileDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { directory_id, organization_id, project_id } = params;
+    const { directory_id } = params;
     return this._client.delete(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
-      query: { organization_id, project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -75,16 +70,11 @@ export class Files extends APIResource {
   /**
    * Create a new file within the specified directory.
    *
-   * The directory must exist and belong to the project passed in. The file_id must
-   * be provided and exist in the project.
+   * The directory must exist and the user must have access to the parent project.
+   * The file_id must be provided and exist in the project.
    */
-  add(directoryID: string, params: FileAddParams, options?: RequestOptions): APIPromise<FileAddResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post(path`/api/v1/beta/directories/${directoryID}/files`, {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+  add(directoryID: string, body: FileAddParams, options?: RequestOptions): APIPromise<FileAddResponse> {
+    return this._client.post(path`/api/v1/beta/directories/${directoryID}/files`, { body, ...options });
   }
 }
 
@@ -334,20 +324,7 @@ export interface FileAddResponse {
 }
 
 export interface FileRetrieveParams {
-  /**
-   * Path param:
-   */
   directory_id: string;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
 }
 
 export interface FileUpdateParams {
@@ -355,16 +332,6 @@ export interface FileUpdateParams {
    * Path param:
    */
   directory_id: string;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
 
   /**
    * Body param: Updated display name.
@@ -386,59 +353,31 @@ export interface FileListParams {
 
   include_deleted?: boolean;
 
-  organization_id?: string | null;
-
   page_size?: number | null;
 
   page_token?: string | null;
-
-  project_id?: string | null;
 
   unique_id?: string | null;
 }
 
 export interface FileDeleteParams {
-  /**
-   * Path param:
-   */
   directory_id: string;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
 }
 
 export interface FileAddParams {
   /**
-   * Body param: File ID for the storage location (required).
+   * File ID for the storage location (required).
    */
   file_id: string;
 
   /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Display name for the file. If not provided, will use the file's
-   * name.
+   * Display name for the file. If not provided, will use the file's name.
    */
   display_name?: string | null;
 
   /**
-   * Body param: Unique identifier for the file in the directory. If not provided,
-   * will use the file's external_file_id or name.
+   * Unique identifier for the file in the directory. If not provided, will use the
+   * file's external_file_id or name.
    */
   unique_id?: string | null;
 }
