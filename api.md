@@ -38,20 +38,12 @@ Types:
 - <code><a href="./src/resources/v1/api-keys.ts">APIKey</a></code>
 - <code><a href="./src/resources/v1/api-keys.ts">APIKeyCreate</a></code>
 - <code><a href="./src/resources/v1/api-keys.ts">APIKeyType</a></code>
-- <code><a href="./src/resources/v1/api-keys.ts">APIKeyListResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/api-keys">client.v1.apiKeys.<a href="./src/resources/v1/api-keys.ts">create</a>({ ...params }) -> APIKey</code>
-- <code title="get /api/v1/api-keys">client.v1.apiKeys.<a href="./src/resources/v1/api-keys.ts">list</a>({ ...params }) -> APIKeyListResponse</code>
-- <code title="delete /api/v1/api-keys/{api_key_id}">client.v1.apiKeys.<a href="./src/resources/v1/api-keys.ts">delete</a>(apiKeyID) -> void</code>
 
 ## ValidateIntegrations
 
 Types:
 
 - <code><a href="./src/resources/v1/validate-integrations.ts">AzureOpenAIEmbeddingConfig</a></code>
-- <code><a href="./src/resources/v1/validate-integrations.ts">BaseConnectionValidation</a></code>
 - <code><a href="./src/resources/v1/validate-integrations.ts">BedrockEmbeddingConfig</a></code>
 - <code><a href="./src/resources/v1/validate-integrations.ts">CloudAstraDBVectorStore</a></code>
 - <code><a href="./src/resources/v1/validate-integrations.ts">CloudAzStorageBlobDataSource</a></code>
@@ -79,12 +71,6 @@ Types:
 - <code><a href="./src/resources/v1/validate-integrations.ts">HuggingFaceInferenceAPIEmbeddingConfig</a></code>
 - <code><a href="./src/resources/v1/validate-integrations.ts">OpenAIEmbeddingConfig</a></code>
 - <code><a href="./src/resources/v1/validate-integrations.ts">VertexAIEmbeddingConfig</a></code>
-
-Methods:
-
-- <code title="post /api/v1/validate-integrations/validate-data-sink-connection">client.v1.validateIntegrations.<a href="./src/resources/v1/validate-integrations.ts">validateDataSinkConnection</a>({ ...params }) -> BaseConnectionValidation</code>
-- <code title="post /api/v1/validate-integrations/validate-data-source-connection">client.v1.validateIntegrations.<a href="./src/resources/v1/validate-integrations.ts">validateDataSourceConnection</a>({ ...params }) -> BaseConnectionValidation</code>
-- <code title="post /api/v1/validate-integrations/validate-embedding-connection">client.v1.validateIntegrations.<a href="./src/resources/v1/validate-integrations.ts">validateEmbeddingConnection</a>({ ...params }) -> BaseConnectionValidation</code>
 
 ## DataSinks
 
@@ -493,37 +479,9 @@ Methods:
 
 ## Auth
 
-Types:
-
-- <code><a href="./src/resources/v1/auth.ts">AuthReadSelfResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/auth/me">client.v1.auth.<a href="./src/resources/v1/auth.ts">readSelf</a>() -> AuthReadSelfResponse</code>
-
 ## Billing
 
-Types:
-
-- <code><a href="./src/resources/v1/billing/billing.ts">BillingCreateCustomerPortalSessionResponse</a></code>
-- <code><a href="./src/resources/v1/billing/billing.ts">BillingCreateIntentAndCustomerSessionResponse</a></code>
-- <code><a href="./src/resources/v1/billing/billing.ts">BillingDowngradePlanResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/billing/customer-portal-session">client.v1.billing.<a href="./src/resources/v1/billing/billing.ts">createCustomerPortalSession</a>({ ...params }) -> string</code>
-- <code title="post /api/v1/billing/create-intent-and-customer-session">client.v1.billing.<a href="./src/resources/v1/billing/billing.ts">createIntentAndCustomerSession</a>({ ...params }) -> BillingCreateIntentAndCustomerSessionResponse</code>
-- <code title="post /api/v1/billing/downgrade-plan">client.v1.billing.<a href="./src/resources/v1/billing/billing.ts">downgradePlan</a>({ ...params }) -> BillingDowngradePlanResponse</code>
-
 ### Metronome
-
-Types:
-
-- <code><a href="./src/resources/v1/billing/metronome.ts">MetronomeGetDashboardResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/billing/metronome/dashboard">client.v1.billing.metronome.<a href="./src/resources/v1/billing/metronome.ts">getDashboard</a>({ ...params }) -> MetronomeGetDashboardResponse</code>
 
 ## Extraction
 
@@ -703,10 +661,10 @@ Types:
 Methods:
 
 - <code title="post /api/v1/beta/directories">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">create</a>({ ...params }) -> DirectoryCreateResponse</code>
-- <code title="get /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">retrieve</a>(directoryID) -> DirectoryRetrieveResponse</code>
+- <code title="get /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">retrieve</a>(directoryID, { ...params }) -> DirectoryRetrieveResponse</code>
 - <code title="patch /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">update</a>(directoryID, { ...params }) -> DirectoryUpdateResponse</code>
 - <code title="get /api/v1/beta/directories">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">list</a>({ ...params }) -> DirectoryListResponse</code>
-- <code title="delete /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">delete</a>(directoryID) -> void</code>
+- <code title="delete /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/resources/v1/beta/directories/directories.ts">delete</a>(directoryID, { ...params }) -> void</code>
 
 #### Files
 

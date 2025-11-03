@@ -97,12 +97,12 @@ export interface EmbeddingModelConfig {
    */
   embedding_config:
     | ValidateIntegrationsAPI.AzureOpenAIEmbeddingConfig
+    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | ValidateIntegrationsAPI.CohereEmbeddingConfig
     | ValidateIntegrationsAPI.GeminiEmbeddingConfig
     | ValidateIntegrationsAPI.HuggingFaceInferenceAPIEmbeddingConfig
     | ValidateIntegrationsAPI.OpenAIEmbeddingConfig
-    | ValidateIntegrationsAPI.VertexAIEmbeddingConfig
-    | ValidateIntegrationsAPI.BedrockEmbeddingConfig;
+    | ValidateIntegrationsAPI.VertexAIEmbeddingConfig;
 
   /**
    * The name of the embedding model config.
@@ -128,12 +128,12 @@ export interface EmbeddingModelConfigUpdate {
    */
   embedding_config?:
     | ValidateIntegrationsAPI.AzureOpenAIEmbeddingConfig
+    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | ValidateIntegrationsAPI.CohereEmbeddingConfig
     | ValidateIntegrationsAPI.GeminiEmbeddingConfig
     | ValidateIntegrationsAPI.HuggingFaceInferenceAPIEmbeddingConfig
     | ValidateIntegrationsAPI.OpenAIEmbeddingConfig
     | ValidateIntegrationsAPI.VertexAIEmbeddingConfig
-    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | null;
 
   /**
@@ -150,12 +150,12 @@ export interface EmbeddingModelConfigCreateParams {
    */
   embedding_config:
     | ValidateIntegrationsAPI.AzureOpenAIEmbeddingConfig
+    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | ValidateIntegrationsAPI.CohereEmbeddingConfig
     | ValidateIntegrationsAPI.GeminiEmbeddingConfig
     | ValidateIntegrationsAPI.HuggingFaceInferenceAPIEmbeddingConfig
     | ValidateIntegrationsAPI.OpenAIEmbeddingConfig
-    | ValidateIntegrationsAPI.VertexAIEmbeddingConfig
-    | ValidateIntegrationsAPI.BedrockEmbeddingConfig;
+    | ValidateIntegrationsAPI.VertexAIEmbeddingConfig;
 
   /**
    * Body param: The name of the embedding model config.
@@ -189,12 +189,12 @@ export interface EmbeddingModelConfigUpdateParams {
    */
   embedding_config?:
     | ValidateIntegrationsAPI.AzureOpenAIEmbeddingConfig
+    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | ValidateIntegrationsAPI.CohereEmbeddingConfig
     | ValidateIntegrationsAPI.GeminiEmbeddingConfig
     | ValidateIntegrationsAPI.HuggingFaceInferenceAPIEmbeddingConfig
     | ValidateIntegrationsAPI.OpenAIEmbeddingConfig
     | ValidateIntegrationsAPI.VertexAIEmbeddingConfig
-    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | null;
 
   /**
@@ -231,12 +231,12 @@ export interface EmbeddingModelConfigUpsertParams {
    */
   embedding_config?:
     | ValidateIntegrationsAPI.AzureOpenAIEmbeddingConfig
+    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | ValidateIntegrationsAPI.CohereEmbeddingConfig
     | ValidateIntegrationsAPI.GeminiEmbeddingConfig
     | ValidateIntegrationsAPI.HuggingFaceInferenceAPIEmbeddingConfig
     | ValidateIntegrationsAPI.OpenAIEmbeddingConfig
     | ValidateIntegrationsAPI.VertexAIEmbeddingConfig
-    | ValidateIntegrationsAPI.BedrockEmbeddingConfig
     | null;
 
   /**

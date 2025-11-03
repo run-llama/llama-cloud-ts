@@ -3,17 +3,9 @@
 import { APIResource } from '../../core/resource';
 import * as V1API from './v1';
 import * as APIKeysAPI from './api-keys';
-import {
-  APIKey,
-  APIKeyCreate,
-  APIKeyCreateParams,
-  APIKeyListParams,
-  APIKeyListResponse,
-  APIKeyType,
-  APIKeys,
-} from './api-keys';
+import { APIKey, APIKeyCreate, APIKeyType, APIKeys } from './api-keys';
 import * as AuthAPI from './auth';
-import { Auth, AuthReadSelfResponse } from './auth';
+import { Auth } from './auth';
 import * as DataSinksAPI from './data-sinks';
 import {
   DataSink,
@@ -87,7 +79,6 @@ import { Test, TestStreamResponse } from './test';
 import * as ValidateIntegrationsAPI from './validate-integrations';
 import {
   AzureOpenAIEmbeddingConfig,
-  BaseConnectionValidation,
   BedrockEmbeddingConfig,
   CloudAstraDBVectorStore,
   CloudAzStorageBlobDataSource,
@@ -114,24 +105,13 @@ import {
   GeminiEmbeddingConfig,
   HuggingFaceInferenceAPIEmbeddingConfig,
   OpenAIEmbeddingConfig,
-  ValidateIntegrationValidateDataSinkConnectionParams,
-  ValidateIntegrationValidateDataSourceConnectionParams,
-  ValidateIntegrationValidateEmbeddingConnectionParams,
   ValidateIntegrations,
   VertexAIEmbeddingConfig,
 } from './validate-integrations';
 import * as BetaAPI from './beta/beta';
 import { Beta, BetaRetrieveQuotaManagementParams, BetaRetrieveQuotaManagementResponse } from './beta/beta';
 import * as BillingAPI from './billing/billing';
-import {
-  Billing,
-  BillingCreateCustomerPortalSessionParams,
-  BillingCreateCustomerPortalSessionResponse,
-  BillingCreateIntentAndCustomerSessionParams,
-  BillingCreateIntentAndCustomerSessionResponse,
-  BillingDowngradePlanParams,
-  BillingDowngradePlanResponse,
-} from './billing/billing';
+import { Billing } from './billing/billing';
 import * as ClassifierAPI from './classifier/classifier';
 import { Classifier } from './classifier/classifier';
 import * as ExtractionAPI from './extraction/extraction';
@@ -360,14 +340,14 @@ export namespace V1GetJobsResponse {
        * Additional metadata for the job execution.
        */
       parameters?:
-        | JobRecord.ParseJobConfig
+        | JobRecord.DataSourceUpdateDispatcherConfig
+        | JobRecord.DocumentIngestionJobParams
+        | JobRecord.LLamaParseTransformConfig
         | JobRecord.LegacyParseJobConfig
         | JobRecord.LoadFilesJobConfig
-        | JobRecord.LLamaParseTransformConfig
-        | JobRecord.PipelineManagedIngestionJobParams
-        | JobRecord.DataSourceUpdateDispatcherConfig
+        | JobRecord.ParseJobConfig
         | JobRecord.PipelineFileUpdaterConfig
-        | JobRecord.DocumentIngestionJobParams
+        | JobRecord.PipelineManagedIngestionJobParams
         | null;
 
       /**
@@ -406,304 +386,99 @@ export namespace V1GetJobsResponse {
 
     export namespace JobRecord {
       /**
-       * Configuration for llamaparse job
+       * Schema for the parameters of a data source dispatcher job.
        */
-      export interface ParseJobConfig {
+      export interface DataSourceUpdateDispatcherConfig {
         /**
-         * The file key.
+         * The custom metadata to attach to the data source.
          */
-        file_key: string;
-
-        /**
-         * The file name.
-         */
-        file_name: string;
+        custom_metadata?: { [key: string]: unknown } | null;
 
         /**
-         * The language.
+         * Schema for the parameters of a delete job.
          */
-        lang: string;
+        delete_info?: V1API.DeleteParams | null;
 
         /**
-         * The original file name.
+         * Optional: limit sync to these pipeline file IDs only.
          */
-        original_file_name: string;
+        pipeline_file_ids?: Array<string> | null;
 
-        adaptive_long_table?: boolean | null;
+        /**
+         * Whether to delete the data source from the pipeline
+         */
+        should_delete?: boolean | null;
 
-        aggressive_table_extraction?: boolean | null;
+        type?: 'data_source_update_dispatcher';
+      }
 
-        annotate_links?: boolean | null;
-
-        auto_mode?: boolean | null;
-
-        auto_mode_configuration_json?: string | null;
-
-        auto_mode_trigger_on_image_in_page?: boolean | null;
-
-        auto_mode_trigger_on_regexp_in_page?: string | null;
-
-        auto_mode_trigger_on_table_in_page?: boolean | null;
-
-        auto_mode_trigger_on_text_in_page?: string | null;
-
-        azure_openai_api_version?: string | null;
-
-        azure_openai_deployment_name?: string | null;
-
-        azure_openai_endpoint?: string | null;
-
-        azure_openai_key?: string | null;
-
-        bbox_bottom?: number | null;
-
-        bbox_left?: number | null;
-
-        bbox_right?: number | null;
-
-        bbox_top?: number | null;
-
-        bounding_box?: string | null;
-
-        compact_markdown_table?: boolean | null;
-
-        complemental_formatting_instruction?: string | null;
-
-        content_guideline_instruction?: string | null;
-
-        continuous_mode?: boolean | null;
-
+      /**
+       * Schema for the parameters of a document ingestion job.
+       */
+      export interface DocumentIngestionJobParams {
         /**
          * The custom metadata to attach to the documents.
          */
         custom_metadata?: { [key: string]: unknown } | null;
 
-        disable_image_extraction?: boolean | null;
-
-        disable_ocr?: boolean | null;
-
-        disable_reconstruction?: boolean | null;
-
-        do_not_cache?: boolean | null;
-
-        do_not_unroll_columns?: boolean | null;
-
-        extract_charts?: boolean | null;
-
-        extract_layout?: boolean | null;
-
-        fast_mode?: boolean | null;
+        /**
+         * Schema for the parameters of a delete job.
+         */
+        delete_info?: V1API.DeleteParams | null;
 
         /**
-         * The file ID.
+         * The IDs for the Documents this execution ran against.
          */
-        file_id?: string | null;
-
-        formatting_instruction?: string | null;
-
-        gpt4o_api_key?: string | null;
-
-        gpt4o_mode?: boolean | null;
-
-        guess_xlsx_sheet_name?: boolean | null;
-
-        hide_footers?: boolean | null;
-
-        hide_headers?: boolean | null;
-
-        high_res_ocr?: boolean | null;
-
-        html_make_all_elements_visible?: boolean | null;
-
-        html_remove_fixed_elements?: boolean | null;
-
-        html_remove_navigation_elements?: boolean | null;
-
-        http_proxy?: string | null;
-
-        ignore_document_elements_for_layout_detection?: boolean | null;
-
-        inline_images_in_markdown?: boolean | null;
+        document_ids?: Array<string> | null;
 
         /**
-         * If specified, llamaParse will take the specified file. should be a valid s3://
-         * url
+         * Whether the file is new
          */
-        input_s3_path?: string | null;
+        is_new_file?: boolean;
 
         /**
-         * The region for the input S3 bucket.
+         * The number of pages in the file. Only used if used llama-parse
          */
-        input_s3_region?: string | null;
-
-        input_url?: string | null;
-
-        internal_is_screenshot_job?: boolean | null;
-
-        invalidate_cache?: boolean | null;
-
-        is_formatting_instruction?: boolean | null;
-
-        job_timeout_extra_time_per_page_in_seconds?: number | null;
-
-        job_timeout_in_seconds?: number | null;
-
-        keep_page_separator_when_merging_tables?: boolean | null;
-
-        languages?: Array<ParsingAPI.ParserLanguages>;
-
-        layout_aware?: boolean | null;
-
-        markdown_table_multiline_header_separator?: string | null;
-
-        max_pages?: number | null;
-
-        max_pages_enforced?: number | null;
-
-        merge_tables_across_pages_in_markdown?: boolean | null;
-
-        model?: string | null;
-
-        outlined_table_extraction?: boolean | null;
-
-        output_pdf_of_document?: boolean | null;
+        page_count?: number | null;
 
         /**
-         * If specified, llamaParse will save the output to the specified path. All output
-         * file will use this 'prefix' should be a valid s3:// url
+         * The ID for the File this execution ran against.
          */
-        output_s3_path_prefix?: string | null;
-
-        /**
-         * The region for the output S3 bucket.
-         */
-        output_s3_region?: string | null;
-
-        output_tables_as_HTML?: boolean | null;
-
-        /**
-         * The output bucket.
-         */
-        outputBucket?: string | null;
-
-        page_error_tolerance?: number | null;
-
-        page_footer_prefix?: string | null;
-
-        page_footer_suffix?: string | null;
-
-        page_header_prefix?: string | null;
-
-        page_header_suffix?: string | null;
-
-        page_prefix?: string | null;
-
-        page_separator?: string | null;
-
-        page_suffix?: string | null;
-
-        /**
-         * Enum for representing the mode of parsing to be used
-         */
-        parse_mode?: ParsingAPI.ParsingMode | null;
-
-        parsing_instruction?: string | null;
-
-        /**
-         * The pipeline ID.
-         */
-        pipeline_id?: string | null;
-
-        precise_bounding_box?: boolean | null;
-
-        premium_mode?: boolean | null;
-
-        presentation_out_of_bounds_content?: boolean | null;
-
-        preserve_layout_alignment_across_pages?: boolean | null;
-
-        preserve_very_small_text?: boolean | null;
-
-        preset?: string | null;
-
-        /**
-         * The priority for the request. This field may be ignored or overwritten depending
-         * on the organization tier.
-         */
-        priority?: 'low' | 'medium' | 'high' | 'critical' | null;
-
-        project_id?: string | null;
-
-        remove_hidden_text?: boolean | null;
-
-        /**
-         * Enum for representing the different available page error handling modes
-         */
-        replace_failed_page_mode?: ParsingAPI.FailPageMode | null;
-
-        replace_failed_page_with_error_message_prefix?: string | null;
-
-        replace_failed_page_with_error_message_suffix?: string | null;
+        pipeline_file_id?: string | null;
 
         /**
          * The resource info about the file
          */
         resource_info?: { [key: string]: unknown } | null;
 
-        save_images?: boolean | null;
+        /**
+         * Whether to delete the documents
+         */
+        should_delete?: boolean | null;
 
-        skip_diagonal_text?: boolean | null;
+        type?: 'document_ingestion';
+      }
 
-        specialized_chart_parsing_agentic?: boolean | null;
-
-        specialized_chart_parsing_efficient?: boolean | null;
-
-        specialized_chart_parsing_plus?: boolean | null;
-
-        specialized_image_parsing?: boolean | null;
-
-        spreadsheet_extract_sub_tables?: boolean | null;
-
-        spreadsheet_force_formula_computation?: boolean | null;
-
-        strict_mode_buggy_font?: boolean | null;
-
-        strict_mode_image_extraction?: boolean | null;
-
-        strict_mode_image_ocr?: boolean | null;
-
-        strict_mode_reconstruction?: boolean | null;
-
-        structured_output?: boolean | null;
-
-        structured_output_json_schema?: string | null;
-
-        structured_output_json_schema_name?: string | null;
-
-        system_prompt?: string | null;
-
-        system_prompt_append?: string | null;
-
-        take_screenshot?: boolean | null;
-
-        target_pages?: string | null;
-
-        type?: 'parse';
-
-        use_vendor_multimodal_model?: boolean | null;
-
-        user_prompt?: string | null;
-
-        vendor_multimodal_api_key?: string | null;
-
-        vendor_multimodal_model_name?: string | null;
+      /**
+       * Schema for the parameters of llamaparse transform job.
+       */
+      export interface LLamaParseTransformConfig {
+        /**
+         * Whether to delete the files
+         */
+        file_output: string;
 
         /**
-         * The outbound webhook configurations
+         * The custom metadata to attach to the documents.
          */
-        webhook_configurations?: Array<JobsAPI.WebhookConfiguration> | null;
+        custom_metadata?: { [key: string]: unknown } | null;
 
-        webhook_url?: string | null;
+        /**
+         * The resource info about the file
+         */
+        resource_info?: { [key: string]: unknown } | null;
+
+        type?: 'llama_parse_transform';
       }
 
       /**
@@ -1267,69 +1042,304 @@ export namespace V1GetJobsResponse {
       }
 
       /**
-       * Schema for the parameters of llamaparse transform job.
+       * Configuration for llamaparse job
        */
-      export interface LLamaParseTransformConfig {
+      export interface ParseJobConfig {
         /**
-         * Whether to delete the files
+         * The file key.
          */
-        file_output: string;
+        file_key: string;
+
+        /**
+         * The file name.
+         */
+        file_name: string;
+
+        /**
+         * The language.
+         */
+        lang: string;
+
+        /**
+         * The original file name.
+         */
+        original_file_name: string;
+
+        adaptive_long_table?: boolean | null;
+
+        aggressive_table_extraction?: boolean | null;
+
+        annotate_links?: boolean | null;
+
+        auto_mode?: boolean | null;
+
+        auto_mode_configuration_json?: string | null;
+
+        auto_mode_trigger_on_image_in_page?: boolean | null;
+
+        auto_mode_trigger_on_regexp_in_page?: string | null;
+
+        auto_mode_trigger_on_table_in_page?: boolean | null;
+
+        auto_mode_trigger_on_text_in_page?: string | null;
+
+        azure_openai_api_version?: string | null;
+
+        azure_openai_deployment_name?: string | null;
+
+        azure_openai_endpoint?: string | null;
+
+        azure_openai_key?: string | null;
+
+        bbox_bottom?: number | null;
+
+        bbox_left?: number | null;
+
+        bbox_right?: number | null;
+
+        bbox_top?: number | null;
+
+        bounding_box?: string | null;
+
+        compact_markdown_table?: boolean | null;
+
+        complemental_formatting_instruction?: string | null;
+
+        content_guideline_instruction?: string | null;
+
+        continuous_mode?: boolean | null;
 
         /**
          * The custom metadata to attach to the documents.
          */
         custom_metadata?: { [key: string]: unknown } | null;
 
+        disable_image_extraction?: boolean | null;
+
+        disable_ocr?: boolean | null;
+
+        disable_reconstruction?: boolean | null;
+
+        do_not_cache?: boolean | null;
+
+        do_not_unroll_columns?: boolean | null;
+
+        extract_charts?: boolean | null;
+
+        extract_layout?: boolean | null;
+
+        fast_mode?: boolean | null;
+
+        /**
+         * The file ID.
+         */
+        file_id?: string | null;
+
+        formatting_instruction?: string | null;
+
+        gpt4o_api_key?: string | null;
+
+        gpt4o_mode?: boolean | null;
+
+        guess_xlsx_sheet_name?: boolean | null;
+
+        hide_footers?: boolean | null;
+
+        hide_headers?: boolean | null;
+
+        high_res_ocr?: boolean | null;
+
+        html_make_all_elements_visible?: boolean | null;
+
+        html_remove_fixed_elements?: boolean | null;
+
+        html_remove_navigation_elements?: boolean | null;
+
+        http_proxy?: string | null;
+
+        ignore_document_elements_for_layout_detection?: boolean | null;
+
+        inline_images_in_markdown?: boolean | null;
+
+        /**
+         * If specified, llamaParse will take the specified file. should be a valid s3://
+         * url
+         */
+        input_s3_path?: string | null;
+
+        /**
+         * The region for the input S3 bucket.
+         */
+        input_s3_region?: string | null;
+
+        input_url?: string | null;
+
+        internal_is_screenshot_job?: boolean | null;
+
+        invalidate_cache?: boolean | null;
+
+        is_formatting_instruction?: boolean | null;
+
+        job_timeout_extra_time_per_page_in_seconds?: number | null;
+
+        job_timeout_in_seconds?: number | null;
+
+        keep_page_separator_when_merging_tables?: boolean | null;
+
+        languages?: Array<ParsingAPI.ParserLanguages>;
+
+        layout_aware?: boolean | null;
+
+        markdown_table_multiline_header_separator?: string | null;
+
+        max_pages?: number | null;
+
+        max_pages_enforced?: number | null;
+
+        merge_tables_across_pages_in_markdown?: boolean | null;
+
+        model?: string | null;
+
+        outlined_table_extraction?: boolean | null;
+
+        output_pdf_of_document?: boolean | null;
+
+        /**
+         * If specified, llamaParse will save the output to the specified path. All output
+         * file will use this 'prefix' should be a valid s3:// url
+         */
+        output_s3_path_prefix?: string | null;
+
+        /**
+         * The region for the output S3 bucket.
+         */
+        output_s3_region?: string | null;
+
+        output_tables_as_HTML?: boolean | null;
+
+        /**
+         * The output bucket.
+         */
+        outputBucket?: string | null;
+
+        page_error_tolerance?: number | null;
+
+        page_footer_prefix?: string | null;
+
+        page_footer_suffix?: string | null;
+
+        page_header_prefix?: string | null;
+
+        page_header_suffix?: string | null;
+
+        page_prefix?: string | null;
+
+        page_separator?: string | null;
+
+        page_suffix?: string | null;
+
+        /**
+         * Enum for representing the mode of parsing to be used
+         */
+        parse_mode?: ParsingAPI.ParsingMode | null;
+
+        parsing_instruction?: string | null;
+
+        /**
+         * The pipeline ID.
+         */
+        pipeline_id?: string | null;
+
+        precise_bounding_box?: boolean | null;
+
+        premium_mode?: boolean | null;
+
+        presentation_out_of_bounds_content?: boolean | null;
+
+        preserve_layout_alignment_across_pages?: boolean | null;
+
+        preserve_very_small_text?: boolean | null;
+
+        preset?: string | null;
+
+        /**
+         * The priority for the request. This field may be ignored or overwritten depending
+         * on the organization tier.
+         */
+        priority?: 'low' | 'medium' | 'high' | 'critical' | null;
+
+        project_id?: string | null;
+
+        remove_hidden_text?: boolean | null;
+
+        /**
+         * Enum for representing the different available page error handling modes
+         */
+        replace_failed_page_mode?: ParsingAPI.FailPageMode | null;
+
+        replace_failed_page_with_error_message_prefix?: string | null;
+
+        replace_failed_page_with_error_message_suffix?: string | null;
+
         /**
          * The resource info about the file
          */
         resource_info?: { [key: string]: unknown } | null;
 
-        type?: 'llama_parse_transform';
-      }
+        save_images?: boolean | null;
 
-      /**
-       * Schema for the parameters of a managed pipeline ingestion job.
-       */
-      export interface PipelineManagedIngestionJobParams {
+        skip_diagonal_text?: boolean | null;
+
+        specialized_chart_parsing_agentic?: boolean | null;
+
+        specialized_chart_parsing_efficient?: boolean | null;
+
+        specialized_chart_parsing_plus?: boolean | null;
+
+        specialized_image_parsing?: boolean | null;
+
+        spreadsheet_extract_sub_tables?: boolean | null;
+
+        spreadsheet_force_formula_computation?: boolean | null;
+
+        strict_mode_buggy_font?: boolean | null;
+
+        strict_mode_image_extraction?: boolean | null;
+
+        strict_mode_image_ocr?: boolean | null;
+
+        strict_mode_reconstruction?: boolean | null;
+
+        structured_output?: boolean | null;
+
+        structured_output_json_schema?: string | null;
+
+        structured_output_json_schema_name?: string | null;
+
+        system_prompt?: string | null;
+
+        system_prompt_append?: string | null;
+
+        take_screenshot?: boolean | null;
+
+        target_pages?: string | null;
+
+        type?: 'parse';
+
+        use_vendor_multimodal_model?: boolean | null;
+
+        user_prompt?: string | null;
+
+        vendor_multimodal_api_key?: string | null;
+
+        vendor_multimodal_model_name?: string | null;
+
         /**
-         * Schema for the parameters of a delete job.
+         * The outbound webhook configurations
          */
-        delete_info?: V1API.DeleteParams | null;
+        webhook_configurations?: Array<JobsAPI.WebhookConfiguration> | null;
 
-        /**
-         * Whether to delete the data sources from the pipeline
-         */
-        should_delete?: boolean | null;
-
-        type?: 'pipeline_managed_ingestion';
-      }
-
-      /**
-       * Schema for the parameters of a data source dispatcher job.
-       */
-      export interface DataSourceUpdateDispatcherConfig {
-        /**
-         * The custom metadata to attach to the data source.
-         */
-        custom_metadata?: { [key: string]: unknown } | null;
-
-        /**
-         * Schema for the parameters of a delete job.
-         */
-        delete_info?: V1API.DeleteParams | null;
-
-        /**
-         * Optional: limit sync to these pipeline file IDs only.
-         */
-        pipeline_file_ids?: Array<string> | null;
-
-        /**
-         * Whether to delete the data source from the pipeline
-         */
-        should_delete?: boolean | null;
-
-        type?: 'data_source_update_dispatcher';
+        webhook_url?: string | null;
       }
 
       /**
@@ -1375,50 +1385,20 @@ export namespace V1GetJobsResponse {
       }
 
       /**
-       * Schema for the parameters of a document ingestion job.
+       * Schema for the parameters of a managed pipeline ingestion job.
        */
-      export interface DocumentIngestionJobParams {
-        /**
-         * The custom metadata to attach to the documents.
-         */
-        custom_metadata?: { [key: string]: unknown } | null;
-
+      export interface PipelineManagedIngestionJobParams {
         /**
          * Schema for the parameters of a delete job.
          */
         delete_info?: V1API.DeleteParams | null;
 
         /**
-         * The IDs for the Documents this execution ran against.
-         */
-        document_ids?: Array<string> | null;
-
-        /**
-         * Whether the file is new
-         */
-        is_new_file?: boolean;
-
-        /**
-         * The number of pages in the file. Only used if used llama-parse
-         */
-        page_count?: number | null;
-
-        /**
-         * The ID for the File this execution ran against.
-         */
-        pipeline_file_id?: string | null;
-
-        /**
-         * The resource info about the file
-         */
-        resource_info?: { [key: string]: unknown } | null;
-
-        /**
-         * Whether to delete the documents
+         * Whether to delete the data sources from the pipeline
          */
         should_delete?: boolean | null;
 
-        type?: 'document_ingestion';
+        type?: 'pipeline_managed_ingestion';
       }
     }
 
@@ -1507,15 +1487,11 @@ export declare namespace V1 {
     type APIKey as APIKey,
     type APIKeyCreate as APIKeyCreate,
     type APIKeyType as APIKeyType,
-    type APIKeyListResponse as APIKeyListResponse,
-    type APIKeyCreateParams as APIKeyCreateParams,
-    type APIKeyListParams as APIKeyListParams,
   };
 
   export {
     ValidateIntegrations as ValidateIntegrations,
     type AzureOpenAIEmbeddingConfig as AzureOpenAIEmbeddingConfig,
-    type BaseConnectionValidation as BaseConnectionValidation,
     type BedrockEmbeddingConfig as BedrockEmbeddingConfig,
     type CloudAstraDBVectorStore as CloudAstraDBVectorStore,
     type CloudAzStorageBlobDataSource as CloudAzStorageBlobDataSource,
@@ -1543,9 +1519,6 @@ export declare namespace V1 {
     type HuggingFaceInferenceAPIEmbeddingConfig as HuggingFaceInferenceAPIEmbeddingConfig,
     type OpenAIEmbeddingConfig as OpenAIEmbeddingConfig,
     type VertexAIEmbeddingConfig as VertexAIEmbeddingConfig,
-    type ValidateIntegrationValidateDataSinkConnectionParams as ValidateIntegrationValidateDataSinkConnectionParams,
-    type ValidateIntegrationValidateDataSourceConnectionParams as ValidateIntegrationValidateDataSourceConnectionParams,
-    type ValidateIntegrationValidateEmbeddingConnectionParams as ValidateIntegrationValidateEmbeddingConnectionParams,
   };
 
   export {
@@ -1674,17 +1647,9 @@ export declare namespace V1 {
 
   export { Classifier as Classifier };
 
-  export { Auth as Auth, type AuthReadSelfResponse as AuthReadSelfResponse };
+  export { Auth as Auth };
 
-  export {
-    Billing as Billing,
-    type BillingCreateCustomerPortalSessionResponse as BillingCreateCustomerPortalSessionResponse,
-    type BillingCreateIntentAndCustomerSessionResponse as BillingCreateIntentAndCustomerSessionResponse,
-    type BillingDowngradePlanResponse as BillingDowngradePlanResponse,
-    type BillingCreateCustomerPortalSessionParams as BillingCreateCustomerPortalSessionParams,
-    type BillingCreateIntentAndCustomerSessionParams as BillingCreateIntentAndCustomerSessionParams,
-    type BillingDowngradePlanParams as BillingDowngradePlanParams,
-  };
+  export { Billing as Billing };
 
   export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
 
