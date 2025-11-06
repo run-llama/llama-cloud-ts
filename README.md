@@ -27,7 +27,6 @@ import LlamaCloud from 'llama-cloud';
 
 const client = new LlamaCloud({
   apiKey: process.env['LLAMACLOUD_API_KEY'], // This is the default and can be omitted
-  environment: 'sandbox', // or 'production' | 'staging'; defaults to 'production'
 });
 
 const agentDeploymentList = await client.projects.listAgents('REPLACE_ME');
@@ -45,7 +44,6 @@ import LlamaCloud from 'llama-cloud';
 
 const client = new LlamaCloud({
   apiKey: process.env['LLAMACLOUD_API_KEY'], // This is the default and can be omitted
-  environment: 'sandbox', // or 'production' | 'staging'; defaults to 'production'
 });
 
 const agentDeploymentList: LlamaCloud.AgentDeploymentList = await client.projects.listAgents('REPLACE_ME');
