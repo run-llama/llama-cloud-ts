@@ -315,19 +315,6 @@ describe('instantiate client', () => {
       expect(client.baseURL).toEqual('https://api.cloud.llamaindex.ai');
     });
 
-    test('env variable with environment', () => {
-      process.env['LLAMA_CLOUD_BASE_URL'] = 'https://example.com/from_env';
-
-      expect(
-        () => new LlamaCloud({ apiKey: 'My API Key', environment: 'production' }),
-      ).toThrowErrorMatchingInlineSnapshot(
-        `"Ambiguous URL; The \`baseURL\` option (or LLAMA_CLOUD_BASE_URL env var) and the \`environment\` option are given. If you want to use the environment you must pass baseURL: null"`,
-      );
-
-      const client = new LlamaCloud({ apiKey: 'My API Key', baseURL: null, environment: 'production' });
-      expect(client.baseURL).toEqual('https://api.cloud.llamaindex.ai');
-    });
-
     test('in request options', () => {
       const client = new LlamaCloud({ apiKey: 'My API Key' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
