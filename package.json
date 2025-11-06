@@ -1,13 +1,13 @@
 {
-  "name": "llamacloud-prod",
+  "name": "llama-cloud",
   "version": "0.0.1",
-  "description": "The official TypeScript library for the Llamacloud Prod API",
-  "author": "Llamacloud Prod <>",
+  "description": "The official TypeScript library for the Llama Cloud API",
+  "author": "Llama Cloud <>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:Georgehe4/llamaindex-ts-sdk",
-  "license": "Apache-2.0",
+  "repository": "github:run-llama/llama-cloud-ts",
+  "license": "MIT",
   "packageManager": "yarn@1.22.22",
   "files": [
     "**/*"

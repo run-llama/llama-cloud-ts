@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'llamacloud-prod/internal/to-file';
-import { toFile } from 'llamacloud-prod/core/uploads';
+import type { ResponseLike } from 'llama-cloud/internal/to-file';
+import { toFile } from 'llama-cloud/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('llamacloud-prod/core/uploads');
+    const uploads = await import('llama-cloud/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(

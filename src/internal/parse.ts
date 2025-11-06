@@ -1,8 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import type { FinalRequestOptions } from './request-options';
-import { Stream } from '../core/streaming';
-import { type LlamacloudProd } from '../client';
+import { type LlamaCloud } from '../client';
 import { formatRequestDetails, loggerFor } from './utils/log';
 
 export type APIResponseProps = {
@@ -14,22 +13,9 @@ export type APIResponseProps = {
   startTime: number;
 };
 
-export async function defaultParseResponse<T>(client: LlamacloudProd, props: APIResponseProps): Promise<T> {
+export async function defaultParseResponse<T>(client: LlamaCloud, props: APIResponseProps): Promise<T> {
   const { response, requestLogID, retryOfRequestLogID, startTime } = props;
   const body = await (async () => {
-    if (props.options.stream) {
-      loggerFor(client).debug('response', response.status, response.url, response.headers, response.body);
-
-      // Note: there is an invariant here that isn't represented in the type system
-      // that if you set `stream: true` the response type must also be `Stream<T>`
-
-      if (props.options.__streamClass) {
-        return props.options.__streamClass.fromSSEResponse(response, props.controller, client) as any;
-      }
-
-      return Stream.fromSSEResponse(response, props.controller, client) as any;
-    }
-
     // fetch refuses to read the body when the status code is 204.
     if (response.status === 204) {
       return null as T;

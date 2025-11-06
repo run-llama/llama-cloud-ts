@@ -1,21 +1,21 @@
-# Llamacloud Prod TypeScript API Library
+# Llama Cloud TypeScript API Library
 
-[![NPM version](<https://img.shields.io/npm/v/llamacloud-prod.svg?label=npm%20(stable)>)](https://npmjs.org/package/llamacloud-prod) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/llamacloud-prod)
+[![NPM version](<https://img.shields.io/npm/v/llama-cloud.svg?label=npm%20(stable)>)](https://npmjs.org/package/llama-cloud) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/llama-cloud)
 
-This library provides convenient access to the Llamacloud Prod REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Llama Cloud REST API from server-side TypeScript or JavaScript.
 
-The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [developers.llamaindex.ai](https://developers.llamaindex.ai/). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:Georgehe4/llamaindex-ts-sdk.git
+npm install git+ssh://git@github.com:run-llama/llama-cloud-ts.git
 ```
 
 > [!NOTE]
-> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install llamacloud-prod`
+> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install llama-cloud`
 
 ## Usage
 
@@ -23,13 +23,14 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import LlamacloudProd from 'llamacloud-prod';
+import LlamaCloud from 'llama-cloud';
 
-const client = new LlamacloudProd({
-  apiKey: process.env['LLAMACLOUD_PROD_API_KEY'], // This is the default and can be omitted
+const client = new LlamaCloud({
+  apiKey: process.env['LLAMACLOUD_API_KEY'], // This is the default and can be omitted
+  environment: 'sandbox', // or 'production' | 'staging'; defaults to 'production'
 });
 
-const agentDeploymentList = await client.v1.projects.listAgents('REPLACE_ME');
+const agentDeploymentList = await client.projects.listAgents('REPLACE_ME');
 
 console.log(agentDeploymentList.deployments);
 ```
@@ -40,15 +41,14 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import LlamacloudProd from 'llamacloud-prod';
+import LlamaCloud from 'llama-cloud';
 
-const client = new LlamacloudProd({
-  apiKey: process.env['LLAMACLOUD_PROD_API_KEY'], // This is the default and can be omitted
+const client = new LlamaCloud({
+  apiKey: process.env['LLAMACLOUD_API_KEY'], // This is the default and can be omitted
+  environment: 'sandbox', // or 'production' | 'staging'; defaults to 'production'
 });
 
-const agentDeploymentList: LlamacloudProd.V1.AgentDeploymentList = await client.v1.projects.listAgents(
-  'REPLACE_ME',
-);
+const agentDeploymentList: LlamaCloud.AgentDeploymentList = await client.projects.listAgents('REPLACE_ME');
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -64,22 +64,22 @@ Request parameters that correspond to file uploads can be passed in many differe
 
 ```ts
 import fs from 'fs';
-import LlamacloudProd, { toFile } from 'llamacloud-prod';
+import LlamaCloud, { toFile } from 'llama-cloud';
 
-const client = new LlamacloudProd();
+const client = new LlamaCloud();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.v1.files.upload({ upload_file: fs.createReadStream('/path/to/file') });
+await client.files.upload({ upload_file: fs.createReadStream('/path/to/file') });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.v1.files.upload({ upload_file: new File(['my bytes'], 'file') });
+await client.files.upload({ upload_file: new File(['my bytes'], 'file') });
 
 // You can also pass a `fetch` `Response`:
-await client.v1.files.upload({ upload_file: await fetch('https://somesite/file') });
+await client.files.upload({ upload_file: await fetch('https://somesite/file') });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.v1.files.upload({ upload_file: await toFile(Buffer.from('my bytes'), 'file') });
-await client.v1.files.upload({ upload_file: await toFile(new Uint8Array([0, 1, 2]), 'file') });
+await client.files.upload({ upload_file: await toFile(Buffer.from('my bytes'), 'file') });
+await client.files.upload({ upload_file: await toFile(new Uint8Array([0, 1, 2]), 'file') });
 ```
 
 ## Handling errors
@@ -90,8 +90,8 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const agentDeploymentList = await client.v1.projects.listAgents('REPLACE_ME').catch(async (err) => {
-  if (err instanceof LlamacloudProd.APIError) {
+const agentDeploymentList = await client.projects.listAgents('REPLACE_ME').catch(async (err) => {
+  if (err instanceof LlamaCloud.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
     console.log(err.headers); // {server: 'nginx', ...}
@@ -125,12 +125,12 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new LlamacloudProd({
+const client = new LlamaCloud({
   maxRetries: 0, // default is 2
 });
 
 // Or, configure per-request:
-await client.v1.projects.listAgents('REPLACE_ME', {
+await client.projects.listAgents('REPLACE_ME', {
   maxRetries: 5,
 });
 ```
@@ -142,12 +142,12 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new LlamacloudProd({
+const client = new LlamaCloud({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
 // Override per-request:
-await client.v1.projects.listAgents('REPLACE_ME', {
+await client.projects.listAgents('REPLACE_ME', {
   timeout: 5 * 1000,
 });
 ```
@@ -168,13 +168,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new LlamacloudProd();
+const client = new LlamaCloud();
 
-const response = await client.v1.projects.listAgents('REPLACE_ME').asResponse();
+const response = await client.projects.listAgents('REPLACE_ME').asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: agentDeploymentList, response: raw } = await client.v1.projects
+const { data: agentDeploymentList, response: raw } = await client.projects
   .listAgents('REPLACE_ME')
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
@@ -191,13 +191,13 @@ console.log(agentDeploymentList.deployments);
 
 The log level can be configured in two ways:
 
-1. Via the `LLAMACLOUD_PROD_LOG` environment variable
+1. Via the `LLAMA_CLOUD_LOG` environment variable
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import LlamacloudProd from 'llamacloud-prod';
+import LlamaCloud from 'llama-cloud';
 
-const client = new LlamacloudProd({
+const client = new LlamaCloud({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -223,13 +223,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import LlamacloudProd from 'llamacloud-prod';
+import LlamaCloud from 'llama-cloud';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new LlamacloudProd({
-  logger: logger.child({ name: 'LlamacloudProd' }),
+const client = new LlamaCloud({
+  logger: logger.child({ name: 'LlamaCloud' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -258,7 +258,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.v1.projects.listAgents({
+client.projects.listAgents({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
@@ -292,10 +292,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import LlamacloudProd from 'llamacloud-prod';
+import LlamaCloud from 'llama-cloud';
 import fetch from 'my-fetch';
 
-const client = new LlamacloudProd({ fetch });
+const client = new LlamaCloud({ fetch });
 ```
 
 ### Fetch options
@@ -303,9 +303,9 @@ const client = new LlamacloudProd({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import LlamacloudProd from 'llamacloud-prod';
+import LlamaCloud from 'llama-cloud';
 
-const client = new LlamacloudProd({
+const client = new LlamaCloud({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -320,11 +320,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import LlamacloudProd from 'llamacloud-prod';
+import LlamaCloud from 'llama-cloud';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new LlamacloudProd({
+const client = new LlamaCloud({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -334,9 +334,9 @@ const client = new LlamacloudProd({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import LlamacloudProd from 'llamacloud-prod';
+import LlamaCloud from 'llama-cloud';
 
-const client = new LlamacloudProd({
+const client = new LlamaCloud({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -346,10 +346,10 @@ const client = new LlamacloudProd({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import LlamacloudProd from 'npm:llamacloud-prod';
+import LlamaCloud from 'npm:llama-cloud';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new LlamacloudProd({
+const client = new LlamaCloud({
   fetchOptions: {
     client: httpClient,
   },
@@ -368,7 +368,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/Georgehe4/llamaindex-ts-sdk/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/run-llama/llama-cloud-ts/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

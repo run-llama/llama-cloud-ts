@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from 'llamacloud-prod/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from 'llama-cloud/internal/utils/path';
 import { inspect } from 'node:util';
 import { runInNewContext } from 'node:vm';
 

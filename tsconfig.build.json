@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "llamacloud-prod/*": ["./dist/src/*"],
-      "llamacloud-prod": ["./dist/src/index.ts"]
+      "llama-cloud/*": ["./dist/src/*"],
+      "llama-cloud": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
