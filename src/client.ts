@@ -16,8 +16,197 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { DeleteParams, V1, V1GetJobsParams, V1GetJobsResponse } from './resources/v1/v1';
-import { V2alpha1 } from './resources/v2alpha1/v2alpha1';
+import {
+  APIKey,
+  APIKeyCreate,
+  APIKeyCreateParams,
+  APIKeyListParams,
+  APIKeyListResponse,
+  APIKeyType,
+  APIKeys,
+} from './resources/api-keys';
+import { Auth, AuthReadSelfResponse } from './resources/auth';
+import {
+  DataSink,
+  DataSinkCreateParams,
+  DataSinkListParams,
+  DataSinkListResponse,
+  DataSinkUpdateParams,
+  DataSinkUpsertParams,
+  DataSinks,
+} from './resources/data-sinks';
+import {
+  DataSource,
+  DataSourceCreateParams,
+  DataSourceListParams,
+  DataSourceListResponse,
+  DataSourceReaderVersionMetadata,
+  DataSourceUpdateParams,
+  DataSourceUpsertParams,
+  DataSources,
+} from './resources/data-sources';
+import {
+  EmbeddingModelConfig,
+  EmbeddingModelConfigCreateParams,
+  EmbeddingModelConfigDeleteParams,
+  EmbeddingModelConfigListParams,
+  EmbeddingModelConfigListResponse,
+  EmbeddingModelConfigUpdate,
+  EmbeddingModelConfigUpdateParams,
+  EmbeddingModelConfigUpsertParams,
+  EmbeddingModelConfigs,
+} from './resources/embedding-model-configs';
+import { EvalListSupportedModelsResponse, Evals } from './resources/evals';
+import {
+  AgentDeploymentList,
+  Project,
+  ProjectCreate,
+  ProjectCreateParams,
+  ProjectDeleteParams,
+  ProjectGetCurrentParams,
+  ProjectGetUsageParams,
+  ProjectListParams,
+  ProjectListResponse,
+  ProjectRetrieveParams,
+  ProjectUpdateParams,
+  ProjectUpsertParams,
+  Projects,
+} from './resources/projects';
+import {
+  CompositeRetrievalMode,
+  CompositeRetrievalResult,
+  ReRankConfig,
+  Retriever,
+  RetrieverCreate,
+  RetrieverCreateParams,
+  RetrieverListParams,
+  RetrieverListResponse,
+  RetrieverPipeline,
+  RetrieverRetrieveDirectParams,
+  RetrieverRetrieveParams,
+  RetrieverUpdateParams,
+  RetrieverUpsertParams,
+  Retrievers,
+} from './resources/retrievers';
+import {
+  AzureOpenAIEmbeddingConfig,
+  BaseConnectionValidation,
+  BedrockEmbeddingConfig,
+  CloudAstraDBVectorStore,
+  CloudAzStorageBlobDataSource,
+  CloudAzureAISearchVectorStore,
+  CloudBoxDataSource,
+  CloudConfluenceDataSource,
+  CloudJiraDataSource,
+  CloudJiraDataSourceV2,
+  CloudMilvusVectorStore,
+  CloudMongoDBAtlasVectorSearch,
+  CloudNotionPageDataSource,
+  CloudOneDriveDataSource,
+  CloudPineconeVectorStore,
+  CloudPostgresVectorStore,
+  CloudQdrantVectorStore,
+  CloudS3DataSource,
+  CloudSharepointDataSource,
+  CloudSlackDataSource,
+  CohereEmbeddingConfig,
+  ConfigurableDataSinkNames,
+  ConfigurableDataSourceNames,
+  DataSinkCreate,
+  DataSourceCreate,
+  GeminiEmbeddingConfig,
+  HuggingFaceInferenceAPIEmbeddingConfig,
+  OpenAIEmbeddingConfig,
+  ValidateIntegrationValidateDataSinkConnectionParams,
+  ValidateIntegrationValidateDataSourceConnectionParams,
+  ValidateIntegrationValidateEmbeddingConnectionParams,
+  ValidateIntegrations,
+  VertexAIEmbeddingConfig,
+} from './resources/validate-integrations';
+import {
+  Beta,
+  BetaRetrieveQuotaManagementParams,
+  BetaRetrieveQuotaManagementResponse,
+} from './resources/beta/beta';
+import {
+  Billing,
+  BillingCreateCustomerPortalSessionParams,
+  BillingCreateCustomerPortalSessionResponse,
+  BillingCreateIntentAndCustomerSessionParams,
+  BillingCreateIntentAndCustomerSessionResponse,
+  BillingDowngradePlanParams,
+  BillingDowngradePlanResponse,
+} from './resources/billing/billing';
+import { Classifier } from './resources/classifier/classifier';
+import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
+import {
+  File,
+  FileCreate,
+  FileDeleteParams,
+  FileGeneratePresignedURLParams,
+  FileGeneratePresignedURLResponse,
+  FileReadContentParams,
+  FileRetrieveParams,
+  FileUploadFromURLParams,
+  FileUploadParams,
+  Files,
+  PresignedURL,
+} from './resources/files/files';
+import {
+  Organization,
+  OrganizationCreate,
+  OrganizationCreateParams,
+  OrganizationListResponse,
+  OrganizationRetrieveRolesResponse,
+  OrganizationRetrieveUsageParams,
+  OrganizationUpdateParams,
+  Organizations,
+  Role,
+  UsageAndPlan,
+} from './resources/organizations/organizations';
+import {
+  FailPageMode,
+  LlamaParseSupportedFileExtensions,
+  ParserLanguages,
+  Parsing,
+  ParsingCreateScreenshotParams,
+  ParsingGetParsingHistoryResponse,
+  ParsingGetSupportedFileExtensionsResponse,
+  ParsingHistoryItem,
+  ParsingJob,
+  ParsingMode,
+  ParsingUploadFileParams,
+  StatusEnum,
+} from './resources/parsing/parsing';
+import {
+  AdvancedModeTransformConfig,
+  AutoTransformConfig,
+  LlamaParseParameters,
+  LlmParameters,
+  ManagedIngestionStatusResponse,
+  MessageRole,
+  MetadataFilters,
+  PageFigureNodeWithScore,
+  PageScreenshotNodeWithScore,
+  Pipeline,
+  PipelineChatParams,
+  PipelineChatResponse,
+  PipelineCreate,
+  PipelineCreateParams,
+  PipelineListParams,
+  PipelineListResponse,
+  PipelineMetadataConfig,
+  PipelineRetrieveFiles2Params,
+  PipelineRetrieveFiles2Response,
+  PipelineRetrievePlaygroundSessionResponse,
+  PipelineRetrieveStatusParams,
+  PipelineType,
+  PipelineUpdateParams,
+  Pipelines,
+  PresetRetrievalParams,
+  RetrievalMode,
+  SparseModelConfig,
+} from './resources/pipelines/pipelines';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -31,16 +220,33 @@ import {
 } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 
+const environments = {
+  production: 'https://api.cloud.llamaindex.ai',
+  sandbox: 'https://api.staging.llamaindex.ai',
+  staging: 'https://api.staging.llamaindex.ai',
+};
+type Environment = keyof typeof environments;
+
 export interface ClientOptions {
   /**
-   * Defaults to process.env['LLAMACLOUD_PROD_API_KEY'].
+   * Defaults to process.env['LLAMACLOUD_API_KEY'].
    */
   apiKey?: string | undefined;
 
   /**
+   * Specifies the environment to use for the API.
+   *
+   * Each environment maps to a different base URL:
+   * - `production` corresponds to `https://api.cloud.llamaindex.ai`
+   * - `sandbox` corresponds to `https://api.staging.llamaindex.ai`
+   * - `staging` corresponds to `https://api.staging.llamaindex.ai`
+   */
+  environment?: Environment | undefined;
+
+  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['LLAMACLOUD_PROD_BASE_URL'].
+   * Defaults to process.env['LLAMA_CLOUD_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -94,7 +300,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['LLAMACLOUD_PROD_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['LLAMA_CLOUD_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -107,9 +313,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Llamacloud Prod API.
+ * API Client for interfacing with the Llama Cloud API.
  */
-export class LlamacloudProd {
+export class LlamaCloud {
   apiKey: string;
 
   baseURL: string;
@@ -125,10 +331,11 @@ export class LlamacloudProd {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Llamacloud Prod API.
+   * API Client for interfacing with the Llama Cloud API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['LLAMACLOUD_PROD_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['LLAMACLOUD_PROD_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
+   * @param {string | undefined} [opts.apiKey=process.env['LLAMACLOUD_API_KEY'] ?? undefined]
+   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
+   * @param {string} [opts.baseURL=process.env['LLAMA_CLOUD_BASE_URL'] ?? https://api.cloud.llamaindex.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -137,31 +344,38 @@ export class LlamacloudProd {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('LLAMACLOUD_PROD_BASE_URL'),
-    apiKey = readEnv('LLAMACLOUD_PROD_API_KEY'),
+    baseURL = readEnv('LLAMA_CLOUD_BASE_URL'),
+    apiKey = readEnv('LLAMACLOUD_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
-      throw new Errors.LlamacloudProdError(
-        "The LLAMACLOUD_PROD_API_KEY environment variable is missing or empty; either provide it, or instantiate the LlamacloudProd client with an apiKey option, like new LlamacloudProd({ apiKey: 'My API Key' }).",
+      throw new Errors.LlamaCloudError(
+        "The LLAMACLOUD_API_KEY environment variable is missing or empty; either provide it, or instantiate the LlamaCloud client with an apiKey option, like new LlamaCloud({ apiKey: 'My API Key' }).",
       );
     }
 
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://api.example.com`,
+      baseURL,
+      environment: opts.environment ?? 'production',
     };
 
-    this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? LlamacloudProd.DEFAULT_TIMEOUT /* 1 minute */;
+    if (baseURL && opts.environment) {
+      throw new Errors.LlamaCloudError(
+        'Ambiguous URL; The `baseURL` option (or LLAMA_CLOUD_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null',
+      );
+    }
+
+    this.baseURL = options.baseURL || environments[options.environment || 'production'];
+    this.timeout = options.timeout ?? LlamaCloud.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('LLAMACLOUD_PROD_LOG'), "process.env['LLAMACLOUD_PROD_LOG']", this) ??
+      parseLogLevel(readEnv('LLAMA_CLOUD_LOG'), "process.env['LLAMA_CLOUD_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
@@ -179,7 +393,8 @@ export class LlamacloudProd {
   withOptions(options: Partial<ClientOptions>): this {
     const client = new (this.constructor as any as new (props: ClientOptions) => typeof this)({
       ...this._options,
-      baseURL: this.baseURL,
+      environment: options.environment ? options.environment : undefined,
+      baseURL: options.environment ? undefined : this.baseURL,
       maxRetries: this.maxRetries,
       timeout: this.timeout,
       logger: this.logger,
@@ -196,7 +411,7 @@ export class LlamacloudProd {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://api.example.com';
+    return this.baseURL !== environments[this._options.environment || 'production'];
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
@@ -224,7 +439,7 @@ export class LlamacloudProd {
         if (value === null) {
           return `${encodeURIComponent(key)}=`;
         }
-        throw new Errors.LlamacloudProdError(
+        throw new Errors.LlamaCloudError(
           `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
         );
       })
@@ -696,10 +911,10 @@ export class LlamacloudProd {
     }
   }
 
-  static LlamacloudProd = this;
+  static LlamaCloud = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static LlamacloudProdError = Errors.LlamacloudProdError;
+  static LlamaCloudError = Errors.LlamaCloudError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -715,22 +930,251 @@ export class LlamacloudProd {
 
   static toFile = Uploads.toFile;
 
-  v1: API.V1 = new API.V1(this);
-  v2alpha1: API.V2alpha1 = new API.V2alpha1(this);
+  projects: API.Projects = new API.Projects(this);
+  apiKeys: API.APIKeys = new API.APIKeys(this);
+  validateIntegrations: API.ValidateIntegrations = new API.ValidateIntegrations(this);
+  dataSinks: API.DataSinks = new API.DataSinks(this);
+  dataSources: API.DataSources = new API.DataSources(this);
+  embeddingModelConfigs: API.EmbeddingModelConfigs = new API.EmbeddingModelConfigs(this);
+  organizations: API.Organizations = new API.Organizations(this);
+  files: API.Files = new API.Files(this);
+  pipelines: API.Pipelines = new API.Pipelines(this);
+  retrievers: API.Retrievers = new API.Retrievers(this);
+  evals: API.Evals = new API.Evals(this);
+  parsing: API.Parsing = new API.Parsing(this);
+  classifier: API.Classifier = new API.Classifier(this);
+  auth: API.Auth = new API.Auth(this);
+  billing: API.Billing = new API.Billing(this);
+  extraction: API.Extraction = new API.Extraction(this);
+  beta: API.Beta = new API.Beta(this);
 }
 
-LlamacloudProd.V1 = V1;
-LlamacloudProd.V2alpha1 = V2alpha1;
+LlamaCloud.Projects = Projects;
+LlamaCloud.APIKeys = APIKeys;
+LlamaCloud.ValidateIntegrations = ValidateIntegrations;
+LlamaCloud.DataSinks = DataSinks;
+LlamaCloud.DataSources = DataSources;
+LlamaCloud.EmbeddingModelConfigs = EmbeddingModelConfigs;
+LlamaCloud.Organizations = Organizations;
+LlamaCloud.Files = Files;
+LlamaCloud.Pipelines = Pipelines;
+LlamaCloud.Retrievers = Retrievers;
+LlamaCloud.Evals = Evals;
+LlamaCloud.Parsing = Parsing;
+LlamaCloud.Classifier = Classifier;
+LlamaCloud.Auth = Auth;
+LlamaCloud.Billing = Billing;
+LlamaCloud.Extraction = Extraction;
+LlamaCloud.Beta = Beta;
 
-export declare namespace LlamacloudProd {
+export declare namespace LlamaCloud {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
-    V1 as V1,
-    type DeleteParams as DeleteParams,
-    type V1GetJobsResponse as V1GetJobsResponse,
-    type V1GetJobsParams as V1GetJobsParams,
+    Projects as Projects,
+    type AgentDeploymentList as AgentDeploymentList,
+    type Project as Project,
+    type ProjectCreate as ProjectCreate,
+    type ProjectListResponse as ProjectListResponse,
+    type ProjectCreateParams as ProjectCreateParams,
+    type ProjectRetrieveParams as ProjectRetrieveParams,
+    type ProjectUpdateParams as ProjectUpdateParams,
+    type ProjectListParams as ProjectListParams,
+    type ProjectDeleteParams as ProjectDeleteParams,
+    type ProjectGetCurrentParams as ProjectGetCurrentParams,
+    type ProjectGetUsageParams as ProjectGetUsageParams,
+    type ProjectUpsertParams as ProjectUpsertParams,
   };
 
-  export { V2alpha1 as V2alpha1 };
+  export {
+    APIKeys as APIKeys,
+    type APIKey as APIKey,
+    type APIKeyCreate as APIKeyCreate,
+    type APIKeyType as APIKeyType,
+    type APIKeyListResponse as APIKeyListResponse,
+    type APIKeyCreateParams as APIKeyCreateParams,
+    type APIKeyListParams as APIKeyListParams,
+  };
+
+  export {
+    ValidateIntegrations as ValidateIntegrations,
+    type AzureOpenAIEmbeddingConfig as AzureOpenAIEmbeddingConfig,
+    type BaseConnectionValidation as BaseConnectionValidation,
+    type BedrockEmbeddingConfig as BedrockEmbeddingConfig,
+    type CloudAstraDBVectorStore as CloudAstraDBVectorStore,
+    type CloudAzStorageBlobDataSource as CloudAzStorageBlobDataSource,
+    type CloudAzureAISearchVectorStore as CloudAzureAISearchVectorStore,
+    type CloudBoxDataSource as CloudBoxDataSource,
+    type CloudConfluenceDataSource as CloudConfluenceDataSource,
+    type CloudJiraDataSource as CloudJiraDataSource,
+    type CloudJiraDataSourceV2 as CloudJiraDataSourceV2,
+    type CloudMilvusVectorStore as CloudMilvusVectorStore,
+    type CloudMongoDBAtlasVectorSearch as CloudMongoDBAtlasVectorSearch,
+    type CloudNotionPageDataSource as CloudNotionPageDataSource,
+    type CloudOneDriveDataSource as CloudOneDriveDataSource,
+    type CloudPineconeVectorStore as CloudPineconeVectorStore,
+    type CloudPostgresVectorStore as CloudPostgresVectorStore,
+    type CloudQdrantVectorStore as CloudQdrantVectorStore,
+    type CloudS3DataSource as CloudS3DataSource,
+    type CloudSharepointDataSource as CloudSharepointDataSource,
+    type CloudSlackDataSource as CloudSlackDataSource,
+    type CohereEmbeddingConfig as CohereEmbeddingConfig,
+    type ConfigurableDataSinkNames as ConfigurableDataSinkNames,
+    type ConfigurableDataSourceNames as ConfigurableDataSourceNames,
+    type DataSinkCreate as DataSinkCreate,
+    type DataSourceCreate as DataSourceCreate,
+    type GeminiEmbeddingConfig as GeminiEmbeddingConfig,
+    type HuggingFaceInferenceAPIEmbeddingConfig as HuggingFaceInferenceAPIEmbeddingConfig,
+    type OpenAIEmbeddingConfig as OpenAIEmbeddingConfig,
+    type VertexAIEmbeddingConfig as VertexAIEmbeddingConfig,
+    type ValidateIntegrationValidateDataSinkConnectionParams as ValidateIntegrationValidateDataSinkConnectionParams,
+    type ValidateIntegrationValidateDataSourceConnectionParams as ValidateIntegrationValidateDataSourceConnectionParams,
+    type ValidateIntegrationValidateEmbeddingConnectionParams as ValidateIntegrationValidateEmbeddingConnectionParams,
+  };
+
+  export {
+    DataSinks as DataSinks,
+    type DataSink as DataSink,
+    type DataSinkListResponse as DataSinkListResponse,
+    type DataSinkCreateParams as DataSinkCreateParams,
+    type DataSinkUpdateParams as DataSinkUpdateParams,
+    type DataSinkListParams as DataSinkListParams,
+    type DataSinkUpsertParams as DataSinkUpsertParams,
+  };
+
+  export {
+    DataSources as DataSources,
+    type DataSource as DataSource,
+    type DataSourceReaderVersionMetadata as DataSourceReaderVersionMetadata,
+    type DataSourceListResponse as DataSourceListResponse,
+    type DataSourceCreateParams as DataSourceCreateParams,
+    type DataSourceUpdateParams as DataSourceUpdateParams,
+    type DataSourceListParams as DataSourceListParams,
+    type DataSourceUpsertParams as DataSourceUpsertParams,
+  };
+
+  export {
+    EmbeddingModelConfigs as EmbeddingModelConfigs,
+    type EmbeddingModelConfig as EmbeddingModelConfig,
+    type EmbeddingModelConfigUpdate as EmbeddingModelConfigUpdate,
+    type EmbeddingModelConfigListResponse as EmbeddingModelConfigListResponse,
+    type EmbeddingModelConfigCreateParams as EmbeddingModelConfigCreateParams,
+    type EmbeddingModelConfigUpdateParams as EmbeddingModelConfigUpdateParams,
+    type EmbeddingModelConfigListParams as EmbeddingModelConfigListParams,
+    type EmbeddingModelConfigDeleteParams as EmbeddingModelConfigDeleteParams,
+    type EmbeddingModelConfigUpsertParams as EmbeddingModelConfigUpsertParams,
+  };
+
+  export {
+    Organizations as Organizations,
+    type Organization as Organization,
+    type OrganizationCreate as OrganizationCreate,
+    type Role as Role,
+    type UsageAndPlan as UsageAndPlan,
+    type OrganizationListResponse as OrganizationListResponse,
+    type OrganizationRetrieveRolesResponse as OrganizationRetrieveRolesResponse,
+    type OrganizationCreateParams as OrganizationCreateParams,
+    type OrganizationUpdateParams as OrganizationUpdateParams,
+    type OrganizationRetrieveUsageParams as OrganizationRetrieveUsageParams,
+  };
+
+  export {
+    Files as Files,
+    type File as File,
+    type FileCreate as FileCreate,
+    type PresignedURL as PresignedURL,
+    type FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse,
+    type FileRetrieveParams as FileRetrieveParams,
+    type FileDeleteParams as FileDeleteParams,
+    type FileGeneratePresignedURLParams as FileGeneratePresignedURLParams,
+    type FileReadContentParams as FileReadContentParams,
+    type FileUploadParams as FileUploadParams,
+    type FileUploadFromURLParams as FileUploadFromURLParams,
+  };
+
+  export {
+    Pipelines as Pipelines,
+    type AdvancedModeTransformConfig as AdvancedModeTransformConfig,
+    type AutoTransformConfig as AutoTransformConfig,
+    type LlamaParseParameters as LlamaParseParameters,
+    type LlmParameters as LlmParameters,
+    type ManagedIngestionStatusResponse as ManagedIngestionStatusResponse,
+    type MessageRole as MessageRole,
+    type MetadataFilters as MetadataFilters,
+    type PageFigureNodeWithScore as PageFigureNodeWithScore,
+    type PageScreenshotNodeWithScore as PageScreenshotNodeWithScore,
+    type Pipeline as Pipeline,
+    type PipelineCreate as PipelineCreate,
+    type PipelineMetadataConfig as PipelineMetadataConfig,
+    type PipelineType as PipelineType,
+    type PresetRetrievalParams as PresetRetrievalParams,
+    type RetrievalMode as RetrievalMode,
+    type SparseModelConfig as SparseModelConfig,
+    type PipelineListResponse as PipelineListResponse,
+    type PipelineChatResponse as PipelineChatResponse,
+    type PipelineRetrieveFiles2Response as PipelineRetrieveFiles2Response,
+    type PipelineRetrievePlaygroundSessionResponse as PipelineRetrievePlaygroundSessionResponse,
+    type PipelineCreateParams as PipelineCreateParams,
+    type PipelineUpdateParams as PipelineUpdateParams,
+    type PipelineListParams as PipelineListParams,
+    type PipelineChatParams as PipelineChatParams,
+    type PipelineRetrieveFiles2Params as PipelineRetrieveFiles2Params,
+    type PipelineRetrieveStatusParams as PipelineRetrieveStatusParams,
+  };
+
+  export {
+    Retrievers as Retrievers,
+    type CompositeRetrievalMode as CompositeRetrievalMode,
+    type CompositeRetrievalResult as CompositeRetrievalResult,
+    type ReRankConfig as ReRankConfig,
+    type Retriever as Retriever,
+    type RetrieverCreate as RetrieverCreate,
+    type RetrieverPipeline as RetrieverPipeline,
+    type RetrieverListResponse as RetrieverListResponse,
+    type RetrieverCreateParams as RetrieverCreateParams,
+    type RetrieverRetrieveParams as RetrieverRetrieveParams,
+    type RetrieverUpdateParams as RetrieverUpdateParams,
+    type RetrieverListParams as RetrieverListParams,
+    type RetrieverRetrieveDirectParams as RetrieverRetrieveDirectParams,
+    type RetrieverUpsertParams as RetrieverUpsertParams,
+  };
+
+  export { Evals as Evals, type EvalListSupportedModelsResponse as EvalListSupportedModelsResponse };
+
+  export {
+    Parsing as Parsing,
+    type FailPageMode as FailPageMode,
+    type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
+    type ParserLanguages as ParserLanguages,
+    type ParsingHistoryItem as ParsingHistoryItem,
+    type ParsingJob as ParsingJob,
+    type ParsingMode as ParsingMode,
+    type StatusEnum as StatusEnum,
+    type ParsingGetParsingHistoryResponse as ParsingGetParsingHistoryResponse,
+    type ParsingGetSupportedFileExtensionsResponse as ParsingGetSupportedFileExtensionsResponse,
+    type ParsingCreateScreenshotParams as ParsingCreateScreenshotParams,
+    type ParsingUploadFileParams as ParsingUploadFileParams,
+  };
+
+  export { Classifier as Classifier };
+
+  export { Auth as Auth, type AuthReadSelfResponse as AuthReadSelfResponse };
+
+  export {
+    Billing as Billing,
+    type BillingCreateCustomerPortalSessionResponse as BillingCreateCustomerPortalSessionResponse,
+    type BillingCreateIntentAndCustomerSessionResponse as BillingCreateIntentAndCustomerSessionResponse,
+    type BillingDowngradePlanResponse as BillingDowngradePlanResponse,
+    type BillingCreateCustomerPortalSessionParams as BillingCreateCustomerPortalSessionParams,
+    type BillingCreateIntentAndCustomerSessionParams as BillingCreateIntentAndCustomerSessionParams,
+    type BillingDowngradePlanParams as BillingDowngradePlanParams,
+  };
+
+  export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
+
+  export {
+    Beta as Beta,
+    type BetaRetrieveQuotaManagementResponse as BetaRetrieveQuotaManagementResponse,
+    type BetaRetrieveQuotaManagementParams as BetaRetrieveQuotaManagementParams,
+  };
 }

@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { LlamacloudProd } from 'llamacloud-prod';
+import { LlamaCloud } from 'llama-cloud';
 
-const { stringifyQuery } = LlamacloudProd.prototype as any;
+const { stringifyQuery } = LlamaCloud.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [

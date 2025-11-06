@@ -1,5 +1,5 @@
 import { inspect } from 'node:util';
-import { buildHeaders, type HeadersLike, type NullableHeaders } from 'llamacloud-prod/internal/headers';
+import { buildHeaders, type HeadersLike, type NullableHeaders } from 'llama-cloud/internal/headers';
 
 function inspectNullableHeaders(headers: NullableHeaders) {
   return `NullableHeaders {${[

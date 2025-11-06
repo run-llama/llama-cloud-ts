@@ -42,25 +42,25 @@ If you’d like to use the repository from source, you can either install from g
 To install via git:
 
 ```sh
-$ npm install git+ssh://git@github.com:Georgehe4/llamaindex-ts-sdk.git
+$ npm install git+ssh://git@github.com:run-llama/llama-cloud-ts.git
 ```
 
 Alternatively, to link a local copy of the repo:
 
 ```sh
 # Clone
-$ git clone https://www.github.com/Georgehe4/llamaindex-ts-sdk
-$ cd llamaindex-ts-sdk
+$ git clone https://www.github.com/run-llama/llama-cloud-ts
+$ cd llama-cloud-ts
 
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link llamacloud-prod
+$ yarn link llama-cloud
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global llamacloud-prod
+$ pnpm link -—global llama-cloud
 ```
 
 ## Running tests
