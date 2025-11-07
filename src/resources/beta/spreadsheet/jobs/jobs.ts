@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../../core/resource';
+import * as FilesAPI from '../../../files/files';
 import * as ParsingAPI from '../../../parsing/parsing';
 import * as TablesAPI from './tables';
 import { TableRetrieveParams, Tables } from './tables';
@@ -71,9 +72,9 @@ export interface SpreadsheetJob {
   created_at: string;
 
   /**
-   * The ID of the file to parse
+   * The file to process
    */
-  file_id: string;
+  file: FilesAPI.File;
 
   /**
    * The ID of the project
@@ -189,6 +190,11 @@ export interface SpreadsheetParsingConfig {
    * extracted.
    */
   sheet_names?: Array<string> | null;
+
+  /**
+   * Enables experimental processing. Accuracy may be impacted.
+   */
+  use_experimental_processing?: boolean;
 }
 
 export interface JobListResponse {
