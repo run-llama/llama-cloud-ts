@@ -29,11 +29,11 @@ export {
   Runs,
   type ExtractConfig,
   type ExtractRun,
-  type RunListResponse,
   type RunDeleteResponse,
   type RunRetrieveParams,
   type RunListParams,
   type RunDeleteParams,
   type RunRetrieveByJobParams,
   type RunRetrieveLatestFromUiParams,
+  type ExtractRunsPaginatedExtractRuns,
 } from './runs';

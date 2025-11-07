@@ -11,6 +11,7 @@ export {
   type DirectoryUpdateParams,
   type DirectoryListParams,
   type DirectoryDeleteParams,
+  type DirectoryListResponsesPaginatedClassifyJobs,
 } from './directories';
 export {
   Files,
@@ -23,4 +24,5 @@ export {
   type FileListParams,
   type FileDeleteParams,
   type FileAddParams,
+  type FileListResponsesPaginatedClassifyJobs,
 } from './files';

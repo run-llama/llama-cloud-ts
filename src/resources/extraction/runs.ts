@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as FilesAPI from '../files/files';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, PaginatedExtractRuns, type PaginatedExtractRunsParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -21,8 +22,14 @@ export class Runs extends APIResource {
   /**
    * List Extract Runs
    */
-  list(query: RunListParams, options?: RequestOptions): APIPromise<RunListResponse> {
-    return this._client.get('/api/v1/extraction/runs', { query, ...options });
+  list(
+    query: RunListParams,
+    options?: RequestOptions,
+  ): PagePromise<ExtractRunsPaginatedExtractRuns, ExtractRun> {
+    return this._client.getAPIList('/api/v1/extraction/runs', PaginatedExtractRuns<ExtractRun>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -61,6 +68,8 @@ export class Runs extends APIResource {
     return this._client.get('/api/v1/extraction/runs/latest-from-ui', { query, ...options });
   }
 }
+
+export type ExtractRunsPaginatedExtractRuns = PaginatedExtractRuns<ExtractRun>;
 
 /**
  * Additional parameters for the extraction agent.
@@ -265,31 +274,6 @@ export interface ExtractRun {
   updated_at?: string | null;
 }
 
-/**
- * Schema for paginated extraction runs response.
- */
-export interface RunListResponse {
-  /**
-   * The list of extraction runs
-   */
-  items: Array<ExtractRun>;
-
-  /**
-   * The maximum number of extraction runs returned
-   */
-  limit: number;
-
-  /**
-   * The number of extraction runs skipped
-   */
-  skip: number;
-
-  /**
-   * The total number of extraction runs
-   */
-  total: number;
-}
-
 export type RunDeleteResponse = unknown;
 
 export interface RunRetrieveParams {
@@ -298,12 +282,8 @@ export interface RunRetrieveParams {
   project_id?: string | null;
 }
 
-export interface RunListParams {
+export interface RunListParams extends PaginatedExtractRunsParams {
   extraction_agent_id: string;
-
-  limit?: number;
-
-  skip?: number;
 }
 
 export interface RunDeleteParams {
@@ -326,8 +306,8 @@ export declare namespace Runs {
   export {
     type ExtractConfig as ExtractConfig,
     type ExtractRun as ExtractRun,
-    type RunListResponse as RunListResponse,
     type RunDeleteResponse as RunDeleteResponse,
+    type ExtractRunsPaginatedExtractRuns as ExtractRunsPaginatedExtractRuns,
     type RunRetrieveParams as RunRetrieveParams,
     type RunListParams as RunListParams,
     type RunDeleteParams as RunDeleteParams,

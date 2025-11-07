@@ -5,10 +5,10 @@ import * as JobsAPI from './jobs/jobs';
 import {
   JobCreateParams,
   JobListParams,
-  JobListResponse,
   JobRetrieveParams,
   Jobs,
   SpreadsheetJob,
+  SpreadsheetJobsPaginatedClassifyJobs,
   SpreadsheetParsingConfig,
 } from './jobs/jobs';
 
@@ -23,7 +23,7 @@ export declare namespace Spreadsheet {
     Jobs as Jobs,
     type SpreadsheetJob as SpreadsheetJob,
     type SpreadsheetParsingConfig as SpreadsheetParsingConfig,
-    type JobListResponse as JobListResponse,
+    type SpreadsheetJobsPaginatedClassifyJobs as SpreadsheetJobsPaginatedClassifyJobs,
     type JobCreateParams as JobCreateParams,
     type JobRetrieveParams as JobRetrieveParams,
     type JobListParams as JobListParams,

@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as ParsingAPI from '../parsing/parsing';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -36,8 +37,14 @@ export class Jobs extends APIResource {
    * List classify jobs. Experimental: This endpoint is not yet ready for production
    * use and is subject to change at any time.
    */
-  list(query: JobListParams | null | undefined = {}, options?: RequestOptions): APIPromise<JobListResponse> {
-    return this._client.get('/api/v1/classifier/jobs', { query, ...options });
+  list(
+    query: JobListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ClassifyJobsPaginatedClassifyJobs, ClassifyJob> {
+    return this._client.getAPIList('/api/v1/classifier/jobs', PaginatedClassifyJobs<ClassifyJob>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -52,6 +59,8 @@ export class Jobs extends APIResource {
     return this._client.get(path`/api/v1/classifier/jobs/${classifyJobID}/results`, { query, ...options });
   }
 }
+
+export type ClassifyJobsPaginatedClassifyJobs = PaginatedClassifyJobs<ClassifyJob>;
 
 /**
  * A rule for classifying documents - v0 simplified version.
@@ -148,26 +157,6 @@ export interface ClassifyParsingConfiguration {
    * The pages to target for parsing (0-indexed, so first page is at 0)
    */
   target_pages?: Array<number> | null;
-}
-
-export interface JobListResponse {
-  /**
-   * The list of items.
-   */
-  items: Array<ClassifyJob>;
-
-  /**
-   * A token, which can be sent as page_token to retrieve the next page. If this
-   * field is omitted, there are no subsequent pages.
-   */
-  next_page_token?: string | null;
-
-  /**
-   * The total number of items available. This is only populated when specifically
-   * requested. The value may be an estimate and can be used for display purposes
-   * only.
-   */
-  total_size?: number | null;
 }
 
 /**
@@ -286,12 +275,8 @@ export interface JobRetrieveParams {
   project_id?: string | null;
 }
 
-export interface JobListParams {
+export interface JobListParams extends PaginatedClassifyJobsParams {
   organization_id?: string | null;
-
-  page_size?: number | null;
-
-  page_token?: string | null;
 
   project_id?: string | null;
 }
@@ -307,8 +292,8 @@ export declare namespace Jobs {
     type ClassifierRule as ClassifierRule,
     type ClassifyJob as ClassifyJob,
     type ClassifyParsingConfiguration as ClassifyParsingConfiguration,
-    type JobListResponse as JobListResponse,
     type JobGetResultsResponse as JobGetResultsResponse,
+    type ClassifyJobsPaginatedClassifyJobs as ClassifyJobsPaginatedClassifyJobs,
     type JobCreateParams as JobCreateParams,
     type JobRetrieveParams as JobRetrieveParams,
     type JobListParams as JobListParams,

@@ -34,6 +34,7 @@ export {
   type DirectoryUpdateParams,
   type DirectoryListParams,
   type DirectoryDeleteParams,
+  type DirectoryListResponsesPaginatedClassifyJobs,
 } from './directories/index';
 export {
   Files,
