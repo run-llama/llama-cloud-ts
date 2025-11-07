@@ -31,8 +31,8 @@ describe('resource dataSources', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveDataSources', async () => {
-    const responsePromise = client.pipelines.dataSources.retrieveDataSources(
+  test.skip('getDataSources', async () => {
+    const responsePromise = client.pipelines.dataSources.getDataSources(
       '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     );
     const rawResponse = await responsePromise.asResponse();
@@ -45,11 +45,10 @@ describe('resource dataSources', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveStatus: only required params', async () => {
-    const responsePromise = client.pipelines.dataSources.retrieveStatus(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      { pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
-    );
+  test.skip('getStatus: only required params', async () => {
+    const responsePromise = client.pipelines.dataSources.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -60,11 +59,10 @@ describe('resource dataSources', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveStatus: required and optional params', async () => {
-    const response = await client.pipelines.dataSources.retrieveStatus(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      { pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
-    );
+  test.skip('getStatus: required and optional params', async () => {
+    const response = await client.pipelines.dataSources.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
   });
 
   // Prism tests are disabled

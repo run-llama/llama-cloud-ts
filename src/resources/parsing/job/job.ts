@@ -26,13 +26,6 @@ export class Job extends APIResource {
   result: ResultAPI.Result = new ResultAPI.Result(this._client);
 
   /**
-   * Get a job by id
-   */
-  retrieve(jobID: string, options?: RequestOptions): APIPromise<ParsingAPI.ParsingJob> {
-    return this._client.get(path`/api/v1/parsing/job/${jobID}`, options);
-  }
-
-  /**
    * Generate a presigned URL for a job
    */
   generatePresignedURL(
@@ -42,6 +35,13 @@ export class Job extends APIResource {
   ): APIPromise<FilesAPI.PresignedURL> {
     const { job_id } = params;
     return this._client.get(path`/api/v1/parsing/job/${job_id}/read/${filename}`, options);
+  }
+
+  /**
+   * Get a job by id
+   */
+  get(jobID: string, options?: RequestOptions): APIPromise<ParsingAPI.ParsingJob> {
+    return this._client.get(path`/api/v1/parsing/job/${jobID}`, options);
   }
 
   /**

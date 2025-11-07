@@ -60,18 +60,6 @@ describe('resource jobs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.extraction.jobs.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.extraction.jobs.list({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -169,8 +157,8 @@ describe('resource jobs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveResult', async () => {
-    const responsePromise = client.extraction.jobs.retrieveResult('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('get', async () => {
+    const responsePromise = client.extraction.jobs.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -181,10 +169,22 @@ describe('resource jobs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveResult: request options and params are passed correctly', async () => {
+  test.skip('getResult', async () => {
+    const responsePromise = client.extraction.jobs.getResult('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getResult: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.extraction.jobs.retrieveResult(
+      client.extraction.jobs.getResult(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',

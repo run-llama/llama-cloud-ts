@@ -6,9 +6,9 @@ export {
   type FileCreate,
   type PresignedURL,
   type FileGeneratePresignedURLResponse,
-  type FileRetrieveParams,
   type FileDeleteParams,
   type FileGeneratePresignedURLParams,
+  type FileGetParams,
   type FileReadContentParams,
   type FileUploadParams,
   type FileUploadFromURLParams,
@@ -16,18 +16,18 @@ export {
 export {
   PageFigures,
   type PageFigureMetadata,
-  type PageFigureRetrieveResponse,
   type PageFigureListResponse,
-  type PageFigureRetrieveParams,
+  type PageFigureGetResponse,
   type PageFigureListParams,
   type PageFigureGeneratePresignedURLParams,
+  type PageFigureGetParams,
 } from './page-figures';
 export {
   PageScreenshots,
   type PageScreenshotMetadata,
-  type PageScreenshotRetrieveResponse,
   type PageScreenshotListResponse,
-  type PageScreenshotRetrieveParams,
+  type PageScreenshotGetResponse,
   type PageScreenshotListParams,
   type PageScreenshotGeneratePresignedURLParams,
+  type PageScreenshotGetParams,
 } from './page-screenshots';

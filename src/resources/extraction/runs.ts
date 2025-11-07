@@ -9,17 +9,6 @@ import { path } from '../../internal/utils/path';
 
 export class Runs extends APIResource {
   /**
-   * Get Run
-   */
-  retrieve(
-    runID: string,
-    query: RunRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ExtractRun> {
-    return this._client.get(path`/api/v1/extraction/runs/${runID}`, { query, ...options });
-  }
-
-  /**
    * List Extract Runs
    */
   list(
@@ -48,11 +37,22 @@ export class Runs extends APIResource {
   }
 
   /**
+   * Get Run
+   */
+  get(
+    runID: string,
+    query: RunGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExtractRun> {
+    return this._client.get(path`/api/v1/extraction/runs/${runID}`, { query, ...options });
+  }
+
+  /**
    * Get Run By Job Id
    */
-  retrieveByJob(
+  getByJob(
     jobID: string,
-    query: RunRetrieveByJobParams | null | undefined = {},
+    query: RunGetByJobParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ExtractRun> {
     return this._client.get(path`/api/v1/extraction/runs/by-job/${jobID}`, { query, ...options });
@@ -61,10 +61,7 @@ export class Runs extends APIResource {
   /**
    * Get Latest Run From Ui
    */
-  retrieveLatestFromUi(
-    query: RunRetrieveLatestFromUiParams,
-    options?: RequestOptions,
-  ): APIPromise<ExtractRun | null> {
+  getLatestFromUi(query: RunGetLatestFromUiParams, options?: RequestOptions): APIPromise<ExtractRun | null> {
     return this._client.get('/api/v1/extraction/runs/latest-from-ui', { query, ...options });
   }
 }
@@ -276,12 +273,6 @@ export interface ExtractRun {
 
 export type RunDeleteResponse = unknown;
 
-export interface RunRetrieveParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export interface RunListParams extends PaginatedExtractRunsParams {
   extraction_agent_id: string;
 }
@@ -292,13 +283,19 @@ export interface RunDeleteParams {
   project_id?: string | null;
 }
 
-export interface RunRetrieveByJobParams {
+export interface RunGetParams {
   organization_id?: string | null;
 
   project_id?: string | null;
 }
 
-export interface RunRetrieveLatestFromUiParams {
+export interface RunGetByJobParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface RunGetLatestFromUiParams {
   extraction_agent_id: string;
 }
 
@@ -308,10 +305,10 @@ export declare namespace Runs {
     type ExtractRun as ExtractRun,
     type RunDeleteResponse as RunDeleteResponse,
     type ExtractRunsPaginatedExtractRuns as ExtractRunsPaginatedExtractRuns,
-    type RunRetrieveParams as RunRetrieveParams,
     type RunListParams as RunListParams,
     type RunDeleteParams as RunDeleteParams,
-    type RunRetrieveByJobParams as RunRetrieveByJobParams,
-    type RunRetrieveLatestFromUiParams as RunRetrieveLatestFromUiParams,
+    type RunGetParams as RunGetParams,
+    type RunGetByJobParams as RunGetByJobParams,
+    type RunGetLatestFromUiParams as RunGetLatestFromUiParams,
   };
 }

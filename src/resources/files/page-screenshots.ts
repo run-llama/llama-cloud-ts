@@ -8,18 +8,6 @@ import { path } from '../../internal/utils/path';
 
 export class PageScreenshots extends APIResource {
   /**
-   * Get screenshot of a page from a file.
-   */
-  retrieve(
-    pageIndex: number,
-    params: PageScreenshotRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { id, ...query } = params;
-    return this._client.get(path`/api/v1/files/${id}/page_screenshots/${pageIndex}`, { query, ...options });
-  }
-
-  /**
    * List metadata for all screenshots of pages from a file.
    */
   list(
@@ -48,6 +36,14 @@ export class PageScreenshots extends APIResource {
       ...options,
     });
   }
+
+  /**
+   * Get screenshot of a page from a file.
+   */
+  get(pageIndex: number, params: PageScreenshotGetParams, options?: RequestOptions): APIPromise<unknown> {
+    const { id, ...query } = params;
+    return this._client.get(path`/api/v1/files/${id}/page_screenshots/${pageIndex}`, { query, ...options });
+  }
 }
 
 export interface PageScreenshotMetadata {
@@ -72,26 +68,9 @@ export interface PageScreenshotMetadata {
   metadata?: { [key: string]: unknown } | null;
 }
 
-export type PageScreenshotRetrieveResponse = unknown;
-
 export type PageScreenshotListResponse = Array<PageScreenshotMetadata>;
 
-export interface PageScreenshotRetrieveParams {
-  /**
-   * Path param:
-   */
-  id: string;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-}
+export type PageScreenshotGetResponse = unknown;
 
 export interface PageScreenshotListParams {
   organization_id?: string | null;
@@ -116,13 +95,30 @@ export interface PageScreenshotGeneratePresignedURLParams {
   project_id?: string | null;
 }
 
+export interface PageScreenshotGetParams {
+  /**
+   * Path param:
+   */
+  id: string;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+}
+
 export declare namespace PageScreenshots {
   export {
     type PageScreenshotMetadata as PageScreenshotMetadata,
-    type PageScreenshotRetrieveResponse as PageScreenshotRetrieveResponse,
     type PageScreenshotListResponse as PageScreenshotListResponse,
-    type PageScreenshotRetrieveParams as PageScreenshotRetrieveParams,
+    type PageScreenshotGetResponse as PageScreenshotGetResponse,
     type PageScreenshotListParams as PageScreenshotListParams,
     type PageScreenshotGeneratePresignedURLParams as PageScreenshotGeneratePresignedURLParams,
+    type PageScreenshotGetParams as PageScreenshotGetParams,
   };
 }

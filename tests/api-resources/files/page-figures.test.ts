@@ -9,31 +9,6 @@ const client = new LlamaCloud({
 
 describe('resource pageFigures', () => {
   // Prism tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.files.pageFigures.retrieve('figure_name', {
-      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      page_index: 0,
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.files.pageFigures.retrieve('figure_name', {
-      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      page_index: 0,
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
-  });
-
-  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.files.pageFigures.list('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -78,6 +53,31 @@ describe('resource pageFigures', () => {
   // Prism tests are disabled
   test.skip('generatePresignedURL: required and optional params', async () => {
     const response = await client.files.pageFigures.generatePresignedURL('figure_name', {
+      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      page_index: 0,
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('get: only required params', async () => {
+    const responsePromise = client.files.pageFigures.get('figure_name', {
+      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      page_index: 0,
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('get: required and optional params', async () => {
+    const response = await client.files.pageFigures.get('figure_name', {
       id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       page_index: 0,
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',

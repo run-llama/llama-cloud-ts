@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import * as DataSourcesAPI from '../data-sources';
-import * as ValidateIntegrationsAPI from '../validate-integrations';
 import * as PipelinesAPI from './pipelines';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
@@ -27,19 +26,16 @@ export class DataSources extends APIResource {
   /**
    * Get data sources for a pipeline.
    */
-  retrieveDataSources(
-    pipelineID: string,
-    options?: RequestOptions,
-  ): APIPromise<DataSourceRetrieveDataSourcesResponse> {
+  getDataSources(pipelineID: string, options?: RequestOptions): APIPromise<DataSourceGetDataSourcesResponse> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}/data-sources`, options);
   }
 
   /**
    * Get the status of a data source for a pipeline.
    */
-  retrieveStatus(
+  getStatus(
     dataSourceID: string,
-    params: DataSourceRetrieveStatusParams,
+    params: DataSourceGetStatusParams,
     options?: RequestOptions,
   ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
     const { pipeline_id } = params;
@@ -92,16 +88,16 @@ export interface PipelineDataSource {
    */
   component:
     | { [key: string]: unknown }
-    | ValidateIntegrationsAPI.CloudS3DataSource
-    | ValidateIntegrationsAPI.CloudAzStorageBlobDataSource
-    | ValidateIntegrationsAPI.CloudOneDriveDataSource
-    | ValidateIntegrationsAPI.CloudSharepointDataSource
-    | ValidateIntegrationsAPI.CloudSlackDataSource
-    | ValidateIntegrationsAPI.CloudNotionPageDataSource
-    | ValidateIntegrationsAPI.CloudConfluenceDataSource
-    | ValidateIntegrationsAPI.CloudJiraDataSource
-    | ValidateIntegrationsAPI.CloudJiraDataSourceV2
-    | ValidateIntegrationsAPI.CloudBoxDataSource;
+    | PipelineDataSource.CloudS3DataSource
+    | PipelineDataSource.CloudAzStorageBlobDataSource
+    | PipelineDataSource.CloudOneDriveDataSource
+    | PipelineDataSource.CloudSharepointDataSource
+    | PipelineDataSource.CloudSlackDataSource
+    | PipelineDataSource.CloudNotionPageDataSource
+    | PipelineDataSource.CloudConfluenceDataSource
+    | PipelineDataSource.CloudJiraDataSource
+    | PipelineDataSource.CloudJiraDataSourceV2
+    | PipelineDataSource.CloudBoxDataSource;
 
   /**
    * The ID of the data source.
@@ -125,7 +121,18 @@ export interface PipelineDataSource {
 
   project_id: string;
 
-  source_type: ValidateIntegrationsAPI.ConfigurableDataSourceNames;
+  source_type:
+    | 'S3'
+    | 'AZURE_STORAGE_BLOB'
+    | 'GOOGLE_DRIVE'
+    | 'MICROSOFT_ONEDRIVE'
+    | 'MICROSOFT_SHAREPOINT'
+    | 'SLACK'
+    | 'NOTION_PAGE'
+    | 'CONFLUENCE'
+    | 'JIRA'
+    | 'JIRA_V2'
+    | 'BOX';
 
   /**
    * Creation datetime
@@ -170,7 +177,427 @@ export interface PipelineDataSource {
   version_metadata?: DataSourcesAPI.DataSourceReaderVersionMetadata | null;
 }
 
-export type DataSourceRetrieveDataSourcesResponse = Array<PipelineDataSource>;
+export namespace PipelineDataSource {
+  export interface CloudS3DataSource {
+    /**
+     * The name of the S3 bucket to read from.
+     */
+    bucket: string;
+
+    /**
+     * The AWS access ID to use for authentication.
+     */
+    aws_access_id?: string | null;
+
+    class_name?: string;
+
+    /**
+     * The prefix of the S3 objects to read from.
+     */
+    prefix?: string | null;
+
+    /**
+     * The regex pattern to filter S3 objects. Must be a valid regex pattern.
+     */
+    regex_pattern?: string | null;
+
+    /**
+     * The S3 endpoint URL to use for authentication.
+     */
+    s3_endpoint_url?: string | null;
+
+    supports_access_control?: boolean;
+  }
+
+  export interface CloudAzStorageBlobDataSource {
+    /**
+     * The Azure Storage Blob account URL to use for authentication.
+     */
+    account_url: string;
+
+    /**
+     * The name of the Azure Storage Blob container to read from.
+     */
+    container_name: string;
+
+    /**
+     * The Azure Storage Blob account name to use for authentication.
+     */
+    account_name?: string | null;
+
+    /**
+     * The blob name to read from.
+     */
+    blob?: string | null;
+
+    class_name?: string;
+
+    /**
+     * The Azure AD client ID to use for authentication.
+     */
+    client_id?: string | null;
+
+    /**
+     * The prefix of the Azure Storage Blob objects to read from.
+     */
+    prefix?: string | null;
+
+    supports_access_control?: boolean;
+
+    /**
+     * The Azure AD tenant ID to use for authentication.
+     */
+    tenant_id?: string | null;
+  }
+
+  export interface CloudOneDriveDataSource {
+    /**
+     * The client ID to use for authentication.
+     */
+    client_id: string;
+
+    /**
+     * The tenant ID to use for authentication.
+     */
+    tenant_id: string;
+
+    /**
+     * The user principal name to use for authentication.
+     */
+    user_principal_name: string;
+
+    class_name?: string;
+
+    /**
+     * The ID of the OneDrive folder to read from.
+     */
+    folder_id?: string | null;
+
+    /**
+     * The path of the OneDrive folder to read from.
+     */
+    folder_path?: string | null;
+
+    /**
+     * The list of required file extensions.
+     */
+    required_exts?: Array<string> | null;
+
+    supports_access_control?: true;
+  }
+
+  export interface CloudSharepointDataSource {
+    /**
+     * The client ID to use for authentication.
+     */
+    client_id: string;
+
+    /**
+     * The tenant ID to use for authentication.
+     */
+    tenant_id: string;
+
+    class_name?: string;
+
+    /**
+     * The name of the Sharepoint drive to read from.
+     */
+    drive_name?: string | null;
+
+    /**
+     * The ID of the Sharepoint folder to read from.
+     */
+    folder_id?: string | null;
+
+    /**
+     * The path of the Sharepoint folder to read from.
+     */
+    folder_path?: string | null;
+
+    /**
+     * Whether to get permissions for the sharepoint site.
+     */
+    get_permissions?: boolean | null;
+
+    /**
+     * The list of required file extensions.
+     */
+    required_exts?: Array<string> | null;
+
+    /**
+     * The ID of the SharePoint site to download from.
+     */
+    site_id?: string | null;
+
+    /**
+     * The name of the SharePoint site to download from.
+     */
+    site_name?: string | null;
+
+    supports_access_control?: true;
+  }
+
+  export interface CloudSlackDataSource {
+    /**
+     * Slack Channel.
+     */
+    channel_ids?: string | null;
+
+    /**
+     * Slack Channel name pattern.
+     */
+    channel_patterns?: string | null;
+
+    class_name?: string;
+
+    /**
+     * Earliest date.
+     */
+    earliest_date?: string | null;
+
+    /**
+     * Earliest date timestamp.
+     */
+    earliest_date_timestamp?: number | null;
+
+    /**
+     * Latest date.
+     */
+    latest_date?: string | null;
+
+    /**
+     * Latest date timestamp.
+     */
+    latest_date_timestamp?: number | null;
+
+    supports_access_control?: boolean;
+  }
+
+  export interface CloudNotionPageDataSource {
+    class_name?: string;
+
+    /**
+     * The Notion Database Id to read content from.
+     */
+    database_ids?: string | null;
+
+    /**
+     * The Page ID's of the Notion to read from.
+     */
+    page_ids?: string | null;
+
+    supports_access_control?: boolean;
+  }
+
+  export interface CloudConfluenceDataSource {
+    /**
+     * Type of Authentication for connecting to Confluence APIs.
+     */
+    authentication_mechanism: string;
+
+    /**
+     * The server URL of the Confluence instance.
+     */
+    server_url: string;
+
+    class_name?: string;
+
+    /**
+     * The CQL query to use for fetching pages.
+     */
+    cql?: string | null;
+
+    /**
+     * Configuration for handling failures during processing. Key-value object
+     * controlling failure handling behaviors.
+     *
+     * Example: { "skip_list_failures": true }
+     *
+     * Currently supports:
+     *
+     * - skip_list_failures: Skip failed batches/lists and continue processing
+     */
+    failure_handling?: CloudConfluenceDataSource.FailureHandling;
+
+    /**
+     * Whether to index restricted pages.
+     */
+    index_restricted_pages?: boolean;
+
+    /**
+     * Whether to keep the markdown format.
+     */
+    keep_markdown_format?: boolean;
+
+    /**
+     * The label to use for fetching pages.
+     */
+    label?: string | null;
+
+    /**
+     * The page IDs of the Confluence to read from.
+     */
+    page_ids?: string | null;
+
+    /**
+     * The space key to read from.
+     */
+    space_key?: string | null;
+
+    supports_access_control?: boolean;
+
+    /**
+     * The username to use for authentication.
+     */
+    user_name?: string | null;
+  }
+
+  export namespace CloudConfluenceDataSource {
+    /**
+     * Configuration for handling failures during processing. Key-value object
+     * controlling failure handling behaviors.
+     *
+     * Example: { "skip_list_failures": true }
+     *
+     * Currently supports:
+     *
+     * - skip_list_failures: Skip failed batches/lists and continue processing
+     */
+    export interface FailureHandling {
+      /**
+       * Whether to skip failed batches/lists and continue processing
+       */
+      skip_list_failures?: boolean;
+    }
+  }
+
+  /**
+   * Cloud Jira Data Source integrating JiraReader.
+   */
+  export interface CloudJiraDataSource {
+    /**
+     * Type of Authentication for connecting to Jira APIs.
+     */
+    authentication_mechanism: string;
+
+    /**
+     * JQL (Jira Query Language) query to search.
+     */
+    query: string;
+
+    class_name?: string;
+
+    /**
+     * The cloud ID, used in case of OAuth2.
+     */
+    cloud_id?: string | null;
+
+    /**
+     * The email address to use for authentication.
+     */
+    email?: string | null;
+
+    /**
+     * The server url for Jira Cloud.
+     */
+    server_url?: string | null;
+
+    supports_access_control?: boolean;
+  }
+
+  /**
+   * Cloud Jira Data Source integrating JiraReaderV2.
+   */
+  export interface CloudJiraDataSourceV2 {
+    /**
+     * Type of Authentication for connecting to Jira APIs.
+     */
+    authentication_mechanism: string;
+
+    /**
+     * JQL (Jira Query Language) query to search.
+     */
+    query: string;
+
+    /**
+     * The server url for Jira Cloud.
+     */
+    server_url: string;
+
+    /**
+     * Jira REST API version to use (2 or 3). 3 supports Atlassian Document Format
+     * (ADF).
+     */
+    api_version?: '2' | '3';
+
+    class_name?: string;
+
+    /**
+     * The cloud ID, used in case of OAuth2.
+     */
+    cloud_id?: string | null;
+
+    /**
+     * The email address to use for authentication.
+     */
+    email?: string | null;
+
+    /**
+     * Fields to expand in the response.
+     */
+    expand?: string | null;
+
+    /**
+     * List of fields to retrieve from Jira. If None, retrieves all fields.
+     */
+    fields?: Array<string> | null;
+
+    /**
+     * Whether to fetch project role permissions and issue-level security
+     */
+    get_permissions?: boolean;
+
+    /**
+     * Rate limit for Jira API requests per minute.
+     */
+    requests_per_minute?: number | null;
+
+    supports_access_control?: boolean;
+  }
+
+  export interface CloudBoxDataSource {
+    /**
+     * The type of authentication to use (Developer Token or CCG)
+     */
+    authentication_mechanism: 'developer_token' | 'ccg';
+
+    class_name?: string;
+
+    /**
+     * Box API key used for identifying the application the user is authenticating with
+     */
+    client_id?: string | null;
+
+    /**
+     * Box Enterprise ID, if provided authenticates as service.
+     */
+    enterprise_id?: string | null;
+
+    /**
+     * The ID of the Box folder to read from.
+     */
+    folder_id?: string | null;
+
+    supports_access_control?: boolean;
+
+    /**
+     * Box User ID, if provided authenticates as user.
+     */
+    user_id?: string | null;
+  }
+}
+
+export type DataSourceGetDataSourcesResponse = Array<PipelineDataSource>;
 
 export type DataSourceUpdateDataSourcesResponse = Array<PipelineDataSource>;
 
@@ -186,7 +613,7 @@ export interface DataSourceUpdateParams {
   sync_interval?: number | null;
 }
 
-export interface DataSourceRetrieveStatusParams {
+export interface DataSourceGetStatusParams {
   pipeline_id: string;
 }
 
@@ -227,10 +654,10 @@ export namespace DataSourceUpdateDataSourcesParams {
 export declare namespace DataSources {
   export {
     type PipelineDataSource as PipelineDataSource,
-    type DataSourceRetrieveDataSourcesResponse as DataSourceRetrieveDataSourcesResponse,
+    type DataSourceGetDataSourcesResponse as DataSourceGetDataSourcesResponse,
     type DataSourceUpdateDataSourcesResponse as DataSourceUpdateDataSourcesResponse,
     type DataSourceUpdateParams as DataSourceUpdateParams,
-    type DataSourceRetrieveStatusParams as DataSourceRetrieveStatusParams,
+    type DataSourceGetStatusParams as DataSourceGetStatusParams,
     type DataSourceSyncParams as DataSourceSyncParams,
     type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
   };

@@ -1,29 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export {
-  APIKeys,
-  type APIKey,
-  type APIKeyCreate,
-  type APIKeyType,
-  type APIKeyListResponse,
-  type APIKeyCreateParams,
-  type APIKeyListParams,
-} from './api-keys';
-export { Auth, type AuthReadSelfResponse } from './auth';
-export {
-  Beta,
-  type BetaRetrieveQuotaManagementResponse,
-  type BetaRetrieveQuotaManagementParams,
-} from './beta/beta';
-export {
-  Billing,
-  type BillingCreateCustomerPortalSessionResponse,
-  type BillingCreateIntentAndCustomerSessionResponse,
-  type BillingDowngradePlanResponse,
-  type BillingCreateCustomerPortalSessionParams,
-  type BillingCreateIntentAndCustomerSessionParams,
-  type BillingDowngradePlanParams,
-} from './billing/billing';
+export { Beta } from './beta/beta';
 export { Classifier } from './classifier/classifier';
 export {
   DataSinks,
@@ -63,9 +40,9 @@ export {
   type FileCreate,
   type PresignedURL,
   type FileGeneratePresignedURLResponse,
-  type FileRetrieveParams,
   type FileDeleteParams,
   type FileGeneratePresignedURLParams,
+  type FileGetParams,
   type FileReadContentParams,
   type FileUploadParams,
   type FileUploadFromURLParams,
@@ -77,10 +54,10 @@ export {
   type Role,
   type UsageAndPlan,
   type OrganizationListResponse,
-  type OrganizationRetrieveRolesResponse,
+  type OrganizationGetRolesResponse,
   type OrganizationCreateParams,
   type OrganizationUpdateParams,
-  type OrganizationRetrieveUsageParams,
+  type OrganizationGetUsageParams,
 } from './organizations/organizations';
 export {
   Parsing,
@@ -116,14 +93,14 @@ export {
   type SparseModelConfig,
   type PipelineListResponse,
   type PipelineChatResponse,
-  type PipelineRetrieveFiles2Response,
-  type PipelineRetrievePlaygroundSessionResponse,
+  type PipelineGetFiles2Response,
+  type PipelineGetPlaygroundSessionResponse,
   type PipelineCreateParams,
   type PipelineUpdateParams,
   type PipelineListParams,
   type PipelineChatParams,
-  type PipelineRetrieveFiles2Params,
-  type PipelineRetrieveStatusParams,
+  type PipelineGetFiles2Params,
+  type PipelineGetStatusParams,
 } from './pipelines/pipelines';
 export {
   Projects,
@@ -132,10 +109,10 @@ export {
   type ProjectCreate,
   type ProjectListResponse,
   type ProjectCreateParams,
-  type ProjectRetrieveParams,
   type ProjectUpdateParams,
   type ProjectListParams,
   type ProjectDeleteParams,
+  type ProjectGetParams,
   type ProjectGetCurrentParams,
   type ProjectGetUsageParams,
   type ProjectUpsertParams,
@@ -153,41 +130,6 @@ export {
   type RetrieverRetrieveParams,
   type RetrieverUpdateParams,
   type RetrieverListParams,
-  type RetrieverRetrieveDirectParams,
+  type RetrieverGetParams,
   type RetrieverUpsertParams,
 } from './retrievers';
-export {
-  ValidateIntegrations,
-  type AzureOpenAIEmbeddingConfig,
-  type BaseConnectionValidation,
-  type BedrockEmbeddingConfig,
-  type CloudAstraDBVectorStore,
-  type CloudAzStorageBlobDataSource,
-  type CloudAzureAISearchVectorStore,
-  type CloudBoxDataSource,
-  type CloudConfluenceDataSource,
-  type CloudJiraDataSource,
-  type CloudJiraDataSourceV2,
-  type CloudMilvusVectorStore,
-  type CloudMongoDBAtlasVectorSearch,
-  type CloudNotionPageDataSource,
-  type CloudOneDriveDataSource,
-  type CloudPineconeVectorStore,
-  type CloudPostgresVectorStore,
-  type CloudQdrantVectorStore,
-  type CloudS3DataSource,
-  type CloudSharepointDataSource,
-  type CloudSlackDataSource,
-  type CohereEmbeddingConfig,
-  type ConfigurableDataSinkNames,
-  type ConfigurableDataSourceNames,
-  type DataSinkCreate,
-  type DataSourceCreate,
-  type GeminiEmbeddingConfig,
-  type HuggingFaceInferenceAPIEmbeddingConfig,
-  type OpenAIEmbeddingConfig,
-  type VertexAIEmbeddingConfig,
-  type ValidateIntegrationValidateDataSinkConnectionParams,
-  type ValidateIntegrationValidateDataSourceConnectionParams,
-  type ValidateIntegrationValidateEmbeddingConnectionParams,
-} from './validate-integrations';

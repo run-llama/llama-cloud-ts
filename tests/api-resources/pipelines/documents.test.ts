@@ -39,27 +39,6 @@ describe('resource documents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.pipelines.documents.retrieve('document_id', {
-      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.pipelines.documents.retrieve('document_id', {
-      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
-  });
-
-  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.pipelines.documents.list('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -136,8 +115,8 @@ describe('resource documents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveChunks: only required params', async () => {
-    const responsePromise = client.pipelines.documents.retrieveChunks('document_id', {
+  test.skip('get: only required params', async () => {
+    const responsePromise = client.pipelines.documents.get('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -150,17 +129,17 @@ describe('resource documents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveChunks: required and optional params', async () => {
-    const response = await client.pipelines.documents.retrieveChunks('document_id', {
+  test.skip('get: required and optional params', async () => {
+    const response = await client.pipelines.documents.get('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
   // Prism tests are disabled
-  test.skip('retrievePaginated', async () => {
-    const responsePromise = client.pipelines.documents.retrievePaginated(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    );
+  test.skip('getChunks: only required params', async () => {
+    const responsePromise = client.pipelines.documents.getChunks('document_id', {
+      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -171,10 +150,29 @@ describe('resource documents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrievePaginated: request options and params are passed correctly', async () => {
+  test.skip('getChunks: required and optional params', async () => {
+    const response = await client.pipelines.documents.getChunks('document_id', {
+      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('getPaginated', async () => {
+    const responsePromise = client.pipelines.documents.getPaginated('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getPaginated: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.pipelines.documents.retrievePaginated(
+      client.pipelines.documents.getPaginated(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         {
           file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -190,8 +188,8 @@ describe('resource documents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveStatus: only required params', async () => {
-    const responsePromise = client.pipelines.documents.retrieveStatus('document_id', {
+  test.skip('getStatus: only required params', async () => {
+    const responsePromise = client.pipelines.documents.getStatus('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -204,8 +202,8 @@ describe('resource documents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveStatus: required and optional params', async () => {
-    const response = await client.pipelines.documents.retrieveStatus('document_id', {
+  test.skip('getStatus: required and optional params', async () => {
+    const response = await client.pipelines.documents.getStatus('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });

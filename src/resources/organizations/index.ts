@@ -8,10 +8,10 @@ export {
   type Role,
   type UsageAndPlan,
   type OrganizationListResponse,
-  type OrganizationRetrieveRolesResponse,
+  type OrganizationGetRolesResponse,
   type OrganizationCreateParams,
   type OrganizationUpdateParams,
-  type OrganizationRetrieveUsageParams,
+  type OrganizationGetUsageParams,
 } from './organizations';
 export {
   Users,

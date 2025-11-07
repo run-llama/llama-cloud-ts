@@ -9,20 +9,6 @@ const client = new LlamaCloud({
 
 describe('resource extractionAgents', () => {
   // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.extraction.extractionAgents.retrieve(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    );
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.extraction.extractionAgents.update(
       '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -117,8 +103,8 @@ describe('resource extractionAgents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveByName', async () => {
-    const responsePromise = client.extraction.extractionAgents.retrieveByName('name');
+  test.skip('get', async () => {
+    const responsePromise = client.extraction.extractionAgents.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -129,10 +115,22 @@ describe('resource extractionAgents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveByName: request options and params are passed correctly', async () => {
+  test.skip('getByName', async () => {
+    const responsePromise = client.extraction.extractionAgents.getByName('name');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getByName: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.extraction.extractionAgents.retrieveByName(
+      client.extraction.extractionAgents.getByName(
         'name',
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -144,8 +142,8 @@ describe('resource extractionAgents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveDefault', async () => {
-    const responsePromise = client.extraction.extractionAgents.retrieveDefault();
+  test.skip('getDefault', async () => {
+    const responsePromise = client.extraction.extractionAgents.getDefault();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -156,10 +154,10 @@ describe('resource extractionAgents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveDefault: request options and params are passed correctly', async () => {
+  test.skip('getDefault: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.extraction.extractionAgents.retrieveDefault(
+      client.extraction.extractionAgents.getDefault(
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -170,8 +168,8 @@ describe('resource extractionAgents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveExtractionAgents', async () => {
-    const responsePromise = client.extraction.extractionAgents.retrieveExtractionAgents();
+  test.skip('getExtractionAgents', async () => {
+    const responsePromise = client.extraction.extractionAgents.getExtractionAgents();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -182,10 +180,10 @@ describe('resource extractionAgents', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveExtractionAgents: request options and params are passed correctly', async () => {
+  test.skip('getExtractionAgents: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.extraction.extractionAgents.retrieveExtractionAgents(
+      client.extraction.extractionAgents.getExtractionAgents(
         {
           include_default: true,
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',

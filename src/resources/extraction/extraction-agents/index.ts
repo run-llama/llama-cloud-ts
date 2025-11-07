@@ -4,12 +4,12 @@ export {
   ExtractionAgents,
   type ExtractAgent,
   type ExtractionAgentDeleteResponse,
-  type ExtractionAgentRetrieveExtractionAgentsResponse,
+  type ExtractionAgentGetExtractionAgentsResponse,
   type ExtractionAgentUpdateParams,
   type ExtractionAgentExtractionAgentsParams,
-  type ExtractionAgentRetrieveByNameParams,
-  type ExtractionAgentRetrieveDefaultParams,
-  type ExtractionAgentRetrieveExtractionAgentsParams,
+  type ExtractionAgentGetByNameParams,
+  type ExtractionAgentGetDefaultParams,
+  type ExtractionAgentGetExtractionAgentsParams,
 } from './extraction-agents';
 export {
   Schema,

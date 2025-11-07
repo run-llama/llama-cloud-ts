@@ -17,17 +17,6 @@ export class Projects extends APIResource {
   }
 
   /**
-   * Get a project by ID.
-   */
-  retrieve(
-    projectID: string,
-    query: ProjectRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<Project> {
-    return this._client.get(path`/api/v1/projects/${projectID}`, { query, ...options });
-  }
-
-  /**
    * Update an existing project.
    */
   update(projectID: string, params: ProjectUpdateParams, options?: RequestOptions): APIPromise<Project> {
@@ -63,6 +52,17 @@ export class Projects extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
+  }
+
+  /**
+   * Get a project by ID.
+   */
+  get(
+    projectID: string,
+    query: ProjectGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Project> {
+    return this._client.get(path`/api/v1/projects/${projectID}`, { query, ...options });
   }
 
   /**
@@ -216,10 +216,6 @@ export interface ProjectCreateParams {
   organization_id?: string | null;
 }
 
-export interface ProjectRetrieveParams {
-  organization_id?: string | null;
-}
-
 export interface ProjectUpdateParams {
   /**
    * Body param:
@@ -239,6 +235,10 @@ export interface ProjectListParams {
 }
 
 export interface ProjectDeleteParams {
+  organization_id?: string | null;
+}
+
+export interface ProjectGetParams {
   organization_id?: string | null;
 }
 
@@ -273,10 +273,10 @@ export declare namespace Projects {
     type ProjectCreate as ProjectCreate,
     type ProjectListResponse as ProjectListResponse,
     type ProjectCreateParams as ProjectCreateParams,
-    type ProjectRetrieveParams as ProjectRetrieveParams,
     type ProjectUpdateParams as ProjectUpdateParams,
     type ProjectListParams as ProjectListParams,
     type ProjectDeleteParams as ProjectDeleteParams,
+    type ProjectGetParams as ProjectGetParams,
     type ProjectGetCurrentParams as ProjectGetCurrentParams,
     type ProjectGetUsageParams as ProjectGetUsageParams,
     type ProjectUpsertParams as ProjectUpsertParams,

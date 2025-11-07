@@ -21,13 +21,6 @@ export class Jobs extends APIResource {
   }
 
   /**
-   * Get Job
-   */
-  retrieve(jobID: string, options?: RequestOptions): APIPromise<ExtractJob> {
-    return this._client.get(path`/api/v1/extraction/jobs/${jobID}`, options);
-  }
-
-  /**
    * List Jobs
    */
   list(query: JobListParams, options?: RequestOptions): APIPromise<JobListResponse> {
@@ -54,13 +47,20 @@ export class Jobs extends APIResource {
   }
 
   /**
+   * Get Job
+   */
+  get(jobID: string, options?: RequestOptions): APIPromise<ExtractJob> {
+    return this._client.get(path`/api/v1/extraction/jobs/${jobID}`, options);
+  }
+
+  /**
    * Get Job Result
    */
-  retrieveResult(
+  getResult(
     jobID: string,
-    query: JobRetrieveResultParams | null | undefined = {},
+    query: JobGetResultParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<JobRetrieveResultResponse> {
+  ): APIPromise<JobGetResultResponse> {
     return this._client.get(path`/api/v1/extraction/jobs/${jobID}/result`, { query, ...options });
   }
 }
@@ -137,7 +137,7 @@ export type JobBatchResponse = Array<ExtractJob>;
 /**
  * Schema for an extraction resultset.
  */
-export interface JobRetrieveResultResponse {
+export interface JobGetResultResponse {
   /**
    * The data extracted from the file
    */
@@ -273,7 +273,7 @@ export interface JobFileParams {
   data_schema_override?: string | null;
 }
 
-export interface JobRetrieveResultParams {
+export interface JobGetResultParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -285,11 +285,11 @@ export declare namespace Jobs {
     type WebhookConfiguration as WebhookConfiguration,
     type JobListResponse as JobListResponse,
     type JobBatchResponse as JobBatchResponse,
-    type JobRetrieveResultResponse as JobRetrieveResultResponse,
+    type JobGetResultResponse as JobGetResultResponse,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
     type JobBatchParams as JobBatchParams,
     type JobFileParams as JobFileParams,
-    type JobRetrieveResultParams as JobRetrieveResultParams,
+    type JobGetResultParams as JobGetResultParams,
   };
 }
