@@ -33,6 +33,7 @@ describe('resource jobs', () => {
         generate_additional_metadata: true,
         include_hidden_cells: true,
         sheet_names: ['string'],
+        use_experimental_processing: true,
       },
     });
   });
