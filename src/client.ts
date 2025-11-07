@@ -59,17 +59,6 @@ import {
   DataSourceUpsertParams,
   DataSources,
 } from './resources/data-sources';
-import {
-  EmbeddingModelConfig,
-  EmbeddingModelConfigCreateParams,
-  EmbeddingModelConfigDeleteParams,
-  EmbeddingModelConfigListParams,
-  EmbeddingModelConfigListResponse,
-  EmbeddingModelConfigUpdate,
-  EmbeddingModelConfigUpdateParams,
-  EmbeddingModelConfigUpsertParams,
-  EmbeddingModelConfigs,
-} from './resources/embedding-model-configs';
 import { EvalListSupportedModelsResponse, Evals } from './resources/evals';
 import {
   AgentDeploymentList,
@@ -892,7 +881,6 @@ export class LlamaCloud {
   projects: API.Projects = new API.Projects(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
-  embeddingModelConfigs: API.EmbeddingModelConfigs = new API.EmbeddingModelConfigs(this);
   organizations: API.Organizations = new API.Organizations(this);
   files: API.Files = new API.Files(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
@@ -907,7 +895,6 @@ export class LlamaCloud {
 LlamaCloud.Projects = Projects;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
-LlamaCloud.EmbeddingModelConfigs = EmbeddingModelConfigs;
 LlamaCloud.Organizations = Organizations;
 LlamaCloud.Files = Files;
 LlamaCloud.Pipelines = Pipelines;
@@ -1016,18 +1003,6 @@ export declare namespace LlamaCloud {
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceListParams as DataSourceListParams,
     type DataSourceUpsertParams as DataSourceUpsertParams,
-  };
-
-  export {
-    EmbeddingModelConfigs as EmbeddingModelConfigs,
-    type EmbeddingModelConfig as EmbeddingModelConfig,
-    type EmbeddingModelConfigUpdate as EmbeddingModelConfigUpdate,
-    type EmbeddingModelConfigListResponse as EmbeddingModelConfigListResponse,
-    type EmbeddingModelConfigCreateParams as EmbeddingModelConfigCreateParams,
-    type EmbeddingModelConfigUpdateParams as EmbeddingModelConfigUpdateParams,
-    type EmbeddingModelConfigListParams as EmbeddingModelConfigListParams,
-    type EmbeddingModelConfigDeleteParams as EmbeddingModelConfigDeleteParams,
-    type EmbeddingModelConfigUpsertParams as EmbeddingModelConfigUpsertParams,
   };
 
   export {
