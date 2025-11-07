@@ -9,18 +9,6 @@ const client = new LlamaCloud({
 
 describe('resource job', () => {
   // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.parsing.job.retrieve('job_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
   test.skip('generatePresignedURL: only required params', async () => {
     const responsePromise = client.parsing.job.generatePresignedURL('filename', { job_id: 'job_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -35,6 +23,18 @@ describe('resource job', () => {
   // Prism tests are disabled
   test.skip('generatePresignedURL: required and optional params', async () => {
     const response = await client.parsing.job.generatePresignedURL('filename', { job_id: 'job_id' });
+  });
+
+  // Prism tests are disabled
+  test.skip('get', async () => {
+    const responsePromise = client.parsing.job.get('job_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 
   // Prism tests are disabled

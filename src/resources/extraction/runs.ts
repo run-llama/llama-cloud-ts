@@ -3,26 +3,22 @@
 import { APIResource } from '../../core/resource';
 import * as FilesAPI from '../files/files';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, PaginatedExtractRuns, type PaginatedExtractRunsParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Runs extends APIResource {
   /**
-   * Get Run
-   */
-  retrieve(
-    runID: string,
-    query: RunRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ExtractRun> {
-    return this._client.get(path`/api/v1/extraction/runs/${runID}`, { query, ...options });
-  }
-
-  /**
    * List Extract Runs
    */
-  list(query: RunListParams, options?: RequestOptions): APIPromise<RunListResponse> {
-    return this._client.get('/api/v1/extraction/runs', { query, ...options });
+  list(
+    query: RunListParams,
+    options?: RequestOptions,
+  ): PagePromise<ExtractRunsPaginatedExtractRuns, ExtractRun> {
+    return this._client.getAPIList('/api/v1/extraction/runs', PaginatedExtractRuns<ExtractRun>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -41,11 +37,22 @@ export class Runs extends APIResource {
   }
 
   /**
+   * Get Run
+   */
+  get(
+    runID: string,
+    query: RunGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExtractRun> {
+    return this._client.get(path`/api/v1/extraction/runs/${runID}`, { query, ...options });
+  }
+
+  /**
    * Get Run By Job Id
    */
-  retrieveByJob(
+  getByJob(
     jobID: string,
-    query: RunRetrieveByJobParams | null | undefined = {},
+    query: RunGetByJobParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ExtractRun> {
     return this._client.get(path`/api/v1/extraction/runs/by-job/${jobID}`, { query, ...options });
@@ -54,13 +61,12 @@ export class Runs extends APIResource {
   /**
    * Get Latest Run From Ui
    */
-  retrieveLatestFromUi(
-    query: RunRetrieveLatestFromUiParams,
-    options?: RequestOptions,
-  ): APIPromise<ExtractRun | null> {
+  getLatestFromUi(query: RunGetLatestFromUiParams, options?: RequestOptions): APIPromise<ExtractRun | null> {
     return this._client.get('/api/v1/extraction/runs/latest-from-ui', { query, ...options });
   }
 }
+
+export type ExtractRunsPaginatedExtractRuns = PaginatedExtractRuns<ExtractRun>;
 
 /**
  * Additional parameters for the extraction agent.
@@ -265,45 +271,10 @@ export interface ExtractRun {
   updated_at?: string | null;
 }
 
-/**
- * Schema for paginated extraction runs response.
- */
-export interface RunListResponse {
-  /**
-   * The list of extraction runs
-   */
-  items: Array<ExtractRun>;
-
-  /**
-   * The maximum number of extraction runs returned
-   */
-  limit: number;
-
-  /**
-   * The number of extraction runs skipped
-   */
-  skip: number;
-
-  /**
-   * The total number of extraction runs
-   */
-  total: number;
-}
-
 export type RunDeleteResponse = unknown;
 
-export interface RunRetrieveParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface RunListParams {
+export interface RunListParams extends PaginatedExtractRunsParams {
   extraction_agent_id: string;
-
-  limit?: number;
-
-  skip?: number;
 }
 
 export interface RunDeleteParams {
@@ -312,13 +283,19 @@ export interface RunDeleteParams {
   project_id?: string | null;
 }
 
-export interface RunRetrieveByJobParams {
+export interface RunGetParams {
   organization_id?: string | null;
 
   project_id?: string | null;
 }
 
-export interface RunRetrieveLatestFromUiParams {
+export interface RunGetByJobParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface RunGetLatestFromUiParams {
   extraction_agent_id: string;
 }
 
@@ -326,12 +303,12 @@ export declare namespace Runs {
   export {
     type ExtractConfig as ExtractConfig,
     type ExtractRun as ExtractRun,
-    type RunListResponse as RunListResponse,
     type RunDeleteResponse as RunDeleteResponse,
-    type RunRetrieveParams as RunRetrieveParams,
+    type ExtractRunsPaginatedExtractRuns as ExtractRunsPaginatedExtractRuns,
     type RunListParams as RunListParams,
     type RunDeleteParams as RunDeleteParams,
-    type RunRetrieveByJobParams as RunRetrieveByJobParams,
-    type RunRetrieveLatestFromUiParams as RunRetrieveLatestFromUiParams,
+    type RunGetParams as RunGetParams,
+    type RunGetByJobParams as RunGetByJobParams,
+    type RunGetLatestFromUiParams as RunGetLatestFromUiParams,
   };
 }

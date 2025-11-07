@@ -9,29 +9,6 @@ const client = new LlamaCloud({
 
 describe('resource pageScreenshots', () => {
   // Prism tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.files.pageScreenshots.retrieve(0, {
-      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.files.pageScreenshots.retrieve(0, {
-      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
-  });
-
-  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.files.pageScreenshots.list('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -75,6 +52,29 @@ describe('resource pageScreenshots', () => {
   // Prism tests are disabled
   test.skip('generatePresignedURL: required and optional params', async () => {
     const response = await client.files.pageScreenshots.generatePresignedURL(0, {
+      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('get: only required params', async () => {
+    const responsePromise = client.files.pageScreenshots.get(0, {
+      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('get: required and optional params', async () => {
+    const response = await client.files.pageScreenshots.get(0, {
       id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',

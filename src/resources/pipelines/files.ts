@@ -55,9 +55,9 @@ export class Files extends APIResource {
   /**
    * Get status of a file for a pipeline.
    */
-  retrieveStatus(
+  getStatus(
     fileID: string,
-    params: FileRetrieveStatusParams,
+    params: FileGetStatusParams,
     options?: RequestOptions,
   ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
     const { pipeline_id } = params;
@@ -67,11 +67,11 @@ export class Files extends APIResource {
   /**
    * Get files for a pipeline.
    */
-  retrieveStatusCounts(
+  getStatusCounts(
     pipelineID: string,
-    query: FileRetrieveStatusCountsParams | null | undefined = {},
+    query: FileGetStatusCountsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<FileRetrieveStatusCountsResponse> {
+  ): APIPromise<FileGetStatusCountsResponse> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}/files/status-counts`, { query, ...options });
   }
 }
@@ -188,7 +188,7 @@ export type FileCreateResponse = Array<PipelineFile>;
 
 export type FileListResponse = Array<PipelineFile>;
 
-export interface FileRetrieveStatusCountsResponse {
+export interface FileGetStatusCountsResponse {
   /**
    * The counts of files by status
    */
@@ -262,11 +262,11 @@ export interface FileDeleteParams {
   pipeline_id: string;
 }
 
-export interface FileRetrieveStatusParams {
+export interface FileGetStatusParams {
   pipeline_id: string;
 }
 
-export interface FileRetrieveStatusCountsParams {
+export interface FileGetStatusCountsParams {
   data_source_id?: string | null;
 
   only_manually_uploaded?: boolean;
@@ -277,12 +277,12 @@ export declare namespace Files {
     type PipelineFile as PipelineFile,
     type FileCreateResponse as FileCreateResponse,
     type FileListResponse as FileListResponse,
-    type FileRetrieveStatusCountsResponse as FileRetrieveStatusCountsResponse,
+    type FileGetStatusCountsResponse as FileGetStatusCountsResponse,
     type FileCreateParams as FileCreateParams,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
-    type FileRetrieveStatusParams as FileRetrieveStatusParams,
-    type FileRetrieveStatusCountsParams as FileRetrieveStatusCountsParams,
+    type FileGetStatusParams as FileGetStatusParams,
+    type FileGetStatusCountsParams as FileGetStatusCountsParams,
   };
 }

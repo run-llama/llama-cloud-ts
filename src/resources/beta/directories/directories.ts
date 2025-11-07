@@ -6,15 +6,21 @@ import {
   FileAddParams,
   FileAddResponse,
   FileDeleteParams,
+  FileGetParams,
+  FileGetResponse,
   FileListParams,
   FileListResponse,
-  FileRetrieveParams,
-  FileRetrieveResponse,
+  FileListResponsesPaginatedClassifyJobs,
   FileUpdateParams,
   FileUpdateResponse,
   Files,
 } from './files';
 import { APIPromise } from '../../../core/api-promise';
+import {
+  PagePromise,
+  PaginatedClassifyJobs,
+  type PaginatedClassifyJobsParams,
+} from '../../../core/pagination';
 import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -35,17 +41,6 @@ export class Directories extends APIResource {
       body,
       ...options,
     });
-  }
-
-  /**
-   * Retrieve a directory by its identifier.
-   */
-  retrieve(
-    directoryID: string,
-    query: DirectoryRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<DirectoryRetrieveResponse> {
-    return this._client.get(path`/api/v1/beta/directories/${directoryID}`, { query, ...options });
   }
 
   /**
@@ -70,8 +65,11 @@ export class Directories extends APIResource {
   list(
     query: DirectoryListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<DirectoryListResponse> {
-    return this._client.get('/api/v1/beta/directories', { query, ...options });
+  ): PagePromise<DirectoryListResponsesPaginatedClassifyJobs, DirectoryListResponse> {
+    return this._client.getAPIList('/api/v1/beta/directories', PaginatedClassifyJobs<DirectoryListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -89,57 +87,25 @@ export class Directories extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Retrieve a directory by its identifier.
+   */
+  get(
+    directoryID: string,
+    query: DirectoryGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<DirectoryGetResponse> {
+    return this._client.get(path`/api/v1/beta/directories/${directoryID}`, { query, ...options });
+  }
 }
+
+export type DirectoryListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<DirectoryListResponse>;
 
 /**
  * API response schema for a directory.
  */
 export interface DirectoryCreateResponse {
-  /**
-   * Unique identifier for the directory.
-   */
-  id: string;
-
-  /**
-   * Human-readable name for the directory.
-   */
-  name: string;
-
-  /**
-   * Project the directory belongs to.
-   */
-  project_id: string;
-
-  /**
-   * Creation datetime
-   */
-  created_at?: string | null;
-
-  /**
-   * Optional data source id the directory syncs from. Null if just manual uploads.
-   */
-  data_source_id?: string | null;
-
-  /**
-   * Optional timestamp of when the directory was deleted. Null if not deleted.
-   */
-  deleted_at?: string | null;
-
-  /**
-   * Optional description shown to users.
-   */
-  description?: string | null;
-
-  /**
-   * Update datetime
-   */
-  updated_at?: string | null;
-}
-
-/**
- * API response schema for a directory.
- */
-export interface DirectoryRetrieveResponse {
   /**
    * Unique identifier for the directory.
    */
@@ -227,73 +193,93 @@ export interface DirectoryUpdateResponse {
 }
 
 /**
- * API query response schema for directories.
+ * API response schema for a directory.
  */
 export interface DirectoryListResponse {
   /**
-   * The list of items.
+   * Unique identifier for the directory.
    */
-  items: Array<DirectoryListResponse.Item>;
+  id: string;
 
   /**
-   * A token, which can be sent as page_token to retrieve the next page. If this
-   * field is omitted, there are no subsequent pages.
+   * Human-readable name for the directory.
    */
-  next_page_token?: string | null;
+  name: string;
 
   /**
-   * The total number of items available. This is only populated when specifically
-   * requested. The value may be an estimate and can be used for display purposes
-   * only.
+   * Project the directory belongs to.
    */
-  total_size?: number | null;
+  project_id: string;
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Optional data source id the directory syncs from. Null if just manual uploads.
+   */
+  data_source_id?: string | null;
+
+  /**
+   * Optional timestamp of when the directory was deleted. Null if not deleted.
+   */
+  deleted_at?: string | null;
+
+  /**
+   * Optional description shown to users.
+   */
+  description?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
 }
 
-export namespace DirectoryListResponse {
+/**
+ * API response schema for a directory.
+ */
+export interface DirectoryGetResponse {
   /**
-   * API response schema for a directory.
+   * Unique identifier for the directory.
    */
-  export interface Item {
-    /**
-     * Unique identifier for the directory.
-     */
-    id: string;
+  id: string;
 
-    /**
-     * Human-readable name for the directory.
-     */
-    name: string;
+  /**
+   * Human-readable name for the directory.
+   */
+  name: string;
 
-    /**
-     * Project the directory belongs to.
-     */
-    project_id: string;
+  /**
+   * Project the directory belongs to.
+   */
+  project_id: string;
 
-    /**
-     * Creation datetime
-     */
-    created_at?: string | null;
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
 
-    /**
-     * Optional data source id the directory syncs from. Null if just manual uploads.
-     */
-    data_source_id?: string | null;
+  /**
+   * Optional data source id the directory syncs from. Null if just manual uploads.
+   */
+  data_source_id?: string | null;
 
-    /**
-     * Optional timestamp of when the directory was deleted. Null if not deleted.
-     */
-    deleted_at?: string | null;
+  /**
+   * Optional timestamp of when the directory was deleted. Null if not deleted.
+   */
+  deleted_at?: string | null;
 
-    /**
-     * Optional description shown to users.
-     */
-    description?: string | null;
+  /**
+   * Optional description shown to users.
+   */
+  description?: string | null;
 
-    /**
-     * Update datetime
-     */
-    updated_at?: string | null;
-  }
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
 }
 
 export interface DirectoryCreateParams {
@@ -323,12 +309,6 @@ export interface DirectoryCreateParams {
   description?: string | null;
 }
 
-export interface DirectoryRetrieveParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export interface DirectoryUpdateParams {
   /**
    * Query param:
@@ -351,7 +331,7 @@ export interface DirectoryUpdateParams {
   name?: string | null;
 }
 
-export interface DirectoryListParams {
+export interface DirectoryListParams extends PaginatedClassifyJobsParams {
   data_source_id?: string | null;
 
   include_deleted?: boolean;
@@ -359,10 +339,6 @@ export interface DirectoryListParams {
   name?: string | null;
 
   organization_id?: string | null;
-
-  page_size?: number | null;
-
-  page_token?: string | null;
 
   project_id?: string | null;
 }
@@ -373,31 +349,39 @@ export interface DirectoryDeleteParams {
   project_id?: string | null;
 }
 
+export interface DirectoryGetParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 Directories.Files = Files;
 
 export declare namespace Directories {
   export {
     type DirectoryCreateResponse as DirectoryCreateResponse,
-    type DirectoryRetrieveResponse as DirectoryRetrieveResponse,
     type DirectoryUpdateResponse as DirectoryUpdateResponse,
     type DirectoryListResponse as DirectoryListResponse,
+    type DirectoryGetResponse as DirectoryGetResponse,
+    type DirectoryListResponsesPaginatedClassifyJobs as DirectoryListResponsesPaginatedClassifyJobs,
     type DirectoryCreateParams as DirectoryCreateParams,
-    type DirectoryRetrieveParams as DirectoryRetrieveParams,
     type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryListParams as DirectoryListParams,
     type DirectoryDeleteParams as DirectoryDeleteParams,
+    type DirectoryGetParams as DirectoryGetParams,
   };
 
   export {
     Files as Files,
-    type FileRetrieveResponse as FileRetrieveResponse,
     type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileAddResponse as FileAddResponse,
-    type FileRetrieveParams as FileRetrieveParams,
+    type FileGetResponse as FileGetResponse,
+    type FileListResponsesPaginatedClassifyJobs as FileListResponsesPaginatedClassifyJobs,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileAddParams as FileAddParams,
+    type FileGetParams as FileGetParams,
   };
 }

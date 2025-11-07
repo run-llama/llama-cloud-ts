@@ -9,22 +9,6 @@ import { path } from '../../internal/utils/path';
 
 export class ParseConfigurations extends APIResource {
   /**
-   * Get a parse configuration by ID.
-   *
-   * Args: config_id: The ID of the parse configuration project: Validated project
-   * from dependency user: Current user db: Database session
-   *
-   * Returns: The parse configuration
-   */
-  retrieve(
-    configID: string,
-    query: ParseConfigurationRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ParseConfiguration> {
-    return this._client.get(path`/api/v1/beta/parse-configurations/${configID}`, { query, ...options });
-  }
-
-  /**
    * Update a parse configuration.
    *
    * Args: config_id: The ID of the parse configuration to update config_update:
@@ -66,6 +50,54 @@ export class ParseConfigurations extends APIResource {
   }
 
   /**
+   * Get a parse configuration by ID.
+   *
+   * Args: config_id: The ID of the parse configuration project: Validated project
+   * from dependency user: Current user db: Database session
+   *
+   * Returns: The parse configuration
+   */
+  get(
+    configID: string,
+    query: ParseConfigurationGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ParseConfiguration> {
+    return this._client.get(path`/api/v1/beta/parse-configurations/${configID}`, { query, ...options });
+  }
+
+  /**
+   * Get the latest parse configuration for the current project.
+   *
+   * Args: project: Validated project from dependency user: Current user db: Database
+   * session creator: Optional creator filter
+   *
+   * Returns: The latest parse configuration or None if not found
+   */
+  getLatest(
+    query: ParseConfigurationGetLatestParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ParseConfiguration | null> {
+    return this._client.get('/api/v1/beta/parse-configurations/latest', { query, ...options });
+  }
+
+  /**
+   * List parse configurations for the current project.
+   *
+   * Args: project: Validated project from dependency user: Current user db: Database
+   * session page_size: Number of items per page page_token: Token for pagination
+   * name: Filter by configuration name creator: Filter by creator version: Filter by
+   * version
+   *
+   * Returns: Paginated response with parse configurations
+   */
+  getParseConfigurations(
+    query: ParseConfigurationGetParseConfigurationsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ParseConfigurationQueryResponse> {
+    return this._client.get('/api/v1/beta/parse-configurations', { query, ...options });
+  }
+
+  /**
    * Create a new parse configuration.
    *
    * Args: config_create: Parse configuration creation data project: Validated
@@ -103,38 +135,6 @@ export class ParseConfigurations extends APIResource {
       body,
       ...options,
     });
-  }
-
-  /**
-   * Get the latest parse configuration for the current project.
-   *
-   * Args: project: Validated project from dependency user: Current user db: Database
-   * session creator: Optional creator filter
-   *
-   * Returns: The latest parse configuration or None if not found
-   */
-  retrieveLatest(
-    query: ParseConfigurationRetrieveLatestParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ParseConfiguration | null> {
-    return this._client.get('/api/v1/beta/parse-configurations/latest', { query, ...options });
-  }
-
-  /**
-   * List parse configurations for the current project.
-   *
-   * Args: project: Validated project from dependency user: Current user db: Database
-   * session page_size: Number of items per page page_token: Token for pagination
-   * name: Filter by configuration name creator: Filter by creator version: Filter by
-   * version
-   *
-   * Returns: Paginated response with parse configurations
-   */
-  retrieveParseConfigurations(
-    query: ParseConfigurationRetrieveParseConfigurationsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ParseConfigurationQueryResponse> {
-    return this._client.get('/api/v1/beta/parse-configurations', { query, ...options });
   }
 
   /**
@@ -266,12 +266,6 @@ export interface ParseConfigurationQueryResponse {
   total_size?: number | null;
 }
 
-export interface ParseConfigurationRetrieveParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export interface ParseConfigurationUpdateParams {
   /**
    * Query param:
@@ -294,6 +288,36 @@ export interface ParseConfigurationDeleteParams {
   organization_id?: string | null;
 
   project_id?: string | null;
+}
+
+export interface ParseConfigurationGetParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface ParseConfigurationGetLatestParams {
+  creator?: string | null;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface ParseConfigurationGetParseConfigurationsParams {
+  creator?: string | null;
+
+  name?: string | null;
+
+  organization_id?: string | null;
+
+  page_size?: number | null;
+
+  page_token?: string | null;
+
+  project_id?: string | null;
+
+  version?: string | null;
 }
 
 export interface ParseConfigurationParseConfigurationsParams {
@@ -411,30 +435,6 @@ export namespace ParseConfigurationQueryParams {
   }
 }
 
-export interface ParseConfigurationRetrieveLatestParams {
-  creator?: string | null;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface ParseConfigurationRetrieveParseConfigurationsParams {
-  creator?: string | null;
-
-  name?: string | null;
-
-  organization_id?: string | null;
-
-  page_size?: number | null;
-
-  page_token?: string | null;
-
-  project_id?: string | null;
-
-  version?: string | null;
-}
-
 export interface ParseConfigurationUpdateParseConfigurationsParams {
   /**
    * Body param: Name of the parse configuration
@@ -482,13 +482,13 @@ export declare namespace ParseConfigurations {
     type ParseConfiguration as ParseConfiguration,
     type ParseConfigurationCreate as ParseConfigurationCreate,
     type ParseConfigurationQueryResponse as ParseConfigurationQueryResponse,
-    type ParseConfigurationRetrieveParams as ParseConfigurationRetrieveParams,
     type ParseConfigurationUpdateParams as ParseConfigurationUpdateParams,
     type ParseConfigurationDeleteParams as ParseConfigurationDeleteParams,
+    type ParseConfigurationGetParams as ParseConfigurationGetParams,
+    type ParseConfigurationGetLatestParams as ParseConfigurationGetLatestParams,
+    type ParseConfigurationGetParseConfigurationsParams as ParseConfigurationGetParseConfigurationsParams,
     type ParseConfigurationParseConfigurationsParams as ParseConfigurationParseConfigurationsParams,
     type ParseConfigurationQueryParams as ParseConfigurationQueryParams,
-    type ParseConfigurationRetrieveLatestParams as ParseConfigurationRetrieveLatestParams,
-    type ParseConfigurationRetrieveParseConfigurationsParams as ParseConfigurationRetrieveParseConfigurationsParams,
     type ParseConfigurationUpdateParseConfigurationsParams as ParseConfigurationUpdateParseConfigurationsParams,
   };
 }

@@ -2,28 +2,16 @@
 
 import { APIResource } from '../../../core/resource';
 import { APIPromise } from '../../../core/api-promise';
+import {
+  PagePromise,
+  PaginatedClassifyJobs,
+  type PaginatedClassifyJobsParams,
+} from '../../../core/pagination';
 import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
 export class Files extends APIResource {
-  /**
-   * Get a file by its directory_file_id within the specified directory. If you're
-   * trying to get a file by its unique_id, use the list endpoint with a filter
-   * instead.
-   */
-  retrieve(
-    directoryFileID: string,
-    params: FileRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<FileRetrieveResponse> {
-    const { directory_id, ...query } = params;
-    return this._client.get(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
-      query,
-      ...options,
-    });
-  }
-
   /**
    * Update file metadata within the specified directory.
    *
@@ -52,8 +40,12 @@ export class Files extends APIResource {
     directoryID: string,
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<FileListResponse> {
-    return this._client.get(path`/api/v1/beta/directories/${directoryID}/files`, { query, ...options });
+  ): PagePromise<FileListResponsesPaginatedClassifyJobs, FileListResponse> {
+    return this._client.getAPIList(
+      path`/api/v1/beta/directories/${directoryID}/files`,
+      PaginatedClassifyJobs<FileListResponse>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -86,62 +78,22 @@ export class Files extends APIResource {
       ...options,
     });
   }
+
+  /**
+   * Get a file by its directory_file_id within the specified directory. If you're
+   * trying to get a file by its unique_id, use the list endpoint with a filter
+   * instead.
+   */
+  get(directoryFileID: string, params: FileGetParams, options?: RequestOptions): APIPromise<FileGetResponse> {
+    const { directory_id, ...query } = params;
+    return this._client.get(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
+      query,
+      ...options,
+    });
+  }
 }
 
-/**
- * API response schema for a directory file.
- */
-export interface FileRetrieveResponse {
-  /**
-   * Unique identifier for the directory file.
-   */
-  id: string;
-
-  /**
-   * Directory the file belongs to.
-   */
-  directory_id: string;
-
-  /**
-   * Display name for the file.
-   */
-  display_name: string;
-
-  /**
-   * Project the directory file belongs to.
-   */
-  project_id: string;
-
-  /**
-   * Unique identifier for the file in the directory
-   */
-  unique_id: string;
-
-  /**
-   * Creation datetime
-   */
-  created_at?: string | null;
-
-  /**
-   * Optional data source credential associated with the file.
-   */
-  data_source_id?: string | null;
-
-  /**
-   * Soft delete marker when the file is removed upstream or by user action.
-   */
-  deleted_at?: string | null;
-
-  /**
-   * File ID for the storage location.
-   */
-  file_id?: string | null;
-
-  /**
-   * Update datetime
-   */
-  updated_at?: string | null;
-}
+export type FileListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<FileListResponse>;
 
 /**
  * API response schema for a directory file.
@@ -199,83 +151,58 @@ export interface FileUpdateResponse {
 }
 
 /**
- * API query response schema for directory files.
+ * API response schema for a directory file.
  */
 export interface FileListResponse {
   /**
-   * The list of items.
+   * Unique identifier for the directory file.
    */
-  items: Array<FileListResponse.Item>;
+  id: string;
 
   /**
-   * A token, which can be sent as page_token to retrieve the next page. If this
-   * field is omitted, there are no subsequent pages.
+   * Directory the file belongs to.
    */
-  next_page_token?: string | null;
+  directory_id: string;
 
   /**
-   * The total number of items available. This is only populated when specifically
-   * requested. The value may be an estimate and can be used for display purposes
-   * only.
+   * Display name for the file.
    */
-  total_size?: number | null;
-}
+  display_name: string;
 
-export namespace FileListResponse {
   /**
-   * API response schema for a directory file.
+   * Project the directory file belongs to.
    */
-  export interface Item {
-    /**
-     * Unique identifier for the directory file.
-     */
-    id: string;
+  project_id: string;
 
-    /**
-     * Directory the file belongs to.
-     */
-    directory_id: string;
+  /**
+   * Unique identifier for the file in the directory
+   */
+  unique_id: string;
 
-    /**
-     * Display name for the file.
-     */
-    display_name: string;
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
 
-    /**
-     * Project the directory file belongs to.
-     */
-    project_id: string;
+  /**
+   * Optional data source credential associated with the file.
+   */
+  data_source_id?: string | null;
 
-    /**
-     * Unique identifier for the file in the directory
-     */
-    unique_id: string;
+  /**
+   * Soft delete marker when the file is removed upstream or by user action.
+   */
+  deleted_at?: string | null;
 
-    /**
-     * Creation datetime
-     */
-    created_at?: string | null;
+  /**
+   * File ID for the storage location.
+   */
+  file_id?: string | null;
 
-    /**
-     * Optional data source credential associated with the file.
-     */
-    data_source_id?: string | null;
-
-    /**
-     * Soft delete marker when the file is removed upstream or by user action.
-     */
-    deleted_at?: string | null;
-
-    /**
-     * File ID for the storage location.
-     */
-    file_id?: string | null;
-
-    /**
-     * Update datetime
-     */
-    updated_at?: string | null;
-  }
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
 }
 
 /**
@@ -333,21 +260,59 @@ export interface FileAddResponse {
   updated_at?: string | null;
 }
 
-export interface FileRetrieveParams {
+/**
+ * API response schema for a directory file.
+ */
+export interface FileGetResponse {
   /**
-   * Path param:
+   * Unique identifier for the directory file.
+   */
+  id: string;
+
+  /**
+   * Directory the file belongs to.
    */
   directory_id: string;
 
   /**
-   * Query param:
+   * Display name for the file.
    */
-  organization_id?: string | null;
+  display_name: string;
 
   /**
-   * Query param:
+   * Project the directory file belongs to.
    */
-  project_id?: string | null;
+  project_id: string;
+
+  /**
+   * Unique identifier for the file in the directory
+   */
+  unique_id: string;
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Optional data source credential associated with the file.
+   */
+  data_source_id?: string | null;
+
+  /**
+   * Soft delete marker when the file is removed upstream or by user action.
+   */
+  deleted_at?: string | null;
+
+  /**
+   * File ID for the storage location.
+   */
+  file_id?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
 }
 
 export interface FileUpdateParams {
@@ -377,7 +342,7 @@ export interface FileUpdateParams {
   unique_id?: string | null;
 }
 
-export interface FileListParams {
+export interface FileListParams extends PaginatedClassifyJobsParams {
   display_name?: string | null;
 
   display_name_contains?: string | null;
@@ -387,10 +352,6 @@ export interface FileListParams {
   include_deleted?: boolean;
 
   organization_id?: string | null;
-
-  page_size?: number | null;
-
-  page_token?: string | null;
 
   project_id?: string | null;
 
@@ -443,16 +404,34 @@ export interface FileAddParams {
   unique_id?: string | null;
 }
 
+export interface FileGetParams {
+  /**
+   * Path param:
+   */
+  directory_id: string;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+}
+
 export declare namespace Files {
   export {
-    type FileRetrieveResponse as FileRetrieveResponse,
     type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileAddResponse as FileAddResponse,
-    type FileRetrieveParams as FileRetrieveParams,
+    type FileGetResponse as FileGetResponse,
+    type FileListResponsesPaginatedClassifyJobs as FileListResponsesPaginatedClassifyJobs,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileAddParams as FileAddParams,
+    type FileGetParams as FileGetParams,
   };
 }

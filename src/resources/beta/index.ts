@@ -1,39 +1,30 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
-  APIKeys,
-  type APIKeyRetrieveAPIKeysResponse,
-  type APIKeyAPIKeysParams,
-  type APIKeyRetrieveAPIKeysParams,
-} from './api-keys';
-export {
   AgentData,
   type AgentDataDeleteResponse,
   type AgentDataAggregateResponse,
   type AgentDataSearchResponse,
-  type AgentDataRetrieveParams,
   type AgentDataUpdateParams,
   type AgentDataDeleteParams,
   type AgentDataAgentDataParams,
   type AgentDataAggregateParams,
+  type AgentDataGetParams,
   type AgentDataSearchParams,
 } from './agent-data';
-export {
-  Beta,
-  type BetaRetrieveQuotaManagementResponse,
-  type BetaRetrieveQuotaManagementParams,
-} from './beta';
+export { Beta } from './beta';
 export {
   Directories,
   type DirectoryCreateResponse,
-  type DirectoryRetrieveResponse,
   type DirectoryUpdateResponse,
   type DirectoryListResponse,
+  type DirectoryGetResponse,
   type DirectoryCreateParams,
-  type DirectoryRetrieveParams,
   type DirectoryUpdateParams,
   type DirectoryListParams,
   type DirectoryDeleteParams,
+  type DirectoryGetParams,
+  type DirectoryListResponsesPaginatedClassifyJobs,
 } from './directories/index';
 export {
   Files,
@@ -47,13 +38,22 @@ export {
   type ParseConfiguration,
   type ParseConfigurationCreate,
   type ParseConfigurationQueryResponse,
-  type ParseConfigurationRetrieveParams,
   type ParseConfigurationUpdateParams,
   type ParseConfigurationDeleteParams,
+  type ParseConfigurationGetParams,
+  type ParseConfigurationGetLatestParams,
+  type ParseConfigurationGetParseConfigurationsParams,
   type ParseConfigurationParseConfigurationsParams,
   type ParseConfigurationQueryParams,
-  type ParseConfigurationRetrieveLatestParams,
-  type ParseConfigurationRetrieveParseConfigurationsParams,
   type ParseConfigurationUpdateParseConfigurationsParams,
 } from './parse-configurations';
-export { Spreadsheet } from './spreadsheet/index';
+export {
+  Spreadsheet,
+  type SpreadsheetJob,
+  type SpreadsheetParsingConfig,
+  type SpreadsheetCreateParams,
+  type SpreadsheetListParams,
+  type SpreadsheetGetParams,
+  type SpreadsheetGetResultTableParams,
+  type SpreadsheetJobsPaginatedClassifyJobs,
+} from './spreadsheet';

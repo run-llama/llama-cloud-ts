@@ -5,13 +5,13 @@ import * as JobsAPI from './jobs';
 import {
   ClassifierRule,
   ClassifyJob,
+  ClassifyJobsPaginatedClassifyJobs,
   ClassifyParsingConfiguration,
   JobCreateParams,
+  JobGetParams,
   JobGetResultsParams,
   JobGetResultsResponse,
   JobListParams,
-  JobListResponse,
-  JobRetrieveParams,
   Jobs,
 } from './jobs';
 
@@ -27,11 +27,11 @@ export declare namespace Classifier {
     type ClassifierRule as ClassifierRule,
     type ClassifyJob as ClassifyJob,
     type ClassifyParsingConfiguration as ClassifyParsingConfiguration,
-    type JobListResponse as JobListResponse,
     type JobGetResultsResponse as JobGetResultsResponse,
+    type ClassifyJobsPaginatedClassifyJobs as ClassifyJobsPaginatedClassifyJobs,
     type JobCreateParams as JobCreateParams,
-    type JobRetrieveParams as JobRetrieveParams,
     type JobListParams as JobListParams,
+    type JobGetParams as JobGetParams,
     type JobGetResultsParams as JobGetResultsParams,
   };
 }

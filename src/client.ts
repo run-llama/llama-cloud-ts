@@ -13,19 +13,33 @@ import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import {
+  AbstractPage,
+  type PaginatedAgentDataAggregateParams,
+  PaginatedAgentDataAggregateResponse,
+  type PaginatedAgentDataSearchParams,
+  PaginatedAgentDataSearchResponse,
+  type PaginatedBatchItemsParams,
+  PaginatedBatchItemsResponse,
+  type PaginatedClassifyJobsParams,
+  PaginatedClassifyJobsResponse,
+  type PaginatedCloudDocumentsParams,
+  PaginatedCloudDocumentsResponse,
+  type PaginatedExtractRunsParams,
+  PaginatedExtractRunsResponse,
+  type PaginatedJobsHistoryParams,
+  PaginatedJobsHistoryResponse,
+  type PaginatedPipelineFilesParams,
+  PaginatedPipelineFilesResponse,
+  type PaginatedQuotaConfigurationsParams,
+  PaginatedQuotaConfigurationsResponse,
+  type PaginatedSpreadsheetJobsParams,
+  PaginatedSpreadsheetJobsResponse,
+} from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  APIKey,
-  APIKeyCreate,
-  APIKeyCreateParams,
-  APIKeyListParams,
-  APIKeyListResponse,
-  APIKeyType,
-  APIKeys,
-} from './resources/api-keys';
-import { Auth, AuthReadSelfResponse } from './resources/auth';
 import {
   DataSink,
   DataSinkCreateParams,
@@ -45,17 +59,6 @@ import {
   DataSourceUpsertParams,
   DataSources,
 } from './resources/data-sources';
-import {
-  EmbeddingModelConfig,
-  EmbeddingModelConfigCreateParams,
-  EmbeddingModelConfigDeleteParams,
-  EmbeddingModelConfigListParams,
-  EmbeddingModelConfigListResponse,
-  EmbeddingModelConfigUpdate,
-  EmbeddingModelConfigUpdateParams,
-  EmbeddingModelConfigUpsertParams,
-  EmbeddingModelConfigs,
-} from './resources/embedding-model-configs';
 import { EvalListSupportedModelsResponse, Evals } from './resources/evals';
 import {
   AgentDeploymentList,
@@ -64,10 +67,10 @@ import {
   ProjectCreateParams,
   ProjectDeleteParams,
   ProjectGetCurrentParams,
+  ProjectGetParams,
   ProjectGetUsageParams,
   ProjectListParams,
   ProjectListResponse,
-  ProjectRetrieveParams,
   ProjectUpdateParams,
   ProjectUpsertParams,
   Projects,
@@ -79,64 +82,16 @@ import {
   Retriever,
   RetrieverCreate,
   RetrieverCreateParams,
+  RetrieverGetParams,
   RetrieverListParams,
   RetrieverListResponse,
   RetrieverPipeline,
-  RetrieverRetrieveDirectParams,
   RetrieverRetrieveParams,
   RetrieverUpdateParams,
   RetrieverUpsertParams,
   Retrievers,
 } from './resources/retrievers';
-import {
-  AzureOpenAIEmbeddingConfig,
-  BaseConnectionValidation,
-  BedrockEmbeddingConfig,
-  CloudAstraDBVectorStore,
-  CloudAzStorageBlobDataSource,
-  CloudAzureAISearchVectorStore,
-  CloudBoxDataSource,
-  CloudConfluenceDataSource,
-  CloudJiraDataSource,
-  CloudJiraDataSourceV2,
-  CloudMilvusVectorStore,
-  CloudMongoDBAtlasVectorSearch,
-  CloudNotionPageDataSource,
-  CloudOneDriveDataSource,
-  CloudPineconeVectorStore,
-  CloudPostgresVectorStore,
-  CloudQdrantVectorStore,
-  CloudS3DataSource,
-  CloudSharepointDataSource,
-  CloudSlackDataSource,
-  CohereEmbeddingConfig,
-  ConfigurableDataSinkNames,
-  ConfigurableDataSourceNames,
-  DataSinkCreate,
-  DataSourceCreate,
-  GeminiEmbeddingConfig,
-  HuggingFaceInferenceAPIEmbeddingConfig,
-  OpenAIEmbeddingConfig,
-  ValidateIntegrationValidateDataSinkConnectionParams,
-  ValidateIntegrationValidateDataSourceConnectionParams,
-  ValidateIntegrationValidateEmbeddingConnectionParams,
-  ValidateIntegrations,
-  VertexAIEmbeddingConfig,
-} from './resources/validate-integrations';
-import {
-  Beta,
-  BetaRetrieveQuotaManagementParams,
-  BetaRetrieveQuotaManagementResponse,
-} from './resources/beta/beta';
-import {
-  Billing,
-  BillingCreateCustomerPortalSessionParams,
-  BillingCreateCustomerPortalSessionResponse,
-  BillingCreateIntentAndCustomerSessionParams,
-  BillingCreateIntentAndCustomerSessionResponse,
-  BillingDowngradePlanParams,
-  BillingDowngradePlanResponse,
-} from './resources/billing/billing';
+import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
 import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
 import {
@@ -145,8 +100,8 @@ import {
   FileDeleteParams,
   FileGeneratePresignedURLParams,
   FileGeneratePresignedURLResponse,
+  FileGetParams,
   FileReadContentParams,
-  FileRetrieveParams,
   FileUploadFromURLParams,
   FileUploadParams,
   Files,
@@ -156,9 +111,9 @@ import {
   Organization,
   OrganizationCreate,
   OrganizationCreateParams,
+  OrganizationGetRolesResponse,
+  OrganizationGetUsageParams,
   OrganizationListResponse,
-  OrganizationRetrieveRolesResponse,
-  OrganizationRetrieveUsageParams,
   OrganizationUpdateParams,
   Organizations,
   Role,
@@ -193,13 +148,13 @@ import {
   PipelineChatResponse,
   PipelineCreate,
   PipelineCreateParams,
+  PipelineGetFiles2Params,
+  PipelineGetFiles2Response,
+  PipelineGetPlaygroundSessionResponse,
+  PipelineGetStatusParams,
   PipelineListParams,
   PipelineListResponse,
   PipelineMetadataConfig,
-  PipelineRetrieveFiles2Params,
-  PipelineRetrieveFiles2Response,
-  PipelineRetrievePlaygroundSessionResponse,
-  PipelineRetrieveStatusParams,
   PipelineType,
   PipelineUpdateParams,
   Pipelines,
@@ -672,6 +627,25 @@ export class LlamaCloud {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: RequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(Page, { method: 'get', path, ...opts });
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: FinalRequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as LlamaCloud, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -905,11 +879,8 @@ export class LlamaCloud {
   static toFile = Uploads.toFile;
 
   projects: API.Projects = new API.Projects(this);
-  apiKeys: API.APIKeys = new API.APIKeys(this);
-  validateIntegrations: API.ValidateIntegrations = new API.ValidateIntegrations(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
-  embeddingModelConfigs: API.EmbeddingModelConfigs = new API.EmbeddingModelConfigs(this);
   organizations: API.Organizations = new API.Organizations(this);
   files: API.Files = new API.Files(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
@@ -917,18 +888,13 @@ export class LlamaCloud {
   evals: API.Evals = new API.Evals(this);
   parsing: API.Parsing = new API.Parsing(this);
   classifier: API.Classifier = new API.Classifier(this);
-  auth: API.Auth = new API.Auth(this);
-  billing: API.Billing = new API.Billing(this);
   extraction: API.Extraction = new API.Extraction(this);
   beta: API.Beta = new API.Beta(this);
 }
 
 LlamaCloud.Projects = Projects;
-LlamaCloud.APIKeys = APIKeys;
-LlamaCloud.ValidateIntegrations = ValidateIntegrations;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
-LlamaCloud.EmbeddingModelConfigs = EmbeddingModelConfigs;
 LlamaCloud.Organizations = Organizations;
 LlamaCloud.Files = Files;
 LlamaCloud.Pipelines = Pipelines;
@@ -936,13 +902,71 @@ LlamaCloud.Retrievers = Retrievers;
 LlamaCloud.Evals = Evals;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Classifier = Classifier;
-LlamaCloud.Auth = Auth;
-LlamaCloud.Billing = Billing;
 LlamaCloud.Extraction = Extraction;
 LlamaCloud.Beta = Beta;
 
 export declare namespace LlamaCloud {
   export type RequestOptions = Opts.RequestOptions;
+
+  export import PaginatedJobsHistory = Pagination.PaginatedJobsHistory;
+  export {
+    type PaginatedJobsHistoryParams as PaginatedJobsHistoryParams,
+    type PaginatedJobsHistoryResponse as PaginatedJobsHistoryResponse,
+  };
+
+  export import PaginatedPipelineFiles = Pagination.PaginatedPipelineFiles;
+  export {
+    type PaginatedPipelineFilesParams as PaginatedPipelineFilesParams,
+    type PaginatedPipelineFilesResponse as PaginatedPipelineFilesResponse,
+  };
+
+  export import PaginatedBatchItems = Pagination.PaginatedBatchItems;
+  export {
+    type PaginatedBatchItemsParams as PaginatedBatchItemsParams,
+    type PaginatedBatchItemsResponse as PaginatedBatchItemsResponse,
+  };
+
+  export import PaginatedExtractRuns = Pagination.PaginatedExtractRuns;
+  export {
+    type PaginatedExtractRunsParams as PaginatedExtractRunsParams,
+    type PaginatedExtractRunsResponse as PaginatedExtractRunsResponse,
+  };
+
+  export import PaginatedCloudDocuments = Pagination.PaginatedCloudDocuments;
+  export {
+    type PaginatedCloudDocumentsParams as PaginatedCloudDocumentsParams,
+    type PaginatedCloudDocumentsResponse as PaginatedCloudDocumentsResponse,
+  };
+
+  export import PaginatedQuotaConfigurations = Pagination.PaginatedQuotaConfigurations;
+  export {
+    type PaginatedQuotaConfigurationsParams as PaginatedQuotaConfigurationsParams,
+    type PaginatedQuotaConfigurationsResponse as PaginatedQuotaConfigurationsResponse,
+  };
+
+  export import PaginatedClassifyJobs = Pagination.PaginatedClassifyJobs;
+  export {
+    type PaginatedClassifyJobsParams as PaginatedClassifyJobsParams,
+    type PaginatedClassifyJobsResponse as PaginatedClassifyJobsResponse,
+  };
+
+  export import PaginatedSpreadsheetJobs = Pagination.PaginatedSpreadsheetJobs;
+  export {
+    type PaginatedSpreadsheetJobsParams as PaginatedSpreadsheetJobsParams,
+    type PaginatedSpreadsheetJobsResponse as PaginatedSpreadsheetJobsResponse,
+  };
+
+  export import PaginatedAgentDataSearch = Pagination.PaginatedAgentDataSearch;
+  export {
+    type PaginatedAgentDataSearchParams as PaginatedAgentDataSearchParams,
+    type PaginatedAgentDataSearchResponse as PaginatedAgentDataSearchResponse,
+  };
+
+  export import PaginatedAgentDataAggregate = Pagination.PaginatedAgentDataAggregate;
+  export {
+    type PaginatedAgentDataAggregateParams as PaginatedAgentDataAggregateParams,
+    type PaginatedAgentDataAggregateResponse as PaginatedAgentDataAggregateResponse,
+  };
 
   export {
     Projects as Projects,
@@ -951,59 +975,13 @@ export declare namespace LlamaCloud {
     type ProjectCreate as ProjectCreate,
     type ProjectListResponse as ProjectListResponse,
     type ProjectCreateParams as ProjectCreateParams,
-    type ProjectRetrieveParams as ProjectRetrieveParams,
     type ProjectUpdateParams as ProjectUpdateParams,
     type ProjectListParams as ProjectListParams,
     type ProjectDeleteParams as ProjectDeleteParams,
+    type ProjectGetParams as ProjectGetParams,
     type ProjectGetCurrentParams as ProjectGetCurrentParams,
     type ProjectGetUsageParams as ProjectGetUsageParams,
     type ProjectUpsertParams as ProjectUpsertParams,
-  };
-
-  export {
-    APIKeys as APIKeys,
-    type APIKey as APIKey,
-    type APIKeyCreate as APIKeyCreate,
-    type APIKeyType as APIKeyType,
-    type APIKeyListResponse as APIKeyListResponse,
-    type APIKeyCreateParams as APIKeyCreateParams,
-    type APIKeyListParams as APIKeyListParams,
-  };
-
-  export {
-    ValidateIntegrations as ValidateIntegrations,
-    type AzureOpenAIEmbeddingConfig as AzureOpenAIEmbeddingConfig,
-    type BaseConnectionValidation as BaseConnectionValidation,
-    type BedrockEmbeddingConfig as BedrockEmbeddingConfig,
-    type CloudAstraDBVectorStore as CloudAstraDBVectorStore,
-    type CloudAzStorageBlobDataSource as CloudAzStorageBlobDataSource,
-    type CloudAzureAISearchVectorStore as CloudAzureAISearchVectorStore,
-    type CloudBoxDataSource as CloudBoxDataSource,
-    type CloudConfluenceDataSource as CloudConfluenceDataSource,
-    type CloudJiraDataSource as CloudJiraDataSource,
-    type CloudJiraDataSourceV2 as CloudJiraDataSourceV2,
-    type CloudMilvusVectorStore as CloudMilvusVectorStore,
-    type CloudMongoDBAtlasVectorSearch as CloudMongoDBAtlasVectorSearch,
-    type CloudNotionPageDataSource as CloudNotionPageDataSource,
-    type CloudOneDriveDataSource as CloudOneDriveDataSource,
-    type CloudPineconeVectorStore as CloudPineconeVectorStore,
-    type CloudPostgresVectorStore as CloudPostgresVectorStore,
-    type CloudQdrantVectorStore as CloudQdrantVectorStore,
-    type CloudS3DataSource as CloudS3DataSource,
-    type CloudSharepointDataSource as CloudSharepointDataSource,
-    type CloudSlackDataSource as CloudSlackDataSource,
-    type CohereEmbeddingConfig as CohereEmbeddingConfig,
-    type ConfigurableDataSinkNames as ConfigurableDataSinkNames,
-    type ConfigurableDataSourceNames as ConfigurableDataSourceNames,
-    type DataSinkCreate as DataSinkCreate,
-    type DataSourceCreate as DataSourceCreate,
-    type GeminiEmbeddingConfig as GeminiEmbeddingConfig,
-    type HuggingFaceInferenceAPIEmbeddingConfig as HuggingFaceInferenceAPIEmbeddingConfig,
-    type OpenAIEmbeddingConfig as OpenAIEmbeddingConfig,
-    type VertexAIEmbeddingConfig as VertexAIEmbeddingConfig,
-    type ValidateIntegrationValidateDataSinkConnectionParams as ValidateIntegrationValidateDataSinkConnectionParams,
-    type ValidateIntegrationValidateDataSourceConnectionParams as ValidateIntegrationValidateDataSourceConnectionParams,
-    type ValidateIntegrationValidateEmbeddingConnectionParams as ValidateIntegrationValidateEmbeddingConnectionParams,
   };
 
   export {
@@ -1028,28 +1006,16 @@ export declare namespace LlamaCloud {
   };
 
   export {
-    EmbeddingModelConfigs as EmbeddingModelConfigs,
-    type EmbeddingModelConfig as EmbeddingModelConfig,
-    type EmbeddingModelConfigUpdate as EmbeddingModelConfigUpdate,
-    type EmbeddingModelConfigListResponse as EmbeddingModelConfigListResponse,
-    type EmbeddingModelConfigCreateParams as EmbeddingModelConfigCreateParams,
-    type EmbeddingModelConfigUpdateParams as EmbeddingModelConfigUpdateParams,
-    type EmbeddingModelConfigListParams as EmbeddingModelConfigListParams,
-    type EmbeddingModelConfigDeleteParams as EmbeddingModelConfigDeleteParams,
-    type EmbeddingModelConfigUpsertParams as EmbeddingModelConfigUpsertParams,
-  };
-
-  export {
     Organizations as Organizations,
     type Organization as Organization,
     type OrganizationCreate as OrganizationCreate,
     type Role as Role,
     type UsageAndPlan as UsageAndPlan,
     type OrganizationListResponse as OrganizationListResponse,
-    type OrganizationRetrieveRolesResponse as OrganizationRetrieveRolesResponse,
+    type OrganizationGetRolesResponse as OrganizationGetRolesResponse,
     type OrganizationCreateParams as OrganizationCreateParams,
     type OrganizationUpdateParams as OrganizationUpdateParams,
-    type OrganizationRetrieveUsageParams as OrganizationRetrieveUsageParams,
+    type OrganizationGetUsageParams as OrganizationGetUsageParams,
   };
 
   export {
@@ -1058,9 +1024,9 @@ export declare namespace LlamaCloud {
     type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
     type FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse,
-    type FileRetrieveParams as FileRetrieveParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGeneratePresignedURLParams as FileGeneratePresignedURLParams,
+    type FileGetParams as FileGetParams,
     type FileReadContentParams as FileReadContentParams,
     type FileUploadParams as FileUploadParams,
     type FileUploadFromURLParams as FileUploadFromURLParams,
@@ -1086,14 +1052,14 @@ export declare namespace LlamaCloud {
     type SparseModelConfig as SparseModelConfig,
     type PipelineListResponse as PipelineListResponse,
     type PipelineChatResponse as PipelineChatResponse,
-    type PipelineRetrieveFiles2Response as PipelineRetrieveFiles2Response,
-    type PipelineRetrievePlaygroundSessionResponse as PipelineRetrievePlaygroundSessionResponse,
+    type PipelineGetFiles2Response as PipelineGetFiles2Response,
+    type PipelineGetPlaygroundSessionResponse as PipelineGetPlaygroundSessionResponse,
     type PipelineCreateParams as PipelineCreateParams,
     type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineListParams as PipelineListParams,
     type PipelineChatParams as PipelineChatParams,
-    type PipelineRetrieveFiles2Params as PipelineRetrieveFiles2Params,
-    type PipelineRetrieveStatusParams as PipelineRetrieveStatusParams,
+    type PipelineGetFiles2Params as PipelineGetFiles2Params,
+    type PipelineGetStatusParams as PipelineGetStatusParams,
   };
 
   export {
@@ -1109,7 +1075,7 @@ export declare namespace LlamaCloud {
     type RetrieverRetrieveParams as RetrieverRetrieveParams,
     type RetrieverUpdateParams as RetrieverUpdateParams,
     type RetrieverListParams as RetrieverListParams,
-    type RetrieverRetrieveDirectParams as RetrieverRetrieveDirectParams,
+    type RetrieverGetParams as RetrieverGetParams,
     type RetrieverUpsertParams as RetrieverUpsertParams,
   };
 
@@ -1132,23 +1098,7 @@ export declare namespace LlamaCloud {
 
   export { Classifier as Classifier };
 
-  export { Auth as Auth, type AuthReadSelfResponse as AuthReadSelfResponse };
-
-  export {
-    Billing as Billing,
-    type BillingCreateCustomerPortalSessionResponse as BillingCreateCustomerPortalSessionResponse,
-    type BillingCreateIntentAndCustomerSessionResponse as BillingCreateIntentAndCustomerSessionResponse,
-    type BillingDowngradePlanResponse as BillingDowngradePlanResponse,
-    type BillingCreateCustomerPortalSessionParams as BillingCreateCustomerPortalSessionParams,
-    type BillingCreateIntentAndCustomerSessionParams as BillingCreateIntentAndCustomerSessionParams,
-    type BillingDowngradePlanParams as BillingDowngradePlanParams,
-  };
-
   export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
 
-  export {
-    Beta as Beta,
-    type BetaRetrieveQuotaManagementResponse as BetaRetrieveQuotaManagementResponse,
-    type BetaRetrieveQuotaManagementParams as BetaRetrieveQuotaManagementParams,
-  };
+  export { Beta as Beta };
 }

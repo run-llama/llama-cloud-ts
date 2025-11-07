@@ -8,21 +8,6 @@ import { path } from '../../internal/utils/path';
 
 export class PageFigures extends APIResource {
   /**
-   * Get a specific figure from a page of a file.
-   */
-  retrieve(
-    figureName: string,
-    params: PageFigureRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { id, page_index, ...query } = params;
-    return this._client.get(path`/api/v1/files/${id}/page-figures/${page_index}/${figureName}`, {
-      query,
-      ...options,
-    });
-  }
-
-  /**
    * List metadata for all figures from all pages of a file.
    */
   list(
@@ -50,6 +35,17 @@ export class PageFigures extends APIResource {
       path`/api/v1/files/${id}/page-figures/${page_index}/${figureName}/presigned_url`,
       { query: { organization_id, project_id }, ...options },
     );
+  }
+
+  /**
+   * Get a specific figure from a page of a file.
+   */
+  get(figureName: string, params: PageFigureGetParams, options?: RequestOptions): APIPromise<unknown> {
+    const { id, page_index, ...query } = params;
+    return this._client.get(path`/api/v1/files/${id}/page-figures/${page_index}/${figureName}`, {
+      query,
+      ...options,
+    });
   }
 }
 
@@ -90,31 +86,9 @@ export interface PageFigureMetadata {
   metadata?: { [key: string]: unknown } | null;
 }
 
-export type PageFigureRetrieveResponse = unknown;
-
 export type PageFigureListResponse = Array<PageFigureMetadata>;
 
-export interface PageFigureRetrieveParams {
-  /**
-   * Path param:
-   */
-  id: string;
-
-  /**
-   * Path param:
-   */
-  page_index: number;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-}
+export type PageFigureGetResponse = unknown;
 
 export interface PageFigureListParams {
   organization_id?: string | null;
@@ -144,13 +118,35 @@ export interface PageFigureGeneratePresignedURLParams {
   project_id?: string | null;
 }
 
+export interface PageFigureGetParams {
+  /**
+   * Path param:
+   */
+  id: string;
+
+  /**
+   * Path param:
+   */
+  page_index: number;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+}
+
 export declare namespace PageFigures {
   export {
     type PageFigureMetadata as PageFigureMetadata,
-    type PageFigureRetrieveResponse as PageFigureRetrieveResponse,
     type PageFigureListResponse as PageFigureListResponse,
-    type PageFigureRetrieveParams as PageFigureRetrieveParams,
+    type PageFigureGetResponse as PageFigureGetResponse,
     type PageFigureListParams as PageFigureListParams,
     type PageFigureGeneratePresignedURLParams as PageFigureGeneratePresignedURLParams,
+    type PageFigureGetParams as PageFigureGetParams,
   };
 }

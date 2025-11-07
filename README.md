@@ -29,9 +29,9 @@ const client = new LlamaCloud({
   apiKey: process.env['LLAMACLOUD_API_KEY'], // This is the default and can be omitted
 });
 
-const agentDeploymentList = await client.projects.listAgents('REPLACE_ME');
+const parsingJob = await client.parsing.uploadFile({ file: fs.createReadStream('path/to/file') });
 
-console.log(agentDeploymentList.deployments);
+console.log(parsingJob.id);
 ```
 
 ### Request & Response types
@@ -46,7 +46,8 @@ const client = new LlamaCloud({
   apiKey: process.env['LLAMACLOUD_API_KEY'], // This is the default and can be omitted
 });
 
-const agentDeploymentList: LlamaCloud.AgentDeploymentList = await client.projects.listAgents('REPLACE_ME');
+const params: LlamaCloud.PipelineListParams = { project_id: 'my-project-id' };
+const pipelines: LlamaCloud.PipelineListResponse = await client.pipelines.list(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -67,17 +68,17 @@ import LlamaCloud, { toFile } from 'llama-cloud';
 const client = new LlamaCloud();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.files.upload({ upload_file: fs.createReadStream('/path/to/file') });
+await client.parsing.uploadFile({ file: fs.createReadStream('/path/to/file') });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.files.upload({ upload_file: new File(['my bytes'], 'file') });
+await client.parsing.uploadFile({ file: new File(['my bytes'], 'file') });
 
 // You can also pass a `fetch` `Response`:
-await client.files.upload({ upload_file: await fetch('https://somesite/file') });
+await client.parsing.uploadFile({ file: await fetch('https://somesite/file') });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.files.upload({ upload_file: await toFile(Buffer.from('my bytes'), 'file') });
-await client.files.upload({ upload_file: await toFile(new Uint8Array([0, 1, 2]), 'file') });
+await client.parsing.uploadFile({ file: await toFile(Buffer.from('my bytes'), 'file') });
+await client.parsing.uploadFile({ file: await toFile(new Uint8Array([0, 1, 2]), 'file') });
 ```
 
 ## Handling errors
@@ -88,7 +89,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const agentDeploymentList = await client.projects.listAgents('REPLACE_ME').catch(async (err) => {
+const pipelines = await client.pipelines.list({ project_id: 'my-project-id' }).catch(async (err) => {
   if (err instanceof LlamaCloud.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -128,7 +129,7 @@ const client = new LlamaCloud({
 });
 
 // Or, configure per-request:
-await client.projects.listAgents('REPLACE_ME', {
+await client.pipelines.list({ project_id: 'my-project-id' }, {
   maxRetries: 5,
 });
 ```
@@ -145,7 +146,7 @@ const client = new LlamaCloud({
 });
 
 // Override per-request:
-await client.projects.listAgents('REPLACE_ME', {
+await client.pipelines.list({ project_id: 'my-project-id' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -153,6 +154,43 @@ await client.projects.listAgents('REPLACE_ME', {
 On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
+
+## Auto-pagination
+
+List methods in the LlamaCloud API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllExtractRuns(params) {
+  const allExtractRuns = [];
+  // Automatically fetches more pages as needed.
+  for await (const extractRun of client.extraction.runs.list({
+    extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    limit: 20,
+  })) {
+    allExtractRuns.push(extractRun);
+  }
+  return allExtractRuns;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.extraction.runs.list({
+  extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+  limit: 20,
+});
+for (const extractRun of page.items) {
+  console.log(extractRun);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
 
 ## Advanced Usage
 
@@ -168,15 +206,15 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new LlamaCloud();
 
-const response = await client.projects.listAgents('REPLACE_ME').asResponse();
+const response = await client.pipelines.list({ project_id: 'my-project-id' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: agentDeploymentList, response: raw } = await client.projects
-  .listAgents('REPLACE_ME')
+const { data: pipelines, response: raw } = await client.pipelines
+  .list({ project_id: 'my-project-id' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(agentDeploymentList.deployments);
+console.log(pipelines);
 ```
 
 ### Logging
@@ -256,7 +294,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.projects.listAgents({
+client.parsing.uploadFile({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
