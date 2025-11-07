@@ -195,18 +195,6 @@ describe('resource pipelines', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.pipelines.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.pipelines.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {});
     const rawResponse = await responsePromise.asResponse();
@@ -296,8 +284,8 @@ describe('resource pipelines', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveFiles2', async () => {
-    const responsePromise = client.pipelines.retrieveFiles2('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('get', async () => {
+    const responsePromise = client.pipelines.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -308,10 +296,22 @@ describe('resource pipelines', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveFiles2: request options and params are passed correctly', async () => {
+  test.skip('getFiles2', async () => {
+    const responsePromise = client.pipelines.getFiles2('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getFiles2: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.pipelines.retrieveFiles2(
+      client.pipelines.getFiles2(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         {
           data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -327,10 +327,8 @@ describe('resource pipelines', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrievePlaygroundSession', async () => {
-    const responsePromise = client.pipelines.retrievePlaygroundSession(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    );
+  test.skip('getPlaygroundSession', async () => {
+    const responsePromise = client.pipelines.getPlaygroundSession('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -341,8 +339,8 @@ describe('resource pipelines', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveStatus', async () => {
-    const responsePromise = client.pipelines.retrieveStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('getStatus', async () => {
+    const responsePromise = client.pipelines.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -353,10 +351,10 @@ describe('resource pipelines', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveStatus: request options and params are passed correctly', async () => {
+  test.skip('getStatus: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.pipelines.retrieveStatus(
+      client.pipelines.getStatus(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         { full_details: true },
         { path: '/_stainless_unknown_path' },

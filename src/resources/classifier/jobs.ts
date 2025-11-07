@@ -22,18 +22,6 @@ export class Jobs extends APIResource {
   }
 
   /**
-   * Get a classify job. Experimental: This endpoint is not yet ready for production
-   * use and is subject to change at any time.
-   */
-  retrieve(
-    classifyJobID: string,
-    query: JobRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ClassifyJob> {
-    return this._client.get(path`/api/v1/classifier/jobs/${classifyJobID}`, { query, ...options });
-  }
-
-  /**
    * List classify jobs. Experimental: This endpoint is not yet ready for production
    * use and is subject to change at any time.
    */
@@ -45,6 +33,18 @@ export class Jobs extends APIResource {
       query,
       ...options,
     });
+  }
+
+  /**
+   * Get a classify job. Experimental: This endpoint is not yet ready for production
+   * use and is subject to change at any time.
+   */
+  get(
+    classifyJobID: string,
+    query: JobGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ClassifyJob> {
+    return this._client.get(path`/api/v1/classifier/jobs/${classifyJobID}`, { query, ...options });
   }
 
   /**
@@ -269,13 +269,13 @@ export interface JobCreateParams {
   parsing_configuration?: ClassifyParsingConfiguration;
 }
 
-export interface JobRetrieveParams {
+export interface JobListParams extends PaginatedClassifyJobsParams {
   organization_id?: string | null;
 
   project_id?: string | null;
 }
 
-export interface JobListParams extends PaginatedClassifyJobsParams {
+export interface JobGetParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -295,8 +295,8 @@ export declare namespace Jobs {
     type JobGetResultsResponse as JobGetResultsResponse,
     type ClassifyJobsPaginatedClassifyJobs as ClassifyJobsPaginatedClassifyJobs,
     type JobCreateParams as JobCreateParams,
-    type JobRetrieveParams as JobRetrieveParams,
     type JobListParams as JobListParams,
+    type JobGetParams as JobGetParams,
     type JobGetResultsParams as JobGetResultsParams,
   };
 }

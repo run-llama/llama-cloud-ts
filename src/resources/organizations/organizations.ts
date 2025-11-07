@@ -29,13 +29,6 @@ export class Organizations extends APIResource {
   }
 
   /**
-   * Get an organization by ID.
-   */
-  retrieve(organizationID: string, options?: RequestOptions): APIPromise<Organization> {
-    return this._client.get(path`/api/v1/organizations/${organizationID}`, options);
-  }
-
-  /**
    * Update an existing organization.
    */
   update(
@@ -64,21 +57,25 @@ export class Organizations extends APIResource {
   }
 
   /**
+   * Get an organization by ID.
+   */
+  get(organizationID: string, options?: RequestOptions): APIPromise<Organization> {
+    return this._client.get(path`/api/v1/organizations/${organizationID}`, options);
+  }
+
+  /**
    * List all roles in an organization.
    */
-  retrieveRoles(
-    organizationID: string,
-    options?: RequestOptions,
-  ): APIPromise<OrganizationRetrieveRolesResponse> {
+  getRoles(organizationID: string, options?: RequestOptions): APIPromise<OrganizationGetRolesResponse> {
     return this._client.get(path`/api/v1/organizations/${organizationID}/roles`, options);
   }
 
   /**
    * Get usage for a specific organization.
    */
-  retrieveUsage(
+  getUsage(
     organizationID: string,
-    query: OrganizationRetrieveUsageParams | null | undefined = {},
+    query: OrganizationGetUsageParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<UsageAndPlan> {
     return this._client.get(path`/api/v1/organizations/${organizationID}/usage`, { query, ...options });
@@ -412,7 +409,7 @@ export namespace UsageAndPlan {
 
 export type OrganizationListResponse = Array<Organization>;
 
-export type OrganizationRetrieveRolesResponse = Array<Role>;
+export type OrganizationGetRolesResponse = Array<Role>;
 
 export interface OrganizationCreateParams {
   /**
@@ -433,7 +430,7 @@ export interface OrganizationUpdateParams {
   feature_flags?: { [key: string]: unknown } | null;
 }
 
-export interface OrganizationRetrieveUsageParams {
+export interface OrganizationGetUsageParams {
   get_current_invoice_total?: boolean;
 }
 
@@ -447,10 +444,10 @@ export declare namespace Organizations {
     type Role as Role,
     type UsageAndPlan as UsageAndPlan,
     type OrganizationListResponse as OrganizationListResponse,
-    type OrganizationRetrieveRolesResponse as OrganizationRetrieveRolesResponse,
+    type OrganizationGetRolesResponse as OrganizationGetRolesResponse,
     type OrganizationCreateParams as OrganizationCreateParams,
     type OrganizationUpdateParams as OrganizationUpdateParams,
-    type OrganizationRetrieveUsageParams as OrganizationRetrieveUsageParams,
+    type OrganizationGetUsageParams as OrganizationGetUsageParams,
   };
 
   export { Default as Default };

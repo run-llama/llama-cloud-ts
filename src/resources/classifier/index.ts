@@ -8,8 +8,8 @@ export {
   type ClassifyParsingConfiguration,
   type JobGetResultsResponse,
   type JobCreateParams,
-  type JobRetrieveParams,
   type JobListParams,
+  type JobGetParams,
   type JobGetResultsParams,
   type ClassifyJobsPaginatedClassifyJobs,
 } from './jobs';

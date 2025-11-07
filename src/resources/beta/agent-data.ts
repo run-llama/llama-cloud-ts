@@ -7,17 +7,6 @@ import { path } from '../../internal/utils/path';
 
 export class AgentData extends APIResource {
   /**
-   * Get agent data by ID.
-   */
-  retrieve(
-    itemID: string,
-    query: AgentDataRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AgentData> {
-    return this._client.get(path`/api/v1/beta/agent-data/${itemID}`, { query, ...options });
-  }
-
-  /**
    * Update agent data by ID (overwrites).
    */
   update(itemID: string, params: AgentDataUpdateParams, options?: RequestOptions): APIPromise<AgentData> {
@@ -69,6 +58,17 @@ export class AgentData extends APIResource {
       body,
       ...options,
     });
+  }
+
+  /**
+   * Get agent data by ID.
+   */
+  get(
+    itemID: string,
+    query: AgentDataGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentData> {
+    return this._client.get(path`/api/v1/beta/agent-data/${itemID}`, { query, ...options });
   }
 
   /**
@@ -156,12 +156,6 @@ export interface AgentDataSearchResponse {
    * only.
    */
   total_size?: number | null;
-}
-
-export interface AgentDataRetrieveParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
 }
 
 export interface AgentDataUpdateParams {
@@ -303,6 +297,12 @@ export namespace AgentDataAggregateParams {
   }
 }
 
+export interface AgentDataGetParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface AgentDataSearchParams {
   /**
    * Body param: The agent deployment's name to search within
@@ -386,11 +386,11 @@ export declare namespace AgentData {
     type AgentDataDeleteResponse as AgentDataDeleteResponse,
     type AgentDataAggregateResponse as AgentDataAggregateResponse,
     type AgentDataSearchResponse as AgentDataSearchResponse,
-    type AgentDataRetrieveParams as AgentDataRetrieveParams,
     type AgentDataUpdateParams as AgentDataUpdateParams,
     type AgentDataDeleteParams as AgentDataDeleteParams,
     type AgentDataAgentDataParams as AgentDataAgentDataParams,
     type AgentDataAggregateParams as AgentDataAggregateParams,
+    type AgentDataGetParams as AgentDataGetParams,
     type AgentDataSearchParams as AgentDataSearchParams,
   };
 }

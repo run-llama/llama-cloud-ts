@@ -8,10 +8,10 @@ import {
   ClassifyJobsPaginatedClassifyJobs,
   ClassifyParsingConfiguration,
   JobCreateParams,
+  JobGetParams,
   JobGetResultsParams,
   JobGetResultsResponse,
   JobListParams,
-  JobRetrieveParams,
   Jobs,
 } from './jobs';
 
@@ -30,8 +30,8 @@ export declare namespace Classifier {
     type JobGetResultsResponse as JobGetResultsResponse,
     type ClassifyJobsPaginatedClassifyJobs as ClassifyJobsPaginatedClassifyJobs,
     type JobCreateParams as JobCreateParams,
-    type JobRetrieveParams as JobRetrieveParams,
     type JobListParams as JobListParams,
+    type JobGetParams as JobGetParams,
     type JobGetResultsParams as JobGetResultsParams,
   };
 }

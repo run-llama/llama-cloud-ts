@@ -13,23 +13,6 @@ import { path } from '../../../internal/utils/path';
 
 export class Files extends APIResource {
   /**
-   * Get a file by its directory_file_id within the specified directory. If you're
-   * trying to get a file by its unique_id, use the list endpoint with a filter
-   * instead.
-   */
-  retrieve(
-    directoryFileID: string,
-    params: FileRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<FileRetrieveResponse> {
-    const { directory_id, ...query } = params;
-    return this._client.get(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
-      query,
-      ...options,
-    });
-  }
-
-  /**
    * Update file metadata within the specified directory.
    *
    * Note: This endpoint uses directory_file_id (the internal ID). If you're trying
@@ -95,64 +78,22 @@ export class Files extends APIResource {
       ...options,
     });
   }
+
+  /**
+   * Get a file by its directory_file_id within the specified directory. If you're
+   * trying to get a file by its unique_id, use the list endpoint with a filter
+   * instead.
+   */
+  get(directoryFileID: string, params: FileGetParams, options?: RequestOptions): APIPromise<FileGetResponse> {
+    const { directory_id, ...query } = params;
+    return this._client.get(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
+      query,
+      ...options,
+    });
+  }
 }
 
 export type FileListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<FileListResponse>;
-
-/**
- * API response schema for a directory file.
- */
-export interface FileRetrieveResponse {
-  /**
-   * Unique identifier for the directory file.
-   */
-  id: string;
-
-  /**
-   * Directory the file belongs to.
-   */
-  directory_id: string;
-
-  /**
-   * Display name for the file.
-   */
-  display_name: string;
-
-  /**
-   * Project the directory file belongs to.
-   */
-  project_id: string;
-
-  /**
-   * Unique identifier for the file in the directory
-   */
-  unique_id: string;
-
-  /**
-   * Creation datetime
-   */
-  created_at?: string | null;
-
-  /**
-   * Optional data source credential associated with the file.
-   */
-  data_source_id?: string | null;
-
-  /**
-   * Soft delete marker when the file is removed upstream or by user action.
-   */
-  deleted_at?: string | null;
-
-  /**
-   * File ID for the storage location.
-   */
-  file_id?: string | null;
-
-  /**
-   * Update datetime
-   */
-  updated_at?: string | null;
-}
 
 /**
  * API response schema for a directory file.
@@ -319,21 +260,59 @@ export interface FileAddResponse {
   updated_at?: string | null;
 }
 
-export interface FileRetrieveParams {
+/**
+ * API response schema for a directory file.
+ */
+export interface FileGetResponse {
   /**
-   * Path param:
+   * Unique identifier for the directory file.
+   */
+  id: string;
+
+  /**
+   * Directory the file belongs to.
    */
   directory_id: string;
 
   /**
-   * Query param:
+   * Display name for the file.
    */
-  organization_id?: string | null;
+  display_name: string;
 
   /**
-   * Query param:
+   * Project the directory file belongs to.
    */
-  project_id?: string | null;
+  project_id: string;
+
+  /**
+   * Unique identifier for the file in the directory
+   */
+  unique_id: string;
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Optional data source credential associated with the file.
+   */
+  data_source_id?: string | null;
+
+  /**
+   * Soft delete marker when the file is removed upstream or by user action.
+   */
+  deleted_at?: string | null;
+
+  /**
+   * File ID for the storage location.
+   */
+  file_id?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
 }
 
 export interface FileUpdateParams {
@@ -425,17 +404,34 @@ export interface FileAddParams {
   unique_id?: string | null;
 }
 
+export interface FileGetParams {
+  /**
+   * Path param:
+   */
+  directory_id: string;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+}
+
 export declare namespace Files {
   export {
-    type FileRetrieveResponse as FileRetrieveResponse,
     type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileAddResponse as FileAddResponse,
+    type FileGetResponse as FileGetResponse,
     type FileListResponsesPaginatedClassifyJobs as FileListResponsesPaginatedClassifyJobs,
-    type FileRetrieveParams as FileRetrieveParams,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileAddParams as FileAddParams,
+    type FileGetParams as FileGetParams,
   };
 }

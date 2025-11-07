@@ -21,18 +21,6 @@ export class Documents extends APIResource {
   }
 
   /**
-   * Return a single document for a pipeline.
-   */
-  retrieve(
-    documentID: string,
-    params: DocumentRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<CloudDocument> {
-    const { pipeline_id } = params;
-    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}`, options);
-  }
-
-  /**
    * Return a list of documents for a pipeline.
    */
   list(
@@ -76,13 +64,21 @@ export class Documents extends APIResource {
   }
 
   /**
+   * Return a single document for a pipeline.
+   */
+  get(documentID: string, params: DocumentGetParams, options?: RequestOptions): APIPromise<CloudDocument> {
+    const { pipeline_id } = params;
+    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}`, options);
+  }
+
+  /**
    * Return a list of chunks for a pipeline document.
    */
-  retrieveChunks(
+  getChunks(
     documentID: string,
-    params: DocumentRetrieveChunksParams,
+    params: DocumentGetChunksParams,
     options?: RequestOptions,
-  ): APIPromise<DocumentRetrieveChunksResponse> {
+  ): APIPromise<DocumentGetChunksResponse> {
     const { pipeline_id } = params;
     return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/chunks`, options);
   }
@@ -90,20 +86,20 @@ export class Documents extends APIResource {
   /**
    * Return a list of documents for a pipeline.
    */
-  retrievePaginated(
+  getPaginated(
     pipelineID: string,
-    query: DocumentRetrievePaginatedParams | null | undefined = {},
+    query: DocumentGetPaginatedParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<DocumentRetrievePaginatedResponse> {
+  ): APIPromise<DocumentGetPaginatedResponse> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}/documents/paginated`, { query, ...options });
   }
 
   /**
    * Return a single document for a pipeline.
    */
-  retrieveStatus(
+  getStatus(
     documentID: string,
-    params: DocumentRetrieveStatusParams,
+    params: DocumentGetStatusParams,
     options?: RequestOptions,
   ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
     const { pipeline_id } = params;
@@ -271,9 +267,9 @@ export type DocumentListResponse = Array<CloudDocument>;
 
 export type DocumentForceSyncAllResponse = unknown;
 
-export type DocumentRetrieveChunksResponse = Array<TextNode>;
+export type DocumentGetChunksResponse = Array<TextNode>;
 
-export interface DocumentRetrievePaginatedResponse {
+export interface DocumentGetPaginatedResponse {
   /**
    * The documents to list
    */
@@ -299,10 +295,6 @@ export type DocumentSyncResponse = unknown;
 
 export interface DocumentCreateParams {
   body: Array<CloudDocumentCreate>;
-}
-
-export interface DocumentRetrieveParams {
-  pipeline_id: string;
 }
 
 export interface DocumentListParams {
@@ -332,11 +324,15 @@ export interface DocumentForceSyncAllParams {
   only_failed?: boolean;
 }
 
-export interface DocumentRetrieveChunksParams {
+export interface DocumentGetParams {
   pipeline_id: string;
 }
 
-export interface DocumentRetrievePaginatedParams {
+export interface DocumentGetChunksParams {
+  pipeline_id: string;
+}
+
+export interface DocumentGetPaginatedParams {
   file_id?: string | null;
 
   limit?: number;
@@ -350,7 +346,7 @@ export interface DocumentRetrievePaginatedParams {
   status_refresh_policy?: 'cached' | 'ttl';
 }
 
-export interface DocumentRetrieveStatusParams {
+export interface DocumentGetStatusParams {
   pipeline_id: string;
 }
 
@@ -366,17 +362,17 @@ export declare namespace Documents {
     type DocumentCreateResponse as DocumentCreateResponse,
     type DocumentListResponse as DocumentListResponse,
     type DocumentForceSyncAllResponse as DocumentForceSyncAllResponse,
-    type DocumentRetrieveChunksResponse as DocumentRetrieveChunksResponse,
-    type DocumentRetrievePaginatedResponse as DocumentRetrievePaginatedResponse,
+    type DocumentGetChunksResponse as DocumentGetChunksResponse,
+    type DocumentGetPaginatedResponse as DocumentGetPaginatedResponse,
     type DocumentSyncResponse as DocumentSyncResponse,
     type DocumentCreateParams as DocumentCreateParams,
-    type DocumentRetrieveParams as DocumentRetrieveParams,
     type DocumentListParams as DocumentListParams,
     type DocumentDeleteParams as DocumentDeleteParams,
     type DocumentForceSyncAllParams as DocumentForceSyncAllParams,
-    type DocumentRetrieveChunksParams as DocumentRetrieveChunksParams,
-    type DocumentRetrievePaginatedParams as DocumentRetrievePaginatedParams,
-    type DocumentRetrieveStatusParams as DocumentRetrieveStatusParams,
+    type DocumentGetParams as DocumentGetParams,
+    type DocumentGetChunksParams as DocumentGetChunksParams,
+    type DocumentGetPaginatedParams as DocumentGetPaginatedParams,
+    type DocumentGetStatusParams as DocumentGetStatusParams,
     type DocumentSyncParams as DocumentSyncParams,
   };
 }

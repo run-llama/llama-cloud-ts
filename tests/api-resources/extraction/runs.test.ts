@@ -9,33 +9,6 @@ const client = new LlamaCloud({
 
 describe('resource runs', () => {
   // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.extraction.runs.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieve: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.extraction.runs.retrieve(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        {
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
-  });
-
-  // Prism tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.extraction.runs.list({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -86,8 +59,8 @@ describe('resource runs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveByJob', async () => {
-    const responsePromise = client.extraction.runs.retrieveByJob('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('get', async () => {
+    const responsePromise = client.extraction.runs.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -98,10 +71,10 @@ describe('resource runs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveByJob: request options and params are passed correctly', async () => {
+  test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.extraction.runs.retrieveByJob(
+      client.extraction.runs.get(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -113,8 +86,35 @@ describe('resource runs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveLatestFromUi: only required params', async () => {
-    const responsePromise = client.extraction.runs.retrieveLatestFromUi({
+  test.skip('getByJob', async () => {
+    const responsePromise = client.extraction.runs.getByJob('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getByJob: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.extraction.runs.getByJob(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Prism tests are disabled
+  test.skip('getLatestFromUi: only required params', async () => {
+    const responsePromise = client.extraction.runs.getLatestFromUi({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -127,8 +127,8 @@ describe('resource runs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveLatestFromUi: required and optional params', async () => {
-    const response = await client.extraction.runs.retrieveLatestFromUi({
+  test.skip('getLatestFromUi: required and optional params', async () => {
+    const response = await client.extraction.runs.getLatestFromUi({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });

@@ -4,21 +4,21 @@ import { APIResource } from '../../core/resource';
 import * as PageFiguresAPI from './page-figures';
 import {
   PageFigureGeneratePresignedURLParams,
+  PageFigureGetParams,
+  PageFigureGetResponse,
   PageFigureListParams,
   PageFigureListResponse,
   PageFigureMetadata,
-  PageFigureRetrieveParams,
-  PageFigureRetrieveResponse,
   PageFigures,
 } from './page-figures';
 import * as PageScreenshotsAPI from './page-screenshots';
 import {
   PageScreenshotGeneratePresignedURLParams,
+  PageScreenshotGetParams,
+  PageScreenshotGetResponse,
   PageScreenshotListParams,
   PageScreenshotListResponse,
   PageScreenshotMetadata,
-  PageScreenshotRetrieveParams,
-  PageScreenshotRetrieveResponse,
   PageScreenshots,
 } from './page-screenshots';
 import { APIPromise } from '../../core/api-promise';
@@ -31,17 +31,6 @@ import { path } from '../../internal/utils/path';
 export class Files extends APIResource {
   pageScreenshots: PageScreenshotsAPI.PageScreenshots = new PageScreenshotsAPI.PageScreenshots(this._client);
   pageFigures: PageFiguresAPI.PageFigures = new PageFiguresAPI.PageFigures(this._client);
-
-  /**
-   * Read File metadata objects.
-   */
-  retrieve(
-    id: string,
-    query: FileRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<File> {
-    return this._client.get(path`/api/v1/files/${id}`, { query, ...options });
-  }
 
   /**
    * Delete the file from S3.
@@ -76,6 +65,13 @@ export class Files extends APIResource {
       body,
       ...options,
     });
+  }
+
+  /**
+   * Read File metadata objects.
+   */
+  get(id: string, query: FileGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<File> {
+    return this._client.get(path`/api/v1/files/${id}`, { query, ...options });
   }
 
   /**
@@ -276,12 +272,6 @@ export interface FileGeneratePresignedURLResponse {
   form_fields?: { [key: string]: string } | null;
 }
 
-export interface FileRetrieveParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export interface FileDeleteParams {
   organization_id?: string | null;
 
@@ -343,6 +333,12 @@ export interface FileGeneratePresignedURLParams {
   resource_info?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
   } | null;
+}
+
+export interface FileGetParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
 }
 
 export interface FileReadContentParams {
@@ -434,9 +430,9 @@ export declare namespace Files {
     type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
     type FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse,
-    type FileRetrieveParams as FileRetrieveParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGeneratePresignedURLParams as FileGeneratePresignedURLParams,
+    type FileGetParams as FileGetParams,
     type FileReadContentParams as FileReadContentParams,
     type FileUploadParams as FileUploadParams,
     type FileUploadFromURLParams as FileUploadFromURLParams,
@@ -445,20 +441,20 @@ export declare namespace Files {
   export {
     PageScreenshots as PageScreenshots,
     type PageScreenshotMetadata as PageScreenshotMetadata,
-    type PageScreenshotRetrieveResponse as PageScreenshotRetrieveResponse,
     type PageScreenshotListResponse as PageScreenshotListResponse,
-    type PageScreenshotRetrieveParams as PageScreenshotRetrieveParams,
+    type PageScreenshotGetResponse as PageScreenshotGetResponse,
     type PageScreenshotListParams as PageScreenshotListParams,
     type PageScreenshotGeneratePresignedURLParams as PageScreenshotGeneratePresignedURLParams,
+    type PageScreenshotGetParams as PageScreenshotGetParams,
   };
 
   export {
     PageFigures as PageFigures,
     type PageFigureMetadata as PageFigureMetadata,
-    type PageFigureRetrieveResponse as PageFigureRetrieveResponse,
     type PageFigureListResponse as PageFigureListResponse,
-    type PageFigureRetrieveParams as PageFigureRetrieveParams,
+    type PageFigureGetResponse as PageFigureGetResponse,
     type PageFigureListParams as PageFigureListParams,
     type PageFigureGeneratePresignedURLParams as PageFigureGeneratePresignedURLParams,
+    type PageFigureGetParams as PageFigureGetParams,
   };
 }

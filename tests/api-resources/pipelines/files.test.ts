@@ -97,8 +97,8 @@ describe('resource files', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveStatus: only required params', async () => {
-    const responsePromise = client.pipelines.files.retrieveStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+  test.skip('getStatus: only required params', async () => {
+    const responsePromise = client.pipelines.files.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -111,17 +111,15 @@ describe('resource files', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveStatus: required and optional params', async () => {
-    const response = await client.pipelines.files.retrieveStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+  test.skip('getStatus: required and optional params', async () => {
+    const response = await client.pipelines.files.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
   // Prism tests are disabled
-  test.skip('retrieveStatusCounts', async () => {
-    const responsePromise = client.pipelines.files.retrieveStatusCounts(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    );
+  test.skip('getStatusCounts', async () => {
+    const responsePromise = client.pipelines.files.getStatusCounts('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -132,10 +130,10 @@ describe('resource files', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveStatusCounts: request options and params are passed correctly', async () => {
+  test.skip('getStatusCounts: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.pipelines.files.retrieveStatusCounts(
+      client.pipelines.files.getStatusCounts(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         { data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', only_manually_uploaded: true },
         { path: '/_stainless_unknown_path' },

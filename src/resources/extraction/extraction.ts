@@ -8,10 +8,10 @@ import {
   JobBatchResponse,
   JobCreateParams,
   JobFileParams,
+  JobGetResultParams,
+  JobGetResultResponse,
   JobListParams,
   JobListResponse,
-  JobRetrieveResultParams,
-  JobRetrieveResultResponse,
   Jobs,
   WebhookConfiguration,
 } from './jobs';
@@ -22,10 +22,10 @@ import {
   ExtractRunsPaginatedExtractRuns,
   RunDeleteParams,
   RunDeleteResponse,
+  RunGetByJobParams,
+  RunGetLatestFromUiParams,
+  RunGetParams,
   RunListParams,
-  RunRetrieveByJobParams,
-  RunRetrieveLatestFromUiParams,
-  RunRetrieveParams,
   Runs,
 } from './runs';
 import * as ExtractionAgentsAPI from './extraction-agents/extraction-agents';
@@ -33,10 +33,10 @@ import {
   ExtractAgent,
   ExtractionAgentDeleteResponse,
   ExtractionAgentExtractionAgentsParams,
-  ExtractionAgentRetrieveByNameParams,
-  ExtractionAgentRetrieveDefaultParams,
-  ExtractionAgentRetrieveExtractionAgentsParams,
-  ExtractionAgentRetrieveExtractionAgentsResponse,
+  ExtractionAgentGetByNameParams,
+  ExtractionAgentGetDefaultParams,
+  ExtractionAgentGetExtractionAgentsParams,
+  ExtractionAgentGetExtractionAgentsResponse,
   ExtractionAgentUpdateParams,
   ExtractionAgents,
 } from './extraction-agents/extraction-agents';
@@ -139,12 +139,12 @@ export declare namespace Extraction {
     type WebhookConfiguration as WebhookConfiguration,
     type JobListResponse as JobListResponse,
     type JobBatchResponse as JobBatchResponse,
-    type JobRetrieveResultResponse as JobRetrieveResultResponse,
+    type JobGetResultResponse as JobGetResultResponse,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
     type JobBatchParams as JobBatchParams,
     type JobFileParams as JobFileParams,
-    type JobRetrieveResultParams as JobRetrieveResultParams,
+    type JobGetResultParams as JobGetResultParams,
   };
 
   export {
@@ -153,22 +153,22 @@ export declare namespace Extraction {
     type ExtractRun as ExtractRun,
     type RunDeleteResponse as RunDeleteResponse,
     type ExtractRunsPaginatedExtractRuns as ExtractRunsPaginatedExtractRuns,
-    type RunRetrieveParams as RunRetrieveParams,
     type RunListParams as RunListParams,
     type RunDeleteParams as RunDeleteParams,
-    type RunRetrieveByJobParams as RunRetrieveByJobParams,
-    type RunRetrieveLatestFromUiParams as RunRetrieveLatestFromUiParams,
+    type RunGetParams as RunGetParams,
+    type RunGetByJobParams as RunGetByJobParams,
+    type RunGetLatestFromUiParams as RunGetLatestFromUiParams,
   };
 
   export {
     ExtractionAgents as ExtractionAgents,
     type ExtractAgent as ExtractAgent,
     type ExtractionAgentDeleteResponse as ExtractionAgentDeleteResponse,
-    type ExtractionAgentRetrieveExtractionAgentsResponse as ExtractionAgentRetrieveExtractionAgentsResponse,
+    type ExtractionAgentGetExtractionAgentsResponse as ExtractionAgentGetExtractionAgentsResponse,
     type ExtractionAgentUpdateParams as ExtractionAgentUpdateParams,
     type ExtractionAgentExtractionAgentsParams as ExtractionAgentExtractionAgentsParams,
-    type ExtractionAgentRetrieveByNameParams as ExtractionAgentRetrieveByNameParams,
-    type ExtractionAgentRetrieveDefaultParams as ExtractionAgentRetrieveDefaultParams,
-    type ExtractionAgentRetrieveExtractionAgentsParams as ExtractionAgentRetrieveExtractionAgentsParams,
+    type ExtractionAgentGetByNameParams as ExtractionAgentGetByNameParams,
+    type ExtractionAgentGetDefaultParams as ExtractionAgentGetDefaultParams,
+    type ExtractionAgentGetExtractionAgentsParams as ExtractionAgentGetExtractionAgentsParams,
   };
 }
