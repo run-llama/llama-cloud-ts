@@ -6,10 +6,10 @@ export {
   type ClassifierRule,
   type ClassifyJob,
   type ClassifyParsingConfiguration,
-  type JobListResponse,
   type JobGetResultsResponse,
   type JobCreateParams,
   type JobRetrieveParams,
   type JobListParams,
   type JobGetResultsParams,
+  type ClassifyJobsPaginatedClassifyJobs,
 } from './jobs';

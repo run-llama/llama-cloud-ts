@@ -8,6 +8,7 @@ import {
   FileDeleteParams,
   FileListParams,
   FileListResponse,
+  FileListResponsesPaginatedClassifyJobs,
   FileRetrieveParams,
   FileRetrieveResponse,
   FileUpdateParams,
@@ -15,6 +16,11 @@ import {
   Files,
 } from './files';
 import { APIPromise } from '../../../core/api-promise';
+import {
+  PagePromise,
+  PaginatedClassifyJobs,
+  type PaginatedClassifyJobsParams,
+} from '../../../core/pagination';
 import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -70,8 +76,11 @@ export class Directories extends APIResource {
   list(
     query: DirectoryListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<DirectoryListResponse> {
-    return this._client.get('/api/v1/beta/directories', { query, ...options });
+  ): PagePromise<DirectoryListResponsesPaginatedClassifyJobs, DirectoryListResponse> {
+    return this._client.getAPIList('/api/v1/beta/directories', PaginatedClassifyJobs<DirectoryListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -90,6 +99,8 @@ export class Directories extends APIResource {
     });
   }
 }
+
+export type DirectoryListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<DirectoryListResponse>;
 
 /**
  * API response schema for a directory.
@@ -227,73 +238,48 @@ export interface DirectoryUpdateResponse {
 }
 
 /**
- * API query response schema for directories.
+ * API response schema for a directory.
  */
 export interface DirectoryListResponse {
   /**
-   * The list of items.
+   * Unique identifier for the directory.
    */
-  items: Array<DirectoryListResponse.Item>;
+  id: string;
 
   /**
-   * A token, which can be sent as page_token to retrieve the next page. If this
-   * field is omitted, there are no subsequent pages.
+   * Human-readable name for the directory.
    */
-  next_page_token?: string | null;
+  name: string;
 
   /**
-   * The total number of items available. This is only populated when specifically
-   * requested. The value may be an estimate and can be used for display purposes
-   * only.
+   * Project the directory belongs to.
    */
-  total_size?: number | null;
-}
+  project_id: string;
 
-export namespace DirectoryListResponse {
   /**
-   * API response schema for a directory.
+   * Creation datetime
    */
-  export interface Item {
-    /**
-     * Unique identifier for the directory.
-     */
-    id: string;
+  created_at?: string | null;
 
-    /**
-     * Human-readable name for the directory.
-     */
-    name: string;
+  /**
+   * Optional data source id the directory syncs from. Null if just manual uploads.
+   */
+  data_source_id?: string | null;
 
-    /**
-     * Project the directory belongs to.
-     */
-    project_id: string;
+  /**
+   * Optional timestamp of when the directory was deleted. Null if not deleted.
+   */
+  deleted_at?: string | null;
 
-    /**
-     * Creation datetime
-     */
-    created_at?: string | null;
+  /**
+   * Optional description shown to users.
+   */
+  description?: string | null;
 
-    /**
-     * Optional data source id the directory syncs from. Null if just manual uploads.
-     */
-    data_source_id?: string | null;
-
-    /**
-     * Optional timestamp of when the directory was deleted. Null if not deleted.
-     */
-    deleted_at?: string | null;
-
-    /**
-     * Optional description shown to users.
-     */
-    description?: string | null;
-
-    /**
-     * Update datetime
-     */
-    updated_at?: string | null;
-  }
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
 }
 
 export interface DirectoryCreateParams {
@@ -351,7 +337,7 @@ export interface DirectoryUpdateParams {
   name?: string | null;
 }
 
-export interface DirectoryListParams {
+export interface DirectoryListParams extends PaginatedClassifyJobsParams {
   data_source_id?: string | null;
 
   include_deleted?: boolean;
@@ -359,10 +345,6 @@ export interface DirectoryListParams {
   name?: string | null;
 
   organization_id?: string | null;
-
-  page_size?: number | null;
-
-  page_token?: string | null;
 
   project_id?: string | null;
 }
@@ -381,6 +363,7 @@ export declare namespace Directories {
     type DirectoryRetrieveResponse as DirectoryRetrieveResponse,
     type DirectoryUpdateResponse as DirectoryUpdateResponse,
     type DirectoryListResponse as DirectoryListResponse,
+    type DirectoryListResponsesPaginatedClassifyJobs as DirectoryListResponsesPaginatedClassifyJobs,
     type DirectoryCreateParams as DirectoryCreateParams,
     type DirectoryRetrieveParams as DirectoryRetrieveParams,
     type DirectoryUpdateParams as DirectoryUpdateParams,
@@ -394,6 +377,7 @@ export declare namespace Directories {
     type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileAddResponse as FileAddResponse,
+    type FileListResponsesPaginatedClassifyJobs as FileListResponsesPaginatedClassifyJobs,
     type FileRetrieveParams as FileRetrieveParams,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,

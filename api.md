@@ -470,14 +470,13 @@ Types:
 - <code><a href="./src/resources/classifier/jobs.ts">ClassifierRule</a></code>
 - <code><a href="./src/resources/classifier/jobs.ts">ClassifyJob</a></code>
 - <code><a href="./src/resources/classifier/jobs.ts">ClassifyParsingConfiguration</a></code>
-- <code><a href="./src/resources/classifier/jobs.ts">JobListResponse</a></code>
 - <code><a href="./src/resources/classifier/jobs.ts">JobGetResultsResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">create</a>({ ...params }) -> ClassifyJob</code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">retrieve</a>(classifyJobID, { ...params }) -> ClassifyJob</code>
-- <code title="get /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">list</a>({ ...params }) -> JobListResponse</code>
+- <code title="get /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">list</a>({ ...params }) -> ClassifyJobsPaginatedClassifyJobs</code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}/results">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">getResults</a>(classifyJobID, { ...params }) -> JobGetResultsResponse</code>
 
 # Auth
@@ -545,13 +544,12 @@ Types:
 
 - <code><a href="./src/resources/extraction/runs.ts">ExtractConfig</a></code>
 - <code><a href="./src/resources/extraction/runs.ts">ExtractRun</a></code>
-- <code><a href="./src/resources/extraction/runs.ts">RunListResponse</a></code>
 - <code><a href="./src/resources/extraction/runs.ts">RunDeleteResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">retrieve</a>(runID, { ...params }) -> ExtractRun</code>
-- <code title="get /api/v1/extraction/runs">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">list</a>({ ...params }) -> RunListResponse</code>
+- <code title="get /api/v1/extraction/runs">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">list</a>({ ...params }) -> ExtractRunsPaginatedExtractRuns</code>
 - <code title="delete /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">delete</a>(runID, { ...params }) -> unknown</code>
 - <code title="get /api/v1/extraction/runs/by-job/{job_id}">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">retrieveByJob</a>(jobID, { ...params }) -> ExtractRun</code>
 - <code title="get /api/v1/extraction/runs/latest-from-ui">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">retrieveLatestFromUi</a>({ ...params }) -> ExtractRun | null</code>
@@ -666,13 +664,12 @@ Types:
 
 - <code><a href="./src/resources/beta/spreadsheet/jobs/jobs.ts">SpreadsheetJob</a></code>
 - <code><a href="./src/resources/beta/spreadsheet/jobs/jobs.ts">SpreadsheetParsingConfig</a></code>
-- <code><a href="./src/resources/beta/spreadsheet/jobs/jobs.ts">JobListResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v1/beta/spreadsheet/jobs">client.beta.spreadsheet.jobs.<a href="./src/resources/beta/spreadsheet/jobs/jobs.ts">create</a>({ ...params }) -> SpreadsheetJob</code>
 - <code title="get /api/v1/beta/spreadsheet/jobs/{spreadsheet_job_id}">client.beta.spreadsheet.jobs.<a href="./src/resources/beta/spreadsheet/jobs/jobs.ts">retrieve</a>(spreadsheetJobID, { ...params }) -> SpreadsheetJob</code>
-- <code title="get /api/v1/beta/spreadsheet/jobs">client.beta.spreadsheet.jobs.<a href="./src/resources/beta/spreadsheet/jobs/jobs.ts">list</a>({ ...params }) -> JobListResponse</code>
+- <code title="get /api/v1/beta/spreadsheet/jobs">client.beta.spreadsheet.jobs.<a href="./src/resources/beta/spreadsheet/jobs/jobs.ts">list</a>({ ...params }) -> SpreadsheetJobsPaginatedClassifyJobs</code>
 
 #### Tables
 
@@ -694,7 +691,7 @@ Methods:
 - <code title="post /api/v1/beta/directories">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">create</a>({ ...params }) -> DirectoryCreateResponse</code>
 - <code title="get /api/v1/beta/directories/{directory_id}">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">retrieve</a>(directoryID, { ...params }) -> DirectoryRetrieveResponse</code>
 - <code title="patch /api/v1/beta/directories/{directory_id}">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">update</a>(directoryID, { ...params }) -> DirectoryUpdateResponse</code>
-- <code title="get /api/v1/beta/directories">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">list</a>({ ...params }) -> DirectoryListResponse</code>
+- <code title="get /api/v1/beta/directories">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">list</a>({ ...params }) -> DirectoryListResponsesPaginatedClassifyJobs</code>
 - <code title="delete /api/v1/beta/directories/{directory_id}">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">delete</a>(directoryID, { ...params }) -> void</code>
 
 ### Files
@@ -710,6 +707,6 @@ Methods:
 
 - <code title="get /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">retrieve</a>(directoryFileID, { ...params }) -> FileRetrieveResponse</code>
 - <code title="patch /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">update</a>(directoryFileID, { ...params }) -> FileUpdateResponse</code>
-- <code title="get /api/v1/beta/directories/{directory_id}/files">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">list</a>(directoryID, { ...params }) -> FileListResponse</code>
+- <code title="get /api/v1/beta/directories/{directory_id}/files">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">list</a>(directoryID, { ...params }) -> FileListResponsesPaginatedClassifyJobs</code>
 - <code title="delete /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">delete</a>(directoryFileID, { ...params }) -> void</code>
 - <code title="post /api/v1/beta/directories/{directory_id}/files">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">add</a>(directoryID, { ...params }) -> FileAddResponse</code>

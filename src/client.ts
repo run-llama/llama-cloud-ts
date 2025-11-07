@@ -13,6 +13,30 @@ import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import {
+  AbstractPage,
+  type PaginatedAgentDataAggregateParams,
+  PaginatedAgentDataAggregateResponse,
+  type PaginatedAgentDataSearchParams,
+  PaginatedAgentDataSearchResponse,
+  type PaginatedBatchItemsParams,
+  PaginatedBatchItemsResponse,
+  type PaginatedClassifyJobsParams,
+  PaginatedClassifyJobsResponse,
+  type PaginatedCloudDocumentsParams,
+  PaginatedCloudDocumentsResponse,
+  type PaginatedExtractRunsParams,
+  PaginatedExtractRunsResponse,
+  type PaginatedJobsHistoryParams,
+  PaginatedJobsHistoryResponse,
+  type PaginatedPipelineFilesParams,
+  PaginatedPipelineFilesResponse,
+  type PaginatedQuotaConfigurationsParams,
+  PaginatedQuotaConfigurationsResponse,
+  type PaginatedSpreadsheetJobsParams,
+  PaginatedSpreadsheetJobsResponse,
+} from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -672,6 +696,25 @@ export class LlamaCloud {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: RequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(Page, { method: 'get', path, ...opts });
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: FinalRequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as LlamaCloud, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -943,6 +986,66 @@ LlamaCloud.Beta = Beta;
 
 export declare namespace LlamaCloud {
   export type RequestOptions = Opts.RequestOptions;
+
+  export import PaginatedJobsHistory = Pagination.PaginatedJobsHistory;
+  export {
+    type PaginatedJobsHistoryParams as PaginatedJobsHistoryParams,
+    type PaginatedJobsHistoryResponse as PaginatedJobsHistoryResponse,
+  };
+
+  export import PaginatedPipelineFiles = Pagination.PaginatedPipelineFiles;
+  export {
+    type PaginatedPipelineFilesParams as PaginatedPipelineFilesParams,
+    type PaginatedPipelineFilesResponse as PaginatedPipelineFilesResponse,
+  };
+
+  export import PaginatedBatchItems = Pagination.PaginatedBatchItems;
+  export {
+    type PaginatedBatchItemsParams as PaginatedBatchItemsParams,
+    type PaginatedBatchItemsResponse as PaginatedBatchItemsResponse,
+  };
+
+  export import PaginatedExtractRuns = Pagination.PaginatedExtractRuns;
+  export {
+    type PaginatedExtractRunsParams as PaginatedExtractRunsParams,
+    type PaginatedExtractRunsResponse as PaginatedExtractRunsResponse,
+  };
+
+  export import PaginatedCloudDocuments = Pagination.PaginatedCloudDocuments;
+  export {
+    type PaginatedCloudDocumentsParams as PaginatedCloudDocumentsParams,
+    type PaginatedCloudDocumentsResponse as PaginatedCloudDocumentsResponse,
+  };
+
+  export import PaginatedQuotaConfigurations = Pagination.PaginatedQuotaConfigurations;
+  export {
+    type PaginatedQuotaConfigurationsParams as PaginatedQuotaConfigurationsParams,
+    type PaginatedQuotaConfigurationsResponse as PaginatedQuotaConfigurationsResponse,
+  };
+
+  export import PaginatedClassifyJobs = Pagination.PaginatedClassifyJobs;
+  export {
+    type PaginatedClassifyJobsParams as PaginatedClassifyJobsParams,
+    type PaginatedClassifyJobsResponse as PaginatedClassifyJobsResponse,
+  };
+
+  export import PaginatedSpreadsheetJobs = Pagination.PaginatedSpreadsheetJobs;
+  export {
+    type PaginatedSpreadsheetJobsParams as PaginatedSpreadsheetJobsParams,
+    type PaginatedSpreadsheetJobsResponse as PaginatedSpreadsheetJobsResponse,
+  };
+
+  export import PaginatedAgentDataSearch = Pagination.PaginatedAgentDataSearch;
+  export {
+    type PaginatedAgentDataSearchParams as PaginatedAgentDataSearchParams,
+    type PaginatedAgentDataSearchResponse as PaginatedAgentDataSearchResponse,
+  };
+
+  export import PaginatedAgentDataAggregate = Pagination.PaginatedAgentDataAggregate;
+  export {
+    type PaginatedAgentDataAggregateParams as PaginatedAgentDataAggregateParams,
+    type PaginatedAgentDataAggregateResponse as PaginatedAgentDataAggregateResponse,
+  };
 
   export {
     Projects as Projects,

@@ -2,6 +2,11 @@
 
 import { APIResource } from '../../../core/resource';
 import { APIPromise } from '../../../core/api-promise';
+import {
+  PagePromise,
+  PaginatedClassifyJobs,
+  type PaginatedClassifyJobsParams,
+} from '../../../core/pagination';
 import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -52,8 +57,12 @@ export class Files extends APIResource {
     directoryID: string,
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<FileListResponse> {
-    return this._client.get(path`/api/v1/beta/directories/${directoryID}/files`, { query, ...options });
+  ): PagePromise<FileListResponsesPaginatedClassifyJobs, FileListResponse> {
+    return this._client.getAPIList(
+      path`/api/v1/beta/directories/${directoryID}/files`,
+      PaginatedClassifyJobs<FileListResponse>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -87,6 +96,8 @@ export class Files extends APIResource {
     });
   }
 }
+
+export type FileListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<FileListResponse>;
 
 /**
  * API response schema for a directory file.
@@ -199,83 +210,58 @@ export interface FileUpdateResponse {
 }
 
 /**
- * API query response schema for directory files.
+ * API response schema for a directory file.
  */
 export interface FileListResponse {
   /**
-   * The list of items.
+   * Unique identifier for the directory file.
    */
-  items: Array<FileListResponse.Item>;
+  id: string;
 
   /**
-   * A token, which can be sent as page_token to retrieve the next page. If this
-   * field is omitted, there are no subsequent pages.
+   * Directory the file belongs to.
    */
-  next_page_token?: string | null;
+  directory_id: string;
 
   /**
-   * The total number of items available. This is only populated when specifically
-   * requested. The value may be an estimate and can be used for display purposes
-   * only.
+   * Display name for the file.
    */
-  total_size?: number | null;
-}
+  display_name: string;
 
-export namespace FileListResponse {
   /**
-   * API response schema for a directory file.
+   * Project the directory file belongs to.
    */
-  export interface Item {
-    /**
-     * Unique identifier for the directory file.
-     */
-    id: string;
+  project_id: string;
 
-    /**
-     * Directory the file belongs to.
-     */
-    directory_id: string;
+  /**
+   * Unique identifier for the file in the directory
+   */
+  unique_id: string;
 
-    /**
-     * Display name for the file.
-     */
-    display_name: string;
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
 
-    /**
-     * Project the directory file belongs to.
-     */
-    project_id: string;
+  /**
+   * Optional data source credential associated with the file.
+   */
+  data_source_id?: string | null;
 
-    /**
-     * Unique identifier for the file in the directory
-     */
-    unique_id: string;
+  /**
+   * Soft delete marker when the file is removed upstream or by user action.
+   */
+  deleted_at?: string | null;
 
-    /**
-     * Creation datetime
-     */
-    created_at?: string | null;
+  /**
+   * File ID for the storage location.
+   */
+  file_id?: string | null;
 
-    /**
-     * Optional data source credential associated with the file.
-     */
-    data_source_id?: string | null;
-
-    /**
-     * Soft delete marker when the file is removed upstream or by user action.
-     */
-    deleted_at?: string | null;
-
-    /**
-     * File ID for the storage location.
-     */
-    file_id?: string | null;
-
-    /**
-     * Update datetime
-     */
-    updated_at?: string | null;
-  }
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
 }
 
 /**
@@ -377,7 +363,7 @@ export interface FileUpdateParams {
   unique_id?: string | null;
 }
 
-export interface FileListParams {
+export interface FileListParams extends PaginatedClassifyJobsParams {
   display_name?: string | null;
 
   display_name_contains?: string | null;
@@ -387,10 +373,6 @@ export interface FileListParams {
   include_deleted?: boolean;
 
   organization_id?: string | null;
-
-  page_size?: number | null;
-
-  page_token?: string | null;
 
   project_id?: string | null;
 
@@ -449,6 +431,7 @@ export declare namespace Files {
     type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileAddResponse as FileAddResponse,
+    type FileListResponsesPaginatedClassifyJobs as FileListResponsesPaginatedClassifyJobs,
     type FileRetrieveParams as FileRetrieveParams,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,

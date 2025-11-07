@@ -6,6 +6,11 @@ import * as ParsingAPI from '../../../parsing/parsing';
 import * as TablesAPI from './tables';
 import { TableRetrieveParams, Tables } from './tables';
 import { APIPromise } from '../../../../core/api-promise';
+import {
+  PagePromise,
+  PaginatedClassifyJobs,
+  type PaginatedClassifyJobsParams,
+} from '../../../../core/pagination';
 import { RequestOptions } from '../../../../internal/request-options';
 import { path } from '../../../../internal/utils/path';
 
@@ -47,10 +52,18 @@ export class Jobs extends APIResource {
    * List spreadsheet parsing jobs. Experimental: This endpoint is not yet ready for
    * production use and is subject to change at any time.
    */
-  list(query: JobListParams | null | undefined = {}, options?: RequestOptions): APIPromise<JobListResponse> {
-    return this._client.get('/api/v1/beta/spreadsheet/jobs', { query, ...options });
+  list(
+    query: JobListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<SpreadsheetJobsPaginatedClassifyJobs, SpreadsheetJob> {
+    return this._client.getAPIList('/api/v1/beta/spreadsheet/jobs', PaginatedClassifyJobs<SpreadsheetJob>, {
+      query,
+      ...options,
+    });
   }
 }
+
+export type SpreadsheetJobsPaginatedClassifyJobs = PaginatedClassifyJobs<SpreadsheetJob>;
 
 /**
  * A spreadsheet parsing job
@@ -197,26 +210,6 @@ export interface SpreadsheetParsingConfig {
   use_experimental_processing?: boolean;
 }
 
-export interface JobListResponse {
-  /**
-   * The list of items.
-   */
-  items: Array<SpreadsheetJob>;
-
-  /**
-   * A token, which can be sent as page_token to retrieve the next page. If this
-   * field is omitted, there are no subsequent pages.
-   */
-  next_page_token?: string | null;
-
-  /**
-   * The total number of items available. This is only populated when specifically
-   * requested. The value may be an estimate and can be used for display purposes
-   * only.
-   */
-  total_size?: number | null;
-}
-
 export interface JobCreateParams {
   /**
    * Body param: The ID of the file to parse
@@ -247,14 +240,10 @@ export interface JobRetrieveParams {
   project_id?: string | null;
 }
 
-export interface JobListParams {
+export interface JobListParams extends PaginatedClassifyJobsParams {
   include_results?: boolean;
 
   organization_id?: string | null;
-
-  page_size?: number | null;
-
-  page_token?: string | null;
 
   project_id?: string | null;
 }
@@ -265,7 +254,7 @@ export declare namespace Jobs {
   export {
     type SpreadsheetJob as SpreadsheetJob,
     type SpreadsheetParsingConfig as SpreadsheetParsingConfig,
-    type JobListResponse as JobListResponse,
+    type SpreadsheetJobsPaginatedClassifyJobs as SpreadsheetJobsPaginatedClassifyJobs,
     type JobCreateParams as JobCreateParams,
     type JobRetrieveParams as JobRetrieveParams,
     type JobListParams as JobListParams,
