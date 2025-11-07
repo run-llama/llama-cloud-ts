@@ -53,22 +53,6 @@ Methods:
 - <code title="get /api/v1/data-sources/{data_source_id}">client.dataSources.<a href="./src/resources/data-sources.ts">get</a>(dataSourceID) -> DataSource</code>
 - <code title="put /api/v1/data-sources">client.dataSources.<a href="./src/resources/data-sources.ts">upsert</a>({ ...params }) -> DataSource</code>
 
-# EmbeddingModelConfigs
-
-Types:
-
-- <code><a href="./src/resources/embedding-model-configs.ts">EmbeddingModelConfig</a></code>
-- <code><a href="./src/resources/embedding-model-configs.ts">EmbeddingModelConfigUpdate</a></code>
-- <code><a href="./src/resources/embedding-model-configs.ts">EmbeddingModelConfigListResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/embedding-model-configs">client.embeddingModelConfigs.<a href="./src/resources/embedding-model-configs.ts">create</a>({ ...params }) -> EmbeddingModelConfig</code>
-- <code title="put /api/v1/embedding-model-configs/{embedding_model_config_id}">client.embeddingModelConfigs.<a href="./src/resources/embedding-model-configs.ts">update</a>(embeddingModelConfigID, { ...params }) -> EmbeddingModelConfig</code>
-- <code title="get /api/v1/embedding-model-configs">client.embeddingModelConfigs.<a href="./src/resources/embedding-model-configs.ts">list</a>({ ...params }) -> EmbeddingModelConfigListResponse</code>
-- <code title="delete /api/v1/embedding-model-configs/{embedding_model_config_id}">client.embeddingModelConfigs.<a href="./src/resources/embedding-model-configs.ts">delete</a>(embeddingModelConfigID, { ...params }) -> void</code>
-- <code title="put /api/v1/embedding-model-configs">client.embeddingModelConfigs.<a href="./src/resources/embedding-model-configs.ts">upsert</a>({ ...params }) -> EmbeddingModelConfig</code>
-
 # Organizations
 
 Types:

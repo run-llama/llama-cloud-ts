@@ -21,17 +21,6 @@ export {
   type DataSourceListParams,
   type DataSourceUpsertParams,
 } from './data-sources';
-export {
-  EmbeddingModelConfigs,
-  type EmbeddingModelConfig,
-  type EmbeddingModelConfigUpdate,
-  type EmbeddingModelConfigListResponse,
-  type EmbeddingModelConfigCreateParams,
-  type EmbeddingModelConfigUpdateParams,
-  type EmbeddingModelConfigListParams,
-  type EmbeddingModelConfigDeleteParams,
-  type EmbeddingModelConfigUpsertParams,
-} from './embedding-model-configs';
 export { Evals, type EvalListSupportedModelsResponse } from './evals';
 export { Extraction, type ExtractionRunParams } from './extraction/extraction';
 export {
