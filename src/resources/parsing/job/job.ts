@@ -21,6 +21,7 @@ import {
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
+import { pollUntilComplete, PollingOptions } from '../../../core/polling';
 
 export class Job extends APIResource {
   result: ResultAPI.Result = new ResultAPI.Result(this._client);
@@ -56,6 +57,73 @@ export class Job extends APIResource {
    */
   getParameters(jobID: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/api/v1/parsing/job/${jobID}/parameters`, options);
+  }
+
+  /**
+   * Wait for a parsing job to complete by polling until it reaches a terminal state.
+   *
+   * This method polls the job status at regular intervals until the job completes
+   * successfully or fails. It uses configurable backoff strategies to optimize
+   * polling behavior.
+   *
+   * @param jobID - The ID of the parsing job to wait for
+   * @param options - Polling configuration options
+   * @returns The completed ParsingJob
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails or is cancelled
+   *
+   * @example
+   * ```typescript
+   * import { LlamaCloud } from 'llama-cloud';
+   *
+   * const client = new LlamaCloud({ apiKey: '...' });
+   *
+   * // Upload a file for parsing
+   * const job = await client.parsing.uploadFile({ file: myFile });
+   *
+   * // Wait for it to complete
+   * const completedJob = await client.parsing.job.waitForCompletion(
+   *   job.id,
+   *   { verbose: true }
+   * );
+   *
+   * // Get the result
+   * const result = await client.parsing.job.result.getJson(job.id);
+   * ```
+   */
+  async waitForCompletion(
+    jobID: string,
+    options?: PollingOptions & RequestOptions,
+  ): Promise<ParsingAPI.ParsingJob> {
+    const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    const getStatus = async (): Promise<ParsingAPI.ParsingJob> => {
+      return await this.get(jobID, requestOptions);
+    };
+
+    const isComplete = (job: ParsingAPI.ParsingJob): boolean => {
+      return job.status === 'SUCCESS' || job.status === 'PARTIAL_SUCCESS';
+    };
+
+    const isError = (job: ParsingAPI.ParsingJob): boolean => {
+      return job.status === 'ERROR' || job.status === 'CANCELLED';
+    };
+
+    const getErrorMessage = (job: ParsingAPI.ParsingJob): string => {
+      const errorParts = [`Job ${jobID} failed with status: ${job.status}`];
+      if (job.error_message) {
+        errorParts.push(`Error: ${job.error_message}`);
+      }
+      return errorParts.join(' | ');
+    };
+
+    return await pollUntilComplete(getStatus, isComplete, isError, getErrorMessage, {
+      pollingInterval,
+      maxInterval,
+      timeout,
+      backoff,
+      verbose,
+    });
   }
 }
 

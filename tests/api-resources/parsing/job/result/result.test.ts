@@ -8,7 +8,8 @@ const client = new LlamaCloud({
 });
 
 describe('resource result', () => {
-  test('getImage: required and optional params', async () => {
+  // Prism tests are disabled
+  test.skip('getImage: required and optional params', async () => {
     const response = await client.parsing.job.result.getImage('name', { job_id: 'job_id' });
   });
 
