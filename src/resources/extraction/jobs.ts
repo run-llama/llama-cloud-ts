@@ -100,10 +100,7 @@ export class Jobs extends APIResource {
    * const result = await client.extraction.jobs.getResult(job.id);
    * ```
    */
-  async waitForCompletion(
-    jobID: string,
-    options?: PollingOptions & RequestOptions,
-  ): Promise<ExtractJob> {
+  async waitForCompletion(jobID: string, options?: PollingOptions & RequestOptions): Promise<ExtractJob> {
     const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
 
     const getStatus = async (): Promise<ExtractJob> => {
@@ -176,7 +173,7 @@ export class Jobs extends APIResource {
     await this.waitForCompletion(job.id, {
       pollingInterval,
       maxInterval,
-      timeout,
+      timeout: timeout || 2000.0,
       backoff,
       verbose,
       ...requestOptions,

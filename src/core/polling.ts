@@ -53,27 +53,27 @@ export interface PollingOptions {
   /**
    * Initial polling interval in seconds (default: 1.0)
    */
-  pollingInterval?: number;
+  pollingInterval?: number | undefined;
 
   /**
    * Maximum polling interval for backoff in seconds (default: 5.0)
    */
-  maxInterval?: number;
+  maxInterval?: number | undefined;
 
   /**
    * Maximum time to wait in seconds (default: 2000.0)
    */
-  timeout?: number;
+  timeout?: number | undefined;
 
   /**
    * Backoff strategy for polling intervals (default: "linear")
    */
-  backoff?: BackoffStrategy;
+  backoff?: BackoffStrategy | undefined;
 
   /**
    * Print progress indicators every 10 polls (default: false)
    */
-  verbose?: boolean;
+  verbose?: boolean | undefined;
 }
 
 /**
@@ -131,9 +131,7 @@ export async function pollUntilComplete<T>(
     // Check timeout
     const elapsed = (Date.now() - startTime) / 1000;
     if (elapsed > timeout) {
-      throw new PollingTimeoutError(
-        `Polling timed out after ${elapsed.toFixed(1)}s (timeout: ${timeout}s)`,
-      );
+      throw new PollingTimeoutError(`Polling timed out after ${elapsed.toFixed(1)}s (timeout: ${timeout}s)`);
     }
 
     // Print progress

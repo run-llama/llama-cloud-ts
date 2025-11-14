@@ -111,8 +111,8 @@ export class Job extends APIResource {
 
     const getErrorMessage = (job: ParsingAPI.ParsingJob): string => {
       const errorParts = [`Job ${jobID} failed with status: ${job.status}`];
-      if (job.error) {
-        errorParts.push(`Error: ${job.error}`);
+      if (job.error_message) {
+        errorParts.push(`Error: ${job.error_message}`);
       }
       return errorParts.join(' | ');
     };
