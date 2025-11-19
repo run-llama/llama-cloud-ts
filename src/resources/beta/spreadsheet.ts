@@ -3,76 +3,8 @@
 import { APIResource } from '../../core/resource';
 import * as FilesAPI from '../files/files';
 import * as ParsingAPI from '../parsing/parsing';
-import { APIPromise } from '../../core/api-promise';
-import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../../core/pagination';
-import { RequestOptions } from '../../internal/request-options';
-import { path } from '../../internal/utils/path';
 
-export class Spreadsheet extends APIResource {
-  /**
-   * Create a spreadsheet parsing job. Experimental: This endpoint is not yet ready
-   * for production use and is subject to change at any time.
-   */
-  create(params: SpreadsheetCreateParams, options?: RequestOptions): APIPromise<SpreadsheetJob> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/spreadsheet/jobs', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
-
-  /**
-   * List spreadsheet parsing jobs. Experimental: This endpoint is not yet ready for
-   * production use and is subject to change at any time.
-   */
-  list(
-    query: SpreadsheetListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<SpreadsheetJobsPaginatedClassifyJobs, SpreadsheetJob> {
-    return this._client.getAPIList('/api/v1/beta/spreadsheet/jobs', PaginatedClassifyJobs<SpreadsheetJob>, {
-      query,
-      ...options,
-    });
-  }
-
-  /**
-   * Get a spreadsheet parsing job.
-   *
-   * When include_results=True (default), the response will include extracted tables
-   * and results if the job is complete, eliminating the need for a separate /results
-   * call.
-   *
-   * Experimental: This endpoint is not yet ready for production use and is subject
-   * to change at any time.
-   */
-  get(
-    spreadsheetJobID: string,
-    query: SpreadsheetGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<SpreadsheetJob> {
-    return this._client.get(path`/api/v1/beta/spreadsheet/jobs/${spreadsheetJobID}`, { query, ...options });
-  }
-
-  /**
-   * Generate a presigned URL to download a specific extracted table. Experimental:
-   * This endpoint is not yet ready for production use and is subject to change at
-   * any time.
-   */
-  getResultTable(
-    tableType: 'table' | 'cell_metadata',
-    params: SpreadsheetGetResultTableParams,
-    options?: RequestOptions,
-  ): APIPromise<FilesAPI.PresignedURL> {
-    const { spreadsheet_job_id, table_id, ...query } = params;
-    return this._client.get(
-      path`/api/v1/beta/spreadsheet/jobs/${spreadsheet_job_id}/tables/${table_id}/result/${tableType}`,
-      { query, ...options },
-    );
-  }
-}
-
-export type SpreadsheetJobsPaginatedClassifyJobs = PaginatedClassifyJobs<SpreadsheetJob>;
+export class Spreadsheet extends APIResource {}
 
 /**
  * A spreadsheet parsing job
@@ -124,14 +56,14 @@ export interface SpreadsheetJob {
   errors?: Array<string>;
 
   /**
+   * All extracted regions (populated when job is complete)
+   */
+  regions?: Array<SpreadsheetJob.Region>;
+
+  /**
    * Whether the job completed successfully
    */
   success?: boolean | null;
-
-  /**
-   * All extracted tables (populated when job is complete)
-   */
-  tables?: Array<SpreadsheetJob.Table>;
 
   /**
    * Metadata for each processed worksheet (populated when job is complete)
@@ -141,28 +73,38 @@ export interface SpreadsheetJob {
 
 export namespace SpreadsheetJob {
   /**
-   * A summary of a single extracted table from a spreadsheet
+   * A summary of a single extracted region from a spreadsheet
    */
-  export interface Table {
+  export interface Region {
     /**
-     * Worksheet name where table was found
+     * Location of the region in the spreadsheet
+     */
+    location: string;
+
+    /**
+     * Type of the extracted region
+     */
+    region_type: string;
+
+    /**
+     * Worksheet name where region was found
      */
     sheet_name: string;
 
     /**
-     * Location of the table in the spreadsheet
+     * Generated description for the region
      */
-    table_location: string;
+    description?: string | null;
 
     /**
-     * JSON metadata with detailed table information
+     * Unique identifier for this region within the file
      */
-    metadata_json?: string | null;
+    region_id?: string;
 
     /**
-     * Unique identifier for this table within the file
+     * Generated title for the region
      */
-    table_id?: string;
+    title?: string | null;
   }
 
   /**
@@ -187,29 +129,29 @@ export namespace SpreadsheetJob {
 }
 
 /**
- * Configuration for spreadsheet parsing and table extraction
+ * Configuration for spreadsheet parsing and region extraction
  */
 export interface SpreadsheetParsingConfig {
   /**
-   * A1 notation of the range to extract a single table from. If None, the entire
+   * A1 notation of the range to extract a single region from. If None, the entire
    * sheet is used.
    */
   extraction_range?: string | null;
 
   /**
    * Whether to generate additional metadata (title, description) for each extracted
-   * table.
+   * region.
    */
   generate_additional_metadata?: boolean;
 
   /**
-   * Whether to include hidden cells when extracting tables from the spreadsheet.
+   * Whether to include hidden cells when extracting regions from the spreadsheet.
    */
   include_hidden_cells?: boolean;
 
   /**
-   * The names of the sheets to extract tables from. If empty, the default sheet is
-   * extracted.
+   * The names of the sheets to extract regions from. If empty, all sheets will be
+   * processed.
    */
   sheet_names?: Array<string> | null;
 
@@ -219,79 +161,6 @@ export interface SpreadsheetParsingConfig {
   use_experimental_processing?: boolean;
 }
 
-export interface SpreadsheetCreateParams {
-  /**
-   * Body param: The ID of the file to parse
-   */
-  file_id: string;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Configuration for the parsing job
-   */
-  config?: SpreadsheetParsingConfig;
-}
-
-export interface SpreadsheetListParams extends PaginatedClassifyJobsParams {
-  include_results?: boolean;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface SpreadsheetGetParams {
-  include_results?: boolean;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface SpreadsheetGetResultTableParams {
-  /**
-   * Path param:
-   */
-  spreadsheet_job_id: string;
-
-  /**
-   * Path param:
-   */
-  table_id: string;
-
-  /**
-   * Query param:
-   */
-  expires_at_seconds?: number | null;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-}
-
 export declare namespace Spreadsheet {
-  export {
-    type SpreadsheetJob as SpreadsheetJob,
-    type SpreadsheetParsingConfig as SpreadsheetParsingConfig,
-    type SpreadsheetJobsPaginatedClassifyJobs as SpreadsheetJobsPaginatedClassifyJobs,
-    type SpreadsheetCreateParams as SpreadsheetCreateParams,
-    type SpreadsheetListParams as SpreadsheetListParams,
-    type SpreadsheetGetParams as SpreadsheetGetParams,
-    type SpreadsheetGetResultTableParams as SpreadsheetGetResultTableParams,
-  };
+  export { type SpreadsheetJob as SpreadsheetJob, type SpreadsheetParsingConfig as SpreadsheetParsingConfig };
 }

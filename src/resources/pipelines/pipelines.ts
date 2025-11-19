@@ -337,6 +337,8 @@ export interface LlamaParseParameters {
 
   extract_layout?: boolean | null;
 
+  extract_printed_page_number?: boolean | null;
+
   fast_mode?: boolean | null;
 
   formatting_instruction?: string | null;

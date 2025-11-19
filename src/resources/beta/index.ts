@@ -47,13 +47,4 @@ export {
   type ParseConfigurationQueryParams,
   type ParseConfigurationUpdateParseConfigurationsParams,
 } from './parse-configurations';
-export {
-  Spreadsheet,
-  type SpreadsheetJob,
-  type SpreadsheetParsingConfig,
-  type SpreadsheetCreateParams,
-  type SpreadsheetListParams,
-  type SpreadsheetGetParams,
-  type SpreadsheetGetResultTableParams,
-  type SpreadsheetJobsPaginatedClassifyJobs,
-} from './spreadsheet';
+export { Spreadsheet, type SpreadsheetJob, type SpreadsheetParsingConfig } from './spreadsheet';
