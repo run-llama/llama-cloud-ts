@@ -122,6 +122,7 @@ describe('resource parsing', () => {
           do_not_unroll_columns: true,
           extract_charts: true,
           extract_layout: true,
+          extract_printed_page_number: true,
           fast_mode: true,
           file: await toFile(Buffer.from('# my file contents'), 'README.md'),
           formatting_instruction: 'formatting_instruction',

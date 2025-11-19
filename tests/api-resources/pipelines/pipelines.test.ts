@@ -79,6 +79,7 @@ describe('resource pipelines', () => {
         do_not_unroll_columns: true,
         extract_charts: true,
         extract_layout: true,
+        extract_printed_page_number: true,
         fast_mode: true,
         formatting_instruction: 'formatting_instruction',
         gpt4o_api_key: 'gpt4o_api_key',
