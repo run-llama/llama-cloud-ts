@@ -540,6 +540,11 @@ export interface ParsingUploadFileParams {
   /**
    * Body param:
    */
+  extract_printed_page_number?: boolean;
+
+  /**
+   * Body param:
+   */
   fast_mode?: boolean;
 
   /**

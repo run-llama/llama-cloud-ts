@@ -537,13 +537,6 @@ Types:
 - <code><a href="./src/resources/beta/spreadsheet.ts">SpreadsheetJob</a></code>
 - <code><a href="./src/resources/beta/spreadsheet.ts">SpreadsheetParsingConfig</a></code>
 
-Methods:
-
-- <code title="post /api/v1/beta/spreadsheet/jobs">client.beta.spreadsheet.<a href="./src/resources/beta/spreadsheet.ts">create</a>({ ...params }) -> SpreadsheetJob</code>
-- <code title="get /api/v1/beta/spreadsheet/jobs">client.beta.spreadsheet.<a href="./src/resources/beta/spreadsheet.ts">list</a>({ ...params }) -> SpreadsheetJobsPaginatedClassifyJobs</code>
-- <code title="get /api/v1/beta/spreadsheet/jobs/{spreadsheet_job_id}">client.beta.spreadsheet.<a href="./src/resources/beta/spreadsheet.ts">get</a>(spreadsheetJobID, { ...params }) -> SpreadsheetJob</code>
-- <code title="get /api/v1/beta/spreadsheet/jobs/{spreadsheet_job_id}/tables/{table_id}/result/{table_type}">client.beta.spreadsheet.<a href="./src/resources/beta/spreadsheet.ts">getResultTable</a>(tableType, { ...params }) -> PresignedURL</code>
-
 ## Directories
 
 Types:

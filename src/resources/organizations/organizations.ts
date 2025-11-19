@@ -107,7 +107,7 @@ export interface Organization {
   feature_flags?: { [key: string]: unknown } | null;
 
   /**
-   * Whether the organization is a Parse Premium customer.
+   * [Deprecated] Whether the organization is a Parse Premium customer.
    */
   parse_plan_level?: 'DEFAULT' | 'PREMIUM';
 

@@ -6,8 +6,8 @@ import { RequestOptions } from '../../../internal/request-options';
 
 export class Schema extends APIResource {
   /**
-   * Generates an extraction agent's schema definition from a file and/or natural
-   * language prompt.
+   * Generates or refines an extraction agent's schema definition from a file,
+   * natural language prompt, or existing schema.
    */
   generate(params: SchemaGenerateParams, options?: RequestOptions): APIPromise<SchemaGenerateResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -55,6 +55,14 @@ export interface SchemaGenerateParams {
    * Query param:
    */
   project_id?: string | null;
+
+  /**
+   * Body param: Optional schema to validate, refine, or extend during generation
+   */
+  data_schema?:
+    | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
+    | string
+    | null;
 
   /**
    * Body param: Optional file ID to analyze for schema generation

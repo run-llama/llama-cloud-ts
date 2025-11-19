@@ -32,16 +32,7 @@ import {
   ParseConfigurations,
 } from './parse-configurations';
 import * as SpreadsheetAPI from './spreadsheet';
-import {
-  Spreadsheet,
-  SpreadsheetCreateParams,
-  SpreadsheetGetParams,
-  SpreadsheetGetResultTableParams,
-  SpreadsheetJob,
-  SpreadsheetJobsPaginatedClassifyJobs,
-  SpreadsheetListParams,
-  SpreadsheetParsingConfig,
-} from './spreadsheet';
+import { Spreadsheet, SpreadsheetJob, SpreadsheetParsingConfig } from './spreadsheet';
 import * as DirectoriesAPI from './directories/directories';
 import {
   Directories,
@@ -112,11 +103,6 @@ export declare namespace Beta {
     Spreadsheet as Spreadsheet,
     type SpreadsheetJob as SpreadsheetJob,
     type SpreadsheetParsingConfig as SpreadsheetParsingConfig,
-    type SpreadsheetJobsPaginatedClassifyJobs as SpreadsheetJobsPaginatedClassifyJobs,
-    type SpreadsheetCreateParams as SpreadsheetCreateParams,
-    type SpreadsheetListParams as SpreadsheetListParams,
-    type SpreadsheetGetParams as SpreadsheetGetParams,
-    type SpreadsheetGetResultTableParams as SpreadsheetGetResultTableParams,
   };
 
   export {
