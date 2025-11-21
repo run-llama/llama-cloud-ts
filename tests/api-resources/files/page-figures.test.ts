@@ -61,8 +61,8 @@ describe('resource pageFigures', () => {
   });
 
   // Prism tests are disabled
-  test.skip('get: only required params', async () => {
-    const responsePromise = client.files.pageFigures.get('figure_name', {
+  test.skip('getFigure: only required params', async () => {
+    const responsePromise = client.files.pageFigures.getFigure('figure_name', {
       id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       page_index: 0,
     });
@@ -76,10 +76,33 @@ describe('resource pageFigures', () => {
   });
 
   // Prism tests are disabled
-  test.skip('get: required and optional params', async () => {
-    const response = await client.files.pageFigures.get('figure_name', {
+  test.skip('getFigure: required and optional params', async () => {
+    const response = await client.files.pageFigures.getFigure('figure_name', {
       id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       page_index: 0,
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('getFigures: only required params', async () => {
+    const responsePromise = client.files.pageFigures.getFigures(0, {
+      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getFigures: required and optional params', async () => {
+    const response = await client.files.pageFigures.getFigures(0, {
+      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });

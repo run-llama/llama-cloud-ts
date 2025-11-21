@@ -17,10 +17,12 @@ export {
   PageFigures,
   type PageFigureMetadata,
   type PageFigureListResponse,
-  type PageFigureGetResponse,
+  type PageFigureGetFigureResponse,
+  type PageFigureGetFiguresResponse,
   type PageFigureListParams,
   type PageFigureGeneratePresignedURLParams,
-  type PageFigureGetParams,
+  type PageFigureGetFigureParams,
+  type PageFigureGetFiguresParams,
 } from './page-figures';
 export {
   PageScreenshots,

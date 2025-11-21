@@ -13,6 +13,8 @@ import {
   FileListResponsesPaginatedClassifyJobs,
   FileUpdateParams,
   FileUpdateResponse,
+  FileUploadParams,
+  FileUploadResponse,
   Files,
 } from './files';
 import { APIPromise } from '../../../core/api-promise';
@@ -377,11 +379,13 @@ export declare namespace Directories {
     type FileListResponse as FileListResponse,
     type FileAddResponse as FileAddResponse,
     type FileGetResponse as FileGetResponse,
+    type FileUploadResponse as FileUploadResponse,
     type FileListResponsesPaginatedClassifyJobs as FileListResponsesPaginatedClassifyJobs,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileAddParams as FileAddParams,
     type FileGetParams as FileGetParams,
+    type FileUploadParams as FileUploadParams,
   };
 }

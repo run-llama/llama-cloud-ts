@@ -113,6 +113,18 @@ export class Documents extends APIResource {
     const { pipeline_id } = params;
     return this._client.post(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/sync`, options);
   }
+
+  /**
+   * Batch create or update a document for a pipeline.
+   */
+  upsertBatch(
+    pipelineID: string,
+    params: DocumentUpsertBatchParams,
+    options?: RequestOptions,
+  ): APIPromise<DocumentUpsertBatchResponse> {
+    const { body } = params;
+    return this._client.put(path`/api/v1/pipelines/${pipelineID}/documents`, { body: body, ...options });
+  }
 }
 
 /**
@@ -293,6 +305,8 @@ export interface DocumentGetPaginatedResponse {
 
 export type DocumentSyncResponse = unknown;
 
+export type DocumentUpsertBatchResponse = Array<CloudDocument>;
+
 export interface DocumentCreateParams {
   body: Array<CloudDocumentCreate>;
 }
@@ -354,6 +368,10 @@ export interface DocumentSyncParams {
   pipeline_id: string;
 }
 
+export interface DocumentUpsertBatchParams {
+  body: Array<CloudDocumentCreate>;
+}
+
 export declare namespace Documents {
   export {
     type CloudDocument as CloudDocument,
@@ -365,6 +383,7 @@ export declare namespace Documents {
     type DocumentGetChunksResponse as DocumentGetChunksResponse,
     type DocumentGetPaginatedResponse as DocumentGetPaginatedResponse,
     type DocumentSyncResponse as DocumentSyncResponse,
+    type DocumentUpsertBatchResponse as DocumentUpsertBatchResponse,
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
     type DocumentDeleteParams as DocumentDeleteParams,
@@ -374,5 +393,6 @@ export declare namespace Documents {
     type DocumentGetPaginatedParams as DocumentGetPaginatedParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,
     type DocumentSyncParams as DocumentSyncParams,
+    type DocumentUpsertBatchParams as DocumentUpsertBatchParams,
   };
 }

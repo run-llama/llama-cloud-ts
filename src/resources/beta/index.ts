@@ -4,14 +4,28 @@ export {
   AgentData,
   type AgentDataDeleteResponse,
   type AgentDataAggregateResponse,
+  type AgentDataDeleteByQueryResponse,
   type AgentDataSearchResponse,
   type AgentDataUpdateParams,
   type AgentDataDeleteParams,
   type AgentDataAgentDataParams,
   type AgentDataAggregateParams,
+  type AgentDataDeleteByQueryParams,
   type AgentDataGetParams,
   type AgentDataSearchParams,
 } from './agent-data';
+export {
+  Batch,
+  type BatchCreateResponse,
+  type BatchListResponse,
+  type BatchCancelResponse,
+  type BatchGetStatusResponse,
+  type BatchCreateParams,
+  type BatchListParams,
+  type BatchCancelParams,
+  type BatchGetStatusParams,
+  type BatchListResponsesPaginatedBatchItems,
+} from './batch/index';
 export { Beta } from './beta';
 export {
   Directories,
@@ -32,6 +46,7 @@ export {
   type FileCreateParams,
   type FileDeleteParams,
   type FileQueryParams,
+  type FileUpsertParams,
 } from './files';
 export {
   ParseConfigurations,
@@ -41,10 +56,18 @@ export {
   type ParseConfigurationUpdateParams,
   type ParseConfigurationDeleteParams,
   type ParseConfigurationGetParams,
-  type ParseConfigurationGetLatestParams,
   type ParseConfigurationGetParseConfigurationsParams,
   type ParseConfigurationParseConfigurationsParams,
-  type ParseConfigurationQueryParams,
-  type ParseConfigurationUpdateParseConfigurationsParams,
 } from './parse-configurations';
-export { Spreadsheet, type SpreadsheetJob, type SpreadsheetParsingConfig } from './spreadsheet';
+export {
+  Sheets,
+  type SheetsJob,
+  type SheetsParsingConfig,
+  type SheetDeleteJobResponse,
+  type SheetCreateParams,
+  type SheetListParams,
+  type SheetDeleteJobParams,
+  type SheetGetParams,
+  type SheetGetResultTableParams,
+  type SheetsJobsPaginatedClassifyJobs,
+} from './sheets';

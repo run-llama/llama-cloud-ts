@@ -62,6 +62,23 @@ export class Files extends APIResource {
       ...options,
     });
   }
+
+  /**
+   * Upsert a file (create or update if exists) in the project.
+   *
+   * Args: file_create: File creation/update data project: Validated project from
+   * dependency db: Database session
+   *
+   * Returns: The upserted file
+   */
+  upsert(params: FileUpsertParams, options?: RequestOptions): APIPromise<FilesFilesAPI.File> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.put('/api/v1/beta/files', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
 }
 
 /**
@@ -218,11 +235,64 @@ export namespace FileQueryParams {
   }
 }
 
+export interface FileUpsertParams {
+  /**
+   * Body param: Name that will be used for created file. If possible, always include
+   * the file extension in the name.
+   */
+  name: string;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: The ID of the data source that the file belongs to
+   */
+  data_source_id?: string | null;
+
+  /**
+   * Body param: The ID of the file in the external system
+   */
+  external_file_id?: string | null;
+
+  /**
+   * Body param: Size of the file in bytes
+   */
+  file_size?: number | null;
+
+  /**
+   * Body param: The last modified time of the file
+   */
+  last_modified_at?: string | null;
+
+  /**
+   * Body param: Permission information for the file
+   */
+  permission_info?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
+
+  /**
+   * Body param: Resource information for the file
+   */
+  resource_info?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
+}
+
 export declare namespace Files {
   export {
     type FileQueryResponse as FileQueryResponse,
     type FileCreateParams as FileCreateParams,
     type FileDeleteParams as FileDeleteParams,
     type FileQueryParams as FileQueryParams,
+    type FileUpsertParams as FileUpsertParams,
   };
 }

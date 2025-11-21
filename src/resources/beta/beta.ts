@@ -7,6 +7,8 @@ import {
   AgentDataAgentDataParams,
   AgentDataAggregateParams,
   AgentDataAggregateResponse,
+  AgentDataDeleteByQueryParams,
+  AgentDataDeleteByQueryResponse,
   AgentDataDeleteParams,
   AgentDataDeleteResponse,
   AgentDataGetParams,
@@ -15,24 +17,52 @@ import {
   AgentDataUpdateParams,
 } from './agent-data';
 import * as FilesAPI from './files';
-import { FileCreateParams, FileDeleteParams, FileQueryParams, FileQueryResponse, Files } from './files';
+import {
+  FileCreateParams,
+  FileDeleteParams,
+  FileQueryParams,
+  FileQueryResponse,
+  FileUpsertParams,
+  Files,
+} from './files';
 import * as ParseConfigurationsAPI from './parse-configurations';
 import {
   ParseConfiguration,
   ParseConfigurationCreate,
   ParseConfigurationDeleteParams,
-  ParseConfigurationGetLatestParams,
   ParseConfigurationGetParams,
   ParseConfigurationGetParseConfigurationsParams,
   ParseConfigurationParseConfigurationsParams,
-  ParseConfigurationQueryParams,
   ParseConfigurationQueryResponse,
   ParseConfigurationUpdateParams,
-  ParseConfigurationUpdateParseConfigurationsParams,
   ParseConfigurations,
 } from './parse-configurations';
-import * as SpreadsheetAPI from './spreadsheet';
-import { Spreadsheet, SpreadsheetJob, SpreadsheetParsingConfig } from './spreadsheet';
+import * as SheetsAPI from './sheets';
+import {
+  SheetCreateParams,
+  SheetDeleteJobParams,
+  SheetDeleteJobResponse,
+  SheetGetParams,
+  SheetGetResultTableParams,
+  SheetListParams,
+  Sheets,
+  SheetsJob,
+  SheetsJobsPaginatedClassifyJobs,
+  SheetsParsingConfig,
+} from './sheets';
+import * as BatchAPI from './batch/batch';
+import {
+  Batch,
+  BatchCancelParams,
+  BatchCancelResponse,
+  BatchCreateParams,
+  BatchCreateResponse,
+  BatchGetStatusParams,
+  BatchGetStatusResponse,
+  BatchListParams,
+  BatchListResponse,
+  BatchListResponsesPaginatedBatchItems,
+} from './batch/batch';
 import * as DirectoriesAPI from './directories/directories';
 import {
   Directories,
@@ -53,25 +83,29 @@ export class Beta extends APIResource {
   files: FilesAPI.Files = new FilesAPI.Files(this._client);
   parseConfigurations: ParseConfigurationsAPI.ParseConfigurations =
     new ParseConfigurationsAPI.ParseConfigurations(this._client);
-  spreadsheet: SpreadsheetAPI.Spreadsheet = new SpreadsheetAPI.Spreadsheet(this._client);
+  sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
   directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
+  batch: BatchAPI.Batch = new BatchAPI.Batch(this._client);
 }
 
 Beta.Files = Files;
 Beta.ParseConfigurations = ParseConfigurations;
-Beta.Spreadsheet = Spreadsheet;
+Beta.Sheets = Sheets;
 Beta.Directories = Directories;
+Beta.Batch = Batch;
 
 export declare namespace Beta {
   export {
     type AgentData as AgentData,
     type AgentDataDeleteResponse as AgentDataDeleteResponse,
     type AgentDataAggregateResponse as AgentDataAggregateResponse,
+    type AgentDataDeleteByQueryResponse as AgentDataDeleteByQueryResponse,
     type AgentDataSearchResponse as AgentDataSearchResponse,
     type AgentDataUpdateParams as AgentDataUpdateParams,
     type AgentDataDeleteParams as AgentDataDeleteParams,
     type AgentDataAgentDataParams as AgentDataAgentDataParams,
     type AgentDataAggregateParams as AgentDataAggregateParams,
+    type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
     type AgentDataGetParams as AgentDataGetParams,
     type AgentDataSearchParams as AgentDataSearchParams,
   };
@@ -82,6 +116,7 @@ export declare namespace Beta {
     type FileCreateParams as FileCreateParams,
     type FileDeleteParams as FileDeleteParams,
     type FileQueryParams as FileQueryParams,
+    type FileUpsertParams as FileUpsertParams,
   };
 
   export {
@@ -92,17 +127,21 @@ export declare namespace Beta {
     type ParseConfigurationUpdateParams as ParseConfigurationUpdateParams,
     type ParseConfigurationDeleteParams as ParseConfigurationDeleteParams,
     type ParseConfigurationGetParams as ParseConfigurationGetParams,
-    type ParseConfigurationGetLatestParams as ParseConfigurationGetLatestParams,
     type ParseConfigurationGetParseConfigurationsParams as ParseConfigurationGetParseConfigurationsParams,
     type ParseConfigurationParseConfigurationsParams as ParseConfigurationParseConfigurationsParams,
-    type ParseConfigurationQueryParams as ParseConfigurationQueryParams,
-    type ParseConfigurationUpdateParseConfigurationsParams as ParseConfigurationUpdateParseConfigurationsParams,
   };
 
   export {
-    Spreadsheet as Spreadsheet,
-    type SpreadsheetJob as SpreadsheetJob,
-    type SpreadsheetParsingConfig as SpreadsheetParsingConfig,
+    Sheets as Sheets,
+    type SheetsJob as SheetsJob,
+    type SheetsParsingConfig as SheetsParsingConfig,
+    type SheetDeleteJobResponse as SheetDeleteJobResponse,
+    type SheetsJobsPaginatedClassifyJobs as SheetsJobsPaginatedClassifyJobs,
+    type SheetCreateParams as SheetCreateParams,
+    type SheetListParams as SheetListParams,
+    type SheetDeleteJobParams as SheetDeleteJobParams,
+    type SheetGetParams as SheetGetParams,
+    type SheetGetResultTableParams as SheetGetResultTableParams,
   };
 
   export {
@@ -117,5 +156,18 @@ export declare namespace Beta {
     type DirectoryListParams as DirectoryListParams,
     type DirectoryDeleteParams as DirectoryDeleteParams,
     type DirectoryGetParams as DirectoryGetParams,
+  };
+
+  export {
+    Batch as Batch,
+    type BatchCreateResponse as BatchCreateResponse,
+    type BatchListResponse as BatchListResponse,
+    type BatchCancelResponse as BatchCancelResponse,
+    type BatchGetStatusResponse as BatchGetStatusResponse,
+    type BatchListResponsesPaginatedBatchItems as BatchListResponsesPaginatedBatchItems,
+    type BatchCreateParams as BatchCreateParams,
+    type BatchListParams as BatchListParams,
+    type BatchCancelParams as BatchCancelParams,
+    type BatchGetStatusParams as BatchGetStatusParams,
   };
 }

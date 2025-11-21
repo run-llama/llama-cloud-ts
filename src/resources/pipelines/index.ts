@@ -21,6 +21,7 @@ export {
   type DocumentGetChunksResponse,
   type DocumentGetPaginatedResponse,
   type DocumentSyncResponse,
+  type DocumentUpsertBatchResponse,
   type DocumentCreateParams,
   type DocumentListParams,
   type DocumentDeleteParams,
@@ -30,6 +31,7 @@ export {
   type DocumentGetPaginatedParams,
   type DocumentGetStatusParams,
   type DocumentSyncParams,
+  type DocumentUpsertBatchParams,
 } from './documents';
 export {
   Files,
@@ -67,11 +69,14 @@ export {
   type PipelineChatResponse,
   type PipelineGetFiles2Response,
   type PipelineGetPlaygroundSessionResponse,
+  type PipelineSearchResponse,
   type PipelineCreateParams,
   type PipelineUpdateParams,
   type PipelineListParams,
   type PipelineChatParams,
   type PipelineGetFiles2Params,
   type PipelineGetStatusParams,
+  type PipelineSearchParams,
+  type PipelineUpsertParams,
 } from './pipelines';
 export { Sync } from './sync';
