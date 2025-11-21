@@ -4,14 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as DefaultAPI from './default';
 import { Default } from './default';
 import * as UsersAPI from './users/users';
-import {
-  UserCreateParams,
-  UserCreateResponse,
-  UserDeleteParams,
-  UserListResponse,
-  UserOrganization,
-  Users,
-} from './users/users';
+import { Users } from './users/users';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -61,13 +54,6 @@ export class Organizations extends APIResource {
    */
   get(organizationID: string, options?: RequestOptions): APIPromise<Organization> {
     return this._client.get(path`/api/v1/organizations/${organizationID}`, options);
-  }
-
-  /**
-   * List all roles in an organization.
-   */
-  getRoles(organizationID: string, options?: RequestOptions): APIPromise<OrganizationGetRolesResponse> {
-    return this._client.get(path`/api/v1/organizations/${organizationID}/roles`, options);
   }
 
   /**
@@ -130,73 +116,6 @@ export interface OrganizationCreate {
    * A name for the organization.
    */
   name: string;
-}
-
-/**
- * Schema for a role.
- */
-export interface Role {
-  /**
-   * Unique identifier
-   */
-  id: string;
-
-  /**
-   * A name for the role.
-   */
-  name: string;
-
-  /**
-   * The actual permissions of the role.
-   */
-  permissions: Array<Role.Permission>;
-
-  /**
-   * Creation datetime
-   */
-  created_at?: string | null;
-
-  /**
-   * Update datetime
-   */
-  updated_at?: string | null;
-}
-
-export namespace Role {
-  /**
-   * Schema for a permission.
-   */
-  export interface Permission {
-    /**
-     * Unique identifier
-     */
-    id: string;
-
-    /**
-     * Whether the permission is granted or not.
-     */
-    access: boolean;
-
-    /**
-     * A description for the permission.
-     */
-    description: string | null;
-
-    /**
-     * A name for the permission.
-     */
-    name: string;
-
-    /**
-     * Creation datetime
-     */
-    created_at?: string | null;
-
-    /**
-     * Update datetime
-     */
-    updated_at?: string | null;
-  }
 }
 
 export interface UsageAndPlan {
@@ -409,8 +328,6 @@ export namespace UsageAndPlan {
 
 export type OrganizationListResponse = Array<Organization>;
 
-export type OrganizationGetRolesResponse = Array<Role>;
-
 export interface OrganizationCreateParams {
   /**
    * A name for the organization.
@@ -441,10 +358,8 @@ export declare namespace Organizations {
   export {
     type Organization as Organization,
     type OrganizationCreate as OrganizationCreate,
-    type Role as Role,
     type UsageAndPlan as UsageAndPlan,
     type OrganizationListResponse as OrganizationListResponse,
-    type OrganizationGetRolesResponse as OrganizationGetRolesResponse,
     type OrganizationCreateParams as OrganizationCreateParams,
     type OrganizationUpdateParams as OrganizationUpdateParams,
     type OrganizationGetUsageParams as OrganizationGetUsageParams,
@@ -452,12 +367,5 @@ export declare namespace Organizations {
 
   export { Default as Default };
 
-  export {
-    Users as Users,
-    type UserOrganization as UserOrganization,
-    type UserCreateResponse as UserCreateResponse,
-    type UserListResponse as UserListResponse,
-    type UserCreateParams as UserCreateParams,
-    type UserDeleteParams as UserDeleteParams,
-  };
+  export { Users as Users };
 }

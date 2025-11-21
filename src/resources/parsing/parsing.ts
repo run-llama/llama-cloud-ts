@@ -911,6 +911,11 @@ export interface ParsingUploadFileParams {
   /**
    * Body param:
    */
+  tier?: string;
+
+  /**
+   * Body param:
+   */
   use_vendor_multimodal_model?: boolean;
 
   /**
@@ -927,6 +932,11 @@ export interface ParsingUploadFileParams {
    * Body param:
    */
   vendor_multimodal_model_name?: string;
+
+  /**
+   * Body param:
+   */
+  version?: string;
 
   /**
    * Body param:

@@ -21,7 +21,7 @@ export {
   type DataSourceListParams,
   type DataSourceUpsertParams,
 } from './data-sources';
-export { Evals, type EvalListSupportedModelsResponse } from './evals';
+export { Evals } from './evals';
 export { Extraction, type ExtractionRunParams } from './extraction/extraction';
 export {
   Files,
@@ -40,10 +40,8 @@ export {
   Organizations,
   type Organization,
   type OrganizationCreate,
-  type Role,
   type UsageAndPlan,
   type OrganizationListResponse,
-  type OrganizationGetRolesResponse,
   type OrganizationCreateParams,
   type OrganizationUpdateParams,
   type OrganizationGetUsageParams,
