@@ -2,7 +2,6 @@
 
 Types:
 
-- <code><a href="./src/resources/projects.ts">AgentDeploymentList</a></code>
 - <code><a href="./src/resources/projects.ts">Project</a></code>
 - <code><a href="./src/resources/projects.ts">ProjectListResponse</a></code>
 
@@ -10,8 +9,6 @@ Methods:
 
 - <code title="get /api/v1/projects">client.projects.<a href="./src/resources/projects.ts">list</a>({ ...params }) -> ProjectListResponse</code>
 - <code title="get /api/v1/projects/{project_id}">client.projects.<a href="./src/resources/projects.ts">get</a>(projectID, { ...params }) -> Project</code>
-- <code title="get /api/v1/projects/{project_id}/agents">client.projects.<a href="./src/resources/projects.ts">listAgents</a>(projectID) -> AgentDeploymentList</code>
-- <code title="post /api/v1/projects/{project_id}/agents:sync">client.projects.<a href="./src/resources/projects.ts">syncAgents</a>(projectID) -> AgentDeploymentList</code>
 
 # DataSinks
 
