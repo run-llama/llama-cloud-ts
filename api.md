@@ -59,10 +59,8 @@ Types:
 
 - <code><a href="./src/resources/organizations/organizations.ts">Organization</a></code>
 - <code><a href="./src/resources/organizations/organizations.ts">OrganizationCreate</a></code>
-- <code><a href="./src/resources/organizations/organizations.ts">Role</a></code>
 - <code><a href="./src/resources/organizations/organizations.ts">UsageAndPlan</a></code>
 - <code><a href="./src/resources/organizations/organizations.ts">OrganizationListResponse</a></code>
-- <code><a href="./src/resources/organizations/organizations.ts">OrganizationGetRolesResponse</a></code>
 
 Methods:
 
@@ -71,7 +69,6 @@ Methods:
 - <code title="get /api/v1/organizations">client.organizations.<a href="./src/resources/organizations/organizations.ts">list</a>() -> OrganizationListResponse</code>
 - <code title="delete /api/v1/organizations/{organization_id}">client.organizations.<a href="./src/resources/organizations/organizations.ts">delete</a>(organizationID) -> void</code>
 - <code title="get /api/v1/organizations/{organization_id}">client.organizations.<a href="./src/resources/organizations/organizations.ts">get</a>(organizationID) -> Organization</code>
-- <code title="get /api/v1/organizations/{organization_id}/roles">client.organizations.<a href="./src/resources/organizations/organizations.ts">getRoles</a>(organizationID) -> OrganizationGetRolesResponse</code>
 - <code title="get /api/v1/organizations/{organization_id}/usage">client.organizations.<a href="./src/resources/organizations/organizations.ts">getUsage</a>(organizationID, { ...params }) -> UsageAndPlan</code>
 
 ## Default
@@ -82,42 +79,9 @@ Methods:
 
 ## Users
 
-Types:
-
-- <code><a href="./src/resources/organizations/users/users.ts">UserOrganization</a></code>
-- <code><a href="./src/resources/organizations/users/users.ts">UserCreateResponse</a></code>
-- <code><a href="./src/resources/organizations/users/users.ts">UserListResponse</a></code>
-
-Methods:
-
-- <code title="put /api/v1/organizations/{organization_id}/users">client.organizations.users.<a href="./src/resources/organizations/users/users.ts">create</a>(organizationID, [ ...body ]) -> UserCreateResponse</code>
-- <code title="get /api/v1/organizations/{organization_id}/users">client.organizations.users.<a href="./src/resources/organizations/users/users.ts">list</a>(organizationID) -> UserListResponse</code>
-- <code title="delete /api/v1/organizations/{organization_id}/users/{member_user_id}">client.organizations.users.<a href="./src/resources/organizations/users/users.ts">delete</a>(memberUserID, [ ...body ]) -> void</code>
-
 ### Roles
 
-Types:
-
-- <code><a href="./src/resources/organizations/users/roles.ts">UserOrganizationRole</a></code>
-
-Methods:
-
-- <code title="put /api/v1/organizations/{organization_id}/users/roles">client.organizations.users.roles.<a href="./src/resources/organizations/users/roles.ts">create</a>(organizationID, { ...params }) -> UserOrganizationRole</code>
-- <code title="get /api/v1/organizations/{organization_id}/users/roles">client.organizations.users.roles.<a href="./src/resources/organizations/users/roles.ts">list</a>(organizationID, { ...params }) -> UserOrganizationRole | null</code>
-
 ### Projects
-
-Types:
-
-- <code><a href="./src/resources/organizations/users/projects.ts">ProjectCreateResponse</a></code>
-- <code><a href="./src/resources/organizations/users/projects.ts">ProjectListResponse</a></code>
-- <code><a href="./src/resources/organizations/users/projects.ts">ProjectDeleteResponse</a></code>
-
-Methods:
-
-- <code title="put /api/v1/organizations/{organization_id}/users/{user_id}/projects">client.organizations.users.projects.<a href="./src/resources/organizations/users/projects.ts">create</a>(userID, { ...params }) -> unknown</code>
-- <code title="get /api/v1/organizations/{organization_id}/users/{user_id}/projects">client.organizations.users.projects.<a href="./src/resources/organizations/users/projects.ts">list</a>(userID, { ...params }) -> ProjectListResponse</code>
-- <code title="delete /api/v1/organizations/{organization_id}/users/{user_id}/projects/{project_id}">client.organizations.users.projects.<a href="./src/resources/organizations/users/projects.ts">delete</a>(projectID, { ...params }) -> unknown</code>
 
 # Files
 
@@ -305,14 +269,6 @@ Methods:
 - <code title="put /api/v1/retrievers">client.retrievers.<a href="./src/resources/retrievers.ts">upsert</a>({ ...params }) -> Retriever</code>
 
 # Evals
-
-Types:
-
-- <code><a href="./src/resources/evals.ts">EvalListSupportedModelsResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/evals/models">client.evals.<a href="./src/resources/evals.ts">listSupportedModels</a>() -> EvalListSupportedModelsResponse</code>
 
 # Parsing
 

@@ -59,7 +59,7 @@ import {
   DataSourceUpsertParams,
   DataSources,
 } from './resources/data-sources';
-import { EvalListSupportedModelsResponse, Evals } from './resources/evals';
+import { Evals } from './resources/evals';
 import {
   AgentDeploymentList,
   Project,
@@ -111,12 +111,10 @@ import {
   Organization,
   OrganizationCreate,
   OrganizationCreateParams,
-  OrganizationGetRolesResponse,
   OrganizationGetUsageParams,
   OrganizationListResponse,
   OrganizationUpdateParams,
   Organizations,
-  Role,
   UsageAndPlan,
 } from './resources/organizations/organizations';
 import {
@@ -1009,10 +1007,8 @@ export declare namespace LlamaCloud {
     Organizations as Organizations,
     type Organization as Organization,
     type OrganizationCreate as OrganizationCreate,
-    type Role as Role,
     type UsageAndPlan as UsageAndPlan,
     type OrganizationListResponse as OrganizationListResponse,
-    type OrganizationGetRolesResponse as OrganizationGetRolesResponse,
     type OrganizationCreateParams as OrganizationCreateParams,
     type OrganizationUpdateParams as OrganizationUpdateParams,
     type OrganizationGetUsageParams as OrganizationGetUsageParams,
@@ -1079,7 +1075,7 @@ export declare namespace LlamaCloud {
     type RetrieverUpsertParams as RetrieverUpsertParams,
   };
 
-  export { Evals as Evals, type EvalListSupportedModelsResponse as EvalListSupportedModelsResponse };
+  export { Evals as Evals };
 
   export {
     Parsing as Parsing,

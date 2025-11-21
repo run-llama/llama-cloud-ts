@@ -501,6 +501,8 @@ export interface LlamaParseParameters {
 
   target_pages?: string | null;
 
+  tier?: string | null;
+
   use_vendor_multimodal_model?: boolean | null;
 
   user_prompt?: string | null;
@@ -508,6 +510,8 @@ export interface LlamaParseParameters {
   vendor_multimodal_api_key?: string | null;
 
   vendor_multimodal_model_name?: string | null;
+
+  version?: string | null;
 
   /**
    * The outbound webhook configurations
