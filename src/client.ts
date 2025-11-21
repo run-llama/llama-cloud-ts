@@ -61,7 +61,6 @@ import {
 } from './resources/data-sources';
 import { Organization, OrganizationListResponse, Organizations } from './resources/organizations';
 import {
-  AgentDeploymentList,
   Project,
   ProjectGetParams,
   ProjectListParams,
@@ -952,7 +951,6 @@ export declare namespace LlamaCloud {
 
   export {
     Projects as Projects,
-    type AgentDeploymentList as AgentDeploymentList,
     type Project as Project,
     type ProjectListResponse as ProjectListResponse,
     type ProjectListParams as ProjectListParams,

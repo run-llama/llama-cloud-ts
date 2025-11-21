@@ -84,7 +84,6 @@ export {
 } from './pipelines/pipelines';
 export {
   Projects,
-  type AgentDeploymentList,
   type Project,
   type ProjectListResponse,
   type ProjectListParams,
