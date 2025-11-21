@@ -73,4 +73,31 @@ describe('resource files', () => {
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
   });
+
+  // Prism tests are disabled
+  test.skip('upsert: only required params', async () => {
+    const responsePromise = client.beta.files.upsert({ name: 'x' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('upsert: required and optional params', async () => {
+    const response = await client.beta.files.upsert({
+      name: 'x',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      external_file_id: 'external_file_id',
+      file_size: 0,
+      last_modified_at: '2019-12-27T18:11:19.117Z',
+      permission_info: { foo: { foo: 'bar' } },
+      resource_info: { foo: { foo: 'bar' } },
+    });
+  });
 });

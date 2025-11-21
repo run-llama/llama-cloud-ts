@@ -7,8 +7,10 @@ import {
   PaginatedClassifyJobs,
   type PaginatedClassifyJobsParams,
 } from '../../../core/pagination';
+import { type Uploadable } from '../../../core/uploads';
 import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
+import { multipartFormRequestOptions } from '../../../internal/uploads';
 import { path } from '../../../internal/utils/path';
 
 export class Files extends APIResource {
@@ -90,6 +92,25 @@ export class Files extends APIResource {
       query,
       ...options,
     });
+  }
+
+  /**
+   * Upload a file directly to a directory.
+   *
+   * Uploads a file and creates a directory file entry in a single operation. If
+   * unique_id or display_name are not provided, they will be derived from the file
+   * metadata.
+   */
+  upload(
+    directoryID: string,
+    params: FileUploadParams,
+    options?: RequestOptions,
+  ): APIPromise<FileUploadResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post(
+      path`/api/v1/beta/directories/${directoryID}/files/upload`,
+      multipartFormRequestOptions({ query: { organization_id, project_id }, body, ...options }, this._client),
+    );
   }
 }
 
@@ -315,6 +336,61 @@ export interface FileGetResponse {
   updated_at?: string | null;
 }
 
+/**
+ * API response schema for a directory file.
+ */
+export interface FileUploadResponse {
+  /**
+   * Unique identifier for the directory file.
+   */
+  id: string;
+
+  /**
+   * Directory the file belongs to.
+   */
+  directory_id: string;
+
+  /**
+   * Display name for the file.
+   */
+  display_name: string;
+
+  /**
+   * Project the directory file belongs to.
+   */
+  project_id: string;
+
+  /**
+   * Unique identifier for the file in the directory
+   */
+  unique_id: string;
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Optional data source credential associated with the file.
+   */
+  data_source_id?: string | null;
+
+  /**
+   * Soft delete marker when the file is removed upstream or by user action.
+   */
+  deleted_at?: string | null;
+
+  /**
+   * File ID for the storage location.
+   */
+  file_id?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
 export interface FileUpdateParams {
   /**
    * Path param:
@@ -421,17 +497,51 @@ export interface FileGetParams {
   project_id?: string | null;
 }
 
+export interface FileUploadParams {
+  /**
+   * Body param:
+   */
+  upload_file: Uploadable;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param:
+   */
+  display_name?: string | null;
+
+  /**
+   * Body param:
+   */
+  external_file_id?: string | null;
+
+  /**
+   * Body param:
+   */
+  unique_id?: string | null;
+}
+
 export declare namespace Files {
   export {
     type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileAddResponse as FileAddResponse,
     type FileGetResponse as FileGetResponse,
+    type FileUploadResponse as FileUploadResponse,
     type FileListResponsesPaginatedClassifyJobs as FileListResponsesPaginatedClassifyJobs,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileAddParams as FileAddParams,
     type FileGetParams as FileGetParams,
+    type FileUploadParams as FileUploadParams,
   };
 }

@@ -40,12 +40,28 @@ export class PageFigures extends APIResource {
   /**
    * Get a specific figure from a page of a file.
    */
-  get(figureName: string, params: PageFigureGetParams, options?: RequestOptions): APIPromise<unknown> {
+  getFigure(
+    figureName: string,
+    params: PageFigureGetFigureParams,
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
     const { id, page_index, ...query } = params;
     return this._client.get(path`/api/v1/files/${id}/page-figures/${page_index}/${figureName}`, {
       query,
       ...options,
     });
+  }
+
+  /**
+   * List metadata for figures from a specific page of a file.
+   */
+  getFigures(
+    pageIndex: number,
+    params: PageFigureGetFiguresParams,
+    options?: RequestOptions,
+  ): APIPromise<PageFigureGetFiguresResponse> {
+    const { id, ...query } = params;
+    return this._client.get(path`/api/v1/files/${id}/page-figures/${pageIndex}`, { query, ...options });
   }
 }
 
@@ -88,7 +104,9 @@ export interface PageFigureMetadata {
 
 export type PageFigureListResponse = Array<PageFigureMetadata>;
 
-export type PageFigureGetResponse = unknown;
+export type PageFigureGetFigureResponse = unknown;
+
+export type PageFigureGetFiguresResponse = Array<PageFigureMetadata>;
 
 export interface PageFigureListParams {
   organization_id?: string | null;
@@ -118,7 +136,7 @@ export interface PageFigureGeneratePresignedURLParams {
   project_id?: string | null;
 }
 
-export interface PageFigureGetParams {
+export interface PageFigureGetFigureParams {
   /**
    * Path param:
    */
@@ -140,13 +158,32 @@ export interface PageFigureGetParams {
   project_id?: string | null;
 }
 
+export interface PageFigureGetFiguresParams {
+  /**
+   * Path param:
+   */
+  id: string;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+}
+
 export declare namespace PageFigures {
   export {
     type PageFigureMetadata as PageFigureMetadata,
     type PageFigureListResponse as PageFigureListResponse,
-    type PageFigureGetResponse as PageFigureGetResponse,
+    type PageFigureGetFigureResponse as PageFigureGetFigureResponse,
+    type PageFigureGetFiguresResponse as PageFigureGetFiguresResponse,
     type PageFigureListParams as PageFigureListParams,
     type PageFigureGeneratePresignedURLParams as PageFigureGeneratePresignedURLParams,
-    type PageFigureGetParams as PageFigureGetParams,
+    type PageFigureGetFigureParams as PageFigureGetFigureParams,
+    type PageFigureGetFiguresParams as PageFigureGetFiguresParams,
   };
 }

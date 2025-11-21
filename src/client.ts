@@ -59,38 +59,15 @@ import {
   DataSourceUpsertParams,
   DataSources,
 } from './resources/data-sources';
-import { Evals } from './resources/evals';
+import { Organization, OrganizationListResponse, Organizations } from './resources/organizations';
 import {
   AgentDeploymentList,
   Project,
-  ProjectCreate,
-  ProjectCreateParams,
-  ProjectDeleteParams,
-  ProjectGetCurrentParams,
   ProjectGetParams,
-  ProjectGetUsageParams,
   ProjectListParams,
   ProjectListResponse,
-  ProjectUpdateParams,
-  ProjectUpsertParams,
   Projects,
 } from './resources/projects';
-import {
-  CompositeRetrievalMode,
-  CompositeRetrievalResult,
-  ReRankConfig,
-  Retriever,
-  RetrieverCreate,
-  RetrieverCreateParams,
-  RetrieverGetParams,
-  RetrieverListParams,
-  RetrieverListResponse,
-  RetrieverPipeline,
-  RetrieverRetrieveParams,
-  RetrieverUpdateParams,
-  RetrieverUpsertParams,
-  Retrievers,
-} from './resources/retrievers';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
 import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
@@ -107,16 +84,6 @@ import {
   Files,
   PresignedURL,
 } from './resources/files/files';
-import {
-  Organization,
-  OrganizationCreate,
-  OrganizationCreateParams,
-  OrganizationGetUsageParams,
-  OrganizationListResponse,
-  OrganizationUpdateParams,
-  Organizations,
-  UsageAndPlan,
-} from './resources/organizations/organizations';
 import {
   FailPageMode,
   LlamaParseSupportedFileExtensions,
@@ -153,13 +120,32 @@ import {
   PipelineListParams,
   PipelineListResponse,
   PipelineMetadataConfig,
+  PipelineSearchParams,
+  PipelineSearchResponse,
   PipelineType,
   PipelineUpdateParams,
+  PipelineUpsertParams,
   Pipelines,
   PresetRetrievalParams,
   RetrievalMode,
   SparseModelConfig,
 } from './resources/pipelines/pipelines';
+import {
+  CompositeRetrievalMode,
+  CompositeRetrievalResult,
+  ReRankConfig,
+  Retriever,
+  RetrieverCreate,
+  RetrieverCreateParams,
+  RetrieverGetParams,
+  RetrieverListParams,
+  RetrieverListResponse,
+  RetrieverPipeline,
+  RetrieverSearchParams,
+  RetrieverUpdateParams,
+  RetrieverUpsertParams,
+  Retrievers,
+} from './resources/retrievers/retrievers';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -883,7 +869,6 @@ export class LlamaCloud {
   files: API.Files = new API.Files(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
   retrievers: API.Retrievers = new API.Retrievers(this);
-  evals: API.Evals = new API.Evals(this);
   parsing: API.Parsing = new API.Parsing(this);
   classifier: API.Classifier = new API.Classifier(this);
   extraction: API.Extraction = new API.Extraction(this);
@@ -897,7 +882,6 @@ LlamaCloud.Organizations = Organizations;
 LlamaCloud.Files = Files;
 LlamaCloud.Pipelines = Pipelines;
 LlamaCloud.Retrievers = Retrievers;
-LlamaCloud.Evals = Evals;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Classifier = Classifier;
 LlamaCloud.Extraction = Extraction;
@@ -970,16 +954,9 @@ export declare namespace LlamaCloud {
     Projects as Projects,
     type AgentDeploymentList as AgentDeploymentList,
     type Project as Project,
-    type ProjectCreate as ProjectCreate,
     type ProjectListResponse as ProjectListResponse,
-    type ProjectCreateParams as ProjectCreateParams,
-    type ProjectUpdateParams as ProjectUpdateParams,
     type ProjectListParams as ProjectListParams,
-    type ProjectDeleteParams as ProjectDeleteParams,
     type ProjectGetParams as ProjectGetParams,
-    type ProjectGetCurrentParams as ProjectGetCurrentParams,
-    type ProjectGetUsageParams as ProjectGetUsageParams,
-    type ProjectUpsertParams as ProjectUpsertParams,
   };
 
   export {
@@ -1006,12 +983,7 @@ export declare namespace LlamaCloud {
   export {
     Organizations as Organizations,
     type Organization as Organization,
-    type OrganizationCreate as OrganizationCreate,
-    type UsageAndPlan as UsageAndPlan,
     type OrganizationListResponse as OrganizationListResponse,
-    type OrganizationCreateParams as OrganizationCreateParams,
-    type OrganizationUpdateParams as OrganizationUpdateParams,
-    type OrganizationGetUsageParams as OrganizationGetUsageParams,
   };
 
   export {
@@ -1050,12 +1022,15 @@ export declare namespace LlamaCloud {
     type PipelineChatResponse as PipelineChatResponse,
     type PipelineGetFiles2Response as PipelineGetFiles2Response,
     type PipelineGetPlaygroundSessionResponse as PipelineGetPlaygroundSessionResponse,
+    type PipelineSearchResponse as PipelineSearchResponse,
     type PipelineCreateParams as PipelineCreateParams,
     type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineListParams as PipelineListParams,
     type PipelineChatParams as PipelineChatParams,
     type PipelineGetFiles2Params as PipelineGetFiles2Params,
     type PipelineGetStatusParams as PipelineGetStatusParams,
+    type PipelineSearchParams as PipelineSearchParams,
+    type PipelineUpsertParams as PipelineUpsertParams,
   };
 
   export {
@@ -1068,14 +1043,12 @@ export declare namespace LlamaCloud {
     type RetrieverPipeline as RetrieverPipeline,
     type RetrieverListResponse as RetrieverListResponse,
     type RetrieverCreateParams as RetrieverCreateParams,
-    type RetrieverRetrieveParams as RetrieverRetrieveParams,
     type RetrieverUpdateParams as RetrieverUpdateParams,
     type RetrieverListParams as RetrieverListParams,
     type RetrieverGetParams as RetrieverGetParams,
+    type RetrieverSearchParams as RetrieverSearchParams,
     type RetrieverUpsertParams as RetrieverUpsertParams,
   };
-
-  export { Evals as Evals };
 
   export {
     Parsing as Parsing,

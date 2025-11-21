@@ -4,8 +4,10 @@ import { APIResource } from '../../core/resource';
 import * as PageFiguresAPI from './page-figures';
 import {
   PageFigureGeneratePresignedURLParams,
-  PageFigureGetParams,
-  PageFigureGetResponse,
+  PageFigureGetFigureParams,
+  PageFigureGetFigureResponse,
+  PageFigureGetFiguresParams,
+  PageFigureGetFiguresResponse,
   PageFigureListParams,
   PageFigureListResponse,
   PageFigureMetadata,
@@ -452,9 +454,11 @@ export declare namespace Files {
     PageFigures as PageFigures,
     type PageFigureMetadata as PageFigureMetadata,
     type PageFigureListResponse as PageFigureListResponse,
-    type PageFigureGetResponse as PageFigureGetResponse,
+    type PageFigureGetFigureResponse as PageFigureGetFigureResponse,
+    type PageFigureGetFiguresResponse as PageFigureGetFiguresResponse,
     type PageFigureListParams as PageFigureListParams,
     type PageFigureGeneratePresignedURLParams as PageFigureGeneratePresignedURLParams,
-    type PageFigureGetParams as PageFigureGetParams,
+    type PageFigureGetFigureParams as PageFigureGetFigureParams,
+    type PageFigureGetFiguresParams as PageFigureGetFiguresParams,
   };
 }
