@@ -19,4 +19,4 @@ export {
   type ResultGetMarkdownParams,
   type ResultGetStructuredParams,
   type ResultGetTextParams,
-} from './result/index';
+} from './result';

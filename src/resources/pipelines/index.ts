@@ -40,9 +40,11 @@ export {
   type FileGetStatusCountsResponse,
   type FileCreateParams,
   type FileUpdateParams,
+  type FileListParams,
   type FileDeleteParams,
   type FileGetStatusParams,
   type FileGetStatusCountsParams,
+  type PipelineFilesPaginatedPipelineFiles,
 } from './files';
 export { Metadata, type MetadataCreateResponse, type MetadataCreateParams } from './metadata';
 export {
