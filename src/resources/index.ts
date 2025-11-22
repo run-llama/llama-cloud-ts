@@ -71,13 +71,7 @@ export {
   type PipelineGetStatusParams,
   type PipelineUpsertParams,
 } from './pipelines/pipelines';
-export {
-  Projects,
-  type Project,
-  type ProjectListResponse,
-  type ProjectListParams,
-  type ProjectGetParams,
-} from './projects';
+export { Projects, type Project, type ProjectListResponse, type ProjectListParams } from './projects';
 export {
   Retrievers,
   type CompositeRetrievalMode,

@@ -3,7 +3,6 @@
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
-import { path } from '../internal/utils/path';
 
 export class Projects extends APIResource {
   /**
@@ -14,17 +13,6 @@ export class Projects extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ProjectListResponse> {
     return this._client.get('/api/v1/projects', { query, ...options });
-  }
-
-  /**
-   * Get a project by ID.
-   */
-  get(
-    projectID: string,
-    query: ProjectGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<Project> {
-    return this._client.get(path`/api/v1/projects/${projectID}`, { query, ...options });
   }
 }
 
@@ -70,15 +58,10 @@ export interface ProjectListParams {
   project_name?: string | null;
 }
 
-export interface ProjectGetParams {
-  organization_id?: string | null;
-}
-
 export declare namespace Projects {
   export {
     type Project as Project,
     type ProjectListResponse as ProjectListResponse,
     type ProjectListParams as ProjectListParams,
-    type ProjectGetParams as ProjectGetParams,
   };
 }

@@ -71,13 +71,7 @@ import {
   PresignedURL,
 } from './resources/files';
 import { Organization, OrganizationListResponse, Organizations } from './resources/organizations';
-import {
-  Project,
-  ProjectGetParams,
-  ProjectListParams,
-  ProjectListResponse,
-  Projects,
-} from './resources/projects';
+import { Project, ProjectListParams, ProjectListResponse, Projects } from './resources/projects';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
 import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
@@ -943,7 +937,6 @@ export declare namespace LlamaCloud {
     type Project as Project,
     type ProjectListResponse as ProjectListResponse,
     type ProjectListParams as ProjectListParams,
-    type ProjectGetParams as ProjectGetParams,
   };
 
   export {

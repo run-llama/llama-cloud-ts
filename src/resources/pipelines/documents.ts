@@ -3,6 +3,11 @@
 import { APIResource } from '../../core/resource';
 import * as PipelinesAPI from './pipelines';
 import { APIPromise } from '../../core/api-promise';
+import {
+  PagePromise,
+  PaginatedCloudDocuments,
+  type PaginatedCloudDocumentsParams,
+} from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -27,8 +32,12 @@ export class Documents extends APIResource {
     pipelineID: string,
     query: DocumentListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<DocumentListResponse> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}/documents`, { query, ...options });
+  ): PagePromise<CloudDocumentsPaginatedCloudDocuments, CloudDocument> {
+    return this._client.getAPIList(
+      path`/api/v1/pipelines/${pipelineID}/documents/paginated`,
+      PaginatedCloudDocuments<CloudDocument>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -66,17 +75,6 @@ export class Documents extends APIResource {
   }
 
   /**
-   * Return a list of documents for a pipeline.
-   */
-  getPaginated(
-    pipelineID: string,
-    query: DocumentGetPaginatedParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<DocumentGetPaginatedResponse> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}/documents/paginated`, { query, ...options });
-  }
-
-  /**
    * Return a single document for a pipeline.
    */
   getStatus(
@@ -108,6 +106,8 @@ export class Documents extends APIResource {
     return this._client.put(path`/api/v1/pipelines/${pipelineID}/documents`, { body: body, ...options });
   }
 }
+
+export type CloudDocumentsPaginatedCloudDocuments = PaginatedCloudDocuments<CloudDocument>;
 
 /**
  * Cloud document stored in S3.
@@ -257,31 +257,7 @@ export namespace TextNode {
 
 export type DocumentCreateResponse = Array<CloudDocument>;
 
-export type DocumentListResponse = Array<CloudDocument>;
-
 export type DocumentGetChunksResponse = Array<TextNode>;
-
-export interface DocumentGetPaginatedResponse {
-  /**
-   * The documents to list
-   */
-  documents: Array<CloudDocument>;
-
-  /**
-   * The limit of the documents
-   */
-  limit: number;
-
-  /**
-   * The offset of the documents
-   */
-  offset: number;
-
-  /**
-   * The total number of documents
-   */
-  total_count: number;
-}
 
 export type DocumentSyncResponse = unknown;
 
@@ -291,16 +267,12 @@ export interface DocumentCreateParams {
   body: Array<CloudDocumentCreate>;
 }
 
-export interface DocumentListParams {
+export interface DocumentListParams extends PaginatedCloudDocumentsParams {
   file_id?: string | null;
-
-  limit?: number;
 
   only_api_data_source_documents?: boolean | null;
 
   only_direct_upload?: boolean | null;
-
-  skip?: number;
 
   status_refresh_policy?: 'cached' | 'ttl';
 }
@@ -315,20 +287,6 @@ export interface DocumentGetParams {
 
 export interface DocumentGetChunksParams {
   pipeline_id: string;
-}
-
-export interface DocumentGetPaginatedParams {
-  file_id?: string | null;
-
-  limit?: number;
-
-  only_api_data_source_documents?: boolean | null;
-
-  only_direct_upload?: boolean | null;
-
-  skip?: number;
-
-  status_refresh_policy?: 'cached' | 'ttl';
 }
 
 export interface DocumentGetStatusParams {
@@ -349,17 +307,15 @@ export declare namespace Documents {
     type CloudDocumentCreate as CloudDocumentCreate,
     type TextNode as TextNode,
     type DocumentCreateResponse as DocumentCreateResponse,
-    type DocumentListResponse as DocumentListResponse,
     type DocumentGetChunksResponse as DocumentGetChunksResponse,
-    type DocumentGetPaginatedResponse as DocumentGetPaginatedResponse,
     type DocumentSyncResponse as DocumentSyncResponse,
     type DocumentUpsertBatchResponse as DocumentUpsertBatchResponse,
+    type CloudDocumentsPaginatedCloudDocuments as CloudDocumentsPaginatedCloudDocuments,
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
     type DocumentDeleteParams as DocumentDeleteParams,
     type DocumentGetParams as DocumentGetParams,
     type DocumentGetChunksParams as DocumentGetChunksParams,
-    type DocumentGetPaginatedParams as DocumentGetPaginatedParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,
     type DocumentSyncParams as DocumentSyncParams,
     type DocumentUpsertBatchParams as DocumentUpsertBatchParams,
