@@ -15,9 +15,7 @@ export {
   type CloudDocumentCreate,
   type TextNode,
   type DocumentCreateResponse,
-  type DocumentListResponse,
   type DocumentGetChunksResponse,
-  type DocumentGetPaginatedResponse,
   type DocumentSyncResponse,
   type DocumentUpsertBatchResponse,
   type DocumentCreateParams,
@@ -25,10 +23,10 @@ export {
   type DocumentDeleteParams,
   type DocumentGetParams,
   type DocumentGetChunksParams,
-  type DocumentGetPaginatedParams,
   type DocumentGetStatusParams,
   type DocumentSyncParams,
   type DocumentUpsertBatchParams,
+  type CloudDocumentsPaginatedCloudDocuments,
 } from './documents';
 export {
   Files,
