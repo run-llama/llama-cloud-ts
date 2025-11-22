@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as FilesFilesAPI from '../files/files';
+import * as FilesAPI from '../files';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -16,7 +16,7 @@ export class Files extends APIResource {
    *
    * Returns: The created file
    */
-  create(params: FileCreateParams, options?: RequestOptions): APIPromise<FilesFilesAPI.File> {
+  create(params: FileCreateParams, options?: RequestOptions): APIPromise<FilesAPI.File> {
     const { organization_id, project_id, ...body } = params;
     return this._client.post('/api/v1/beta/files', {
       query: { organization_id, project_id },
@@ -71,7 +71,7 @@ export class Files extends APIResource {
    *
    * Returns: The upserted file
    */
-  upsert(params: FileUpsertParams, options?: RequestOptions): APIPromise<FilesFilesAPI.File> {
+  upsert(params: FileUpsertParams, options?: RequestOptions): APIPromise<FilesAPI.File> {
     const { organization_id, project_id, ...body } = params;
     return this._client.put('/api/v1/beta/files', {
       query: { organization_id, project_id },
@@ -88,7 +88,7 @@ export interface FileQueryResponse {
   /**
    * The list of items.
    */
-  items: Array<FilesFilesAPI.File>;
+  items: Array<FilesAPI.File>;
 
   /**
    * A token, which can be sent as page_token to retrieve the next page. If this
