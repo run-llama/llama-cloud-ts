@@ -50,6 +50,18 @@ describe('resource parsing', () => {
   });
 
   // Prism tests are disabled
+  test.skip('getParsingHistory', async () => {
+    const responsePromise = client.parsing.getParsingHistory();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
   test.skip('getSupportedFileExtensions', async () => {
     const responsePromise = client.parsing.getSupportedFileExtensions();
     const rawResponse = await responsePromise.asResponse();

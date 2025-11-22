@@ -31,6 +31,18 @@ export class Parsing extends APIResource {
   }
 
   /**
+   * Get parsing history for user
+   *
+   * This endpoint is deprecated. Use
+   * /api/v1/jobs/?job_name=parsing&project_id=YOUR_PROJECT_ID instead.
+   *
+   * @deprecated
+   */
+  getParsingHistory(options?: RequestOptions): APIPromise<ParsingGetParsingHistoryResponse> {
+    return this._client.get('/api/v1/parsing/history', options);
+  }
+
+  /**
    * Get a list of supported file extensions
    */
   getSupportedFileExtensions(
@@ -227,6 +239,26 @@ export type ParserLanguages =
   | 'te'
   | 'kn';
 
+export interface ParsingHistoryItem {
+  day: string;
+
+  file_name: string;
+
+  job_id: string;
+
+  original_file_name: string;
+
+  user_id: string;
+
+  expired?: boolean;
+
+  images?: number | null;
+
+  pages?: number | null;
+
+  time?: number | null;
+}
+
 export interface ParsingJob {
   id: string;
 
@@ -257,6 +289,8 @@ export type ParsingMode =
  * Enum for representing the status of a job
  */
 export type StatusEnum = 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED';
+
+export type ParsingGetParsingHistoryResponse = Array<ParsingHistoryItem>;
 
 export type ParsingGetSupportedFileExtensionsResponse = Array<LlamaParseSupportedFileExtensions>;
 
@@ -922,9 +956,11 @@ export declare namespace Parsing {
     type FailPageMode as FailPageMode,
     type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
     type ParserLanguages as ParserLanguages,
+    type ParsingHistoryItem as ParsingHistoryItem,
     type ParsingJob as ParsingJob,
     type ParsingMode as ParsingMode,
     type StatusEnum as StatusEnum,
+    type ParsingGetParsingHistoryResponse as ParsingGetParsingHistoryResponse,
     type ParsingGetSupportedFileExtensionsResponse as ParsingGetSupportedFileExtensionsResponse,
     type ParsingCreateScreenshotParams as ParsingCreateScreenshotParams,
     type ParsingUploadFileParams as ParsingUploadFileParams,
