@@ -52,6 +52,37 @@ describe('resource files', () => {
   });
 
   // Prism tests are disabled
+  test.skip('list', async () => {
+    const responsePromise = client.pipelines.files.list('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.pipelines.files.list(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        {
+          data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          file_name_contains: 'file_name_contains',
+          limit: 0,
+          offset: 0,
+          only_manually_uploaded: true,
+          order_by: 'order_by',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.pipelines.files.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',

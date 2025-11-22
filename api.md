@@ -178,6 +178,7 @@ Methods:
 
 - <code title="put /api/v1/pipelines/{pipeline_id}/files">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">create</a>(pipelineID, [ ...body ]) -> FileCreateResponse</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/files/{file_id}">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">update</a>(fileID, { ...params }) -> PipelineFile</code>
+- <code title="get /api/v1/pipelines/{pipeline_id}/files2">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">list</a>(pipelineID, { ...params }) -> PipelineFilesPaginatedPipelineFiles</code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}/files/{file_id}">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">delete</a>(fileID, { ...params }) -> void</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/files/{file_id}/status">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">getStatus</a>(fileID, { ...params }) -> ManagedIngestionStatusResponse</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/files/status-counts">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">getStatusCounts</a>(pipelineID, { ...params }) -> FileGetStatusCountsResponse</code>
@@ -285,24 +286,22 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/parsing/job/result/result.ts">ParsingJobJsonResult</a></code>
-- <code><a href="./src/resources/parsing/job/result/result.ts">ParsingJobMarkdownResult</a></code>
-- <code><a href="./src/resources/parsing/job/result/result.ts">ParsingJobStructuredResult</a></code>
-- <code><a href="./src/resources/parsing/job/result/result.ts">ParsingJobTextResult</a></code>
-- <code><a href="./src/resources/parsing/job/result/result.ts">ResultGetPdfResponse</a></code>
-- <code><a href="./src/resources/parsing/job/result/result.ts">ResultGetXlsxResponse</a></code>
+- <code><a href="./src/resources/parsing/job/result.ts">ParsingJobJsonResult</a></code>
+- <code><a href="./src/resources/parsing/job/result.ts">ParsingJobMarkdownResult</a></code>
+- <code><a href="./src/resources/parsing/job/result.ts">ParsingJobStructuredResult</a></code>
+- <code><a href="./src/resources/parsing/job/result.ts">ParsingJobTextResult</a></code>
+- <code><a href="./src/resources/parsing/job/result.ts">ResultGetPdfResponse</a></code>
+- <code><a href="./src/resources/parsing/job/result.ts">ResultGetXlsxResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/parsing/job/{job_id}/result/image/{name}">client.parsing.job.result.<a href="./src/resources/parsing/job/result/result.ts">getImage</a>(name, { ...params }) -> Response</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/json">client.parsing.job.result.<a href="./src/resources/parsing/job/result/result.ts">getJson</a>(jobID, { ...params }) -> ParsingJobJsonResult</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/markdown">client.parsing.job.result.<a href="./src/resources/parsing/job/result/result.ts">getMarkdown</a>(jobID, { ...params }) -> ParsingJobMarkdownResult</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/pdf">client.parsing.job.result.<a href="./src/resources/parsing/job/result/result.ts">getPdf</a>(jobID) -> unknown</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/structured">client.parsing.job.result.<a href="./src/resources/parsing/job/result/result.ts">getStructured</a>(jobID, { ...params }) -> ParsingJobStructuredResult</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/text">client.parsing.job.result.<a href="./src/resources/parsing/job/result/result.ts">getText</a>(jobID, { ...params }) -> ParsingJobTextResult</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/resources/parsing/job/result/result.ts">getXlsx</a>(jobID) -> unknown</code>
-
-#### Raw
+- <code title="get /api/v1/parsing/job/{job_id}/result/image/{name}">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getImage</a>(name, { ...params }) -> Response</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/json">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getJson</a>(jobID, { ...params }) -> ParsingJobJsonResult</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/markdown">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getMarkdown</a>(jobID, { ...params }) -> ParsingJobMarkdownResult</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/pdf">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getPdf</a>(jobID) -> unknown</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/structured">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getStructured</a>(jobID, { ...params }) -> ParsingJobStructuredResult</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/text">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getText</a>(jobID, { ...params }) -> ParsingJobTextResult</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getXlsx</a>(jobID) -> unknown</code>
 
 # Classifier
 

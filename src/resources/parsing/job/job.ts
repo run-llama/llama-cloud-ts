@@ -3,7 +3,7 @@
 import { APIResource } from '../../../core/resource';
 import * as FilesAPI from '../../files/files';
 import * as ParsingAPI from '../parsing';
-import * as ResultAPI from './result/result';
+import * as ResultAPI from './result';
 import {
   ParsingJobJsonResult,
   ParsingJobMarkdownResult,
@@ -17,7 +17,7 @@ import {
   ResultGetStructuredParams,
   ResultGetTextParams,
   ResultGetXlsxResponse,
-} from './result/result';
+} from './result';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
