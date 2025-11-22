@@ -40,7 +40,6 @@ Methods:
 - <code title="get /api/v1/data-sources">client.dataSources.<a href="./src/resources/data-sources.ts">list</a>({ ...params }) -> DataSourceListResponse</code>
 - <code title="delete /api/v1/data-sources/{data_source_id}">client.dataSources.<a href="./src/resources/data-sources.ts">delete</a>(dataSourceID) -> void</code>
 - <code title="get /api/v1/data-sources/{data_source_id}">client.dataSources.<a href="./src/resources/data-sources.ts">get</a>(dataSourceID) -> DataSource</code>
-- <code title="put /api/v1/data-sources">client.dataSources.<a href="./src/resources/data-sources.ts">upsert</a>({ ...params }) -> DataSource</code>
 
 # Organizations
 
@@ -173,14 +172,12 @@ Types:
 
 - <code><a href="./src/resources/pipelines/files.ts">PipelineFile</a></code>
 - <code><a href="./src/resources/pipelines/files.ts">FileCreateResponse</a></code>
-- <code><a href="./src/resources/pipelines/files.ts">FileListResponse</a></code>
 - <code><a href="./src/resources/pipelines/files.ts">FileGetStatusCountsResponse</a></code>
 
 Methods:
 
 - <code title="put /api/v1/pipelines/{pipeline_id}/files">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">create</a>(pipelineID, [ ...body ]) -> FileCreateResponse</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/files/{file_id}">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">update</a>(fileID, { ...params }) -> PipelineFile</code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/files">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">list</a>(pipelineID, { ...params }) -> FileListResponse</code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}/files/{file_id}">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">delete</a>(fileID, { ...params }) -> void</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/files/{file_id}/status">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">getStatus</a>(fileID, { ...params }) -> ManagedIngestionStatusResponse</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/files/status-counts">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">getStatusCounts</a>(pipelineID, { ...params }) -> FileGetStatusCountsResponse</code>
@@ -259,17 +256,14 @@ Types:
 - <code><a href="./src/resources/parsing/parsing.ts">FailPageMode</a></code>
 - <code><a href="./src/resources/parsing/parsing.ts">LlamaParseSupportedFileExtensions</a></code>
 - <code><a href="./src/resources/parsing/parsing.ts">ParserLanguages</a></code>
-- <code><a href="./src/resources/parsing/parsing.ts">ParsingHistoryItem</a></code>
 - <code><a href="./src/resources/parsing/parsing.ts">ParsingJob</a></code>
 - <code><a href="./src/resources/parsing/parsing.ts">ParsingMode</a></code>
 - <code><a href="./src/resources/parsing/parsing.ts">StatusEnum</a></code>
-- <code><a href="./src/resources/parsing/parsing.ts">ParsingGetParsingHistoryResponse</a></code>
 - <code><a href="./src/resources/parsing/parsing.ts">ParsingGetSupportedFileExtensionsResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v1/parsing/screenshot">client.parsing.<a href="./src/resources/parsing/parsing.ts">createScreenshot</a>({ ...params }) -> ParsingJob</code>
-- <code title="get /api/v1/parsing/history">client.parsing.<a href="./src/resources/parsing/parsing.ts">getParsingHistory</a>() -> ParsingGetParsingHistoryResponse</code>
 - <code title="get /api/v1/parsing/supported_file_extensions">client.parsing.<a href="./src/resources/parsing/parsing.ts">getSupportedFileExtensions</a>() -> ParsingGetSupportedFileExtensionsResponse</code>
 - <code title="post /api/v1/parsing/upload">client.parsing.<a href="./src/resources/parsing/parsing.ts">uploadFile</a>({ ...params }) -> ParsingJob</code>
 
@@ -309,24 +303,6 @@ Methods:
 - <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/resources/parsing/job/result/result.ts">getXlsx</a>(jobID) -> unknown</code>
 
 #### Raw
-
-Types:
-
-- <code><a href="./src/resources/parsing/job/result/raw.ts">RawGetRawJsonResponse</a></code>
-- <code><a href="./src/resources/parsing/job/result/raw.ts">RawGetRawMarkdownResponse</a></code>
-- <code><a href="./src/resources/parsing/job/result/raw.ts">RawGetRawPdfResponse</a></code>
-- <code><a href="./src/resources/parsing/job/result/raw.ts">RawGetRawStructuredResponse</a></code>
-- <code><a href="./src/resources/parsing/job/result/raw.ts">RawGetRawTextResponse</a></code>
-- <code><a href="./src/resources/parsing/job/result/raw.ts">RawGetRawXlsxResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/json">client.parsing.job.result.raw.<a href="./src/resources/parsing/job/result/raw.ts">getRawJson</a>(jobID) -> unknown</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/markdown">client.parsing.job.result.raw.<a href="./src/resources/parsing/job/result/raw.ts">getRawMarkdown</a>(jobID) -> unknown</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/pdf">client.parsing.job.result.raw.<a href="./src/resources/parsing/job/result/raw.ts">getRawPdf</a>(jobID) -> unknown</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/structured">client.parsing.job.result.raw.<a href="./src/resources/parsing/job/result/raw.ts">getRawStructured</a>(jobID) -> unknown</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/text">client.parsing.job.result.raw.<a href="./src/resources/parsing/job/result/raw.ts">getRawText</a>(jobID) -> unknown</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/xlsx">client.parsing.job.result.raw.<a href="./src/resources/parsing/job/result/raw.ts">getRawXlsx</a>(jobID) -> unknown</code>
 
 # Classifier
 
