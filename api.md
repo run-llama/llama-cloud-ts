@@ -1,14 +1,3 @@
-# Projects
-
-Types:
-
-- <code><a href="./src/resources/projects.ts">Project</a></code>
-- <code><a href="./src/resources/projects.ts">ProjectListResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/projects">client.projects.<a href="./src/resources/projects.ts">list</a>({ ...params }) -> ProjectListResponse</code>
-
 # DataSinks
 
 Types:
@@ -39,17 +28,6 @@ Methods:
 - <code title="get /api/v1/data-sources">client.dataSources.<a href="./src/resources/data-sources.ts">list</a>({ ...params }) -> DataSourceListResponse</code>
 - <code title="delete /api/v1/data-sources/{data_source_id}">client.dataSources.<a href="./src/resources/data-sources.ts">delete</a>(dataSourceID) -> void</code>
 - <code title="get /api/v1/data-sources/{data_source_id}">client.dataSources.<a href="./src/resources/data-sources.ts">get</a>(dataSourceID) -> DataSource</code>
-
-# Organizations
-
-Types:
-
-- <code><a href="./src/resources/organizations.ts">Organization</a></code>
-- <code><a href="./src/resources/organizations.ts">OrganizationListResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/organizations">client.organizations.<a href="./src/resources/organizations.ts">list</a>() -> OrganizationListResponse</code>
 
 # Files
 

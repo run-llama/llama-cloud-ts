@@ -70,8 +70,6 @@ import {
   Files,
   PresignedURL,
 } from './resources/files';
-import { Organization, OrganizationListResponse, Organizations } from './resources/organizations';
-import { Project, ProjectListParams, ProjectListResponse, Projects } from './resources/projects';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
 import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
@@ -844,10 +842,8 @@ export class LlamaCloud {
 
   static toFile = Uploads.toFile;
 
-  projects: API.Projects = new API.Projects(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
-  organizations: API.Organizations = new API.Organizations(this);
   files: API.Files = new API.Files(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
   retrievers: API.Retrievers = new API.Retrievers(this);
@@ -857,10 +853,8 @@ export class LlamaCloud {
   beta: API.Beta = new API.Beta(this);
 }
 
-LlamaCloud.Projects = Projects;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
-LlamaCloud.Organizations = Organizations;
 LlamaCloud.Files = Files;
 LlamaCloud.Pipelines = Pipelines;
 LlamaCloud.Retrievers = Retrievers;
@@ -933,13 +927,6 @@ export declare namespace LlamaCloud {
   };
 
   export {
-    Projects as Projects,
-    type Project as Project,
-    type ProjectListResponse as ProjectListResponse,
-    type ProjectListParams as ProjectListParams,
-  };
-
-  export {
     DataSinks as DataSinks,
     type DataSink as DataSink,
     type DataSinkListResponse as DataSinkListResponse,
@@ -956,12 +943,6 @@ export declare namespace LlamaCloud {
     type DataSourceCreateParams as DataSourceCreateParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceListParams as DataSourceListParams,
-  };
-
-  export {
-    Organizations as Organizations,
-    type Organization as Organization,
-    type OrganizationListResponse as OrganizationListResponse,
   };
 
   export {

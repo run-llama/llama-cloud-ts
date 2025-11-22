@@ -33,7 +33,6 @@ export {
   type FileUploadParams,
   type FileUploadFromURLParams,
 } from './files';
-export { Organizations, type Organization, type OrganizationListResponse } from './organizations';
 export {
   Parsing,
   type FailPageMode,
@@ -71,7 +70,6 @@ export {
   type PipelineGetStatusParams,
   type PipelineUpsertParams,
 } from './pipelines/pipelines';
-export { Projects, type Project, type ProjectListResponse, type ProjectListParams } from './projects';
 export {
   Retrievers,
   type CompositeRetrievalMode,
