@@ -8,10 +8,8 @@ export {
   type ExtractionAgentGetExtractionAgentsResponse,
   type ExtractionAgentUpdateParams,
   type ExtractionAgentExtractionAgentsParams,
-  type ExtractionAgentGetByNameParams,
-  type ExtractionAgentGetDefaultParams,
   type ExtractionAgentGetExtractionAgentsParams,
-} from './extraction-agents/index';
+} from './extraction-agents';
 export {
   Jobs,
   type ExtractJob,

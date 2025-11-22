@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as ExtractionAgentsAPI from './extraction-agents';
 import * as RunsAPI from './runs';
 import * as FilesAPI from '../files/files';
 import * as ParsingAPI from '../parsing/parsing';
-import * as ExtractionAgentsAPI from './extraction-agents/extraction-agents';
 import { APIPromise } from '../../core/api-promise';
 import { type Uploadable } from '../../core/uploads';
 import { RequestOptions } from '../../internal/request-options';
