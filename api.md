@@ -366,31 +366,17 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">ExtractAgent</a></code>
-- <code><a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">ExtractionAgentDeleteResponse</a></code>
-- <code><a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">ExtractionAgentGetExtractionAgentsResponse</a></code>
+- <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractAgent</a></code>
+- <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractionAgentDeleteResponse</a></code>
+- <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractionAgentGetExtractionAgentsResponse</a></code>
 
 Methods:
 
-- <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">update</a>(extractionAgentID, { ...params }) -> ExtractAgent</code>
-- <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">delete</a>(extractionAgentID) -> unknown</code>
-- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">extractionAgents</a>({ ...params }) -> ExtractAgent</code>
-- <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">get</a>(extractionAgentID) -> ExtractAgent</code>
-- <code title="get /api/v1/extraction/extraction-agents/by-name/{name}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">getByName</a>(name, { ...params }) -> ExtractAgent</code>
-- <code title="get /api/v1/extraction/extraction-agents/default">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">getDefault</a>({ ...params }) -> ExtractAgent</code>
-- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">getExtractionAgents</a>({ ...params }) -> ExtractionAgentGetExtractionAgentsResponse</code>
-
-### Schema
-
-Types:
-
-- <code><a href="./src/resources/extraction/extraction-agents/schema.ts">SchemaGenerateResponse</a></code>
-- <code><a href="./src/resources/extraction/extraction-agents/schema.ts">SchemaValidationResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/extraction/extraction-agents/schema/generate">client.extraction.extractionAgents.schema.<a href="./src/resources/extraction/extraction-agents/schema.ts">generate</a>({ ...params }) -> SchemaGenerateResponse</code>
-- <code title="post /api/v1/extraction/extraction-agents/schema/validation">client.extraction.extractionAgents.schema.<a href="./src/resources/extraction/extraction-agents/schema.ts">validation</a>({ ...params }) -> SchemaValidationResponse</code>
+- <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">update</a>(extractionAgentID, { ...params }) -> ExtractAgent</code>
+- <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">delete</a>(extractionAgentID) -> unknown</code>
+- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">extractionAgents</a>({ ...params }) -> ExtractAgent</code>
+- <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">get</a>(extractionAgentID) -> ExtractAgent</code>
+- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">getExtractionAgents</a>({ ...params }) -> ExtractionAgentGetExtractionAgentsResponse</code>
 
 # Beta
 
