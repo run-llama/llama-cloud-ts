@@ -1,6 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Raw } from './raw';
+export {
+  Raw,
+  type RawGetRawJsonResponse,
+  type RawGetRawMarkdownResponse,
+  type RawGetRawPdfResponse,
+  type RawGetRawStructuredResponse,
+  type RawGetRawTextResponse,
+  type RawGetRawXlsxResponse,
+} from './raw';
 export {
   Result,
   type ParsingJobJsonResult,

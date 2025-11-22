@@ -18,6 +18,7 @@ export {
   type DataSourceCreateParams,
   type DataSourceUpdateParams,
   type DataSourceListParams,
+  type DataSourceUpsertParams,
 } from './data-sources';
 export { Extraction, type ExtractionRunParams } from './extraction/extraction';
 export {
@@ -39,9 +40,11 @@ export {
   type FailPageMode,
   type LlamaParseSupportedFileExtensions,
   type ParserLanguages,
+  type ParsingHistoryItem,
   type ParsingJob,
   type ParsingMode,
   type StatusEnum,
+  type ParsingGetParsingHistoryResponse,
   type ParsingGetSupportedFileExtensionsResponse,
   type ParsingCreateScreenshotParams,
   type ParsingUploadFileParams,

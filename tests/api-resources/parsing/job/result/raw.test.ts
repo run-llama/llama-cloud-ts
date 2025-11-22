@@ -7,14 +7,10 @@ const client = new LlamaCloud({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource dataSources', () => {
+describe('resource raw', () => {
   // Prism tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.dataSources.create({
-      component: { foo: 'bar' },
-      name: 'name',
-      source_type: 'S3',
-    });
+  test.skip('getRawJson', async () => {
+    const responsePromise = client.parsing.job.result.raw.getRawJson('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -25,22 +21,8 @@ describe('resource dataSources', () => {
   });
 
   // Prism tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.dataSources.create({
-      component: { foo: 'bar' },
-      name: 'name',
-      source_type: 'S3',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      custom_metadata: { foo: { foo: 'bar' } },
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('update: only required params', async () => {
-    const responsePromise = client.dataSources.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      source_type: 'S3',
-    });
+  test.skip('getRawMarkdown', async () => {
+    const responsePromise = client.parsing.job.result.raw.getRawMarkdown('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -51,18 +33,8 @@ describe('resource dataSources', () => {
   });
 
   // Prism tests are disabled
-  test.skip('update: required and optional params', async () => {
-    const response = await client.dataSources.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      source_type: 'S3',
-      component: { foo: 'bar' },
-      custom_metadata: { foo: { foo: 'bar' } },
-      name: 'name',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.dataSources.list();
+  test.skip('getRawPdf', async () => {
+    const responsePromise = client.parsing.job.result.raw.getRawPdf('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -73,22 +45,8 @@ describe('resource dataSources', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.dataSources.list(
-        {
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
-  });
-
-  // Prism tests are disabled
-  test.skip('delete', async () => {
-    const responsePromise = client.dataSources.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('getRawStructured', async () => {
+    const responsePromise = client.parsing.job.result.raw.getRawStructured('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -99,8 +57,8 @@ describe('resource dataSources', () => {
   });
 
   // Prism tests are disabled
-  test.skip('get', async () => {
-    const responsePromise = client.dataSources.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('getRawText', async () => {
+    const responsePromise = client.parsing.job.result.raw.getRawText('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -111,12 +69,8 @@ describe('resource dataSources', () => {
   });
 
   // Prism tests are disabled
-  test.skip('upsert: only required params', async () => {
-    const responsePromise = client.dataSources.upsert({
-      component: { foo: 'bar' },
-      name: 'name',
-      source_type: 'S3',
-    });
+  test.skip('getRawXlsx', async () => {
+    const responsePromise = client.parsing.job.result.raw.getRawXlsx('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -124,17 +78,5 @@ describe('resource dataSources', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('upsert: required and optional params', async () => {
-    const response = await client.dataSources.upsert({
-      component: { foo: 'bar' },
-      name: 'name',
-      source_type: 'S3',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      custom_metadata: { foo: { foo: 'bar' } },
-    });
   });
 });

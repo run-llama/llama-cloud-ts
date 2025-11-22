@@ -2,7 +2,15 @@
 
 import { APIResource } from '../../../../core/resource';
 import * as RawAPI from './raw';
-import { Raw } from './raw';
+import {
+  Raw,
+  RawGetRawJsonResponse,
+  RawGetRawMarkdownResponse,
+  RawGetRawPdfResponse,
+  RawGetRawStructuredResponse,
+  RawGetRawTextResponse,
+  RawGetRawXlsxResponse,
+} from './raw';
 import { APIPromise } from '../../../../core/api-promise';
 import { buildHeaders } from '../../../../internal/headers';
 import { RequestOptions } from '../../../../internal/request-options';
@@ -183,5 +191,13 @@ export declare namespace Result {
     type ResultGetTextParams as ResultGetTextParams,
   };
 
-  export { Raw as Raw };
+  export {
+    Raw as Raw,
+    type RawGetRawJsonResponse as RawGetRawJsonResponse,
+    type RawGetRawMarkdownResponse as RawGetRawMarkdownResponse,
+    type RawGetRawPdfResponse as RawGetRawPdfResponse,
+    type RawGetRawStructuredResponse as RawGetRawStructuredResponse,
+    type RawGetRawTextResponse as RawGetRawTextResponse,
+    type RawGetRawXlsxResponse as RawGetRawXlsxResponse,
+  };
 }
