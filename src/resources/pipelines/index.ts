@@ -7,7 +7,6 @@ export {
   type DataSourceUpdateDataSourcesResponse,
   type DataSourceUpdateParams,
   type DataSourceGetStatusParams,
-  type DataSourceSyncParams,
   type DataSourceUpdateDataSourcesParams,
 } from './data-sources';
 export {
@@ -64,7 +63,6 @@ export {
   type RetrievalMode,
   type SparseModelConfig,
   type PipelineListResponse,
-  type PipelineGetPlaygroundSessionResponse,
   type PipelineCreateParams,
   type PipelineUpdateParams,
   type PipelineListParams,
