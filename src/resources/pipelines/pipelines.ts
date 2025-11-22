@@ -29,8 +29,6 @@ import {
   DocumentListParams,
   DocumentSyncParams,
   DocumentSyncResponse,
-  DocumentUpsertBatchParams,
-  DocumentUpsertBatchResponse,
   Documents,
   TextNode,
 } from './documents';
@@ -5697,7 +5695,6 @@ export declare namespace Pipelines {
     type DocumentCreateResponse as DocumentCreateResponse,
     type DocumentGetChunksResponse as DocumentGetChunksResponse,
     type DocumentSyncResponse as DocumentSyncResponse,
-    type DocumentUpsertBatchResponse as DocumentUpsertBatchResponse,
     type CloudDocumentsPaginatedCloudDocuments as CloudDocumentsPaginatedCloudDocuments,
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
@@ -5706,6 +5703,5 @@ export declare namespace Pipelines {
     type DocumentGetChunksParams as DocumentGetChunksParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,
     type DocumentSyncParams as DocumentSyncParams,
-    type DocumentUpsertBatchParams as DocumentUpsertBatchParams,
   };
 }

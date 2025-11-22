@@ -161,7 +161,6 @@ Types:
 - <code><a href="./src/resources/pipelines/documents.ts">DocumentCreateResponse</a></code>
 - <code><a href="./src/resources/pipelines/documents.ts">DocumentGetChunksResponse</a></code>
 - <code><a href="./src/resources/pipelines/documents.ts">DocumentSyncResponse</a></code>
-- <code><a href="./src/resources/pipelines/documents.ts">DocumentUpsertBatchResponse</a></code>
 
 Methods:
 
@@ -172,7 +171,6 @@ Methods:
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">getChunks</a>(documentID, { ...params }) -> DocumentGetChunksResponse</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/status">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">getStatus</a>(documentID, { ...params }) -> ManagedIngestionStatusResponse</code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">sync</a>(documentID, { ...params }) -> unknown</code>
-- <code title="put /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">upsertBatch</a>(pipelineID, [ ...body ]) -> DocumentUpsertBatchResponse</code>
 
 # Retrievers
 
