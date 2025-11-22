@@ -29,19 +29,6 @@ export class Files extends APIResource {
   }
 
   /**
-   * Get files for a pipeline.
-   *
-   * @deprecated
-   */
-  list(
-    pipelineID: string,
-    query: FileListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<FileListResponse> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}/files`, { query, ...options });
-  }
-
-  /**
    * Delete a file from a pipeline.
    */
   delete(fileID: string, params: FileDeleteParams, options?: RequestOptions): APIPromise<void> {
@@ -186,8 +173,6 @@ export interface PipelineFile {
 
 export type FileCreateResponse = Array<PipelineFile>;
 
-export type FileListResponse = Array<PipelineFile>;
-
 export interface FileGetStatusCountsResponse {
   /**
    * The counts of files by status
@@ -252,12 +237,6 @@ export interface FileUpdateParams {
   } | null;
 }
 
-export interface FileListParams {
-  data_source_id?: string | null;
-
-  only_manually_uploaded?: boolean;
-}
-
 export interface FileDeleteParams {
   pipeline_id: string;
 }
@@ -276,11 +255,9 @@ export declare namespace Files {
   export {
     type PipelineFile as PipelineFile,
     type FileCreateResponse as FileCreateResponse,
-    type FileListResponse as FileListResponse,
     type FileGetStatusCountsResponse as FileGetStatusCountsResponse,
     type FileCreateParams as FileCreateParams,
     type FileUpdateParams as FileUpdateParams,
-    type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGetStatusParams as FileGetStatusParams,
     type FileGetStatusCountsParams as FileGetStatusCountsParams,
