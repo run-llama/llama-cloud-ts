@@ -93,18 +93,6 @@ export class Documents extends APIResource {
     const { pipeline_id } = params;
     return this._client.post(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/sync`, options);
   }
-
-  /**
-   * Batch create or update a document for a pipeline.
-   */
-  upsertBatch(
-    pipelineID: string,
-    params: DocumentUpsertBatchParams,
-    options?: RequestOptions,
-  ): APIPromise<DocumentUpsertBatchResponse> {
-    const { body } = params;
-    return this._client.put(path`/api/v1/pipelines/${pipelineID}/documents`, { body: body, ...options });
-  }
 }
 
 export type CloudDocumentsPaginatedCloudDocuments = PaginatedCloudDocuments<CloudDocument>;
@@ -261,8 +249,6 @@ export type DocumentGetChunksResponse = Array<TextNode>;
 
 export type DocumentSyncResponse = unknown;
 
-export type DocumentUpsertBatchResponse = Array<CloudDocument>;
-
 export interface DocumentCreateParams {
   body: Array<CloudDocumentCreate>;
 }
@@ -297,10 +283,6 @@ export interface DocumentSyncParams {
   pipeline_id: string;
 }
 
-export interface DocumentUpsertBatchParams {
-  body: Array<CloudDocumentCreate>;
-}
-
 export declare namespace Documents {
   export {
     type CloudDocument as CloudDocument,
@@ -309,7 +291,6 @@ export declare namespace Documents {
     type DocumentCreateResponse as DocumentCreateResponse,
     type DocumentGetChunksResponse as DocumentGetChunksResponse,
     type DocumentSyncResponse as DocumentSyncResponse,
-    type DocumentUpsertBatchResponse as DocumentUpsertBatchResponse,
     type CloudDocumentsPaginatedCloudDocuments as CloudDocumentsPaginatedCloudDocuments,
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
@@ -318,6 +299,5 @@ export declare namespace Documents {
     type DocumentGetChunksParams as DocumentGetChunksParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,
     type DocumentSyncParams as DocumentSyncParams,
-    type DocumentUpsertBatchParams as DocumentUpsertBatchParams,
   };
 }
