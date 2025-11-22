@@ -46,24 +46,6 @@ export class Documents extends APIResource {
   }
 
   /**
-   * Force sync all documents in a pipeline by batching document ingestion jobs.
-   *
-   * - Iterates all document refs for the pipeline
-   * - Enqueues document ingestion jobs in batches of `batch_size`
-   */
-  forceSyncAll(
-    pipelineID: string,
-    params: DocumentForceSyncAllParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { batch_size, only_failed } = params ?? {};
-    return this._client.post(path`/api/v1/pipelines/${pipelineID}/documents/force-sync-all`, {
-      query: { batch_size, only_failed },
-      ...options,
-    });
-  }
-
-  /**
    * Return a single document for a pipeline.
    */
   get(documentID: string, params: DocumentGetParams, options?: RequestOptions): APIPromise<CloudDocument> {
@@ -277,8 +259,6 @@ export type DocumentCreateResponse = Array<CloudDocument>;
 
 export type DocumentListResponse = Array<CloudDocument>;
 
-export type DocumentForceSyncAllResponse = unknown;
-
 export type DocumentGetChunksResponse = Array<TextNode>;
 
 export interface DocumentGetPaginatedResponse {
@@ -329,15 +309,6 @@ export interface DocumentDeleteParams {
   pipeline_id: string;
 }
 
-export interface DocumentForceSyncAllParams {
-  batch_size?: number;
-
-  /**
-   * Only sync retriable documents (failed/cancelled/not-started/stalled-in-progress)
-   */
-  only_failed?: boolean;
-}
-
 export interface DocumentGetParams {
   pipeline_id: string;
 }
@@ -379,7 +350,6 @@ export declare namespace Documents {
     type TextNode as TextNode,
     type DocumentCreateResponse as DocumentCreateResponse,
     type DocumentListResponse as DocumentListResponse,
-    type DocumentForceSyncAllResponse as DocumentForceSyncAllResponse,
     type DocumentGetChunksResponse as DocumentGetChunksResponse,
     type DocumentGetPaginatedResponse as DocumentGetPaginatedResponse,
     type DocumentSyncResponse as DocumentSyncResponse,
@@ -387,7 +357,6 @@ export declare namespace Documents {
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
     type DocumentDeleteParams as DocumentDeleteParams,
-    type DocumentForceSyncAllParams as DocumentForceSyncAllParams,
     type DocumentGetParams as DocumentGetParams,
     type DocumentGetChunksParams as DocumentGetChunksParams,
     type DocumentGetPaginatedParams as DocumentGetPaginatedParams,

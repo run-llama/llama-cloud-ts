@@ -65,15 +65,11 @@ export {
   type RetrievalMode,
   type SparseModelConfig,
   type PipelineListResponse,
-  type PipelineChatResponse,
   type PipelineGetPlaygroundSessionResponse,
-  type PipelineSearchResponse,
   type PipelineCreateParams,
   type PipelineUpdateParams,
   type PipelineListParams,
-  type PipelineChatParams,
   type PipelineGetStatusParams,
-  type PipelineSearchParams,
   type PipelineUpsertParams,
 } from './pipelines/pipelines';
 export {
