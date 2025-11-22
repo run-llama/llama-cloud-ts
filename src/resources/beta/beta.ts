@@ -16,15 +16,6 @@ import {
   AgentDataSearchResponse,
   AgentDataUpdateParams,
 } from './agent-data';
-import * as FilesAPI from './files';
-import {
-  FileCreateParams,
-  FileDeleteParams,
-  FileQueryParams,
-  FileQueryResponse,
-  FileUpsertParams,
-  Files,
-} from './files';
 import * as ParseConfigurationsAPI from './parse-configurations';
 import {
   ParseConfiguration,
@@ -80,7 +71,6 @@ import {
 
 export class Beta extends APIResource {
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
-  files: FilesAPI.Files = new FilesAPI.Files(this._client);
   parseConfigurations: ParseConfigurationsAPI.ParseConfigurations =
     new ParseConfigurationsAPI.ParseConfigurations(this._client);
   sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
@@ -88,7 +78,6 @@ export class Beta extends APIResource {
   batch: BatchAPI.Batch = new BatchAPI.Batch(this._client);
 }
 
-Beta.Files = Files;
 Beta.ParseConfigurations = ParseConfigurations;
 Beta.Sheets = Sheets;
 Beta.Directories = Directories;
@@ -108,15 +97,6 @@ export declare namespace Beta {
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
     type AgentDataGetParams as AgentDataGetParams,
     type AgentDataSearchParams as AgentDataSearchParams,
-  };
-
-  export {
-    Files as Files,
-    type FileQueryResponse as FileQueryResponse,
-    type FileCreateParams as FileCreateParams,
-    type FileDeleteParams as FileDeleteParams,
-    type FileQueryParams as FileQueryParams,
-    type FileUpsertParams as FileUpsertParams,
   };
 
   export {

@@ -41,14 +41,6 @@ export {
   type DirectoryListResponsesPaginatedClassifyJobs,
 } from './directories/index';
 export {
-  Files,
-  type FileQueryResponse,
-  type FileCreateParams,
-  type FileDeleteParams,
-  type FileQueryParams,
-  type FileUpsertParams,
-} from './files';
-export {
   ParseConfigurations,
   type ParseConfiguration,
   type ParseConfigurationCreate,

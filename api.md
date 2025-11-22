@@ -352,19 +352,6 @@ Methods:
 - <code title="get /api/v1/beta/agent-data/{item_id}">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">get</a>(itemID, { ...params }) -> AgentData</code>
 - <code title="post /api/v1/beta/agent-data/:search">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">search</a>({ ...params }) -> AgentDataSearchResponse</code>
 
-## Files
-
-Types:
-
-- <code><a href="./src/resources/beta/files.ts">FileQueryResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/beta/files">client.beta.files.<a href="./src/resources/beta/files.ts">create</a>({ ...params }) -> File</code>
-- <code title="delete /api/v1/beta/files/{file_id}">client.beta.files.<a href="./src/resources/beta/files.ts">delete</a>(fileID, { ...params }) -> void</code>
-- <code title="post /api/v1/beta/files/query">client.beta.files.<a href="./src/resources/beta/files.ts">query</a>({ ...params }) -> FileQueryResponse</code>
-- <code title="put /api/v1/beta/files">client.beta.files.<a href="./src/resources/beta/files.ts">upsert</a>({ ...params }) -> File</code>
-
 ## ParseConfigurations
 
 Types:
