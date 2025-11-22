@@ -3,7 +3,6 @@
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
-import { path } from '../internal/utils/path';
 
 export class Organizations extends APIResource {
   /**
@@ -11,13 +10,6 @@ export class Organizations extends APIResource {
    */
   list(options?: RequestOptions): APIPromise<OrganizationListResponse> {
     return this._client.get('/api/v1/organizations', options);
-  }
-
-  /**
-   * Get an organization by ID.
-   */
-  get(organizationID: string, options?: RequestOptions): APIPromise<Organization> {
-    return this._client.get(path`/api/v1/organizations/${organizationID}`, options);
   }
 }
 

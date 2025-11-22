@@ -51,7 +51,6 @@ Types:
 Methods:
 
 - <code title="get /api/v1/organizations">client.organizations.<a href="./src/resources/organizations.ts">list</a>() -> OrganizationListResponse</code>
-- <code title="get /api/v1/organizations/{organization_id}">client.organizations.<a href="./src/resources/organizations.ts">get</a>(organizationID) -> Organization</code>
 
 # Files
 
