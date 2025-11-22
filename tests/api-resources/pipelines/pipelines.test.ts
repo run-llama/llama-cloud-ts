@@ -263,30 +263,6 @@ describe('resource pipelines', () => {
   });
 
   // Prism tests are disabled
-  test.skip('copy', async () => {
-    const responsePromise = client.pipelines.copy('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('forceDelete', async () => {
-    const responsePromise = client.pipelines.forceDelete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.pipelines.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -296,37 +272,6 @@ describe('resource pipelines', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('getFiles2', async () => {
-    const responsePromise = client.pipelines.getFiles2('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('getFiles2: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.pipelines.getFiles2(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        {
-          data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          file_name_contains: 'file_name_contains',
-          limit: 0,
-          offset: 0,
-          only_manually_uploaded: true,
-          order_by: 'order_by',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
   // Prism tests are disabled
