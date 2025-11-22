@@ -123,7 +123,6 @@ Types:
 - <code><a href="./src/resources/pipelines/pipelines.ts">SparseModelConfig</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineListResponse</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineChatResponse</a></code>
-- <code><a href="./src/resources/pipelines/pipelines.ts">PipelineGetFiles2Response</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineGetPlaygroundSessionResponse</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineSearchResponse</a></code>
 
@@ -134,10 +133,7 @@ Methods:
 - <code title="get /api/v1/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">list</a>({ ...params }) -> PipelineListResponse</code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">delete</a>(pipelineID) -> void</code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/chat">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">chat</a>(pipelineID, { ...params }) -> unknown</code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/copy">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">copy</a>(pipelineID) -> Pipeline</code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/force-delete">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">forceDelete</a>(pipelineID) -> void</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">get</a>(pipelineID) -> Pipeline</code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/files2">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">getFiles2</a>(pipelineID, { ...params }) -> PipelineGetFiles2Response</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/playground-session">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">getPlaygroundSession</a>(pipelineID) -> PipelineGetPlaygroundSessionResponse</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/status">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">getStatus</a>(pipelineID, { ...params }) -> ManagedIngestionStatusResponse</code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/retrieve">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">search</a>(pipelineID, { ...params }) -> PipelineSearchResponse</code>

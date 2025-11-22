@@ -119,45 +119,10 @@ export class Pipelines extends APIResource {
   }
 
   /**
-   * Copy a pipeline by ID.
-   */
-  copy(pipelineID: string, options?: RequestOptions): APIPromise<Pipeline> {
-    return this._client.post(path`/api/v1/pipelines/${pipelineID}/copy`, options);
-  }
-
-  /**
-   * Force Delete Pipeline
-   */
-  forceDelete(pipelineID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/api/v1/pipelines/${pipelineID}/force-delete`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
-  }
-
-  /**
    * Get a pipeline by ID for a given project.
    */
   get(pipelineID: string, options?: RequestOptions): APIPromise<Pipeline> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}`, options);
-  }
-
-  /**
-   * Get files for a pipeline.
-   *
-   * Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
-   * source ID only_manually_uploaded: Filter for only manually uploaded files
-   * file_name_contains: Optional filter by file name (substring match) limit: Limit
-   * number of results offset: Offset for pagination order_by: Field to order by
-   *
-   * @deprecated
-   */
-  getFiles2(
-    pipelineID: string,
-    query: PipelineGetFiles2Params | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<PipelineGetFiles2Response> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}/files2`, { query, ...options });
   }
 
   /**
@@ -2968,28 +2933,6 @@ export type PipelineListResponse = Array<Pipeline>;
 
 export type PipelineChatResponse = unknown;
 
-export interface PipelineGetFiles2Response {
-  /**
-   * The files to list
-   */
-  files: Array<FilesAPI.PipelineFile>;
-
-  /**
-   * The limit of the files
-   */
-  limit: number;
-
-  /**
-   * The offset of the files
-   */
-  offset: number;
-
-  /**
-   * The total number of files
-   */
-  total_count: number;
-}
-
 /**
  * A playground session for a user.
  */
@@ -4963,20 +4906,6 @@ export namespace PipelineChatParams {
   }
 }
 
-export interface PipelineGetFiles2Params {
-  data_source_id?: string | null;
-
-  file_name_contains?: string | null;
-
-  limit?: number | null;
-
-  offset?: number | null;
-
-  only_manually_uploaded?: boolean;
-
-  order_by?: string | null;
-}
-
 export interface PipelineGetStatusParams {
   full_details?: boolean | null;
 }
@@ -5990,14 +5919,12 @@ export declare namespace Pipelines {
     type SparseModelConfig as SparseModelConfig,
     type PipelineListResponse as PipelineListResponse,
     type PipelineChatResponse as PipelineChatResponse,
-    type PipelineGetFiles2Response as PipelineGetFiles2Response,
     type PipelineGetPlaygroundSessionResponse as PipelineGetPlaygroundSessionResponse,
     type PipelineSearchResponse as PipelineSearchResponse,
     type PipelineCreateParams as PipelineCreateParams,
     type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineListParams as PipelineListParams,
     type PipelineChatParams as PipelineChatParams,
-    type PipelineGetFiles2Params as PipelineGetFiles2Params,
     type PipelineGetStatusParams as PipelineGetStatusParams,
     type PipelineSearchParams as PipelineSearchParams,
     type PipelineUpsertParams as PipelineUpsertParams,
