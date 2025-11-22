@@ -32,7 +32,7 @@ export {
   type FileReadContentParams,
   type FileUploadParams,
   type FileUploadFromURLParams,
-} from './files/files';
+} from './files';
 export { Organizations, type Organization, type OrganizationListResponse } from './organizations';
 export {
   Parsing,

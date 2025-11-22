@@ -57,17 +57,6 @@ import {
   DataSourceUpdateParams,
   DataSources,
 } from './resources/data-sources';
-import { Organization, OrganizationListResponse, Organizations } from './resources/organizations';
-import {
-  Project,
-  ProjectGetParams,
-  ProjectListParams,
-  ProjectListResponse,
-  Projects,
-} from './resources/projects';
-import { Beta } from './resources/beta/beta';
-import { Classifier } from './resources/classifier/classifier';
-import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
 import {
   File,
   FileCreate,
@@ -80,7 +69,18 @@ import {
   FileUploadParams,
   Files,
   PresignedURL,
-} from './resources/files/files';
+} from './resources/files';
+import { Organization, OrganizationListResponse, Organizations } from './resources/organizations';
+import {
+  Project,
+  ProjectGetParams,
+  ProjectListParams,
+  ProjectListResponse,
+  Projects,
+} from './resources/projects';
+import { Beta } from './resources/beta/beta';
+import { Classifier } from './resources/classifier/classifier';
+import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
 import {
   FailPageMode,
   LlamaParseSupportedFileExtensions,

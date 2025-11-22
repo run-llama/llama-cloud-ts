@@ -57,49 +57,19 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/files/files.ts">File</a></code>
-- <code><a href="./src/resources/files/files.ts">FileCreate</a></code>
-- <code><a href="./src/resources/files/files.ts">PresignedURL</a></code>
-- <code><a href="./src/resources/files/files.ts">FileGeneratePresignedURLResponse</a></code>
+- <code><a href="./src/resources/files.ts">File</a></code>
+- <code><a href="./src/resources/files.ts">FileCreate</a></code>
+- <code><a href="./src/resources/files.ts">PresignedURL</a></code>
+- <code><a href="./src/resources/files.ts">FileGeneratePresignedURLResponse</a></code>
 
 Methods:
 
-- <code title="delete /api/v1/files/{id}">client.files.<a href="./src/resources/files/files.ts">delete</a>(id, { ...params }) -> void</code>
-- <code title="put /api/v1/files">client.files.<a href="./src/resources/files/files.ts">generatePresignedURL</a>({ ...params }) -> FileGeneratePresignedURLResponse</code>
-- <code title="get /api/v1/files/{id}">client.files.<a href="./src/resources/files/files.ts">get</a>(id, { ...params }) -> File</code>
-- <code title="get /api/v1/files/{id}/content">client.files.<a href="./src/resources/files/files.ts">readContent</a>(id, { ...params }) -> PresignedURL</code>
-- <code title="post /api/v1/files">client.files.<a href="./src/resources/files/files.ts">upload</a>({ ...params }) -> File</code>
-- <code title="put /api/v1/files/upload_from_url">client.files.<a href="./src/resources/files/files.ts">uploadFromURL</a>({ ...params }) -> File</code>
-
-## PageScreenshots
-
-Types:
-
-- <code><a href="./src/resources/files/page-screenshots.ts">PageScreenshotMetadata</a></code>
-- <code><a href="./src/resources/files/page-screenshots.ts">PageScreenshotListResponse</a></code>
-- <code><a href="./src/resources/files/page-screenshots.ts">PageScreenshotGetResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/files/{id}/page_screenshots">client.files.pageScreenshots.<a href="./src/resources/files/page-screenshots.ts">list</a>(id, { ...params }) -> PageScreenshotListResponse</code>
-- <code title="post /api/v1/files/{id}/page_screenshots/{page_index}/presigned_url">client.files.pageScreenshots.<a href="./src/resources/files/page-screenshots.ts">generatePresignedURL</a>(pageIndex, { ...params }) -> PresignedURL</code>
-- <code title="get /api/v1/files/{id}/page_screenshots/{page_index}">client.files.pageScreenshots.<a href="./src/resources/files/page-screenshots.ts">get</a>(pageIndex, { ...params }) -> unknown</code>
-
-## PageFigures
-
-Types:
-
-- <code><a href="./src/resources/files/page-figures.ts">PageFigureMetadata</a></code>
-- <code><a href="./src/resources/files/page-figures.ts">PageFigureListResponse</a></code>
-- <code><a href="./src/resources/files/page-figures.ts">PageFigureGetFigureResponse</a></code>
-- <code><a href="./src/resources/files/page-figures.ts">PageFigureGetFiguresResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/files/{id}/page-figures">client.files.pageFigures.<a href="./src/resources/files/page-figures.ts">list</a>(id, { ...params }) -> PageFigureListResponse</code>
-- <code title="post /api/v1/files/{id}/page-figures/{page_index}/{figure_name}/presigned_url">client.files.pageFigures.<a href="./src/resources/files/page-figures.ts">generatePresignedURL</a>(figureName, { ...params }) -> PresignedURL</code>
-- <code title="get /api/v1/files/{id}/page-figures/{page_index}/{figure_name}">client.files.pageFigures.<a href="./src/resources/files/page-figures.ts">getFigure</a>(figureName, { ...params }) -> unknown</code>
-- <code title="get /api/v1/files/{id}/page-figures/{page_index}">client.files.pageFigures.<a href="./src/resources/files/page-figures.ts">getFigures</a>(pageIndex, { ...params }) -> PageFigureGetFiguresResponse</code>
+- <code title="delete /api/v1/files/{id}">client.files.<a href="./src/resources/files.ts">delete</a>(id, { ...params }) -> void</code>
+- <code title="put /api/v1/files">client.files.<a href="./src/resources/files.ts">generatePresignedURL</a>({ ...params }) -> FileGeneratePresignedURLResponse</code>
+- <code title="get /api/v1/files/{id}">client.files.<a href="./src/resources/files.ts">get</a>(id, { ...params }) -> File</code>
+- <code title="get /api/v1/files/{id}/content">client.files.<a href="./src/resources/files.ts">readContent</a>(id, { ...params }) -> PresignedURL</code>
+- <code title="post /api/v1/files">client.files.<a href="./src/resources/files.ts">upload</a>({ ...params }) -> File</code>
+- <code title="put /api/v1/files/upload_from_url">client.files.<a href="./src/resources/files.ts">uploadFromURL</a>({ ...params }) -> File</code>
 
 # Pipelines
 

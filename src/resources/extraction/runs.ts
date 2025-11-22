@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as FilesAPI from '../files/files';
+import * as FilesAPI from '../files';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedExtractRuns, type PaginatedExtractRunsParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';

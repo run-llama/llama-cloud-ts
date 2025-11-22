@@ -4,8 +4,6 @@ import { APIResource } from '../../core/resource';
 import * as PipelinesAPI from './pipelines';
 import * as DataSinksAPI from '../data-sinks';
 import * as JobsAPI from '../extraction/jobs';
-import * as PageFiguresAPI from '../files/page-figures';
-import * as PageScreenshotsAPI from '../files/page-screenshots';
 import * as ParsingAPI from '../parsing/parsing';
 import * as DataSourcesAPI from './data-sources';
 import {
@@ -678,7 +676,7 @@ export namespace MetadataFilters {
  * Page figure metadata with score
  */
 export interface PageFigureNodeWithScore {
-  node: PageFiguresAPI.PageFigureMetadata;
+  node: PageFigureNodeWithScore.Node;
 
   /**
    * The score of the figure node
@@ -688,11 +686,50 @@ export interface PageFigureNodeWithScore {
   class_name?: string;
 }
 
+export namespace PageFigureNodeWithScore {
+  export interface Node {
+    /**
+     * The confidence of the figure
+     */
+    confidence: number;
+
+    /**
+     * The name of the figure
+     */
+    figure_name: string;
+
+    /**
+     * The size of the figure in bytes
+     */
+    figure_size: number;
+
+    /**
+     * The ID of the file that the figure was taken from
+     */
+    file_id: string;
+
+    /**
+     * The index of the page for which the figure is taken (0-indexed)
+     */
+    page_index: number;
+
+    /**
+     * Whether the figure is likely to be noise
+     */
+    is_likely_noise?: boolean;
+
+    /**
+     * Metadata for the figure
+     */
+    metadata?: { [key: string]: unknown } | null;
+  }
+}
+
 /**
  * Page screenshot metadata with score
  */
 export interface PageScreenshotNodeWithScore {
-  node: PageScreenshotsAPI.PageScreenshotMetadata;
+  node: PageScreenshotNodeWithScore.Node;
 
   /**
    * The score of the screenshot node
@@ -700,6 +737,30 @@ export interface PageScreenshotNodeWithScore {
   score: number;
 
   class_name?: string;
+}
+
+export namespace PageScreenshotNodeWithScore {
+  export interface Node {
+    /**
+     * The ID of the file that the page screenshot was taken from
+     */
+    file_id: string;
+
+    /**
+     * The size of the image in bytes
+     */
+    image_size: number;
+
+    /**
+     * The index of the page for which the screenshot is taken (0-indexed)
+     */
+    page_index: number;
+
+    /**
+     * Metadata for the screenshot
+     */
+    metadata?: { [key: string]: unknown } | null;
+  }
 }
 
 /**
