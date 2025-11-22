@@ -65,7 +65,6 @@ export {
   type RetrievalMode,
   type SparseModelConfig,
   type PipelineListResponse,
-  type PipelineGetPlaygroundSessionResponse,
   type PipelineCreateParams,
   type PipelineUpdateParams,
   type PipelineListParams,

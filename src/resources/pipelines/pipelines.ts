@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as PipelinesAPI from './pipelines';
 import * as DataSinksAPI from '../data-sinks';
 import * as JobsAPI from '../extraction/jobs';
 import * as ParsingAPI from '../parsing/parsing';
@@ -9,7 +8,6 @@ import * as DataSourcesAPI from './data-sources';
 import {
   DataSourceGetDataSourcesResponse,
   DataSourceGetStatusParams,
-  DataSourceSyncParams,
   DataSourceUpdateDataSourcesParams,
   DataSourceUpdateDataSourcesResponse,
   DataSourceUpdateParams,
@@ -112,16 +110,6 @@ export class Pipelines extends APIResource {
    */
   get(pipelineID: string, options?: RequestOptions): APIPromise<Pipeline> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}`, options);
-  }
-
-  /**
-   * Get a playground session for a user and pipeline.
-   */
-  getPlaygroundSession(
-    pipelineID: string,
-    options?: RequestOptions,
-  ): APIPromise<PipelineGetPlaygroundSessionResponse> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}/playground-session`, options);
   }
 
   /**
@@ -2967,92 +2955,6 @@ export interface SparseModelConfig {
 
 export type PipelineListResponse = Array<Pipeline>;
 
-/**
- * A playground session for a user.
- */
-export interface PipelineGetPlaygroundSessionResponse {
-  /**
-   * Unique identifier
-   */
-  id: string;
-
-  llm_params_id: string;
-
-  pipeline_id: string;
-
-  retrieval_params_id: string;
-
-  user_id: string;
-
-  /**
-   * Chat message history for this session.
-   */
-  chat_messages?: Array<PipelineGetPlaygroundSessionResponse.ChatMessage>;
-
-  /**
-   * Creation datetime
-   */
-  created_at?: string | null;
-
-  /**
-   * LLM parameters last used in this session.
-   */
-  llm_params?: LlmParameters;
-
-  /**
-   * Preset retrieval parameters last used in this session.
-   */
-  retrieval_params?: PresetRetrievalParams;
-
-  /**
-   * Update datetime
-   */
-  updated_at?: string | null;
-}
-
-export namespace PipelineGetPlaygroundSessionResponse {
-  export interface ChatMessage {
-    id: string;
-
-    /**
-     * The index of the message in the chat.
-     */
-    index: number;
-
-    /**
-     * The role of the message.
-     */
-    role: PipelinesAPI.MessageRole;
-
-    /**
-     * Additional arguments passed to the model
-     */
-    additional_kwargs?: { [key: string]: string };
-
-    /**
-     * Retrieval annotations for the message.
-     */
-    annotations?: Array<ChatMessage.Annotation>;
-
-    class_name?: string;
-
-    /**
-     * Text content of the generation
-     */
-    content?: string | null;
-  }
-
-  export namespace ChatMessage {
-    export interface Annotation {
-      data: string;
-
-      type: string;
-
-      class_name?: string;
-    }
-  }
-}
-
 export interface PipelineCreateParams {
   /**
    * Body param:
@@ -5750,7 +5652,6 @@ export declare namespace Pipelines {
     type RetrievalMode as RetrievalMode,
     type SparseModelConfig as SparseModelConfig,
     type PipelineListResponse as PipelineListResponse,
-    type PipelineGetPlaygroundSessionResponse as PipelineGetPlaygroundSessionResponse,
     type PipelineCreateParams as PipelineCreateParams,
     type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineListParams as PipelineListParams,
@@ -5767,7 +5668,6 @@ export declare namespace Pipelines {
     type DataSourceUpdateDataSourcesResponse as DataSourceUpdateDataSourcesResponse,
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceGetStatusParams as DataSourceGetStatusParams,
-    type DataSourceSyncParams as DataSourceSyncParams,
     type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
   };
 
