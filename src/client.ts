@@ -46,7 +46,6 @@ import {
   DataSinkListParams,
   DataSinkListResponse,
   DataSinkUpdateParams,
-  DataSinkUpsertParams,
   DataSinks,
 } from './resources/data-sinks';
 import {
@@ -56,7 +55,6 @@ import {
   DataSourceListResponse,
   DataSourceReaderVersionMetadata,
   DataSourceUpdateParams,
-  DataSourceUpsertParams,
   DataSources,
 } from './resources/data-sources';
 import { Organization, OrganizationListResponse, Organizations } from './resources/organizations';
@@ -89,9 +87,7 @@ import {
   ParserLanguages,
   Parsing,
   ParsingCreateScreenshotParams,
-  ParsingGetParsingHistoryResponse,
   ParsingGetSupportedFileExtensionsResponse,
-  ParsingHistoryItem,
   ParsingJob,
   ParsingMode,
   ParsingUploadFileParams,
@@ -964,7 +960,6 @@ export declare namespace LlamaCloud {
     type DataSinkCreateParams as DataSinkCreateParams,
     type DataSinkUpdateParams as DataSinkUpdateParams,
     type DataSinkListParams as DataSinkListParams,
-    type DataSinkUpsertParams as DataSinkUpsertParams,
   };
 
   export {
@@ -975,7 +970,6 @@ export declare namespace LlamaCloud {
     type DataSourceCreateParams as DataSourceCreateParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceListParams as DataSourceListParams,
-    type DataSourceUpsertParams as DataSourceUpsertParams,
   };
 
   export {
@@ -1053,11 +1047,9 @@ export declare namespace LlamaCloud {
     type FailPageMode as FailPageMode,
     type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
     type ParserLanguages as ParserLanguages,
-    type ParsingHistoryItem as ParsingHistoryItem,
     type ParsingJob as ParsingJob,
     type ParsingMode as ParsingMode,
     type StatusEnum as StatusEnum,
-    type ParsingGetParsingHistoryResponse as ParsingGetParsingHistoryResponse,
     type ParsingGetSupportedFileExtensionsResponse as ParsingGetSupportedFileExtensionsResponse,
     type ParsingCreateScreenshotParams as ParsingCreateScreenshotParams,
     type ParsingUploadFileParams as ParsingUploadFileParams,
