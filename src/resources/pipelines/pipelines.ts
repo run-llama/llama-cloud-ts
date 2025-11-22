@@ -23,8 +23,6 @@ import {
   DocumentCreateParams,
   DocumentCreateResponse,
   DocumentDeleteParams,
-  DocumentForceSyncAllParams,
-  DocumentForceSyncAllResponse,
   DocumentGetChunksParams,
   DocumentGetChunksResponse,
   DocumentGetPaginatedParams,
@@ -110,13 +108,6 @@ export class Pipelines extends APIResource {
   }
 
   /**
-   * Make a retrieval query + chat completion for a managed pipeline.
-   */
-  chat(pipelineID: string, body: PipelineChatParams, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.post(path`/api/v1/pipelines/${pipelineID}/chat`, { body, ...options });
-  }
-
-  /**
    * Get a pipeline by ID for a given project.
    */
   get(pipelineID: string, options?: RequestOptions): APIPromise<Pipeline> {
@@ -142,22 +133,6 @@ export class Pipelines extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ManagedIngestionStatusResponse> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}/status`, { query, ...options });
-  }
-
-  /**
-   * Get retrieval results for a managed pipeline and a query
-   */
-  search(
-    pipelineID: string,
-    params: PipelineSearchParams,
-    options?: RequestOptions,
-  ): APIPromise<PipelineSearchResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post(path`/api/v1/pipelines/${pipelineID}/retrieve`, {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
   }
 
   /**
@@ -2992,8 +2967,6 @@ export interface SparseModelConfig {
 
 export type PipelineListResponse = Array<Pipeline>;
 
-export type PipelineChatResponse = unknown;
-
 /**
  * A playground session for a user.
  */
@@ -3077,69 +3050,6 @@ export namespace PipelineGetPlaygroundSessionResponse {
 
       class_name?: string;
     }
-  }
-}
-
-/**
- * Schema for the result of an retrieval execution.
- */
-export interface PipelineSearchResponse {
-  /**
-   * The ID of the pipeline that the query was retrieved against.
-   */
-  pipeline_id: string;
-
-  /**
-   * The nodes retrieved by the pipeline for the given query.
-   */
-  retrieval_nodes: Array<PipelineSearchResponse.RetrievalNode>;
-
-  class_name?: string;
-
-  /**
-   * @deprecated The image nodes retrieved by the pipeline for the given query.
-   * Deprecated - will soon be replaced with 'page_screenshot_nodes'.
-   */
-  image_nodes?: Array<PageScreenshotNodeWithScore>;
-
-  /**
-   * Metadata filters for vector stores.
-   */
-  inferred_search_filters?: MetadataFilters | null;
-
-  /**
-   * Metadata associated with the retrieval execution
-   */
-  metadata?: { [key: string]: string };
-
-  /**
-   * The page figure nodes retrieved by the pipeline for the given query.
-   */
-  page_figure_nodes?: Array<PageFigureNodeWithScore>;
-
-  /**
-   * The end-to-end latency for retrieval and reranking.
-   */
-  retrieval_latency?: { [key: string]: number };
-}
-
-export namespace PipelineSearchResponse {
-  /**
-   * Same as NodeWithScore but type for node is a TextNode instead of BaseNode.
-   * FastAPI doesn't accept abstract classes like BaseNode.
-   */
-  export interface RetrievalNode {
-    /**
-     * Provided for backward compatibility.
-     *
-     * Note: we keep the field with the typo "seperator" to maintain backward
-     * compatibility for serialized objects.
-     */
-    node: DocumentsAPI.TextNode;
-
-    class_name?: string;
-
-    score?: number | null;
   }
 }
 
@@ -4920,147 +4830,8 @@ export interface PipelineListParams {
   project_name?: string | null;
 }
 
-export interface PipelineChatParams {
-  class_name?: string;
-
-  data?: PipelineChatParams.Data;
-
-  messages?: Array<PipelineChatParams.Message>;
-}
-
-export namespace PipelineChatParams {
-  export interface Data {
-    class_name?: string;
-
-    llm_parameters?: PipelinesAPI.LlmParameters | null;
-
-    /**
-     * Schema for the search params for an retrieval execution that can be preset for a
-     * pipeline.
-     */
-    retrieval_parameters?: PipelinesAPI.PresetRetrievalParams;
-  }
-
-  /**
-   * This is distinct from a ChatMessage because this schema is enforced by the AI
-   * Chat library used in the frontend
-   */
-  export interface Message {
-    content: string;
-
-    /**
-     * Message role.
-     */
-    role: PipelinesAPI.MessageRole;
-
-    /**
-     * ID of the message, if any. a UUID.
-     */
-    id?: string;
-
-    class_name?: string;
-
-    /**
-     * Additional data to be stored with the message.
-     */
-    data?: { [key: string]: unknown } | null;
-  }
-}
-
 export interface PipelineGetStatusParams {
   full_details?: boolean | null;
-}
-
-export interface PipelineSearchParams {
-  /**
-   * Body param: The query to retrieve against.
-   */
-  query: string;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Alpha value for hybrid retrieval to determine the weights between
-   * dense and sparse retrieval. 0 is sparse retrieval and 1 is dense retrieval.
-   */
-  alpha?: number | null;
-
-  /**
-   * Body param:
-   */
-  class_name?: string;
-
-  /**
-   * Body param: Minimum similarity score wrt query for retrieval
-   */
-  dense_similarity_cutoff?: number | null;
-
-  /**
-   * Body param: Number of nodes for dense retrieval.
-   */
-  dense_similarity_top_k?: number | null;
-
-  /**
-   * Body param: Enable reranking for retrieval
-   */
-  enable_reranking?: boolean | null;
-
-  /**
-   * Body param: Number of files to retrieve (only for retrieval mode
-   * files_via_metadata and files_via_content).
-   */
-  files_top_k?: number | null;
-
-  /**
-   * Body param: Number of reranked nodes for returning.
-   */
-  rerank_top_n?: number | null;
-
-  /**
-   * Body param: The retrieval mode for the query.
-   */
-  retrieval_mode?: RetrievalMode;
-
-  /**
-   * @deprecated Body param: Whether to retrieve image nodes.
-   */
-  retrieve_image_nodes?: boolean;
-
-  /**
-   * Body param: Whether to retrieve page figure nodes.
-   */
-  retrieve_page_figure_nodes?: boolean;
-
-  /**
-   * Body param: Whether to retrieve page screenshot nodes.
-   */
-  retrieve_page_screenshot_nodes?: boolean;
-
-  /**
-   * Body param: Metadata filters for vector stores.
-   */
-  search_filters?: MetadataFilters | null;
-
-  /**
-   * Body param: JSON Schema that will be used to infer search_filters. Omit or leave
-   * as null to skip inference.
-   */
-  search_filters_inference_schema?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
-
-  /**
-   * Body param: Number of nodes for sparse retrieval.
-   */
-  sparse_similarity_top_k?: number | null;
 }
 
 export interface PipelineUpsertParams {
@@ -5979,15 +5750,11 @@ export declare namespace Pipelines {
     type RetrievalMode as RetrievalMode,
     type SparseModelConfig as SparseModelConfig,
     type PipelineListResponse as PipelineListResponse,
-    type PipelineChatResponse as PipelineChatResponse,
     type PipelineGetPlaygroundSessionResponse as PipelineGetPlaygroundSessionResponse,
-    type PipelineSearchResponse as PipelineSearchResponse,
     type PipelineCreateParams as PipelineCreateParams,
     type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineListParams as PipelineListParams,
-    type PipelineChatParams as PipelineChatParams,
     type PipelineGetStatusParams as PipelineGetStatusParams,
-    type PipelineSearchParams as PipelineSearchParams,
     type PipelineUpsertParams as PipelineUpsertParams,
   };
 
@@ -6031,7 +5798,6 @@ export declare namespace Pipelines {
     type TextNode as TextNode,
     type DocumentCreateResponse as DocumentCreateResponse,
     type DocumentListResponse as DocumentListResponse,
-    type DocumentForceSyncAllResponse as DocumentForceSyncAllResponse,
     type DocumentGetChunksResponse as DocumentGetChunksResponse,
     type DocumentGetPaginatedResponse as DocumentGetPaginatedResponse,
     type DocumentSyncResponse as DocumentSyncResponse,
@@ -6039,7 +5805,6 @@ export declare namespace Pipelines {
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
     type DocumentDeleteParams as DocumentDeleteParams,
-    type DocumentForceSyncAllParams as DocumentForceSyncAllParams,
     type DocumentGetParams as DocumentGetParams,
     type DocumentGetChunksParams as DocumentGetChunksParams,
     type DocumentGetPaginatedParams as DocumentGetPaginatedParams,
