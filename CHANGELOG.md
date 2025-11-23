@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.3.0 (2025-11-23)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** Add missing api endpoints ([cf1d957](https://github.com/run-llama/llama-cloud-ts/commit/cf1d95707439140f4194e6352ce44a539c2ca12a))
+* **api:** api update ([d97a3e8](https://github.com/run-llama/llama-cloud-ts/commit/d97a3e8f2c0bfcbf92d325a4ee5f734a6c8a9b55))
+* **api:** api update ([3fc8ca5](https://github.com/run-llama/llama-cloud-ts/commit/3fc8ca5873817720f97d44bea99216c07b8dba5c))
+* **api:** api update ([a50086a](https://github.com/run-llama/llama-cloud-ts/commit/a50086ad5581dfdfe48d3c34ed6469e166767b19))
+* **api:** manual updates ([08e59a5](https://github.com/run-llama/llama-cloud-ts/commit/08e59a5803ab98fa27eeb0a869159568c7c11e1b))
+* **api:** manual updates ([df65235](https://github.com/run-llama/llama-cloud-ts/commit/df652355d174968aeb162c729568badfd0b7b1d5))
+* **api:** manual updates ([07c5cfa](https://github.com/run-llama/llama-cloud-ts/commit/07c5cfa3094a3a092868d8057e0f9e4f54c6e2cf))
+* **api:** manual updates ([ad73aa2](https://github.com/run-llama/llama-cloud-ts/commit/ad73aa299c9d4ece0f3335655fcccf509ffd21a7))
+* **api:** manual updates ([80cd9d8](https://github.com/run-llama/llama-cloud-ts/commit/80cd9d8b165de8f4dc44b2fd3449279b91203112))
+* **api:** manual updates ([3d06c4f](https://github.com/run-llama/llama-cloud-ts/commit/3d06c4f299e7e579f7e593ea1559a8065b3b6ccb))
+* **api:** manual updates ([4c5c5ed](https://github.com/run-llama/llama-cloud-ts/commit/4c5c5ed6bcba1d4379ac8200dd6ba1214e4da132))
+* **api:** manual updates ([80e6dbd](https://github.com/run-llama/llama-cloud-ts/commit/80e6dbdba2208ef92078f4e1a103aac06b4f4f3c))
+* **api:** manual updates ([ec1eb5d](https://github.com/run-llama/llama-cloud-ts/commit/ec1eb5d79a0ce9cd77c46ef04741fa572065e54a))
+* **api:** manual updates ([421ddd6](https://github.com/run-llama/llama-cloud-ts/commit/421ddd60be606e59bd7bc83e5696a3dc7a0f7d0a))
+* **api:** manual updates ([780cb09](https://github.com/run-llama/llama-cloud-ts/commit/780cb0911d132bfb78257aa455ecdb8ad960652e))
+* **api:** manual updates ([46c5cae](https://github.com/run-llama/llama-cloud-ts/commit/46c5cae7e6e00fe0fb8fc91171c882efb7237735))
+* **api:** manual updates ([5374b1d](https://github.com/run-llama/llama-cloud-ts/commit/5374b1de26a6a0b3e5391eaec14cdf51ec023deb))
+* **api:** remove some agent items ([12ec7bd](https://github.com/run-llama/llama-cloud-ts/commit/12ec7bd41941a4c195e474378474a10f64909b93))
+
 ## 0.2.0 (2025-11-19)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.1.0...v0.2.0)
