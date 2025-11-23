@@ -2,12 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as JobAPI from './job/job';
-import {
-  Job,
-  JobGeneratePresignedURLParams,
-  JobGetDetailsResponse,
-  JobGetParametersResponse,
-} from './job/job';
+import { Job, JobGeneratePresignedURLParams, JobGetDetailsResponse } from './job/job';
 import { APIPromise } from '../../core/api-promise';
 import { type Uploadable } from '../../core/uploads';
 import { RequestOptions } from '../../internal/request-options';
@@ -933,7 +928,6 @@ export declare namespace Parsing {
   export {
     Job as Job,
     type JobGetDetailsResponse as JobGetDetailsResponse,
-    type JobGetParametersResponse as JobGetParametersResponse,
     type JobGeneratePresignedURLParams as JobGeneratePresignedURLParams,
   };
 }

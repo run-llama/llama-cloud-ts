@@ -201,14 +201,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/parsing/job/job.ts">JobGetDetailsResponse</a></code>
-- <code><a href="./src/resources/parsing/job/job.ts">JobGetParametersResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v1/parsing/job/{job_id}/read/{filename}">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">generatePresignedURL</a>(filename, { ...params }) -> PresignedURL</code>
 - <code title="get /api/v1/parsing/job/{job_id}">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">get</a>(jobID) -> ParsingJob</code>
 - <code title="get /api/v1/parsing/job/{job_id}/details">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">getDetails</a>(jobID) -> unknown</code>
-- <code title="get /api/v1/parsing/job/{job_id}/parameters">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">getParameters</a>(jobID) -> unknown</code>
 
 ### Result
 

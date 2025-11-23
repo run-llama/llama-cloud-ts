@@ -53,13 +53,6 @@ export class Job extends APIResource {
   }
 
   /**
-   * Get a job by id
-   */
-  getParameters(jobID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.get(path`/api/v1/parsing/job/${jobID}/parameters`, options);
-  }
-
-  /**
    * Wait for a parsing job to complete by polling until it reaches a terminal state.
    *
    * This method polls the job status at regular intervals until the job completes
@@ -129,8 +122,6 @@ export class Job extends APIResource {
 
 export type JobGetDetailsResponse = unknown;
 
-export type JobGetParametersResponse = unknown;
-
 export interface JobGeneratePresignedURLParams {
   job_id: string;
 }
@@ -140,7 +131,6 @@ Job.Result = Result;
 export declare namespace Job {
   export {
     type JobGetDetailsResponse as JobGetDetailsResponse,
-    type JobGetParametersResponse as JobGetParametersResponse,
     type JobGeneratePresignedURLParams as JobGeneratePresignedURLParams,
   };
 
