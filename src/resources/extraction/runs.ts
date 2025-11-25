@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as FilesAPI from '../files/files';
+import * as FilesAPI from '../files';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedExtractRuns, type PaginatedExtractRunsParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -163,6 +163,7 @@ export interface ExtractConfig {
     | 'anthropic-sonnet-4.0'
     | 'anthropic-sonnet-4.5'
     | 'anthropic-haiku-4.5'
+    | 'gemini-3.0-pro'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-pro'
     | 'gemini-2.0-flash'

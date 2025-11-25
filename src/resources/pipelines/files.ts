@@ -3,6 +3,11 @@
 import { APIResource } from '../../core/resource';
 import * as PipelinesAPI from './pipelines';
 import { APIPromise } from '../../core/api-promise';
+import {
+  PagePromise,
+  PaginatedPipelineFiles,
+  type PaginatedPipelineFilesParams,
+} from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -31,14 +36,23 @@ export class Files extends APIResource {
   /**
    * Get files for a pipeline.
    *
+   * Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
+   * source ID only_manually_uploaded: Filter for only manually uploaded files
+   * file_name_contains: Optional filter by file name (substring match) limit: Limit
+   * number of results offset: Offset for pagination order_by: Field to order by
+   *
    * @deprecated
    */
   list(
     pipelineID: string,
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<FileListResponse> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}/files`, { query, ...options });
+  ): PagePromise<PipelineFilesPaginatedPipelineFiles, PipelineFile> {
+    return this._client.getAPIList(
+      path`/api/v1/pipelines/${pipelineID}/files2`,
+      PaginatedPipelineFiles<PipelineFile>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -75,6 +89,8 @@ export class Files extends APIResource {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}/files/status-counts`, { query, ...options });
   }
 }
+
+export type PipelineFilesPaginatedPipelineFiles = PaginatedPipelineFiles<PipelineFile>;
 
 /**
  * Schema for a file that is associated with a pipeline.
@@ -186,8 +202,6 @@ export interface PipelineFile {
 
 export type FileCreateResponse = Array<PipelineFile>;
 
-export type FileListResponse = Array<PipelineFile>;
-
 export interface FileGetStatusCountsResponse {
   /**
    * The counts of files by status
@@ -252,10 +266,14 @@ export interface FileUpdateParams {
   } | null;
 }
 
-export interface FileListParams {
+export interface FileListParams extends PaginatedPipelineFilesParams {
   data_source_id?: string | null;
 
+  file_name_contains?: string | null;
+
   only_manually_uploaded?: boolean;
+
+  order_by?: string | null;
 }
 
 export interface FileDeleteParams {
@@ -276,8 +294,8 @@ export declare namespace Files {
   export {
     type PipelineFile as PipelineFile,
     type FileCreateResponse as FileCreateResponse,
-    type FileListResponse as FileListResponse,
     type FileGetStatusCountsResponse as FileGetStatusCountsResponse,
+    type PipelineFilesPaginatedPipelineFiles as PipelineFilesPaginatedPipelineFiles,
     type FileCreateParams as FileCreateParams,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,

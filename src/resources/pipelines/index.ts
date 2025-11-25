@@ -7,7 +7,6 @@ export {
   type DataSourceUpdateDataSourcesResponse,
   type DataSourceUpdateParams,
   type DataSourceGetStatusParams,
-  type DataSourceSyncParams,
   type DataSourceUpdateDataSourcesParams,
 } from './data-sources';
 export {
@@ -16,26 +15,21 @@ export {
   type CloudDocumentCreate,
   type TextNode,
   type DocumentCreateResponse,
-  type DocumentListResponse,
-  type DocumentForceSyncAllResponse,
   type DocumentGetChunksResponse,
-  type DocumentGetPaginatedResponse,
   type DocumentSyncResponse,
   type DocumentCreateParams,
   type DocumentListParams,
   type DocumentDeleteParams,
-  type DocumentForceSyncAllParams,
   type DocumentGetParams,
   type DocumentGetChunksParams,
-  type DocumentGetPaginatedParams,
   type DocumentGetStatusParams,
   type DocumentSyncParams,
+  type CloudDocumentsPaginatedCloudDocuments,
 } from './documents';
 export {
   Files,
   type PipelineFile,
   type FileCreateResponse,
-  type FileListResponse,
   type FileGetStatusCountsResponse,
   type FileCreateParams,
   type FileUpdateParams,
@@ -43,6 +37,7 @@ export {
   type FileDeleteParams,
   type FileGetStatusParams,
   type FileGetStatusCountsParams,
+  type PipelineFilesPaginatedPipelineFiles,
 } from './files';
 export { Metadata, type MetadataCreateResponse, type MetadataCreateParams } from './metadata';
 export {
@@ -64,14 +59,10 @@ export {
   type RetrievalMode,
   type SparseModelConfig,
   type PipelineListResponse,
-  type PipelineChatResponse,
-  type PipelineGetFiles2Response,
-  type PipelineGetPlaygroundSessionResponse,
   type PipelineCreateParams,
   type PipelineUpdateParams,
   type PipelineListParams,
-  type PipelineChatParams,
-  type PipelineGetFiles2Params,
   type PipelineGetStatusParams,
+  type PipelineUpsertParams,
 } from './pipelines';
 export { Sync } from './sync';

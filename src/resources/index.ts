@@ -9,7 +9,6 @@ export {
   type DataSinkCreateParams,
   type DataSinkUpdateParams,
   type DataSinkListParams,
-  type DataSinkUpsertParams,
 } from './data-sinks';
 export {
   DataSources,
@@ -19,9 +18,7 @@ export {
   type DataSourceCreateParams,
   type DataSourceUpdateParams,
   type DataSourceListParams,
-  type DataSourceUpsertParams,
 } from './data-sources';
-export { Evals, type EvalListSupportedModelsResponse } from './evals';
 export { Extraction, type ExtractionRunParams } from './extraction/extraction';
 export {
   Files,
@@ -35,29 +32,15 @@ export {
   type FileReadContentParams,
   type FileUploadParams,
   type FileUploadFromURLParams,
-} from './files/files';
-export {
-  Organizations,
-  type Organization,
-  type OrganizationCreate,
-  type Role,
-  type UsageAndPlan,
-  type OrganizationListResponse,
-  type OrganizationGetRolesResponse,
-  type OrganizationCreateParams,
-  type OrganizationUpdateParams,
-  type OrganizationGetUsageParams,
-} from './organizations/organizations';
+} from './files';
 export {
   Parsing,
   type FailPageMode,
   type LlamaParseSupportedFileExtensions,
   type ParserLanguages,
-  type ParsingHistoryItem,
   type ParsingJob,
   type ParsingMode,
   type StatusEnum,
-  type ParsingGetParsingHistoryResponse,
   type ParsingGetSupportedFileExtensionsResponse,
   type ParsingCreateScreenshotParams,
   type ParsingUploadFileParams,
@@ -81,31 +64,12 @@ export {
   type RetrievalMode,
   type SparseModelConfig,
   type PipelineListResponse,
-  type PipelineChatResponse,
-  type PipelineGetFiles2Response,
-  type PipelineGetPlaygroundSessionResponse,
   type PipelineCreateParams,
   type PipelineUpdateParams,
   type PipelineListParams,
-  type PipelineChatParams,
-  type PipelineGetFiles2Params,
   type PipelineGetStatusParams,
+  type PipelineUpsertParams,
 } from './pipelines/pipelines';
-export {
-  Projects,
-  type AgentDeploymentList,
-  type Project,
-  type ProjectCreate,
-  type ProjectListResponse,
-  type ProjectCreateParams,
-  type ProjectUpdateParams,
-  type ProjectListParams,
-  type ProjectDeleteParams,
-  type ProjectGetParams,
-  type ProjectGetCurrentParams,
-  type ProjectGetUsageParams,
-  type ProjectUpsertParams,
-} from './projects';
 export {
   Retrievers,
   type CompositeRetrievalMode,
@@ -116,9 +80,9 @@ export {
   type RetrieverPipeline,
   type RetrieverListResponse,
   type RetrieverCreateParams,
-  type RetrieverRetrieveParams,
   type RetrieverUpdateParams,
   type RetrieverListParams,
   type RetrieverGetParams,
+  type RetrieverSearchParams,
   type RetrieverUpsertParams,
-} from './retrievers';
+} from './retrievers/retrievers';

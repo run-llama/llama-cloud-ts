@@ -113,6 +113,29 @@ describe('resource agentData', () => {
   });
 
   // Prism tests are disabled
+  test.skip('deleteByQuery: only required params', async () => {
+    const responsePromise = client.beta.agentData.deleteByQuery({ deployment_name: 'deployment_name' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('deleteByQuery: required and optional params', async () => {
+    const response = await client.beta.agentData.deleteByQuery({
+      deployment_name: 'deployment_name',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      collection: 'collection',
+      filter: { foo: { eq: 0, gt: 0, gte: 0, includes: [0], lt: 0, lte: 0 } },
+    });
+  });
+
+  // Prism tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.beta.agentData.get('item_id');
     const rawResponse = await responsePromise.asResponse();

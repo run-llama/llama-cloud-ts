@@ -66,21 +66,6 @@ export class ParseConfigurations extends APIResource {
   }
 
   /**
-   * Get the latest parse configuration for the current project.
-   *
-   * Args: project: Validated project from dependency user: Current user db: Database
-   * session creator: Optional creator filter
-   *
-   * Returns: The latest parse configuration or None if not found
-   */
-  getLatest(
-    query: ParseConfigurationGetLatestParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ParseConfiguration | null> {
-    return this._client.get('/api/v1/beta/parse-configurations/latest', { query, ...options });
-  }
-
-  /**
    * List parse configurations for the current project.
    *
    * Args: project: Validated project from dependency user: Current user db: Database
@@ -111,46 +96,6 @@ export class ParseConfigurations extends APIResource {
   ): APIPromise<ParseConfiguration> {
     const { organization_id, project_id, ...body } = params;
     return this._client.post('/api/v1/beta/parse-configurations', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
-
-  /**
-   * Query parse configurations with filtering and pagination.
-   *
-   * Args: query_request: Query request with filters and pagination project:
-   * Validated project from dependency user: Current user db: Database session
-   *
-   * Returns: Paginated response with parse configurations
-   */
-  query(
-    params: ParseConfigurationQueryParams,
-    options?: RequestOptions,
-  ): APIPromise<ParseConfigurationQueryResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/parse-configurations/query', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
-
-  /**
-   * Create or update a parse configuration by name.
-   *
-   * Args: config_create: Parse configuration creation data project: Validated
-   * project from dependency user: Current user db: Database session
-   *
-   * Returns: The created or updated parse configuration
-   */
-  updateParseConfigurations(
-    params: ParseConfigurationUpdateParseConfigurationsParams,
-    options?: RequestOptions,
-  ): APIPromise<ParseConfiguration> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.put('/api/v1/beta/parse-configurations', {
       query: { organization_id, project_id },
       body,
       ...options,
@@ -296,14 +241,6 @@ export interface ParseConfigurationGetParams {
   project_id?: string | null;
 }
 
-export interface ParseConfigurationGetLatestParams {
-  creator?: string | null;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export interface ParseConfigurationGetParseConfigurationsParams {
   creator?: string | null;
 
@@ -362,121 +299,6 @@ export interface ParseConfigurationParseConfigurationsParams {
   source_type?: string | null;
 }
 
-export interface ParseConfigurationQueryParams {
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Filter parameters for parse configuration queries.
-   */
-  filter?: ParseConfigurationQueryParams.Filter | null;
-
-  /**
-   * Body param: A comma-separated list of fields to order by, sorted in ascending
-   * order. Use 'field_name desc' to specify descending order.
-   */
-  order_by?: string | null;
-
-  /**
-   * Body param: The maximum number of items to return. The service may return fewer
-   * than this value. If unspecified, a default page size will be used. The maximum
-   * value is typically 1000; values above this will be coerced to the maximum.
-   */
-  page_size?: number | null;
-
-  /**
-   * Body param: A page token, received from a previous list call. Provide this to
-   * retrieve the subsequent page.
-   */
-  page_token?: string | null;
-}
-
-export namespace ParseConfigurationQueryParams {
-  /**
-   * Filter parameters for parse configuration queries.
-   */
-  export interface Filter {
-    /**
-     * Filter by creator
-     */
-    creator?: string | null;
-
-    /**
-     * Filter by name
-     */
-    name?: string | null;
-
-    /**
-     * Filter by specific parse configuration IDs
-     */
-    parse_config_ids?: Array<string> | null;
-
-    /**
-     * Filter by source ID
-     */
-    source_id?: string | null;
-
-    /**
-     * Filter by source type
-     */
-    source_type?: string | null;
-
-    /**
-     * Filter by version
-     */
-    version?: string | null;
-  }
-}
-
-export interface ParseConfigurationUpdateParseConfigurationsParams {
-  /**
-   * Body param: Name of the parse configuration
-   */
-  name: string;
-
-  /**
-   * Body param: LlamaParseParameters configuration
-   */
-  parameters: PipelinesAPI.LlamaParseParameters;
-
-  /**
-   * Body param: Version of the configuration
-   */
-  version: string;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Creator of the configuration
-   */
-  creator?: string | null;
-
-  /**
-   * Body param: ID of the source
-   */
-  source_id?: string | null;
-
-  /**
-   * Body param: Type of the source (e.g., 'project')
-   */
-  source_type?: string | null;
-}
-
 export declare namespace ParseConfigurations {
   export {
     type ParseConfiguration as ParseConfiguration,
@@ -485,10 +307,7 @@ export declare namespace ParseConfigurations {
     type ParseConfigurationUpdateParams as ParseConfigurationUpdateParams,
     type ParseConfigurationDeleteParams as ParseConfigurationDeleteParams,
     type ParseConfigurationGetParams as ParseConfigurationGetParams,
-    type ParseConfigurationGetLatestParams as ParseConfigurationGetLatestParams,
     type ParseConfigurationGetParseConfigurationsParams as ParseConfigurationGetParseConfigurationsParams,
     type ParseConfigurationParseConfigurationsParams as ParseConfigurationParseConfigurationsParams,
-    type ParseConfigurationQueryParams as ParseConfigurationQueryParams,
-    type ParseConfigurationUpdateParseConfigurationsParams as ParseConfigurationUpdateParseConfigurationsParams,
   };
 }

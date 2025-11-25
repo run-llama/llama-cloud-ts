@@ -2,12 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as JobAPI from './job/job';
-import {
-  Job,
-  JobGeneratePresignedURLParams,
-  JobGetDetailsResponse,
-  JobGetParametersResponse,
-} from './job/job';
+import { Job, JobGeneratePresignedURLParams, JobGetDetailsResponse } from './job/job';
 import { APIPromise } from '../../core/api-promise';
 import { type Uploadable } from '../../core/uploads';
 import { RequestOptions } from '../../internal/request-options';
@@ -28,18 +23,6 @@ export class Parsing extends APIResource {
       '/api/v1/parsing/screenshot',
       multipartFormRequestOptions({ query: { organization_id, project_id }, body, ...options }, this._client),
     );
-  }
-
-  /**
-   * Get parsing history for user
-   *
-   * This endpoint is deprecated. Use
-   * /api/v1/jobs/?job_name=parsing&project_id=YOUR_PROJECT_ID instead.
-   *
-   * @deprecated
-   */
-  getParsingHistory(options?: RequestOptions): APIPromise<ParsingGetParsingHistoryResponse> {
-    return this._client.get('/api/v1/parsing/history', options);
   }
 
   /**
@@ -239,26 +222,6 @@ export type ParserLanguages =
   | 'te'
   | 'kn';
 
-export interface ParsingHistoryItem {
-  day: string;
-
-  file_name: string;
-
-  job_id: string;
-
-  original_file_name: string;
-
-  user_id: string;
-
-  expired?: boolean;
-
-  images?: number | null;
-
-  pages?: number | null;
-
-  time?: number | null;
-}
-
 export interface ParsingJob {
   id: string;
 
@@ -289,8 +252,6 @@ export type ParsingMode =
  * Enum for representing the status of a job
  */
 export type StatusEnum = 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED';
-
-export type ParsingGetParsingHistoryResponse = Array<ParsingHistoryItem>;
 
 export type ParsingGetSupportedFileExtensionsResponse = Array<LlamaParseSupportedFileExtensions>;
 
@@ -911,6 +872,11 @@ export interface ParsingUploadFileParams {
   /**
    * Body param:
    */
+  tier?: string;
+
+  /**
+   * Body param:
+   */
   use_vendor_multimodal_model?: boolean;
 
   /**
@@ -931,6 +897,11 @@ export interface ParsingUploadFileParams {
   /**
    * Body param:
    */
+  version?: string;
+
+  /**
+   * Body param:
+   */
   webhook_configurations?: string;
 
   /**
@@ -946,11 +917,9 @@ export declare namespace Parsing {
     type FailPageMode as FailPageMode,
     type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
     type ParserLanguages as ParserLanguages,
-    type ParsingHistoryItem as ParsingHistoryItem,
     type ParsingJob as ParsingJob,
     type ParsingMode as ParsingMode,
     type StatusEnum as StatusEnum,
-    type ParsingGetParsingHistoryResponse as ParsingGetParsingHistoryResponse,
     type ParsingGetSupportedFileExtensionsResponse as ParsingGetSupportedFileExtensionsResponse,
     type ParsingCreateScreenshotParams as ParsingCreateScreenshotParams,
     type ParsingUploadFileParams as ParsingUploadFileParams,
@@ -959,7 +928,6 @@ export declare namespace Parsing {
   export {
     Job as Job,
     type JobGetDetailsResponse as JobGetDetailsResponse,
-    type JobGetParametersResponse as JobGetParametersResponse,
     type JobGeneratePresignedURLParams as JobGeneratePresignedURLParams,
   };
 }

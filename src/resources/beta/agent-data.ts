@@ -61,6 +61,21 @@ export class AgentData extends APIResource {
   }
 
   /**
+   * Bulk delete agent data by query (deployment_name, collection, optional filters).
+   */
+  deleteByQuery(
+    params: AgentDataDeleteByQueryParams,
+    options?: RequestOptions,
+  ): APIPromise<AgentDataDeleteByQueryResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/beta/agent-data/:delete', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
+
+  /**
    * Get agent data by ID.
    */
   get(
@@ -136,6 +151,13 @@ export namespace AgentDataAggregateResponse {
 
     first_item?: { [key: string]: unknown } | null;
   }
+}
+
+/**
+ * API response for bulk delete operation
+ */
+export interface AgentDataDeleteByQueryResponse {
+  deleted_count: number;
 }
 
 export interface AgentDataSearchResponse {
@@ -297,6 +319,52 @@ export namespace AgentDataAggregateParams {
   }
 }
 
+export interface AgentDataDeleteByQueryParams {
+  /**
+   * Body param: The agent deployment's name to delete data for
+   */
+  deployment_name: string;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: The logical agent data collection to delete from
+   */
+  collection?: string;
+
+  /**
+   * Body param: Optional filters to select which items to delete
+   */
+  filter?: { [key: string]: AgentDataDeleteByQueryParams.Filter } | null;
+}
+
+export namespace AgentDataDeleteByQueryParams {
+  /**
+   * API request model for a filter comparison operation.
+   */
+  export interface Filter {
+    eq?: number | string | (string & {}) | null;
+
+    gt?: number | string | (string & {}) | null;
+
+    gte?: number | string | (string & {}) | null;
+
+    includes?: Array<number | string | (string & {}) | null>;
+
+    lt?: number | string | (string & {}) | null;
+
+    lte?: number | string | (string & {}) | null;
+  }
+}
+
 export interface AgentDataGetParams {
   organization_id?: string | null;
 
@@ -385,11 +453,13 @@ export declare namespace AgentData {
     type AgentData as AgentData,
     type AgentDataDeleteResponse as AgentDataDeleteResponse,
     type AgentDataAggregateResponse as AgentDataAggregateResponse,
+    type AgentDataDeleteByQueryResponse as AgentDataDeleteByQueryResponse,
     type AgentDataSearchResponse as AgentDataSearchResponse,
     type AgentDataUpdateParams as AgentDataUpdateParams,
     type AgentDataDeleteParams as AgentDataDeleteParams,
     type AgentDataAgentDataParams as AgentDataAgentDataParams,
     type AgentDataAggregateParams as AgentDataAggregateParams,
+    type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
     type AgentDataGetParams as AgentDataGetParams,
     type AgentDataSearchParams as AgentDataSearchParams,
   };

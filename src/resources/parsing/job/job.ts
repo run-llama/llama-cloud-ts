@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
-import * as FilesAPI from '../../files/files';
+import * as FilesAPI from '../../files';
 import * as ParsingAPI from '../parsing';
-import * as ResultAPI from './result/result';
+import * as ResultAPI from './result';
 import {
   ParsingJobJsonResult,
   ParsingJobMarkdownResult,
@@ -17,7 +17,7 @@ import {
   ResultGetStructuredParams,
   ResultGetTextParams,
   ResultGetXlsxResponse,
-} from './result/result';
+} from './result';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -50,13 +50,6 @@ export class Job extends APIResource {
    */
   getDetails(jobID: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/api/v1/parsing/job/${jobID}/details`, options);
-  }
-
-  /**
-   * Get a job by id
-   */
-  getParameters(jobID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.get(path`/api/v1/parsing/job/${jobID}/parameters`, options);
   }
 
   /**
@@ -129,8 +122,6 @@ export class Job extends APIResource {
 
 export type JobGetDetailsResponse = unknown;
 
-export type JobGetParametersResponse = unknown;
-
 export interface JobGeneratePresignedURLParams {
   job_id: string;
 }
@@ -140,7 +131,6 @@ Job.Result = Result;
 export declare namespace Job {
   export {
     type JobGetDetailsResponse as JobGetDetailsResponse,
-    type JobGetParametersResponse as JobGetParametersResponse,
     type JobGeneratePresignedURLParams as JobGeneratePresignedURLParams,
   };
 

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import LlamaCloud from 'llama-cloud';
+import LlamaCloud, { toFile } from 'llama-cloud';
 
 const client = new LlamaCloud({
   apiKey: 'My API Key',
@@ -133,6 +133,32 @@ describe('resource files', () => {
       directory_id: 'directory_id',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('upload: only required params', async () => {
+    const responsePromise = client.beta.directories.files.upload('directory_id', {
+      upload_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('upload: required and optional params', async () => {
+    const response = await client.beta.directories.files.upload('directory_id', {
+      upload_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      display_name: 'display_name',
+      external_file_id: 'external_file_id',
+      unique_id: 'unique_id',
     });
   });
 });

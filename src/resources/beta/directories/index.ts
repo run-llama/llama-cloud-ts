@@ -19,10 +19,12 @@ export {
   type FileListResponse,
   type FileAddResponse,
   type FileGetResponse,
+  type FileUploadResponse,
   type FileUpdateParams,
   type FileListParams,
   type FileDeleteParams,
   type FileAddParams,
   type FileGetParams,
+  type FileUploadParams,
   type FileListResponsesPaginatedClassifyJobs,
 } from './files';

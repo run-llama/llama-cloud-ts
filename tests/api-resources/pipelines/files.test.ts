@@ -69,7 +69,14 @@ describe('resource files', () => {
     await expect(
       client.pipelines.files.list(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        { data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', only_manually_uploaded: true },
+        {
+          data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          file_name_contains: 'file_name_contains',
+          limit: 0,
+          offset: 0,
+          only_manually_uploaded: true,
+          order_by: 'order_by',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);

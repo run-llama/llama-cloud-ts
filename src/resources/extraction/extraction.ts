@@ -1,6 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as ExtractionAgentsAPI from './extraction-agents';
+import {
+  ExtractAgent,
+  ExtractionAgentDeleteResponse,
+  ExtractionAgentExtractionAgentsParams,
+  ExtractionAgentGetExtractionAgentsParams,
+  ExtractionAgentGetExtractionAgentsResponse,
+  ExtractionAgentUpdateParams,
+  ExtractionAgents,
+} from './extraction-agents';
 import * as JobsAPI from './jobs';
 import {
   ExtractJob,
@@ -28,18 +38,6 @@ import {
   RunListParams,
   Runs,
 } from './runs';
-import * as ExtractionAgentsAPI from './extraction-agents/extraction-agents';
-import {
-  ExtractAgent,
-  ExtractionAgentDeleteResponse,
-  ExtractionAgentExtractionAgentsParams,
-  ExtractionAgentGetByNameParams,
-  ExtractionAgentGetDefaultParams,
-  ExtractionAgentGetExtractionAgentsParams,
-  ExtractionAgentGetExtractionAgentsResponse,
-  ExtractionAgentUpdateParams,
-  ExtractionAgents,
-} from './extraction-agents/extraction-agents';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
@@ -167,8 +165,6 @@ export declare namespace Extraction {
     type ExtractionAgentGetExtractionAgentsResponse as ExtractionAgentGetExtractionAgentsResponse,
     type ExtractionAgentUpdateParams as ExtractionAgentUpdateParams,
     type ExtractionAgentExtractionAgentsParams as ExtractionAgentExtractionAgentsParams,
-    type ExtractionAgentGetByNameParams as ExtractionAgentGetByNameParams,
-    type ExtractionAgentGetDefaultParams as ExtractionAgentGetDefaultParams,
     type ExtractionAgentGetExtractionAgentsParams as ExtractionAgentGetExtractionAgentsParams,
   };
 }
