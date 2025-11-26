@@ -72,7 +72,7 @@ import {
 } from './resources/files';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
-import { Extraction, ExtractionExtractParams } from './resources/extraction/extraction';
+import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
 import {
   FailPageMode,
   LlamaParseSupportedFileExtensions,
@@ -1017,7 +1017,7 @@ export declare namespace LlamaCloud {
 
   export { Classifier as Classifier };
 
-  export { Extraction as Extraction, type ExtractionExtractParams as ExtractionExtractParams };
+  export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
 
   export { Beta as Beta };
 }
