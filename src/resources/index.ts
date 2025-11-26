@@ -19,7 +19,7 @@ export {
   type DataSourceUpdateParams,
   type DataSourceListParams,
 } from './data-sources';
-export { Extraction, type ExtractionExtractParams } from './extraction/extraction';
+export { Extraction, type ExtractionRunParams } from './extraction/extraction';
 export {
   Files,
   type File,

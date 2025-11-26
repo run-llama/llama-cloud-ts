@@ -251,7 +251,7 @@ Methods:
 
 Methods:
 
-- <code title="post /api/v1/extraction/run">client.extraction.<a href="./src/resources/extraction/extraction.ts">extract</a>({ ...params }) -> ExtractJob</code>
+- <code title="post /api/v1/extraction/run">client.extraction.<a href="./src/resources/extraction/extraction.ts">run</a>({ ...params }) -> ExtractJob</code>
 
 ## Jobs
 
