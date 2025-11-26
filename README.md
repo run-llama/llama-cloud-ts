@@ -26,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 import LlamaCloud from 'llama-cloud';
 
 const client = new LlamaCloud({
-  apiKey: process.env['LLAMACLOUD_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted
 });
 
 const parsingJob = await client.parsing.uploadFile({ file: fs.createReadStream('path/to/file') });
@@ -43,7 +43,7 @@ This library includes TypeScript definitions for all request params and response
 import LlamaCloud from 'llama-cloud';
 
 const client = new LlamaCloud({
-  apiKey: process.env['LLAMACLOUD_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted
 });
 
 const params: LlamaCloud.PipelineListParams = { project_id: 'my-project-id' };
