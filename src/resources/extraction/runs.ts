@@ -216,11 +216,6 @@ export interface ExtractRun {
   extraction_agent_id: string;
 
   /**
-   * The file that the extract was extracted from
-   */
-  file: FilesAPI.File;
-
-  /**
    * Whether this extraction run was triggered from the UI
    */
   from_ui: boolean;
@@ -259,6 +254,16 @@ export interface ExtractRun {
   extraction_metadata?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
   } | null;
+
+  /**
+   * @deprecated Schema for a file.
+   */
+  file?: FilesAPI.File | null;
+
+  /**
+   * The id of the file that the extract was extracted from
+   */
+  file_id?: string | null;
 
   /**
    * The id of the job that the extraction run belongs to
