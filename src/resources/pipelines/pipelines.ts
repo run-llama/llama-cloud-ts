@@ -342,6 +342,8 @@ export interface LlamaParseParameters {
 
   layout_aware?: boolean | null;
 
+  line_level_bounding_box?: boolean | null;
+
   markdown_table_multiline_header_separator?: string | null;
 
   max_pages?: number | null;

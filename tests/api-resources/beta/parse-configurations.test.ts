@@ -181,6 +181,7 @@ describe('resource parseConfigurations', () => {
         keep_page_separator_when_merging_tables: true,
         languages: ['af'],
         layout_aware: true,
+        line_level_bounding_box: true,
         markdown_table_multiline_header_separator: 'markdown_table_multiline_header_separator',
         max_pages: 0,
         max_pages_enforced: 0,

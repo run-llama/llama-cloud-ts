@@ -57,13 +57,6 @@ export class Runs extends APIResource {
   ): APIPromise<ExtractRun> {
     return this._client.get(path`/api/v1/extraction/runs/by-job/${jobID}`, { query, ...options });
   }
-
-  /**
-   * Get Latest Run From Ui
-   */
-  getLatestFromUi(query: RunGetLatestFromUiParams, options?: RequestOptions): APIPromise<ExtractRun | null> {
-    return this._client.get('/api/v1/extraction/runs/latest-from-ui', { query, ...options });
-  }
 }
 
 export type ExtractRunsPaginatedExtractRuns = PaginatedExtractRuns<ExtractRun>;
@@ -76,6 +69,12 @@ export interface ExtractConfig {
    * The mode to use for chunking the document.
    */
   chunk_mode?: 'PAGE' | 'SECTION';
+
+  /**
+   * Whether to fetch citation bounding boxes for the extraction. Only available in
+   * PREMIUM mode.
+   */
+  citation_bbox?: boolean;
 
   /**
    * Whether to cite sources for the extraction.
@@ -296,10 +295,6 @@ export interface RunGetByJobParams {
   project_id?: string | null;
 }
 
-export interface RunGetLatestFromUiParams {
-  extraction_agent_id: string;
-}
-
 export declare namespace Runs {
   export {
     type ExtractConfig as ExtractConfig,
@@ -310,6 +305,5 @@ export declare namespace Runs {
     type RunDeleteParams as RunDeleteParams,
     type RunGetParams as RunGetParams,
     type RunGetByJobParams as RunGetByJobParams,
-    type RunGetLatestFromUiParams as RunGetLatestFromUiParams,
   };
 }

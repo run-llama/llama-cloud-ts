@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Extraction, type ExtractionRunParams } from './extraction';
+export { Extraction, type ExtractionExtractParams } from './extraction';
 export {
   ExtractionAgents,
   type ExtractAgent,
@@ -32,6 +32,5 @@ export {
   type RunDeleteParams,
   type RunGetParams,
   type RunGetByJobParams,
-  type RunGetLatestFromUiParams,
   type ExtractRunsPaginatedExtractRuns,
 } from './runs';

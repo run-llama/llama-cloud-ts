@@ -289,6 +289,13 @@ export namespace PipelineDataSource {
     drive_name?: string | null;
 
     /**
+     * List of regex patterns for file paths to exclude. Files whose paths (including
+     * filename) match any pattern will be excluded. Example: ['/temp/', '/backup/',
+     * '\.git/', '\.tmp$', '^~']
+     */
+    exclude_path_patterns?: Array<string> | null;
+
+    /**
      * The ID of the Sharepoint folder to read from.
      */
     folder_id?: string | null;
@@ -302,6 +309,13 @@ export namespace PipelineDataSource {
      * Whether to get permissions for the sharepoint site.
      */
     get_permissions?: boolean | null;
+
+    /**
+     * List of regex patterns for file paths to include. Full paths (including
+     * filename) must match at least one pattern to be included. Example: ['/reports/',
+     * '/docs/.*\.pdf$', '^Report.*\.pdf$']
+     */
+    include_path_patterns?: Array<string> | null;
 
     /**
      * The list of required file extensions.
