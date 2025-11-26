@@ -33,7 +33,6 @@ import {
   RunDeleteParams,
   RunDeleteResponse,
   RunGetByJobParams,
-  RunGetLatestFromUiParams,
   RunGetParams,
   RunListParams,
   Runs,
@@ -53,7 +52,7 @@ export class Extraction extends APIResource {
    * default project. Requires data_schema, config, and either file_id, text, or
    * base64 encoded file data.
    */
-  run(params: ExtractionRunParams, options?: RequestOptions): APIPromise<JobsAPI.ExtractJob> {
+  extract(params: ExtractionExtractParams, options?: RequestOptions): APIPromise<JobsAPI.ExtractJob> {
     const { organization_id, project_id, ...body } = params;
     return this._client.post('/api/v1/extraction/run', {
       query: { organization_id, project_id },
@@ -63,7 +62,7 @@ export class Extraction extends APIResource {
   }
 }
 
-export interface ExtractionRunParams {
+export interface ExtractionExtractParams {
   /**
    * Body param: The configuration parameters for the extraction
    */
@@ -89,7 +88,7 @@ export interface ExtractionRunParams {
   /**
    * Body param: Schema for file data with base64 content and MIME type.
    */
-  file?: ExtractionRunParams.File | null;
+  file?: ExtractionExtractParams.File | null;
 
   /**
    * Body param: The ID of the file to extract from
@@ -107,7 +106,7 @@ export interface ExtractionRunParams {
   webhook_configurations?: Array<JobsAPI.WebhookConfiguration> | null;
 }
 
-export namespace ExtractionRunParams {
+export namespace ExtractionExtractParams {
   /**
    * Schema for file data with base64 content and MIME type.
    */
@@ -129,7 +128,7 @@ Extraction.Runs = Runs;
 Extraction.ExtractionAgents = ExtractionAgents;
 
 export declare namespace Extraction {
-  export { type ExtractionRunParams as ExtractionRunParams };
+  export { type ExtractionExtractParams as ExtractionExtractParams };
 
   export {
     Jobs as Jobs,
@@ -155,7 +154,6 @@ export declare namespace Extraction {
     type RunDeleteParams as RunDeleteParams,
     type RunGetParams as RunGetParams,
     type RunGetByJobParams as RunGetByJobParams,
-    type RunGetLatestFromUiParams as RunGetLatestFromUiParams,
   };
 
   export {

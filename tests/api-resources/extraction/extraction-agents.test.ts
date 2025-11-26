@@ -28,6 +28,7 @@ describe('resource extractionAgents', () => {
     const response = await client.extraction.extractionAgents.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       config: {
         chunk_mode: 'PAGE',
+        citation_bbox: true,
         cite_sources: true,
         confidence_scores: true,
         extract_model: 'openai-gpt-4-1',
@@ -80,6 +81,7 @@ describe('resource extractionAgents', () => {
     const response = await client.extraction.extractionAgents.extractionAgents({
       config: {
         chunk_mode: 'PAGE',
+        citation_bbox: true,
         cite_sources: true,
         confidence_scores: true,
         extract_model: 'openai-gpt-4-1',

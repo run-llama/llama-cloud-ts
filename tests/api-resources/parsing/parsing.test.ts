@@ -136,6 +136,7 @@ describe('resource parsing', () => {
           keep_page_separator_when_merging_tables: true,
           language: ['af'],
           layout_aware: true,
+          line_level_bounding_box: true,
           markdown_table_multiline_header_separator: 'markdown_table_multiline_header_separator',
           max_pages: 0,
           merge_tables_across_pages_in_markdown: true,

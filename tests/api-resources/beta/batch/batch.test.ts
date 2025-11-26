@@ -84,6 +84,7 @@ describe('resource batch', () => {
           lang: 'lang',
           languages: ['af'],
           layout_aware: true,
+          line_level_bounding_box: true,
           markdown_table_multiline_header_separator: 'markdown_table_multiline_header_separator',
           max_pages: 0,
           max_pages_enforced: 0,

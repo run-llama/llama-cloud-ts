@@ -9,8 +9,8 @@ const client = new LlamaCloud({
 
 describe('resource extraction', () => {
   // Prism tests are disabled
-  test.skip('run: only required params', async () => {
-    const responsePromise = client.extraction.run({ config: {}, data_schema: { foo: { foo: 'bar' } } });
+  test.skip('extract: only required params', async () => {
+    const responsePromise = client.extraction.extract({ config: {}, data_schema: { foo: { foo: 'bar' } } });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,10 +21,11 @@ describe('resource extraction', () => {
   });
 
   // Prism tests are disabled
-  test.skip('run: required and optional params', async () => {
-    const response = await client.extraction.run({
+  test.skip('extract: required and optional params', async () => {
+    const response = await client.extraction.extract({
       config: {
         chunk_mode: 'PAGE',
+        citation_bbox: true,
         cite_sources: true,
         confidence_scores: true,
         extract_model: 'openai-gpt-4-1',
