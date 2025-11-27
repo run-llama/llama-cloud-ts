@@ -111,9 +111,9 @@ export interface SheetsJob {
   created_at: string;
 
   /**
-   * The file to process
+   * The ID of the input file
    */
-  file: FilesAPI.File;
+  file_id: string | null;
 
   /**
    * The ID of the project
@@ -139,6 +139,11 @@ export interface SheetsJob {
    * Any errors encountered
    */
   errors?: Array<string>;
+
+  /**
+   * @deprecated Schema for a file.
+   */
+  file?: FilesAPI.File | null;
 
   /**
    * All extracted regions (populated when job is complete)
