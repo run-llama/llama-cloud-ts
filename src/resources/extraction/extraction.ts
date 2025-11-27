@@ -4,10 +4,10 @@ import { APIResource } from '../../core/resource';
 import * as ExtractionAgentsAPI from './extraction-agents';
 import {
   ExtractAgent,
+  ExtractionAgentCreateParams,
   ExtractionAgentDeleteResponse,
-  ExtractionAgentExtractionAgentsParams,
-  ExtractionAgentGetExtractionAgentsParams,
-  ExtractionAgentGetExtractionAgentsResponse,
+  ExtractionAgentListParams,
+  ExtractionAgentListResponse,
   ExtractionAgentUpdateParams,
   ExtractionAgents,
 } from './extraction-agents';
@@ -159,10 +159,10 @@ export declare namespace Extraction {
   export {
     ExtractionAgents as ExtractionAgents,
     type ExtractAgent as ExtractAgent,
+    type ExtractionAgentListResponse as ExtractionAgentListResponse,
     type ExtractionAgentDeleteResponse as ExtractionAgentDeleteResponse,
-    type ExtractionAgentGetExtractionAgentsResponse as ExtractionAgentGetExtractionAgentsResponse,
+    type ExtractionAgentCreateParams as ExtractionAgentCreateParams,
     type ExtractionAgentUpdateParams as ExtractionAgentUpdateParams,
-    type ExtractionAgentExtractionAgentsParams as ExtractionAgentExtractionAgentsParams,
-    type ExtractionAgentGetExtractionAgentsParams as ExtractionAgentGetExtractionAgentsParams,
+    type ExtractionAgentListParams as ExtractionAgentListParams,
   };
 }
