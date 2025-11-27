@@ -292,16 +292,16 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractAgent</a></code>
+- <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractionAgentListResponse</a></code>
 - <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractionAgentDeleteResponse</a></code>
-- <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractionAgentGetExtractionAgentsResponse</a></code>
 
 Methods:
 
+- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">create</a>({ ...params }) -> ExtractAgent</code>
 - <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">update</a>(extractionAgentID, { ...params }) -> ExtractAgent</code>
+- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">list</a>({ ...params }) -> ExtractionAgentListResponse</code>
 - <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">delete</a>(extractionAgentID) -> unknown</code>
-- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">extractionAgents</a>({ ...params }) -> ExtractAgent</code>
 - <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">get</a>(extractionAgentID) -> ExtractAgent</code>
-- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">getExtractionAgents</a>({ ...params }) -> ExtractionAgentGetExtractionAgentsResponse</code>
 
 # Beta
 

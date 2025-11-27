@@ -8,6 +8,18 @@ import { path } from '../../internal/utils/path';
 
 export class ExtractionAgents extends APIResource {
   /**
+   * Create Extraction Agent
+   */
+  create(params: ExtractionAgentCreateParams, options?: RequestOptions): APIPromise<ExtractAgent> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/extraction/extraction-agents', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
+
+  /**
    * Update Extraction Agent
    */
   update(
@@ -22,6 +34,16 @@ export class ExtractionAgents extends APIResource {
   }
 
   /**
+   * List Extraction Agents
+   */
+  list(
+    query: ExtractionAgentListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExtractionAgentListResponse> {
+    return this._client.get('/api/v1/extraction/extraction-agents', { query, ...options });
+  }
+
+  /**
    * Delete Extraction Agent
    */
   delete(extractionAgentID: string, options?: RequestOptions): APIPromise<unknown> {
@@ -29,35 +51,10 @@ export class ExtractionAgents extends APIResource {
   }
 
   /**
-   * Create Extraction Agent
-   */
-  extractionAgents(
-    params: ExtractionAgentExtractionAgentsParams,
-    options?: RequestOptions,
-  ): APIPromise<ExtractAgent> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/extraction/extraction-agents', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
-
-  /**
    * Get Extraction Agent
    */
   get(extractionAgentID: string, options?: RequestOptions): APIPromise<ExtractAgent> {
     return this._client.get(path`/api/v1/extraction/extraction-agents/${extractionAgentID}`, options);
-  }
-
-  /**
-   * List Extraction Agents
-   */
-  getExtractionAgents(
-    query: ExtractionAgentGetExtractionAgentsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ExtractionAgentGetExtractionAgentsResponse> {
-    return this._client.get('/api/v1/extraction/extraction-agents', { query, ...options });
   }
 }
 
@@ -109,25 +106,11 @@ export interface ExtractAgent {
   updated_at?: string | null;
 }
 
+export type ExtractionAgentListResponse = Array<ExtractAgent>;
+
 export type ExtractionAgentDeleteResponse = unknown;
 
-export type ExtractionAgentGetExtractionAgentsResponse = Array<ExtractAgent>;
-
-export interface ExtractionAgentUpdateParams {
-  /**
-   * The configuration parameters for the extraction agent.
-   */
-  config: RunsAPI.ExtractConfig;
-
-  /**
-   * The schema of the data
-   */
-  data_schema:
-    | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
-    | string;
-}
-
-export interface ExtractionAgentExtractionAgentsParams {
+export interface ExtractionAgentCreateParams {
   /**
    * Body param: The configuration parameters for the extraction agent.
    */
@@ -156,7 +139,21 @@ export interface ExtractionAgentExtractionAgentsParams {
   project_id?: string | null;
 }
 
-export interface ExtractionAgentGetExtractionAgentsParams {
+export interface ExtractionAgentUpdateParams {
+  /**
+   * The configuration parameters for the extraction agent.
+   */
+  config: RunsAPI.ExtractConfig;
+
+  /**
+   * The schema of the data
+   */
+  data_schema:
+    | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
+    | string;
+}
+
+export interface ExtractionAgentListParams {
   /**
    * Whether to include default agents in the results
    */
@@ -170,10 +167,10 @@ export interface ExtractionAgentGetExtractionAgentsParams {
 export declare namespace ExtractionAgents {
   export {
     type ExtractAgent as ExtractAgent,
+    type ExtractionAgentListResponse as ExtractionAgentListResponse,
     type ExtractionAgentDeleteResponse as ExtractionAgentDeleteResponse,
-    type ExtractionAgentGetExtractionAgentsResponse as ExtractionAgentGetExtractionAgentsResponse,
+    type ExtractionAgentCreateParams as ExtractionAgentCreateParams,
     type ExtractionAgentUpdateParams as ExtractionAgentUpdateParams,
-    type ExtractionAgentExtractionAgentsParams as ExtractionAgentExtractionAgentsParams,
-    type ExtractionAgentGetExtractionAgentsParams as ExtractionAgentGetExtractionAgentsParams,
+    type ExtractionAgentListParams as ExtractionAgentListParams,
   };
 }
