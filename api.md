@@ -49,12 +49,16 @@ Types:
 - <code><a href="./src/resources/files.ts">FileCreate</a></code>
 - <code><a href="./src/resources/files.ts">PresignedURL</a></code>
 - <code><a href="./src/resources/files.ts">FileGeneratePresignedURLResponse</a></code>
+- <code><a href="./src/resources/files.ts">FileGetPageFigureResponse</a></code>
+- <code><a href="./src/resources/files.ts">FileGetPageScreenshotResponse</a></code>
 
 Methods:
 
 - <code title="delete /api/v1/files/{id}">client.files.<a href="./src/resources/files.ts">delete</a>(id, { ...params }) -> void</code>
 - <code title="put /api/v1/files">client.files.<a href="./src/resources/files.ts">generatePresignedURL</a>({ ...params }) -> FileGeneratePresignedURLResponse</code>
 - <code title="get /api/v1/files/{id}">client.files.<a href="./src/resources/files.ts">get</a>(id, { ...params }) -> File</code>
+- <code title="get /api/v1/files/{id}/page-figures/{page_index}/{figure_name}">client.files.<a href="./src/resources/files.ts">getPageFigure</a>(figureName, { ...params }) -> unknown</code>
+- <code title="get /api/v1/files/{id}/page_screenshots/{page_index}">client.files.<a href="./src/resources/files.ts">getPageScreenshot</a>(pageIndex, { ...params }) -> unknown</code>
 - <code title="get /api/v1/files/{id}/content">client.files.<a href="./src/resources/files.ts">readContent</a>(id, { ...params }) -> PresignedURL</code>
 - <code title="post /api/v1/files">client.files.<a href="./src/resources/files.ts">upload</a>({ ...params }) -> File</code>
 - <code title="put /api/v1/files/upload_from_url">client.files.<a href="./src/resources/files.ts">uploadFromURL</a>({ ...params }) -> File</code>
