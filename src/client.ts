@@ -70,6 +70,13 @@ import {
   Files,
   PresignedURL,
 } from './resources/files';
+import {
+  Project,
+  ProjectGetParams,
+  ProjectListParams,
+  ProjectListResponse,
+  Projects,
+} from './resources/projects';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
 import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
@@ -842,6 +849,7 @@ export class LlamaCloud {
 
   static toFile = Uploads.toFile;
 
+  projects: API.Projects = new API.Projects(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
   files: API.Files = new API.Files(this);
@@ -853,6 +861,7 @@ export class LlamaCloud {
   beta: API.Beta = new API.Beta(this);
 }
 
+LlamaCloud.Projects = Projects;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
 LlamaCloud.Files = Files;
@@ -924,6 +933,14 @@ export declare namespace LlamaCloud {
   export {
     type PaginatedAgentDataAggregateParams as PaginatedAgentDataAggregateParams,
     type PaginatedAgentDataAggregateResponse as PaginatedAgentDataAggregateResponse,
+  };
+
+  export {
+    Projects as Projects,
+    type Project as Project,
+    type ProjectListResponse as ProjectListResponse,
+    type ProjectListParams as ProjectListParams,
+    type ProjectGetParams as ProjectGetParams,
   };
 
   export {
