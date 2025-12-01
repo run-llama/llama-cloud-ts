@@ -165,7 +165,7 @@ async function fetchAllExtractRuns(params) {
   const allExtractRuns = [];
   // Automatically fetches more pages as needed.
   for await (const extractRun of client.extraction.runs.list({
-    extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    extraction_agent_id: '30988414-9163-4a0b-a7e0-35dd760109d7',
     limit: 20,
   })) {
     allExtractRuns.push(extractRun);
@@ -178,7 +178,7 @@ Alternatively, you can request a single page at a time:
 
 ```ts
 let page = await client.extraction.runs.list({
-  extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+  extraction_agent_id: '30988414-9163-4a0b-a7e0-35dd760109d7',
   limit: 20,
 });
 for (const extractRun of page.items) {
