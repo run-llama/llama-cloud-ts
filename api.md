@@ -83,11 +83,13 @@ Types:
 - <code><a href="./src/resources/pipelines/pipelines.ts">PresetRetrievalParams</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">RetrievalMode</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">SparseModelConfig</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">PipelineRetrieveResponse</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineListResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v1/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">create</a>({ ...params }) -> Pipeline</code>
+- <code title="post /api/v1/pipelines/{pipeline_id}/retrieve">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">retrieve</a>(pipelineID, { ...params }) -> PipelineRetrieveResponse</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">update</a>(pipelineID, { ...params }) -> Pipeline</code>
 - <code title="get /api/v1/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">list</a>({ ...params }) -> PipelineListResponse</code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">delete</a>(pipelineID) -> void</code>

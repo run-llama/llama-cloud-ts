@@ -75,6 +75,22 @@ export class Pipelines extends APIResource {
   }
 
   /**
+   * Get retrieval results for a managed pipeline and a query
+   */
+  retrieve(
+    pipelineID: string,
+    params: PipelineRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<PipelineRetrieveResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post(path`/api/v1/pipelines/${pipelineID}/retrieve`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
+
+  /**
    * Update an existing pipeline for a project.
    */
   update(pipelineID: string, body: PipelineUpdateParams, options?: RequestOptions): APIPromise<Pipeline> {
@@ -2951,6 +2967,69 @@ export interface SparseModelConfig {
   model_type?: 'splade' | 'bm25' | 'auto';
 }
 
+/**
+ * Schema for the result of an retrieval execution.
+ */
+export interface PipelineRetrieveResponse {
+  /**
+   * The ID of the pipeline that the query was retrieved against.
+   */
+  pipeline_id: string;
+
+  /**
+   * The nodes retrieved by the pipeline for the given query.
+   */
+  retrieval_nodes: Array<PipelineRetrieveResponse.RetrievalNode>;
+
+  class_name?: string;
+
+  /**
+   * @deprecated The image nodes retrieved by the pipeline for the given query.
+   * Deprecated - will soon be replaced with 'page_screenshot_nodes'.
+   */
+  image_nodes?: Array<PageScreenshotNodeWithScore>;
+
+  /**
+   * Metadata filters for vector stores.
+   */
+  inferred_search_filters?: MetadataFilters | null;
+
+  /**
+   * Metadata associated with the retrieval execution
+   */
+  metadata?: { [key: string]: string };
+
+  /**
+   * The page figure nodes retrieved by the pipeline for the given query.
+   */
+  page_figure_nodes?: Array<PageFigureNodeWithScore>;
+
+  /**
+   * The end-to-end latency for retrieval and reranking.
+   */
+  retrieval_latency?: { [key: string]: number };
+}
+
+export namespace PipelineRetrieveResponse {
+  /**
+   * Same as NodeWithScore but type for node is a TextNode instead of BaseNode.
+   * FastAPI doesn't accept abstract classes like BaseNode.
+   */
+  export interface RetrievalNode {
+    /**
+     * Provided for backward compatibility.
+     *
+     * Note: we keep the field with the typo "seperator" to maintain backward
+     * compatibility for serialized objects.
+     */
+    node: DocumentsAPI.TextNode;
+
+    class_name?: string;
+
+    score?: number | null;
+  }
+}
+
 export type PipelineListResponse = Array<Pipeline>;
 
 export interface PipelineCreateParams {
@@ -3842,6 +3921,98 @@ export namespace PipelineCreateParams {
       timeout?: number;
     }
   }
+}
+
+export interface PipelineRetrieveParams {
+  /**
+   * Body param: The query to retrieve against.
+   */
+  query: string;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: Alpha value for hybrid retrieval to determine the weights between
+   * dense and sparse retrieval. 0 is sparse retrieval and 1 is dense retrieval.
+   */
+  alpha?: number | null;
+
+  /**
+   * Body param:
+   */
+  class_name?: string;
+
+  /**
+   * Body param: Minimum similarity score wrt query for retrieval
+   */
+  dense_similarity_cutoff?: number | null;
+
+  /**
+   * Body param: Number of nodes for dense retrieval.
+   */
+  dense_similarity_top_k?: number | null;
+
+  /**
+   * Body param: Enable reranking for retrieval
+   */
+  enable_reranking?: boolean | null;
+
+  /**
+   * Body param: Number of files to retrieve (only for retrieval mode
+   * files_via_metadata and files_via_content).
+   */
+  files_top_k?: number | null;
+
+  /**
+   * Body param: Number of reranked nodes for returning.
+   */
+  rerank_top_n?: number | null;
+
+  /**
+   * Body param: The retrieval mode for the query.
+   */
+  retrieval_mode?: RetrievalMode;
+
+  /**
+   * @deprecated Body param: Whether to retrieve image nodes.
+   */
+  retrieve_image_nodes?: boolean;
+
+  /**
+   * Body param: Whether to retrieve page figure nodes.
+   */
+  retrieve_page_figure_nodes?: boolean;
+
+  /**
+   * Body param: Whether to retrieve page screenshot nodes.
+   */
+  retrieve_page_screenshot_nodes?: boolean;
+
+  /**
+   * Body param: Metadata filters for vector stores.
+   */
+  search_filters?: MetadataFilters | null;
+
+  /**
+   * Body param: JSON Schema that will be used to infer search_filters. Omit or leave
+   * as null to skip inference.
+   */
+  search_filters_inference_schema?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
+
+  /**
+   * Body param: Number of nodes for sparse retrieval.
+   */
+  sparse_similarity_top_k?: number | null;
 }
 
 export interface PipelineUpdateParams {
@@ -5649,8 +5820,10 @@ export declare namespace Pipelines {
     type PresetRetrievalParams as PresetRetrievalParams,
     type RetrievalMode as RetrievalMode,
     type SparseModelConfig as SparseModelConfig,
+    type PipelineRetrieveResponse as PipelineRetrieveResponse,
     type PipelineListResponse as PipelineListResponse,
     type PipelineCreateParams as PipelineCreateParams,
+    type PipelineRetrieveParams as PipelineRetrieveParams,
     type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineListParams as PipelineListParams,
     type PipelineGetStatusParams as PipelineGetStatusParams,
