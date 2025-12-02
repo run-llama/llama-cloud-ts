@@ -631,6 +631,11 @@ export interface ParsingUploadFileParams {
   /**
    * Body param:
    */
+  line_level_bounding_box?: boolean;
+
+  /**
+   * Body param:
+   */
   markdown_table_multiline_header_separator?: string;
 
   /**

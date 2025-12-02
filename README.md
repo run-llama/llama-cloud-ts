@@ -26,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 import LlamaCloud from 'llama-cloud';
 
 const client = new LlamaCloud({
-  apiKey: process.env['LLAMACLOUD_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted
 });
 
 const parsingJob = await client.parsing.uploadFile({ file: fs.createReadStream('path/to/file') });
@@ -43,7 +43,7 @@ This library includes TypeScript definitions for all request params and response
 import LlamaCloud from 'llama-cloud';
 
 const client = new LlamaCloud({
-  apiKey: process.env['LLAMACLOUD_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted
 });
 
 const params: LlamaCloud.PipelineListParams = { project_id: 'my-project-id' };
@@ -165,7 +165,7 @@ async function fetchAllExtractRuns(params) {
   const allExtractRuns = [];
   // Automatically fetches more pages as needed.
   for await (const extractRun of client.extraction.runs.list({
-    extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    extraction_agent_id: '30988414-9163-4a0b-a7e0-35dd760109d7',
     limit: 20,
   })) {
     allExtractRuns.push(extractRun);
@@ -178,7 +178,7 @@ Alternatively, you can request a single page at a time:
 
 ```ts
 let page = await client.extraction.runs.list({
-  extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+  extraction_agent_id: '30988414-9163-4a0b-a7e0-35dd760109d7',
   limit: 20,
 });
 for (const extractRun of page.items) {

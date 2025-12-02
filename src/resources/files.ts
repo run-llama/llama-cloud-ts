@@ -52,6 +52,33 @@ export class Files extends APIResource {
   }
 
   /**
+   * Get a specific figure from a page of a file.
+   */
+  getPageFigure(
+    figureName: string,
+    params: FileGetPageFigureParams,
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { id, page_index, ...query } = params;
+    return this._client.get(path`/api/v1/files/${id}/page-figures/${page_index}/${figureName}`, {
+      query,
+      ...options,
+    });
+  }
+
+  /**
+   * Get screenshot of a page from a file.
+   */
+  getPageScreenshot(
+    pageIndex: number,
+    params: FileGetPageScreenshotParams,
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { id, ...query } = params;
+    return this._client.get(path`/api/v1/files/${id}/page_screenshots/${pageIndex}`, { query, ...options });
+  }
+
+  /**
    * Returns a presigned url to read the file content.
    */
   readContent(
@@ -249,6 +276,10 @@ export interface FileGeneratePresignedURLResponse {
   form_fields?: { [key: string]: string } | null;
 }
 
+export type FileGetPageFigureResponse = unknown;
+
+export type FileGetPageScreenshotResponse = unknown;
+
 export interface FileDeleteParams {
   organization_id?: string | null;
 
@@ -315,6 +346,45 @@ export interface FileGeneratePresignedURLParams {
 export interface FileGetParams {
   organization_id?: string | null;
 
+  project_id?: string | null;
+}
+
+export interface FileGetPageFigureParams {
+  /**
+   * Path param:
+   */
+  id: string;
+
+  /**
+   * Path param:
+   */
+  page_index: number;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+}
+
+export interface FileGetPageScreenshotParams {
+  /**
+   * Path param:
+   */
+  id: string;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
   project_id?: string | null;
 }
 
@@ -404,9 +474,13 @@ export declare namespace Files {
     type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
     type FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse,
+    type FileGetPageFigureResponse as FileGetPageFigureResponse,
+    type FileGetPageScreenshotResponse as FileGetPageScreenshotResponse,
     type FileDeleteParams as FileDeleteParams,
     type FileGeneratePresignedURLParams as FileGeneratePresignedURLParams,
     type FileGetParams as FileGetParams,
+    type FileGetPageFigureParams as FileGetPageFigureParams,
+    type FileGetPageScreenshotParams as FileGetPageScreenshotParams,
     type FileReadContentParams as FileReadContentParams,
     type FileUploadParams as FileUploadParams,
     type FileUploadFromURLParams as FileUploadFromURLParams,

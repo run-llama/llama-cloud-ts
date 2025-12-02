@@ -196,11 +196,6 @@ export interface ExtractJob {
   extraction_agent: ExtractionAgentsAPI.ExtractAgent;
 
   /**
-   * The file that the extract was extracted from
-   */
-  file: FilesAPI.File;
-
-  /**
    * The status of the extraction job
    */
   status: ParsingAPI.StatusEnum;
@@ -209,6 +204,16 @@ export interface ExtractJob {
    * The error that occurred during extraction
    */
   error?: string | null;
+
+  /**
+   * @deprecated Schema for a file.
+   */
+  file?: FilesAPI.File | null;
+
+  /**
+   * The id of the file that the extract was extracted from
+   */
+  file_id?: string | null;
 }
 
 /**

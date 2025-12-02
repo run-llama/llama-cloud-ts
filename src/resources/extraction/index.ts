@@ -4,11 +4,11 @@ export { Extraction, type ExtractionRunParams } from './extraction';
 export {
   ExtractionAgents,
   type ExtractAgent,
+  type ExtractionAgentListResponse,
   type ExtractionAgentDeleteResponse,
-  type ExtractionAgentGetExtractionAgentsResponse,
+  type ExtractionAgentCreateParams,
   type ExtractionAgentUpdateParams,
-  type ExtractionAgentExtractionAgentsParams,
-  type ExtractionAgentGetExtractionAgentsParams,
+  type ExtractionAgentListParams,
 } from './extraction-agents';
 export {
   Jobs,
@@ -32,6 +32,5 @@ export {
   type RunDeleteParams,
   type RunGetParams,
   type RunGetByJobParams,
-  type RunGetLatestFromUiParams,
   type ExtractRunsPaginatedExtractRuns,
 } from './runs';

@@ -63,6 +63,10 @@ import {
   FileDeleteParams,
   FileGeneratePresignedURLParams,
   FileGeneratePresignedURLResponse,
+  FileGetPageFigureParams,
+  FileGetPageFigureResponse,
+  FileGetPageScreenshotParams,
+  FileGetPageScreenshotResponse,
   FileGetParams,
   FileReadContentParams,
   FileUploadFromURLParams,
@@ -70,6 +74,13 @@ import {
   Files,
   PresignedURL,
 } from './resources/files';
+import {
+  Project,
+  ProjectGetParams,
+  ProjectListParams,
+  ProjectListResponse,
+  Projects,
+} from './resources/projects';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
 import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
@@ -102,6 +113,8 @@ import {
   PipelineListParams,
   PipelineListResponse,
   PipelineMetadataConfig,
+  PipelineRetrieveParams,
+  PipelineRetrieveResponse,
   PipelineType,
   PipelineUpdateParams,
   PipelineUpsertParams,
@@ -141,7 +154,7 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['LLAMACLOUD_API_KEY'].
+   * Defaults to process.env['LLAMA_CLOUD_API_KEY'].
    */
   apiKey?: string | undefined;
 
@@ -223,7 +236,7 @@ export class LlamaCloud {
   baseURL: string;
   maxRetries: number;
   timeout: number;
-  logger: Logger | undefined;
+  logger: Logger;
   logLevel: LogLevel | undefined;
   fetchOptions: MergedRequestInit | undefined;
 
@@ -235,7 +248,7 @@ export class LlamaCloud {
   /**
    * API Client for interfacing with the Llama Cloud API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['LLAMACLOUD_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey=process.env['LLAMA_CLOUD_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['LLAMA_CLOUD_BASE_URL'] ?? https://api.cloud.llamaindex.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -246,12 +259,12 @@ export class LlamaCloud {
    */
   constructor({
     baseURL = readEnv('LLAMA_CLOUD_BASE_URL'),
-    apiKey = readEnv('LLAMACLOUD_API_KEY'),
+    apiKey = readEnv('LLAMA_CLOUD_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.LlamaCloudError(
-        "The LLAMACLOUD_API_KEY environment variable is missing or empty; either provide it, or instantiate the LlamaCloud client with an apiKey option, like new LlamaCloud({ apiKey: 'My API Key' }).",
+        "The LLAMA_CLOUD_API_KEY environment variable is missing or empty; either provide it, or instantiate the LlamaCloud client with an apiKey option, like new LlamaCloud({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -842,6 +855,7 @@ export class LlamaCloud {
 
   static toFile = Uploads.toFile;
 
+  projects: API.Projects = new API.Projects(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
   files: API.Files = new API.Files(this);
@@ -853,6 +867,7 @@ export class LlamaCloud {
   beta: API.Beta = new API.Beta(this);
 }
 
+LlamaCloud.Projects = Projects;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
 LlamaCloud.Files = Files;
@@ -927,6 +942,14 @@ export declare namespace LlamaCloud {
   };
 
   export {
+    Projects as Projects,
+    type Project as Project,
+    type ProjectListResponse as ProjectListResponse,
+    type ProjectListParams as ProjectListParams,
+    type ProjectGetParams as ProjectGetParams,
+  };
+
+  export {
     DataSinks as DataSinks,
     type DataSink as DataSink,
     type DataSinkListResponse as DataSinkListResponse,
@@ -951,9 +974,13 @@ export declare namespace LlamaCloud {
     type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
     type FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse,
+    type FileGetPageFigureResponse as FileGetPageFigureResponse,
+    type FileGetPageScreenshotResponse as FileGetPageScreenshotResponse,
     type FileDeleteParams as FileDeleteParams,
     type FileGeneratePresignedURLParams as FileGeneratePresignedURLParams,
     type FileGetParams as FileGetParams,
+    type FileGetPageFigureParams as FileGetPageFigureParams,
+    type FileGetPageScreenshotParams as FileGetPageScreenshotParams,
     type FileReadContentParams as FileReadContentParams,
     type FileUploadParams as FileUploadParams,
     type FileUploadFromURLParams as FileUploadFromURLParams,
@@ -977,8 +1004,10 @@ export declare namespace LlamaCloud {
     type PresetRetrievalParams as PresetRetrievalParams,
     type RetrievalMode as RetrievalMode,
     type SparseModelConfig as SparseModelConfig,
+    type PipelineRetrieveResponse as PipelineRetrieveResponse,
     type PipelineListResponse as PipelineListResponse,
     type PipelineCreateParams as PipelineCreateParams,
+    type PipelineRetrieveParams as PipelineRetrieveParams,
     type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineListParams as PipelineListParams,
     type PipelineGetStatusParams as PipelineGetStatusParams,

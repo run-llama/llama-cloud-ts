@@ -105,6 +105,7 @@ describe('resource pipelines', () => {
         keep_page_separator_when_merging_tables: true,
         languages: ['af'],
         layout_aware: true,
+        line_level_bounding_box: true,
         markdown_table_multiline_header_separator: 'markdown_table_multiline_header_separator',
         max_pages: 0,
         max_pages_enforced: 0,
@@ -194,6 +195,41 @@ describe('resource pipelines', () => {
       sparse_model_config: { class_name: 'class_name', model_type: 'splade' },
       status: 'status',
       transform_config: { chunk_overlap: 0, chunk_size: 1, mode: 'auto' },
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.pipelines.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { query: 'x' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.pipelines.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      query: 'x',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      alpha: 0,
+      class_name: 'class_name',
+      dense_similarity_cutoff: 0,
+      dense_similarity_top_k: 1,
+      enable_reranking: true,
+      files_top_k: 1,
+      rerank_top_n: 1,
+      retrieval_mode: 'chunks',
+      retrieve_image_nodes: true,
+      retrieve_page_figure_nodes: true,
+      retrieve_page_screenshot_nodes: true,
+      search_filters: { filters: [{ key: 'key', value: 0, operator: '==' }], condition: 'and' },
+      search_filters_inference_schema: { foo: { foo: 'bar' } },
+      sparse_similarity_top_k: 1,
     });
   });
 
@@ -383,6 +419,7 @@ describe('resource pipelines', () => {
         keep_page_separator_when_merging_tables: true,
         languages: ['af'],
         layout_aware: true,
+        line_level_bounding_box: true,
         markdown_table_multiline_header_separator: 'markdown_table_multiline_header_separator',
         max_pages: 0,
         max_pages_enforced: 0,

@@ -31,6 +31,7 @@ describe('resource jobs', () => {
       from_ui: true,
       config_override: {
         chunk_mode: 'PAGE',
+        citation_bbox: true,
         cite_sources: true,
         confidence_scores: true,
         extract_model: 'openai-gpt-4-1',
@@ -103,6 +104,7 @@ describe('resource jobs', () => {
       from_ui: true,
       config_override: {
         chunk_mode: 'PAGE',
+        citation_bbox: true,
         cite_sources: true,
         confidence_scores: true,
         extract_model: 'openai-gpt-4-1',

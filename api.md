@@ -1,3 +1,15 @@
+# Projects
+
+Types:
+
+- <code><a href="./src/resources/projects.ts">Project</a></code>
+- <code><a href="./src/resources/projects.ts">ProjectListResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/projects">client.projects.<a href="./src/resources/projects.ts">list</a>({ ...params }) -> ProjectListResponse</code>
+- <code title="get /api/v1/projects/{project_id}">client.projects.<a href="./src/resources/projects.ts">get</a>(projectID, { ...params }) -> Project</code>
+
 # DataSinks
 
 Types:
@@ -37,12 +49,16 @@ Types:
 - <code><a href="./src/resources/files.ts">FileCreate</a></code>
 - <code><a href="./src/resources/files.ts">PresignedURL</a></code>
 - <code><a href="./src/resources/files.ts">FileGeneratePresignedURLResponse</a></code>
+- <code><a href="./src/resources/files.ts">FileGetPageFigureResponse</a></code>
+- <code><a href="./src/resources/files.ts">FileGetPageScreenshotResponse</a></code>
 
 Methods:
 
 - <code title="delete /api/v1/files/{id}">client.files.<a href="./src/resources/files.ts">delete</a>(id, { ...params }) -> void</code>
 - <code title="put /api/v1/files">client.files.<a href="./src/resources/files.ts">generatePresignedURL</a>({ ...params }) -> FileGeneratePresignedURLResponse</code>
 - <code title="get /api/v1/files/{id}">client.files.<a href="./src/resources/files.ts">get</a>(id, { ...params }) -> File</code>
+- <code title="get /api/v1/files/{id}/page-figures/{page_index}/{figure_name}">client.files.<a href="./src/resources/files.ts">getPageFigure</a>(figureName, { ...params }) -> unknown</code>
+- <code title="get /api/v1/files/{id}/page_screenshots/{page_index}">client.files.<a href="./src/resources/files.ts">getPageScreenshot</a>(pageIndex, { ...params }) -> unknown</code>
 - <code title="get /api/v1/files/{id}/content">client.files.<a href="./src/resources/files.ts">readContent</a>(id, { ...params }) -> PresignedURL</code>
 - <code title="post /api/v1/files">client.files.<a href="./src/resources/files.ts">upload</a>({ ...params }) -> File</code>
 - <code title="put /api/v1/files/upload_from_url">client.files.<a href="./src/resources/files.ts">uploadFromURL</a>({ ...params }) -> File</code>
@@ -67,11 +83,13 @@ Types:
 - <code><a href="./src/resources/pipelines/pipelines.ts">PresetRetrievalParams</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">RetrievalMode</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">SparseModelConfig</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">PipelineRetrieveResponse</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineListResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v1/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">create</a>({ ...params }) -> Pipeline</code>
+- <code title="post /api/v1/pipelines/{pipeline_id}/retrieve">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">retrieve</a>(pipelineID, { ...params }) -> PipelineRetrieveResponse</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">update</a>(pipelineID, { ...params }) -> Pipeline</code>
 - <code title="get /api/v1/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">list</a>({ ...params }) -> PipelineListResponse</code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">delete</a>(pipelineID) -> void</code>
@@ -286,23 +304,22 @@ Methods:
 - <code title="delete /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">delete</a>(runID, { ...params }) -> unknown</code>
 - <code title="get /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">get</a>(runID, { ...params }) -> ExtractRun</code>
 - <code title="get /api/v1/extraction/runs/by-job/{job_id}">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">getByJob</a>(jobID, { ...params }) -> ExtractRun</code>
-- <code title="get /api/v1/extraction/runs/latest-from-ui">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">getLatestFromUi</a>({ ...params }) -> ExtractRun | null</code>
 
 ## ExtractionAgents
 
 Types:
 
 - <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractAgent</a></code>
+- <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractionAgentListResponse</a></code>
 - <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractionAgentDeleteResponse</a></code>
-- <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractionAgentGetExtractionAgentsResponse</a></code>
 
 Methods:
 
+- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">create</a>({ ...params }) -> ExtractAgent</code>
 - <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">update</a>(extractionAgentID, { ...params }) -> ExtractAgent</code>
+- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">list</a>({ ...params }) -> ExtractionAgentListResponse</code>
 - <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">delete</a>(extractionAgentID) -> unknown</code>
-- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">extractionAgents</a>({ ...params }) -> ExtractAgent</code>
 - <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">get</a>(extractionAgentID) -> ExtractAgent</code>
-- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">getExtractionAgents</a>({ ...params }) -> ExtractionAgentGetExtractionAgentsResponse</code>
 
 # Beta
 

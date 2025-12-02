@@ -25,6 +25,7 @@ describe('resource extraction', () => {
     const response = await client.extraction.run({
       config: {
         chunk_mode: 'PAGE',
+        citation_bbox: true,
         cite_sources: true,
         confidence_scores: true,
         extract_model: 'openai-gpt-4-1',
