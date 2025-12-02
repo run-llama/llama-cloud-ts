@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.4.0 (2025-12-02)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** add back projects list/get ([e150597](https://github.com/run-llama/llama-cloud-ts/commit/e150597c6c9c55e656c2e827281ffc37f52742c3))
+* **api:** add get page figure/screenshot methods ([5264e78](https://github.com/run-llama/llama-cloud-ts/commit/5264e78a2f5627df4ab2e8ae773cfa1c8158d166))
+* **api:** add pipeline.retrieve method ([284ec83](https://github.com/run-llama/llama-cloud-ts/commit/284ec8389b0d22f172581bcf43aa64159be06ab6))
+* **api:** api update ([ae8dd73](https://github.com/run-llama/llama-cloud-ts/commit/ae8dd7333702108645b3d01d164ea375833442e2))
+* **api:** api update ([417ae7b](https://github.com/run-llama/llama-cloud-ts/commit/417ae7b50ff6b612f8def36d1b7b86b7f6b2bf54))
+* **api:** api update ([19aa818](https://github.com/run-llama/llama-cloud-ts/commit/19aa8185c589a2f5195eba24a232b7d6aa21902e))
+* **api:** api update ([2ea1fa7](https://github.com/run-llama/llama-cloud-ts/commit/2ea1fa715769b1eec6497ea5e9f01a5ebbf9f994))
+* **api:** api update ([56d6f9b](https://github.com/run-llama/llama-cloud-ts/commit/56d6f9bdc08dfd11878a78e215c4eab57c0d1fb4))
+* **api:** api update ([4deb4e5](https://github.com/run-llama/llama-cloud-ts/commit/4deb4e5c2a554e975cc4ecb08aa5a3fb0ffedf58))
+* **api:** api update ([177da82](https://github.com/run-llama/llama-cloud-ts/commit/177da82b884da08495c1bf42eb22da4f2ba6ca10))
+* **api:** fix api key name ([09f3e90](https://github.com/run-llama/llama-cloud-ts/commit/09f3e90fd7b164a0c3a809eb8c8a63adfc5a0533))
+* **api:** fix readme example ([0e2f151](https://github.com/run-llama/llama-cloud-ts/commit/0e2f151bb0931aac69b198c7c6f025c2a56cdf7e))
+* **api:** manual updates ([9bc7a62](https://github.com/run-llama/llama-cloud-ts/commit/9bc7a623e1c8c84b0f68cb3bf8a80fc95124e7d1))
+* **api:** manual updates ([b1aca0f](https://github.com/run-llama/llama-cloud-ts/commit/b1aca0f73226c4ea5f99fb4378be9d2232f79871))
+* **api:** update extract API endpoints ([485573f](https://github.com/run-llama/llama-cloud-ts/commit/485573f3f52b9f871bc938055248767d46272e5e))
+
+
+### Chores
+
+* **client:** fix logger property type ([2b784ef](https://github.com/run-llama/llama-cloud-ts/commit/2b784ef2f802af81470d37a74f4a000e2d634abd))
+
 ## 0.3.0 (2025-11-23)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.2.0...v0.3.0)
