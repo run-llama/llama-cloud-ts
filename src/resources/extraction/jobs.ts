@@ -182,6 +182,40 @@ export class Jobs extends APIResource {
     // Get and return the result
     return await this.getResult(job.id, {}, requestOptions);
   }
+
+  /**
+   * Create an extraction job and wait for it to complete, returning the result.
+   *
+   * This is an alias for createAndWait() that provides a more concise API.
+   *
+   * @param params - Job creation parameters
+   * @param options - Polling configuration and request options
+   * @returns The extraction result (JobGetResultResponse)
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails or is cancelled
+   *
+   * @example
+   * ```typescript
+   * import { LlamaCloud } from 'llama-cloud';
+   *
+   * const client = new LlamaCloud({ apiKey: '...' });
+   *
+   * // One-shot: create job, wait for completion, and get result
+   * const result = await client.extraction.jobs.extract({
+   *   extraction_agent_id: 'agent_id',
+   *   file_id: 'file_id'
+   * }, { verbose: true });
+   *
+   * // Result is ready to use immediately
+   * console.log(result.data);
+   * ```
+   */
+  async extract(
+    params: JobCreateParams,
+    options?: PollingOptions & RequestOptions,
+  ): Promise<JobGetResultResponse> {
+    return await this.createAndWait(params, options);
+  }
 }
 
 /**

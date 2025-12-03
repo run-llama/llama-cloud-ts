@@ -39,6 +39,7 @@ import {
 } from './extraction-agents/extraction-agents';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
+import { PollingOptions } from '../../core/polling';
 
 export class Extraction extends APIResource {
   jobs: JobsAPI.Jobs = new JobsAPI.Jobs(this._client);
@@ -59,6 +60,65 @@ export class Extraction extends APIResource {
       body,
       ...options,
     });
+  }
+
+  /**
+   * Run a stateless extraction and wait for it to complete, returning the result.
+   *
+   * This is a convenience method that combines run(), waitForCompletion(),
+   * and getResult() into a single call for the most common end-to-end workflow.
+   *
+   * This endpoint uses a default extraction agent in the user's default project.
+   *
+   * @param params - Extraction parameters
+   * @param options - Polling configuration and request options
+   * @returns The extraction result (JobGetResultResponse)
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails or is cancelled
+   *
+   * @example
+   * ```typescript
+   * import { LlamaCloud } from 'llama-cloud';
+   *
+   * const client = new LlamaCloud({ apiKey: '...' });
+   *
+   * // One-shot: run stateless extraction, wait for completion, and get result
+   * const result = await client.extraction.extract({
+   *   config: {
+   *     chunk_mode: 'PAGE',
+   *     cite_sources: true,
+   *     extraction_target: 'PER_DOC',
+   *     extraction_mode: 'BALANCED'
+   *   },
+   *   data_schema: { model_names: { type: 'array', items: { type: 'string' } } },
+   *   file_id: 'file_id'
+   * }, { verbose: true });
+   *
+   * // Result is ready to use immediately
+   * console.log(result.data);
+   * ```
+   */
+  async extract(
+    params: ExtractionRunParams,
+    options?: PollingOptions & RequestOptions,
+  ): Promise<JobsAPI.JobGetResultResponse> {
+    const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    // Run the extraction job
+    const job = await this.run(params, requestOptions);
+
+    // Wait for completion
+    await this.jobs.waitForCompletion(job.id, {
+      pollingInterval,
+      maxInterval,
+      timeout: timeout || 2000.0,
+      backoff,
+      verbose,
+      ...requestOptions,
+    });
+
+    // Get and return the result
+    return await this.jobs.getResult(job.id, {}, requestOptions);
   }
 }
 
