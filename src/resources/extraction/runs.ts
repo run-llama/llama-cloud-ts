@@ -62,7 +62,7 @@ export class Runs extends APIResource {
 export type ExtractRunsPaginatedExtractRuns = PaginatedExtractRuns<ExtractRun>;
 
 /**
- * Additional parameters for the extraction agent.
+ * Configuration parameters for the extraction agent.
  */
 export interface ExtractConfig {
   /**
@@ -87,8 +87,7 @@ export interface ExtractConfig {
   confidence_scores?: boolean;
 
   /**
-   * The extract model to use for data extraction. If not provided, uses the default
-   * for the extraction mode.
+   * Extract model options.
    */
   extract_model?:
     | 'openai-gpt-4-1'
@@ -141,8 +140,7 @@ export interface ExtractConfig {
   page_range?: string | null;
 
   /**
-   * The parse model to use for document parsing. If not provided, uses the default
-   * for the extraction mode.
+   * Public model names.
    */
   parse_model?:
     | 'openai-gpt-4o'
@@ -153,17 +151,18 @@ export interface ExtractConfig {
     | 'openai-gpt-5'
     | 'openai-gpt-5-mini'
     | 'openai-gpt-5-nano'
-    | 'openai-text-embedding-3-small'
     | 'openai-text-embedding-3-large'
+    | 'openai-text-embedding-3-small'
     | 'openai-whisper-1'
     | 'anthropic-sonnet-3.5'
     | 'anthropic-sonnet-3.5-v2'
     | 'anthropic-sonnet-3.7'
     | 'anthropic-sonnet-4.0'
     | 'anthropic-sonnet-4.5'
+    | 'anthropic-haiku-3.5'
     | 'anthropic-haiku-4.5'
-    | 'gemini-3.0-pro'
     | 'gemini-2.5-flash'
+    | 'gemini-3.0-pro'
     | 'gemini-2.5-pro'
     | 'gemini-2.0-flash'
     | 'gemini-2.0-flash-lite'

@@ -184,6 +184,9 @@ export class Jobs extends APIResource {
   }
 }
 
+/**
+ * Schema for an extraction job.
+ */
 export interface ExtractJob {
   /**
    * The id of the extraction job
@@ -305,7 +308,7 @@ export interface JobCreateParams {
   from_ui?: boolean;
 
   /**
-   * Body param: Additional parameters for the extraction agent.
+   * Body param: Configuration parameters for the extraction agent.
    */
   config_override?: RunsAPI.ExtractConfig | null;
 
@@ -350,7 +353,7 @@ export interface JobBatchParams {
   from_ui?: boolean;
 
   /**
-   * Body param: Additional parameters for the extraction agent.
+   * Body param: Configuration parameters for the extraction agent.
    */
   config_override?: RunsAPI.ExtractConfig | null;
 

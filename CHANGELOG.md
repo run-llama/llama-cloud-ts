@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0 (2025-12-02)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** api update ([e200adc](https://github.com/run-llama/llama-cloud-ts/commit/e200adcad2968ab152e5bcc3e10091837e738c57))
+
 ## 0.4.0 (2025-12-02)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.3.0...v0.4.0)

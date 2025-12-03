@@ -59,7 +59,7 @@ export class ExtractionAgents extends APIResource {
 }
 
 /**
- * Schema and configuration for creating an extraction agent.
+ * Schema and configuration for an extraction agent.
  */
 export interface ExtractAgent {
   /**
