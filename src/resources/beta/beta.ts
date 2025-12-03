@@ -41,6 +41,17 @@ import {
   SheetsJobsPaginatedClassifyJobs,
   SheetsParsingConfig,
 } from './sheets';
+import * as SplitAPI from './split';
+import {
+  Split,
+  SplitCreateParams,
+  SplitCreateResponse,
+  SplitGetParams,
+  SplitGetResponse,
+  SplitListParams,
+  SplitListResponse,
+  SplitListResponsesPaginatedClassifyJobs,
+} from './split';
 import * as BatchAPI from './batch/batch';
 import {
   Batch,
@@ -76,12 +87,14 @@ export class Beta extends APIResource {
   sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
   directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
   batch: BatchAPI.Batch = new BatchAPI.Batch(this._client);
+  split: SplitAPI.Split = new SplitAPI.Split(this._client);
 }
 
 Beta.ParseConfigurations = ParseConfigurations;
 Beta.Sheets = Sheets;
 Beta.Directories = Directories;
 Beta.Batch = Batch;
+Beta.Split = Split;
 
 export declare namespace Beta {
   export {
@@ -149,5 +162,16 @@ export declare namespace Beta {
     type BatchListParams as BatchListParams,
     type BatchCancelParams as BatchCancelParams,
     type BatchGetStatusParams as BatchGetStatusParams,
+  };
+
+  export {
+    Split as Split,
+    type SplitCreateResponse as SplitCreateResponse,
+    type SplitListResponse as SplitListResponse,
+    type SplitGetResponse as SplitGetResponse,
+    type SplitListResponsesPaginatedClassifyJobs as SplitListResponsesPaginatedClassifyJobs,
+    type SplitCreateParams as SplitCreateParams,
+    type SplitListParams as SplitListParams,
+    type SplitGetParams as SplitGetParams,
   };
 }
