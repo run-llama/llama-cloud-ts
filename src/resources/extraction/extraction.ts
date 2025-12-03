@@ -1,16 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as ExtractionAgentsAPI from './extraction-agents';
-import {
-  ExtractAgent,
-  ExtractionAgentCreateParams,
-  ExtractionAgentDeleteResponse,
-  ExtractionAgentListParams,
-  ExtractionAgentListResponse,
-  ExtractionAgentUpdateParams,
-  ExtractionAgents,
-} from './extraction-agents';
 import * as JobsAPI from './jobs';
 import {
   ExtractJob,
@@ -37,6 +27,16 @@ import {
   RunListParams,
   Runs,
 } from './runs';
+import * as ExtractionAgentsAPI from './extraction-agents/extraction-agents';
+import {
+  ExtractAgent,
+  ExtractionAgentCreateParams,
+  ExtractionAgentDeleteResponse,
+  ExtractionAgentListParams,
+  ExtractionAgentListResponse,
+  ExtractionAgentUpdateParams,
+  ExtractionAgents,
+} from './extraction-agents/extraction-agents';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
