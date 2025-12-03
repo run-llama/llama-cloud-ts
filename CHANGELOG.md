@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.0 (2025-12-03)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** add split ([387bf2e](https://github.com/run-llama/llama-cloud-ts/commit/387bf2e29e60ec877b91b5bf1e7fdd330b7ba558))
+
+
+### Chores
+
+* **internal:** upgrade eslint ([31a164f](https://github.com/run-llama/llama-cloud-ts/commit/31a164f8bc2d23ba04018d81e1268f77070a5889))
+
 ## 0.6.0 (2025-12-03)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.5.0...v0.6.0)
