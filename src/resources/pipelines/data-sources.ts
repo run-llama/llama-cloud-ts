@@ -46,6 +46,22 @@ export class DataSources extends APIResource {
   }
 
   /**
+   * Run ingestion for the pipeline data source by incrementally updating the
+   * data-sink with upstream changes from data-source.
+   */
+  sync(
+    dataSourceID: string,
+    params: DataSourceSyncParams,
+    options?: RequestOptions,
+  ): APIPromise<PipelinesAPI.Pipeline> {
+    const { pipeline_id, ...body } = params;
+    return this._client.post(path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}/sync`, {
+      body,
+      ...options,
+    });
+  }
+
+  /**
    * Add data sources to a pipeline.
    */
   updateDataSources(
@@ -615,6 +631,18 @@ export interface DataSourceGetStatusParams {
   pipeline_id: string;
 }
 
+export interface DataSourceSyncParams {
+  /**
+   * Path param:
+   */
+  pipeline_id: string;
+
+  /**
+   * Body param:
+   */
+  pipeline_file_ids?: Array<string> | null;
+}
+
 export interface DataSourceUpdateDataSourcesParams {
   body: Array<DataSourceUpdateDataSourcesParams.Body>;
 }
@@ -644,6 +672,7 @@ export declare namespace DataSources {
     type DataSourceUpdateDataSourcesResponse as DataSourceUpdateDataSourcesResponse,
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceGetStatusParams as DataSourceGetStatusParams,
+    type DataSourceSyncParams as DataSourceSyncParams,
     type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
   };
 }

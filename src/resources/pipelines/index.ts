@@ -7,6 +7,7 @@ export {
   type DataSourceUpdateDataSourcesResponse,
   type DataSourceUpdateParams,
   type DataSourceGetStatusParams,
+  type DataSourceSyncParams,
   type DataSourceUpdateDataSourcesParams,
 } from './data-sources';
 export {
@@ -17,6 +18,7 @@ export {
   type DocumentCreateResponse,
   type DocumentGetChunksResponse,
   type DocumentSyncResponse,
+  type DocumentUpsertResponse,
   type DocumentCreateParams,
   type DocumentListParams,
   type DocumentDeleteParams,
@@ -24,6 +26,7 @@ export {
   type DocumentGetChunksParams,
   type DocumentGetStatusParams,
   type DocumentSyncParams,
+  type DocumentUpsertParams,
   type CloudDocumentsPaginatedCloudDocuments,
 } from './documents';
 export {

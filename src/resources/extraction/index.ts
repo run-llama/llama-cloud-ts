@@ -9,7 +9,7 @@ export {
   type ExtractionAgentCreateParams,
   type ExtractionAgentUpdateParams,
   type ExtractionAgentListParams,
-} from './extraction-agents';
+} from './extraction-agents/index';
 export {
   Jobs,
   type ExtractJob,
