@@ -453,3 +453,17 @@ Methods:
 
 - <code title="get /api/v1/beta/batch-processing/{job_id}/items">client.beta.batch.jobItems.<a href="./src/resources/beta/batch/job-items.ts">list</a>(jobID, { ...params }) -> JobItemListResponsesPaginatedBatchItems</code>
 - <code title="get /api/v1/beta/batch-processing/items/{item_id}/processing-results">client.beta.batch.jobItems.<a href="./src/resources/beta/batch/job-items.ts">getProcessingResults</a>(itemID, { ...params }) -> JobItemGetProcessingResultsResponse</code>
+
+## Split
+
+Types:
+
+- <code><a href="./src/resources/beta/split.ts">SplitCreateResponse</a></code>
+- <code><a href="./src/resources/beta/split.ts">SplitListResponse</a></code>
+- <code><a href="./src/resources/beta/split.ts">SplitGetResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/beta/split/jobs">client.beta.split.<a href="./src/resources/beta/split.ts">create</a>({ ...params }) -> SplitCreateResponse</code>
+- <code title="get /api/v1/beta/split/jobs">client.beta.split.<a href="./src/resources/beta/split.ts">list</a>({ ...params }) -> SplitListResponsesPaginatedClassifyJobs</code>
+- <code title="get /api/v1/beta/split/jobs/{split_job_id}">client.beta.split.<a href="./src/resources/beta/split.ts">get</a>(splitJobID, { ...params }) -> SplitGetResponse</code>
