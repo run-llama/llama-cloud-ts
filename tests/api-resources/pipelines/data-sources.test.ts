@@ -66,6 +66,28 @@ describe('resource dataSources', () => {
   });
 
   // Prism tests are disabled
+  test.skip('sync: only required params', async () => {
+    const responsePromise = client.pipelines.dataSources.sync('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('sync: required and optional params', async () => {
+    const response = await client.pipelines.dataSources.sync('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      pipeline_file_ids: ['182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'],
+    });
+  });
+
+  // Prism tests are disabled
   test.skip('updateDataSources: only required params', async () => {
     const responsePromise = client.pipelines.dataSources.updateDataSources(
       '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',

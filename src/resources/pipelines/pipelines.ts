@@ -8,6 +8,7 @@ import * as DataSourcesAPI from './data-sources';
 import {
   DataSourceGetDataSourcesResponse,
   DataSourceGetStatusParams,
+  DataSourceSyncParams,
   DataSourceUpdateDataSourcesParams,
   DataSourceUpdateDataSourcesResponse,
   DataSourceUpdateParams,
@@ -29,6 +30,8 @@ import {
   DocumentListParams,
   DocumentSyncParams,
   DocumentSyncResponse,
+  DocumentUpsertParams,
+  DocumentUpsertResponse,
   Documents,
   TextNode,
 } from './documents';
@@ -5839,6 +5842,7 @@ export declare namespace Pipelines {
     type DataSourceUpdateDataSourcesResponse as DataSourceUpdateDataSourcesResponse,
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceGetStatusParams as DataSourceGetStatusParams,
+    type DataSourceSyncParams as DataSourceSyncParams,
     type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
   };
 
@@ -5870,6 +5874,7 @@ export declare namespace Pipelines {
     type DocumentCreateResponse as DocumentCreateResponse,
     type DocumentGetChunksResponse as DocumentGetChunksResponse,
     type DocumentSyncResponse as DocumentSyncResponse,
+    type DocumentUpsertResponse as DocumentUpsertResponse,
     type CloudDocumentsPaginatedCloudDocuments as CloudDocumentsPaginatedCloudDocuments,
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
@@ -5878,5 +5883,6 @@ export declare namespace Pipelines {
     type DocumentGetChunksParams as DocumentGetChunksParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,
     type DocumentSyncParams as DocumentSyncParams,
+    type DocumentUpsertParams as DocumentUpsertParams,
   };
 }

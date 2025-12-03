@@ -117,6 +117,7 @@ Methods:
 - <code title="put /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">update</a>(dataSourceID, { ...params }) -> PipelineDataSource</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/data-sources">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">getDataSources</a>(pipelineID) -> DataSourceGetDataSourcesResponse</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/status">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">getStatus</a>(dataSourceID, { ...params }) -> ManagedIngestionStatusResponse</code>
+- <code title="post /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/sync">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">sync</a>(dataSourceID, { ...params }) -> Pipeline</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/data-sources">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">updateDataSources</a>(pipelineID, [ ...body ]) -> DataSourceUpdateDataSourcesResponse</code>
 
 ## Files
@@ -157,6 +158,7 @@ Types:
 - <code><a href="./src/resources/pipelines/documents.ts">DocumentCreateResponse</a></code>
 - <code><a href="./src/resources/pipelines/documents.ts">DocumentGetChunksResponse</a></code>
 - <code><a href="./src/resources/pipelines/documents.ts">DocumentSyncResponse</a></code>
+- <code><a href="./src/resources/pipelines/documents.ts">DocumentUpsertResponse</a></code>
 
 Methods:
 
@@ -167,6 +169,7 @@ Methods:
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">getChunks</a>(documentID, { ...params }) -> DocumentGetChunksResponse</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/status">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">getStatus</a>(documentID, { ...params }) -> ManagedIngestionStatusResponse</code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">sync</a>(documentID, { ...params }) -> unknown</code>
+- <code title="put /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">upsert</a>(pipelineID, [ ...body ]) -> DocumentUpsertResponse</code>
 
 # Retrievers
 
@@ -309,17 +312,29 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractAgent</a></code>
-- <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractionAgentListResponse</a></code>
-- <code><a href="./src/resources/extraction/extraction-agents.ts">ExtractionAgentDeleteResponse</a></code>
+- <code><a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">ExtractAgent</a></code>
+- <code><a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">ExtractionAgentListResponse</a></code>
+- <code><a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">ExtractionAgentDeleteResponse</a></code>
 
 Methods:
 
-- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">create</a>({ ...params }) -> ExtractAgent</code>
-- <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">update</a>(extractionAgentID, { ...params }) -> ExtractAgent</code>
-- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">list</a>({ ...params }) -> ExtractionAgentListResponse</code>
-- <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">delete</a>(extractionAgentID) -> unknown</code>
-- <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents.ts">get</a>(extractionAgentID) -> ExtractAgent</code>
+- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">create</a>({ ...params }) -> ExtractAgent</code>
+- <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">update</a>(extractionAgentID, { ...params }) -> ExtractAgent</code>
+- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">list</a>({ ...params }) -> ExtractionAgentListResponse</code>
+- <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">delete</a>(extractionAgentID) -> unknown</code>
+- <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">get</a>(extractionAgentID) -> ExtractAgent</code>
+
+### Schema
+
+Types:
+
+- <code><a href="./src/resources/extraction/extraction-agents/schema.ts">SchemaGenerateSchemaResponse</a></code>
+- <code><a href="./src/resources/extraction/extraction-agents/schema.ts">SchemaValidateSchemaResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/extraction/extraction-agents/schema/generate">client.extraction.extractionAgents.schema.<a href="./src/resources/extraction/extraction-agents/schema.ts">generateSchema</a>({ ...params }) -> SchemaGenerateSchemaResponse</code>
+- <code title="post /api/v1/extraction/extraction-agents/schema/validation">client.extraction.extractionAgents.schema.<a href="./src/resources/extraction/extraction-agents/schema.ts">validateSchema</a>({ ...params }) -> SchemaValidateSchemaResponse</code>
 
 # Beta
 
