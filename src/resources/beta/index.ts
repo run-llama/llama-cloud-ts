@@ -63,3 +63,13 @@ export {
   type SheetGetResultTableParams,
   type SheetsJobsPaginatedClassifyJobs,
 } from './sheets';
+export {
+  Split,
+  type SplitCreateResponse,
+  type SplitListResponse,
+  type SplitGetResponse,
+  type SplitCreateParams,
+  type SplitListParams,
+  type SplitGetParams,
+  type SplitListResponsesPaginatedClassifyJobs,
+} from './split';
