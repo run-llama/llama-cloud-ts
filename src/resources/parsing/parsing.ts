@@ -3,10 +3,17 @@
 import { APIResource } from '../../core/resource';
 import * as JobAPI from './job/job';
 import { Job, JobGeneratePresignedURLParams, JobGetDetailsResponse } from './job/job';
+import {
+  ParsingJobJsonResult,
+  ParsingJobMarkdownResult,
+  ParsingJobStructuredResult,
+  ParsingJobTextResult,
+} from './job/result';
 import { APIPromise } from '../../core/api-promise';
 import { type Uploadable } from '../../core/uploads';
 import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
+import { PollingOptions } from '../../core/polling';
 
 export class Parsing extends APIResource {
   job: JobAPI.Job = new JobAPI.Job(this._client);
@@ -46,6 +53,83 @@ export class Parsing extends APIResource {
       '/api/v1/parsing/upload',
       multipartFormRequestOptions({ query: { organization_id, project_id }, body, ...options }, this._client),
     );
+  }
+
+  /**
+   * Upload a file for parsing and wait for it to complete, returning the result.
+   *
+   * This is a convenience method that combines uploadFile(), waitForCompletion(),
+   * and result.get*() into a single call for the most common end-to-end workflow.
+   *
+   * @param params - Upload parameters including the file and parsing configuration
+   * @param options - Request and polling configuration options
+   * @returns The parsing result in the requested format
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails or is cancelled
+   *
+   * @example
+   * ```typescript
+   * import LlamaCloud from 'llama-cloud';
+   * import fs from 'fs';
+   *
+   * const client = new LlamaCloud({ apiKey: '...' });
+   *
+   * // One-shot: upload, wait, and get markdown result
+   * const result = await client.parsing.parse({
+   *   file: fs.createReadStream('document.pdf'),
+   *   parse_mode: 'parse_page_with_agent',
+   *   result_type: 'markdown'
+   * });
+   *
+   * console.log(result.markdown);
+   * ```
+   */
+  async parse(
+    params: ParsingParseParams,
+    options?: RequestOptions,
+  ): Promise<
+    ParsingJobMarkdownResult | ParsingJobTextResult | ParsingJobJsonResult | ParsingJobStructuredResult
+  > {
+    const {
+      result_type = 'markdown',
+      pollingInterval,
+      maxInterval,
+      timeout,
+      backoff,
+      verbose,
+      ...uploadParams
+    } = params;
+
+    // Upload the file
+    const job = await this.uploadFile(uploadParams, options);
+
+    // Wait for completion
+    const pollingOptions: PollingOptions & RequestOptions = { ...options };
+    if (pollingInterval !== undefined) pollingOptions.pollingInterval = pollingInterval;
+    if (maxInterval !== undefined) pollingOptions.maxInterval = maxInterval;
+    if (timeout !== undefined) pollingOptions.timeout = timeout;
+    if (backoff !== undefined) pollingOptions.backoff = backoff;
+    if (verbose !== undefined) pollingOptions.verbose = verbose;
+
+    const completedJob = await this.job.waitForCompletion(job.id, pollingOptions);
+
+    // Get and return the result in the requested format
+    const organization_id = uploadParams.organization_id ?? null;
+    const resultParams = organization_id !== null ? { organization_id } : {};
+
+    if (completedJob.status !== 'SUCCESS') {
+      return await this.job.result.getJson(job.id, resultParams, options);
+    } else if (result_type === 'markdown') {
+      return await this.job.result.getMarkdown(job.id, resultParams, options);
+    } else if (result_type === 'text') {
+      return await this.job.result.getText(job.id, resultParams, options);
+    } else if (result_type === 'json') {
+      return await this.job.result.getJson(job.id, resultParams, options);
+    } else if (result_type === 'structured') {
+      return await this.job.result.getStructured(job.id, resultParams, options);
+    } else {
+      throw new Error(`Invalid result_type: ${result_type}`);
+    }
   }
 }
 
@@ -915,6 +999,17 @@ export interface ParsingUploadFileParams {
   webhook_url?: string;
 }
 
+export interface ParsingParseParams extends ParsingUploadFileParams, PollingOptions {
+  /**
+   * The type of result to return. Options:
+   * - "markdown": Return markdown formatted result (default)
+   * - "text": Return plain text result
+   * - "json": Return JSON formatted result
+   * - "structured": Return structured data result
+   */
+  result_type?: 'markdown' | 'text' | 'json' | 'structured';
+}
+
 Parsing.Job = Job;
 
 export declare namespace Parsing {
@@ -928,6 +1023,7 @@ export declare namespace Parsing {
     type ParsingGetSupportedFileExtensionsResponse as ParsingGetSupportedFileExtensionsResponse,
     type ParsingCreateScreenshotParams as ParsingCreateScreenshotParams,
     type ParsingUploadFileParams as ParsingUploadFileParams,
+    type ParsingParseParams as ParsingParseParams,
   };
 
   export {
