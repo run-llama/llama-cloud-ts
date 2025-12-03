@@ -88,10 +88,7 @@ export class Parsing extends APIResource {
     params: ParsingParseParams,
     options?: RequestOptions,
   ): Promise<
-    | ParsingJobMarkdownResult
-    | ParsingJobTextResult
-    | ParsingJobJsonResult
-    | ParsingJobStructuredResult
+    ParsingJobMarkdownResult | ParsingJobTextResult | ParsingJobJsonResult | ParsingJobStructuredResult
   > {
     const {
       result_type = 'markdown',
