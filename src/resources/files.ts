@@ -79,6 +79,28 @@ export class Files extends APIResource {
   }
 
   /**
+   * List metadata for all figures from all pages of a file.
+   */
+  listPageFigures(
+    id: string,
+    query: FileListPageFiguresParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<FileListPageFiguresResponse> {
+    return this._client.get(path`/api/v1/files/${id}/page-figures`, { query, ...options });
+  }
+
+  /**
+   * List metadata for all screenshots of pages from a file.
+   */
+  listPageScreenshots(
+    id: string,
+    query: FileListPageScreenshotsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<FileListPageScreenshotsResponse> {
+    return this._client.get(path`/api/v1/files/${id}/page_screenshots`, { query, ...options });
+  }
+
+  /**
    * Returns a presigned url to read the file content.
    */
   readContent(
@@ -280,6 +302,74 @@ export type FileGetPageFigureResponse = unknown;
 
 export type FileGetPageScreenshotResponse = unknown;
 
+export type FileListPageFiguresResponse = Array<FileListPageFiguresResponse.FileListPageFiguresResponseItem>;
+
+export namespace FileListPageFiguresResponse {
+  export interface FileListPageFiguresResponseItem {
+    /**
+     * The confidence of the figure
+     */
+    confidence: number;
+
+    /**
+     * The name of the figure
+     */
+    figure_name: string;
+
+    /**
+     * The size of the figure in bytes
+     */
+    figure_size: number;
+
+    /**
+     * The ID of the file that the figure was taken from
+     */
+    file_id: string;
+
+    /**
+     * The index of the page for which the figure is taken (0-indexed)
+     */
+    page_index: number;
+
+    /**
+     * Whether the figure is likely to be noise
+     */
+    is_likely_noise?: boolean;
+
+    /**
+     * Metadata for the figure
+     */
+    metadata?: { [key: string]: unknown } | null;
+  }
+}
+
+export type FileListPageScreenshotsResponse =
+  Array<FileListPageScreenshotsResponse.FileListPageScreenshotsResponseItem>;
+
+export namespace FileListPageScreenshotsResponse {
+  export interface FileListPageScreenshotsResponseItem {
+    /**
+     * The ID of the file that the page screenshot was taken from
+     */
+    file_id: string;
+
+    /**
+     * The size of the image in bytes
+     */
+    image_size: number;
+
+    /**
+     * The index of the page for which the screenshot is taken (0-indexed)
+     */
+    page_index: number;
+
+    /**
+     * Metadata for the screenshot
+     */
+    metadata?: { [key: string]: unknown } | null;
+  }
+}
+
 export interface FileDeleteParams {
   organization_id?: string | null;
 
@@ -388,6 +478,18 @@ export interface FileGetPageScreenshotParams {
   project_id?: string | null;
 }
 
+export interface FileListPageFiguresParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface FileListPageScreenshotsParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface FileReadContentParams {
   expires_at_seconds?: number | null;
 
@@ -476,11 +578,15 @@ export declare namespace Files {
     type FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse,
     type FileGetPageFigureResponse as FileGetPageFigureResponse,
     type FileGetPageScreenshotResponse as FileGetPageScreenshotResponse,
+    type FileListPageFiguresResponse as FileListPageFiguresResponse,
+    type FileListPageScreenshotsResponse as FileListPageScreenshotsResponse,
     type FileDeleteParams as FileDeleteParams,
     type FileGeneratePresignedURLParams as FileGeneratePresignedURLParams,
     type FileGetParams as FileGetParams,
     type FileGetPageFigureParams as FileGetPageFigureParams,
     type FileGetPageScreenshotParams as FileGetPageScreenshotParams,
+    type FileListPageFiguresParams as FileListPageFiguresParams,
+    type FileListPageScreenshotsParams as FileListPageScreenshotsParams,
     type FileReadContentParams as FileReadContentParams,
     type FileUploadParams as FileUploadParams,
     type FileUploadFromURLParams as FileUploadFromURLParams,
