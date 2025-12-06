@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.8.1 (2025-12-06)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/run-llama/llama-cloud-ts/compare/v0.8.0...v0.8.1)
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([4be8229](https://github.com/run-llama/llama-cloud-ts/commit/4be8229897ff09547ca3ff2d77ca4f1a5a514921))
+* **mcp:** return correct lines on typescript errors ([53e6cf6](https://github.com/run-llama/llama-cloud-ts/commit/53e6cf67e6719f579cb919ab27bc6872b7b4b8f9))
+
+
+### Chores
+
+* **internal:** codegen related update ([f8a6f4c](https://github.com/run-llama/llama-cloud-ts/commit/f8a6f4c45ef078897704a12aef89ecac7d28a274))
+* **internal:** codegen related update ([0f7b512](https://github.com/run-llama/llama-cloud-ts/commit/0f7b512b81172b98df6043451b4fe17831e54d3e))
+
 ## 0.8.0 (2025-12-04)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.7.0...v0.8.0)
