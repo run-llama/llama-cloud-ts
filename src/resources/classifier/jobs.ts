@@ -203,6 +203,11 @@ export interface ClassifyJob {
   job_record_id?: string | null;
 
   /**
+   * The classification mode to use
+   */
+  mode?: 'FAST' | 'MULTIMODAL';
+
+  /**
    * The configuration for the parsing job
    */
   parsing_configuration?: ClassifyParsingConfiguration;
@@ -336,6 +341,11 @@ export interface JobCreateParams {
    * Query param:
    */
   project_id?: string | null;
+
+  /**
+   * Body param: The classification mode to use
+   */
+  mode?: 'FAST' | 'MULTIMODAL';
 
   /**
    * Body param: The configuration for the parsing job

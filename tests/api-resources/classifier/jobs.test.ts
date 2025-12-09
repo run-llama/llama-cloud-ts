@@ -30,6 +30,7 @@ describe('resource jobs', () => {
       rules: [{ description: 'contains invoice number, line items, and total amount', type: 'invoice' }],
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      mode: 'FAST',
       parsing_configuration: { lang: 'af', max_pages: 0, target_pages: [0] },
     });
   });
