@@ -172,6 +172,11 @@ export interface File {
   data_source_id?: string | null;
 
   /**
+   * The expiration date for the file. Files past this date can be deleted.
+   */
+  expires_at?: string | null;
+
+  /**
    * The ID of the file in the external system
    */
   external_file_id?: string | null;
@@ -211,6 +216,9 @@ export interface File {
   updated_at?: string | null;
 }
 
+/**
+ * Schema for creating a file.
+ */
 export interface FileCreate {
   /**
    * Name that will be used for created file. If possible, always include the file
