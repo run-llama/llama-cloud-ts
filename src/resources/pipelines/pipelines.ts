@@ -400,7 +400,7 @@ export interface LlamaParseParameters {
   page_suffix?: string | null;
 
   /**
-   * Enum for representing the mode of parsing to be used
+   * Enum for representing the mode of parsing to be used.
    */
   parse_mode?: ParsingAPI.ParsingMode | null;
 
@@ -411,6 +411,8 @@ export interface LlamaParseParameters {
   premium_mode?: boolean | null;
 
   presentation_out_of_bounds_content?: boolean | null;
+
+  presentation_skip_embedded_data?: boolean | null;
 
   preserve_layout_alignment_across_pages?: boolean | null;
 
@@ -429,7 +431,7 @@ export interface LlamaParseParameters {
   remove_hidden_text?: boolean | null;
 
   /**
-   * Enum for representing the different available page error handling modes
+   * Enum for representing the different available page error handling modes.
    */
   replace_failed_page_mode?: ParsingAPI.FailPageMode | null;
 

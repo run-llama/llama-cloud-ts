@@ -1,6 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Job, type JobGetDetailsResponse, type JobGeneratePresignedURLParams } from './job';
+export {
+  Job,
+  type JobGetDetailsResponse,
+  type JobGeneratePresignedURLParams,
+  type JobGetParams,
+  type JobGetDetailsParams,
+} from './job';
 export {
   Result,
   type ParsingJobJsonResult,
@@ -12,6 +18,8 @@ export {
   type ResultGetImageParams,
   type ResultGetJsonParams,
   type ResultGetMarkdownParams,
+  type ResultGetPdfParams,
   type ResultGetStructuredParams,
   type ResultGetTextParams,
+  type ResultGetXlsxParams,
 } from './result';

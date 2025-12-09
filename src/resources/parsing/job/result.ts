@@ -11,8 +11,9 @@ export class Result extends APIResource {
    * Get a job by id
    */
   getImage(name: string, params: ResultGetImageParams, options?: RequestOptions): APIPromise<Response> {
-    const { job_id } = params;
+    const { job_id, ...query } = params;
     return this._client.get(path`/api/v1/parsing/job/${job_id}/result/image/${name}`, {
+      query,
       ...options,
       headers: buildHeaders([{ Accept: 'image/jpeg' }, options?.headers]),
       __binaryResponse: true,
@@ -50,8 +51,12 @@ export class Result extends APIResource {
   /**
    * Get a job by id
    */
-  getPdf(jobID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.get(path`/api/v1/parsing/job/${jobID}/result/pdf`, options);
+  getPdf(
+    jobID: string,
+    query: ResultGetPdfParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    return this._client.get(path`/api/v1/parsing/job/${jobID}/result/pdf`, { query, ...options });
   }
 
   /**
@@ -85,14 +90,21 @@ export class Result extends APIResource {
   /**
    * Get a job by id
    */
-  getXlsx(jobID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.get(path`/api/v1/parsing/job/${jobID}/result/xlsx`, options);
+  getXlsx(
+    jobID: string,
+    query: ResultGetXlsxParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    return this._client.get(path`/api/v1/parsing/job/${jobID}/result/xlsx`, { query, ...options });
   }
 }
 
+/**
+ * Response schema for parsing job JSON result.
+ */
 export interface ParsingJobJsonResult {
   /**
-   * Parsing job metadata , including usage
+   * Parsing job metadata, including usage
    */
   job_metadata: unknown;
 
@@ -102,9 +114,12 @@ export interface ParsingJobJsonResult {
   pages: unknown;
 }
 
+/**
+ * Response schema for parsing job markdown result.
+ */
 export interface ParsingJobMarkdownResult {
   /**
-   * Parsing job metadata , including usage
+   * Parsing job metadata, including usage
    */
   job_metadata: unknown;
 
@@ -114,9 +129,12 @@ export interface ParsingJobMarkdownResult {
   markdown: string;
 }
 
+/**
+ * Response schema for parsing job structured result.
+ */
 export interface ParsingJobStructuredResult {
   /**
-   * Parsing job metadata , including usage
+   * Parsing job metadata, including usage
    */
   job_metadata: unknown;
 
@@ -126,9 +144,12 @@ export interface ParsingJobStructuredResult {
   structured: unknown;
 }
 
+/**
+ * Response schema for parsing job text result.
+ */
 export interface ParsingJobTextResult {
   /**
-   * Parsing job metadata , including usage
+   * Parsing job metadata, including usage
    */
   job_metadata: unknown;
 
@@ -143,23 +164,56 @@ export type ResultGetPdfResponse = unknown;
 export type ResultGetXlsxResponse = unknown;
 
 export interface ResultGetImageParams {
+  /**
+   * Path param:
+   */
   job_id: string;
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
 }
 
 export interface ResultGetJsonParams {
   organization_id?: string | null;
+
+  project_id?: string | null;
 }
 
 export interface ResultGetMarkdownParams {
   organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface ResultGetPdfParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
 }
 
 export interface ResultGetStructuredParams {
   organization_id?: string | null;
+
+  project_id?: string | null;
 }
 
 export interface ResultGetTextParams {
   organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface ResultGetXlsxParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
 }
 
 export declare namespace Result {
@@ -173,7 +227,9 @@ export declare namespace Result {
     type ResultGetImageParams as ResultGetImageParams,
     type ResultGetJsonParams as ResultGetJsonParams,
     type ResultGetMarkdownParams as ResultGetMarkdownParams,
+    type ResultGetPdfParams as ResultGetPdfParams,
     type ResultGetStructuredParams as ResultGetStructuredParams,
     type ResultGetTextParams as ResultGetTextParams,
+    type ResultGetXlsxParams as ResultGetXlsxParams,
   };
 }

@@ -1,6 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Job, type JobGetDetailsResponse, type JobGeneratePresignedURLParams } from './job/index';
+export {
+  Job,
+  type JobGetDetailsResponse,
+  type JobGeneratePresignedURLParams,
+  type JobGetParams,
+  type JobGetDetailsParams,
+} from './job/index';
 export {
   Parsing,
   type FailPageMode,

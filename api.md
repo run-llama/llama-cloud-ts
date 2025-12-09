@@ -230,8 +230,8 @@ Types:
 Methods:
 
 - <code title="get /api/v1/parsing/job/{job_id}/read/{filename}">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">generatePresignedURL</a>(filename, { ...params }) -> PresignedURL</code>
-- <code title="get /api/v1/parsing/job/{job_id}">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">get</a>(jobID) -> ParsingJob</code>
-- <code title="get /api/v1/parsing/job/{job_id}/details">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">getDetails</a>(jobID) -> unknown</code>
+- <code title="get /api/v1/parsing/job/{job_id}">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">get</a>(jobID, { ...params }) -> ParsingJob</code>
+- <code title="get /api/v1/parsing/job/{job_id}/details">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">getDetails</a>(jobID, { ...params }) -> unknown</code>
 
 ### Result
 
@@ -249,10 +249,10 @@ Methods:
 - <code title="get /api/v1/parsing/job/{job_id}/result/image/{name}">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getImage</a>(name, { ...params }) -> Response</code>
 - <code title="get /api/v1/parsing/job/{job_id}/result/json">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getJson</a>(jobID, { ...params }) -> ParsingJobJsonResult</code>
 - <code title="get /api/v1/parsing/job/{job_id}/result/markdown">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getMarkdown</a>(jobID, { ...params }) -> ParsingJobMarkdownResult</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/pdf">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getPdf</a>(jobID) -> unknown</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/pdf">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getPdf</a>(jobID, { ...params }) -> unknown</code>
 - <code title="get /api/v1/parsing/job/{job_id}/result/structured">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getStructured</a>(jobID, { ...params }) -> ParsingJobStructuredResult</code>
 - <code title="get /api/v1/parsing/job/{job_id}/result/text">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getText</a>(jobID, { ...params }) -> ParsingJobTextResult</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getXlsx</a>(jobID) -> unknown</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getXlsx</a>(jobID, { ...params }) -> unknown</code>
 
 # Classifier
 

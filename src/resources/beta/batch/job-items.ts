@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../../core/resource';
 import * as JobsAPI from '../../classifier/jobs';
+import * as ExtractionJobsAPI from '../../extraction/jobs';
 import * as ParsingAPI from '../../parsing/parsing';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, PaginatedBatchItems, type PaginatedBatchItemsParams } from '../../../core/pagination';
@@ -428,7 +429,7 @@ export namespace JobItemGetProcessingResultsResponse {
         page_suffix?: string | null;
 
         /**
-         * Enum for representing the mode of parsing to be used
+         * Enum for representing the mode of parsing to be used.
          */
         parse_mode?: ParsingAPI.ParsingMode | null;
 
@@ -442,6 +443,10 @@ export namespace JobItemGetProcessingResultsResponse {
         precise_bounding_box?: boolean | null;
 
         premium_mode?: boolean | null;
+
+        presentation_out_of_bounds_content?: boolean | null;
+
+        presentation_skip_embedded_data?: boolean | null;
 
         preserve_layout_alignment_across_pages?: boolean | null;
 
@@ -457,8 +462,10 @@ export namespace JobItemGetProcessingResultsResponse {
 
         project_id?: string | null;
 
+        remove_hidden_text?: boolean | null;
+
         /**
-         * Enum for representing the different available page error handling modes
+         * Enum for representing the different available page error handling modes.
          */
         replace_failed_page_mode?: ParsingAPI.FailPageMode | null;
 
@@ -522,6 +529,11 @@ export namespace JobItemGetProcessingResultsResponse {
         vendor_multimodal_model_name?: string | null;
 
         version?: string | null;
+
+        /**
+         * The outbound webhook configurations
+         */
+        webhook_configurations?: Array<ExtractionJobsAPI.WebhookConfiguration> | null;
 
         webhook_url?: string | null;
       }
