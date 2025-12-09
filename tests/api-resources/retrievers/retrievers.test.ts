@@ -206,7 +206,7 @@ describe('resource retrievers', () => {
           },
         },
       ],
-      rerank_config: { top_n: 0, type: 'system_default' },
+      rerank_config: { top_n: 1, type: 'system_default' },
       rerank_top_n: 0,
     });
   });

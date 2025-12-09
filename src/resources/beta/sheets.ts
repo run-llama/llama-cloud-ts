@@ -229,6 +229,12 @@ export interface SheetsParsingConfig {
   extraction_range?: string | null;
 
   /**
+   * Return a flattened dataframe when a detected table is recognized as
+   * hierarchical.
+   */
+  flatten_hierarchical_tables?: boolean;
+
+  /**
    * Whether to generate additional metadata (title, description) for each extracted
    * region.
    */
@@ -244,6 +250,13 @@ export interface SheetsParsingConfig {
    * processed.
    */
   sheet_names?: Array<string> | null;
+
+  /**
+   * Influences how likely similar-looking regions are merged into a single table.
+   * Useful for spreadsheets that either have sparse tables (strong merging) or many
+   * distinct tables close together (weak merging).
+   */
+  table_merge_sensitivity?: 'strong' | 'weak';
 
   /**
    * Enables experimental processing. Accuracy may be impacted.

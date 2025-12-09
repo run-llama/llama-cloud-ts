@@ -159,6 +159,7 @@ describe('resource parsing', () => {
           precise_bounding_box: true,
           premium_mode: true,
           presentation_out_of_bounds_content: true,
+          presentation_skip_embedded_data: true,
           preserve_layout_alignment_across_pages: true,
           preserve_very_small_text: true,
           preset: 'preset',

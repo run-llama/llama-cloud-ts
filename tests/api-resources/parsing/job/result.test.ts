@@ -9,7 +9,11 @@ const client = new LlamaCloud({
 
 describe('resource result', () => {
   test('getImage: required and optional params', async () => {
-    const response = await client.parsing.job.result.getImage('name', { job_id: 'job_id' });
+    const response = await client.parsing.job.result.getImage('name', {
+      job_id: 'job_id',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
   });
 
   // Prism tests are disabled
@@ -30,7 +34,10 @@ describe('resource result', () => {
     await expect(
       client.parsing.job.result.getJson(
         'job_id',
-        { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);
@@ -54,7 +61,10 @@ describe('resource result', () => {
     await expect(
       client.parsing.job.result.getMarkdown(
         'job_id',
-        { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);
@@ -70,6 +80,21 @@ describe('resource result', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getPdf: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.parsing.job.result.getPdf(
+        'job_id',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
   // Prism tests are disabled
@@ -90,7 +115,10 @@ describe('resource result', () => {
     await expect(
       client.parsing.job.result.getStructured(
         'job_id',
-        { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);
@@ -114,7 +142,10 @@ describe('resource result', () => {
     await expect(
       client.parsing.job.result.getText(
         'job_id',
-        { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);
@@ -130,5 +161,20 @@ describe('resource result', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getXlsx: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.parsing.job.result.getXlsx(
+        'job_id',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 });

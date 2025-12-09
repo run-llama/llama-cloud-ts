@@ -2,7 +2,13 @@
 
 import { APIResource } from '../../core/resource';
 import * as JobAPI from './job/job';
-import { Job, JobGeneratePresignedURLParams, JobGetDetailsResponse } from './job/job';
+import {
+  Job,
+  JobGeneratePresignedURLParams,
+  JobGetDetailsParams,
+  JobGetDetailsResponse,
+  JobGetParams,
+} from './job/job';
 import { APIPromise } from '../../core/api-promise';
 import { type Uploadable } from '../../core/uploads';
 import { RequestOptions } from '../../internal/request-options';
@@ -50,10 +56,13 @@ export class Parsing extends APIResource {
 }
 
 /**
- * Enum for representing the different available page error handling modes
+ * Enum for representing the different available page error handling modes.
  */
 export type FailPageMode = 'raw_text' | 'blank_page' | 'error_message';
 
+/**
+ * Enum for supported file extensions.
+ */
 export type LlamaParseSupportedFileExtensions =
   | '.pdf'
   | '.doc'
@@ -132,7 +141,7 @@ export type LlamaParseSupportedFileExtensions =
   | '.tsv';
 
 /**
- * Enum for representing the languages supported by the parser
+ * Enum for representing the languages supported by the parser.
  */
 export type ParserLanguages =
   | 'af'
@@ -222,6 +231,9 @@ export type ParserLanguages =
   | 'te'
   | 'kn';
 
+/**
+ * Response schema for a parsing job.
+ */
 export interface ParsingJob {
   id: string;
 
@@ -236,7 +248,7 @@ export interface ParsingJob {
 }
 
 /**
- * Enum for representing the mode of parsing to be used
+ * Enum for representing the mode of parsing to be used.
  */
 export type ParsingMode =
   | 'parse_page_without_llm'
@@ -719,7 +731,7 @@ export interface ParsingUploadFileParams {
   page_suffix?: string;
 
   /**
-   * Body param: Enum for representing the mode of parsing to be used
+   * Body param: Enum for representing the mode of parsing to be used.
    */
   parse_mode?: ParsingMode | null;
 
@@ -746,6 +758,11 @@ export interface ParsingUploadFileParams {
   /**
    * Body param:
    */
+  presentation_skip_embedded_data?: boolean;
+
+  /**
+   * Body param:
+   */
   preserve_layout_alignment_across_pages?: boolean;
 
   /**
@@ -765,7 +782,7 @@ export interface ParsingUploadFileParams {
 
   /**
    * Body param: Enum for representing the different available page error handling
-   * modes
+   * modes.
    */
   replace_failed_page_mode?: FailPageMode | null;
 
@@ -934,5 +951,7 @@ export declare namespace Parsing {
     Job as Job,
     type JobGetDetailsResponse as JobGetDetailsResponse,
     type JobGeneratePresignedURLParams as JobGeneratePresignedURLParams,
+    type JobGetParams as JobGetParams,
+    type JobGetDetailsParams as JobGetDetailsParams,
   };
 }
