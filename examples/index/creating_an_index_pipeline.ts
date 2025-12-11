@@ -1,3 +1,4 @@
+import { stat } from 'fs';
 import LlamaCloud from 'llama-cloud';
 
 async function createIndex() {
@@ -9,7 +10,7 @@ async function createIndex() {
   // 3. The data source (if blank, no data will be connected by default, you can always add data later)
   // 4. The parsing parameters when ingesting data (if blank, the default parsing parameters will be used)
   // 5. The transform configuration when processing ingested data (if blank, the default transform configuration will be used)
-  const pipeline = await client.pipelines.create({
+  const pipeline = await client.pipelines.upsert({
     name: 'my-first-index',
     project_id: 'my-project-id',
     data_sink_id: await createDataSink(),
@@ -40,6 +41,18 @@ async function createIndex() {
     ],
   });
   console.log(`Uploaded ${documents.length} documents to the index.`);
+
+  // Optional: Connect a data source after creating the index
+  // const dataSourceId = await createDataSource();
+  // await client.pipelines.dataSources.updateDataSources(pipeline.id, {
+  //  body: [
+  //    { 
+  //      data_source_id: dataSourceId,
+  //      sync_interval: 43200.0 // Optional, scheduled sync frequency in seconds. In this case, every 12 hours.
+  //    },
+  //  ],
+  // });
+  // console.log(`Connected data source ${dataSourceId} to the index.`);
 
   // Optional: Wait for indexing to complete
   let statusResp = await client.pipelines.getStatus(pipeline.id, {});
