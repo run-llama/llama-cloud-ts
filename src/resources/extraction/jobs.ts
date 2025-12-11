@@ -2,8 +2,8 @@
 
 import { APIResource } from '../../core/resource';
 import * as FilesAPI from '../files';
+import * as ParsingAPI from '../parsing';
 import * as RunsAPI from './runs';
-import * as ParsingAPI from '../parsing/parsing';
 import * as ExtractionAgentsAPI from './extraction-agents/extraction-agents';
 import { APIPromise } from '../../core/api-promise';
 import { type Uploadable } from '../../core/uploads';

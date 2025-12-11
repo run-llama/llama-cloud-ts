@@ -45,14 +45,15 @@ export {
   Parsing,
   type FailPageMode,
   type LlamaParseSupportedFileExtensions,
-  type ParserLanguages,
   type ParsingJob,
+  type ParsingLanguages,
   type ParsingMode,
   type StatusEnum,
-  type ParsingGetSupportedFileExtensionsResponse,
-  type ParsingCreateScreenshotParams,
+  type ParsingGetResponse,
+  type ParsingCreateParams,
+  type ParsingGetParams,
   type ParsingUploadFileParams,
-} from './parsing/parsing';
+} from './parsing';
 export {
   Pipelines,
   type AdvancedModeTransformConfig,

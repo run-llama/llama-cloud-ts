@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as FilesAPI from '../files';
-import * as ParsingAPI from '../parsing/parsing';
+import * as ParsingAPI from '../parsing';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';

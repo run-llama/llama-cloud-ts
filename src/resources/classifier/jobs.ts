@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as ParsingAPI from '../parsing/parsing';
+import * as ParsingAPI from '../parsing';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -151,7 +151,7 @@ export interface ClassifyParsingConfiguration {
   /**
    * The language to parse the files in
    */
-  lang?: ParsingAPI.ParserLanguages;
+  lang?: ParsingAPI.ParsingLanguages;
 
   /**
    * The maximum number of pages to parse

@@ -2,8 +2,8 @@
 
 import { APIResource } from '../../core/resource';
 import * as DataSinksAPI from '../data-sinks';
+import * as ParsingAPI from '../parsing';
 import * as JobsAPI from '../extraction/jobs';
-import * as ParsingAPI from '../parsing/parsing';
 import * as DataSourcesAPI from './data-sources';
 import {
   DataSourceGetDataSourcesResponse,
@@ -357,7 +357,7 @@ export interface LlamaParseParameters {
 
   keep_page_separator_when_merging_tables?: boolean | null;
 
-  languages?: Array<ParsingAPI.ParserLanguages>;
+  languages?: Array<ParsingAPI.ParsingLanguages>;
 
   layout_aware?: boolean | null;
 
