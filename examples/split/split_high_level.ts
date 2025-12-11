@@ -63,4 +63,3 @@ async function splitDocument() {
 
 // Run the example
 splitDocument().catch(console.error);
-
