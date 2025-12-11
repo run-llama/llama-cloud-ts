@@ -29,7 +29,9 @@ const client = new LlamaCloud({
   apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted
 });
 
-const pipelines = await client.pipelines.list({ project_id: 'my-project-id' });
+const parsingJob = await client.parsing.uploadFile();
+
+console.log(parsingJob.id);
 ```
 
 ### Request & Response types
@@ -292,7 +294,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.pipelines.list({
+client.parsing.uploadFile({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
