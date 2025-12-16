@@ -82,9 +82,6 @@ import {
   FailPageMode,
   LlamaParseSupportedFileExtensions,
   Parsing,
-  ParsingCreateParams,
-  ParsingGetParams,
-  ParsingGetResponse,
   ParsingJob,
   ParsingLanguages,
   ParsingMode,
@@ -1048,9 +1045,6 @@ export declare namespace LlamaCloud {
     type ParsingLanguages as ParsingLanguages,
     type ParsingMode as ParsingMode,
     type StatusEnum as StatusEnum,
-    type ParsingGetResponse as ParsingGetResponse,
-    type ParsingCreateParams as ParsingCreateParams,
-    type ParsingGetParams as ParsingGetParams,
     type ParsingUploadFileParams as ParsingUploadFileParams,
   };
 

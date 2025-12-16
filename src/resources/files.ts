@@ -259,6 +259,12 @@ export interface FileCreate {
   resource_info?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
   } | null;
+
+  /**
+   * Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
+   * expiration). If not specified, defaults to permanent storage.
+   */
+  storage_type?: 'ephemeral' | 'permanent' | (string & {});
 }
 
 /**
@@ -439,6 +445,12 @@ export interface FileGeneratePresignedURLParams {
   resource_info?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
   } | null;
+
+  /**
+   * Body param: Storage type for the file. Valid values: 'Ephemeral', 'Permanent'
+   * (no expiration). If not specified, defaults to permanent storage.
+   */
+  storage_type?: 'ephemeral' | 'permanent' | (string & {});
 }
 
 export interface FileGetParams {
