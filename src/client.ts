@@ -86,6 +86,7 @@ import {
   ParsingLanguages,
   ParsingMode,
   ParsingUploadFileParams,
+  ParsingUploadFileResponse,
   StatusEnum,
 } from './resources/parsing';
 import {
@@ -1045,6 +1046,7 @@ export declare namespace LlamaCloud {
     type ParsingLanguages as ParsingLanguages,
     type ParsingMode as ParsingMode,
     type StatusEnum as StatusEnum,
+    type ParsingUploadFileResponse as ParsingUploadFileResponse,
     type ParsingUploadFileParams as ParsingUploadFileParams,
   };
 

@@ -49,6 +49,7 @@ export {
   type ParsingLanguages,
   type ParsingMode,
   type StatusEnum,
+  type ParsingUploadFileResponse,
   type ParsingUploadFileParams,
 } from './parsing';
 export {

@@ -11,7 +11,7 @@ export class Parsing extends APIResource {
   uploadFile(
     params: ParsingUploadFileParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ParsingJob> {
+  ): APIPromise<ParsingUploadFileResponse> {
     const { organization_id, project_id } = params ?? {};
     return this._client.post('/api/v2alpha1/parse/upload', {
       query: { organization_id, project_id },
@@ -230,6 +230,46 @@ export type ParsingMode =
  */
 export type StatusEnum = 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED';
 
+/**
+ * Response schema for a parse job.
+ */
+export interface ParsingUploadFileResponse {
+  /**
+   * Unique identifier for the parse job
+   */
+  id: string;
+
+  /**
+   * Job-specific parameters as JSON
+   */
+  parameters: { [key: string]: unknown };
+
+  /**
+   * Project this job belongs to
+   */
+  project_id: string;
+
+  /**
+   * Current status of the job (e.g., pending, running, completed, failed, cancelled)
+   */
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Error message if job failed
+   */
+  error_message?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
 export interface ParsingUploadFileParams {
   organization_id?: string | null;
 
@@ -244,6 +284,7 @@ export declare namespace Parsing {
     type ParsingLanguages as ParsingLanguages,
     type ParsingMode as ParsingMode,
     type StatusEnum as StatusEnum,
+    type ParsingUploadFileResponse as ParsingUploadFileResponse,
     type ParsingUploadFileParams as ParsingUploadFileParams,
   };
 }
