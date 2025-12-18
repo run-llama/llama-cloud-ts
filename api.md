@@ -213,10 +213,16 @@ Types:
 - <code><a href="./src/resources/parsing.ts">ParsingLanguages</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingMode</a></code>
 - <code><a href="./src/resources/parsing.ts">StatusEnum</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingCreateResponse</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingListResponse</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingGetResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingUploadFileResponse</a></code>
 
 Methods:
 
+- <code title="post /api/v2alpha1/parse">client.parsing.<a href="./src/resources/parsing.ts">create</a>({ ...params }) -> ParsingCreateResponse</code>
+- <code title="get /api/v2alpha1/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedClassifyJobs</code>
+- <code title="get /api/v2alpha1/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
 - <code title="post /api/v2alpha1/parse/upload">client.parsing.<a href="./src/resources/parsing.ts">uploadFile</a>({ ...params }) -> ParsingUploadFileResponse</code>
 
 # Classifier
