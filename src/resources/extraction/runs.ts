@@ -87,7 +87,8 @@ export interface ExtractConfig {
   confidence_scores?: boolean;
 
   /**
-   * Extract model options.
+   * The extract model to use for data extraction. If not provided, uses the default
+   * for the extraction mode.
    */
   extract_model?:
     | 'openai-gpt-4-1'
@@ -101,6 +102,7 @@ export interface ExtractConfig {
     | 'gemini-2.5-pro'
     | 'openai-gpt-4o'
     | 'openai-gpt-4o-mini'
+    | (string & {})
     | null;
 
   /**

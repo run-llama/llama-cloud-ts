@@ -29,9 +29,9 @@ const client = new LlamaCloud({
   apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted
 });
 
-const parsingJob = await client.parsing.uploadFile();
+const response = await client.parsing.uploadFile();
 
-console.log(parsingJob.id);
+console.log(response.id);
 ```
 
 ### Request & Response types
