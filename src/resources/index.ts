@@ -49,8 +49,15 @@ export {
   type ParsingLanguages,
   type ParsingMode,
   type StatusEnum,
+  type ParsingCreateResponse,
+  type ParsingListResponse,
+  type ParsingGetResponse,
   type ParsingUploadFileResponse,
+  type ParsingCreateParams,
+  type ParsingListParams,
+  type ParsingGetParams,
   type ParsingUploadFileParams,
+  type ParsingListResponsesPaginatedClassifyJobs,
 } from './parsing';
 export {
   Pipelines,
