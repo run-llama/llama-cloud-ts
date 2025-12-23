@@ -294,7 +294,7 @@ export interface ParsingCreateResponse {
   /**
    * Current status of the job (e.g., pending, running, completed, failed, cancelled)
    */
-  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
 
   /**
    * Creation datetime
@@ -334,7 +334,7 @@ export interface ParsingListResponse {
   /**
    * Current status of the job (e.g., pending, running, completed, failed, cancelled)
    */
-  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
 
   /**
    * Creation datetime
@@ -357,10 +357,6 @@ export interface ParsingListResponse {
  *
  * The job field is always present with status information. Other fields are only
  * included if requested via the corresponding flags in ParseResultRequest.
- *
- * The result_content_metadata field is only included when requested via the expand
- * parameter. It provides size information for available results, allowing clients
- * to determine result sizes before fetching content.
  */
 export interface ParsingGetResponse {
   /**
@@ -377,13 +373,6 @@ export interface ParsingGetResponse {
    * Markdown result (if requested)
    */
   markdown?: ParsingGetResponse.Markdown | null;
-
-  /**
-   * Metadata about available results (sizes, existence) - only included when
-   * 'result_content_metadata' is in the expand parameter. Maps result type names
-   * (e.g., 'text', 'markdown', 'items') to their metadata.
-   */
-  result_content_metadata?: { [key: string]: ParsingGetResponse.ResultContentMetadata } | null;
 
   /**
    * Plain text result (if requested)
@@ -414,7 +403,7 @@ export namespace ParsingGetResponse {
     /**
      * Current status of the job (e.g., pending, running, completed, failed, cancelled)
      */
-    status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+    status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
 
     /**
      * Creation datetime
@@ -685,21 +674,6 @@ export namespace ParsingGetResponse {
   }
 
   /**
-   * Metadata about a specific result type stored in S3.
-   */
-  export interface ResultContentMetadata {
-    /**
-     * Size of the result file in S3 (bytes)
-     */
-    size_bytes: number;
-
-    /**
-     * Whether the result file exists in S3
-     */
-    exists?: boolean;
-  }
-
-  /**
    * Plain text result (if requested)
    */
   export interface Text {
@@ -746,7 +720,7 @@ export interface ParsingUploadFileResponse {
   /**
    * Current status of the job (e.g., pending, running, completed, failed, cancelled)
    */
-  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
 
   /**
    * Creation datetime
@@ -1155,7 +1129,7 @@ export namespace ParsingCreateParams {
     max_pages?: number | null;
 
     /**
-     * Specific pages to process (e.g., '1,3,5-8') using 1-based indexing
+     * Specific pages to process (e.g., '1,3,5-10')
      */
     target_pages?: string | null;
   }
@@ -1232,11 +1206,6 @@ export namespace ParsingCreateParams {
     aggressive_table_extraction?: boolean | null;
 
     /**
-     * Configuration for auto mode parsing with triggers and parsing options
-     */
-    auto_mode_configuration?: Array<ProcessingOptions.AutoModeConfiguration> | null;
-
-    /**
      * Options for ignoring specific text types
      */
     ignore?: ProcessingOptions.Ignore;
@@ -1248,352 +1217,6 @@ export namespace ParsingCreateParams {
   }
 
   export namespace ProcessingOptions {
-    /**
-     * A single entry in the auto mode configuration array.
-     */
-    export interface AutoModeConfiguration {
-      /**
-       * Configuration for parsing in auto mode (V2 format).
-       *
-       * This uses V2 API naming conventions. The backend service will convert these to
-       * the V1 format expected by the llamaparse worker.
-       */
-      parsing_conf: AutoModeConfiguration.ParsingConf;
-
-      /**
-       * Single glob pattern to match against filename
-       */
-      filename_match_glob?: string | null;
-
-      /**
-       * List of glob patterns to match against filename
-       */
-      filename_match_glob_list?: Array<string> | null;
-
-      /**
-       * Regex pattern to match against filename
-       */
-      filename_regexp?: string | null;
-
-      /**
-       * Regex mode flags (e.g., 'i' for case-insensitive)
-       */
-      filename_regexp_mode?: string | null;
-
-      /**
-       * Trigger if page contains a full-page image (scanned page detection)
-       */
-      full_page_image_in_page?: boolean | null;
-
-      /**
-       * Threshold for full page image detection (0.0-1.0, default 0.8)
-       */
-      full_page_image_in_page_threshold?: number | string | null;
-
-      /**
-       * Trigger if page contains non-screenshot images
-       */
-      image_in_page?: boolean | null;
-
-      /**
-       * Trigger if page contains this layout element type
-       */
-      layout_element_in_page?: string | null;
-
-      /**
-       * Confidence threshold for layout element detection
-       */
-      layout_element_in_page_confidence_threshold?: number | string | null;
-
-      /**
-       * Trigger if page has more than N charts
-       */
-      page_contains_at_least_n_charts?: number | string | null;
-
-      /**
-       * Trigger if page has more than N images
-       */
-      page_contains_at_least_n_images?: number | string | null;
-
-      /**
-       * Trigger if page has more than N layout elements
-       */
-      page_contains_at_least_n_layout_elements?: number | string | null;
-
-      /**
-       * Trigger if page has more than N lines
-       */
-      page_contains_at_least_n_lines?: number | string | null;
-
-      /**
-       * Trigger if page has more than N links
-       */
-      page_contains_at_least_n_links?: number | string | null;
-
-      /**
-       * Trigger if page has more than N numeric words
-       */
-      page_contains_at_least_n_numbers?: number | string | null;
-
-      /**
-       * Trigger if page has more than N% numeric words
-       */
-      page_contains_at_least_n_percent_numbers?: number | string | null;
-
-      /**
-       * Trigger if page has more than N tables
-       */
-      page_contains_at_least_n_tables?: number | string | null;
-
-      /**
-       * Trigger if page has more than N words
-       */
-      page_contains_at_least_n_words?: number | string | null;
-
-      /**
-       * Trigger if page has fewer than N charts
-       */
-      page_contains_at_most_n_charts?: number | string | null;
-
-      /**
-       * Trigger if page has fewer than N images
-       */
-      page_contains_at_most_n_images?: number | string | null;
-
-      /**
-       * Trigger if page has fewer than N layout elements
-       */
-      page_contains_at_most_n_layout_elements?: number | string | null;
-
-      /**
-       * Trigger if page has fewer than N lines
-       */
-      page_contains_at_most_n_lines?: number | string | null;
-
-      /**
-       * Trigger if page has fewer than N links
-       */
-      page_contains_at_most_n_links?: number | string | null;
-
-      /**
-       * Trigger if page has fewer than N numeric words
-       */
-      page_contains_at_most_n_numbers?: number | string | null;
-
-      /**
-       * Trigger if page has fewer than N% numeric words
-       */
-      page_contains_at_most_n_percent_numbers?: number | string | null;
-
-      /**
-       * Trigger if page has fewer than N tables
-       */
-      page_contains_at_most_n_tables?: number | string | null;
-
-      /**
-       * Trigger if page has fewer than N words
-       */
-      page_contains_at_most_n_words?: number | string | null;
-
-      /**
-       * Trigger if page has more than N characters
-       */
-      page_longer_than_n_chars?: number | string | null;
-
-      /**
-       * Trigger on pages with markdown extraction errors
-       */
-      page_md_error?: boolean | null;
-
-      /**
-       * Trigger if page has fewer than N characters
-       */
-      page_shorter_than_n_chars?: number | string | null;
-
-      /**
-       * Regex pattern to match in page content
-       */
-      regexp_in_page?: string | null;
-
-      /**
-       * Regex mode flags for regexp_in_page
-       */
-      regexp_in_page_mode?: string | null;
-
-      /**
-       * Trigger if page contains a table
-       */
-      table_in_page?: boolean | null;
-
-      /**
-       * Trigger if page text/markdown contains this string
-       */
-      text_in_page?: string | null;
-
-      /**
-       * How to combine multiple trigger conditions: 'and' (all must match, default) or
-       * 'or' (any can match)
-       */
-      trigger_mode?: string | null;
-    }
-
-    export namespace AutoModeConfiguration {
-      /**
-       * Configuration for parsing in auto mode (V2 format).
-       *
-       * This uses V2 API naming conventions. The backend service will convert these to
-       * the V1 format expected by the llamaparse worker.
-       */
-      export interface ParsingConf {
-        /**
-         * Whether to use adaptive long table handling
-         */
-        adaptive_long_table?: boolean | null;
-
-        /**
-         * Whether to use aggressive table extraction
-         */
-        aggressive_table_extraction?: boolean | null;
-
-        /**
-         * Crop box options for auto mode parsing configuration.
-         */
-        crop_box?: ParsingConf.CropBox | null;
-
-        /**
-         * Custom prompt for AI-powered parsing
-         */
-        custom_prompt?: string | null;
-
-        /**
-         * Whether to extract layout information
-         */
-        extract_layout?: boolean | null;
-
-        /**
-         * Whether to use high resolution OCR
-         */
-        high_res_ocr?: boolean | null;
-
-        /**
-         * Ignore options for auto mode parsing configuration.
-         */
-        ignore?: ParsingConf.Ignore | null;
-
-        /**
-         * Primary language of the document
-         */
-        language?: string | null;
-
-        /**
-         * Whether to use outlined table extraction
-         */
-        outlined_table_extraction?: boolean | null;
-
-        /**
-         * Presentation-specific options for auto mode parsing configuration.
-         */
-        presentation?: ParsingConf.Presentation | null;
-
-        /**
-         * Spatial text options for auto mode parsing configuration.
-         */
-        spatial_text?: ParsingConf.SpatialText | null;
-
-        /**
-         * The parsing tier to use
-         */
-        tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus' | null;
-
-        /**
-         * Version of the tier configuration
-         */
-        version?: '2025-12-18' | '2025-12-11' | 'latest' | (string & {}) | null;
-      }
-
-      export namespace ParsingConf {
-        /**
-         * Crop box options for auto mode parsing configuration.
-         */
-        export interface CropBox {
-          /**
-           * Bottom boundary of crop box as ratio (0-1)
-           */
-          bottom?: number | null;
-
-          /**
-           * Left boundary of crop box as ratio (0-1)
-           */
-          left?: number | null;
-
-          /**
-           * Right boundary of crop box as ratio (0-1)
-           */
-          right?: number | null;
-
-          /**
-           * Top boundary of crop box as ratio (0-1)
-           */
-          top?: number | null;
-        }
-
-        /**
-         * Ignore options for auto mode parsing configuration.
-         */
-        export interface Ignore {
-          /**
-           * Whether to ignore diagonal text in the document
-           */
-          ignore_diagonal_text?: boolean | null;
-
-          /**
-           * Whether to ignore hidden text in the document
-           */
-          ignore_hidden_text?: boolean | null;
-        }
-
-        /**
-         * Presentation-specific options for auto mode parsing configuration.
-         */
-        export interface Presentation {
-          /**
-           * Extract out of bounds content in presentation slides
-           */
-          out_of_bounds_content?: boolean | null;
-
-          /**
-           * Skip extraction of embedded data for charts in presentation slides
-           */
-          skip_embedded_data?: boolean | null;
-        }
-
-        /**
-         * Spatial text options for auto mode parsing configuration.
-         */
-        export interface SpatialText {
-          /**
-           * Keep column structure intact without unrolling
-           */
-          do_not_unroll_columns?: boolean | null;
-
-          /**
-           * Merge tables that span across pages in markdown output
-           */
-          merge_tables_across_pages_in_markdown?: boolean | null;
-
-          /**
-           * Preserve text alignment across page boundaries
-           */
-          preserve_layout_alignment_across_pages?: boolean | null;
-
-          /**
-           * Include very small text in spatial output
-           */
-          preserve_very_small_text?: boolean | null;
-        }
-      }
-    }
-
     /**
      * Options for ignoring specific text types
      */
@@ -1649,16 +1272,15 @@ export interface ParsingListParams extends PaginatedClassifyJobsParams {
   project_id?: string | null;
 
   /**
-   * Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)
+   * Filter by job status (pending, running, completed, failed, cancelled)
    */
-  status?: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | null;
+  status?: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled' | null;
 }
 
 export interface ParsingGetParams {
   /**
-   * List of fields to include in response. Supported values: text, markdown, items,
-   * text_content_metadata, markdown_content_metadata, items_content_metadata.
-   * Example: ?expand=text&expand=markdown&expand=text_content_metadata
+   * List of fields to include in response. Supported values: text, markdown, items.
+   * Example: ?expand=text&expand=markdown
    */
   expand?: Array<string>;
 
