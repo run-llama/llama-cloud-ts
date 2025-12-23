@@ -71,8 +71,8 @@ export interface ExtractConfig {
   chunk_mode?: 'PAGE' | 'SECTION';
 
   /**
-   * @deprecated Whether to fetch citation bounding boxes for the extraction. Only
-   * available in PREMIUM mode. Deprecated: this is now synonymous with cite_sources.
+   * Whether to fetch citation bounding boxes for the extraction. Only available in
+   * PREMIUM mode.
    */
   citation_bbox?: boolean;
 
