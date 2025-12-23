@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.9.0 (2025-12-23)
+
+Full Changelog: [v0.8.1...v0.9.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.8.1...v0.9.0)
+
+### Features
+
+* **api:** api update ([99e1075](https://github.com/run-llama/llama-cloud-ts/commit/99e1075e19311a88c29d8d889732b542ffc6ba89))
+* **api:** api update ([e449fe1](https://github.com/run-llama/llama-cloud-ts/commit/e449fe10c862ebfd0069b22628ab2721e68130ad))
+* **api:** api update ([fbbc9fc](https://github.com/run-llama/llama-cloud-ts/commit/fbbc9fc357c9ca2fe7941cc1ae67657295b48511))
+* **api:** api update ([46fea14](https://github.com/run-llama/llama-cloud-ts/commit/46fea14bebb8945f033dce9699efc69fdd5b74ac))
+* **api:** api update ([2da62c7](https://github.com/run-llama/llama-cloud-ts/commit/2da62c79711b8e2f8d2bdfc7206cdaf2c16f169b))
+* **api:** api update ([bdbb7d8](https://github.com/run-llama/llama-cloud-ts/commit/bdbb7d865a39a03f82cf8ca74eb3c70e8bfc1e74))
+* **api:** parse v2 updates ([d0c1980](https://github.com/run-llama/llama-cloud-ts/commit/d0c198039fc10caba726f3f362b3ad7007970f66))
+* **api:** swap in parse v2 support ([31e56cf](https://github.com/run-llama/llama-cloud-ts/commit/31e56cfc72d39a5190a8913592c692c60c029d41))
+* **api:** update readme ([1ed4d6a](https://github.com/run-llama/llama-cloud-ts/commit/1ed4d6aa86a873f574c9f8ae5f20277cc12afd55))
+* **api:** use repeat query params with and char ([c51e1a6](https://github.com/run-llama/llama-cloud-ts/commit/c51e1a69a82402859ad6139097a295fdbd6167cd))
+
+
+### Chores
+
+* **internal:** codegen related update ([2da8f95](https://github.com/run-llama/llama-cloud-ts/commit/2da8f9546116815691d866535f631cecc9793570))
+
 ## 0.8.1 (2025-12-06)
 
 Full Changelog: [v0.8.0...v0.8.1](https://github.com/run-llama/llama-cloud-ts/compare/v0.8.0...v0.8.1)
