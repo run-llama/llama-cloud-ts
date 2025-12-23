@@ -1,4 +1,3 @@
-import { stat } from 'fs';
 import LlamaCloud from 'llama-cloud';
 
 async function createIndex() {
@@ -46,7 +45,7 @@ async function createIndex() {
   // const dataSourceId = await createDataSource();
   // await client.pipelines.dataSources.updateDataSources(pipeline.id, {
   //  body: [
-  //    { 
+  //    {
   //      data_source_id: dataSourceId,
   //      sync_interval: 43200.0 // Optional, scheduled sync frequency in seconds. In this case, every 12 hours.
   //    },

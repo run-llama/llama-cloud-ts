@@ -6,13 +6,39 @@ import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
+import { type Uploadable } from '../core/uploads';
+import { multipartFormRequestOptions } from '../internal/uploads';
+import { pollUntilComplete, PollingOptions } from '../core/polling';
 
 export class Parsing extends APIResource {
   /**
-   * Parse a file by file ID or URL.
+   * Parse a file by file ID, URL, or direct file upload.
    */
-  create(params: ParsingCreateParams, options?: RequestOptions): APIPromise<ParsingCreateResponse> {
-    const { organization_id, project_id, ...body } = params;
+  create(
+    params: ParsingCreateParams & { upload_file?: Uploadable },
+    options?: RequestOptions,
+  ): APIPromise<ParsingCreateResponse> {
+    const { organization_id, project_id, upload_file, ...body } = params;
+
+    // If file is provided, use multipart upload endpoint
+    if (upload_file) {
+      // Prepare configuration as JSON string
+      const configuration = JSON.stringify(body);
+
+      return this._client.post(
+        '/api/v2alpha1/parse/upload',
+        multipartFormRequestOptions(
+          {
+            query: { organization_id, project_id },
+            body: { configuration, file: upload_file },
+            ...options,
+          },
+          this._client,
+        ),
+      );
+    }
+
+    // Otherwise use regular JSON endpoint
     return this._client.post('/api/v2alpha1/parse', {
       query: { organization_id, project_id },
       body,
@@ -46,16 +72,145 @@ export class Parsing extends APIResource {
   }
 
   /**
-   * Upload and parse a file using multipart/form-data.
+   * Wait for a parse job to complete by polling until it reaches a terminal state.
+   *
+   * This method polls the job status at regular intervals until the job completes
+   * successfully or fails. It uses configurable backoff strategies to optimize
+   * polling behavior.
+   *
+   * @param jobID - The ID of the parse job to wait for
+   * @param options - Polling configuration options
+   * @returns The completed ParsingGetResponse
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails or is cancelled
+   *
+   * @example
+   * ```typescript
+   * import { LlamaCloud } from 'llama-cloud';
+   *
+   * const client = new LlamaCloud({ apiKey: '...' });
+   *
+   * // Create a parse job
+   * const job = await client.parsing.create({
+   *   tier: 'fast',
+   *   source_url: 'https://example.com/document.pdf'
+   * });
+   *
+   * // Wait for it to complete
+   * const result = await client.parsing.waitForCompletion(
+   *   job.id,
+   *   { verbose: true }
+   * );
+   * ```
    */
-  uploadFile(
-    params: ParsingUploadFileParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ParsingUploadFileResponse> {
-    const { organization_id, project_id } = params ?? {};
-    return this._client.post('/api/v2alpha1/parse/upload', {
-      query: { organization_id, project_id },
-      ...options,
+  async waitForCompletion(
+    jobID: string,
+    query?: ParsingGetParams,
+    options?: PollingOptions & RequestOptions,
+  ): Promise<ParsingGetResponse> {
+    const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    const getStatus = async (): Promise<ParsingGetResponse> => {
+      return await this.get(jobID, query, requestOptions);
+    };
+
+    const isComplete = (result: ParsingGetResponse): boolean => {
+      return result.job.status === 'COMPLETED';
+    };
+
+    const isError = (result: ParsingGetResponse): boolean => {
+      return result.job.status === 'FAILED' || result.job.status === 'CANCELLED';
+    };
+
+    const getErrorMessage = (result: ParsingGetResponse): string => {
+      const errorParts = [`Job ${jobID} failed with status: ${result.job.status}`];
+      if (result.job.error_message) {
+        errorParts.push(`Error: ${result.job.error_message}`);
+      }
+      return errorParts.join(' | ');
+    };
+
+    return await pollUntilComplete(getStatus, isComplete, isError, getErrorMessage, {
+      pollingInterval,
+      maxInterval,
+      timeout: timeout || 2000.0,
+      backoff,
+      verbose,
+    });
+  }
+
+  /**
+   * Parse a file and wait for it to complete, returning the result.
+   *
+   * This is a convenience method that combines create() and waitForCompletion()
+   * into a single call for the most common end-to-end workflow.
+   *
+   * @param params - Parse job creation parameters (including optional file for direct upload)
+   * @param options - Polling configuration and request options
+   * @returns The parse result (ParsingGetResponse) with job status and optional result data
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails or is cancelled
+   *
+   * @example
+   * ```typescript
+   * import { LlamaCloud } from 'llama-cloud';
+   *
+   * const client = new LlamaCloud({ apiKey: '...' });
+   *
+   * // One-shot: parse, wait for completion, and get result
+   * const result = await client.parsing.parse({
+   *   tier: 'fast',
+   *   source_url: 'https://example.com/document.pdf',
+   *   expand: ['text', 'markdown']
+   * }, { verbose: true });
+   *
+   * // Result is ready to use immediately
+   * console.log(result.text);
+   * console.log(result.markdown);
+   * ```
+   *
+   * @example
+   * ```typescript
+   * // Parse with file upload
+   * import fs from 'fs';
+   *
+   * const result = await client.parsing.parse({
+   *   tier: 'fast',
+   *   upload_file: fs.createReadStream('./document.pdf'),
+   *   expand: ['text', 'markdown']
+   * });
+   * ```
+   */
+  async parse(
+    params: ParsingCreateParams & { upload_file?: Uploadable; expand?: Array<string> },
+    options?: PollingOptions & RequestOptions,
+  ): Promise<ParsingGetResponse> {
+    const { expand, ...createParams } = params;
+    const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    // Create the parsing job
+    const job = await this.create(createParams, requestOptions);
+
+    // Build query params for get, only including defined values
+    const getQuery: ParsingGetParams = {};
+    if (params.organization_id !== undefined) {
+      getQuery.organization_id = params.organization_id;
+    }
+    if (params.project_id !== undefined) {
+      getQuery.project_id = params.project_id;
+    }
+    if (expand) {
+      getQuery.expand = expand;
+    }
+
+    // Wait for completion and return the result with requested expansions
+    return await this.waitForCompletion(job.id, getQuery, {
+      pollingInterval,
+      maxInterval,
+      timeout: timeout || 2000.0,
+      backoff,
+      verbose,
+      ...requestOptions,
     });
   }
 }
@@ -722,46 +877,6 @@ export namespace ParsingGetResponse {
       text: string;
     }
   }
-}
-
-/**
- * Response schema for a parse job.
- */
-export interface ParsingUploadFileResponse {
-  /**
-   * Unique identifier for the parse job
-   */
-  id: string;
-
-  /**
-   * Job-specific parameters as JSON
-   */
-  parameters: { [key: string]: unknown };
-
-  /**
-   * Project this job belongs to
-   */
-  project_id: string;
-
-  /**
-   * Current status of the job (e.g., pending, running, completed, failed, cancelled)
-   */
-  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
-
-  /**
-   * Creation datetime
-   */
-  created_at?: string | null;
-
-  /**
-   * Error message if job failed
-   */
-  error_message?: string | null;
-
-  /**
-   * Update datetime
-   */
-  updated_at?: string | null;
 }
 
 export interface ParsingCreateParams {
@@ -1667,12 +1782,6 @@ export interface ParsingGetParams {
   project_id?: string | null;
 }
 
-export interface ParsingUploadFileParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export declare namespace Parsing {
   export {
     type FailPageMode as FailPageMode,
@@ -1684,11 +1793,9 @@ export declare namespace Parsing {
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
     type ParsingGetResponse as ParsingGetResponse,
-    type ParsingUploadFileResponse as ParsingUploadFileResponse,
     type ParsingListResponsesPaginatedClassifyJobs as ParsingListResponsesPaginatedClassifyJobs,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingListParams as ParsingListParams,
     type ParsingGetParams as ParsingGetParams,
-    type ParsingUploadFileParams as ParsingUploadFileParams,
   };
 }
