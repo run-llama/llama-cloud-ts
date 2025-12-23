@@ -79,6 +79,19 @@ import {
   PresignedURL,
 } from './resources/files';
 import {
+  FailPageMode,
+  LlamaParseSupportedFileExtensions,
+  Parsing,
+  ParsingCreateParams,
+  ParsingGetParams,
+  ParsingGetResponse,
+  ParsingJob,
+  ParsingLanguages,
+  ParsingMode,
+  ParsingUploadFileParams,
+  StatusEnum,
+} from './resources/parsing';
+import {
   Project,
   ProjectGetParams,
   ProjectListParams,
@@ -88,18 +101,6 @@ import {
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
 import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
-import {
-  FailPageMode,
-  LlamaParseSupportedFileExtensions,
-  ParserLanguages,
-  Parsing,
-  ParsingCreateScreenshotParams,
-  ParsingGetSupportedFileExtensionsResponse,
-  ParsingJob,
-  ParsingMode,
-  ParsingUploadFileParams,
-  StatusEnum,
-} from './resources/parsing/parsing';
 import {
   AdvancedModeTransformConfig,
   AutoTransformConfig,
@@ -1043,12 +1044,13 @@ export declare namespace LlamaCloud {
     Parsing as Parsing,
     type FailPageMode as FailPageMode,
     type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
-    type ParserLanguages as ParserLanguages,
     type ParsingJob as ParsingJob,
+    type ParsingLanguages as ParsingLanguages,
     type ParsingMode as ParsingMode,
     type StatusEnum as StatusEnum,
-    type ParsingGetSupportedFileExtensionsResponse as ParsingGetSupportedFileExtensionsResponse,
-    type ParsingCreateScreenshotParams as ParsingCreateScreenshotParams,
+    type ParsingGetResponse as ParsingGetResponse,
+    type ParsingCreateParams as ParsingCreateParams,
+    type ParsingGetParams as ParsingGetParams,
     type ParsingUploadFileParams as ParsingUploadFileParams,
   };
 

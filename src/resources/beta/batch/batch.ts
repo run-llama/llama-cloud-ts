@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import * as ParsingAPI from '../../parsing';
 import * as JobsAPI from '../../classifier/jobs';
 import * as ExtractionJobsAPI from '../../extraction/jobs';
-import * as ParsingAPI from '../../parsing/parsing';
 import * as JobItemsAPI from './job-items';
 import {
   JobItemGetProcessingResultsParams,
@@ -650,7 +650,7 @@ export namespace BatchCreateParams {
        */
       lang?: string;
 
-      languages?: Array<ParsingAPI.ParserLanguages>;
+      languages?: Array<ParsingAPI.ParsingLanguages>;
 
       layout_aware?: boolean | null;
 

@@ -207,52 +207,19 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/parsing/parsing.ts">FailPageMode</a></code>
-- <code><a href="./src/resources/parsing/parsing.ts">LlamaParseSupportedFileExtensions</a></code>
-- <code><a href="./src/resources/parsing/parsing.ts">ParserLanguages</a></code>
-- <code><a href="./src/resources/parsing/parsing.ts">ParsingJob</a></code>
-- <code><a href="./src/resources/parsing/parsing.ts">ParsingMode</a></code>
-- <code><a href="./src/resources/parsing/parsing.ts">StatusEnum</a></code>
-- <code><a href="./src/resources/parsing/parsing.ts">ParsingGetSupportedFileExtensionsResponse</a></code>
+- <code><a href="./src/resources/parsing.ts">FailPageMode</a></code>
+- <code><a href="./src/resources/parsing.ts">LlamaParseSupportedFileExtensions</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingJob</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingLanguages</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingMode</a></code>
+- <code><a href="./src/resources/parsing.ts">StatusEnum</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingGetResponse</a></code>
 
 Methods:
 
-- <code title="post /api/v1/parsing/screenshot">client.parsing.<a href="./src/resources/parsing/parsing.ts">createScreenshot</a>({ ...params }) -> ParsingJob</code>
-- <code title="get /api/v1/parsing/supported_file_extensions">client.parsing.<a href="./src/resources/parsing/parsing.ts">getSupportedFileExtensions</a>() -> ParsingGetSupportedFileExtensionsResponse</code>
-- <code title="post /api/v1/parsing/upload">client.parsing.<a href="./src/resources/parsing/parsing.ts">uploadFile</a>({ ...params }) -> ParsingJob</code>
-
-## Job
-
-Types:
-
-- <code><a href="./src/resources/parsing/job/job.ts">JobGetDetailsResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/parsing/job/{job_id}/read/{filename}">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">generatePresignedURL</a>(filename, { ...params }) -> PresignedURL</code>
-- <code title="get /api/v1/parsing/job/{job_id}">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">get</a>(jobID, { ...params }) -> ParsingJob</code>
-- <code title="get /api/v1/parsing/job/{job_id}/details">client.parsing.job.<a href="./src/resources/parsing/job/job.ts">getDetails</a>(jobID, { ...params }) -> unknown</code>
-
-### Result
-
-Types:
-
-- <code><a href="./src/resources/parsing/job/result.ts">ParsingJobJsonResult</a></code>
-- <code><a href="./src/resources/parsing/job/result.ts">ParsingJobMarkdownResult</a></code>
-- <code><a href="./src/resources/parsing/job/result.ts">ParsingJobStructuredResult</a></code>
-- <code><a href="./src/resources/parsing/job/result.ts">ParsingJobTextResult</a></code>
-- <code><a href="./src/resources/parsing/job/result.ts">ResultGetPdfResponse</a></code>
-- <code><a href="./src/resources/parsing/job/result.ts">ResultGetXlsxResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/parsing/job/{job_id}/result/image/{name}">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getImage</a>(name, { ...params }) -> Response</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/json">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getJson</a>(jobID, { ...params }) -> ParsingJobJsonResult</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/markdown">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getMarkdown</a>(jobID, { ...params }) -> ParsingJobMarkdownResult</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/pdf">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getPdf</a>(jobID, { ...params }) -> unknown</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/structured">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getStructured</a>(jobID, { ...params }) -> ParsingJobStructuredResult</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/text">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getText</a>(jobID, { ...params }) -> ParsingJobTextResult</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/resources/parsing/job/result.ts">getXlsx</a>(jobID, { ...params }) -> unknown</code>
+- <code title="post /api/v2alpha1/parse/">client.parsing.<a href="./src/resources/parsing.ts">create</a>({ ...params }) -> ParsingJob</code>
+- <code title="get /api/v2alpha1/parse/{job_id}/result">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
+- <code title="post /api/v2alpha1/parse/upload">client.parsing.<a href="./src/resources/parsing.ts">uploadFile</a>({ ...params }) -> ParsingJob</code>
 
 # Classifier
 

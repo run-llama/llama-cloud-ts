@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import * as ParsingAPI from '../../parsing';
 import * as JobsAPI from '../../classifier/jobs';
 import * as ExtractionJobsAPI from '../../extraction/jobs';
-import * as ParsingAPI from '../../parsing/parsing';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, PaginatedBatchItems, type PaginatedBatchItemsParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
@@ -374,7 +374,7 @@ export namespace JobItemGetProcessingResultsResponse {
          */
         lang?: string;
 
-        languages?: Array<ParsingAPI.ParserLanguages>;
+        languages?: Array<ParsingAPI.ParsingLanguages>;
 
         layout_aware?: boolean | null;
 
