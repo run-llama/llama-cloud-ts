@@ -55,12 +55,12 @@ $ cd llama-cloud-ts
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link llama-cloud
+$ yarn link @llamaindex/llama-cloud
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global llama-cloud
+$ pnpm link -—global @llamaindex/llama-cloud
 ```
 
 ## Running tests

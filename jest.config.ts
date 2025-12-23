@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^llama-cloud$': '<rootDir>/src/index.ts',
-    '^llama-cloud/(.*)$': '<rootDir>/src/$1',
+    '^@llamaindex/llama-cloud$': '<rootDir>/src/index.ts',
+    '^@llamaindex/llama-cloud/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'llama-cloud/core/api-promise';
+import { APIPromise } from '@llamaindex/llama-cloud/core/api-promise';
 
 import util from 'node:util';
-import LlamaCloud from 'llama-cloud';
-import { APIUserAbortError } from 'llama-cloud';
+import LlamaCloud from '@llamaindex/llama-cloud';
+import { APIUserAbortError } from '@llamaindex/llama-cloud';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

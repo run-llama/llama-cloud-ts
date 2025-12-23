@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^llama-cloud(/.*)?',
+              regex: '^@llamaindex/llama-cloud(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],
