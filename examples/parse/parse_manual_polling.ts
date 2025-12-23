@@ -8,17 +8,17 @@ async function main() {
   const job = await client.parsing.create({
     // The file to parse
     upload_file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
-    tier: "agentic",
-    version: "latest",
+    tier: 'agentic',
+    version: 'latest',
   });
 
   // Poll for completion
-  let result = await client.parsing.get(job.id, { expand: ["markdown", "text", "items"] });
+  let result = await client.parsing.get(job.id, { expand: ['markdown', 'text', 'items'] });
   while (result.job.status === 'PENDING' || result.job.status === 'RUNNING') {
     console.log(`Job status: ${result.job.status}. Waiting...`);
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    result = await client.parsing.get(job.id, { expand: ["markdown", "text", "items"] });
+    result = await client.parsing.get(job.id, { expand: ['markdown', 'text', 'items'] });
   }
 
   // Get the result you want

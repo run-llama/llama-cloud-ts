@@ -8,9 +8,9 @@ async function parseDoc() {
   const result = await client.parsing.parse({
     // The file to parse
     upload_file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
-    tier: "agentic",
-    version: "latest",
-    expand: ["text", "markdown", "items"]
+    tier: 'agentic',
+    version: 'latest',
+    expand: ['text', 'markdown', 'items'],
   });
 
   console.log(result.markdown);
