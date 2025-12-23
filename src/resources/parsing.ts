@@ -1,3 +1,1801 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export * from './parsing/index';
+import { APIResource } from '../core/resource';
+import * as ParsingAPI from './parsing';
+import { APIPromise } from '../core/api-promise';
+import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
+import { type Uploadable } from '../core/uploads';
+import { multipartFormRequestOptions } from '../internal/uploads';
+import { pollUntilComplete, PollingOptions } from '../core/polling';
+
+export class Parsing extends APIResource {
+  /**
+   * Parse a file by file ID, URL, or direct file upload.
+   */
+  create(
+    params: ParsingCreateParams & { upload_file?: Uploadable },
+    options?: RequestOptions,
+  ): APIPromise<ParsingCreateResponse> {
+    const { organization_id, project_id, upload_file, ...body } = params;
+
+    // If file is provided, use multipart upload endpoint
+    if (upload_file) {
+      // Prepare configuration as JSON string
+      const configuration = JSON.stringify(body);
+
+      return this._client.post(
+        '/api/v2alpha1/parse/upload',
+        multipartFormRequestOptions(
+          {
+            query: { organization_id, project_id },
+            body: { configuration, file: upload_file },
+            ...options,
+          },
+          this._client,
+        ),
+      );
+    }
+
+    // Otherwise use regular JSON endpoint
+    return this._client.post('/api/v2alpha1/parse', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
+
+  /**
+   * List parse jobs for the current project with optional status filtering and
+   * pagination.
+   */
+  list(
+    query: ParsingListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ParsingListResponsesPaginatedClassifyJobs, ParsingListResponse> {
+    return this._client.getAPIList('/api/v2alpha1/parse', PaginatedClassifyJobs<ParsingListResponse>, {
+      query,
+      ...options,
+    });
+  }
+
+  /**
+   * Retrieve parse job with optional expanded result data (text, markdown, items).
+   */
+  get(
+    jobID: string,
+    query: ParsingGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ParsingGetResponse> {
+    return this._client.get(path`/api/v2alpha1/parse/${jobID}`, { query, ...options });
+  }
+
+  /**
+   * Wait for a parse job to complete by polling until it reaches a terminal state.
+   *
+   * This method polls the job status at regular intervals until the job completes
+   * successfully or fails. It uses configurable backoff strategies to optimize
+   * polling behavior.
+   *
+   * @param jobID - The ID of the parse job to wait for
+   * @param options - Polling configuration options
+   * @returns The completed ParsingGetResponse
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails or is cancelled
+   *
+   * @example
+   * ```typescript
+   * import { LlamaCloud } from 'llama-cloud';
+   *
+   * const client = new LlamaCloud({ apiKey: '...' });
+   *
+   * // Create a parse job
+   * const job = await client.parsing.create({
+   *   tier: 'fast',
+   *   source_url: 'https://example.com/document.pdf'
+   * });
+   *
+   * // Wait for it to complete
+   * const result = await client.parsing.waitForCompletion(
+   *   job.id,
+   *   { verbose: true }
+   * );
+   * ```
+   */
+  async waitForCompletion(
+    jobID: string,
+    query?: ParsingGetParams,
+    options?: PollingOptions & RequestOptions,
+  ): Promise<ParsingGetResponse> {
+    const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    const getStatus = async (): Promise<ParsingGetResponse> => {
+      return await this.get(jobID, query, requestOptions);
+    };
+
+    const isComplete = (result: ParsingGetResponse): boolean => {
+      return result.job.status === 'COMPLETED';
+    };
+
+    const isError = (result: ParsingGetResponse): boolean => {
+      return result.job.status === 'FAILED' || result.job.status === 'CANCELLED';
+    };
+
+    const getErrorMessage = (result: ParsingGetResponse): string => {
+      const errorParts = [`Job ${jobID} failed with status: ${result.job.status}`];
+      if (result.job.error_message) {
+        errorParts.push(`Error: ${result.job.error_message}`);
+      }
+      return errorParts.join(' | ');
+    };
+
+    return await pollUntilComplete(getStatus, isComplete, isError, getErrorMessage, {
+      pollingInterval,
+      maxInterval,
+      timeout: timeout || 2000.0,
+      backoff,
+      verbose,
+    });
+  }
+
+  /**
+   * Parse a file and wait for it to complete, returning the result.
+   *
+   * This is a convenience method that combines create() and waitForCompletion()
+   * into a single call for the most common end-to-end workflow.
+   *
+   * @param params - Parse job creation parameters (including optional file for direct upload)
+   * @param options - Polling configuration and request options
+   * @returns The parse result (ParsingGetResponse) with job status and optional result data
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails or is cancelled
+   *
+   * @example
+   * ```typescript
+   * import { LlamaCloud } from 'llama-cloud';
+   *
+   * const client = new LlamaCloud({ apiKey: '...' });
+   *
+   * // One-shot: parse, wait for completion, and get result
+   * const result = await client.parsing.parse({
+   *   tier: 'fast',
+   *   source_url: 'https://example.com/document.pdf',
+   *   expand: ['text', 'markdown']
+   * }, { verbose: true });
+   *
+   * // Result is ready to use immediately
+   * console.log(result.text);
+   * console.log(result.markdown);
+   * ```
+   *
+   * @example
+   * ```typescript
+   * // Parse with file upload
+   * import fs from 'fs';
+   *
+   * const result = await client.parsing.parse({
+   *   tier: 'fast',
+   *   upload_file: fs.createReadStream('./document.pdf'),
+   *   expand: ['text', 'markdown']
+   * });
+   * ```
+   */
+  async parse(
+    params: ParsingCreateParams & { upload_file?: Uploadable; expand?: Array<string> },
+    options?: PollingOptions & RequestOptions,
+  ): Promise<ParsingGetResponse> {
+    const { expand, ...createParams } = params;
+    const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    // Create the parsing job
+    const job = await this.create(createParams, requestOptions);
+
+    // Build query params for get, only including defined values
+    const getQuery: ParsingGetParams = {};
+    if (params.organization_id !== undefined) {
+      getQuery.organization_id = params.organization_id;
+    }
+    if (params.project_id !== undefined) {
+      getQuery.project_id = params.project_id;
+    }
+    if (expand) {
+      getQuery.expand = expand;
+    }
+
+    // Wait for completion and return the result with requested expansions
+    return await this.waitForCompletion(job.id, getQuery, {
+      pollingInterval,
+      maxInterval,
+      timeout: timeout || 2000.0,
+      backoff,
+      verbose,
+      ...requestOptions,
+    });
+  }
+}
+
+export type ParsingListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<ParsingListResponse>;
+
+/**
+ * Enum for representing the different available page error handling modes.
+ */
+export type FailPageMode = 'raw_text' | 'blank_page' | 'error_message';
+
+/**
+ * Enum for supported file extensions.
+ */
+export type LlamaParseSupportedFileExtensions =
+  | '.pdf'
+  | '.doc'
+  | '.docx'
+  | '.docm'
+  | '.dot'
+  | '.dotx'
+  | '.dotm'
+  | '.rtf'
+  | '.wps'
+  | '.wpd'
+  | '.sxw'
+  | '.stw'
+  | '.sxg'
+  | '.pages'
+  | '.mw'
+  | '.mcw'
+  | '.uot'
+  | '.uof'
+  | '.uos'
+  | '.uop'
+  | '.ppt'
+  | '.pptx'
+  | '.pot'
+  | '.pptm'
+  | '.potx'
+  | '.potm'
+  | '.key'
+  | '.odp'
+  | '.odg'
+  | '.otp'
+  | '.fopd'
+  | '.sxi'
+  | '.sti'
+  | '.epub'
+  | '.jpg'
+  | '.jpeg'
+  | '.png'
+  | '.gif'
+  | '.bmp'
+  | '.svg'
+  | '.tiff'
+  | '.webp'
+  | '.html'
+  | '.htm'
+  | '.xls'
+  | '.xlsx'
+  | '.xlsm'
+  | '.xlsb'
+  | '.xlw'
+  | '.csv'
+  | '.dif'
+  | '.sylk'
+  | '.slk'
+  | '.prn'
+  | '.numbers'
+  | '.et'
+  | '.ods'
+  | '.fods'
+  | '.uos1'
+  | '.uos2'
+  | '.dbf'
+  | '.wk1'
+  | '.wk2'
+  | '.wk3'
+  | '.wk4'
+  | '.wks'
+  | '.wq1'
+  | '.wq2'
+  | '.wb1'
+  | '.wb2'
+  | '.wb3'
+  | '.qpw'
+  | '.xlr'
+  | '.eth'
+  | '.tsv';
+
+/**
+ * Response schema for a parsing job.
+ */
+export interface ParsingJob {
+  id: string;
+
+  /**
+   * Enum for representing the status of a job
+   */
+  status: StatusEnum;
+
+  error_code?: string | null;
+
+  error_message?: string | null;
+}
+
+/**
+ * Enum for representing the languages supported by the parser.
+ */
+export type ParsingLanguages =
+  | 'af'
+  | 'az'
+  | 'bs'
+  | 'cs'
+  | 'cy'
+  | 'da'
+  | 'de'
+  | 'en'
+  | 'es'
+  | 'et'
+  | 'fr'
+  | 'ga'
+  | 'hr'
+  | 'hu'
+  | 'id'
+  | 'is'
+  | 'it'
+  | 'ku'
+  | 'la'
+  | 'lt'
+  | 'lv'
+  | 'mi'
+  | 'ms'
+  | 'mt'
+  | 'nl'
+  | 'no'
+  | 'oc'
+  | 'pi'
+  | 'pl'
+  | 'pt'
+  | 'ro'
+  | 'rs_latin'
+  | 'sk'
+  | 'sl'
+  | 'sq'
+  | 'sv'
+  | 'sw'
+  | 'tl'
+  | 'tr'
+  | 'uz'
+  | 'vi'
+  | 'ar'
+  | 'fa'
+  | 'ug'
+  | 'ur'
+  | 'bn'
+  | 'as'
+  | 'mni'
+  | 'ru'
+  | 'rs_cyrillic'
+  | 'be'
+  | 'bg'
+  | 'uk'
+  | 'mn'
+  | 'abq'
+  | 'ady'
+  | 'kbd'
+  | 'ava'
+  | 'dar'
+  | 'inh'
+  | 'che'
+  | 'lbe'
+  | 'lez'
+  | 'tab'
+  | 'tjk'
+  | 'hi'
+  | 'mr'
+  | 'ne'
+  | 'bh'
+  | 'mai'
+  | 'ang'
+  | 'bho'
+  | 'mah'
+  | 'sck'
+  | 'new'
+  | 'gom'
+  | 'sa'
+  | 'bgc'
+  | 'th'
+  | 'ch_sim'
+  | 'ch_tra'
+  | 'ja'
+  | 'ko'
+  | 'ta'
+  | 'te'
+  | 'kn';
+
+/**
+ * Enum for representing the mode of parsing to be used.
+ */
+export type ParsingMode =
+  | 'parse_page_without_llm'
+  | 'parse_page_with_llm'
+  | 'parse_page_with_lvm'
+  | 'parse_page_with_agent'
+  | 'parse_page_with_layout_agent'
+  | 'parse_document_with_llm'
+  | 'parse_document_with_lvm'
+  | 'parse_document_with_agent';
+
+/**
+ * Enum for representing the status of a job
+ */
+export type StatusEnum = 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED';
+
+/**
+ * Response schema for a parse job.
+ */
+export interface ParsingCreateResponse {
+  /**
+   * Unique identifier for the parse job
+   */
+  id: string;
+
+  /**
+   * Job-specific parameters as JSON
+   */
+  parameters: { [key: string]: unknown };
+
+  /**
+   * Project this job belongs to
+   */
+  project_id: string;
+
+  /**
+   * Current status of the job (e.g., pending, running, completed, failed, cancelled)
+   */
+  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Error message if job failed
+   */
+  error_message?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
+/**
+ * Response schema for a parse job.
+ */
+export interface ParsingListResponse {
+  /**
+   * Unique identifier for the parse job
+   */
+  id: string;
+
+  /**
+   * Job-specific parameters as JSON
+   */
+  parameters: { [key: string]: unknown };
+
+  /**
+   * Project this job belongs to
+   */
+  project_id: string;
+
+  /**
+   * Current status of the job (e.g., pending, running, completed, failed, cancelled)
+   */
+  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Error message if job failed
+   */
+  error_message?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
+/**
+ * Combined parse result response with job status and optional result data.
+ *
+ * The job field is always present with status information. Other fields are only
+ * included if requested via the corresponding flags in ParseResultRequest.
+ *
+ * The result_content_metadata field is only included when requested via the expand
+ * parameter. It provides size information for available results, allowing clients
+ * to determine result sizes before fetching content.
+ */
+export interface ParsingGetResponse {
+  /**
+   * Parse job status and metadata (always included)
+   */
+  job: ParsingGetResponse.Job;
+
+  /**
+   * Structured JSON result (if requested)
+   */
+  items?: ParsingGetResponse.Items | null;
+
+  /**
+   * Markdown result (if requested)
+   */
+  markdown?: ParsingGetResponse.Markdown | null;
+
+  /**
+   * Metadata about available results (sizes, existence) - only included when
+   * 'result_content_metadata' is in the expand parameter. Maps result type names
+   * (e.g., 'text', 'markdown', 'items') to their metadata.
+   */
+  result_content_metadata?: { [key: string]: ParsingGetResponse.ResultContentMetadata } | null;
+
+  /**
+   * Plain text result (if requested)
+   */
+  text?: ParsingGetResponse.Text | null;
+}
+
+export namespace ParsingGetResponse {
+  /**
+   * Parse job status and metadata (always included)
+   */
+  export interface Job {
+    /**
+     * Unique identifier for the parse job
+     */
+    id: string;
+
+    /**
+     * Job-specific parameters as JSON
+     */
+    parameters: { [key: string]: unknown };
+
+    /**
+     * Project this job belongs to
+     */
+    project_id: string;
+
+    /**
+     * Current status of the job (e.g., pending, running, completed, failed, cancelled)
+     */
+    status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+
+    /**
+     * Creation datetime
+     */
+    created_at?: string | null;
+
+    /**
+     * Error message if job failed
+     */
+    error_message?: string | null;
+
+    /**
+     * Update datetime
+     */
+    updated_at?: string | null;
+  }
+
+  /**
+   * Structured JSON result (if requested)
+   */
+  export interface Items {
+    /**
+     * List of structured pages or failed page entries
+     */
+    pages: Array<Items.StructuredResultPage | Items.FailedStructuredPage>;
+  }
+
+  export namespace Items {
+    export interface StructuredResultPage {
+      /**
+       * List of structured items on the page
+       */
+      items: Array<
+        | StructuredResultPage.TextItem
+        | StructuredResultPage.HeadingItem
+        | StructuredResultPage.ListItem
+        | StructuredResultPage.CodeItem
+        | StructuredResultPage.TableItem
+        | StructuredResultPage.ImageItem
+      >;
+
+      /**
+       * Page number of the document
+       */
+      page_number: number;
+
+      /**
+       * Success indicator
+       */
+      success?: true;
+    }
+
+    export namespace StructuredResultPage {
+      export interface TextItem {
+        /**
+         * Text content
+         */
+        value: string;
+
+        /**
+         * Bounding box coordinates [x1, y1, x2, y2]
+         */
+        bBox?: Array<unknown> | null;
+
+        /**
+         * Text item type
+         */
+        type?: 'text';
+      }
+
+      export interface HeadingItem {
+        /**
+         * Heading level (1-6)
+         */
+        level: number;
+
+        /**
+         * Heading text content
+         */
+        value: string;
+
+        /**
+         * Bounding box coordinates [x1, y1, x2, y2]
+         */
+        bBox?: Array<unknown> | null;
+
+        /**
+         * Heading item type
+         */
+        type?: 'heading';
+      }
+
+      export interface ListItem {
+        /**
+         * List of nested text or list items
+         */
+        items: Array<ListItem.TextItem | unknown>;
+
+        /**
+         * Whether the list is ordered or unordered
+         */
+        ordered: boolean;
+
+        /**
+         * Bounding box coordinates [x1, y1, x2, y2]
+         */
+        bBox?: Array<unknown> | null;
+
+        /**
+         * List item type
+         */
+        type?: 'list';
+      }
+
+      export namespace ListItem {
+        export interface TextItem {
+          /**
+           * Text content
+           */
+          value: string;
+
+          /**
+           * Bounding box coordinates [x1, y1, x2, y2]
+           */
+          bBox?: Array<unknown> | null;
+
+          /**
+           * Text item type
+           */
+          type?: 'text';
+        }
+      }
+
+      export interface CodeItem {
+        /**
+         * Code content
+         */
+        value: string;
+
+        /**
+         * Bounding box coordinates [x1, y1, x2, y2]
+         */
+        bBox?: Array<unknown> | null;
+
+        /**
+         * Programming language identifier
+         */
+        language?: string | null;
+
+        /**
+         * Code block item type
+         */
+        type?: 'code';
+      }
+
+      export interface TableItem {
+        /**
+         * CSV representation of the table
+         */
+        csv: string;
+
+        /**
+         * HTML representation of the table
+         */
+        html: string;
+
+        /**
+         * Markdown representation of the table
+         */
+        md: string;
+
+        /**
+         * Table data as array of string arrays
+         */
+        rows: Array<Array<string>>;
+
+        /**
+         * Bounding box coordinates [x1, y1, x2, y2]
+         */
+        bBox?: Array<unknown> | null;
+
+        /**
+         * Table item type
+         */
+        type?: 'table';
+      }
+
+      export interface ImageItem {
+        /**
+         * Image filename or identifier
+         */
+        name: string;
+
+        /**
+         * Bounding box coordinates [x1, y1, x2, y2]
+         */
+        bBox?: Array<unknown> | null;
+
+        /**
+         * Image item type
+         */
+        type?: 'image';
+      }
+    }
+
+    export interface FailedStructuredPage {
+      /**
+       * Error message describing the failure
+       */
+      error: string;
+
+      /**
+       * Page number of the document
+       */
+      page_number: number;
+
+      /**
+       * Failure indicator
+       */
+      success?: boolean;
+    }
+  }
+
+  /**
+   * Markdown result (if requested)
+   */
+  export interface Markdown {
+    /**
+     * List of markdown pages or failed page entries
+     */
+    pages: Array<Markdown.MarkdownResultPage | Markdown.FailedMarkdownPage>;
+  }
+
+  export namespace Markdown {
+    export interface MarkdownResultPage {
+      /**
+       * Markdown content of the page
+       */
+      markdown: string;
+
+      /**
+       * Page number of the document
+       */
+      page_number: number;
+
+      /**
+       * Success indicator
+       */
+      success?: true;
+    }
+
+    export interface FailedMarkdownPage {
+      /**
+       * Error message describing the failure
+       */
+      error: string;
+
+      /**
+       * Page number of the document
+       */
+      page_number: number;
+
+      /**
+       * Failure indicator
+       */
+      success?: boolean;
+    }
+  }
+
+  /**
+   * Metadata about a specific result type stored in S3.
+   */
+  export interface ResultContentMetadata {
+    /**
+     * Size of the result file in S3 (bytes)
+     */
+    size_bytes: number;
+
+    /**
+     * Whether the result file exists in S3
+     */
+    exists?: boolean;
+  }
+
+  /**
+   * Plain text result (if requested)
+   */
+  export interface Text {
+    /**
+     * List of text pages
+     */
+    pages: Array<Text.Page>;
+  }
+
+  export namespace Text {
+    export interface Page {
+      /**
+       * Page number of the document
+       */
+      page_number: number;
+
+      /**
+       * Plain text content of the page
+       */
+      text: string;
+    }
+  }
+}
+
+export interface ParsingCreateParams {
+  /**
+   * Body param: The parsing tier to use
+   */
+  tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';
+
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: Options for agentic tier parsing (with AI agents).
+   */
+  agentic_options?: ParsingCreateParams.AgenticOptions | null;
+
+  /**
+   * Body param: Name of the client making the parsing request
+   */
+  client_name?: string | null;
+
+  /**
+   * Body param: Document crop box boundaries
+   */
+  crop_box?: ParsingCreateParams.CropBox;
+
+  /**
+   * Body param: Whether to disable caching for this parsing job
+   */
+  disable_cache?: boolean | null;
+
+  /**
+   * Body param: Options for fast tier parsing (without AI).
+   */
+  fast_options?: unknown | null;
+
+  /**
+   * Body param: ID of an existing file in the project to parse
+   */
+  file_id?: string | null;
+
+  /**
+   * Body param: HTTP proxy URL for network requests (only used with source_url)
+   */
+  http_proxy?: string | null;
+
+  /**
+   * Body param: Input format-specific parsing options
+   */
+  input_options?: ParsingCreateParams.InputOptions;
+
+  /**
+   * Body param: Output format and styling options
+   */
+  output_options?: ParsingCreateParams.OutputOptions;
+
+  /**
+   * Body param: Page range selection options
+   */
+  page_ranges?: ParsingCreateParams.PageRanges;
+
+  /**
+   * Body param: Job processing control and failure handling
+   */
+  processing_control?: ParsingCreateParams.ProcessingControl;
+
+  /**
+   * Body param: Processing options shared across all tiers
+   */
+  processing_options?: ParsingCreateParams.ProcessingOptions;
+
+  /**
+   * Body param: Source URL to fetch document from
+   */
+  source_url?: string | null;
+
+  /**
+   * Body param: Version of the tier configuration
+   */
+  version?: '2025-12-18' | '2025-12-11' | 'latest' | (string & {});
+
+  /**
+   * Body param: List of webhook configurations for notifications
+   */
+  webhook_configurations?: Array<ParsingCreateParams.WebhookConfiguration>;
+}
+
+export namespace ParsingCreateParams {
+  /**
+   * Options for agentic tier parsing (with AI agents).
+   */
+  export interface AgenticOptions {
+    /**
+     * Custom prompt for AI-powered parsing
+     */
+    custom_prompt?: string | null;
+  }
+
+  /**
+   * Document crop box boundaries
+   */
+  export interface CropBox {
+    /**
+     * Bottom boundary of crop box as ratio (0-1)
+     */
+    bottom?: number | null;
+
+    /**
+     * Left boundary of crop box as ratio (0-1)
+     */
+    left?: number | null;
+
+    /**
+     * Right boundary of crop box as ratio (0-1)
+     */
+    right?: number | null;
+
+    /**
+     * Top boundary of crop box as ratio (0-1)
+     */
+    top?: number | null;
+  }
+
+  /**
+   * Input format-specific parsing options
+   */
+  export interface InputOptions {
+    /**
+     * HTML-specific parsing options
+     */
+    html?: InputOptions.HTML;
+
+    /**
+     * PDF-specific parsing options
+     */
+    pdf?: unknown;
+
+    /**
+     * Presentation-specific parsing options
+     */
+    presentation?: InputOptions.Presentation;
+
+    /**
+     * Spreadsheet-specific parsing options
+     */
+    spreadsheet?: InputOptions.Spreadsheet;
+  }
+
+  export namespace InputOptions {
+    /**
+     * HTML-specific parsing options
+     */
+    export interface HTML {
+      /**
+       * Make all HTML elements visible during parsing
+       */
+      make_all_elements_visible?: boolean | null;
+
+      /**
+       * Remove fixed position elements from HTML
+       */
+      remove_fixed_elements?: boolean | null;
+
+      /**
+       * Remove navigation elements from HTML
+       */
+      remove_navigation_elements?: boolean | null;
+    }
+
+    /**
+     * Presentation-specific parsing options
+     */
+    export interface Presentation {
+      /**
+       * Extract out of bounds content in presentation slides
+       */
+      out_of_bounds_content?: boolean | null;
+
+      /**
+       * Skip extraction of embedded data for charts in presentation slides
+       */
+      skip_embedded_data?: boolean | null;
+    }
+
+    /**
+     * Spreadsheet-specific parsing options
+     */
+    export interface Spreadsheet {
+      /**
+       * Detect and extract sub-tables within spreadsheet cells
+       */
+      detect_sub_tables_in_sheets?: boolean | null;
+
+      /**
+       * Force re-computation of spreadsheet cells containing formulas
+       */
+      force_formula_computation_in_sheets?: boolean | null;
+    }
+  }
+
+  /**
+   * Output format and styling options
+   */
+  export interface OutputOptions {
+    /**
+     * Embedded image extraction options
+     */
+    embedded_images?: OutputOptions.EmbeddedImages;
+
+    /**
+     * PDF export options
+     */
+    export_pdf?: OutputOptions.ExportPdf;
+
+    /**
+     * Extract printed page numbers from the document
+     */
+    extract_printed_page_number?: boolean | null;
+
+    /**
+     * Markdown output formatting options
+     */
+    markdown?: OutputOptions.Markdown;
+
+    /**
+     * Screenshot generation options
+     */
+    screenshots?: OutputOptions.Screenshots;
+
+    /**
+     * Spatial text output options
+     */
+    spatial_text?: OutputOptions.SpatialText;
+
+    /**
+     * Table export as spreadsheet options
+     */
+    tables_as_spreadsheet?: OutputOptions.TablesAsSpreadsheet;
+  }
+
+  export namespace OutputOptions {
+    /**
+     * Embedded image extraction options
+     */
+    export interface EmbeddedImages {
+      /**
+       * Whether this option is enabled
+       */
+      enable?: boolean | null;
+    }
+
+    /**
+     * PDF export options
+     */
+    export interface ExportPdf {
+      /**
+       * Whether this option is enabled
+       */
+      enable?: boolean | null;
+    }
+
+    /**
+     * Markdown output formatting options
+     */
+    export interface Markdown {
+      /**
+       * Add annotations to links in markdown output
+       */
+      annotate_links?: boolean | null;
+
+      /**
+       * Page formatting options for markdown
+       */
+      pages?: Markdown.Pages;
+
+      /**
+       * Table formatting options for markdown
+       */
+      tables?: Markdown.Tables;
+    }
+
+    export namespace Markdown {
+      /**
+       * Page formatting options for markdown
+       */
+      export interface Pages {
+        /**
+         * Merge tables that span across pages in markdown output
+         */
+        merge_tables_across_pages_in_markdown?: boolean | null;
+      }
+
+      /**
+       * Table formatting options for markdown
+       */
+      export interface Tables {
+        /**
+         * Use compact formatting for markdown tables
+         */
+        compact_markdown_tables?: boolean | null;
+
+        /**
+         * Separator for multiline content in markdown tables
+         */
+        markdown_table_multiline_separator?: string | null;
+
+        /**
+         * Output tables in markdown format
+         */
+        output_tables_as_markdown?: boolean | null;
+      }
+    }
+
+    /**
+     * Screenshot generation options
+     */
+    export interface Screenshots {
+      /**
+       * Whether this option is enabled
+       */
+      enable?: boolean | null;
+    }
+
+    /**
+     * Spatial text output options
+     */
+    export interface SpatialText {
+      /**
+       * Keep column structure intact without unrolling
+       */
+      do_not_unroll_columns?: boolean | null;
+
+      /**
+       * Page formatting options for spatial text
+       */
+      pages?: SpatialText.Pages | null;
+
+      /**
+       * Preserve text alignment across page boundaries
+       */
+      preserve_layout_alignment_across_pages?: boolean | null;
+
+      /**
+       * Include very small text in spatial output
+       */
+      preserve_very_small_text?: boolean | null;
+    }
+
+    export namespace SpatialText {
+      /**
+       * Page formatting options for spatial text
+       */
+      export interface Pages {
+        /**
+         * Merge tables that span across pages in markdown output
+         */
+        merge_tables_across_pages_in_markdown?: boolean | null;
+      }
+    }
+
+    /**
+     * Table export as spreadsheet options
+     */
+    export interface TablesAsSpreadsheet {
+      /**
+       * Whether this option is enabled
+       */
+      enable?: boolean | null;
+
+      /**
+       * Automatically guess sheet names when exporting tables
+       */
+      guess_sheet_name?: boolean;
+    }
+  }
+
+  /**
+   * Page range selection options
+   */
+  export interface PageRanges {
+    /**
+     * Maximum number of pages to process
+     */
+    max_pages?: number | null;
+
+    /**
+     * Specific pages to process (e.g., '1,3,5-8') using 1-based indexing
+     */
+    target_pages?: string | null;
+  }
+
+  /**
+   * Job processing control and failure handling
+   */
+  export interface ProcessingControl {
+    /**
+     * Conditions that determine job failure
+     */
+    job_failure_conditions?: ProcessingControl.JobFailureConditions;
+
+    /**
+     * Timeout configuration for parsing jobs
+     */
+    timeouts?: ProcessingControl.Timeouts;
+  }
+
+  export namespace ProcessingControl {
+    /**
+     * Conditions that determine job failure
+     */
+    export interface JobFailureConditions {
+      /**
+       * Maximum ratio of pages allowed to fail (0-1)
+       */
+      allowed_page_failure_ratio?: number | null;
+
+      /**
+       * Fail job if buggy fonts are detected
+       */
+      fail_on_buggy_font?: boolean | null;
+
+      /**
+       * Fail job if image extraction encounters errors
+       */
+      fail_on_image_extraction_error?: boolean | null;
+
+      /**
+       * Fail job if image OCR encounters errors
+       */
+      fail_on_image_ocr_error?: boolean | null;
+
+      /**
+       * Fail job if markdown reconstruction encounters errors
+       */
+      fail_on_markdown_reconstruction_error?: boolean | null;
+    }
+
+    /**
+     * Timeout configuration for parsing jobs
+     */
+    export interface Timeouts {
+      /**
+       * Base timeout in seconds (max 30 minutes)
+       */
+      base_in_seconds?: number | null;
+
+      /**
+       * Additional timeout per page in seconds (max 5 minutes)
+       */
+      extra_time_per_page_in_seconds?: number | null;
+    }
+  }
+
+  /**
+   * Processing options shared across all tiers
+   */
+  export interface ProcessingOptions {
+    /**
+     * Whether to use aggressive table extraction
+     */
+    aggressive_table_extraction?: boolean | null;
+
+    /**
+     * Configuration for auto mode parsing with triggers and parsing options
+     */
+    auto_mode_configuration?: Array<ProcessingOptions.AutoModeConfiguration> | null;
+
+    /**
+     * Options for ignoring specific text types
+     */
+    ignore?: ProcessingOptions.Ignore;
+
+    /**
+     * OCR configuration parameters
+     */
+    ocr_parameters?: ProcessingOptions.OcrParameters;
+  }
+
+  export namespace ProcessingOptions {
+    /**
+     * A single entry in the auto mode configuration array.
+     */
+    export interface AutoModeConfiguration {
+      /**
+       * Configuration for parsing in auto mode (V2 format).
+       *
+       * This uses V2 API naming conventions. The backend service will convert these to
+       * the V1 format expected by the llamaparse worker.
+       */
+      parsing_conf: AutoModeConfiguration.ParsingConf;
+
+      /**
+       * Single glob pattern to match against filename
+       */
+      filename_match_glob?: string | null;
+
+      /**
+       * List of glob patterns to match against filename
+       */
+      filename_match_glob_list?: Array<string> | null;
+
+      /**
+       * Regex pattern to match against filename
+       */
+      filename_regexp?: string | null;
+
+      /**
+       * Regex mode flags (e.g., 'i' for case-insensitive)
+       */
+      filename_regexp_mode?: string | null;
+
+      /**
+       * Trigger if page contains a full-page image (scanned page detection)
+       */
+      full_page_image_in_page?: boolean | null;
+
+      /**
+       * Threshold for full page image detection (0.0-1.0, default 0.8)
+       */
+      full_page_image_in_page_threshold?: number | string | null;
+
+      /**
+       * Trigger if page contains non-screenshot images
+       */
+      image_in_page?: boolean | null;
+
+      /**
+       * Trigger if page contains this layout element type
+       */
+      layout_element_in_page?: string | null;
+
+      /**
+       * Confidence threshold for layout element detection
+       */
+      layout_element_in_page_confidence_threshold?: number | string | null;
+
+      /**
+       * Trigger if page has more than N charts
+       */
+      page_contains_at_least_n_charts?: number | string | null;
+
+      /**
+       * Trigger if page has more than N images
+       */
+      page_contains_at_least_n_images?: number | string | null;
+
+      /**
+       * Trigger if page has more than N layout elements
+       */
+      page_contains_at_least_n_layout_elements?: number | string | null;
+
+      /**
+       * Trigger if page has more than N lines
+       */
+      page_contains_at_least_n_lines?: number | string | null;
+
+      /**
+       * Trigger if page has more than N links
+       */
+      page_contains_at_least_n_links?: number | string | null;
+
+      /**
+       * Trigger if page has more than N numeric words
+       */
+      page_contains_at_least_n_numbers?: number | string | null;
+
+      /**
+       * Trigger if page has more than N% numeric words
+       */
+      page_contains_at_least_n_percent_numbers?: number | string | null;
+
+      /**
+       * Trigger if page has more than N tables
+       */
+      page_contains_at_least_n_tables?: number | string | null;
+
+      /**
+       * Trigger if page has more than N words
+       */
+      page_contains_at_least_n_words?: number | string | null;
+
+      /**
+       * Trigger if page has fewer than N charts
+       */
+      page_contains_at_most_n_charts?: number | string | null;
+
+      /**
+       * Trigger if page has fewer than N images
+       */
+      page_contains_at_most_n_images?: number | string | null;
+
+      /**
+       * Trigger if page has fewer than N layout elements
+       */
+      page_contains_at_most_n_layout_elements?: number | string | null;
+
+      /**
+       * Trigger if page has fewer than N lines
+       */
+      page_contains_at_most_n_lines?: number | string | null;
+
+      /**
+       * Trigger if page has fewer than N links
+       */
+      page_contains_at_most_n_links?: number | string | null;
+
+      /**
+       * Trigger if page has fewer than N numeric words
+       */
+      page_contains_at_most_n_numbers?: number | string | null;
+
+      /**
+       * Trigger if page has fewer than N% numeric words
+       */
+      page_contains_at_most_n_percent_numbers?: number | string | null;
+
+      /**
+       * Trigger if page has fewer than N tables
+       */
+      page_contains_at_most_n_tables?: number | string | null;
+
+      /**
+       * Trigger if page has fewer than N words
+       */
+      page_contains_at_most_n_words?: number | string | null;
+
+      /**
+       * Trigger if page has more than N characters
+       */
+      page_longer_than_n_chars?: number | string | null;
+
+      /**
+       * Trigger on pages with markdown extraction errors
+       */
+      page_md_error?: boolean | null;
+
+      /**
+       * Trigger if page has fewer than N characters
+       */
+      page_shorter_than_n_chars?: number | string | null;
+
+      /**
+       * Regex pattern to match in page content
+       */
+      regexp_in_page?: string | null;
+
+      /**
+       * Regex mode flags for regexp_in_page
+       */
+      regexp_in_page_mode?: string | null;
+
+      /**
+       * Trigger if page contains a table
+       */
+      table_in_page?: boolean | null;
+
+      /**
+       * Trigger if page text/markdown contains this string
+       */
+      text_in_page?: string | null;
+
+      /**
+       * How to combine multiple trigger conditions: 'and' (all must match, default) or
+       * 'or' (any can match)
+       */
+      trigger_mode?: string | null;
+    }
+
+    export namespace AutoModeConfiguration {
+      /**
+       * Configuration for parsing in auto mode (V2 format).
+       *
+       * This uses V2 API naming conventions. The backend service will convert these to
+       * the V1 format expected by the llamaparse worker.
+       */
+      export interface ParsingConf {
+        /**
+         * Whether to use adaptive long table handling
+         */
+        adaptive_long_table?: boolean | null;
+
+        /**
+         * Whether to use aggressive table extraction
+         */
+        aggressive_table_extraction?: boolean | null;
+
+        /**
+         * Crop box options for auto mode parsing configuration.
+         */
+        crop_box?: ParsingConf.CropBox | null;
+
+        /**
+         * Custom prompt for AI-powered parsing
+         */
+        custom_prompt?: string | null;
+
+        /**
+         * Whether to extract layout information
+         */
+        extract_layout?: boolean | null;
+
+        /**
+         * Whether to use high resolution OCR
+         */
+        high_res_ocr?: boolean | null;
+
+        /**
+         * Ignore options for auto mode parsing configuration.
+         */
+        ignore?: ParsingConf.Ignore | null;
+
+        /**
+         * Primary language of the document
+         */
+        language?: string | null;
+
+        /**
+         * Whether to use outlined table extraction
+         */
+        outlined_table_extraction?: boolean | null;
+
+        /**
+         * Presentation-specific options for auto mode parsing configuration.
+         */
+        presentation?: ParsingConf.Presentation | null;
+
+        /**
+         * Spatial text options for auto mode parsing configuration.
+         */
+        spatial_text?: ParsingConf.SpatialText | null;
+
+        /**
+         * The parsing tier to use
+         */
+        tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus' | null;
+
+        /**
+         * Version of the tier configuration
+         */
+        version?: '2025-12-18' | '2025-12-11' | 'latest' | (string & {}) | null;
+      }
+
+      export namespace ParsingConf {
+        /**
+         * Crop box options for auto mode parsing configuration.
+         */
+        export interface CropBox {
+          /**
+           * Bottom boundary of crop box as ratio (0-1)
+           */
+          bottom?: number | null;
+
+          /**
+           * Left boundary of crop box as ratio (0-1)
+           */
+          left?: number | null;
+
+          /**
+           * Right boundary of crop box as ratio (0-1)
+           */
+          right?: number | null;
+
+          /**
+           * Top boundary of crop box as ratio (0-1)
+           */
+          top?: number | null;
+        }
+
+        /**
+         * Ignore options for auto mode parsing configuration.
+         */
+        export interface Ignore {
+          /**
+           * Whether to ignore diagonal text in the document
+           */
+          ignore_diagonal_text?: boolean | null;
+
+          /**
+           * Whether to ignore hidden text in the document
+           */
+          ignore_hidden_text?: boolean | null;
+        }
+
+        /**
+         * Presentation-specific options for auto mode parsing configuration.
+         */
+        export interface Presentation {
+          /**
+           * Extract out of bounds content in presentation slides
+           */
+          out_of_bounds_content?: boolean | null;
+
+          /**
+           * Skip extraction of embedded data for charts in presentation slides
+           */
+          skip_embedded_data?: boolean | null;
+        }
+
+        /**
+         * Spatial text options for auto mode parsing configuration.
+         */
+        export interface SpatialText {
+          /**
+           * Keep column structure intact without unrolling
+           */
+          do_not_unroll_columns?: boolean | null;
+
+          /**
+           * Merge tables that span across pages in markdown output
+           */
+          merge_tables_across_pages_in_markdown?: boolean | null;
+
+          /**
+           * Preserve text alignment across page boundaries
+           */
+          preserve_layout_alignment_across_pages?: boolean | null;
+
+          /**
+           * Include very small text in spatial output
+           */
+          preserve_very_small_text?: boolean | null;
+        }
+      }
+    }
+
+    /**
+     * Options for ignoring specific text types
+     */
+    export interface Ignore {
+      /**
+       * Whether to ignore diagonal text in the document
+       */
+      ignore_diagonal_text?: boolean | null;
+
+      /**
+       * Whether to ignore hidden text in the document
+       */
+      ignore_hidden_text?: boolean | null;
+
+      /**
+       * Whether to ignore text that appears within images
+       */
+      ignore_text_in_image?: boolean | null;
+    }
+
+    /**
+     * OCR configuration parameters
+     */
+    export interface OcrParameters {
+      /**
+       * List of languages to use for OCR processing
+       */
+      languages?: Array<ParsingAPI.ParsingLanguages> | null;
+    }
+  }
+
+  export interface WebhookConfiguration {
+    /**
+     * List of events that trigger webhook notifications
+     */
+    webhook_events?: Array<string> | null;
+
+    /**
+     * Custom headers to include in webhook requests
+     */
+    webhook_headers?: { [key: string]: unknown } | null;
+
+    /**
+     * Webhook URL for receiving parsing notifications
+     */
+    webhook_url?: string | null;
+  }
+}
+
+export interface ParsingListParams extends PaginatedClassifyJobsParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+
+  /**
+   * Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)
+   */
+  status?: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | null;
+}
+
+export interface ParsingGetParams {
+  /**
+   * List of fields to include in response. Supported values: text, markdown, items,
+   * text_content_metadata, markdown_content_metadata, items_content_metadata.
+   * Example: ?expand=text&expand=markdown&expand=text_content_metadata
+   */
+  expand?: Array<string>;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export declare namespace Parsing {
+  export {
+    type FailPageMode as FailPageMode,
+    type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
+    type ParsingJob as ParsingJob,
+    type ParsingLanguages as ParsingLanguages,
+    type ParsingMode as ParsingMode,
+    type StatusEnum as StatusEnum,
+    type ParsingCreateResponse as ParsingCreateResponse,
+    type ParsingListResponse as ParsingListResponse,
+    type ParsingGetResponse as ParsingGetResponse,
+    type ParsingListResponsesPaginatedClassifyJobs as ParsingListResponsesPaginatedClassifyJobs,
+    type ParsingCreateParams as ParsingCreateParams,
+    type ParsingListParams as ParsingListParams,
+    type ParsingGetParams as ParsingGetParams,
+  };
+}

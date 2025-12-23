@@ -28,9 +28,11 @@ describe('resource sheets', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       config: {
         extraction_range: 'extraction_range',
+        flatten_hierarchical_tables: true,
         generate_additional_metadata: true,
         include_hidden_cells: true,
         sheet_names: ['string'],
+        table_merge_sensitivity: 'strong',
         use_experimental_processing: true,
       },
     });

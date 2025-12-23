@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as ParsingAPI from '../parsing/parsing';
+import * as ParsingAPI from '../parsing';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -203,6 +203,11 @@ export interface ClassifyJob {
   job_record_id?: string | null;
 
   /**
+   * The classification mode to use
+   */
+  mode?: 'FAST' | 'MULTIMODAL';
+
+  /**
    * The configuration for the parsing job
    */
   parsing_configuration?: ClassifyParsingConfiguration;
@@ -220,7 +225,7 @@ export interface ClassifyParsingConfiguration {
   /**
    * The language to parse the files in
    */
-  lang?: ParsingAPI.ParserLanguages;
+  lang?: ParsingAPI.ParsingLanguages;
 
   /**
    * The maximum number of pages to parse
@@ -336,6 +341,11 @@ export interface JobCreateParams {
    * Query param:
    */
   project_id?: string | null;
+
+  /**
+   * Body param: The classification mode to use
+   */
+  mode?: 'FAST' | 'MULTIMODAL';
 
   /**
    * Body param: The configuration for the parsing job

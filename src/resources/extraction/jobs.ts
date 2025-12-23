@@ -3,7 +3,6 @@
 import { APIResource } from '../../core/resource';
 import * as FilesAPI from '../files';
 import * as RunsAPI from './runs';
-import * as ParsingAPI from '../parsing/parsing';
 import * as ExtractionAgentsAPI from './extraction-agents/extraction-agents';
 import { APIPromise } from '../../core/api-promise';
 import { type Uploadable } from '../../core/uploads';
@@ -235,7 +234,7 @@ export interface ExtractJob {
   /**
    * The status of the extraction job
    */
-  status: ParsingAPI.StatusEnum;
+  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED';
 
   /**
    * The error that occurred during extraction

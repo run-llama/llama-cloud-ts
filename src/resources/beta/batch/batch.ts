@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import * as ParsingAPI from '../../parsing';
 import * as JobsAPI from '../../classifier/jobs';
-import * as ParsingAPI from '../../parsing/parsing';
+import * as ExtractionJobsAPI from '../../extraction/jobs';
 import * as JobItemsAPI from './job-items';
 import {
   JobItemGetProcessingResultsParams,
@@ -649,7 +650,7 @@ export namespace BatchCreateParams {
        */
       lang?: string;
 
-      languages?: Array<ParsingAPI.ParserLanguages>;
+      languages?: Array<ParsingAPI.ParsingLanguages>;
 
       layout_aware?: boolean | null;
 
@@ -704,7 +705,7 @@ export namespace BatchCreateParams {
       page_suffix?: string | null;
 
       /**
-       * Enum for representing the mode of parsing to be used
+       * Enum for representing the mode of parsing to be used.
        */
       parse_mode?: ParsingAPI.ParsingMode | null;
 
@@ -718,6 +719,10 @@ export namespace BatchCreateParams {
       precise_bounding_box?: boolean | null;
 
       premium_mode?: boolean | null;
+
+      presentation_out_of_bounds_content?: boolean | null;
+
+      presentation_skip_embedded_data?: boolean | null;
 
       preserve_layout_alignment_across_pages?: boolean | null;
 
@@ -733,8 +738,10 @@ export namespace BatchCreateParams {
 
       project_id?: string | null;
 
+      remove_hidden_text?: boolean | null;
+
       /**
-       * Enum for representing the different available page error handling modes
+       * Enum for representing the different available page error handling modes.
        */
       replace_failed_page_mode?: ParsingAPI.FailPageMode | null;
 
@@ -798,6 +805,11 @@ export namespace BatchCreateParams {
       vendor_multimodal_model_name?: string | null;
 
       version?: string | null;
+
+      /**
+       * The outbound webhook configurations
+       */
+      webhook_configurations?: Array<ExtractionJobsAPI.WebhookConfiguration> | null;
 
       webhook_url?: string | null;
     }

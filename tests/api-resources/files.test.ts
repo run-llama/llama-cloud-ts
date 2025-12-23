@@ -60,6 +60,7 @@ describe('resource files', () => {
       last_modified_at: '2019-12-27T18:11:19.117Z',
       permission_info: { foo: { foo: 'bar' } },
       resource_info: { foo: { foo: 'bar' } },
+      storage_type: 'ephemeral',
     });
   });
 

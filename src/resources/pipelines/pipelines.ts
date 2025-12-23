@@ -2,8 +2,8 @@
 
 import { APIResource } from '../../core/resource';
 import * as DataSinksAPI from '../data-sinks';
+import * as ParsingAPI from '../parsing';
 import * as JobsAPI from '../extraction/jobs';
-import * as ParsingAPI from '../parsing/parsing';
 import * as DataSourcesAPI from './data-sources';
 import {
   DataSourceGetDataSourcesResponse,
@@ -357,7 +357,7 @@ export interface LlamaParseParameters {
 
   keep_page_separator_when_merging_tables?: boolean | null;
 
-  languages?: Array<ParsingAPI.ParserLanguages>;
+  languages?: Array<ParsingAPI.ParsingLanguages>;
 
   layout_aware?: boolean | null;
 
@@ -400,7 +400,7 @@ export interface LlamaParseParameters {
   page_suffix?: string | null;
 
   /**
-   * Enum for representing the mode of parsing to be used
+   * Enum for representing the mode of parsing to be used.
    */
   parse_mode?: ParsingAPI.ParsingMode | null;
 
@@ -411,6 +411,8 @@ export interface LlamaParseParameters {
   premium_mode?: boolean | null;
 
   presentation_out_of_bounds_content?: boolean | null;
+
+  presentation_skip_embedded_data?: boolean | null;
 
   preserve_layout_alignment_across_pages?: boolean | null;
 
@@ -429,7 +431,7 @@ export interface LlamaParseParameters {
   remove_hidden_text?: boolean | null;
 
   /**
-   * Enum for representing the different available page error handling modes
+   * Enum for representing the different available page error handling modes.
    */
   replace_failed_page_mode?: ParsingAPI.FailPageMode | null;
 
@@ -512,7 +514,6 @@ export interface LlmParameters {
     | 'AZURE_OPENAI_GPT_4_1'
     | 'AZURE_OPENAI_GPT_4_1_MINI'
     | 'AZURE_OPENAI_GPT_4_1_NANO'
-    | 'CLAUDE_3_5_SONNET'
     | 'CLAUDE_4_5_SONNET'
     | 'BEDROCK_CLAUDE_3_5_SONNET_V1'
     | 'BEDROCK_CLAUDE_3_5_SONNET_V2'

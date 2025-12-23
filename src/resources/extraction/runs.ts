@@ -71,8 +71,8 @@ export interface ExtractConfig {
   chunk_mode?: 'PAGE' | 'SECTION';
 
   /**
-   * Whether to fetch citation bounding boxes for the extraction. Only available in
-   * PREMIUM mode.
+   * @deprecated Whether to fetch citation bounding boxes for the extraction. Only
+   * available in PREMIUM mode. Deprecated: this is now synonymous with cite_sources.
    */
   citation_bbox?: boolean;
 
@@ -87,7 +87,8 @@ export interface ExtractConfig {
   confidence_scores?: boolean;
 
   /**
-   * Extract model options.
+   * The extract model to use for data extraction. If not provided, uses the default
+   * for the extraction mode.
    */
   extract_model?:
     | 'openai-gpt-4-1'
@@ -101,6 +102,7 @@ export interface ExtractConfig {
     | 'gemini-2.5-pro'
     | 'openai-gpt-4o'
     | 'openai-gpt-4o-mini'
+    | (string & {})
     | null;
 
   /**
