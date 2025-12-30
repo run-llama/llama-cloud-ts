@@ -240,6 +240,7 @@ describe('resource files', () => {
       external_file_id: 'external_file_id',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      storage_type: 'storage_type',
     });
   });
 
@@ -266,6 +267,7 @@ describe('resource files', () => {
       proxy_url: 'https://example.com',
       request_headers: { foo: 'string' },
       resource_info: { foo: { foo: 'bar' } },
+      storage_type: 'ephemeral',
       verify_ssl: true,
     });
   });

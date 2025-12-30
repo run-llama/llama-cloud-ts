@@ -35,7 +35,7 @@ export class Parsing extends APIResource {
   }
 
   /**
-   * Retrieve parse job with optional expanded result data (text, markdown, items).
+   * Retrieve parse job with optional content or metadata.
    */
   get(
     jobID: string,
@@ -353,18 +353,14 @@ export interface ParsingListResponse {
 }
 
 /**
- * Combined parse result response with job status and optional result data.
+ * Parse result response with job status and optional content or metadata.
  *
- * The job field is always present with status information. Other fields are only
- * included if requested via the corresponding flags in ParseResultRequest.
- *
- * The result_content_metadata field is only included when requested via the expand
- * parameter. It provides size information for available results, allowing clients
- * to determine result sizes before fetching content.
+ * The job field is always included. Other fields are included based on expand
+ * parameters.
  */
 export interface ParsingGetResponse {
   /**
-   * Parse job status and metadata (always included)
+   * Parse job status and metadata
    */
   job: ParsingGetResponse.Job;
 
@@ -379,9 +375,7 @@ export interface ParsingGetResponse {
   markdown?: ParsingGetResponse.Markdown | null;
 
   /**
-   * Metadata about available results (sizes, existence) - only included when
-   * 'result_content_metadata' is in the expand parameter. Maps result type names
-   * (e.g., 'text', 'markdown', 'items') to their metadata.
+   * Metadata including size, existence, and presigned URLs for result files
    */
   result_content_metadata?: { [key: string]: ParsingGetResponse.ResultContentMetadata } | null;
 
@@ -393,7 +387,7 @@ export interface ParsingGetResponse {
 
 export namespace ParsingGetResponse {
   /**
-   * Parse job status and metadata (always included)
+   * Parse job status and metadata
    */
   export interface Job {
     /**
@@ -697,6 +691,11 @@ export namespace ParsingGetResponse {
      * Whether the result file exists in S3
      */
     exists?: boolean;
+
+    /**
+     * Presigned URL to download the result file
+     */
+    presigned_url?: string | null;
   }
 
   /**
@@ -1656,9 +1655,9 @@ export interface ParsingListParams extends PaginatedClassifyJobsParams {
 
 export interface ParsingGetParams {
   /**
-   * List of fields to include in response. Supported values: text, markdown, items,
-   * text_content_metadata, markdown_content_metadata, items_content_metadata.
-   * Example: ?expand=text&expand=markdown&expand=text_content_metadata
+   * Fields to include: text, markdown, items, text_content_metadata,
+   * markdown_content_metadata, items_content_metadata. Metadata fields include
+   * presigned URLs.
    */
   expand?: Array<string>;
 

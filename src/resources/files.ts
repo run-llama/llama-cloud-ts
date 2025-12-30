@@ -115,11 +115,11 @@ export class Files extends APIResource {
    * Upload a file to S3.
    */
   upload(params: FileUploadParams, options?: RequestOptions): APIPromise<File> {
-    const { external_file_id, organization_id, project_id, ...body } = params;
+    const { external_file_id, organization_id, project_id, storage_type, ...body } = params;
     return this._client.post(
       '/api/v1/files',
       multipartFormRequestOptions(
-        { query: { external_file_id, organization_id, project_id }, body, ...options },
+        { query: { external_file_id, organization_id, project_id, storage_type }, body, ...options },
         this._client,
       ),
     );
@@ -202,6 +202,12 @@ export interface File {
   permission_info?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
   } | null;
+
+  /**
+   * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
+   * 'split', 'classify')
+   */
+  purpose?: string | null;
 
   /**
    * Resource information for the file
@@ -538,6 +544,11 @@ export interface FileUploadParams {
    * Query param:
    */
   project_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  storage_type?: string | null;
 }
 
 export interface FileUploadFromURLParams {
@@ -583,6 +594,12 @@ export interface FileUploadFromURLParams {
   resource_info?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
   } | null;
+
+  /**
+   * Body param: Storage type for the file. Valid values: 'Ephemeral', 'Permanent'
+   * (no expiration). If not specified, defaults to permanent storage.
+   */
+  storage_type?: 'ephemeral' | 'permanent' | (string & {});
 
   /**
    * Body param: Whether to verify the SSL certificate when downloading the file
