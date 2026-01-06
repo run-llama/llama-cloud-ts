@@ -1,75 +1,96 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as FilesAPI from '../files';
+import * as PipelinesAPI from './pipelines';
 import { APIPromise } from '../../core/api-promise';
-import { type Uploadable } from '../../core/uploads';
+import {
+  PagePromise,
+  PaginatedPipelineFiles,
+  type PaginatedPipelineFilesParams,
+} from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
-import { multipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 export class Files extends APIResource {
   /**
-   * Upload a file using multipart/form-data.
+   * Add files to a pipeline.
    */
-  create(params: FileCreateParams, options?: RequestOptions): APIPromise<FileCreateResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post(
-      '/api/v1/beta/files',
-      multipartFormRequestOptions({ query: { organization_id, project_id }, body, ...options }, this._client),
+  create(
+    pipelineID: string,
+    params: FileCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<FileCreateResponse> {
+    const { body } = params;
+    return this._client.put(path`/api/v1/pipelines/${pipelineID}/files`, { body: body, ...options });
+  }
+
+  /**
+   * Update a file for a pipeline.
+   */
+  update(fileID: string, params: FileUpdateParams, options?: RequestOptions): APIPromise<PipelineFile> {
+    const { pipeline_id, ...body } = params;
+    return this._client.put(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}`, { body, ...options });
+  }
+
+  /**
+   * Get files for a pipeline.
+   *
+   * Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
+   * source ID only_manually_uploaded: Filter for only manually uploaded files
+   * file_name_contains: Optional filter by file name (substring match) limit: Limit
+   * number of results offset: Offset for pagination order_by: Field to order by
+   *
+   * @deprecated
+   */
+  list(
+    pipelineID: string,
+    query: FileListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<PipelineFilesPaginatedPipelineFiles, PipelineFile> {
+    return this._client.getAPIList(
+      path`/api/v1/pipelines/${pipelineID}/files2`,
+      PaginatedPipelineFiles<PipelineFile>,
+      { query, ...options },
     );
   }
 
   /**
-   * Delete a single file from the project.
-   *
-   * Args: file_id: The ID of the file to delete project: Validated project from
-   * dependency db: Database session
-   *
-   * Returns: None (204 No Content on success)
+   * Delete a file from a pipeline.
    */
-  delete(
-    fileID: string,
-    params: FileDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { organization_id, project_id } = params ?? {};
-    return this._client.delete(path`/api/v1/beta/files/${fileID}`, {
-      query: { organization_id, project_id },
+  delete(fileID: string, params: FileDeleteParams, options?: RequestOptions): APIPromise<void> {
+    const { pipeline_id } = params;
+    return this._client.delete(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 
   /**
-   * Returns a presigned url to read the file content.
+   * Get status of a file for a pipeline.
    */
-  get(
+  getStatus(
     fileID: string,
-    query: FileGetParams | null | undefined = {},
+    params: FileGetStatusParams,
     options?: RequestOptions,
-  ): APIPromise<FilesAPI.PresignedURL> {
-    return this._client.get(path`/api/v1/beta/files/${fileID}/content`, { query, ...options });
+  ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
+    const { pipeline_id } = params;
+    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}/status`, options);
   }
 
   /**
-   * Query files with flexible filtering and pagination.
-   *
-   * Args: request: The query request with filters and pagination project: Validated
-   * project from dependency db: Database session
-   *
-   * Returns: Paginated response with files
+   * Get files for a pipeline.
    */
-  query(params: FileQueryParams, options?: RequestOptions): APIPromise<FileQueryResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/files/query', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+  getStatusCounts(
+    pipelineID: string,
+    query: FileGetStatusCountsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<FileGetStatusCountsResponse> {
+    return this._client.get(path`/api/v1/pipelines/${pipelineID}/files/status-counts`, { query, ...options });
   }
 }
+
+export type PipelineFilesPaginatedPipelineFiles = PaginatedPipelineFiles<PipelineFile>;
 
 /**
  * Schema for a file that is associated with a pipeline.
@@ -179,240 +200,107 @@ export interface PipelineFile {
   updated_at?: string | null;
 }
 
-/**
- * Schema for a file in the v2 API.
- */
-export interface FileCreateResponse {
-  /**
-   * Unique identifier
-   */
-  id: string;
+export type FileCreateResponse = Array<PipelineFile>;
 
-  name: string;
+export interface FileGetStatusCountsResponse {
+  /**
+   * The counts of files by status
+   */
+  counts: { [key: string]: number };
 
   /**
-   * The ID of the project that the file belongs to
+   * The total number of files
    */
-  project_id: string;
+  total_count: number;
 
   /**
-   * The expiration date for the file. Files past this date can be deleted.
+   * The ID of the data source that the files belong to
    */
-  expires_at?: string | null;
+  data_source_id?: string | null;
 
   /**
-   * The ID of the file in the external system
+   * Whether to only count manually uploaded files
    */
-  external_file_id?: string | null;
+  only_manually_uploaded?: boolean;
 
   /**
-   * File type (e.g. pdf, docx, etc.)
+   * The ID of the pipeline that the files belong to
    */
-  file_type?: string | null;
-
-  /**
-   * The last modified time of the file
-   */
-  last_modified_at?: string | null;
-
-  /**
-   * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-   * 'split', 'classify')
-   */
-  purpose?: string | null;
-}
-
-/**
- * Response schema for paginated file queries in V2 API.
- */
-export interface FileQueryResponse {
-  /**
-   * The list of items.
-   */
-  items: Array<FileQueryResponse.Item>;
-
-  /**
-   * A token, which can be sent as page_token to retrieve the next page. If this
-   * field is omitted, there are no subsequent pages.
-   */
-  next_page_token?: string | null;
-
-  /**
-   * The total number of items available. This is only populated when specifically
-   * requested. The value may be an estimate and can be used for display purposes
-   * only.
-   */
-  total_size?: number | null;
-}
-
-export namespace FileQueryResponse {
-  /**
-   * Schema for a file in the v2 API.
-   */
-  export interface Item {
-    /**
-     * Unique identifier
-     */
-    id: string;
-
-    name: string;
-
-    /**
-     * The ID of the project that the file belongs to
-     */
-    project_id: string;
-
-    /**
-     * The expiration date for the file. Files past this date can be deleted.
-     */
-    expires_at?: string | null;
-
-    /**
-     * The ID of the file in the external system
-     */
-    external_file_id?: string | null;
-
-    /**
-     * File type (e.g. pdf, docx, etc.)
-     */
-    file_type?: string | null;
-
-    /**
-     * The last modified time of the file
-     */
-    last_modified_at?: string | null;
-
-    /**
-     * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-     * 'split', 'classify')
-     */
-    purpose?: string | null;
-  }
+  pipeline_id?: string | null;
 }
 
 export interface FileCreateParams {
+  body: Array<FileCreateParams.Body>;
+}
+
+export namespace FileCreateParams {
   /**
-   * Body param: The file to upload
+   * Schema for creating a file that is associated with a pipeline.
    */
-  file: Uploadable;
+  export interface Body {
+    /**
+     * The ID of the file
+     */
+    file_id: string;
+
+    /**
+     * Custom metadata for the file
+     */
+    custom_metadata?: {
+      [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+    } | null;
+  }
+}
+
+export interface FileUpdateParams {
+  /**
+   * Path param:
+   */
+  pipeline_id: string;
 
   /**
-   * Body param: The intended purpose of the file. Valid values: 'user_data',
-   * 'parse', 'extract', 'split', 'classify'
+   * Body param: Custom metadata for the file
    */
-  purpose: string;
+  custom_metadata?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
+}
 
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
+export interface FileListParams extends PaginatedPipelineFilesParams {
+  data_source_id?: string | null;
 
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
+  file_name_contains?: string | null;
 
-  /**
-   * Body param: The ID of the file in the external system
-   */
-  external_file_id?: string | null;
+  only_manually_uploaded?: boolean;
+
+  order_by?: string | null;
 }
 
 export interface FileDeleteParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
+  pipeline_id: string;
 }
 
-export interface FileGetParams {
-  expires_at_seconds?: number | null;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
+export interface FileGetStatusParams {
+  pipeline_id: string;
 }
 
-export interface FileQueryParams {
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
+export interface FileGetStatusCountsParams {
+  data_source_id?: string | null;
 
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Filter parameters for file queries.
-   */
-  filter?: FileQueryParams.Filter | null;
-
-  /**
-   * Body param: A comma-separated list of fields to order by, sorted in ascending
-   * order. Use 'field_name desc' to specify descending order.
-   */
-  order_by?: string | null;
-
-  /**
-   * Body param: The maximum number of items to return. The service may return fewer
-   * than this value. If unspecified, a default page size will be used. The maximum
-   * value is typically 1000; values above this will be coerced to the maximum.
-   */
-  page_size?: number | null;
-
-  /**
-   * Body param: A page token, received from a previous list call. Provide this to
-   * retrieve the subsequent page.
-   */
-  page_token?: string | null;
-}
-
-export namespace FileQueryParams {
-  /**
-   * Filter parameters for file queries.
-   */
-  export interface Filter {
-    /**
-     * Filter by data source ID
-     */
-    data_source_id?: string | null;
-
-    /**
-     * Filter by external file ID
-     */
-    external_file_id?: string | null;
-
-    /**
-     * Filter by specific file IDs
-     */
-    file_ids?: Array<string> | null;
-
-    /**
-     * Filter by file name
-     */
-    file_name?: string | null;
-
-    /**
-     * Filter only manually uploaded files (data_source_id is null)
-     */
-    only_manually_uploaded?: boolean | null;
-
-    /**
-     * Filter by project ID
-     */
-    project_id?: string | null;
-  }
+  only_manually_uploaded?: boolean;
 }
 
 export declare namespace Files {
   export {
     type PipelineFile as PipelineFile,
     type FileCreateResponse as FileCreateResponse,
-    type FileQueryResponse as FileQueryResponse,
+    type FileGetStatusCountsResponse as FileGetStatusCountsResponse,
+    type PipelineFilesPaginatedPipelineFiles as PipelineFilesPaginatedPipelineFiles,
     type FileCreateParams as FileCreateParams,
+    type FileUpdateParams as FileUpdateParams,
+    type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
-    type FileGetParams as FileGetParams,
-    type FileQueryParams as FileQueryParams,
+    type FileGetStatusParams as FileGetStatusParams,
+    type FileGetStatusCountsParams as FileGetStatusCountsParams,
   };
 }

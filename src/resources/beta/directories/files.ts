@@ -17,8 +17,6 @@ export class Files extends APIResource {
   /**
    * Update file metadata within the specified directory.
    *
-   * Supports moving files to a different directory by setting directory_id.
-   *
    * Note: This endpoint uses directory_file_id (the internal ID). If you're trying
    * to update a file by its unique_id, use the list endpoint with a filter to find
    * the directory_file_id first.
@@ -28,8 +26,8 @@ export class Files extends APIResource {
     params: FileUpdateParams,
     options?: RequestOptions,
   ): APIPromise<FileUpdateResponse> {
-    const { path_directory_id, organization_id, project_id, ...body } = params;
-    return this._client.patch(path`/api/v1/beta/directories/${path_directory_id}/files/${directoryFileID}`, {
+    const { directory_id, organization_id, project_id, ...body } = params;
+    return this._client.patch(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
       query: { organization_id, project_id },
       body,
       ...options,
@@ -397,7 +395,7 @@ export interface FileUpdateParams {
   /**
    * Path param:
    */
-  path_directory_id: string;
+  directory_id: string;
 
   /**
    * Query param:
@@ -408,11 +406,6 @@ export interface FileUpdateParams {
    * Query param:
    */
   project_id?: string | null;
-
-  /**
-   * Body param: Move file to a different directory.
-   */
-  body_directory_id?: string | null;
 
   /**
    * Body param: Updated display name.
