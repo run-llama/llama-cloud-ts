@@ -1,4 +1,4 @@
-import LlamaCloud from 'llama-cloud';
+import LlamaCloud from '@llamaindex/llama-cloud';
 
 async function createIndex() {
   const client = new LlamaCloud();
