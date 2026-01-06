@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
-import { stringify } from 'llama-cloud/internal/qs';
-import { encode } from 'llama-cloud/internal/qs/utils';
-import { StringifyOptions } from 'llama-cloud/internal/qs/types';
+import { stringify } from '@llamaindex/llama-cloud/internal/qs';
+import { encode } from '@llamaindex/llama-cloud/internal/qs/utils';
+import { StringifyOptions } from '@llamaindex/llama-cloud/internal/qs/types';
 import { empty_test_cases } from './empty-keys-cases';
 import assert from 'assert';
 

@@ -1,4 +1,4 @@
-import LlamaCloud from 'llama-cloud';
+import LlamaCloud from '@llamaindex/llama-cloud';
 import fs from 'fs';
 
 // Sleep helper function

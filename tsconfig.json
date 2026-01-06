@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "llama-cloud/*": ["./src/*"],
-      "llama-cloud": ["./src/index.ts"]
+      "@llamaindex/llama-cloud/*": ["./src/*"],
+      "@llamaindex/llama-cloud": ["./src/index.ts"]
     },
     "noEmit": true,
 
