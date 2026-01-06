@@ -29,9 +29,9 @@ const client = new LlamaCloud({
   apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted
 });
 
-const response = await client.parsing.uploadFile();
+const parsing = await client.parsing.create({ tier: 'agentic', file_id: 'abc1234', version: 'latest' });
 
-console.log(response.id);
+console.log(parsing.id);
 ```
 
 ### Request & Response types
@@ -294,7 +294,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.parsing.uploadFile({
+client.parsing.create({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
