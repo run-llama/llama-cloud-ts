@@ -1,6 +1,6 @@
 {
   "name": "@llamaindex/llama-cloud",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "The official TypeScript library for the Llama Cloud API",
   "author": "Llama Cloud <>",
   "types": "dist/index.d.ts",
