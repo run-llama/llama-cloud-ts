@@ -50,7 +50,13 @@ import {
   PipelineFilesPaginatedPipelineFiles,
 } from './files';
 import * as ImagesAPI from './images';
-import { Images } from './images';
+import {
+  ImageGetPageFigureParams,
+  ImageGetPageFigureResponse,
+  ImageGetPageScreenshotParams,
+  ImageGetPageScreenshotResponse,
+  Images,
+} from './images';
 import * as MetadataAPI from './metadata';
 import { Metadata, MetadataCreateParams, MetadataCreateResponse } from './metadata';
 import * as SyncAPI from './sync';
@@ -5851,7 +5857,13 @@ export declare namespace Pipelines {
     type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
   };
 
-  export { Images as Images };
+  export {
+    Images as Images,
+    type ImageGetPageFigureResponse as ImageGetPageFigureResponse,
+    type ImageGetPageScreenshotResponse as ImageGetPageScreenshotResponse,
+    type ImageGetPageFigureParams as ImageGetPageFigureParams,
+    type ImageGetPageScreenshotParams as ImageGetPageScreenshotParams,
+  };
 
   export {
     Files as Files,
