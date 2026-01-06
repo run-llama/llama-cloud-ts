@@ -282,11 +282,6 @@ export interface ParsingCreateResponse {
   id: string;
 
   /**
-   * Job-specific parameters as JSON
-   */
-  parameters: { [key: string]: unknown };
-
-  /**
    * Project this job belongs to
    */
   project_id: string;
@@ -320,11 +315,6 @@ export interface ParsingListResponse {
    * Unique identifier for the parse job
    */
   id: string;
-
-  /**
-   * Job-specific parameters as JSON
-   */
-  parameters: { [key: string]: unknown };
 
   /**
    * Project this job belongs to
@@ -365,6 +355,11 @@ export interface ParsingGetResponse {
   job: ParsingGetResponse.Job;
 
   /**
+   * Metadata for all extracted images.
+   */
+  images_content_metadata?: ParsingGetResponse.ImagesContentMetadata | null;
+
+  /**
    * Structured JSON result (if requested)
    */
   items?: ParsingGetResponse.Items | null;
@@ -396,11 +391,6 @@ export namespace ParsingGetResponse {
     id: string;
 
     /**
-     * Job-specific parameters as JSON
-     */
-    parameters: { [key: string]: unknown };
-
-    /**
      * Project this job belongs to
      */
     project_id: string;
@@ -427,6 +417,53 @@ export namespace ParsingGetResponse {
   }
 
   /**
+   * Metadata for all extracted images.
+   */
+  export interface ImagesContentMetadata {
+    /**
+     * List of image metadata with presigned URLs
+     */
+    images: Array<ImagesContentMetadata.Image>;
+
+    /**
+     * Total number of extracted images
+     */
+    total_count: number;
+  }
+
+  export namespace ImagesContentMetadata {
+    /**
+     * Metadata for a single extracted image.
+     */
+    export interface Image {
+      /**
+       * Image filename (e.g., 'image_0.png')
+       */
+      filename: string;
+
+      /**
+       * Index of the image in the extraction order
+       */
+      index: number;
+
+      /**
+       * MIME type of the image
+       */
+      content_type?: string | null;
+
+      /**
+       * Presigned URL to download the image
+       */
+      presigned_url?: string | null;
+
+      /**
+       * Size of the image file in bytes
+       */
+      size_bytes?: number | null;
+    }
+  }
+
+  /**
    * Structured JSON result (if requested)
    */
   export interface Items {
@@ -448,6 +485,7 @@ export namespace ParsingGetResponse {
         | StructuredResultPage.CodeItem
         | StructuredResultPage.TableItem
         | StructuredResultPage.ImageItem
+        | StructuredResultPage.LinkItem
       >;
 
       /**
@@ -463,6 +501,11 @@ export namespace ParsingGetResponse {
 
     export namespace StructuredResultPage {
       export interface TextItem {
+        /**
+         * Markdown representation preserving formatting
+         */
+        md: string;
+
         /**
          * Text content
          */
@@ -484,6 +527,11 @@ export namespace ParsingGetResponse {
          * Heading level (1-6)
          */
         level: number;
+
+        /**
+         * Markdown representation preserving formatting
+         */
+        md: string;
 
         /**
          * Heading text content
@@ -526,6 +574,11 @@ export namespace ParsingGetResponse {
       export namespace ListItem {
         export interface TextItem {
           /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
            * Text content
            */
           value: string;
@@ -543,6 +596,11 @@ export namespace ParsingGetResponse {
       }
 
       export interface CodeItem {
+        /**
+         * Markdown representation with code fences
+         */
+        md: string;
+
         /**
          * Code content
          */
@@ -611,6 +669,28 @@ export namespace ParsingGetResponse {
          * Image item type
          */
         type?: 'image';
+      }
+
+      export interface LinkItem {
+        /**
+         * Display text of the link
+         */
+        text: string;
+
+        /**
+         * URL of the link
+         */
+        url: string;
+
+        /**
+         * Bounding box coordinates [x1, y1, x2, y2]
+         */
+        bBox?: Array<unknown> | null;
+
+        /**
+         * Link item type
+         */
+        type?: 'link';
       }
     }
 
@@ -733,11 +813,6 @@ export interface ParsingUploadFileResponse {
   id: string;
 
   /**
-   * Job-specific parameters as JSON
-   */
-  parameters: { [key: string]: unknown };
-
-  /**
    * Project this job belongs to
    */
   project_id: string;
@@ -847,7 +922,7 @@ export interface ParsingCreateParams {
   /**
    * Body param: Version of the tier configuration
    */
-  version?: '2025-12-18' | '2025-12-11' | 'latest' | (string & {});
+  version?: '2025-12-31' | '2025-12-18' | '2025-12-11' | 'latest' | (string & {});
 
   /**
    * Body param: List of webhook configurations for notifications
@@ -1507,7 +1582,7 @@ export namespace ParsingCreateParams {
         /**
          * Version of the tier configuration
          */
-        version?: '2025-12-18' | '2025-12-11' | 'latest' | (string & {}) | null;
+        version?: '2025-12-31' | '2025-12-18' | '2025-12-11' | 'latest' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -1656,14 +1731,26 @@ export interface ParsingListParams extends PaginatedClassifyJobsParams {
 export interface ParsingGetParams {
   /**
    * Fields to include: text, markdown, items, text_content_metadata,
-   * markdown_content_metadata, items_content_metadata. Metadata fields include
+   * markdown_content_metadata, items_content_metadata, xlsx_content_metadata,
+   * output_pdf_content_metadata, images_content_metadata. Metadata fields include
    * presigned URLs.
    */
   expand?: Array<string>;
 
+  /**
+   * Comma-delimited list of image filenames to fetch. Supersedes return_all_images.
+   * Example: image_0.png,image_1.jpg
+   */
+  image_filenames?: string | null;
+
   organization_id?: string | null;
 
   project_id?: string | null;
+
+  /**
+   * Return all available images when true. Ignored if image_filenames is provided.
+   */
+  return_all_images?: boolean;
 }
 
 export interface ParsingUploadFileParams {

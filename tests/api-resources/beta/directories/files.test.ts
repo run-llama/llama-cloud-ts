@@ -11,7 +11,7 @@ describe('resource files', () => {
   // Prism tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.beta.directories.files.update('directory_file_id', {
-      directory_id: 'directory_id',
+      path_directory_id: 'directory_id',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -25,9 +25,10 @@ describe('resource files', () => {
   // Prism tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.beta.directories.files.update('directory_file_id', {
-      directory_id: 'directory_id',
+      path_directory_id: 'directory_id',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      body_directory_id: 'directory_id',
       display_name: 'display_name',
       unique_id: 'x',
     });
