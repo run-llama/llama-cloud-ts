@@ -40,14 +40,11 @@ import {
   FileCreateParams,
   FileCreateResponse,
   FileDeleteParams,
-  FileGetStatusCountsParams,
-  FileGetStatusCountsResponse,
-  FileGetStatusParams,
-  FileListParams,
-  FileUpdateParams,
+  FileGetParams,
+  FileQueryParams,
+  FileQueryResponse,
   Files,
   PipelineFile,
-  PipelineFilesPaginatedPipelineFiles,
 } from './files';
 import * as MetadataAPI from './metadata';
 import { Metadata, MetadataCreateParams, MetadataCreateResponse } from './metadata';
@@ -5851,14 +5848,11 @@ export declare namespace Pipelines {
     Files as Files,
     type PipelineFile as PipelineFile,
     type FileCreateResponse as FileCreateResponse,
-    type FileGetStatusCountsResponse as FileGetStatusCountsResponse,
-    type PipelineFilesPaginatedPipelineFiles as PipelineFilesPaginatedPipelineFiles,
+    type FileQueryResponse as FileQueryResponse,
     type FileCreateParams as FileCreateParams,
-    type FileUpdateParams as FileUpdateParams,
-    type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
-    type FileGetStatusParams as FileGetStatusParams,
-    type FileGetStatusCountsParams as FileGetStatusCountsParams,
+    type FileGetParams as FileGetParams,
+    type FileQueryParams as FileQueryParams,
   };
 
   export {

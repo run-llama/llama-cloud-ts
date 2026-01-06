@@ -130,16 +130,14 @@ Types:
 
 - <code><a href="./src/resources/pipelines/files.ts">PipelineFile</a></code>
 - <code><a href="./src/resources/pipelines/files.ts">FileCreateResponse</a></code>
-- <code><a href="./src/resources/pipelines/files.ts">FileGetStatusCountsResponse</a></code>
+- <code><a href="./src/resources/pipelines/files.ts">FileQueryResponse</a></code>
 
 Methods:
 
-- <code title="put /api/v1/pipelines/{pipeline_id}/files">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">create</a>(pipelineID, [ ...body ]) -> FileCreateResponse</code>
-- <code title="put /api/v1/pipelines/{pipeline_id}/files/{file_id}">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">update</a>(fileID, { ...params }) -> PipelineFile</code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/files2">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">list</a>(pipelineID, { ...params }) -> PipelineFilesPaginatedPipelineFiles</code>
-- <code title="delete /api/v1/pipelines/{pipeline_id}/files/{file_id}">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">delete</a>(fileID, { ...params }) -> void</code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/files/{file_id}/status">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">getStatus</a>(fileID, { ...params }) -> ManagedIngestionStatusResponse</code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/files/status-counts">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">getStatusCounts</a>(pipelineID, { ...params }) -> FileGetStatusCountsResponse</code>
+- <code title="post /api/v1/beta/files">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">create</a>({ ...params }) -> FileCreateResponse</code>
+- <code title="delete /api/v1/beta/files/{file_id}">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">delete</a>(fileID, { ...params }) -> void</code>
+- <code title="get /api/v1/beta/files/{file_id}/content">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">get</a>(fileID, { ...params }) -> PresignedURL</code>
+- <code title="post /api/v1/beta/files/query">client.pipelines.files.<a href="./src/resources/pipelines/files.ts">query</a>({ ...params }) -> FileQueryResponse</code>
 
 ## Metadata
 

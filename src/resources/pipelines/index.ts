@@ -33,14 +33,11 @@ export {
   Files,
   type PipelineFile,
   type FileCreateResponse,
-  type FileGetStatusCountsResponse,
+  type FileQueryResponse,
   type FileCreateParams,
-  type FileUpdateParams,
-  type FileListParams,
   type FileDeleteParams,
-  type FileGetStatusParams,
-  type FileGetStatusCountsParams,
-  type PipelineFilesPaginatedPipelineFiles,
+  type FileGetParams,
+  type FileQueryParams,
 } from './files';
 export { Metadata, type MetadataCreateResponse, type MetadataCreateParams } from './metadata';
 export {
