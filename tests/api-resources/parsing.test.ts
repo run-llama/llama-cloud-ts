@@ -98,7 +98,7 @@ describe('resource parsing', () => {
                 preserve_very_small_text: true,
               },
               tier: 'fast',
-              version: '2025-12-18',
+              version: '2025-12-31',
             },
             filename_match_glob: 'filename_match_glob',
             filename_match_glob_list: ['string'],
@@ -141,7 +141,7 @@ describe('resource parsing', () => {
         ocr_parameters: { languages: ['af'] },
       },
       source_url: 'https:',
-      version: '2025-12-18',
+      version: '2025-12-31',
       webhook_configurations: [
         { webhook_events: ['string'], webhook_headers: { foo: 'bar' }, webhook_url: 'https:' },
       ],
@@ -197,8 +197,10 @@ describe('resource parsing', () => {
         'job_id',
         {
           expand: ['string'],
+          image_filenames: 'image_filenames',
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          return_all_images: true,
         },
         { path: '/_stainless_unknown_path' },
       ),
