@@ -102,7 +102,16 @@ describe('resource agentData', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       collection: 'collection',
       count: true,
-      filter: { foo: { eq: 0, gt: 0, gte: 0, includes: [0], lt: 0, lte: 0 } },
+      filter: {
+        foo: {
+          eq: 0,
+          gt: 0,
+          gte: 0,
+          includes: [0],
+          lt: 0,
+          lte: 0,
+        },
+      },
       first: true,
       group_by: ['string'],
       offset: 0,
@@ -131,7 +140,16 @@ describe('resource agentData', () => {
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       collection: 'collection',
-      filter: { foo: { eq: 0, gt: 0, gte: 0, includes: [0], lt: 0, lte: 0 } },
+      filter: {
+        foo: {
+          eq: 0,
+          gt: 0,
+          gte: 0,
+          includes: [0],
+          lt: 0,
+          lte: 0,
+        },
+      },
     });
   });
 
@@ -181,7 +199,16 @@ describe('resource agentData', () => {
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       collection: 'collection',
-      filter: { foo: { eq: 0, gt: 0, gte: 0, includes: [0], lt: 0, lte: 0 } },
+      filter: {
+        foo: {
+          eq: 0,
+          gt: 0,
+          gte: 0,
+          includes: [0],
+          lt: 0,
+          lte: 0,
+        },
+      },
       include_total: true,
       offset: 0,
       order_by: 'order_by',
