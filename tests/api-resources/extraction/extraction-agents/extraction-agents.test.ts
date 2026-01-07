@@ -56,7 +56,10 @@ describe('resource extractionAgents', () => {
   test.skip('update: only required params', async () => {
     const responsePromise = client.extraction.extractionAgents.update(
       '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      { config: {}, data_schema: { foo: { foo: 'bar' } } },
+      {
+        config: {},
+        data_schema: { foo: { foo: 'bar' } },
+      },
     );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);

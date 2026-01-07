@@ -43,7 +43,16 @@ describe('resource retrievers', () => {
             retrieve_image_nodes: true,
             retrieve_page_figure_nodes: true,
             retrieve_page_screenshot_nodes: true,
-            search_filters: { filters: [{ key: 'key', value: 0, operator: '==' }], condition: 'and' },
+            search_filters: {
+              filters: [
+                {
+                  key: 'key',
+                  value: 0,
+                  operator: '==',
+                },
+              ],
+              condition: 'and',
+            },
             search_filters_inference_schema: { foo: { foo: 'bar' } },
             sparse_similarity_top_k: 1,
           },
@@ -56,7 +65,11 @@ describe('resource retrievers', () => {
   test.skip('update: only required params', async () => {
     const responsePromise = client.retrievers.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipelines: [
-        { description: 'description', name: 'x', pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        {
+          description: 'description',
+          name: 'x',
+          pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
       ],
     });
     const rawResponse = await responsePromise.asResponse();
@@ -88,7 +101,16 @@ describe('resource retrievers', () => {
             retrieve_image_nodes: true,
             retrieve_page_figure_nodes: true,
             retrieve_page_screenshot_nodes: true,
-            search_filters: { filters: [{ key: 'key', value: 0, operator: '==' }], condition: 'and' },
+            search_filters: {
+              filters: [
+                {
+                  key: 'key',
+                  value: 0,
+                  operator: '==',
+                },
+              ],
+              condition: 'and',
+            },
             search_filters_inference_schema: { foo: { foo: 'bar' } },
             sparse_similarity_top_k: 1,
           },
@@ -200,7 +222,16 @@ describe('resource retrievers', () => {
             retrieve_image_nodes: true,
             retrieve_page_figure_nodes: true,
             retrieve_page_screenshot_nodes: true,
-            search_filters: { filters: [{ key: 'key', value: 0, operator: '==' }], condition: 'and' },
+            search_filters: {
+              filters: [
+                {
+                  key: 'key',
+                  value: 0,
+                  operator: '==',
+                },
+              ],
+              condition: 'and',
+            },
             search_filters_inference_schema: { foo: { foo: 'bar' } },
             sparse_similarity_top_k: 1,
           },
@@ -246,7 +277,16 @@ describe('resource retrievers', () => {
             retrieve_image_nodes: true,
             retrieve_page_figure_nodes: true,
             retrieve_page_screenshot_nodes: true,
-            search_filters: { filters: [{ key: 'key', value: 0, operator: '==' }], condition: 'and' },
+            search_filters: {
+              filters: [
+                {
+                  key: 'key',
+                  value: 0,
+                  operator: '==',
+                },
+              ],
+              condition: 'and',
+            },
             search_filters_inference_schema: { foo: { foo: 'bar' } },
             sparse_similarity_top_k: 1,
           },

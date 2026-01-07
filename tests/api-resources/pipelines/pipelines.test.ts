@@ -26,7 +26,11 @@ describe('resource pipelines', () => {
       name: 'x',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      data_sink: { component: { foo: 'bar' }, name: 'name', sink_type: 'PINECONE' },
+      data_sink: {
+        component: { foo: 'bar' },
+        name: 'name',
+        sink_type: 'PINECONE',
+      },
       data_sink_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       embedding_config: {
         component: {
@@ -189,13 +193,26 @@ describe('resource pipelines', () => {
         retrieve_image_nodes: true,
         retrieve_page_figure_nodes: true,
         retrieve_page_screenshot_nodes: true,
-        search_filters: { filters: [{ key: 'key', value: 0, operator: '==' }], condition: 'and' },
+        search_filters: {
+          filters: [
+            {
+              key: 'key',
+              value: 0,
+              operator: '==',
+            },
+          ],
+          condition: 'and',
+        },
         search_filters_inference_schema: { foo: { foo: 'bar' } },
         sparse_similarity_top_k: 1,
       },
       sparse_model_config: { class_name: 'class_name', model_type: 'splade' },
       status: 'status',
-      transform_config: { chunk_overlap: 0, chunk_size: 1, mode: 'auto' },
+      transform_config: {
+        chunk_overlap: 0,
+        chunk_size: 1,
+        mode: 'auto',
+      },
     });
   });
 
@@ -228,7 +245,16 @@ describe('resource pipelines', () => {
       retrieve_image_nodes: true,
       retrieve_page_figure_nodes: true,
       retrieve_page_screenshot_nodes: true,
-      search_filters: { filters: [{ key: 'key', value: 0, operator: '==' }], condition: 'and' },
+      search_filters: {
+        filters: [
+          {
+            key: 'key',
+            value: 0,
+            operator: '==',
+          },
+        ],
+        condition: 'and',
+      },
       search_filters_inference_schema: { foo: { foo: 'bar' } },
       sparse_similarity_top_k: 1,
     });
@@ -341,7 +367,11 @@ describe('resource pipelines', () => {
       name: 'x',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      data_sink: { component: { foo: 'bar' }, name: 'name', sink_type: 'PINECONE' },
+      data_sink: {
+        component: { foo: 'bar' },
+        name: 'name',
+        sink_type: 'PINECONE',
+      },
       data_sink_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       embedding_config: {
         component: {
@@ -504,13 +534,26 @@ describe('resource pipelines', () => {
         retrieve_image_nodes: true,
         retrieve_page_figure_nodes: true,
         retrieve_page_screenshot_nodes: true,
-        search_filters: { filters: [{ key: 'key', value: 0, operator: '==' }], condition: 'and' },
+        search_filters: {
+          filters: [
+            {
+              key: 'key',
+              value: 0,
+              operator: '==',
+            },
+          ],
+          condition: 'and',
+        },
         search_filters_inference_schema: { foo: { foo: 'bar' } },
         sparse_similarity_top_k: 1,
       },
       sparse_model_config: { class_name: 'class_name', model_type: 'splade' },
       status: 'status',
-      transform_config: { chunk_overlap: 0, chunk_size: 1, mode: 'auto' },
+      transform_config: {
+        chunk_overlap: 0,
+        chunk_size: 1,
+        mode: 'auto',
+      },
     });
   });
 });

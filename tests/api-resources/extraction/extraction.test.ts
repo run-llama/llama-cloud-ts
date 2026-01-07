@@ -10,7 +10,10 @@ const client = new LlamaCloud({
 describe('resource extraction', () => {
   // Prism tests are disabled
   test.skip('run: only required params', async () => {
-    const responsePromise = client.extraction.run({ config: {}, data_schema: { foo: { foo: 'bar' } } });
+    const responsePromise = client.extraction.run({
+      config: {},
+      data_schema: { foo: { foo: 'bar' } },
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
