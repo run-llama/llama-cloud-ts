@@ -22,8 +22,9 @@ async function extractStateless() {
   const client = new LlamaCloud();
 
   // Upload the file first
-  const fileObj = await client.files.upload({
-    upload_file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
+  const fileObj = await client.files.create({
+    file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
+    purpose: "extract"
   });
   const fileId = fileObj.id;
 
@@ -48,7 +49,8 @@ async function extractWithAgent() {
 
   // Upload the file first
   const fileObj = await client.files.upload({
-    upload_file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
+    file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
+    purpose: "extract"  
   });
   const fileId = fileObj.id;
 

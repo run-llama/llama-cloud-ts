@@ -23,8 +23,9 @@ async function splitDocumentLowLevel() {
   const client = new LlamaCloud();
 
   // Upload a file to split
-  const fileObj = await client.files.upload({
-    upload_file: fs.createReadStream('examples/example_files/turing+imagenet+attention.pdf'),
+  const fileObj = await client.files.create({
+    file: fs.createReadStream('examples/example_files/turing+imagenet+attention.pdf'),
+    purpose: "split"
   });
   const fileId = fileObj.id;
   console.log(`Uploaded file with ID: ${fileId}`);

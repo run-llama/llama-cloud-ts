@@ -5,8 +5,9 @@ async function extractTables() {
   const client = new LlamaCloud();
 
   // Upload a spreadsheet
-  const fileObj = await client.files.upload({
-    upload_file: fs.createReadStream('../example_files/sample_spreadsheet.xlsx'),
+  const fileObj = await client.files.create({
+    file: fs.createReadStream('../example_files/sample_spreadsheet.xlsx'),
+    purpose: "parse"
   });
   const fileId = fileObj.id;
 

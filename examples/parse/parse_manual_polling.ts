@@ -4,10 +4,16 @@ import fs from 'fs';
 async function main() {
   const client = new LlamaCloud();
 
-  // Or, upload without directly waiting
+  // Upload a file
+  const fileObj = await client.files.create({
+    file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
+    purpose: "parse",
+  });
+
+  // Trigger a parse job
   const job = await client.parsing.create({
     // The file to parse
-    upload_file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
+    file_id: fileObj.id,
     tier: 'agentic',
     version: 'latest',
   });

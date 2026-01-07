@@ -5,8 +5,9 @@ async function classifyDocument() {
   const client = new LlamaCloud();
 
   // Upload a file
-  const fileObj = await client.files.upload({
-    upload_file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
+  const fileObj = await client.files.create({
+    file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
+    purpose: "classify"
   });
   const fileId = fileObj.id;
 
