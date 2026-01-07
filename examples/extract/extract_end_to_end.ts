@@ -48,7 +48,7 @@ async function extractWithAgent() {
   const client = new LlamaCloud();
 
   // Upload the file first
-  const fileObj = await client.files.upload({
+  const fileObj = await client.files.create({
     file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
     purpose: 'extract',
   });
