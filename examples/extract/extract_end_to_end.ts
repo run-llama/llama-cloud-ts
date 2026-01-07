@@ -24,7 +24,7 @@ async function extractStateless() {
   // Upload the file first
   const fileObj = await client.files.create({
     file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
-    purpose: "extract"
+    purpose: 'extract',
   });
   const fileId = fileObj.id;
 
@@ -50,7 +50,7 @@ async function extractWithAgent() {
   // Upload the file first
   const fileObj = await client.files.upload({
     file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
-    purpose: "extract"  
+    purpose: 'extract',
   });
   const fileId = fileObj.id;
 

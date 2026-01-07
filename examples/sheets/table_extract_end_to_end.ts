@@ -7,7 +7,7 @@ async function extractTables() {
   // Upload a spreadsheet
   const fileObj = await client.files.create({
     file: fs.createReadStream('../example_files/sample_spreadsheet.xlsx'),
-    purpose: "parse"
+    purpose: 'parse',
   });
   const fileId = fileObj.id;
 

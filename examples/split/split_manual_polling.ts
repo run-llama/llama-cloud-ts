@@ -25,7 +25,7 @@ async function splitDocumentLowLevel() {
   // Upload a file to split
   const fileObj = await client.files.create({
     file: fs.createReadStream('examples/example_files/turing+imagenet+attention.pdf'),
-    purpose: "split"
+    purpose: 'split',
   });
   const fileId = fileObj.id;
   console.log(`Uploaded file with ID: ${fileId}`);

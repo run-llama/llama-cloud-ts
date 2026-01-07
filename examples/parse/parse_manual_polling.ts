@@ -7,7 +7,7 @@ async function main() {
   // Upload a file
   const fileObj = await client.files.create({
     file: fs.createReadStream('../example_files/attention_is_all_you_need.pdf'),
-    purpose: "parse",
+    purpose: 'parse',
   });
 
   // Trigger a parse job
