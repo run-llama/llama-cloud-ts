@@ -10,15 +10,31 @@ import { path } from '../internal/utils/path';
 
 export class Files extends APIResource {
   /**
-   * Delete the file from S3.
+   * Upload a file using multipart/form-data.
+   */
+  create(params: FileCreateParams, options?: RequestOptions): APIPromise<FileCreateResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post(
+      '/api/v1/beta/files',
+      multipartFormRequestOptions({ query: { organization_id, project_id }, body, ...options }, this._client),
+    );
+  }
+
+  /**
+   * Delete a single file from the project.
+   *
+   * Args: file_id: The ID of the file to delete project: Validated project from
+   * dependency db: Database session
+   *
+   * Returns: None (204 No Content on success)
    */
   delete(
-    id: string,
+    fileID: string,
     params: FileDeleteParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<void> {
     const { organization_id, project_id } = params ?? {};
-    return this._client.delete(path`/api/v1/files/${id}`, {
+    return this._client.delete(path`/api/v1/beta/files/${fileID}`, {
       query: { organization_id, project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
@@ -26,118 +42,27 @@ export class Files extends APIResource {
   }
 
   /**
-   * Create a presigned url for uploading a file.
-   *
-   * The presigned url is valid for a limited time period, after which it will
-   * expire. Be careful on accidental exposure of the presigned url, as it may allow
-   * unauthorized access to the file before the expiration.
-   */
-  generatePresignedURL(
-    params: FileGeneratePresignedURLParams,
-    options?: RequestOptions,
-  ): APIPromise<FileGeneratePresignedURLResponse> {
-    const { expires_at_seconds, organization_id, project_id, ...body } = params;
-    return this._client.put('/api/v1/files', {
-      query: { expires_at_seconds, organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
-
-  /**
-   * Read File metadata objects.
-   */
-  get(id: string, query: FileGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<File> {
-    return this._client.get(path`/api/v1/files/${id}`, { query, ...options });
-  }
-
-  /**
-   * Get a specific figure from a page of a file.
-   */
-  getPageFigure(
-    figureName: string,
-    params: FileGetPageFigureParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { id, page_index, ...query } = params;
-    return this._client.get(path`/api/v1/files/${id}/page-figures/${page_index}/${figureName}`, {
-      query,
-      ...options,
-    });
-  }
-
-  /**
-   * Get screenshot of a page from a file.
-   */
-  getPageScreenshot(
-    pageIndex: number,
-    params: FileGetPageScreenshotParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { id, ...query } = params;
-    return this._client.get(path`/api/v1/files/${id}/page_screenshots/${pageIndex}`, { query, ...options });
-  }
-
-  /**
-   * List metadata for all figures from all pages of a file.
-   */
-  listPageFigures(
-    id: string,
-    query: FileListPageFiguresParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<FileListPageFiguresResponse> {
-    return this._client.get(path`/api/v1/files/${id}/page-figures`, { query, ...options });
-  }
-
-  /**
-   * List metadata for all screenshots of pages from a file.
-   */
-  listPageScreenshots(
-    id: string,
-    query: FileListPageScreenshotsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<FileListPageScreenshotsResponse> {
-    return this._client.get(path`/api/v1/files/${id}/page_screenshots`, { query, ...options });
-  }
-
-  /**
    * Returns a presigned url to read the file content.
    */
-  readContent(
-    id: string,
-    query: FileReadContentParams | null | undefined = {},
+  get(
+    fileID: string,
+    query: FileGetParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<PresignedURL> {
-    return this._client.get(path`/api/v1/files/${id}/content`, { query, ...options });
+    return this._client.get(path`/api/v1/beta/files/${fileID}/content`, { query, ...options });
   }
 
   /**
-   * Upload a file to S3.
-   */
-  upload(params: FileUploadParams, options?: RequestOptions): APIPromise<File> {
-    const { external_file_id, organization_id, project_id, storage_type, ...body } = params;
-    return this._client.post(
-      '/api/v1/files',
-      multipartFormRequestOptions(
-        { query: { external_file_id, organization_id, project_id, storage_type }, body, ...options },
-        this._client,
-      ),
-    );
-  }
-
-  /**
-   * Upload a file to the project from a URL.
+   * Query files with flexible filtering and pagination.
    *
-   * If name is ommitted in the request payload, the file name will be extracted from
-   * the response Content-Disposition header if available or otherwise it will be
-   * derived from the URL path.
+   * Args: request: The query request with filters and pagination project: Validated
+   * project from dependency db: Database session
    *
-   * If providing the name in the request payload, always suffix the file extension
-   * in the name if available.
+   * Returns: Paginated response with files
    */
-  uploadFromURL(params: FileUploadFromURLParams, options?: RequestOptions): APIPromise<File> {
+  query(params: FileQueryParams, options?: RequestOptions): APIPromise<FileQueryResponse> {
     const { organization_id, project_id, ...body } = params;
-    return this._client.put('/api/v1/files/upload_from_url', {
+    return this._client.post('/api/v1/beta/files/query', {
       query: { organization_id, project_id },
       body,
       ...options,
@@ -294,100 +219,142 @@ export interface PresignedURL {
 }
 
 /**
- * Schema for a presigned URL with a file ID.
+ * Schema for a file in the v2 API.
  */
-export interface FileGeneratePresignedURLResponse {
+export interface FileCreateResponse {
   /**
-   * The time at which the presigned URL expires
+   * Unique identifier
    */
-  expires_at: string;
+  id: string;
+
+  name: string;
 
   /**
-   * The ID of the file associated with the presigned URL
+   * The ID of the project that the file belongs to
    */
-  file_id: string;
+  project_id: string;
 
   /**
-   * A presigned URL for IO operations against a private file
+   * The expiration date for the file. Files past this date can be deleted.
    */
-  url: string;
+  expires_at?: string | null;
 
   /**
-   * Form fields for a presigned POST request
+   * The ID of the file in the external system
    */
-  form_fields?: { [key: string]: string } | null;
+  external_file_id?: string | null;
+
+  /**
+   * File type (e.g. pdf, docx, etc.)
+   */
+  file_type?: string | null;
+
+  /**
+   * The last modified time of the file
+   */
+  last_modified_at?: string | null;
+
+  /**
+   * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
+   * 'split', 'classify')
+   */
+  purpose?: string | null;
 }
 
-export type FileGetPageFigureResponse = unknown;
+/**
+ * Response schema for paginated file queries in V2 API.
+ */
+export interface FileQueryResponse {
+  /**
+   * The list of items.
+   */
+  items: Array<FileQueryResponse.Item>;
 
-export type FileGetPageScreenshotResponse = unknown;
+  /**
+   * A token, which can be sent as page_token to retrieve the next page. If this
+   * field is omitted, there are no subsequent pages.
+   */
+  next_page_token?: string | null;
 
-export type FileListPageFiguresResponse = Array<FileListPageFiguresResponse.FileListPageFiguresResponseItem>;
+  /**
+   * The total number of items available. This is only populated when specifically
+   * requested. The value may be an estimate and can be used for display purposes
+   * only.
+   */
+  total_size?: number | null;
+}
 
-export namespace FileListPageFiguresResponse {
-  export interface FileListPageFiguresResponseItem {
+export namespace FileQueryResponse {
+  /**
+   * Schema for a file in the v2 API.
+   */
+  export interface Item {
     /**
-     * The confidence of the figure
+     * Unique identifier
      */
-    confidence: number;
+    id: string;
 
-    /**
-     * The name of the figure
-     */
-    figure_name: string;
-
-    /**
-     * The size of the figure in bytes
-     */
-    figure_size: number;
-
-    /**
-     * The ID of the file that the figure was taken from
-     */
-    file_id: string;
-
-    /**
-     * The index of the page for which the figure is taken (0-indexed)
-     */
-    page_index: number;
-
-    /**
-     * Whether the figure is likely to be noise
-     */
-    is_likely_noise?: boolean;
+    name: string;
 
     /**
-     * Metadata for the figure
+     * The ID of the project that the file belongs to
      */
-    metadata?: { [key: string]: unknown } | null;
+    project_id: string;
+
+    /**
+     * The expiration date for the file. Files past this date can be deleted.
+     */
+    expires_at?: string | null;
+
+    /**
+     * The ID of the file in the external system
+     */
+    external_file_id?: string | null;
+
+    /**
+     * File type (e.g. pdf, docx, etc.)
+     */
+    file_type?: string | null;
+
+    /**
+     * The last modified time of the file
+     */
+    last_modified_at?: string | null;
+
+    /**
+     * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
+     * 'split', 'classify')
+     */
+    purpose?: string | null;
   }
 }
 
-export type FileListPageScreenshotsResponse =
-  Array<FileListPageScreenshotsResponse.FileListPageScreenshotsResponseItem>;
+export interface FileCreateParams {
+  /**
+   * Body param: The file to upload
+   */
+  file: Uploadable;
 
-export namespace FileListPageScreenshotsResponse {
-  export interface FileListPageScreenshotsResponseItem {
-    /**
-     * The ID of the file that the page screenshot was taken from
-     */
-    file_id: string;
+  /**
+   * Body param: The intended purpose of the file. Valid values: 'user_data',
+   * 'parse', 'extract', 'split', 'classify'
+   */
+  purpose: string;
 
-    /**
-     * The size of the image in bytes
-     */
-    image_size: number;
+  /**
+   * Query param:
+   */
+  organization_id?: string | null;
 
-    /**
-     * The index of the page for which the screenshot is taken (0-indexed)
-     */
-    page_index: number;
+  /**
+   * Query param:
+   */
+  project_id?: string | null;
 
-    /**
-     * Metadata for the screenshot
-     */
-    metadata?: { [key: string]: unknown } | null;
-  }
+  /**
+   * Body param: The ID of the file in the external system
+   */
+  external_file_id?: string | null;
 }
 
 export interface FileDeleteParams {
@@ -396,127 +363,7 @@ export interface FileDeleteParams {
   project_id?: string | null;
 }
 
-export interface FileGeneratePresignedURLParams {
-  /**
-   * Body param: Name that will be used for created file. If possible, always include
-   * the file extension in the name.
-   */
-  name: string;
-
-  /**
-   * Query param:
-   */
-  expires_at_seconds?: number | null;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: The ID of the data source that the file belongs to
-   */
-  data_source_id?: string | null;
-
-  /**
-   * Body param: The ID of the file in the external system
-   */
-  external_file_id?: string | null;
-
-  /**
-   * Body param: Size of the file in bytes
-   */
-  file_size?: number | null;
-
-  /**
-   * Body param: The last modified time of the file
-   */
-  last_modified_at?: string | null;
-
-  /**
-   * Body param: Permission information for the file
-   */
-  permission_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
-
-  /**
-   * Body param: Resource information for the file
-   */
-  resource_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
-
-  /**
-   * Body param: Storage type for the file. Valid values: 'Ephemeral', 'Permanent'
-   * (no expiration). If not specified, defaults to permanent storage.
-   */
-  storage_type?: 'ephemeral' | 'permanent' | (string & {});
-}
-
 export interface FileGetParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface FileGetPageFigureParams {
-  /**
-   * Path param:
-   */
-  id: string;
-
-  /**
-   * Path param:
-   */
-  page_index: number;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-}
-
-export interface FileGetPageScreenshotParams {
-  /**
-   * Path param:
-   */
-  id: string;
-
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
-}
-
-export interface FileListPageFiguresParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface FileListPageScreenshotsParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface FileReadContentParams {
   expires_at_seconds?: number | null;
 
   organization_id?: string | null;
@@ -524,17 +371,7 @@ export interface FileReadContentParams {
   project_id?: string | null;
 }
 
-export interface FileUploadParams {
-  /**
-   * Body param:
-   */
-  upload_file: Uploadable;
-
-  /**
-   * Query param:
-   */
-  external_file_id?: string | null;
-
+export interface FileQueryParams {
   /**
    * Query param:
    */
@@ -546,65 +383,65 @@ export interface FileUploadParams {
   project_id?: string | null;
 
   /**
-   * Query param:
+   * Body param: Filter parameters for file queries.
    */
-  storage_type?: string | null;
+  filter?: FileQueryParams.Filter | null;
+
+  /**
+   * Body param: A comma-separated list of fields to order by, sorted in ascending
+   * order. Use 'field_name desc' to specify descending order.
+   */
+  order_by?: string | null;
+
+  /**
+   * Body param: The maximum number of items to return. The service may return fewer
+   * than this value. If unspecified, a default page size will be used. The maximum
+   * value is typically 1000; values above this will be coerced to the maximum.
+   */
+  page_size?: number | null;
+
+  /**
+   * Body param: A page token, received from a previous list call. Provide this to
+   * retrieve the subsequent page.
+   */
+  page_token?: string | null;
 }
 
-export interface FileUploadFromURLParams {
+export namespace FileQueryParams {
   /**
-   * Body param: URL of the file to download
+   * Filter parameters for file queries.
    */
-  url: string;
+  export interface Filter {
+    /**
+     * Filter by data source ID
+     */
+    data_source_id?: string | null;
 
-  /**
-   * Query param:
-   */
-  organization_id?: string | null;
+    /**
+     * Filter by external file ID
+     */
+    external_file_id?: string | null;
 
-  /**
-   * Query param:
-   */
-  project_id?: string | null;
+    /**
+     * Filter by specific file IDs
+     */
+    file_ids?: Array<string> | null;
 
-  /**
-   * Body param: Whether to follow redirects when downloading the file
-   */
-  follow_redirects?: boolean;
+    /**
+     * Filter by file name
+     */
+    file_name?: string | null;
 
-  /**
-   * Body param: Name that will be used for created file. If possible, always include
-   * the file extension in the name.
-   */
-  name?: string | null;
+    /**
+     * Filter only manually uploaded files (data_source_id is null)
+     */
+    only_manually_uploaded?: boolean | null;
 
-  /**
-   * Body param: URL of the proxy server to use for downloading the file
-   */
-  proxy_url?: string | null;
-
-  /**
-   * Body param: Headers to include in the request when downloading the file
-   */
-  request_headers?: { [key: string]: string } | null;
-
-  /**
-   * Body param: Resource information for the file
-   */
-  resource_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
-
-  /**
-   * Body param: Storage type for the file. Valid values: 'Ephemeral', 'Permanent'
-   * (no expiration). If not specified, defaults to permanent storage.
-   */
-  storage_type?: 'ephemeral' | 'permanent' | (string & {});
-
-  /**
-   * Body param: Whether to verify the SSL certificate when downloading the file
-   */
-  verify_ssl?: boolean;
+    /**
+     * Filter by project ID
+     */
+    project_id?: string | null;
+  }
 }
 
 export declare namespace Files {
@@ -612,20 +449,11 @@ export declare namespace Files {
     type File as File,
     type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
-    type FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse,
-    type FileGetPageFigureResponse as FileGetPageFigureResponse,
-    type FileGetPageScreenshotResponse as FileGetPageScreenshotResponse,
-    type FileListPageFiguresResponse as FileListPageFiguresResponse,
-    type FileListPageScreenshotsResponse as FileListPageScreenshotsResponse,
+    type FileCreateResponse as FileCreateResponse,
+    type FileQueryResponse as FileQueryResponse,
+    type FileCreateParams as FileCreateParams,
     type FileDeleteParams as FileDeleteParams,
-    type FileGeneratePresignedURLParams as FileGeneratePresignedURLParams,
     type FileGetParams as FileGetParams,
-    type FileGetPageFigureParams as FileGetPageFigureParams,
-    type FileGetPageScreenshotParams as FileGetPageScreenshotParams,
-    type FileListPageFiguresParams as FileListPageFiguresParams,
-    type FileListPageScreenshotsParams as FileListPageScreenshotsParams,
-    type FileReadContentParams as FileReadContentParams,
-    type FileUploadParams as FileUploadParams,
-    type FileUploadFromURLParams as FileUploadFromURLParams,
+    type FileQueryParams as FileQueryParams,
   };
 }
