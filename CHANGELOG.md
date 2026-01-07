@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.11.0 (2026-01-07)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* **api:** add back pipeline files ([030ed5a](https://github.com/run-llama/llama-cloud-ts/commit/030ed5ac7d900abee20101a7f6fbd6a646998b74))
+* **api:** add pipelines image utils ([d63dea5](https://github.com/run-llama/llama-cloud-ts/commit/d63dea5e06ec184fe4bd5c7fd61eacbd4a316c25))
+* **api:** api update ([37ffb79](https://github.com/run-llama/llama-cloud-ts/commit/37ffb79d2934544e9826fd03eabef5016e412777))
+* **api:** api update ([59d9aa7](https://github.com/run-llama/llama-cloud-ts/commit/59d9aa7540380053fd70c967bd52397fe4e2479c))
+* **api:** api update ([8ca9422](https://github.com/run-llama/llama-cloud-ts/commit/8ca94227fc74a7e00a4a996f6b3ccbbec06e607e))
+* **api:** api update ([f29c0e6](https://github.com/run-llama/llama-cloud-ts/commit/f29c0e6a25d3e7818ee5a02ecb8826fd28cdb1bf))
+* **api:** Fix readme ([e19ac1c](https://github.com/run-llama/llama-cloud-ts/commit/e19ac1c709ad8c9ef07f645a2d3bd4848d04f7a7))
+* **api:** swap in files v2 support ([b946834](https://github.com/run-llama/llama-cloud-ts/commit/b94683432cd3b74b30abdb5c740fa48d20cfd7d8))
+* **api:** typo ([ccf6c44](https://github.com/run-llama/llama-cloud-ts/commit/ccf6c446cda52b927888d8ff27ffc197b0de36ee))
+
 ## 0.10.0 (2026-01-06)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.9.0...v0.10.0)

@@ -49,6 +49,14 @@ import {
   PipelineFile,
   PipelineFilesPaginatedPipelineFiles,
 } from './files';
+import * as ImagesAPI from './images';
+import {
+  ImageGetPageFigureParams,
+  ImageGetPageFigureResponse,
+  ImageGetPageScreenshotParams,
+  ImageGetPageScreenshotResponse,
+  Images,
+} from './images';
 import * as MetadataAPI from './metadata';
 import { Metadata, MetadataCreateParams, MetadataCreateResponse } from './metadata';
 import * as SyncAPI from './sync';
@@ -61,6 +69,7 @@ import { path } from '../../internal/utils/path';
 export class Pipelines extends APIResource {
   sync: SyncAPI.Sync = new SyncAPI.Sync(this._client);
   dataSources: DataSourcesAPI.DataSources = new DataSourcesAPI.DataSources(this._client);
+  images: ImagesAPI.Images = new ImagesAPI.Images(this._client);
   files: FilesAPI.Files = new FilesAPI.Files(this._client);
   metadata: MetadataAPI.Metadata = new MetadataAPI.Metadata(this._client);
   documents: DocumentsAPI.Documents = new DocumentsAPI.Documents(this._client);
@@ -5802,6 +5811,7 @@ export namespace PipelineUpsertParams {
 
 Pipelines.Sync = Sync;
 Pipelines.DataSources = DataSources;
+Pipelines.Images = Images;
 Pipelines.Files = Files;
 Pipelines.Metadata = Metadata;
 Pipelines.Documents = Documents;
@@ -5845,6 +5855,14 @@ export declare namespace Pipelines {
     type DataSourceGetStatusParams as DataSourceGetStatusParams,
     type DataSourceSyncParams as DataSourceSyncParams,
     type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
+  };
+
+  export {
+    Images as Images,
+    type ImageGetPageFigureResponse as ImageGetPageFigureResponse,
+    type ImageGetPageScreenshotResponse as ImageGetPageScreenshotResponse,
+    type ImageGetPageFigureParams as ImageGetPageFigureParams,
+    type ImageGetPageScreenshotParams as ImageGetPageScreenshotParams,
   };
 
   export {

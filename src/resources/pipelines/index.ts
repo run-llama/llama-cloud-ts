@@ -42,6 +42,13 @@ export {
   type FileGetStatusCountsParams,
   type PipelineFilesPaginatedPipelineFiles,
 } from './files';
+export {
+  Images,
+  type ImageGetPageFigureResponse,
+  type ImageGetPageScreenshotResponse,
+  type ImageGetPageFigureParams,
+  type ImageGetPageScreenshotParams,
+} from './images';
 export { Metadata, type MetadataCreateResponse, type MetadataCreateParams } from './metadata';
 export {
   Pipelines,

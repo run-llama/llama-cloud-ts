@@ -48,24 +48,15 @@ Types:
 - <code><a href="./src/resources/files.ts">File</a></code>
 - <code><a href="./src/resources/files.ts">FileCreate</a></code>
 - <code><a href="./src/resources/files.ts">PresignedURL</a></code>
-- <code><a href="./src/resources/files.ts">FileGeneratePresignedURLResponse</a></code>
-- <code><a href="./src/resources/files.ts">FileGetPageFigureResponse</a></code>
-- <code><a href="./src/resources/files.ts">FileGetPageScreenshotResponse</a></code>
-- <code><a href="./src/resources/files.ts">FileListPageFiguresResponse</a></code>
-- <code><a href="./src/resources/files.ts">FileListPageScreenshotsResponse</a></code>
+- <code><a href="./src/resources/files.ts">FileCreateResponse</a></code>
+- <code><a href="./src/resources/files.ts">FileQueryResponse</a></code>
 
 Methods:
 
-- <code title="delete /api/v1/files/{id}">client.files.<a href="./src/resources/files.ts">delete</a>(id, { ...params }) -> void</code>
-- <code title="put /api/v1/files">client.files.<a href="./src/resources/files.ts">generatePresignedURL</a>({ ...params }) -> FileGeneratePresignedURLResponse</code>
-- <code title="get /api/v1/files/{id}">client.files.<a href="./src/resources/files.ts">get</a>(id, { ...params }) -> File</code>
-- <code title="get /api/v1/files/{id}/page-figures/{page_index}/{figure_name}">client.files.<a href="./src/resources/files.ts">getPageFigure</a>(figureName, { ...params }) -> unknown</code>
-- <code title="get /api/v1/files/{id}/page_screenshots/{page_index}">client.files.<a href="./src/resources/files.ts">getPageScreenshot</a>(pageIndex, { ...params }) -> unknown</code>
-- <code title="get /api/v1/files/{id}/page-figures">client.files.<a href="./src/resources/files.ts">listPageFigures</a>(id, { ...params }) -> FileListPageFiguresResponse</code>
-- <code title="get /api/v1/files/{id}/page_screenshots">client.files.<a href="./src/resources/files.ts">listPageScreenshots</a>(id, { ...params }) -> FileListPageScreenshotsResponse</code>
-- <code title="get /api/v1/files/{id}/content">client.files.<a href="./src/resources/files.ts">readContent</a>(id, { ...params }) -> PresignedURL</code>
-- <code title="post /api/v1/files">client.files.<a href="./src/resources/files.ts">upload</a>({ ...params }) -> File</code>
-- <code title="put /api/v1/files/upload_from_url">client.files.<a href="./src/resources/files.ts">uploadFromURL</a>({ ...params }) -> File</code>
+- <code title="post /api/v1/beta/files">client.files.<a href="./src/resources/files.ts">create</a>({ ...params }) -> FileCreateResponse</code>
+- <code title="delete /api/v1/beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID, { ...params }) -> void</code>
+- <code title="get /api/v1/beta/files/{file_id}/content">client.files.<a href="./src/resources/files.ts">get</a>(fileID, { ...params }) -> PresignedURL</code>
+- <code title="post /api/v1/beta/files/query">client.files.<a href="./src/resources/files.ts">query</a>({ ...params }) -> FileQueryResponse</code>
 
 # Pipelines
 
@@ -123,6 +114,18 @@ Methods:
 - <code title="get /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/status">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">getStatus</a>(dataSourceID, { ...params }) -> ManagedIngestionStatusResponse</code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/sync">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">sync</a>(dataSourceID, { ...params }) -> Pipeline</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/data-sources">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">updateDataSources</a>(pipelineID, [ ...body ]) -> DataSourceUpdateDataSourcesResponse</code>
+
+## Images
+
+Types:
+
+- <code><a href="./src/resources/pipelines/images.ts">ImageGetPageFigureResponse</a></code>
+- <code><a href="./src/resources/pipelines/images.ts">ImageGetPageScreenshotResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/files/{id}/page-figures/{page_index}/{figure_name}">client.pipelines.images.<a href="./src/resources/pipelines/images.ts">getPageFigure</a>(figureName, { ...params }) -> unknown</code>
+- <code title="get /api/v1/files/{id}/page_screenshots/{page_index}">client.pipelines.images.<a href="./src/resources/pipelines/images.ts">getPageScreenshot</a>(pageIndex, { ...params }) -> unknown</code>
 
 ## Files
 

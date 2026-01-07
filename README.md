@@ -29,9 +29,9 @@ const client = new LlamaCloud({
   apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted
 });
 
-const response = await client.parsing.uploadFile();
+const parsing = await client.parsing.create({ tier: 'agentic', file_id: 'abc1234', version: 'latest' });
 
-console.log(response.id);
+console.log(parsing.id);
 ```
 
 ### Request & Response types
@@ -68,17 +68,17 @@ import LlamaCloud, { toFile } from '@llamaindex/llama-cloud';
 const client = new LlamaCloud();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.files.upload({ upload_file: fs.createReadStream('/path/to/file') });
+await client.files.create({ file: fs.createReadStream('/path/to/file'), purpose: 'purpose' });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.files.upload({ upload_file: new File(['my bytes'], 'file') });
+await client.files.create({ file: new File(['my bytes'], 'file'), purpose: 'purpose' });
 
 // You can also pass a `fetch` `Response`:
-await client.files.upload({ upload_file: await fetch('https://somesite/file') });
+await client.files.create({ file: await fetch('https://somesite/file'), purpose: 'purpose' });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.files.upload({ upload_file: await toFile(Buffer.from('my bytes'), 'file') });
-await client.files.upload({ upload_file: await toFile(new Uint8Array([0, 1, 2]), 'file') });
+await client.files.create({ file: await toFile(Buffer.from('my bytes'), 'file'), purpose: 'purpose' });
+await client.files.create({ file: await toFile(new Uint8Array([0, 1, 2]), 'file'), purpose: 'purpose' });
 ```
 
 ## Handling errors
@@ -294,7 +294,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.parsing.uploadFile({
+client.parsing.create({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
