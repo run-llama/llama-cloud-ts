@@ -46,8 +46,12 @@ export {
   Images,
   type ImageGetPageFigureResponse,
   type ImageGetPageScreenshotResponse,
+  type ImageListPageFiguresResponse,
+  type ImageListPageScreenshotsResponse,
   type ImageGetPageFigureParams,
   type ImageGetPageScreenshotParams,
+  type ImageListPageFiguresParams,
+  type ImageListPageScreenshotsParams,
 } from './images';
 export { Metadata, type MetadataCreateResponse, type MetadataCreateParams } from './metadata';
 export {
