@@ -28,7 +28,12 @@ describe('resource parsing', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       agentic_options: { custom_prompt: 'custom_prompt' },
       client_name: 'client_name',
-      crop_box: { bottom: 0, left: 0, right: 0, top: 0 },
+      crop_box: {
+        bottom: 0,
+        left: 0,
+        right: 0,
+        top: 0,
+      },
       disable_cache: true,
       fast_options: {},
       file_id: 'file_id',
@@ -83,7 +88,12 @@ describe('resource parsing', () => {
             parsing_conf: {
               adaptive_long_table: true,
               aggressive_table_extraction: true,
-              crop_box: { bottom: 0, left: 0, right: 0, top: 0 },
+              crop_box: {
+                bottom: 0,
+                left: 0,
+                right: 0,
+                top: 0,
+              },
               custom_prompt: 'custom_prompt',
               extract_layout: true,
               high_res_ocr: true,
@@ -137,13 +147,21 @@ describe('resource parsing', () => {
             trigger_mode: 'trigger_mode',
           },
         ],
-        ignore: { ignore_diagonal_text: true, ignore_hidden_text: true, ignore_text_in_image: true },
+        ignore: {
+          ignore_diagonal_text: true,
+          ignore_hidden_text: true,
+          ignore_text_in_image: true,
+        },
         ocr_parameters: { languages: ['af'] },
       },
       source_url: 'https:',
       version: '2025-12-31',
       webhook_configurations: [
-        { webhook_events: ['string'], webhook_headers: { foo: 'bar' }, webhook_url: 'https:' },
+        {
+          webhook_events: ['string'],
+          webhook_headers: { foo: 'bar' },
+          webhook_url: 'https:',
+        },
       ],
     });
   });

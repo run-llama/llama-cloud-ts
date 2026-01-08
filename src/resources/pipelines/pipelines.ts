@@ -55,6 +55,10 @@ import {
   ImageGetPageFigureResponse,
   ImageGetPageScreenshotParams,
   ImageGetPageScreenshotResponse,
+  ImageListPageFiguresParams,
+  ImageListPageFiguresResponse,
+  ImageListPageScreenshotsParams,
+  ImageListPageScreenshotsResponse,
   Images,
 } from './images';
 import * as MetadataAPI from './metadata';
@@ -5861,8 +5865,12 @@ export declare namespace Pipelines {
     Images as Images,
     type ImageGetPageFigureResponse as ImageGetPageFigureResponse,
     type ImageGetPageScreenshotResponse as ImageGetPageScreenshotResponse,
+    type ImageListPageFiguresResponse as ImageListPageFiguresResponse,
+    type ImageListPageScreenshotsResponse as ImageListPageScreenshotsResponse,
     type ImageGetPageFigureParams as ImageGetPageFigureParams,
     type ImageGetPageScreenshotParams as ImageGetPageScreenshotParams,
+    type ImageListPageFiguresParams as ImageListPageFiguresParams,
+    type ImageListPageScreenshotsParams as ImageListPageScreenshotsParams,
   };
 
   export {

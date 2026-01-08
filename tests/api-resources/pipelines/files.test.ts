@@ -25,7 +25,12 @@ describe('resource files', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.pipelines.files.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      body: [{ file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', custom_metadata: { foo: { foo: 'bar' } } }],
+      body: [
+        {
+          file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          custom_metadata: { foo: { foo: 'bar' } },
+        },
+      ],
     });
   });
 

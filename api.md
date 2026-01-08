@@ -121,11 +121,15 @@ Types:
 
 - <code><a href="./src/resources/pipelines/images.ts">ImageGetPageFigureResponse</a></code>
 - <code><a href="./src/resources/pipelines/images.ts">ImageGetPageScreenshotResponse</a></code>
+- <code><a href="./src/resources/pipelines/images.ts">ImageListPageFiguresResponse</a></code>
+- <code><a href="./src/resources/pipelines/images.ts">ImageListPageScreenshotsResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v1/files/{id}/page-figures/{page_index}/{figure_name}">client.pipelines.images.<a href="./src/resources/pipelines/images.ts">getPageFigure</a>(figureName, { ...params }) -> unknown</code>
 - <code title="get /api/v1/files/{id}/page_screenshots/{page_index}">client.pipelines.images.<a href="./src/resources/pipelines/images.ts">getPageScreenshot</a>(pageIndex, { ...params }) -> unknown</code>
+- <code title="get /api/v1/files/{id}/page-figures">client.pipelines.images.<a href="./src/resources/pipelines/images.ts">listPageFigures</a>(id, { ...params }) -> ImageListPageFiguresResponse</code>
+- <code title="get /api/v1/files/{id}/page_screenshots">client.pipelines.images.<a href="./src/resources/pipelines/images.ts">listPageScreenshots</a>(id, { ...params }) -> ImageListPageScreenshotsResponse</code>
 
 ## Files
 

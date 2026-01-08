@@ -29,7 +29,11 @@ const client = new LlamaCloud({
   apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted
 });
 
-const parsing = await client.parsing.create({ tier: 'agentic', file_id: 'abc1234', version: 'latest' });
+const parsing = await client.parsing.create({
+  tier: 'agentic',
+  file_id: 'abc1234',
+  version: 'latest',
+});
 
 console.log(parsing.id);
 ```
@@ -77,8 +81,14 @@ await client.files.create({ file: new File(['my bytes'], 'file'), purpose: 'purp
 await client.files.create({ file: await fetch('https://somesite/file'), purpose: 'purpose' });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.files.create({ file: await toFile(Buffer.from('my bytes'), 'file'), purpose: 'purpose' });
-await client.files.create({ file: await toFile(new Uint8Array([0, 1, 2]), 'file'), purpose: 'purpose' });
+await client.files.create({
+  file: await toFile(Buffer.from('my bytes'), 'file'),
+  purpose: 'purpose',
+});
+await client.files.create({
+  file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
+  purpose: 'purpose',
+});
 ```
 
 ## Handling errors
@@ -89,15 +99,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const pipelines = await client.pipelines.list({ project_id: 'my-project-id' }).catch(async (err) => {
-  if (err instanceof LlamaCloud.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const pipelines = await client.pipelines
+  .list({ project_id: 'my-project-id' })
+  .catch(async (err) => {
+    if (err instanceof LlamaCloud.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
