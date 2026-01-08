@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.12.0 (2026-01-08)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* **api:** add list commands to pipeline file images ([f3d15aa](https://github.com/run-llama/llama-cloud-ts/commit/f3d15aa753772365c0fcdf98842d9bf91d1192d1))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([be79fed](https://github.com/run-llama/llama-cloud-ts/commit/be79fedccaace854ac3e9359e9db811201850749))
+
 ## 0.11.0 (2026-01-07)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.10.0...v0.11.0)
