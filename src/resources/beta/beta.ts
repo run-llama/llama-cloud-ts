@@ -44,13 +44,17 @@ import {
 import * as SplitAPI from './split';
 import {
   Split,
+  SplitCategory,
   SplitCreateParams,
   SplitCreateResponse,
+  SplitDocumentInput,
   SplitGetParams,
   SplitGetResponse,
   SplitListParams,
   SplitListResponse,
   SplitListResponsesPaginatedClassifyJobs,
+  SplitResultResponse,
+  SplitSegmentResponse,
 } from './split';
 import * as BatchAPI from './batch/batch';
 import {
@@ -166,6 +170,10 @@ export declare namespace Beta {
 
   export {
     Split as Split,
+    type SplitCategory as SplitCategory,
+    type SplitDocumentInput as SplitDocumentInput,
+    type SplitResultResponse as SplitResultResponse,
+    type SplitSegmentResponse as SplitSegmentResponse,
     type SplitCreateResponse as SplitCreateResponse,
     type SplitListResponse as SplitListResponse,
     type SplitGetResponse as SplitGetResponse,

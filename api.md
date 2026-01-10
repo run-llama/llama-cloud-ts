@@ -1,3 +1,27 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">CloudAstraDBVectorStore</a></code>
+- <code><a href="./src/resources/shared.ts">CloudAzStorageBlobDataSource</a></code>
+- <code><a href="./src/resources/shared.ts">CloudAzureAISearchVectorStore</a></code>
+- <code><a href="./src/resources/shared.ts">CloudBoxDataSource</a></code>
+- <code><a href="./src/resources/shared.ts">CloudConfluenceDataSource</a></code>
+- <code><a href="./src/resources/shared.ts">CloudJiraDataSource</a></code>
+- <code><a href="./src/resources/shared.ts">CloudJiraDataSourceV2</a></code>
+- <code><a href="./src/resources/shared.ts">CloudMilvusVectorStore</a></code>
+- <code><a href="./src/resources/shared.ts">CloudMongoDBAtlasVectorSearch</a></code>
+- <code><a href="./src/resources/shared.ts">CloudNotionPageDataSource</a></code>
+- <code><a href="./src/resources/shared.ts">CloudOneDriveDataSource</a></code>
+- <code><a href="./src/resources/shared.ts">CloudPineconeVectorStore</a></code>
+- <code><a href="./src/resources/shared.ts">CloudPostgresVectorStore</a></code>
+- <code><a href="./src/resources/shared.ts">CloudQdrantVectorStore</a></code>
+- <code><a href="./src/resources/shared.ts">CloudS3DataSource</a></code>
+- <code><a href="./src/resources/shared.ts">CloudSharepointDataSource</a></code>
+- <code><a href="./src/resources/shared.ts">CloudSlackDataSource</a></code>
+- <code><a href="./src/resources/shared.ts">FailureHandlingConfig</a></code>
+- <code><a href="./src/resources/shared.ts">PgVectorHnswSettings</a></code>
+
 # Projects
 
 Types:
@@ -64,11 +88,24 @@ Types:
 
 - <code><a href="./src/resources/pipelines/pipelines.ts">AdvancedModeTransformConfig</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">AutoTransformConfig</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">AzureOpenAIEmbedding</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">AzureOpenAIEmbeddingConfig</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">BedrockEmbedding</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">BedrockEmbeddingConfig</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">CohereEmbedding</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">CohereEmbeddingConfig</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">DataSinkCreate</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">GeminiEmbedding</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">GeminiEmbeddingConfig</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">HuggingFaceInferenceAPIEmbedding</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">HuggingFaceInferenceAPIEmbeddingConfig</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">LlamaParseParameters</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">LlmParameters</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">ManagedIngestionStatusResponse</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">MessageRole</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">MetadataFilters</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">OpenAIEmbedding</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">OpenAIEmbeddingConfig</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PageFigureNodeWithScore</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PageScreenshotNodeWithScore</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">Pipeline</a></code>
@@ -78,6 +115,8 @@ Types:
 - <code><a href="./src/resources/pipelines/pipelines.ts">PresetRetrievalParams</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">RetrievalMode</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">SparseModelConfig</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">VertexAIEmbeddingConfig</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">VertexTextEmbedding</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineRetrieveResponse</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineListResponse</a></code>
 
@@ -214,6 +253,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/parsing.ts">BBox</a></code>
 - <code><a href="./src/resources/parsing.ts">FailPageMode</a></code>
 - <code><a href="./src/resources/parsing.ts">LlamaParseSupportedFileExtensions</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingJob</a></code>
@@ -440,6 +480,10 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/beta/split.ts">SplitCategory</a></code>
+- <code><a href="./src/resources/beta/split.ts">SplitDocumentInput</a></code>
+- <code><a href="./src/resources/beta/split.ts">SplitResultResponse</a></code>
+- <code><a href="./src/resources/beta/split.ts">SplitSegmentResponse</a></code>
 - <code><a href="./src/resources/beta/split.ts">SplitCreateResponse</a></code>
 - <code><a href="./src/resources/beta/split.ts">SplitListResponse</a></code>
 - <code><a href="./src/resources/beta/split.ts">SplitGetResponse</a></code>
