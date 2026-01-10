@@ -256,7 +256,7 @@ export interface FileCreateResponse {
 
   /**
    * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-   * 'split', 'classify')
+   * 'split', 'classify', 'sheet')
    */
   purpose?: string | null;
 }
@@ -323,7 +323,7 @@ export namespace FileQueryResponse {
 
     /**
      * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-     * 'split', 'classify')
+     * 'split', 'classify', 'sheet')
      */
     purpose?: string | null;
   }
@@ -337,7 +337,7 @@ export interface FileCreateParams {
 
   /**
    * Body param: The intended purpose of the file. Valid values: 'user_data',
-   * 'parse', 'extract', 'split', 'classify'
+   * 'parse', 'extract', 'split', 'classify', 'sheet'
    */
   purpose: string;
 
