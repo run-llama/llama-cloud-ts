@@ -71,6 +71,7 @@ import {
   PresignedURL,
 } from './resources/files';
 import {
+  BBox,
   FailPageMode,
   LlamaParseSupportedFileExtensions,
   Parsing,
@@ -99,11 +100,24 @@ import { Extraction, ExtractionRunParams } from './resources/extraction/extracti
 import {
   AdvancedModeTransformConfig,
   AutoTransformConfig,
+  AzureOpenAIEmbedding,
+  AzureOpenAIEmbeddingConfig,
+  BedrockEmbedding,
+  BedrockEmbeddingConfig,
+  CohereEmbedding,
+  CohereEmbeddingConfig,
+  DataSinkCreate,
+  GeminiEmbedding,
+  GeminiEmbeddingConfig,
+  HuggingFaceInferenceAPIEmbedding,
+  HuggingFaceInferenceAPIEmbeddingConfig,
   LlamaParseParameters,
   LlmParameters,
   ManagedIngestionStatusResponse,
   MessageRole,
   MetadataFilters,
+  OpenAIEmbedding,
+  OpenAIEmbeddingConfig,
   PageFigureNodeWithScore,
   PageScreenshotNodeWithScore,
   Pipeline,
@@ -122,6 +136,8 @@ import {
   PresetRetrievalParams,
   RetrievalMode,
   SparseModelConfig,
+  VertexAIEmbeddingConfig,
+  VertexTextEmbedding,
 } from './resources/pipelines/pipelines';
 import {
   CompositeRetrievalMode,
@@ -969,11 +985,24 @@ export declare namespace LlamaCloud {
     Pipelines as Pipelines,
     type AdvancedModeTransformConfig as AdvancedModeTransformConfig,
     type AutoTransformConfig as AutoTransformConfig,
+    type AzureOpenAIEmbedding as AzureOpenAIEmbedding,
+    type AzureOpenAIEmbeddingConfig as AzureOpenAIEmbeddingConfig,
+    type BedrockEmbedding as BedrockEmbedding,
+    type BedrockEmbeddingConfig as BedrockEmbeddingConfig,
+    type CohereEmbedding as CohereEmbedding,
+    type CohereEmbeddingConfig as CohereEmbeddingConfig,
+    type DataSinkCreate as DataSinkCreate,
+    type GeminiEmbedding as GeminiEmbedding,
+    type GeminiEmbeddingConfig as GeminiEmbeddingConfig,
+    type HuggingFaceInferenceAPIEmbedding as HuggingFaceInferenceAPIEmbedding,
+    type HuggingFaceInferenceAPIEmbeddingConfig as HuggingFaceInferenceAPIEmbeddingConfig,
     type LlamaParseParameters as LlamaParseParameters,
     type LlmParameters as LlmParameters,
     type ManagedIngestionStatusResponse as ManagedIngestionStatusResponse,
     type MessageRole as MessageRole,
     type MetadataFilters as MetadataFilters,
+    type OpenAIEmbedding as OpenAIEmbedding,
+    type OpenAIEmbeddingConfig as OpenAIEmbeddingConfig,
     type PageFigureNodeWithScore as PageFigureNodeWithScore,
     type PageScreenshotNodeWithScore as PageScreenshotNodeWithScore,
     type Pipeline as Pipeline,
@@ -983,6 +1012,8 @@ export declare namespace LlamaCloud {
     type PresetRetrievalParams as PresetRetrievalParams,
     type RetrievalMode as RetrievalMode,
     type SparseModelConfig as SparseModelConfig,
+    type VertexAIEmbeddingConfig as VertexAIEmbeddingConfig,
+    type VertexTextEmbedding as VertexTextEmbedding,
     type PipelineRetrieveResponse as PipelineRetrieveResponse,
     type PipelineListResponse as PipelineListResponse,
     type PipelineCreateParams as PipelineCreateParams,
@@ -1012,6 +1043,7 @@ export declare namespace LlamaCloud {
 
   export {
     Parsing as Parsing,
+    type BBox as BBox,
     type FailPageMode as FailPageMode,
     type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
     type ParsingJob as ParsingJob,
@@ -1032,4 +1064,24 @@ export declare namespace LlamaCloud {
   export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
 
   export { Beta as Beta };
+
+  export type CloudAstraDBVectorStore = API.CloudAstraDBVectorStore;
+  export type CloudAzStorageBlobDataSource = API.CloudAzStorageBlobDataSource;
+  export type CloudAzureAISearchVectorStore = API.CloudAzureAISearchVectorStore;
+  export type CloudBoxDataSource = API.CloudBoxDataSource;
+  export type CloudConfluenceDataSource = API.CloudConfluenceDataSource;
+  export type CloudJiraDataSource = API.CloudJiraDataSource;
+  export type CloudJiraDataSourceV2 = API.CloudJiraDataSourceV2;
+  export type CloudMilvusVectorStore = API.CloudMilvusVectorStore;
+  export type CloudMongoDBAtlasVectorSearch = API.CloudMongoDBAtlasVectorSearch;
+  export type CloudNotionPageDataSource = API.CloudNotionPageDataSource;
+  export type CloudOneDriveDataSource = API.CloudOneDriveDataSource;
+  export type CloudPineconeVectorStore = API.CloudPineconeVectorStore;
+  export type CloudPostgresVectorStore = API.CloudPostgresVectorStore;
+  export type CloudQdrantVectorStore = API.CloudQdrantVectorStore;
+  export type CloudS3DataSource = API.CloudS3DataSource;
+  export type CloudSharepointDataSource = API.CloudSharepointDataSource;
+  export type CloudSlackDataSource = API.CloudSlackDataSource;
+  export type FailureHandlingConfig = API.FailureHandlingConfig;
+  export type PgVectorHnswSettings = API.PgVectorHnswSettings;
 }

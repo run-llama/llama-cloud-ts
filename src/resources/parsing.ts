@@ -218,6 +218,51 @@ export class Parsing extends APIResource {
 export type ParsingListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<ParsingListResponse>;
 
 /**
+ * Bounding box with coordinates and optional metadata.
+ */
+export interface BBox {
+  /**
+   * Height of the bounding box
+   */
+  h: number;
+
+  /**
+   * Width of the bounding box
+   */
+  w: number;
+
+  /**
+   * X coordinate of the bounding box
+   */
+  x: number;
+
+  /**
+   * Y coordinate of the bounding box
+   */
+  y: number;
+
+  /**
+   * Confidence score
+   */
+  confidence?: number | null;
+
+  /**
+   * End index in the text
+   */
+  endIndex?: number | null;
+
+  /**
+   * Label for the bounding box
+   */
+  label?: string | null;
+
+  /**
+   * Start index in the text
+   */
+  startIndex?: number | null;
+}
+
+/**
  * Enum for representing the different available page error handling modes.
  */
 export type FailPageMode = 'raw_text' | 'blank_page' | 'error_message';
@@ -674,59 +719,12 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<TextItem.BBox> | null;
+        bBox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Text item type
          */
         type?: 'text';
-      }
-
-      export namespace TextItem {
-        /**
-         * Bounding box with coordinates and optional metadata.
-         */
-        export interface BBox {
-          /**
-           * Height of the bounding box
-           */
-          h: number;
-
-          /**
-           * Width of the bounding box
-           */
-          w: number;
-
-          /**
-           * X coordinate of the bounding box
-           */
-          x: number;
-
-          /**
-           * Y coordinate of the bounding box
-           */
-          y: number;
-
-          /**
-           * Confidence score
-           */
-          confidence?: number | null;
-
-          /**
-           * End index in the text
-           */
-          endIndex?: number | null;
-
-          /**
-           * Label for the bounding box
-           */
-          label?: string | null;
-
-          /**
-           * Start index in the text
-           */
-          startIndex?: number | null;
-        }
       }
 
       export interface HeadingItem {
@@ -748,59 +746,12 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<HeadingItem.BBox> | null;
+        bBox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Heading item type
          */
         type?: 'heading';
-      }
-
-      export namespace HeadingItem {
-        /**
-         * Bounding box with coordinates and optional metadata.
-         */
-        export interface BBox {
-          /**
-           * Height of the bounding box
-           */
-          h: number;
-
-          /**
-           * Width of the bounding box
-           */
-          w: number;
-
-          /**
-           * X coordinate of the bounding box
-           */
-          x: number;
-
-          /**
-           * Y coordinate of the bounding box
-           */
-          y: number;
-
-          /**
-           * Confidence score
-           */
-          confidence?: number | null;
-
-          /**
-           * End index in the text
-           */
-          endIndex?: number | null;
-
-          /**
-           * Label for the bounding box
-           */
-          label?: string | null;
-
-          /**
-           * Start index in the text
-           */
-          startIndex?: number | null;
-        }
       }
 
       export interface ListItem {
@@ -817,7 +768,7 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<ListItem.BBox> | null;
+        bBox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * List item type
@@ -840,104 +791,12 @@ export namespace ParsingGetResponse {
           /**
            * List of bounding boxes
            */
-          bBox?: Array<TextItem.BBox> | null;
+          bBox?: Array<ParsingAPI.BBox> | null;
 
           /**
            * Text item type
            */
           type?: 'text';
-        }
-
-        export namespace TextItem {
-          /**
-           * Bounding box with coordinates and optional metadata.
-           */
-          export interface BBox {
-            /**
-             * Height of the bounding box
-             */
-            h: number;
-
-            /**
-             * Width of the bounding box
-             */
-            w: number;
-
-            /**
-             * X coordinate of the bounding box
-             */
-            x: number;
-
-            /**
-             * Y coordinate of the bounding box
-             */
-            y: number;
-
-            /**
-             * Confidence score
-             */
-            confidence?: number | null;
-
-            /**
-             * End index in the text
-             */
-            endIndex?: number | null;
-
-            /**
-             * Label for the bounding box
-             */
-            label?: string | null;
-
-            /**
-             * Start index in the text
-             */
-            startIndex?: number | null;
-          }
-        }
-
-        /**
-         * Bounding box with coordinates and optional metadata.
-         */
-        export interface BBox {
-          /**
-           * Height of the bounding box
-           */
-          h: number;
-
-          /**
-           * Width of the bounding box
-           */
-          w: number;
-
-          /**
-           * X coordinate of the bounding box
-           */
-          x: number;
-
-          /**
-           * Y coordinate of the bounding box
-           */
-          y: number;
-
-          /**
-           * Confidence score
-           */
-          confidence?: number | null;
-
-          /**
-           * End index in the text
-           */
-          endIndex?: number | null;
-
-          /**
-           * Label for the bounding box
-           */
-          label?: string | null;
-
-          /**
-           * Start index in the text
-           */
-          startIndex?: number | null;
         }
       }
 
@@ -955,7 +814,7 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<CodeItem.BBox> | null;
+        bBox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Programming language identifier
@@ -966,53 +825,6 @@ export namespace ParsingGetResponse {
          * Code block item type
          */
         type?: 'code';
-      }
-
-      export namespace CodeItem {
-        /**
-         * Bounding box with coordinates and optional metadata.
-         */
-        export interface BBox {
-          /**
-           * Height of the bounding box
-           */
-          h: number;
-
-          /**
-           * Width of the bounding box
-           */
-          w: number;
-
-          /**
-           * X coordinate of the bounding box
-           */
-          x: number;
-
-          /**
-           * Y coordinate of the bounding box
-           */
-          y: number;
-
-          /**
-           * Confidence score
-           */
-          confidence?: number | null;
-
-          /**
-           * End index in the text
-           */
-          endIndex?: number | null;
-
-          /**
-           * Label for the bounding box
-           */
-          label?: string | null;
-
-          /**
-           * Start index in the text
-           */
-          startIndex?: number | null;
-        }
       }
 
       export interface TableItem {
@@ -1039,59 +851,12 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<TableItem.BBox> | null;
+        bBox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Table item type
          */
         type?: 'table';
-      }
-
-      export namespace TableItem {
-        /**
-         * Bounding box with coordinates and optional metadata.
-         */
-        export interface BBox {
-          /**
-           * Height of the bounding box
-           */
-          h: number;
-
-          /**
-           * Width of the bounding box
-           */
-          w: number;
-
-          /**
-           * X coordinate of the bounding box
-           */
-          x: number;
-
-          /**
-           * Y coordinate of the bounding box
-           */
-          y: number;
-
-          /**
-           * Confidence score
-           */
-          confidence?: number | null;
-
-          /**
-           * End index in the text
-           */
-          endIndex?: number | null;
-
-          /**
-           * Label for the bounding box
-           */
-          label?: string | null;
-
-          /**
-           * Start index in the text
-           */
-          startIndex?: number | null;
-        }
       }
 
       export interface ImageItem {
@@ -1113,59 +878,12 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<ImageItem.BBox> | null;
+        bBox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Image item type
          */
         type?: 'image';
-      }
-
-      export namespace ImageItem {
-        /**
-         * Bounding box with coordinates and optional metadata.
-         */
-        export interface BBox {
-          /**
-           * Height of the bounding box
-           */
-          h: number;
-
-          /**
-           * Width of the bounding box
-           */
-          w: number;
-
-          /**
-           * X coordinate of the bounding box
-           */
-          x: number;
-
-          /**
-           * Y coordinate of the bounding box
-           */
-          y: number;
-
-          /**
-           * Confidence score
-           */
-          confidence?: number | null;
-
-          /**
-           * End index in the text
-           */
-          endIndex?: number | null;
-
-          /**
-           * Label for the bounding box
-           */
-          label?: string | null;
-
-          /**
-           * Start index in the text
-           */
-          startIndex?: number | null;
-        }
       }
 
       export interface LinkItem {
@@ -1182,59 +900,12 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<LinkItem.BBox> | null;
+        bBox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Link item type
          */
         type?: 'link';
-      }
-
-      export namespace LinkItem {
-        /**
-         * Bounding box with coordinates and optional metadata.
-         */
-        export interface BBox {
-          /**
-           * Height of the bounding box
-           */
-          h: number;
-
-          /**
-           * Width of the bounding box
-           */
-          w: number;
-
-          /**
-           * X coordinate of the bounding box
-           */
-          x: number;
-
-          /**
-           * Y coordinate of the bounding box
-           */
-          y: number;
-
-          /**
-           * Confidence score
-           */
-          confidence?: number | null;
-
-          /**
-           * End index in the text
-           */
-          endIndex?: number | null;
-
-          /**
-           * Label for the bounding box
-           */
-          label?: string | null;
-
-          /**
-           * Start index in the text
-           */
-          startIndex?: number | null;
-        }
       }
     }
 
@@ -2305,6 +1976,7 @@ export interface ParsingGetParams {
 
 export declare namespace Parsing {
   export {
+    type BBox as BBox,
     type FailPageMode as FailPageMode,
     type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
     type ParsingJob as ParsingJob,
