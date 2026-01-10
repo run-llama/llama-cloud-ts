@@ -65,6 +65,10 @@ export {
 } from './sheets';
 export {
   Split,
+  type SplitCategory,
+  type SplitDocumentInput,
+  type SplitResultResponse,
+  type SplitSegmentResponse,
   type SplitCreateResponse,
   type SplitListResponse,
   type SplitGetResponse,

@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export * from './shared';
 export { Beta } from './beta/beta';
 export { Classifier } from './classifier/classifier';
 export {
@@ -34,6 +35,7 @@ export {
 } from './files';
 export {
   Parsing,
+  type BBox,
   type FailPageMode,
   type LlamaParseSupportedFileExtensions,
   type ParsingJob,
@@ -54,11 +56,24 @@ export {
   Pipelines,
   type AdvancedModeTransformConfig,
   type AutoTransformConfig,
+  type AzureOpenAIEmbedding,
+  type AzureOpenAIEmbeddingConfig,
+  type BedrockEmbedding,
+  type BedrockEmbeddingConfig,
+  type CohereEmbedding,
+  type CohereEmbeddingConfig,
+  type DataSinkCreate,
+  type GeminiEmbedding,
+  type GeminiEmbeddingConfig,
+  type HuggingFaceInferenceAPIEmbedding,
+  type HuggingFaceInferenceAPIEmbeddingConfig,
   type LlamaParseParameters,
   type LlmParameters,
   type ManagedIngestionStatusResponse,
   type MessageRole,
   type MetadataFilters,
+  type OpenAIEmbedding,
+  type OpenAIEmbeddingConfig,
   type PageFigureNodeWithScore,
   type PageScreenshotNodeWithScore,
   type Pipeline,
@@ -68,6 +83,8 @@ export {
   type PresetRetrievalParams,
   type RetrievalMode,
   type SparseModelConfig,
+  type VertexAIEmbeddingConfig,
+  type VertexTextEmbedding,
   type PipelineRetrieveResponse,
   type PipelineListResponse,
   type PipelineCreateParams,

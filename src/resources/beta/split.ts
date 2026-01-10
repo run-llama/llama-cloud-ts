@@ -52,6 +52,66 @@ export class Split extends APIResource {
 export type SplitListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<SplitListResponse>;
 
 /**
+ * Category definition for document splitting.
+ */
+export interface SplitCategory {
+  /**
+   * Name of the category.
+   */
+  name: string;
+
+  /**
+   * Optional description of what content belongs in this category.
+   */
+  description?: string | null;
+}
+
+/**
+ * Document input specification.
+ */
+export interface SplitDocumentInput {
+  /**
+   * Type of document input. Valid values are: file_id
+   */
+  type: string;
+
+  /**
+   * Document identifier.
+   */
+  value: string;
+}
+
+/**
+ * Result of a completed split job.
+ */
+export interface SplitResultResponse {
+  /**
+   * List of document segments.
+   */
+  segments: Array<SplitSegmentResponse>;
+}
+
+/**
+ * A segment of the split document.
+ */
+export interface SplitSegmentResponse {
+  /**
+   * Category name this split belongs to.
+   */
+  category: string;
+
+  /**
+   * Categorical confidence level. Valid values are: high, medium, low.
+   */
+  confidence_category: string;
+
+  /**
+   * 1-indexed page numbers in this split.
+   */
+  pages: Array<number>;
+}
+
+/**
  * A document split job.
  */
 export interface SplitCreateResponse {
@@ -63,12 +123,12 @@ export interface SplitCreateResponse {
   /**
    * Categories used for splitting.
    */
-  categories: Array<SplitCreateResponse.Category>;
+  categories: Array<SplitCategory>;
 
   /**
    * Document that was split.
    */
-  document_input: SplitCreateResponse.DocumentInput;
+  document_input: SplitDocumentInput;
 
   /**
    * Project ID this job belongs to.
@@ -99,76 +159,12 @@ export interface SplitCreateResponse {
   /**
    * Result of a completed split job.
    */
-  result?: SplitCreateResponse.Result | null;
+  result?: SplitResultResponse | null;
 
   /**
    * Update datetime
    */
   updated_at?: string | null;
-}
-
-export namespace SplitCreateResponse {
-  /**
-   * Category definition for document splitting.
-   */
-  export interface Category {
-    /**
-     * Name of the category.
-     */
-    name: string;
-
-    /**
-     * Optional description of what content belongs in this category.
-     */
-    description?: string | null;
-  }
-
-  /**
-   * Document that was split.
-   */
-  export interface DocumentInput {
-    /**
-     * Type of document input. Valid values are: file_id
-     */
-    type: string;
-
-    /**
-     * Document identifier.
-     */
-    value: string;
-  }
-
-  /**
-   * Result of a completed split job.
-   */
-  export interface Result {
-    /**
-     * List of document segments.
-     */
-    segments: Array<Result.Segment>;
-  }
-
-  export namespace Result {
-    /**
-     * A segment of the split document.
-     */
-    export interface Segment {
-      /**
-       * Category name this split belongs to.
-       */
-      category: string;
-
-      /**
-       * Categorical confidence level. Valid values are: high, medium, low.
-       */
-      confidence_category: string;
-
-      /**
-       * 1-indexed page numbers in this split.
-       */
-      pages: Array<number>;
-    }
-  }
 }
 
 /**
@@ -183,12 +179,12 @@ export interface SplitListResponse {
   /**
    * Categories used for splitting.
    */
-  categories: Array<SplitListResponse.Category>;
+  categories: Array<SplitCategory>;
 
   /**
    * Document that was split.
    */
-  document_input: SplitListResponse.DocumentInput;
+  document_input: SplitDocumentInput;
 
   /**
    * Project ID this job belongs to.
@@ -219,76 +215,12 @@ export interface SplitListResponse {
   /**
    * Result of a completed split job.
    */
-  result?: SplitListResponse.Result | null;
+  result?: SplitResultResponse | null;
 
   /**
    * Update datetime
    */
   updated_at?: string | null;
-}
-
-export namespace SplitListResponse {
-  /**
-   * Category definition for document splitting.
-   */
-  export interface Category {
-    /**
-     * Name of the category.
-     */
-    name: string;
-
-    /**
-     * Optional description of what content belongs in this category.
-     */
-    description?: string | null;
-  }
-
-  /**
-   * Document that was split.
-   */
-  export interface DocumentInput {
-    /**
-     * Type of document input. Valid values are: file_id
-     */
-    type: string;
-
-    /**
-     * Document identifier.
-     */
-    value: string;
-  }
-
-  /**
-   * Result of a completed split job.
-   */
-  export interface Result {
-    /**
-     * List of document segments.
-     */
-    segments: Array<Result.Segment>;
-  }
-
-  export namespace Result {
-    /**
-     * A segment of the split document.
-     */
-    export interface Segment {
-      /**
-       * Category name this split belongs to.
-       */
-      category: string;
-
-      /**
-       * Categorical confidence level. Valid values are: high, medium, low.
-       */
-      confidence_category: string;
-
-      /**
-       * 1-indexed page numbers in this split.
-       */
-      pages: Array<number>;
-    }
-  }
 }
 
 /**
@@ -303,12 +235,12 @@ export interface SplitGetResponse {
   /**
    * Categories used for splitting.
    */
-  categories: Array<SplitGetResponse.Category>;
+  categories: Array<SplitCategory>;
 
   /**
    * Document that was split.
    */
-  document_input: SplitGetResponse.DocumentInput;
+  document_input: SplitDocumentInput;
 
   /**
    * Project ID this job belongs to.
@@ -339,7 +271,7 @@ export interface SplitGetResponse {
   /**
    * Result of a completed split job.
    */
-  result?: SplitGetResponse.Result | null;
+  result?: SplitResultResponse | null;
 
   /**
    * Update datetime
@@ -347,80 +279,16 @@ export interface SplitGetResponse {
   updated_at?: string | null;
 }
 
-export namespace SplitGetResponse {
-  /**
-   * Category definition for document splitting.
-   */
-  export interface Category {
-    /**
-     * Name of the category.
-     */
-    name: string;
-
-    /**
-     * Optional description of what content belongs in this category.
-     */
-    description?: string | null;
-  }
-
-  /**
-   * Document that was split.
-   */
-  export interface DocumentInput {
-    /**
-     * Type of document input. Valid values are: file_id
-     */
-    type: string;
-
-    /**
-     * Document identifier.
-     */
-    value: string;
-  }
-
-  /**
-   * Result of a completed split job.
-   */
-  export interface Result {
-    /**
-     * List of document segments.
-     */
-    segments: Array<Result.Segment>;
-  }
-
-  export namespace Result {
-    /**
-     * A segment of the split document.
-     */
-    export interface Segment {
-      /**
-       * Category name this split belongs to.
-       */
-      category: string;
-
-      /**
-       * Categorical confidence level. Valid values are: high, medium, low.
-       */
-      confidence_category: string;
-
-      /**
-       * 1-indexed page numbers in this split.
-       */
-      pages: Array<number>;
-    }
-  }
-}
-
 export interface SplitCreateParams {
   /**
    * Body param: Categories to split the document into.
    */
-  categories: Array<SplitCreateParams.Category>;
+  categories: Array<SplitCategory>;
 
   /**
    * Body param: Document to be split.
    */
-  document_input: SplitCreateParams.DocumentInput;
+  document_input: SplitDocumentInput;
 
   /**
    * Query param:
@@ -439,36 +307,6 @@ export interface SplitCreateParams {
 }
 
 export namespace SplitCreateParams {
-  /**
-   * Category definition for document splitting.
-   */
-  export interface Category {
-    /**
-     * Name of the category.
-     */
-    name: string;
-
-    /**
-     * Optional description of what content belongs in this category.
-     */
-    description?: string | null;
-  }
-
-  /**
-   * Document to be split.
-   */
-  export interface DocumentInput {
-    /**
-     * Type of document input. Valid values are: file_id
-     */
-    type: string;
-
-    /**
-     * Document identifier.
-     */
-    value: string;
-  }
-
   /**
    * Strategy for splitting the document.
    */
@@ -495,6 +333,10 @@ export interface SplitGetParams {
 
 export declare namespace Split {
   export {
+    type SplitCategory as SplitCategory,
+    type SplitDocumentInput as SplitDocumentInput,
+    type SplitResultResponse as SplitResultResponse,
+    type SplitSegmentResponse as SplitSegmentResponse,
     type SplitCreateResponse as SplitCreateResponse,
     type SplitListResponse as SplitListResponse,
     type SplitGetResponse as SplitGetResponse,

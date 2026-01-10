@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as PipelinesAPI from './pipelines';
 import * as DataSinksAPI from '../data-sinks';
 import * as ParsingAPI from '../parsing';
+import * as Shared from '../shared';
 import * as JobsAPI from '../extraction/jobs';
 import * as DataSourcesAPI from './data-sources';
 import {
@@ -257,6 +259,377 @@ export interface AutoTransformConfig {
   chunk_size?: number;
 
   mode?: 'auto';
+}
+
+export interface AzureOpenAIEmbedding {
+  /**
+   * Additional kwargs for the OpenAI API.
+   */
+  additional_kwargs?: { [key: string]: unknown };
+
+  /**
+   * The base URL for Azure deployment.
+   */
+  api_base?: string;
+
+  /**
+   * The OpenAI API key.
+   */
+  api_key?: string | null;
+
+  /**
+   * The version for Azure OpenAI API.
+   */
+  api_version?: string;
+
+  /**
+   * The Azure deployment to use.
+   */
+  azure_deployment?: string | null;
+
+  /**
+   * The Azure endpoint to use.
+   */
+  azure_endpoint?: string | null;
+
+  class_name?: string;
+
+  /**
+   * The default headers for API requests.
+   */
+  default_headers?: { [key: string]: string } | null;
+
+  /**
+   * The number of dimensions on the output embedding vectors. Works only with v3
+   * embedding models.
+   */
+  dimensions?: number | null;
+
+  /**
+   * The batch size for embedding calls.
+   */
+  embed_batch_size?: number;
+
+  /**
+   * Maximum number of retries.
+   */
+  max_retries?: number;
+
+  /**
+   * The name of the OpenAI embedding model.
+   */
+  model_name?: string;
+
+  /**
+   * The number of workers to use for async embedding calls.
+   */
+  num_workers?: number | null;
+
+  /**
+   * Reuse the OpenAI client between requests. When doing anything with large volumes
+   * of async API calls, setting this to false can improve stability.
+   */
+  reuse_client?: boolean;
+
+  /**
+   * Timeout for each request.
+   */
+  timeout?: number;
+}
+
+export interface AzureOpenAIEmbeddingConfig {
+  /**
+   * Configuration for the Azure OpenAI embedding model.
+   */
+  component?: AzureOpenAIEmbedding;
+
+  /**
+   * Type of the embedding model.
+   */
+  type?: 'AZURE_EMBEDDING';
+}
+
+export interface BedrockEmbedding {
+  /**
+   * Additional kwargs for the bedrock client.
+   */
+  additional_kwargs?: { [key: string]: unknown };
+
+  /**
+   * AWS Access Key ID to use
+   */
+  aws_access_key_id?: string | null;
+
+  /**
+   * AWS Secret Access Key to use
+   */
+  aws_secret_access_key?: string | null;
+
+  /**
+   * AWS Session Token to use
+   */
+  aws_session_token?: string | null;
+
+  class_name?: string;
+
+  /**
+   * The batch size for embedding calls.
+   */
+  embed_batch_size?: number;
+
+  /**
+   * The maximum number of API retries.
+   */
+  max_retries?: number;
+
+  /**
+   * The modelId of the Bedrock model to use.
+   */
+  model_name?: string;
+
+  /**
+   * The number of workers to use for async embedding calls.
+   */
+  num_workers?: number | null;
+
+  /**
+   * The name of aws profile to use. If not given, then the default profile is used.
+   */
+  profile_name?: string | null;
+
+  /**
+   * AWS region name to use. Uses region configured in AWS CLI if not passed
+   */
+  region_name?: string | null;
+
+  /**
+   * The timeout for the Bedrock API request in seconds. It will be used for both
+   * connect and read timeouts.
+   */
+  timeout?: number;
+}
+
+export interface BedrockEmbeddingConfig {
+  /**
+   * Configuration for the Bedrock embedding model.
+   */
+  component?: BedrockEmbedding;
+
+  /**
+   * Type of the embedding model.
+   */
+  type?: 'BEDROCK_EMBEDDING';
+}
+
+export interface CohereEmbedding {
+  /**
+   * The Cohere API key.
+   */
+  api_key: string | null;
+
+  class_name?: string;
+
+  /**
+   * The batch size for embedding calls.
+   */
+  embed_batch_size?: number;
+
+  /**
+   * Embedding type. If not provided float embedding_type is used when needed.
+   */
+  embedding_type?: string;
+
+  /**
+   * Model Input type. If not provided, search_document and search_query are used
+   * when needed.
+   */
+  input_type?: string | null;
+
+  /**
+   * The modelId of the Cohere model to use.
+   */
+  model_name?: string;
+
+  /**
+   * The number of workers to use for async embedding calls.
+   */
+  num_workers?: number | null;
+
+  /**
+   * Truncation type - START/ END/ NONE
+   */
+  truncate?: string;
+}
+
+export interface CohereEmbeddingConfig {
+  /**
+   * Configuration for the Cohere embedding model.
+   */
+  component?: CohereEmbedding;
+
+  /**
+   * Type of the embedding model.
+   */
+  type?: 'COHERE_EMBEDDING';
+}
+
+/**
+ * Schema for creating a data sink.
+ */
+export interface DataSinkCreate {
+  /**
+   * Component that implements the data sink
+   */
+  component:
+    | { [key: string]: unknown }
+    | Shared.CloudPineconeVectorStore
+    | Shared.CloudPostgresVectorStore
+    | Shared.CloudQdrantVectorStore
+    | Shared.CloudAzureAISearchVectorStore
+    | Shared.CloudMongoDBAtlasVectorSearch
+    | Shared.CloudMilvusVectorStore
+    | Shared.CloudAstraDBVectorStore;
+
+  /**
+   * The name of the data sink.
+   */
+  name: string;
+
+  sink_type: 'PINECONE' | 'POSTGRES' | 'QDRANT' | 'AZUREAI_SEARCH' | 'MONGODB_ATLAS' | 'MILVUS' | 'ASTRA_DB';
+}
+
+export interface GeminiEmbedding {
+  /**
+   * API base to access the model. Defaults to None.
+   */
+  api_base?: string | null;
+
+  /**
+   * API key to access the model. Defaults to None.
+   */
+  api_key?: string | null;
+
+  class_name?: string;
+
+  /**
+   * The batch size for embedding calls.
+   */
+  embed_batch_size?: number;
+
+  /**
+   * The modelId of the Gemini model to use.
+   */
+  model_name?: string;
+
+  /**
+   * The number of workers to use for async embedding calls.
+   */
+  num_workers?: number | null;
+
+  /**
+   * The task for embedding model.
+   */
+  task_type?: string | null;
+
+  /**
+   * Title is only applicable for retrieval_document tasks, and is used to represent
+   * a document title. For other tasks, title is invalid.
+   */
+  title?: string | null;
+
+  /**
+   * Transport to access the model. Defaults to None.
+   */
+  transport?: string | null;
+}
+
+export interface GeminiEmbeddingConfig {
+  /**
+   * Configuration for the Gemini embedding model.
+   */
+  component?: GeminiEmbedding;
+
+  /**
+   * Type of the embedding model.
+   */
+  type?: 'GEMINI_EMBEDDING';
+}
+
+export interface HuggingFaceInferenceAPIEmbedding {
+  /**
+   * Hugging Face token. Will default to the locally saved token. Pass token=False if
+   * you don’t want to send your token to the server.
+   */
+  token?: string | boolean | null;
+
+  class_name?: string;
+
+  /**
+   * Additional cookies to send to the server.
+   */
+  cookies?: { [key: string]: string } | null;
+
+  /**
+   * The batch size for embedding calls.
+   */
+  embed_batch_size?: number;
+
+  /**
+   * Additional headers to send to the server. By default only the authorization and
+   * user-agent headers are sent. Values in this dictionary will override the default
+   * values.
+   */
+  headers?: { [key: string]: string } | null;
+
+  /**
+   * Hugging Face model name. If None, the task will be used.
+   */
+  model_name?: string | null;
+
+  /**
+   * The number of workers to use for async embedding calls.
+   */
+  num_workers?: number | null;
+
+  /**
+   * Enum of possible pooling choices with pooling behaviors.
+   */
+  pooling?: 'cls' | 'mean' | 'last' | null;
+
+  /**
+   * Instruction to prepend during query embedding.
+   */
+  query_instruction?: string | null;
+
+  /**
+   * Optional task to pick Hugging Face's recommended model, used when model_name is
+   * left as default of None.
+   */
+  task?: string | null;
+
+  /**
+   * Instruction to prepend during text embedding.
+   */
+  text_instruction?: string | null;
+
+  /**
+   * The maximum number of seconds to wait for a response from the server. Loading a
+   * new model in Inference API can take up to several minutes. Defaults to None,
+   * meaning it will loop until the server is available.
+   */
+  timeout?: number | null;
+}
+
+export interface HuggingFaceInferenceAPIEmbeddingConfig {
+  /**
+   * Configuration for the HuggingFace Inference API embedding model.
+   */
+  component?: HuggingFaceInferenceAPIEmbedding;
+
+  /**
+   * Type of the embedding model.
+   */
+  type?: 'HUGGINGFACE_API_EMBEDDING';
 }
 
 /**
@@ -666,6 +1039,84 @@ export namespace MetadataFilters {
   }
 }
 
+export interface OpenAIEmbedding {
+  /**
+   * Additional kwargs for the OpenAI API.
+   */
+  additional_kwargs?: { [key: string]: unknown };
+
+  /**
+   * The base URL for OpenAI API.
+   */
+  api_base?: string | null;
+
+  /**
+   * The OpenAI API key.
+   */
+  api_key?: string | null;
+
+  /**
+   * The version for OpenAI API.
+   */
+  api_version?: string | null;
+
+  class_name?: string;
+
+  /**
+   * The default headers for API requests.
+   */
+  default_headers?: { [key: string]: string } | null;
+
+  /**
+   * The number of dimensions on the output embedding vectors. Works only with v3
+   * embedding models.
+   */
+  dimensions?: number | null;
+
+  /**
+   * The batch size for embedding calls.
+   */
+  embed_batch_size?: number;
+
+  /**
+   * Maximum number of retries.
+   */
+  max_retries?: number;
+
+  /**
+   * The name of the OpenAI embedding model.
+   */
+  model_name?: string;
+
+  /**
+   * The number of workers to use for async embedding calls.
+   */
+  num_workers?: number | null;
+
+  /**
+   * Reuse the OpenAI client between requests. When doing anything with large volumes
+   * of async API calls, setting this to false can improve stability.
+   */
+  reuse_client?: boolean;
+
+  /**
+   * Timeout for each request.
+   */
+  timeout?: number;
+}
+
+export interface OpenAIEmbeddingConfig {
+  /**
+   * Configuration for the OpenAI embedding model.
+   */
+  component?: OpenAIEmbedding;
+
+  /**
+   * Type of the embedding model.
+   */
+  type?: 'OPENAI_EMBEDDING';
+}
+
 /**
  * Page figure metadata with score
  */
@@ -768,13 +1219,13 @@ export interface Pipeline {
 
   embedding_config:
     | Pipeline.ManagedOpenAIEmbeddingConfig
-    | Pipeline.AzureOpenAIEmbeddingConfig
-    | Pipeline.CohereEmbeddingConfig
-    | Pipeline.GeminiEmbeddingConfig
-    | Pipeline.HuggingFaceInferenceAPIEmbeddingConfig
-    | Pipeline.OpenAIEmbeddingConfig
-    | Pipeline.VertexAIEmbeddingConfig
-    | Pipeline.BedrockEmbeddingConfig;
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig;
 
   name: string;
 
@@ -892,536 +1343,6 @@ export namespace Pipeline {
     }
   }
 
-  export interface AzureOpenAIEmbeddingConfig {
-    /**
-     * Configuration for the Azure OpenAI embedding model.
-     */
-    component?: AzureOpenAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'AZURE_EMBEDDING';
-  }
-
-  export namespace AzureOpenAIEmbeddingConfig {
-    /**
-     * Configuration for the Azure OpenAI embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the OpenAI API.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * The base URL for Azure deployment.
-       */
-      api_base?: string;
-
-      /**
-       * The OpenAI API key.
-       */
-      api_key?: string | null;
-
-      /**
-       * The version for Azure OpenAI API.
-       */
-      api_version?: string;
-
-      /**
-       * The Azure deployment to use.
-       */
-      azure_deployment?: string | null;
-
-      /**
-       * The Azure endpoint to use.
-       */
-      azure_endpoint?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The default headers for API requests.
-       */
-      default_headers?: { [key: string]: string } | null;
-
-      /**
-       * The number of dimensions on the output embedding vectors. Works only with v3
-       * embedding models.
-       */
-      dimensions?: number | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Maximum number of retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The name of the OpenAI embedding model.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Reuse the OpenAI client between requests. When doing anything with large volumes
-       * of async API calls, setting this to false can improve stability.
-       */
-      reuse_client?: boolean;
-
-      /**
-       * Timeout for each request.
-       */
-      timeout?: number;
-    }
-  }
-
-  export interface CohereEmbeddingConfig {
-    /**
-     * Configuration for the Cohere embedding model.
-     */
-    component?: CohereEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'COHERE_EMBEDDING';
-  }
-
-  export namespace CohereEmbeddingConfig {
-    /**
-     * Configuration for the Cohere embedding model.
-     */
-    export interface Component {
-      /**
-       * The Cohere API key.
-       */
-      api_key: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Embedding type. If not provided float embedding_type is used when needed.
-       */
-      embedding_type?: string;
-
-      /**
-       * Model Input type. If not provided, search_document and search_query are used
-       * when needed.
-       */
-      input_type?: string | null;
-
-      /**
-       * The modelId of the Cohere model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Truncation type - START/ END/ NONE
-       */
-      truncate?: string;
-    }
-  }
-
-  export interface GeminiEmbeddingConfig {
-    /**
-     * Configuration for the Gemini embedding model.
-     */
-    component?: GeminiEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'GEMINI_EMBEDDING';
-  }
-
-  export namespace GeminiEmbeddingConfig {
-    /**
-     * Configuration for the Gemini embedding model.
-     */
-    export interface Component {
-      /**
-       * API base to access the model. Defaults to None.
-       */
-      api_base?: string | null;
-
-      /**
-       * API key to access the model. Defaults to None.
-       */
-      api_key?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The modelId of the Gemini model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * The task for embedding model.
-       */
-      task_type?: string | null;
-
-      /**
-       * Title is only applicable for retrieval_document tasks, and is used to represent
-       * a document title. For other tasks, title is invalid.
-       */
-      title?: string | null;
-
-      /**
-       * Transport to access the model. Defaults to None.
-       */
-      transport?: string | null;
-    }
-  }
-
-  export interface HuggingFaceInferenceAPIEmbeddingConfig {
-    /**
-     * Configuration for the HuggingFace Inference API embedding model.
-     */
-    component?: HuggingFaceInferenceAPIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'HUGGINGFACE_API_EMBEDDING';
-  }
-
-  export namespace HuggingFaceInferenceAPIEmbeddingConfig {
-    /**
-     * Configuration for the HuggingFace Inference API embedding model.
-     */
-    export interface Component {
-      /**
-       * Hugging Face token. Will default to the locally saved token. Pass token=False if
-       * you don’t want to send your token to the server.
-       */
-      token?: string | boolean | null;
-
-      class_name?: string;
-
-      /**
-       * Additional cookies to send to the server.
-       */
-      cookies?: { [key: string]: string } | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Additional headers to send to the server. By default only the authorization and
-       * user-agent headers are sent. Values in this dictionary will override the default
-       * values.
-       */
-      headers?: { [key: string]: string } | null;
-
-      /**
-       * Hugging Face model name. If None, the task will be used.
-       */
-      model_name?: string | null;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Enum of possible pooling choices with pooling behaviors.
-       */
-      pooling?: 'cls' | 'mean' | 'last' | null;
-
-      /**
-       * Instruction to prepend during query embedding.
-       */
-      query_instruction?: string | null;
-
-      /**
-       * Optional task to pick Hugging Face's recommended model, used when model_name is
-       * left as default of None.
-       */
-      task?: string | null;
-
-      /**
-       * Instruction to prepend during text embedding.
-       */
-      text_instruction?: string | null;
-
-      /**
-       * The maximum number of seconds to wait for a response from the server. Loading a
-       * new model in Inference API can take up to several minutes. Defaults to None,
-       * meaning it will loop until the server is available.
-       */
-      timeout?: number | null;
-    }
-  }
-
-  export interface OpenAIEmbeddingConfig {
-    /**
-     * Configuration for the OpenAI embedding model.
-     */
-    component?: OpenAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'OPENAI_EMBEDDING';
-  }
-
-  export namespace OpenAIEmbeddingConfig {
-    /**
-     * Configuration for the OpenAI embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the OpenAI API.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * The base URL for OpenAI API.
-       */
-      api_base?: string | null;
-
-      /**
-       * The OpenAI API key.
-       */
-      api_key?: string | null;
-
-      /**
-       * The version for OpenAI API.
-       */
-      api_version?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The default headers for API requests.
-       */
-      default_headers?: { [key: string]: string } | null;
-
-      /**
-       * The number of dimensions on the output embedding vectors. Works only with v3
-       * embedding models.
-       */
-      dimensions?: number | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Maximum number of retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The name of the OpenAI embedding model.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Reuse the OpenAI client between requests. When doing anything with large volumes
-       * of async API calls, setting this to false can improve stability.
-       */
-      reuse_client?: boolean;
-
-      /**
-       * Timeout for each request.
-       */
-      timeout?: number;
-    }
-  }
-
-  export interface VertexAIEmbeddingConfig {
-    /**
-     * Configuration for the VertexAI embedding model.
-     */
-    component?: VertexAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'VERTEXAI_EMBEDDING';
-  }
-
-  export namespace VertexAIEmbeddingConfig {
-    /**
-     * Configuration for the VertexAI embedding model.
-     */
-    export interface Component {
-      /**
-       * The client email for the VertexAI credentials.
-       */
-      client_email: string | null;
-
-      /**
-       * The default location to use when making API calls.
-       */
-      location: string;
-
-      /**
-       * The private key for the VertexAI credentials.
-       */
-      private_key: string | null;
-
-      /**
-       * The private key ID for the VertexAI credentials.
-       */
-      private_key_id: string | null;
-
-      /**
-       * The default GCP project to use when making Vertex API calls.
-       */
-      project: string;
-
-      /**
-       * The token URI for the VertexAI credentials.
-       */
-      token_uri: string | null;
-
-      /**
-       * Additional kwargs for the Vertex.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The embedding mode to use.
-       */
-      embed_mode?: 'default' | 'classification' | 'clustering' | 'similarity' | 'retrieval';
-
-      /**
-       * The modelId of the VertexAI model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-    }
-  }
-
-  export interface BedrockEmbeddingConfig {
-    /**
-     * Configuration for the Bedrock embedding model.
-     */
-    component?: BedrockEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'BEDROCK_EMBEDDING';
-  }
-
-  export namespace BedrockEmbeddingConfig {
-    /**
-     * Configuration for the Bedrock embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the bedrock client.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * AWS Access Key ID to use
-       */
-      aws_access_key_id?: string | null;
-
-      /**
-       * AWS Secret Access Key to use
-       */
-      aws_secret_access_key?: string | null;
-
-      /**
-       * AWS Session Token to use
-       */
-      aws_session_token?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The maximum number of API retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The modelId of the Bedrock model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * The name of aws profile to use. If not given, then the default profile is used.
-       */
-      profile_name?: string | null;
-
-      /**
-       * AWS region name to use. Uses region configured in AWS CLI if not passed
-       */
-      region_name?: string | null;
-
-      /**
-       * The timeout for the Bedrock API request in seconds. It will be used for both
-       * connect and read timeouts.
-       */
-      timeout?: number;
-    }
-  }
-
   /**
    * Hashes for the configuration of a pipeline.
    */
@@ -1455,13 +1376,13 @@ export namespace Pipeline {
      * The embedding configuration for the embedding model config.
      */
     embedding_config:
-      | EmbeddingModelConfig.AzureOpenAIEmbeddingConfig
-      | EmbeddingModelConfig.CohereEmbeddingConfig
-      | EmbeddingModelConfig.GeminiEmbeddingConfig
-      | EmbeddingModelConfig.HuggingFaceInferenceAPIEmbeddingConfig
-      | EmbeddingModelConfig.OpenAIEmbeddingConfig
-      | EmbeddingModelConfig.VertexAIEmbeddingConfig
-      | EmbeddingModelConfig.BedrockEmbeddingConfig;
+      | PipelinesAPI.AzureOpenAIEmbeddingConfig
+      | PipelinesAPI.CohereEmbeddingConfig
+      | PipelinesAPI.GeminiEmbeddingConfig
+      | PipelinesAPI.HuggingFaceInferenceAPIEmbeddingConfig
+      | PipelinesAPI.OpenAIEmbeddingConfig
+      | PipelinesAPI.VertexAIEmbeddingConfig
+      | PipelinesAPI.BedrockEmbeddingConfig;
 
     /**
      * The name of the embedding model config.
@@ -1480,538 +1401,6 @@ export namespace Pipeline {
      */
     updated_at?: string | null;
   }
-
-  export namespace EmbeddingModelConfig {
-    export interface AzureOpenAIEmbeddingConfig {
-      /**
-       * Configuration for the Azure OpenAI embedding model.
-       */
-      component?: AzureOpenAIEmbeddingConfig.Component;
-
-      /**
-       * Type of the embedding model.
-       */
-      type?: 'AZURE_EMBEDDING';
-    }
-
-    export namespace AzureOpenAIEmbeddingConfig {
-      /**
-       * Configuration for the Azure OpenAI embedding model.
-       */
-      export interface Component {
-        /**
-         * Additional kwargs for the OpenAI API.
-         */
-        additional_kwargs?: { [key: string]: unknown };
-
-        /**
-         * The base URL for Azure deployment.
-         */
-        api_base?: string;
-
-        /**
-         * The OpenAI API key.
-         */
-        api_key?: string | null;
-
-        /**
-         * The version for Azure OpenAI API.
-         */
-        api_version?: string;
-
-        /**
-         * The Azure deployment to use.
-         */
-        azure_deployment?: string | null;
-
-        /**
-         * The Azure endpoint to use.
-         */
-        azure_endpoint?: string | null;
-
-        class_name?: string;
-
-        /**
-         * The default headers for API requests.
-         */
-        default_headers?: { [key: string]: string } | null;
-
-        /**
-         * The number of dimensions on the output embedding vectors. Works only with v3
-         * embedding models.
-         */
-        dimensions?: number | null;
-
-        /**
-         * The batch size for embedding calls.
-         */
-        embed_batch_size?: number;
-
-        /**
-         * Maximum number of retries.
-         */
-        max_retries?: number;
-
-        /**
-         * The name of the OpenAI embedding model.
-         */
-        model_name?: string;
-
-        /**
-         * The number of workers to use for async embedding calls.
-         */
-        num_workers?: number | null;
-
-        /**
-         * Reuse the OpenAI client between requests. When doing anything with large volumes
-         * of async API calls, setting this to false can improve stability.
-         */
-        reuse_client?: boolean;
-
-        /**
-         * Timeout for each request.
-         */
-        timeout?: number;
-      }
-    }
-
-    export interface CohereEmbeddingConfig {
-      /**
-       * Configuration for the Cohere embedding model.
-       */
-      component?: CohereEmbeddingConfig.Component;
-
-      /**
-       * Type of the embedding model.
-       */
-      type?: 'COHERE_EMBEDDING';
-    }
-
-    export namespace CohereEmbeddingConfig {
-      /**
-       * Configuration for the Cohere embedding model.
-       */
-      export interface Component {
-        /**
-         * The Cohere API key.
-         */
-        api_key: string | null;
-
-        class_name?: string;
-
-        /**
-         * The batch size for embedding calls.
-         */
-        embed_batch_size?: number;
-
-        /**
-         * Embedding type. If not provided float embedding_type is used when needed.
-         */
-        embedding_type?: string;
-
-        /**
-         * Model Input type. If not provided, search_document and search_query are used
-         * when needed.
-         */
-        input_type?: string | null;
-
-        /**
-         * The modelId of the Cohere model to use.
-         */
-        model_name?: string;
-
-        /**
-         * The number of workers to use for async embedding calls.
-         */
-        num_workers?: number | null;
-
-        /**
-         * Truncation type - START/ END/ NONE
-         */
-        truncate?: string;
-      }
-    }
-
-    export interface GeminiEmbeddingConfig {
-      /**
-       * Configuration for the Gemini embedding model.
-       */
-      component?: GeminiEmbeddingConfig.Component;
-
-      /**
-       * Type of the embedding model.
-       */
-      type?: 'GEMINI_EMBEDDING';
-    }
-
-    export namespace GeminiEmbeddingConfig {
-      /**
-       * Configuration for the Gemini embedding model.
-       */
-      export interface Component {
-        /**
-         * API base to access the model. Defaults to None.
-         */
-        api_base?: string | null;
-
-        /**
-         * API key to access the model. Defaults to None.
-         */
-        api_key?: string | null;
-
-        class_name?: string;
-
-        /**
-         * The batch size for embedding calls.
-         */
-        embed_batch_size?: number;
-
-        /**
-         * The modelId of the Gemini model to use.
-         */
-        model_name?: string;
-
-        /**
-         * The number of workers to use for async embedding calls.
-         */
-        num_workers?: number | null;
-
-        /**
-         * The task for embedding model.
-         */
-        task_type?: string | null;
-
-        /**
-         * Title is only applicable for retrieval_document tasks, and is used to represent
-         * a document title. For other tasks, title is invalid.
-         */
-        title?: string | null;
-
-        /**
-         * Transport to access the model. Defaults to None.
-         */
-        transport?: string | null;
-      }
-    }
-
-    export interface HuggingFaceInferenceAPIEmbeddingConfig {
-      /**
-       * Configuration for the HuggingFace Inference API embedding model.
-       */
-      component?: HuggingFaceInferenceAPIEmbeddingConfig.Component;
-
-      /**
-       * Type of the embedding model.
-       */
-      type?: 'HUGGINGFACE_API_EMBEDDING';
-    }
-
-    export namespace HuggingFaceInferenceAPIEmbeddingConfig {
-      /**
-       * Configuration for the HuggingFace Inference API embedding model.
-       */
-      export interface Component {
-        /**
-         * Hugging Face token. Will default to the locally saved token. Pass token=False if
-         * you don’t want to send your token to the server.
-         */
-        token?: string | boolean | null;
-
-        class_name?: string;
-
-        /**
-         * Additional cookies to send to the server.
-         */
-        cookies?: { [key: string]: string } | null;
-
-        /**
-         * The batch size for embedding calls.
-         */
-        embed_batch_size?: number;
-
-        /**
-         * Additional headers to send to the server. By default only the authorization and
-         * user-agent headers are sent. Values in this dictionary will override the default
-         * values.
-         */
-        headers?: { [key: string]: string } | null;
-
-        /**
-         * Hugging Face model name. If None, the task will be used.
-         */
-        model_name?: string | null;
-
-        /**
-         * The number of workers to use for async embedding calls.
-         */
-        num_workers?: number | null;
-
-        /**
-         * Enum of possible pooling choices with pooling behaviors.
-         */
-        pooling?: 'cls' | 'mean' | 'last' | null;
-
-        /**
-         * Instruction to prepend during query embedding.
-         */
-        query_instruction?: string | null;
-
-        /**
-         * Optional task to pick Hugging Face's recommended model, used when model_name is
-         * left as default of None.
-         */
-        task?: string | null;
-
-        /**
-         * Instruction to prepend during text embedding.
-         */
-        text_instruction?: string | null;
-
-        /**
-         * The maximum number of seconds to wait for a response from the server. Loading a
-         * new model in Inference API can take up to several minutes. Defaults to None,
-         * meaning it will loop until the server is available.
-         */
-        timeout?: number | null;
-      }
-    }
-
-    export interface OpenAIEmbeddingConfig {
-      /**
-       * Configuration for the OpenAI embedding model.
-       */
-      component?: OpenAIEmbeddingConfig.Component;
-
-      /**
-       * Type of the embedding model.
-       */
-      type?: 'OPENAI_EMBEDDING';
-    }
-
-    export namespace OpenAIEmbeddingConfig {
-      /**
-       * Configuration for the OpenAI embedding model.
-       */
-      export interface Component {
-        /**
-         * Additional kwargs for the OpenAI API.
-         */
-        additional_kwargs?: { [key: string]: unknown };
-
-        /**
-         * The base URL for OpenAI API.
-         */
-        api_base?: string | null;
-
-        /**
-         * The OpenAI API key.
-         */
-        api_key?: string | null;
-
-        /**
-         * The version for OpenAI API.
-         */
-        api_version?: string | null;
-
-        class_name?: string;
-
-        /**
-         * The default headers for API requests.
-         */
-        default_headers?: { [key: string]: string } | null;
-
-        /**
-         * The number of dimensions on the output embedding vectors. Works only with v3
-         * embedding models.
-         */
-        dimensions?: number | null;
-
-        /**
-         * The batch size for embedding calls.
-         */
-        embed_batch_size?: number;
-
-        /**
-         * Maximum number of retries.
-         */
-        max_retries?: number;
-
-        /**
-         * The name of the OpenAI embedding model.
-         */
-        model_name?: string;
-
-        /**
-         * The number of workers to use for async embedding calls.
-         */
-        num_workers?: number | null;
-
-        /**
-         * Reuse the OpenAI client between requests. When doing anything with large volumes
-         * of async API calls, setting this to false can improve stability.
-         */
-        reuse_client?: boolean;
-
-        /**
-         * Timeout for each request.
-         */
-        timeout?: number;
-      }
-    }
-
-    export interface VertexAIEmbeddingConfig {
-      /**
-       * Configuration for the VertexAI embedding model.
-       */
-      component?: VertexAIEmbeddingConfig.Component;
-
-      /**
-       * Type of the embedding model.
-       */
-      type?: 'VERTEXAI_EMBEDDING';
-    }
-
-    export namespace VertexAIEmbeddingConfig {
-      /**
-       * Configuration for the VertexAI embedding model.
-       */
-      export interface Component {
-        /**
-         * The client email for the VertexAI credentials.
-         */
-        client_email: string | null;
-
-        /**
-         * The default location to use when making API calls.
-         */
-        location: string;
-
-        /**
-         * The private key for the VertexAI credentials.
-         */
-        private_key: string | null;
-
-        /**
-         * The private key ID for the VertexAI credentials.
-         */
-        private_key_id: string | null;
-
-        /**
-         * The default GCP project to use when making Vertex API calls.
-         */
-        project: string;
-
-        /**
-         * The token URI for the VertexAI credentials.
-         */
-        token_uri: string | null;
-
-        /**
-         * Additional kwargs for the Vertex.
-         */
-        additional_kwargs?: { [key: string]: unknown };
-
-        class_name?: string;
-
-        /**
-         * The batch size for embedding calls.
-         */
-        embed_batch_size?: number;
-
-        /**
-         * The embedding mode to use.
-         */
-        embed_mode?: 'default' | 'classification' | 'clustering' | 'similarity' | 'retrieval';
-
-        /**
-         * The modelId of the VertexAI model to use.
-         */
-        model_name?: string;
-
-        /**
-         * The number of workers to use for async embedding calls.
-         */
-        num_workers?: number | null;
-      }
-    }
-
-    export interface BedrockEmbeddingConfig {
-      /**
-       * Configuration for the Bedrock embedding model.
-       */
-      component?: BedrockEmbeddingConfig.Component;
-
-      /**
-       * Type of the embedding model.
-       */
-      type?: 'BEDROCK_EMBEDDING';
-    }
-
-    export namespace BedrockEmbeddingConfig {
-      /**
-       * Configuration for the Bedrock embedding model.
-       */
-      export interface Component {
-        /**
-         * Additional kwargs for the bedrock client.
-         */
-        additional_kwargs?: { [key: string]: unknown };
-
-        /**
-         * AWS Access Key ID to use
-         */
-        aws_access_key_id?: string | null;
-
-        /**
-         * AWS Secret Access Key to use
-         */
-        aws_secret_access_key?: string | null;
-
-        /**
-         * AWS Session Token to use
-         */
-        aws_session_token?: string | null;
-
-        class_name?: string;
-
-        /**
-         * The batch size for embedding calls.
-         */
-        embed_batch_size?: number;
-
-        /**
-         * The maximum number of API retries.
-         */
-        max_retries?: number;
-
-        /**
-         * The modelId of the Bedrock model to use.
-         */
-        model_name?: string;
-
-        /**
-         * The number of workers to use for async embedding calls.
-         */
-        num_workers?: number | null;
-
-        /**
-         * The name of aws profile to use. If not given, then the default profile is used.
-         */
-        profile_name?: string | null;
-
-        /**
-         * AWS region name to use. Uses region configured in AWS CLI if not passed
-         */
-        region_name?: string | null;
-
-        /**
-         * The timeout for the Bedrock API request in seconds. It will be used for both
-         * connect and read timeouts.
-         */
-        timeout?: number;
-      }
-    }
-  }
 }
 
 /**
@@ -2023,7 +1412,7 @@ export interface PipelineCreate {
   /**
    * Schema for creating a data sink.
    */
-  data_sink?: PipelineCreate.DataSink | null;
+  data_sink?: DataSinkCreate | null;
 
   /**
    * Data sink ID. When provided instead of data_sink, the data sink will be looked
@@ -2032,13 +1421,13 @@ export interface PipelineCreate {
   data_sink_id?: string | null;
 
   embedding_config?:
-    | PipelineCreate.AzureOpenAIEmbeddingConfig
-    | PipelineCreate.CohereEmbeddingConfig
-    | PipelineCreate.GeminiEmbeddingConfig
-    | PipelineCreate.HuggingFaceInferenceAPIEmbeddingConfig
-    | PipelineCreate.OpenAIEmbeddingConfig
-    | PipelineCreate.VertexAIEmbeddingConfig
-    | PipelineCreate.BedrockEmbeddingConfig
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig
     | null;
 
   /**
@@ -2090,784 +1479,6 @@ export interface PipelineCreate {
    * Configuration for the transformation.
    */
   transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
-}
-
-export namespace PipelineCreate {
-  /**
-   * Schema for creating a data sink.
-   */
-  export interface DataSink {
-    /**
-     * Component that implements the data sink
-     */
-    component:
-      | { [key: string]: unknown }
-      | DataSink.CloudPineconeVectorStore
-      | DataSink.CloudPostgresVectorStore
-      | DataSink.CloudQdrantVectorStore
-      | DataSink.CloudAzureAISearchVectorStore
-      | DataSink.CloudMongoDBAtlasVectorSearch
-      | DataSink.CloudMilvusVectorStore
-      | DataSink.CloudAstraDBVectorStore;
-
-    /**
-     * The name of the data sink.
-     */
-    name: string;
-
-    sink_type:
-      | 'PINECONE'
-      | 'POSTGRES'
-      | 'QDRANT'
-      | 'AZUREAI_SEARCH'
-      | 'MONGODB_ATLAS'
-      | 'MILVUS'
-      | 'ASTRA_DB';
-  }
-
-  export namespace DataSink {
-    /**
-     * Cloud Pinecone Vector Store.
-     *
-     * This class is used to store the configuration for a Pinecone vector store, so
-     * that it can be created and used in LlamaCloud.
-     *
-     * Args: api_key (str): API key for authenticating with Pinecone index_name (str):
-     * name of the Pinecone index namespace (optional[str]): namespace to use in the
-     * Pinecone index insert_kwargs (optional[dict]): additional kwargs to pass during
-     * insertion
-     */
-    export interface CloudPineconeVectorStore {
-      index_name: string;
-
-      class_name?: string;
-
-      insert_kwargs?: { [key: string]: unknown } | null;
-
-      namespace?: string | null;
-
-      supports_nested_metadata_filters?: true;
-    }
-
-    export interface CloudPostgresVectorStore {
-      database: string;
-
-      embed_dim: number;
-
-      host: string;
-
-      port: number;
-
-      schema_name: string;
-
-      table_name: string;
-
-      user: string;
-
-      class_name?: string;
-
-      /**
-       * HNSW settings for PGVector.
-       */
-      hnsw_settings?: CloudPostgresVectorStore.HnswSettings | null;
-
-      hybrid_search?: boolean | null;
-
-      perform_setup?: boolean;
-
-      supports_nested_metadata_filters?: boolean;
-    }
-
-    export namespace CloudPostgresVectorStore {
-      /**
-       * HNSW settings for PGVector.
-       */
-      export interface HnswSettings {
-        /**
-         * The distance method to use.
-         */
-        distance_method?: 'l2' | 'ip' | 'cosine' | 'l1' | 'hamming' | 'jaccard';
-
-        /**
-         * The number of edges to use during the construction phase.
-         */
-        ef_construction?: number;
-
-        /**
-         * The number of edges to use during the search phase.
-         */
-        ef_search?: number;
-
-        /**
-         * The number of bi-directional links created for each new element.
-         */
-        m?: number;
-
-        /**
-         * The type of vector to use.
-         */
-        vector_type?: 'vector' | 'half_vec' | 'bit' | 'sparse_vec';
-      }
-    }
-
-    /**
-     * Cloud Qdrant Vector Store.
-     *
-     * This class is used to store the configuration for a Qdrant vector store, so that
-     * it can be created and used in LlamaCloud.
-     *
-     * Args: collection_name (str): name of the Qdrant collection url (str): url of the
-     * Qdrant instance api_key (str): API key for authenticating with Qdrant
-     * max_retries (int): maximum number of retries in case of a failure. Defaults to 3
-     * client_kwargs (dict): additional kwargs to pass to the Qdrant client
-     */
-    export interface CloudQdrantVectorStore {
-      collection_name: string;
-
-      url: string;
-
-      class_name?: string;
-
-      client_kwargs?: { [key: string]: unknown };
-
-      max_retries?: number;
-
-      supports_nested_metadata_filters?: true;
-    }
-
-    /**
-     * Cloud Azure AI Search Vector Store.
-     */
-    export interface CloudAzureAISearchVectorStore {
-      search_service_endpoint: string;
-
-      class_name?: string;
-
-      client_id?: string | null;
-
-      embedding_dimension?: number | null;
-
-      filterable_metadata_field_keys?: { [key: string]: unknown } | null;
-
-      index_name?: string | null;
-
-      search_service_api_version?: string | null;
-
-      supports_nested_metadata_filters?: true;
-
-      tenant_id?: string | null;
-    }
-
-    /**
-     * Cloud MongoDB Atlas Vector Store.
-     *
-     * This class is used to store the configuration for a MongoDB Atlas vector store,
-     * so that it can be created and used in LlamaCloud.
-     *
-     * Args: mongodb_uri (str): URI for connecting to MongoDB Atlas db_name (str): name
-     * of the MongoDB database collection_name (str): name of the MongoDB collection
-     * vector_index_name (str): name of the MongoDB Atlas vector index
-     * fulltext_index_name (str): name of the MongoDB Atlas full-text index
-     */
-    export interface CloudMongoDBAtlasVectorSearch {
-      collection_name: string;
-
-      db_name: string;
-
-      class_name?: string;
-
-      embedding_dimension?: number | null;
-
-      fulltext_index_name?: string | null;
-
-      supports_nested_metadata_filters?: boolean;
-
-      vector_index_name?: string | null;
-    }
-
-    /**
-     * Cloud Milvus Vector Store.
-     */
-    export interface CloudMilvusVectorStore {
-      uri: string;
-
-      class_name?: string;
-
-      collection_name?: string | null;
-
-      embedding_dimension?: number | null;
-
-      supports_nested_metadata_filters?: boolean;
-    }
-
-    /**
-     * Cloud AstraDB Vector Store.
-     *
-     * This class is used to store the configuration for an AstraDB vector store, so
-     * that it can be created and used in LlamaCloud.
-     *
-     * Args: token (str): The Astra DB Application Token to use. api_endpoint (str):
-     * The Astra DB JSON API endpoint for your database. collection_name (str):
-     * Collection name to use. If not existing, it will be created. embedding_dimension
-     * (int): Length of the embedding vectors in use. keyspace (optional[str]): The
-     * keyspace to use. If not provided, 'default_keyspace'
-     */
-    export interface CloudAstraDBVectorStore {
-      /**
-       * The Astra DB JSON API endpoint for your database
-       */
-      api_endpoint: string;
-
-      /**
-       * Collection name to use. If not existing, it will be created
-       */
-      collection_name: string;
-
-      /**
-       * Length of the embedding vectors in use
-       */
-      embedding_dimension: number;
-
-      class_name?: string;
-
-      /**
-       * The keyspace to use. If not provided, 'default_keyspace'
-       */
-      keyspace?: string | null;
-
-      supports_nested_metadata_filters?: true;
-    }
-  }
-
-  export interface AzureOpenAIEmbeddingConfig {
-    /**
-     * Configuration for the Azure OpenAI embedding model.
-     */
-    component?: AzureOpenAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'AZURE_EMBEDDING';
-  }
-
-  export namespace AzureOpenAIEmbeddingConfig {
-    /**
-     * Configuration for the Azure OpenAI embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the OpenAI API.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * The base URL for Azure deployment.
-       */
-      api_base?: string;
-
-      /**
-       * The OpenAI API key.
-       */
-      api_key?: string | null;
-
-      /**
-       * The version for Azure OpenAI API.
-       */
-      api_version?: string;
-
-      /**
-       * The Azure deployment to use.
-       */
-      azure_deployment?: string | null;
-
-      /**
-       * The Azure endpoint to use.
-       */
-      azure_endpoint?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The default headers for API requests.
-       */
-      default_headers?: { [key: string]: string } | null;
-
-      /**
-       * The number of dimensions on the output embedding vectors. Works only with v3
-       * embedding models.
-       */
-      dimensions?: number | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Maximum number of retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The name of the OpenAI embedding model.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Reuse the OpenAI client between requests. When doing anything with large volumes
-       * of async API calls, setting this to false can improve stability.
-       */
-      reuse_client?: boolean;
-
-      /**
-       * Timeout for each request.
-       */
-      timeout?: number;
-    }
-  }
-
-  export interface CohereEmbeddingConfig {
-    /**
-     * Configuration for the Cohere embedding model.
-     */
-    component?: CohereEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'COHERE_EMBEDDING';
-  }
-
-  export namespace CohereEmbeddingConfig {
-    /**
-     * Configuration for the Cohere embedding model.
-     */
-    export interface Component {
-      /**
-       * The Cohere API key.
-       */
-      api_key: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Embedding type. If not provided float embedding_type is used when needed.
-       */
-      embedding_type?: string;
-
-      /**
-       * Model Input type. If not provided, search_document and search_query are used
-       * when needed.
-       */
-      input_type?: string | null;
-
-      /**
-       * The modelId of the Cohere model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Truncation type - START/ END/ NONE
-       */
-      truncate?: string;
-    }
-  }
-
-  export interface GeminiEmbeddingConfig {
-    /**
-     * Configuration for the Gemini embedding model.
-     */
-    component?: GeminiEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'GEMINI_EMBEDDING';
-  }
-
-  export namespace GeminiEmbeddingConfig {
-    /**
-     * Configuration for the Gemini embedding model.
-     */
-    export interface Component {
-      /**
-       * API base to access the model. Defaults to None.
-       */
-      api_base?: string | null;
-
-      /**
-       * API key to access the model. Defaults to None.
-       */
-      api_key?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The modelId of the Gemini model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * The task for embedding model.
-       */
-      task_type?: string | null;
-
-      /**
-       * Title is only applicable for retrieval_document tasks, and is used to represent
-       * a document title. For other tasks, title is invalid.
-       */
-      title?: string | null;
-
-      /**
-       * Transport to access the model. Defaults to None.
-       */
-      transport?: string | null;
-    }
-  }
-
-  export interface HuggingFaceInferenceAPIEmbeddingConfig {
-    /**
-     * Configuration for the HuggingFace Inference API embedding model.
-     */
-    component?: HuggingFaceInferenceAPIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'HUGGINGFACE_API_EMBEDDING';
-  }
-
-  export namespace HuggingFaceInferenceAPIEmbeddingConfig {
-    /**
-     * Configuration for the HuggingFace Inference API embedding model.
-     */
-    export interface Component {
-      /**
-       * Hugging Face token. Will default to the locally saved token. Pass token=False if
-       * you don’t want to send your token to the server.
-       */
-      token?: string | boolean | null;
-
-      class_name?: string;
-
-      /**
-       * Additional cookies to send to the server.
-       */
-      cookies?: { [key: string]: string } | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Additional headers to send to the server. By default only the authorization and
-       * user-agent headers are sent. Values in this dictionary will override the default
-       * values.
-       */
-      headers?: { [key: string]: string } | null;
-
-      /**
-       * Hugging Face model name. If None, the task will be used.
-       */
-      model_name?: string | null;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Enum of possible pooling choices with pooling behaviors.
-       */
-      pooling?: 'cls' | 'mean' | 'last' | null;
-
-      /**
-       * Instruction to prepend during query embedding.
-       */
-      query_instruction?: string | null;
-
-      /**
-       * Optional task to pick Hugging Face's recommended model, used when model_name is
-       * left as default of None.
-       */
-      task?: string | null;
-
-      /**
-       * Instruction to prepend during text embedding.
-       */
-      text_instruction?: string | null;
-
-      /**
-       * The maximum number of seconds to wait for a response from the server. Loading a
-       * new model in Inference API can take up to several minutes. Defaults to None,
-       * meaning it will loop until the server is available.
-       */
-      timeout?: number | null;
-    }
-  }
-
-  export interface OpenAIEmbeddingConfig {
-    /**
-     * Configuration for the OpenAI embedding model.
-     */
-    component?: OpenAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'OPENAI_EMBEDDING';
-  }
-
-  export namespace OpenAIEmbeddingConfig {
-    /**
-     * Configuration for the OpenAI embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the OpenAI API.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * The base URL for OpenAI API.
-       */
-      api_base?: string | null;
-
-      /**
-       * The OpenAI API key.
-       */
-      api_key?: string | null;
-
-      /**
-       * The version for OpenAI API.
-       */
-      api_version?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The default headers for API requests.
-       */
-      default_headers?: { [key: string]: string } | null;
-
-      /**
-       * The number of dimensions on the output embedding vectors. Works only with v3
-       * embedding models.
-       */
-      dimensions?: number | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Maximum number of retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The name of the OpenAI embedding model.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Reuse the OpenAI client between requests. When doing anything with large volumes
-       * of async API calls, setting this to false can improve stability.
-       */
-      reuse_client?: boolean;
-
-      /**
-       * Timeout for each request.
-       */
-      timeout?: number;
-    }
-  }
-
-  export interface VertexAIEmbeddingConfig {
-    /**
-     * Configuration for the VertexAI embedding model.
-     */
-    component?: VertexAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'VERTEXAI_EMBEDDING';
-  }
-
-  export namespace VertexAIEmbeddingConfig {
-    /**
-     * Configuration for the VertexAI embedding model.
-     */
-    export interface Component {
-      /**
-       * The client email for the VertexAI credentials.
-       */
-      client_email: string | null;
-
-      /**
-       * The default location to use when making API calls.
-       */
-      location: string;
-
-      /**
-       * The private key for the VertexAI credentials.
-       */
-      private_key: string | null;
-
-      /**
-       * The private key ID for the VertexAI credentials.
-       */
-      private_key_id: string | null;
-
-      /**
-       * The default GCP project to use when making Vertex API calls.
-       */
-      project: string;
-
-      /**
-       * The token URI for the VertexAI credentials.
-       */
-      token_uri: string | null;
-
-      /**
-       * Additional kwargs for the Vertex.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The embedding mode to use.
-       */
-      embed_mode?: 'default' | 'classification' | 'clustering' | 'similarity' | 'retrieval';
-
-      /**
-       * The modelId of the VertexAI model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-    }
-  }
-
-  export interface BedrockEmbeddingConfig {
-    /**
-     * Configuration for the Bedrock embedding model.
-     */
-    component?: BedrockEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'BEDROCK_EMBEDDING';
-  }
-
-  export namespace BedrockEmbeddingConfig {
-    /**
-     * Configuration for the Bedrock embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the bedrock client.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * AWS Access Key ID to use
-       */
-      aws_access_key_id?: string | null;
-
-      /**
-       * AWS Secret Access Key to use
-       */
-      aws_secret_access_key?: string | null;
-
-      /**
-       * AWS Session Token to use
-       */
-      aws_session_token?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The maximum number of API retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The modelId of the Bedrock model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * The name of aws profile to use. If not given, then the default profile is used.
-       */
-      profile_name?: string | null;
-
-      /**
-       * AWS region name to use. Uses region configured in AWS CLI if not passed
-       */
-      region_name?: string | null;
-
-      /**
-       * The timeout for the Bedrock API request in seconds. It will be used for both
-       * connect and read timeouts.
-       */
-      timeout?: number;
-    }
-  }
 }
 
 export interface PipelineMetadataConfig {
@@ -2984,6 +1595,77 @@ export interface SparseModelConfig {
   model_type?: 'splade' | 'bm25' | 'auto';
 }
 
+export interface VertexAIEmbeddingConfig {
+  /**
+   * Configuration for the VertexAI embedding model.
+   */
+  component?: VertexTextEmbedding;
+
+  /**
+   * Type of the embedding model.
+   */
+  type?: 'VERTEXAI_EMBEDDING';
+}
+
+export interface VertexTextEmbedding {
+  /**
+   * The client email for the VertexAI credentials.
+   */
+  client_email: string | null;
+
+  /**
+   * The default location to use when making API calls.
+   */
+  location: string;
+
+  /**
+   * The private key for the VertexAI credentials.
+   */
+  private_key: string | null;
+
+  /**
+   * The private key ID for the VertexAI credentials.
+   */
+  private_key_id: string | null;
+
+  /**
+   * The default GCP project to use when making Vertex API calls.
+   */
+  project: string;
+
+  /**
+   * The token URI for the VertexAI credentials.
+   */
+  token_uri: string | null;
+
+  /**
+   * Additional kwargs for the Vertex.
+   */
+  additional_kwargs?: { [key: string]: unknown };
+
+  class_name?: string;
+
+  /**
+   * The batch size for embedding calls.
+   */
+  embed_batch_size?: number;
+
+  /**
+   * The embedding mode to use.
+   */
+  embed_mode?: 'default' | 'classification' | 'clustering' | 'similarity' | 'retrieval';
+
+  /**
+   * The modelId of the VertexAI model to use.
+   */
+  model_name?: string;
+
+  /**
+   * The number of workers to use for async embedding calls.
+   */
+  num_workers?: number | null;
+}
+
 /**
  * Schema for the result of an retrieval execution.
  */
@@ -3068,7 +1750,7 @@ export interface PipelineCreateParams {
   /**
    * Body param: Schema for creating a data sink.
    */
-  data_sink?: PipelineCreateParams.DataSink | null;
+  data_sink?: DataSinkCreate | null;
 
   /**
    * Body param: Data sink ID. When provided instead of data_sink, the data sink will
@@ -3080,13 +1762,13 @@ export interface PipelineCreateParams {
    * Body param:
    */
   embedding_config?:
-    | PipelineCreateParams.AzureOpenAIEmbeddingConfig
-    | PipelineCreateParams.CohereEmbeddingConfig
-    | PipelineCreateParams.GeminiEmbeddingConfig
-    | PipelineCreateParams.HuggingFaceInferenceAPIEmbeddingConfig
-    | PipelineCreateParams.OpenAIEmbeddingConfig
-    | PipelineCreateParams.VertexAIEmbeddingConfig
-    | PipelineCreateParams.BedrockEmbeddingConfig
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig
     | null;
 
   /**
@@ -3138,806 +1820,6 @@ export interface PipelineCreateParams {
    * Body param: Configuration for the transformation.
    */
   transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
-}
-
-export namespace PipelineCreateParams {
-  /**
-   * Schema for creating a data sink.
-   */
-  export interface DataSink {
-    /**
-     * Component that implements the data sink
-     */
-    component:
-      | { [key: string]: unknown }
-      | DataSink.CloudPineconeVectorStore
-      | DataSink.CloudPostgresVectorStore
-      | DataSink.CloudQdrantVectorStore
-      | DataSink.CloudAzureAISearchVectorStore
-      | DataSink.CloudMongoDBAtlasVectorSearch
-      | DataSink.CloudMilvusVectorStore
-      | DataSink.CloudAstraDBVectorStore;
-
-    /**
-     * The name of the data sink.
-     */
-    name: string;
-
-    sink_type:
-      | 'PINECONE'
-      | 'POSTGRES'
-      | 'QDRANT'
-      | 'AZUREAI_SEARCH'
-      | 'MONGODB_ATLAS'
-      | 'MILVUS'
-      | 'ASTRA_DB';
-  }
-
-  export namespace DataSink {
-    /**
-     * Cloud Pinecone Vector Store.
-     *
-     * This class is used to store the configuration for a Pinecone vector store, so
-     * that it can be created and used in LlamaCloud.
-     *
-     * Args: api_key (str): API key for authenticating with Pinecone index_name (str):
-     * name of the Pinecone index namespace (optional[str]): namespace to use in the
-     * Pinecone index insert_kwargs (optional[dict]): additional kwargs to pass during
-     * insertion
-     */
-    export interface CloudPineconeVectorStore {
-      /**
-       * The API key for authenticating with Pinecone
-       */
-      api_key: string;
-
-      index_name: string;
-
-      class_name?: string;
-
-      insert_kwargs?: { [key: string]: unknown } | null;
-
-      namespace?: string | null;
-
-      supports_nested_metadata_filters?: true;
-    }
-
-    export interface CloudPostgresVectorStore {
-      database: string;
-
-      embed_dim: number;
-
-      host: string;
-
-      password: string;
-
-      port: number;
-
-      schema_name: string;
-
-      table_name: string;
-
-      user: string;
-
-      class_name?: string;
-
-      /**
-       * HNSW settings for PGVector.
-       */
-      hnsw_settings?: CloudPostgresVectorStore.HnswSettings | null;
-
-      hybrid_search?: boolean | null;
-
-      perform_setup?: boolean;
-
-      supports_nested_metadata_filters?: boolean;
-    }
-
-    export namespace CloudPostgresVectorStore {
-      /**
-       * HNSW settings for PGVector.
-       */
-      export interface HnswSettings {
-        /**
-         * The distance method to use.
-         */
-        distance_method?: 'l2' | 'ip' | 'cosine' | 'l1' | 'hamming' | 'jaccard';
-
-        /**
-         * The number of edges to use during the construction phase.
-         */
-        ef_construction?: number;
-
-        /**
-         * The number of edges to use during the search phase.
-         */
-        ef_search?: number;
-
-        /**
-         * The number of bi-directional links created for each new element.
-         */
-        m?: number;
-
-        /**
-         * The type of vector to use.
-         */
-        vector_type?: 'vector' | 'half_vec' | 'bit' | 'sparse_vec';
-      }
-    }
-
-    /**
-     * Cloud Qdrant Vector Store.
-     *
-     * This class is used to store the configuration for a Qdrant vector store, so that
-     * it can be created and used in LlamaCloud.
-     *
-     * Args: collection_name (str): name of the Qdrant collection url (str): url of the
-     * Qdrant instance api_key (str): API key for authenticating with Qdrant
-     * max_retries (int): maximum number of retries in case of a failure. Defaults to 3
-     * client_kwargs (dict): additional kwargs to pass to the Qdrant client
-     */
-    export interface CloudQdrantVectorStore {
-      api_key: string;
-
-      collection_name: string;
-
-      url: string;
-
-      class_name?: string;
-
-      client_kwargs?: { [key: string]: unknown };
-
-      max_retries?: number;
-
-      supports_nested_metadata_filters?: true;
-    }
-
-    /**
-     * Cloud Azure AI Search Vector Store.
-     */
-    export interface CloudAzureAISearchVectorStore {
-      search_service_api_key: string;
-
-      search_service_endpoint: string;
-
-      class_name?: string;
-
-      client_id?: string | null;
-
-      client_secret?: string | null;
-
-      embedding_dimension?: number | null;
-
-      filterable_metadata_field_keys?: { [key: string]: unknown } | null;
-
-      index_name?: string | null;
-
-      search_service_api_version?: string | null;
-
-      supports_nested_metadata_filters?: true;
-
-      tenant_id?: string | null;
-    }
-
-    /**
-     * Cloud MongoDB Atlas Vector Store.
-     *
-     * This class is used to store the configuration for a MongoDB Atlas vector store,
-     * so that it can be created and used in LlamaCloud.
-     *
-     * Args: mongodb_uri (str): URI for connecting to MongoDB Atlas db_name (str): name
-     * of the MongoDB database collection_name (str): name of the MongoDB collection
-     * vector_index_name (str): name of the MongoDB Atlas vector index
-     * fulltext_index_name (str): name of the MongoDB Atlas full-text index
-     */
-    export interface CloudMongoDBAtlasVectorSearch {
-      collection_name: string;
-
-      db_name: string;
-
-      mongodb_uri: string;
-
-      class_name?: string;
-
-      embedding_dimension?: number | null;
-
-      fulltext_index_name?: string | null;
-
-      supports_nested_metadata_filters?: boolean;
-
-      vector_index_name?: string | null;
-    }
-
-    /**
-     * Cloud Milvus Vector Store.
-     */
-    export interface CloudMilvusVectorStore {
-      uri: string;
-
-      token?: string | null;
-
-      class_name?: string;
-
-      collection_name?: string | null;
-
-      embedding_dimension?: number | null;
-
-      supports_nested_metadata_filters?: boolean;
-    }
-
-    /**
-     * Cloud AstraDB Vector Store.
-     *
-     * This class is used to store the configuration for an AstraDB vector store, so
-     * that it can be created and used in LlamaCloud.
-     *
-     * Args: token (str): The Astra DB Application Token to use. api_endpoint (str):
-     * The Astra DB JSON API endpoint for your database. collection_name (str):
-     * Collection name to use. If not existing, it will be created. embedding_dimension
-     * (int): Length of the embedding vectors in use. keyspace (optional[str]): The
-     * keyspace to use. If not provided, 'default_keyspace'
-     */
-    export interface CloudAstraDBVectorStore {
-      /**
-       * The Astra DB Application Token to use
-       */
-      token: string;
-
-      /**
-       * The Astra DB JSON API endpoint for your database
-       */
-      api_endpoint: string;
-
-      /**
-       * Collection name to use. If not existing, it will be created
-       */
-      collection_name: string;
-
-      /**
-       * Length of the embedding vectors in use
-       */
-      embedding_dimension: number;
-
-      class_name?: string;
-
-      /**
-       * The keyspace to use. If not provided, 'default_keyspace'
-       */
-      keyspace?: string | null;
-
-      supports_nested_metadata_filters?: true;
-    }
-  }
-
-  export interface AzureOpenAIEmbeddingConfig {
-    /**
-     * Configuration for the Azure OpenAI embedding model.
-     */
-    component?: AzureOpenAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'AZURE_EMBEDDING';
-  }
-
-  export namespace AzureOpenAIEmbeddingConfig {
-    /**
-     * Configuration for the Azure OpenAI embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the OpenAI API.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * The base URL for Azure deployment.
-       */
-      api_base?: string;
-
-      /**
-       * The OpenAI API key.
-       */
-      api_key?: string | null;
-
-      /**
-       * The version for Azure OpenAI API.
-       */
-      api_version?: string;
-
-      /**
-       * The Azure deployment to use.
-       */
-      azure_deployment?: string | null;
-
-      /**
-       * The Azure endpoint to use.
-       */
-      azure_endpoint?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The default headers for API requests.
-       */
-      default_headers?: { [key: string]: string } | null;
-
-      /**
-       * The number of dimensions on the output embedding vectors. Works only with v3
-       * embedding models.
-       */
-      dimensions?: number | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Maximum number of retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The name of the OpenAI embedding model.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Reuse the OpenAI client between requests. When doing anything with large volumes
-       * of async API calls, setting this to false can improve stability.
-       */
-      reuse_client?: boolean;
-
-      /**
-       * Timeout for each request.
-       */
-      timeout?: number;
-    }
-  }
-
-  export interface CohereEmbeddingConfig {
-    /**
-     * Configuration for the Cohere embedding model.
-     */
-    component?: CohereEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'COHERE_EMBEDDING';
-  }
-
-  export namespace CohereEmbeddingConfig {
-    /**
-     * Configuration for the Cohere embedding model.
-     */
-    export interface Component {
-      /**
-       * The Cohere API key.
-       */
-      api_key: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Embedding type. If not provided float embedding_type is used when needed.
-       */
-      embedding_type?: string;
-
-      /**
-       * Model Input type. If not provided, search_document and search_query are used
-       * when needed.
-       */
-      input_type?: string | null;
-
-      /**
-       * The modelId of the Cohere model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Truncation type - START/ END/ NONE
-       */
-      truncate?: string;
-    }
-  }
-
-  export interface GeminiEmbeddingConfig {
-    /**
-     * Configuration for the Gemini embedding model.
-     */
-    component?: GeminiEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'GEMINI_EMBEDDING';
-  }
-
-  export namespace GeminiEmbeddingConfig {
-    /**
-     * Configuration for the Gemini embedding model.
-     */
-    export interface Component {
-      /**
-       * API base to access the model. Defaults to None.
-       */
-      api_base?: string | null;
-
-      /**
-       * API key to access the model. Defaults to None.
-       */
-      api_key?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The modelId of the Gemini model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * The task for embedding model.
-       */
-      task_type?: string | null;
-
-      /**
-       * Title is only applicable for retrieval_document tasks, and is used to represent
-       * a document title. For other tasks, title is invalid.
-       */
-      title?: string | null;
-
-      /**
-       * Transport to access the model. Defaults to None.
-       */
-      transport?: string | null;
-    }
-  }
-
-  export interface HuggingFaceInferenceAPIEmbeddingConfig {
-    /**
-     * Configuration for the HuggingFace Inference API embedding model.
-     */
-    component?: HuggingFaceInferenceAPIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'HUGGINGFACE_API_EMBEDDING';
-  }
-
-  export namespace HuggingFaceInferenceAPIEmbeddingConfig {
-    /**
-     * Configuration for the HuggingFace Inference API embedding model.
-     */
-    export interface Component {
-      /**
-       * Hugging Face token. Will default to the locally saved token. Pass token=False if
-       * you don’t want to send your token to the server.
-       */
-      token?: string | boolean | null;
-
-      class_name?: string;
-
-      /**
-       * Additional cookies to send to the server.
-       */
-      cookies?: { [key: string]: string } | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Additional headers to send to the server. By default only the authorization and
-       * user-agent headers are sent. Values in this dictionary will override the default
-       * values.
-       */
-      headers?: { [key: string]: string } | null;
-
-      /**
-       * Hugging Face model name. If None, the task will be used.
-       */
-      model_name?: string | null;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Enum of possible pooling choices with pooling behaviors.
-       */
-      pooling?: 'cls' | 'mean' | 'last' | null;
-
-      /**
-       * Instruction to prepend during query embedding.
-       */
-      query_instruction?: string | null;
-
-      /**
-       * Optional task to pick Hugging Face's recommended model, used when model_name is
-       * left as default of None.
-       */
-      task?: string | null;
-
-      /**
-       * Instruction to prepend during text embedding.
-       */
-      text_instruction?: string | null;
-
-      /**
-       * The maximum number of seconds to wait for a response from the server. Loading a
-       * new model in Inference API can take up to several minutes. Defaults to None,
-       * meaning it will loop until the server is available.
-       */
-      timeout?: number | null;
-    }
-  }
-
-  export interface OpenAIEmbeddingConfig {
-    /**
-     * Configuration for the OpenAI embedding model.
-     */
-    component?: OpenAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'OPENAI_EMBEDDING';
-  }
-
-  export namespace OpenAIEmbeddingConfig {
-    /**
-     * Configuration for the OpenAI embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the OpenAI API.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * The base URL for OpenAI API.
-       */
-      api_base?: string | null;
-
-      /**
-       * The OpenAI API key.
-       */
-      api_key?: string | null;
-
-      /**
-       * The version for OpenAI API.
-       */
-      api_version?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The default headers for API requests.
-       */
-      default_headers?: { [key: string]: string } | null;
-
-      /**
-       * The number of dimensions on the output embedding vectors. Works only with v3
-       * embedding models.
-       */
-      dimensions?: number | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Maximum number of retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The name of the OpenAI embedding model.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Reuse the OpenAI client between requests. When doing anything with large volumes
-       * of async API calls, setting this to false can improve stability.
-       */
-      reuse_client?: boolean;
-
-      /**
-       * Timeout for each request.
-       */
-      timeout?: number;
-    }
-  }
-
-  export interface VertexAIEmbeddingConfig {
-    /**
-     * Configuration for the VertexAI embedding model.
-     */
-    component?: VertexAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'VERTEXAI_EMBEDDING';
-  }
-
-  export namespace VertexAIEmbeddingConfig {
-    /**
-     * Configuration for the VertexAI embedding model.
-     */
-    export interface Component {
-      /**
-       * The client email for the VertexAI credentials.
-       */
-      client_email: string | null;
-
-      /**
-       * The default location to use when making API calls.
-       */
-      location: string;
-
-      /**
-       * The private key for the VertexAI credentials.
-       */
-      private_key: string | null;
-
-      /**
-       * The private key ID for the VertexAI credentials.
-       */
-      private_key_id: string | null;
-
-      /**
-       * The default GCP project to use when making Vertex API calls.
-       */
-      project: string;
-
-      /**
-       * The token URI for the VertexAI credentials.
-       */
-      token_uri: string | null;
-
-      /**
-       * Additional kwargs for the Vertex.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The embedding mode to use.
-       */
-      embed_mode?: 'default' | 'classification' | 'clustering' | 'similarity' | 'retrieval';
-
-      /**
-       * The modelId of the VertexAI model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-    }
-  }
-
-  export interface BedrockEmbeddingConfig {
-    /**
-     * Configuration for the Bedrock embedding model.
-     */
-    component?: BedrockEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'BEDROCK_EMBEDDING';
-  }
-
-  export namespace BedrockEmbeddingConfig {
-    /**
-     * Configuration for the Bedrock embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the bedrock client.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * AWS Access Key ID to use
-       */
-      aws_access_key_id?: string | null;
-
-      /**
-       * AWS Secret Access Key to use
-       */
-      aws_secret_access_key?: string | null;
-
-      /**
-       * AWS Session Token to use
-       */
-      aws_session_token?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The maximum number of API retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The modelId of the Bedrock model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * The name of aws profile to use. If not given, then the default profile is used.
-       */
-      profile_name?: string | null;
-
-      /**
-       * AWS region name to use. Uses region configured in AWS CLI if not passed
-       */
-      region_name?: string | null;
-
-      /**
-       * The timeout for the Bedrock API request in seconds. It will be used for both
-       * connect and read timeouts.
-       */
-      timeout?: number;
-    }
-  }
 }
 
 export interface PipelineRetrieveParams {
@@ -4036,7 +1918,7 @@ export interface PipelineUpdateParams {
   /**
    * Schema for creating a data sink.
    */
-  data_sink?: PipelineUpdateParams.DataSink | null;
+  data_sink?: DataSinkCreate | null;
 
   /**
    * Data sink ID. When provided instead of data_sink, the data sink will be looked
@@ -4045,13 +1927,13 @@ export interface PipelineUpdateParams {
   data_sink_id?: string | null;
 
   embedding_config?:
-    | PipelineUpdateParams.AzureOpenAIEmbeddingConfig
-    | PipelineUpdateParams.CohereEmbeddingConfig
-    | PipelineUpdateParams.GeminiEmbeddingConfig
-    | PipelineUpdateParams.HuggingFaceInferenceAPIEmbeddingConfig
-    | PipelineUpdateParams.OpenAIEmbeddingConfig
-    | PipelineUpdateParams.VertexAIEmbeddingConfig
-    | PipelineUpdateParams.BedrockEmbeddingConfig
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig
     | null;
 
   /**
@@ -4103,806 +1985,6 @@ export interface PipelineUpdateParams {
   transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
 }
 
-export namespace PipelineUpdateParams {
-  /**
-   * Schema for creating a data sink.
-   */
-  export interface DataSink {
-    /**
-     * Component that implements the data sink
-     */
-    component:
-      | { [key: string]: unknown }
-      | DataSink.CloudPineconeVectorStore
-      | DataSink.CloudPostgresVectorStore
-      | DataSink.CloudQdrantVectorStore
-      | DataSink.CloudAzureAISearchVectorStore
-      | DataSink.CloudMongoDBAtlasVectorSearch
-      | DataSink.CloudMilvusVectorStore
-      | DataSink.CloudAstraDBVectorStore;
-
-    /**
-     * The name of the data sink.
-     */
-    name: string;
-
-    sink_type:
-      | 'PINECONE'
-      | 'POSTGRES'
-      | 'QDRANT'
-      | 'AZUREAI_SEARCH'
-      | 'MONGODB_ATLAS'
-      | 'MILVUS'
-      | 'ASTRA_DB';
-  }
-
-  export namespace DataSink {
-    /**
-     * Cloud Pinecone Vector Store.
-     *
-     * This class is used to store the configuration for a Pinecone vector store, so
-     * that it can be created and used in LlamaCloud.
-     *
-     * Args: api_key (str): API key for authenticating with Pinecone index_name (str):
-     * name of the Pinecone index namespace (optional[str]): namespace to use in the
-     * Pinecone index insert_kwargs (optional[dict]): additional kwargs to pass during
-     * insertion
-     */
-    export interface CloudPineconeVectorStore {
-      /**
-       * The API key for authenticating with Pinecone
-       */
-      api_key: string;
-
-      index_name: string;
-
-      class_name?: string;
-
-      insert_kwargs?: { [key: string]: unknown } | null;
-
-      namespace?: string | null;
-
-      supports_nested_metadata_filters?: true;
-    }
-
-    export interface CloudPostgresVectorStore {
-      database: string;
-
-      embed_dim: number;
-
-      host: string;
-
-      password: string;
-
-      port: number;
-
-      schema_name: string;
-
-      table_name: string;
-
-      user: string;
-
-      class_name?: string;
-
-      /**
-       * HNSW settings for PGVector.
-       */
-      hnsw_settings?: CloudPostgresVectorStore.HnswSettings | null;
-
-      hybrid_search?: boolean | null;
-
-      perform_setup?: boolean;
-
-      supports_nested_metadata_filters?: boolean;
-    }
-
-    export namespace CloudPostgresVectorStore {
-      /**
-       * HNSW settings for PGVector.
-       */
-      export interface HnswSettings {
-        /**
-         * The distance method to use.
-         */
-        distance_method?: 'l2' | 'ip' | 'cosine' | 'l1' | 'hamming' | 'jaccard';
-
-        /**
-         * The number of edges to use during the construction phase.
-         */
-        ef_construction?: number;
-
-        /**
-         * The number of edges to use during the search phase.
-         */
-        ef_search?: number;
-
-        /**
-         * The number of bi-directional links created for each new element.
-         */
-        m?: number;
-
-        /**
-         * The type of vector to use.
-         */
-        vector_type?: 'vector' | 'half_vec' | 'bit' | 'sparse_vec';
-      }
-    }
-
-    /**
-     * Cloud Qdrant Vector Store.
-     *
-     * This class is used to store the configuration for a Qdrant vector store, so that
-     * it can be created and used in LlamaCloud.
-     *
-     * Args: collection_name (str): name of the Qdrant collection url (str): url of the
-     * Qdrant instance api_key (str): API key for authenticating with Qdrant
-     * max_retries (int): maximum number of retries in case of a failure. Defaults to 3
-     * client_kwargs (dict): additional kwargs to pass to the Qdrant client
-     */
-    export interface CloudQdrantVectorStore {
-      api_key: string;
-
-      collection_name: string;
-
-      url: string;
-
-      class_name?: string;
-
-      client_kwargs?: { [key: string]: unknown };
-
-      max_retries?: number;
-
-      supports_nested_metadata_filters?: true;
-    }
-
-    /**
-     * Cloud Azure AI Search Vector Store.
-     */
-    export interface CloudAzureAISearchVectorStore {
-      search_service_api_key: string;
-
-      search_service_endpoint: string;
-
-      class_name?: string;
-
-      client_id?: string | null;
-
-      client_secret?: string | null;
-
-      embedding_dimension?: number | null;
-
-      filterable_metadata_field_keys?: { [key: string]: unknown } | null;
-
-      index_name?: string | null;
-
-      search_service_api_version?: string | null;
-
-      supports_nested_metadata_filters?: true;
-
-      tenant_id?: string | null;
-    }
-
-    /**
-     * Cloud MongoDB Atlas Vector Store.
-     *
-     * This class is used to store the configuration for a MongoDB Atlas vector store,
-     * so that it can be created and used in LlamaCloud.
-     *
-     * Args: mongodb_uri (str): URI for connecting to MongoDB Atlas db_name (str): name
-     * of the MongoDB database collection_name (str): name of the MongoDB collection
-     * vector_index_name (str): name of the MongoDB Atlas vector index
-     * fulltext_index_name (str): name of the MongoDB Atlas full-text index
-     */
-    export interface CloudMongoDBAtlasVectorSearch {
-      collection_name: string;
-
-      db_name: string;
-
-      mongodb_uri: string;
-
-      class_name?: string;
-
-      embedding_dimension?: number | null;
-
-      fulltext_index_name?: string | null;
-
-      supports_nested_metadata_filters?: boolean;
-
-      vector_index_name?: string | null;
-    }
-
-    /**
-     * Cloud Milvus Vector Store.
-     */
-    export interface CloudMilvusVectorStore {
-      uri: string;
-
-      token?: string | null;
-
-      class_name?: string;
-
-      collection_name?: string | null;
-
-      embedding_dimension?: number | null;
-
-      supports_nested_metadata_filters?: boolean;
-    }
-
-    /**
-     * Cloud AstraDB Vector Store.
-     *
-     * This class is used to store the configuration for an AstraDB vector store, so
-     * that it can be created and used in LlamaCloud.
-     *
-     * Args: token (str): The Astra DB Application Token to use. api_endpoint (str):
-     * The Astra DB JSON API endpoint for your database. collection_name (str):
-     * Collection name to use. If not existing, it will be created. embedding_dimension
-     * (int): Length of the embedding vectors in use. keyspace (optional[str]): The
-     * keyspace to use. If not provided, 'default_keyspace'
-     */
-    export interface CloudAstraDBVectorStore {
-      /**
-       * The Astra DB Application Token to use
-       */
-      token: string;
-
-      /**
-       * The Astra DB JSON API endpoint for your database
-       */
-      api_endpoint: string;
-
-      /**
-       * Collection name to use. If not existing, it will be created
-       */
-      collection_name: string;
-
-      /**
-       * Length of the embedding vectors in use
-       */
-      embedding_dimension: number;
-
-      class_name?: string;
-
-      /**
-       * The keyspace to use. If not provided, 'default_keyspace'
-       */
-      keyspace?: string | null;
-
-      supports_nested_metadata_filters?: true;
-    }
-  }
-
-  export interface AzureOpenAIEmbeddingConfig {
-    /**
-     * Configuration for the Azure OpenAI embedding model.
-     */
-    component?: AzureOpenAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'AZURE_EMBEDDING';
-  }
-
-  export namespace AzureOpenAIEmbeddingConfig {
-    /**
-     * Configuration for the Azure OpenAI embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the OpenAI API.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * The base URL for Azure deployment.
-       */
-      api_base?: string;
-
-      /**
-       * The OpenAI API key.
-       */
-      api_key?: string | null;
-
-      /**
-       * The version for Azure OpenAI API.
-       */
-      api_version?: string;
-
-      /**
-       * The Azure deployment to use.
-       */
-      azure_deployment?: string | null;
-
-      /**
-       * The Azure endpoint to use.
-       */
-      azure_endpoint?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The default headers for API requests.
-       */
-      default_headers?: { [key: string]: string } | null;
-
-      /**
-       * The number of dimensions on the output embedding vectors. Works only with v3
-       * embedding models.
-       */
-      dimensions?: number | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Maximum number of retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The name of the OpenAI embedding model.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Reuse the OpenAI client between requests. When doing anything with large volumes
-       * of async API calls, setting this to false can improve stability.
-       */
-      reuse_client?: boolean;
-
-      /**
-       * Timeout for each request.
-       */
-      timeout?: number;
-    }
-  }
-
-  export interface CohereEmbeddingConfig {
-    /**
-     * Configuration for the Cohere embedding model.
-     */
-    component?: CohereEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'COHERE_EMBEDDING';
-  }
-
-  export namespace CohereEmbeddingConfig {
-    /**
-     * Configuration for the Cohere embedding model.
-     */
-    export interface Component {
-      /**
-       * The Cohere API key.
-       */
-      api_key: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Embedding type. If not provided float embedding_type is used when needed.
-       */
-      embedding_type?: string;
-
-      /**
-       * Model Input type. If not provided, search_document and search_query are used
-       * when needed.
-       */
-      input_type?: string | null;
-
-      /**
-       * The modelId of the Cohere model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Truncation type - START/ END/ NONE
-       */
-      truncate?: string;
-    }
-  }
-
-  export interface GeminiEmbeddingConfig {
-    /**
-     * Configuration for the Gemini embedding model.
-     */
-    component?: GeminiEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'GEMINI_EMBEDDING';
-  }
-
-  export namespace GeminiEmbeddingConfig {
-    /**
-     * Configuration for the Gemini embedding model.
-     */
-    export interface Component {
-      /**
-       * API base to access the model. Defaults to None.
-       */
-      api_base?: string | null;
-
-      /**
-       * API key to access the model. Defaults to None.
-       */
-      api_key?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The modelId of the Gemini model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * The task for embedding model.
-       */
-      task_type?: string | null;
-
-      /**
-       * Title is only applicable for retrieval_document tasks, and is used to represent
-       * a document title. For other tasks, title is invalid.
-       */
-      title?: string | null;
-
-      /**
-       * Transport to access the model. Defaults to None.
-       */
-      transport?: string | null;
-    }
-  }
-
-  export interface HuggingFaceInferenceAPIEmbeddingConfig {
-    /**
-     * Configuration for the HuggingFace Inference API embedding model.
-     */
-    component?: HuggingFaceInferenceAPIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'HUGGINGFACE_API_EMBEDDING';
-  }
-
-  export namespace HuggingFaceInferenceAPIEmbeddingConfig {
-    /**
-     * Configuration for the HuggingFace Inference API embedding model.
-     */
-    export interface Component {
-      /**
-       * Hugging Face token. Will default to the locally saved token. Pass token=False if
-       * you don’t want to send your token to the server.
-       */
-      token?: string | boolean | null;
-
-      class_name?: string;
-
-      /**
-       * Additional cookies to send to the server.
-       */
-      cookies?: { [key: string]: string } | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Additional headers to send to the server. By default only the authorization and
-       * user-agent headers are sent. Values in this dictionary will override the default
-       * values.
-       */
-      headers?: { [key: string]: string } | null;
-
-      /**
-       * Hugging Face model name. If None, the task will be used.
-       */
-      model_name?: string | null;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Enum of possible pooling choices with pooling behaviors.
-       */
-      pooling?: 'cls' | 'mean' | 'last' | null;
-
-      /**
-       * Instruction to prepend during query embedding.
-       */
-      query_instruction?: string | null;
-
-      /**
-       * Optional task to pick Hugging Face's recommended model, used when model_name is
-       * left as default of None.
-       */
-      task?: string | null;
-
-      /**
-       * Instruction to prepend during text embedding.
-       */
-      text_instruction?: string | null;
-
-      /**
-       * The maximum number of seconds to wait for a response from the server. Loading a
-       * new model in Inference API can take up to several minutes. Defaults to None,
-       * meaning it will loop until the server is available.
-       */
-      timeout?: number | null;
-    }
-  }
-
-  export interface OpenAIEmbeddingConfig {
-    /**
-     * Configuration for the OpenAI embedding model.
-     */
-    component?: OpenAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'OPENAI_EMBEDDING';
-  }
-
-  export namespace OpenAIEmbeddingConfig {
-    /**
-     * Configuration for the OpenAI embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the OpenAI API.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * The base URL for OpenAI API.
-       */
-      api_base?: string | null;
-
-      /**
-       * The OpenAI API key.
-       */
-      api_key?: string | null;
-
-      /**
-       * The version for OpenAI API.
-       */
-      api_version?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The default headers for API requests.
-       */
-      default_headers?: { [key: string]: string } | null;
-
-      /**
-       * The number of dimensions on the output embedding vectors. Works only with v3
-       * embedding models.
-       */
-      dimensions?: number | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Maximum number of retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The name of the OpenAI embedding model.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Reuse the OpenAI client between requests. When doing anything with large volumes
-       * of async API calls, setting this to false can improve stability.
-       */
-      reuse_client?: boolean;
-
-      /**
-       * Timeout for each request.
-       */
-      timeout?: number;
-    }
-  }
-
-  export interface VertexAIEmbeddingConfig {
-    /**
-     * Configuration for the VertexAI embedding model.
-     */
-    component?: VertexAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'VERTEXAI_EMBEDDING';
-  }
-
-  export namespace VertexAIEmbeddingConfig {
-    /**
-     * Configuration for the VertexAI embedding model.
-     */
-    export interface Component {
-      /**
-       * The client email for the VertexAI credentials.
-       */
-      client_email: string | null;
-
-      /**
-       * The default location to use when making API calls.
-       */
-      location: string;
-
-      /**
-       * The private key for the VertexAI credentials.
-       */
-      private_key: string | null;
-
-      /**
-       * The private key ID for the VertexAI credentials.
-       */
-      private_key_id: string | null;
-
-      /**
-       * The default GCP project to use when making Vertex API calls.
-       */
-      project: string;
-
-      /**
-       * The token URI for the VertexAI credentials.
-       */
-      token_uri: string | null;
-
-      /**
-       * Additional kwargs for the Vertex.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The embedding mode to use.
-       */
-      embed_mode?: 'default' | 'classification' | 'clustering' | 'similarity' | 'retrieval';
-
-      /**
-       * The modelId of the VertexAI model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-    }
-  }
-
-  export interface BedrockEmbeddingConfig {
-    /**
-     * Configuration for the Bedrock embedding model.
-     */
-    component?: BedrockEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'BEDROCK_EMBEDDING';
-  }
-
-  export namespace BedrockEmbeddingConfig {
-    /**
-     * Configuration for the Bedrock embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the bedrock client.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * AWS Access Key ID to use
-       */
-      aws_access_key_id?: string | null;
-
-      /**
-       * AWS Secret Access Key to use
-       */
-      aws_secret_access_key?: string | null;
-
-      /**
-       * AWS Session Token to use
-       */
-      aws_session_token?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The maximum number of API retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The modelId of the Bedrock model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * The name of aws profile to use. If not given, then the default profile is used.
-       */
-      profile_name?: string | null;
-
-      /**
-       * AWS region name to use. Uses region configured in AWS CLI if not passed
-       */
-      region_name?: string | null;
-
-      /**
-       * The timeout for the Bedrock API request in seconds. It will be used for both
-       * connect and read timeouts.
-       */
-      timeout?: number;
-    }
-  }
-}
-
 export interface PipelineListParams {
   organization_id?: string | null;
 
@@ -4941,7 +2023,7 @@ export interface PipelineUpsertParams {
   /**
    * Body param: Schema for creating a data sink.
    */
-  data_sink?: PipelineUpsertParams.DataSink | null;
+  data_sink?: DataSinkCreate | null;
 
   /**
    * Body param: Data sink ID. When provided instead of data_sink, the data sink will
@@ -4953,13 +2035,13 @@ export interface PipelineUpsertParams {
    * Body param:
    */
   embedding_config?:
-    | PipelineUpsertParams.AzureOpenAIEmbeddingConfig
-    | PipelineUpsertParams.CohereEmbeddingConfig
-    | PipelineUpsertParams.GeminiEmbeddingConfig
-    | PipelineUpsertParams.HuggingFaceInferenceAPIEmbeddingConfig
-    | PipelineUpsertParams.OpenAIEmbeddingConfig
-    | PipelineUpsertParams.VertexAIEmbeddingConfig
-    | PipelineUpsertParams.BedrockEmbeddingConfig
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig
     | null;
 
   /**
@@ -5013,806 +2095,6 @@ export interface PipelineUpsertParams {
   transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
 }
 
-export namespace PipelineUpsertParams {
-  /**
-   * Schema for creating a data sink.
-   */
-  export interface DataSink {
-    /**
-     * Component that implements the data sink
-     */
-    component:
-      | { [key: string]: unknown }
-      | DataSink.CloudPineconeVectorStore
-      | DataSink.CloudPostgresVectorStore
-      | DataSink.CloudQdrantVectorStore
-      | DataSink.CloudAzureAISearchVectorStore
-      | DataSink.CloudMongoDBAtlasVectorSearch
-      | DataSink.CloudMilvusVectorStore
-      | DataSink.CloudAstraDBVectorStore;
-
-    /**
-     * The name of the data sink.
-     */
-    name: string;
-
-    sink_type:
-      | 'PINECONE'
-      | 'POSTGRES'
-      | 'QDRANT'
-      | 'AZUREAI_SEARCH'
-      | 'MONGODB_ATLAS'
-      | 'MILVUS'
-      | 'ASTRA_DB';
-  }
-
-  export namespace DataSink {
-    /**
-     * Cloud Pinecone Vector Store.
-     *
-     * This class is used to store the configuration for a Pinecone vector store, so
-     * that it can be created and used in LlamaCloud.
-     *
-     * Args: api_key (str): API key for authenticating with Pinecone index_name (str):
-     * name of the Pinecone index namespace (optional[str]): namespace to use in the
-     * Pinecone index insert_kwargs (optional[dict]): additional kwargs to pass during
-     * insertion
-     */
-    export interface CloudPineconeVectorStore {
-      /**
-       * The API key for authenticating with Pinecone
-       */
-      api_key: string;
-
-      index_name: string;
-
-      class_name?: string;
-
-      insert_kwargs?: { [key: string]: unknown } | null;
-
-      namespace?: string | null;
-
-      supports_nested_metadata_filters?: true;
-    }
-
-    export interface CloudPostgresVectorStore {
-      database: string;
-
-      embed_dim: number;
-
-      host: string;
-
-      password: string;
-
-      port: number;
-
-      schema_name: string;
-
-      table_name: string;
-
-      user: string;
-
-      class_name?: string;
-
-      /**
-       * HNSW settings for PGVector.
-       */
-      hnsw_settings?: CloudPostgresVectorStore.HnswSettings | null;
-
-      hybrid_search?: boolean | null;
-
-      perform_setup?: boolean;
-
-      supports_nested_metadata_filters?: boolean;
-    }
-
-    export namespace CloudPostgresVectorStore {
-      /**
-       * HNSW settings for PGVector.
-       */
-      export interface HnswSettings {
-        /**
-         * The distance method to use.
-         */
-        distance_method?: 'l2' | 'ip' | 'cosine' | 'l1' | 'hamming' | 'jaccard';
-
-        /**
-         * The number of edges to use during the construction phase.
-         */
-        ef_construction?: number;
-
-        /**
-         * The number of edges to use during the search phase.
-         */
-        ef_search?: number;
-
-        /**
-         * The number of bi-directional links created for each new element.
-         */
-        m?: number;
-
-        /**
-         * The type of vector to use.
-         */
-        vector_type?: 'vector' | 'half_vec' | 'bit' | 'sparse_vec';
-      }
-    }
-
-    /**
-     * Cloud Qdrant Vector Store.
-     *
-     * This class is used to store the configuration for a Qdrant vector store, so that
-     * it can be created and used in LlamaCloud.
-     *
-     * Args: collection_name (str): name of the Qdrant collection url (str): url of the
-     * Qdrant instance api_key (str): API key for authenticating with Qdrant
-     * max_retries (int): maximum number of retries in case of a failure. Defaults to 3
-     * client_kwargs (dict): additional kwargs to pass to the Qdrant client
-     */
-    export interface CloudQdrantVectorStore {
-      api_key: string;
-
-      collection_name: string;
-
-      url: string;
-
-      class_name?: string;
-
-      client_kwargs?: { [key: string]: unknown };
-
-      max_retries?: number;
-
-      supports_nested_metadata_filters?: true;
-    }
-
-    /**
-     * Cloud Azure AI Search Vector Store.
-     */
-    export interface CloudAzureAISearchVectorStore {
-      search_service_api_key: string;
-
-      search_service_endpoint: string;
-
-      class_name?: string;
-
-      client_id?: string | null;
-
-      client_secret?: string | null;
-
-      embedding_dimension?: number | null;
-
-      filterable_metadata_field_keys?: { [key: string]: unknown } | null;
-
-      index_name?: string | null;
-
-      search_service_api_version?: string | null;
-
-      supports_nested_metadata_filters?: true;
-
-      tenant_id?: string | null;
-    }
-
-    /**
-     * Cloud MongoDB Atlas Vector Store.
-     *
-     * This class is used to store the configuration for a MongoDB Atlas vector store,
-     * so that it can be created and used in LlamaCloud.
-     *
-     * Args: mongodb_uri (str): URI for connecting to MongoDB Atlas db_name (str): name
-     * of the MongoDB database collection_name (str): name of the MongoDB collection
-     * vector_index_name (str): name of the MongoDB Atlas vector index
-     * fulltext_index_name (str): name of the MongoDB Atlas full-text index
-     */
-    export interface CloudMongoDBAtlasVectorSearch {
-      collection_name: string;
-
-      db_name: string;
-
-      mongodb_uri: string;
-
-      class_name?: string;
-
-      embedding_dimension?: number | null;
-
-      fulltext_index_name?: string | null;
-
-      supports_nested_metadata_filters?: boolean;
-
-      vector_index_name?: string | null;
-    }
-
-    /**
-     * Cloud Milvus Vector Store.
-     */
-    export interface CloudMilvusVectorStore {
-      uri: string;
-
-      token?: string | null;
-
-      class_name?: string;
-
-      collection_name?: string | null;
-
-      embedding_dimension?: number | null;
-
-      supports_nested_metadata_filters?: boolean;
-    }
-
-    /**
-     * Cloud AstraDB Vector Store.
-     *
-     * This class is used to store the configuration for an AstraDB vector store, so
-     * that it can be created and used in LlamaCloud.
-     *
-     * Args: token (str): The Astra DB Application Token to use. api_endpoint (str):
-     * The Astra DB JSON API endpoint for your database. collection_name (str):
-     * Collection name to use. If not existing, it will be created. embedding_dimension
-     * (int): Length of the embedding vectors in use. keyspace (optional[str]): The
-     * keyspace to use. If not provided, 'default_keyspace'
-     */
-    export interface CloudAstraDBVectorStore {
-      /**
-       * The Astra DB Application Token to use
-       */
-      token: string;
-
-      /**
-       * The Astra DB JSON API endpoint for your database
-       */
-      api_endpoint: string;
-
-      /**
-       * Collection name to use. If not existing, it will be created
-       */
-      collection_name: string;
-
-      /**
-       * Length of the embedding vectors in use
-       */
-      embedding_dimension: number;
-
-      class_name?: string;
-
-      /**
-       * The keyspace to use. If not provided, 'default_keyspace'
-       */
-      keyspace?: string | null;
-
-      supports_nested_metadata_filters?: true;
-    }
-  }
-
-  export interface AzureOpenAIEmbeddingConfig {
-    /**
-     * Configuration for the Azure OpenAI embedding model.
-     */
-    component?: AzureOpenAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'AZURE_EMBEDDING';
-  }
-
-  export namespace AzureOpenAIEmbeddingConfig {
-    /**
-     * Configuration for the Azure OpenAI embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the OpenAI API.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * The base URL for Azure deployment.
-       */
-      api_base?: string;
-
-      /**
-       * The OpenAI API key.
-       */
-      api_key?: string | null;
-
-      /**
-       * The version for Azure OpenAI API.
-       */
-      api_version?: string;
-
-      /**
-       * The Azure deployment to use.
-       */
-      azure_deployment?: string | null;
-
-      /**
-       * The Azure endpoint to use.
-       */
-      azure_endpoint?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The default headers for API requests.
-       */
-      default_headers?: { [key: string]: string } | null;
-
-      /**
-       * The number of dimensions on the output embedding vectors. Works only with v3
-       * embedding models.
-       */
-      dimensions?: number | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Maximum number of retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The name of the OpenAI embedding model.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Reuse the OpenAI client between requests. When doing anything with large volumes
-       * of async API calls, setting this to false can improve stability.
-       */
-      reuse_client?: boolean;
-
-      /**
-       * Timeout for each request.
-       */
-      timeout?: number;
-    }
-  }
-
-  export interface CohereEmbeddingConfig {
-    /**
-     * Configuration for the Cohere embedding model.
-     */
-    component?: CohereEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'COHERE_EMBEDDING';
-  }
-
-  export namespace CohereEmbeddingConfig {
-    /**
-     * Configuration for the Cohere embedding model.
-     */
-    export interface Component {
-      /**
-       * The Cohere API key.
-       */
-      api_key: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Embedding type. If not provided float embedding_type is used when needed.
-       */
-      embedding_type?: string;
-
-      /**
-       * Model Input type. If not provided, search_document and search_query are used
-       * when needed.
-       */
-      input_type?: string | null;
-
-      /**
-       * The modelId of the Cohere model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Truncation type - START/ END/ NONE
-       */
-      truncate?: string;
-    }
-  }
-
-  export interface GeminiEmbeddingConfig {
-    /**
-     * Configuration for the Gemini embedding model.
-     */
-    component?: GeminiEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'GEMINI_EMBEDDING';
-  }
-
-  export namespace GeminiEmbeddingConfig {
-    /**
-     * Configuration for the Gemini embedding model.
-     */
-    export interface Component {
-      /**
-       * API base to access the model. Defaults to None.
-       */
-      api_base?: string | null;
-
-      /**
-       * API key to access the model. Defaults to None.
-       */
-      api_key?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The modelId of the Gemini model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * The task for embedding model.
-       */
-      task_type?: string | null;
-
-      /**
-       * Title is only applicable for retrieval_document tasks, and is used to represent
-       * a document title. For other tasks, title is invalid.
-       */
-      title?: string | null;
-
-      /**
-       * Transport to access the model. Defaults to None.
-       */
-      transport?: string | null;
-    }
-  }
-
-  export interface HuggingFaceInferenceAPIEmbeddingConfig {
-    /**
-     * Configuration for the HuggingFace Inference API embedding model.
-     */
-    component?: HuggingFaceInferenceAPIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'HUGGINGFACE_API_EMBEDDING';
-  }
-
-  export namespace HuggingFaceInferenceAPIEmbeddingConfig {
-    /**
-     * Configuration for the HuggingFace Inference API embedding model.
-     */
-    export interface Component {
-      /**
-       * Hugging Face token. Will default to the locally saved token. Pass token=False if
-       * you don’t want to send your token to the server.
-       */
-      token?: string | boolean | null;
-
-      class_name?: string;
-
-      /**
-       * Additional cookies to send to the server.
-       */
-      cookies?: { [key: string]: string } | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Additional headers to send to the server. By default only the authorization and
-       * user-agent headers are sent. Values in this dictionary will override the default
-       * values.
-       */
-      headers?: { [key: string]: string } | null;
-
-      /**
-       * Hugging Face model name. If None, the task will be used.
-       */
-      model_name?: string | null;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Enum of possible pooling choices with pooling behaviors.
-       */
-      pooling?: 'cls' | 'mean' | 'last' | null;
-
-      /**
-       * Instruction to prepend during query embedding.
-       */
-      query_instruction?: string | null;
-
-      /**
-       * Optional task to pick Hugging Face's recommended model, used when model_name is
-       * left as default of None.
-       */
-      task?: string | null;
-
-      /**
-       * Instruction to prepend during text embedding.
-       */
-      text_instruction?: string | null;
-
-      /**
-       * The maximum number of seconds to wait for a response from the server. Loading a
-       * new model in Inference API can take up to several minutes. Defaults to None,
-       * meaning it will loop until the server is available.
-       */
-      timeout?: number | null;
-    }
-  }
-
-  export interface OpenAIEmbeddingConfig {
-    /**
-     * Configuration for the OpenAI embedding model.
-     */
-    component?: OpenAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'OPENAI_EMBEDDING';
-  }
-
-  export namespace OpenAIEmbeddingConfig {
-    /**
-     * Configuration for the OpenAI embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the OpenAI API.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * The base URL for OpenAI API.
-       */
-      api_base?: string | null;
-
-      /**
-       * The OpenAI API key.
-       */
-      api_key?: string | null;
-
-      /**
-       * The version for OpenAI API.
-       */
-      api_version?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The default headers for API requests.
-       */
-      default_headers?: { [key: string]: string } | null;
-
-      /**
-       * The number of dimensions on the output embedding vectors. Works only with v3
-       * embedding models.
-       */
-      dimensions?: number | null;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * Maximum number of retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The name of the OpenAI embedding model.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * Reuse the OpenAI client between requests. When doing anything with large volumes
-       * of async API calls, setting this to false can improve stability.
-       */
-      reuse_client?: boolean;
-
-      /**
-       * Timeout for each request.
-       */
-      timeout?: number;
-    }
-  }
-
-  export interface VertexAIEmbeddingConfig {
-    /**
-     * Configuration for the VertexAI embedding model.
-     */
-    component?: VertexAIEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'VERTEXAI_EMBEDDING';
-  }
-
-  export namespace VertexAIEmbeddingConfig {
-    /**
-     * Configuration for the VertexAI embedding model.
-     */
-    export interface Component {
-      /**
-       * The client email for the VertexAI credentials.
-       */
-      client_email: string | null;
-
-      /**
-       * The default location to use when making API calls.
-       */
-      location: string;
-
-      /**
-       * The private key for the VertexAI credentials.
-       */
-      private_key: string | null;
-
-      /**
-       * The private key ID for the VertexAI credentials.
-       */
-      private_key_id: string | null;
-
-      /**
-       * The default GCP project to use when making Vertex API calls.
-       */
-      project: string;
-
-      /**
-       * The token URI for the VertexAI credentials.
-       */
-      token_uri: string | null;
-
-      /**
-       * Additional kwargs for the Vertex.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The embedding mode to use.
-       */
-      embed_mode?: 'default' | 'classification' | 'clustering' | 'similarity' | 'retrieval';
-
-      /**
-       * The modelId of the VertexAI model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-    }
-  }
-
-  export interface BedrockEmbeddingConfig {
-    /**
-     * Configuration for the Bedrock embedding model.
-     */
-    component?: BedrockEmbeddingConfig.Component;
-
-    /**
-     * Type of the embedding model.
-     */
-    type?: 'BEDROCK_EMBEDDING';
-  }
-
-  export namespace BedrockEmbeddingConfig {
-    /**
-     * Configuration for the Bedrock embedding model.
-     */
-    export interface Component {
-      /**
-       * Additional kwargs for the bedrock client.
-       */
-      additional_kwargs?: { [key: string]: unknown };
-
-      /**
-       * AWS Access Key ID to use
-       */
-      aws_access_key_id?: string | null;
-
-      /**
-       * AWS Secret Access Key to use
-       */
-      aws_secret_access_key?: string | null;
-
-      /**
-       * AWS Session Token to use
-       */
-      aws_session_token?: string | null;
-
-      class_name?: string;
-
-      /**
-       * The batch size for embedding calls.
-       */
-      embed_batch_size?: number;
-
-      /**
-       * The maximum number of API retries.
-       */
-      max_retries?: number;
-
-      /**
-       * The modelId of the Bedrock model to use.
-       */
-      model_name?: string;
-
-      /**
-       * The number of workers to use for async embedding calls.
-       */
-      num_workers?: number | null;
-
-      /**
-       * The name of aws profile to use. If not given, then the default profile is used.
-       */
-      profile_name?: string | null;
-
-      /**
-       * AWS region name to use. Uses region configured in AWS CLI if not passed
-       */
-      region_name?: string | null;
-
-      /**
-       * The timeout for the Bedrock API request in seconds. It will be used for both
-       * connect and read timeouts.
-       */
-      timeout?: number;
-    }
-  }
-}
-
 Pipelines.Sync = Sync;
 Pipelines.DataSources = DataSources;
 Pipelines.Images = Images;
@@ -5824,11 +2106,24 @@ export declare namespace Pipelines {
   export {
     type AdvancedModeTransformConfig as AdvancedModeTransformConfig,
     type AutoTransformConfig as AutoTransformConfig,
+    type AzureOpenAIEmbedding as AzureOpenAIEmbedding,
+    type AzureOpenAIEmbeddingConfig as AzureOpenAIEmbeddingConfig,
+    type BedrockEmbedding as BedrockEmbedding,
+    type BedrockEmbeddingConfig as BedrockEmbeddingConfig,
+    type CohereEmbedding as CohereEmbedding,
+    type CohereEmbeddingConfig as CohereEmbeddingConfig,
+    type DataSinkCreate as DataSinkCreate,
+    type GeminiEmbedding as GeminiEmbedding,
+    type GeminiEmbeddingConfig as GeminiEmbeddingConfig,
+    type HuggingFaceInferenceAPIEmbedding as HuggingFaceInferenceAPIEmbedding,
+    type HuggingFaceInferenceAPIEmbeddingConfig as HuggingFaceInferenceAPIEmbeddingConfig,
     type LlamaParseParameters as LlamaParseParameters,
     type LlmParameters as LlmParameters,
     type ManagedIngestionStatusResponse as ManagedIngestionStatusResponse,
     type MessageRole as MessageRole,
     type MetadataFilters as MetadataFilters,
+    type OpenAIEmbedding as OpenAIEmbedding,
+    type OpenAIEmbeddingConfig as OpenAIEmbeddingConfig,
     type PageFigureNodeWithScore as PageFigureNodeWithScore,
     type PageScreenshotNodeWithScore as PageScreenshotNodeWithScore,
     type Pipeline as Pipeline,
@@ -5838,6 +2133,8 @@ export declare namespace Pipelines {
     type PresetRetrievalParams as PresetRetrievalParams,
     type RetrievalMode as RetrievalMode,
     type SparseModelConfig as SparseModelConfig,
+    type VertexAIEmbeddingConfig as VertexAIEmbeddingConfig,
+    type VertexTextEmbedding as VertexTextEmbedding,
     type PipelineRetrieveResponse as PipelineRetrieveResponse,
     type PipelineListResponse as PipelineListResponse,
     type PipelineCreateParams as PipelineCreateParams,
