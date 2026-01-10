@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.13.0 (2026-01-10)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* **api:** api update ([de73699](https://github.com/run-llama/llama-cloud-ts/commit/de7369971a4a290e5704cc5934e9ed3e695f5bb3))
+* **api:** manual updates ([028da8f](https://github.com/run-llama/llama-cloud-ts/commit/028da8fc73389c76b139639f3c8f33d831154575))
+
 ## 0.12.0 (2026-01-08)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.11.0...v0.12.0)
