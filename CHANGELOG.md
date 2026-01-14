@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.14.0 (2026-01-14)
+
+Full Changelog: [v0.13.1...v0.14.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.13.1...v0.14.0)
+
+### Features
+
+* **api:** manual updates ([b0b6576](https://github.com/run-llama/llama-cloud-ts/commit/b0b6576dbdf3c7e9871815c71c1317317d7999d0))
+* **api:** manual updates ([e9e3ef6](https://github.com/run-llama/llama-cloud-ts/commit/e9e3ef68c223df45f155cb553f44123cbd758dd0))
+* **api:** Remove extract batch ([850ba20](https://github.com/run-llama/llama-cloud-ts/commit/850ba20abd41cb5ad516662c7018764f29392c1c))
+* **api:** Remove extract batch ([1167d9b](https://github.com/run-llama/llama-cloud-ts/commit/1167d9b8a24e01173a699d79ebd2523b8337a9ee))
+
+
+### Bug Fixes
+
+* comments and example ([a3358c9](https://github.com/run-llama/llama-cloud-ts/commit/a3358c9df6826e7bf5265e4abf6afba89406d5fc))
+* comments and example ([a3358c9](https://github.com/run-llama/llama-cloud-ts/commit/a3358c9df6826e7bf5265e4abf6afba89406d5fc))
+
 ## 0.13.1 (2026-01-14)
 
 Full Changelog: [v0.13.0...v0.13.1](https://github.com/run-llama/llama-cloud-ts/compare/v0.13.0...v0.13.1)
