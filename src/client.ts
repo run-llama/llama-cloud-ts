@@ -23,10 +23,10 @@ import {
   PaginatedAgentDataSearchResponse,
   type PaginatedBatchItemsParams,
   PaginatedBatchItemsResponse,
-  type PaginatedClassifyJobsParams,
-  PaginatedClassifyJobsResponse,
   type PaginatedCloudDocumentsParams,
   PaginatedCloudDocumentsResponse,
+  type PaginatedCursorParams,
+  PaginatedCursorResponse,
   type PaginatedExtractRunsParams,
   PaginatedExtractRunsResponse,
   type PaginatedJobsHistoryParams,
@@ -35,8 +35,6 @@ import {
   PaginatedPipelineFilesResponse,
   type PaginatedQuotaConfigurationsParams,
   PaginatedQuotaConfigurationsResponse,
-  type PaginatedSpreadsheetJobsParams,
-  PaginatedSpreadsheetJobsResponse,
 } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
@@ -65,6 +63,9 @@ import {
   FileCreateResponse,
   FileDeleteParams,
   FileGetParams,
+  FileListParams,
+  FileListResponse,
+  FileListResponsesPaginatedCursor,
   FileQueryParams,
   FileQueryResponse,
   Files,
@@ -84,7 +85,7 @@ import {
   ParsingLanguages,
   ParsingListParams,
   ParsingListResponse,
-  ParsingListResponsesPaginatedClassifyJobs,
+  ParsingListResponsesPaginatedCursor,
   ParsingMode,
   StatusEnum,
 } from './resources/parsing';
@@ -918,16 +919,10 @@ export declare namespace LlamaCloud {
     type PaginatedQuotaConfigurationsResponse as PaginatedQuotaConfigurationsResponse,
   };
 
-  export import PaginatedClassifyJobs = Pagination.PaginatedClassifyJobs;
+  export import PaginatedCursor = Pagination.PaginatedCursor;
   export {
-    type PaginatedClassifyJobsParams as PaginatedClassifyJobsParams,
-    type PaginatedClassifyJobsResponse as PaginatedClassifyJobsResponse,
-  };
-
-  export import PaginatedSpreadsheetJobs = Pagination.PaginatedSpreadsheetJobs;
-  export {
-    type PaginatedSpreadsheetJobsParams as PaginatedSpreadsheetJobsParams,
-    type PaginatedSpreadsheetJobsResponse as PaginatedSpreadsheetJobsResponse,
+    type PaginatedCursorParams as PaginatedCursorParams,
+    type PaginatedCursorResponse as PaginatedCursorResponse,
   };
 
   export import PaginatedAgentDataSearch = Pagination.PaginatedAgentDataSearch;
@@ -975,8 +970,11 @@ export declare namespace LlamaCloud {
     type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
     type FileCreateResponse as FileCreateResponse,
+    type FileListResponse as FileListResponse,
     type FileQueryResponse as FileQueryResponse,
+    type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
     type FileCreateParams as FileCreateParams,
+    type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGetParams as FileGetParams,
     type FileQueryParams as FileQueryParams,
@@ -1055,7 +1053,7 @@ export declare namespace LlamaCloud {
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
     type ParsingGetResponse as ParsingGetResponse,
-    type ParsingListResponsesPaginatedClassifyJobs as ParsingListResponsesPaginatedClassifyJobs,
+    type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingListParams as ParsingListParams,
     type ParsingGetParams as ParsingGetParams,

@@ -521,13 +521,13 @@ export class PaginatedQuotaConfigurations<Item>
   }
 }
 
-export interface PaginatedClassifyJobsResponse<Item> {
+export interface PaginatedCursorResponse<Item> {
   items: Array<Item>;
 
   next_page_token: string;
 }
 
-export interface PaginatedClassifyJobsParams {
+export interface PaginatedCursorParams {
   /**
    * Token for retrieving next page
    */
@@ -539,10 +539,7 @@ export interface PaginatedClassifyJobsParams {
   page_size?: number;
 }
 
-export class PaginatedClassifyJobs<Item>
-  extends AbstractPage<Item>
-  implements PaginatedClassifyJobsResponse<Item>
-{
+export class PaginatedCursor<Item> extends AbstractPage<Item> implements PaginatedCursorResponse<Item> {
   items: Array<Item>;
 
   next_page_token: string;
@@ -550,65 +547,7 @@ export class PaginatedClassifyJobs<Item>
   constructor(
     client: LlamaCloud,
     response: Response,
-    body: PaginatedClassifyJobsResponse<Item>,
-    options: FinalRequestOptions,
-  ) {
-    super(client, response, body, options);
-
-    this.items = body.items || [];
-    this.next_page_token = body.next_page_token || '';
-  }
-
-  getPaginatedItems(): Item[] {
-    return this.items ?? [];
-  }
-
-  nextPageRequestOptions(): PageRequestOptions | null {
-    const cursor = this.next_page_token;
-    if (!cursor) {
-      return null;
-    }
-
-    return {
-      ...this.options,
-      query: {
-        ...maybeObj(this.options.query),
-        page_token: cursor,
-      },
-    };
-  }
-}
-
-export interface PaginatedSpreadsheetJobsResponse<Item> {
-  items: Array<Item>;
-
-  next_page_token: string;
-}
-
-export interface PaginatedSpreadsheetJobsParams {
-  /**
-   * Token for retrieving next page
-   */
-  page_token?: string;
-
-  /**
-   * Maximum number of items to return
-   */
-  page_size?: number;
-}
-
-export class PaginatedSpreadsheetJobs<Item>
-  extends AbstractPage<Item>
-  implements PaginatedSpreadsheetJobsResponse<Item>
-{
-  items: Array<Item>;
-
-  next_page_token: string;
-
-  constructor(
-    client: LlamaCloud,
-    response: Response,
-    body: PaginatedSpreadsheetJobsResponse<Item>,
+    body: PaginatedCursorResponse<Item>,
     options: FinalRequestOptions,
   ) {
     super(client, response, body, options);

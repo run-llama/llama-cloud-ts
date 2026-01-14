@@ -27,11 +27,14 @@ export {
   type FileCreate,
   type PresignedURL,
   type FileCreateResponse,
+  type FileListResponse,
   type FileQueryResponse,
   type FileCreateParams,
+  type FileListParams,
   type FileDeleteParams,
   type FileGetParams,
   type FileQueryParams,
+  type FileListResponsesPaginatedCursor,
 } from './files';
 export {
   Parsing,
@@ -49,7 +52,7 @@ export {
   type ParsingCreateParams,
   type ParsingListParams,
   type ParsingGetParams,
-  type ParsingListResponsesPaginatedClassifyJobs,
+  type ParsingListResponsesPaginatedCursor,
 } from './parsing';
 export {
   Pipelines,

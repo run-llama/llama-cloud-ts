@@ -73,11 +73,13 @@ Types:
 - <code><a href="./src/resources/files.ts">FileCreate</a></code>
 - <code><a href="./src/resources/files.ts">PresignedURL</a></code>
 - <code><a href="./src/resources/files.ts">FileCreateResponse</a></code>
+- <code><a href="./src/resources/files.ts">FileListResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileQueryResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v1/beta/files">client.files.<a href="./src/resources/files.ts">create</a>({ ...params }) -> FileCreateResponse</code>
+- <code title="get /api/v1/beta/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FileListResponsesPaginatedCursor</code>
 - <code title="delete /api/v1/beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID, { ...params }) -> void</code>
 - <code title="get /api/v1/beta/files/{file_id}/content">client.files.<a href="./src/resources/files.ts">get</a>(fileID, { ...params }) -> PresignedURL</code>
 - <code title="post /api/v1/beta/files/query">client.files.<a href="./src/resources/files.ts">query</a>({ ...params }) -> FileQueryResponse</code>
@@ -268,7 +270,7 @@ Types:
 Methods:
 
 - <code title="post /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">create</a>({ ...params }) -> ParsingCreateResponse</code>
-- <code title="get /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedClassifyJobs</code>
+- <code title="get /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedCursor</code>
 - <code title="get /api/v2/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
 
 # Classifier
@@ -285,7 +287,7 @@ Types:
 Methods:
 
 - <code title="post /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">create</a>({ ...params }) -> ClassifyJob</code>
-- <code title="get /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">list</a>({ ...params }) -> ClassifyJobsPaginatedClassifyJobs</code>
+- <code title="get /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">list</a>({ ...params }) -> ClassifyJobsPaginatedCursor</code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">get</a>(classifyJobID, { ...params }) -> ClassifyJob</code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}/results">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">getResults</a>(classifyJobID, { ...params }) -> JobGetResultsResponse</code>
 
@@ -404,7 +406,7 @@ Types:
 Methods:
 
 - <code title="post /api/v1/beta/sheets/jobs">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">create</a>({ ...params }) -> SheetsJob</code>
-- <code title="get /api/v1/beta/sheets/jobs">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">list</a>({ ...params }) -> SheetsJobsPaginatedClassifyJobs</code>
+- <code title="get /api/v1/beta/sheets/jobs">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">list</a>({ ...params }) -> SheetsJobsPaginatedCursor</code>
 - <code title="delete /api/v1/beta/sheets/jobs/{spreadsheet_job_id}">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">deleteJob</a>(spreadsheetJobID, { ...params }) -> unknown</code>
 - <code title="get /api/v1/beta/sheets/jobs/{spreadsheet_job_id}">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">get</a>(spreadsheetJobID, { ...params }) -> SheetsJob</code>
 - <code title="get /api/v1/beta/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">getResultTable</a>(regionType, { ...params }) -> PresignedURL</code>
@@ -422,7 +424,7 @@ Methods:
 
 - <code title="post /api/v1/beta/directories">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">create</a>({ ...params }) -> DirectoryCreateResponse</code>
 - <code title="patch /api/v1/beta/directories/{directory_id}">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">update</a>(directoryID, { ...params }) -> DirectoryUpdateResponse</code>
-- <code title="get /api/v1/beta/directories">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">list</a>({ ...params }) -> DirectoryListResponsesPaginatedClassifyJobs</code>
+- <code title="get /api/v1/beta/directories">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">list</a>({ ...params }) -> DirectoryListResponsesPaginatedCursor</code>
 - <code title="delete /api/v1/beta/directories/{directory_id}">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">delete</a>(directoryID, { ...params }) -> void</code>
 - <code title="get /api/v1/beta/directories/{directory_id}">client.beta.directories.<a href="./src/resources/beta/directories/directories.ts">get</a>(directoryID, { ...params }) -> DirectoryGetResponse</code>
 
@@ -439,7 +441,7 @@ Types:
 Methods:
 
 - <code title="patch /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">update</a>(directoryFileID, { ...params }) -> FileUpdateResponse</code>
-- <code title="get /api/v1/beta/directories/{directory_id}/files">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">list</a>(directoryID, { ...params }) -> FileListResponsesPaginatedClassifyJobs</code>
+- <code title="get /api/v1/beta/directories/{directory_id}/files">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">list</a>(directoryID, { ...params }) -> FileListResponsesPaginatedCursor</code>
 - <code title="delete /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">delete</a>(directoryFileID, { ...params }) -> void</code>
 - <code title="post /api/v1/beta/directories/{directory_id}/files">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">add</a>(directoryID, { ...params }) -> FileAddResponse</code>
 - <code title="get /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">get</a>(directoryFileID, { ...params }) -> FileGetResponse</code>
@@ -488,5 +490,5 @@ Types:
 Methods:
 
 - <code title="post /api/v1/beta/split/jobs">client.beta.split.<a href="./src/resources/beta/split.ts">create</a>({ ...params }) -> SplitCreateResponse</code>
-- <code title="get /api/v1/beta/split/jobs">client.beta.split.<a href="./src/resources/beta/split.ts">list</a>({ ...params }) -> SplitListResponsesPaginatedClassifyJobs</code>
+- <code title="get /api/v1/beta/split/jobs">client.beta.split.<a href="./src/resources/beta/split.ts">list</a>({ ...params }) -> SplitListResponsesPaginatedCursor</code>
 - <code title="get /api/v1/beta/split/jobs/{split_job_id}">client.beta.split.<a href="./src/resources/beta/split.ts">get</a>(splitJobID, { ...params }) -> SplitGetResponse</code>
