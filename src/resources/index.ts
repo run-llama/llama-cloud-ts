@@ -37,6 +37,7 @@ export {
   Parsing,
   type BBox,
   type FailPageMode,
+  type ListItem,
   type LlamaParseSupportedFileExtensions,
   type ParsingJob,
   type ParsingLanguages,
