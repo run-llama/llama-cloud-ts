@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, PaginatedCursorPost, type PaginatedCursorPostParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -51,13 +52,13 @@ export class AgentData extends APIResource {
   aggregate(
     params: AgentDataAggregateParams,
     options?: RequestOptions,
-  ): APIPromise<AgentDataAggregateResponse> {
+  ): PagePromise<AgentDataAggregateResponsesPaginatedCursorPost, AgentDataAggregateResponse> {
     const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/agent-data/:aggregate', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    return this._client.getAPIList(
+      '/api/v1/beta/agent-data/:aggregate',
+      PaginatedCursorPost<AgentDataAggregateResponse>,
+      { query: { organization_id, project_id }, body, method: 'post', ...options },
+    );
   }
 
   /**
@@ -89,15 +90,23 @@ export class AgentData extends APIResource {
   /**
    * Search agent data with filtering, sorting, and pagination.
    */
-  search(params: AgentDataSearchParams, options?: RequestOptions): APIPromise<AgentDataSearchResponse> {
+  search(
+    params: AgentDataSearchParams,
+    options?: RequestOptions,
+  ): PagePromise<AgentDataPaginatedCursorPost, AgentData> {
     const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/agent-data/:search', {
+    return this._client.getAPIList('/api/v1/beta/agent-data/:search', PaginatedCursorPost<AgentData>, {
       query: { organization_id, project_id },
       body,
+      method: 'post',
       ...options,
     });
   }
 }
+
+export type AgentDataAggregateResponsesPaginatedCursorPost = PaginatedCursorPost<AgentDataAggregateResponse>;
+
+export type AgentDataPaginatedCursorPost = PaginatedCursorPost<AgentData>;
 
 /**
  * API Result for a single agent data item
@@ -120,37 +129,15 @@ export interface AgentData {
 
 export type AgentDataDeleteResponse = { [key: string]: string };
 
+/**
+ * API Result for a single group in the aggregate response
+ */
 export interface AgentDataAggregateResponse {
-  /**
-   * The list of items.
-   */
-  items: Array<AgentDataAggregateResponse.Item>;
+  group_key: { [key: string]: unknown };
 
-  /**
-   * A token, which can be sent as page_token to retrieve the next page. If this
-   * field is omitted, there are no subsequent pages.
-   */
-  next_page_token?: string | null;
+  count?: number | null;
 
-  /**
-   * The total number of items available. This is only populated when specifically
-   * requested. The value may be an estimate and can be used for display purposes
-   * only.
-   */
-  total_size?: number | null;
-}
-
-export namespace AgentDataAggregateResponse {
-  /**
-   * API Result for a single group in the aggregate response
-   */
-  export interface Item {
-    group_key: { [key: string]: unknown };
-
-    count?: number | null;
-
-    first_item?: { [key: string]: unknown } | null;
-  }
+  first_item?: { [key: string]: unknown } | null;
 }
 
 /**
@@ -158,26 +145,6 @@ export namespace AgentDataAggregateResponse {
  */
 export interface AgentDataDeleteByQueryResponse {
   deleted_count: number;
-}
-
-export interface AgentDataSearchResponse {
-  /**
-   * The list of items.
-   */
-  items: Array<AgentData>;
-
-  /**
-   * A token, which can be sent as page_token to retrieve the next page. If this
-   * field is omitted, there are no subsequent pages.
-   */
-  next_page_token?: string | null;
-
-  /**
-   * The total number of items available. This is only populated when specifically
-   * requested. The value may be an estimate and can be used for display purposes
-   * only.
-   */
-  total_size?: number | null;
 }
 
 export interface AgentDataUpdateParams {
@@ -230,7 +197,7 @@ export interface AgentDataAgentDataParams {
   collection?: string;
 }
 
-export interface AgentDataAggregateParams {
+export interface AgentDataAggregateParams extends PaginatedCursorPostParams {
   /**
    * Body param: The agent deployment's name to aggregate data for
    */
@@ -285,19 +252,6 @@ export interface AgentDataAggregateParams {
    * order. Use 'field_name desc' to specify descending order.
    */
   order_by?: string | null;
-
-  /**
-   * Body param: The maximum number of items to return. The service may return fewer
-   * than this value. If unspecified, a default page size will be used. The maximum
-   * value is typically 1000; values above this will be coerced to the maximum.
-   */
-  page_size?: number | null;
-
-  /**
-   * Body param: A page token, received from a previous list call. Provide this to
-   * retrieve the subsequent page.
-   */
-  page_token?: string | null;
 }
 
 export namespace AgentDataAggregateParams {
@@ -371,7 +325,7 @@ export interface AgentDataGetParams {
   project_id?: string | null;
 }
 
-export interface AgentDataSearchParams {
+export interface AgentDataSearchParams extends PaginatedCursorPostParams {
   /**
    * Body param: The agent deployment's name to search within
    */
@@ -414,19 +368,6 @@ export interface AgentDataSearchParams {
    * order. Use 'field_name desc' to specify descending order.
    */
   order_by?: string | null;
-
-  /**
-   * Body param: The maximum number of items to return. The service may return fewer
-   * than this value. If unspecified, a default page size will be used. The maximum
-   * value is typically 1000; values above this will be coerced to the maximum.
-   */
-  page_size?: number | null;
-
-  /**
-   * Body param: A page token, received from a previous list call. Provide this to
-   * retrieve the subsequent page.
-   */
-  page_token?: string | null;
 }
 
 export namespace AgentDataSearchParams {
@@ -454,7 +395,8 @@ export declare namespace AgentData {
     type AgentDataDeleteResponse as AgentDataDeleteResponse,
     type AgentDataAggregateResponse as AgentDataAggregateResponse,
     type AgentDataDeleteByQueryResponse as AgentDataDeleteByQueryResponse,
-    type AgentDataSearchResponse as AgentDataSearchResponse,
+    type AgentDataAggregateResponsesPaginatedCursorPost as AgentDataAggregateResponsesPaginatedCursorPost,
+    type AgentDataPaginatedCursorPost as AgentDataPaginatedCursorPost,
     type AgentDataUpdateParams as AgentDataUpdateParams,
     type AgentDataDeleteParams as AgentDataDeleteParams,
     type AgentDataAgentDataParams as AgentDataAgentDataParams,

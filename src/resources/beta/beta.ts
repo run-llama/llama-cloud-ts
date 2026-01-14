@@ -7,26 +7,28 @@ import {
   AgentDataAgentDataParams,
   AgentDataAggregateParams,
   AgentDataAggregateResponse,
+  AgentDataAggregateResponsesPaginatedCursorPost,
   AgentDataDeleteByQueryParams,
   AgentDataDeleteByQueryResponse,
   AgentDataDeleteParams,
   AgentDataDeleteResponse,
   AgentDataGetParams,
+  AgentDataPaginatedCursorPost,
   AgentDataSearchParams,
-  AgentDataSearchResponse,
   AgentDataUpdateParams,
 } from './agent-data';
 import * as ParseConfigurationsAPI from './parse-configurations';
 import {
   ParseConfiguration,
   ParseConfigurationCreate,
+  ParseConfigurationCreateParams,
   ParseConfigurationDeleteParams,
   ParseConfigurationGetParams,
-  ParseConfigurationGetParseConfigurationsParams,
-  ParseConfigurationParseConfigurationsParams,
+  ParseConfigurationListParams,
   ParseConfigurationQueryResponse,
   ParseConfigurationUpdateParams,
   ParseConfigurations,
+  ParseConfigurationsPaginatedCursor,
 } from './parse-configurations';
 import * as SheetsAPI from './sheets';
 import {
@@ -106,7 +108,8 @@ export declare namespace Beta {
     type AgentDataDeleteResponse as AgentDataDeleteResponse,
     type AgentDataAggregateResponse as AgentDataAggregateResponse,
     type AgentDataDeleteByQueryResponse as AgentDataDeleteByQueryResponse,
-    type AgentDataSearchResponse as AgentDataSearchResponse,
+    type AgentDataAggregateResponsesPaginatedCursorPost as AgentDataAggregateResponsesPaginatedCursorPost,
+    type AgentDataPaginatedCursorPost as AgentDataPaginatedCursorPost,
     type AgentDataUpdateParams as AgentDataUpdateParams,
     type AgentDataDeleteParams as AgentDataDeleteParams,
     type AgentDataAgentDataParams as AgentDataAgentDataParams,
@@ -121,11 +124,12 @@ export declare namespace Beta {
     type ParseConfiguration as ParseConfiguration,
     type ParseConfigurationCreate as ParseConfigurationCreate,
     type ParseConfigurationQueryResponse as ParseConfigurationQueryResponse,
+    type ParseConfigurationsPaginatedCursor as ParseConfigurationsPaginatedCursor,
+    type ParseConfigurationCreateParams as ParseConfigurationCreateParams,
     type ParseConfigurationUpdateParams as ParseConfigurationUpdateParams,
+    type ParseConfigurationListParams as ParseConfigurationListParams,
     type ParseConfigurationDeleteParams as ParseConfigurationDeleteParams,
     type ParseConfigurationGetParams as ParseConfigurationGetParams,
-    type ParseConfigurationGetParseConfigurationsParams as ParseConfigurationGetParseConfigurationsParams,
-    type ParseConfigurationParseConfigurationsParams as ParseConfigurationParseConfigurationsParams,
   };
 
   export {
