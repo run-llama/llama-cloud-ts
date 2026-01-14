@@ -13,11 +13,7 @@ export class Parsing extends APIResource {
    */
   create(params: ParsingCreateParams, options?: RequestOptions): APIPromise<ParsingCreateResponse> {
     const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v2alpha1/parse', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    return this._client.post('/api/v2/parse', { query: { organization_id, project_id }, body, ...options });
   }
 
   /**
@@ -28,7 +24,7 @@ export class Parsing extends APIResource {
     query: ParsingListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<ParsingListResponsesPaginatedClassifyJobs, ParsingListResponse> {
-    return this._client.getAPIList('/api/v2alpha1/parse', PaginatedClassifyJobs<ParsingListResponse>, {
+    return this._client.getAPIList('/api/v2/parse', PaginatedClassifyJobs<ParsingListResponse>, {
       query,
       ...options,
     });
@@ -42,21 +38,7 @@ export class Parsing extends APIResource {
     query: ParsingGetParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ParsingGetResponse> {
-    return this._client.get(path`/api/v2alpha1/parse/${jobID}`, { query, ...options });
-  }
-
-  /**
-   * Upload and parse a file using multipart/form-data.
-   */
-  uploadFile(
-    params: ParsingUploadFileParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ParsingUploadFileResponse> {
-    const { organization_id, project_id } = params ?? {};
-    return this._client.post('/api/v2alpha1/parse/upload', {
-      query: { organization_id, project_id },
-      ...options,
-    });
+    return this._client.get(path`/api/v2/parse/${jobID}`, { query, ...options });
   }
 }
 
@@ -150,6 +132,10 @@ export type LlamaParseSupportedFileExtensions =
   | '.sxi'
   | '.sti'
   | '.epub'
+  | '.vsd'
+  | '.vsdx'
+  | '.vdx'
+  | '.vsdm'
   | '.jpg'
   | '.jpeg'
   | '.png'
@@ -539,9 +525,19 @@ export namespace ParsingGetResponse {
       >;
 
       /**
+       * Height of the page in points
+       */
+      page_height: number;
+
+      /**
        * Page number of the document
        */
       page_number: number;
+
+      /**
+       * Width of the page in points
+       */
+      page_width: number;
 
       /**
        * Success indicator
@@ -910,41 +906,6 @@ export namespace ParsingGetResponse {
   }
 }
 
-/**
- * Response schema for a parse job.
- */
-export interface ParsingUploadFileResponse {
-  /**
-   * Unique identifier for the parse job
-   */
-  id: string;
-
-  /**
-   * Project this job belongs to
-   */
-  project_id: string;
-
-  /**
-   * Current status of the job (e.g., pending, running, completed, failed, cancelled)
-   */
-  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
-
-  /**
-   * Creation datetime
-   */
-  created_at?: string | null;
-
-  /**
-   * Error message if job failed
-   */
-  error_message?: string | null;
-
-  /**
-   * Update datetime
-   */
-  updated_at?: string | null;
-}
-
 export interface ParsingCreateParams {
   /**
    * Body param: The parsing tier to use
@@ -952,12 +913,17 @@ export interface ParsingCreateParams {
   tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';
 
   /**
-   * Query param:
+   * Body param: Version of the tier configuration
+   */
+  version: '2026-01-08' | '2025-12-31' | '2025-12-18' | '2025-12-11' | 'latest' | (string & {});
+
+  /**
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -1025,11 +991,6 @@ export interface ParsingCreateParams {
    * Body param: Source URL to fetch document from
    */
   source_url?: string | null;
-
-  /**
-   * Body param: Version of the tier configuration
-   */
-  version?: '2026-01-08' | '2025-12-31' | '2025-12-18' | '2025-12-11' | 'latest' | (string & {});
 
   /**
    * Body param: List of webhook configurations for notifications
@@ -1155,11 +1116,6 @@ export namespace ParsingCreateParams {
    */
   export interface OutputOptions {
     /**
-     * Embedded image extraction options
-     */
-    embedded_images?: OutputOptions.EmbeddedImages;
-
-    /**
      * PDF export options
      */
     export_pdf?: OutputOptions.ExportPdf;
@@ -1170,14 +1126,16 @@ export namespace ParsingCreateParams {
     extract_printed_page_number?: boolean | null;
 
     /**
+     * Image categories to save: 'screenshot' (full page), 'embedded' (images in
+     * document), 'layout' (cropped images from layout detection). If not set or empty,
+     * no images are saved.
+     */
+    images_to_save?: Array<'screenshot' | 'embedded' | 'layout'> | null;
+
+    /**
      * Markdown output formatting options
      */
     markdown?: OutputOptions.Markdown;
-
-    /**
-     * Screenshot generation options
-     */
-    screenshots?: OutputOptions.Screenshots;
 
     /**
      * Spatial text output options
@@ -1191,16 +1149,6 @@ export namespace ParsingCreateParams {
   }
 
   export namespace OutputOptions {
-    /**
-     * Embedded image extraction options
-     */
-    export interface EmbeddedImages {
-      /**
-       * Whether this option is enabled
-       */
-      enable?: boolean | null;
-    }
-
     /**
      * PDF export options
      */
@@ -1261,16 +1209,6 @@ export namespace ParsingCreateParams {
          */
         output_tables_as_markdown?: boolean | null;
       }
-    }
-
-    /**
-     * Screenshot generation options
-     */
-    export interface Screenshots {
-      /**
-       * Whether this option is enabled
-       */
-      enable?: boolean | null;
     }
 
     /**
@@ -1416,6 +1354,12 @@ export namespace ParsingCreateParams {
      * Configuration for auto mode parsing with triggers and parsing options
      */
     auto_mode_configuration?: Array<ProcessingOptions.AutoModeConfiguration> | null;
+
+    /**
+     * Whether to disable heuristics like outlined table extraction and adaptive long
+     * table handling
+     */
+    disable_heuristics?: boolean | null;
 
     /**
      * Options for ignoring specific text types
@@ -1854,12 +1798,6 @@ export interface ParsingGetParams {
   project_id?: string | null;
 }
 
-export interface ParsingUploadFileParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export declare namespace Parsing {
   export {
     type BBox as BBox,
@@ -1872,11 +1810,9 @@ export declare namespace Parsing {
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
     type ParsingGetResponse as ParsingGetResponse,
-    type ParsingUploadFileResponse as ParsingUploadFileResponse,
     type ParsingListResponsesPaginatedClassifyJobs as ParsingListResponsesPaginatedClassifyJobs,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingListParams as ParsingListParams,
     type ParsingGetParams as ParsingGetParams,
-    type ParsingUploadFileParams as ParsingUploadFileParams,
   };
 }

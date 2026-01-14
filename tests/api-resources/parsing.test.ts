@@ -10,7 +10,7 @@ const client = new LlamaCloud({
 describe('resource parsing', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.parsing.create({ tier: 'fast' });
+    const responsePromise = client.parsing.create({ tier: 'fast', version: '2026-01-08' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,6 +24,7 @@ describe('resource parsing', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.parsing.create({
       tier: 'fast',
+      version: '2026-01-08',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       agentic_options: { custom_prompt: 'custom_prompt' },
@@ -49,9 +50,9 @@ describe('resource parsing', () => {
         spreadsheet: { detect_sub_tables_in_sheets: true, force_formula_computation_in_sheets: true },
       },
       output_options: {
-        embedded_images: { enable: true },
         export_pdf: { enable: true },
         extract_printed_page_number: true,
+        images_to_save: ['screenshot'],
         markdown: {
           annotate_links: true,
           pages: { merge_tables_across_pages_in_markdown: true },
@@ -61,7 +62,6 @@ describe('resource parsing', () => {
             output_tables_as_markdown: true,
           },
         },
-        screenshots: { enable: true },
         spatial_text: {
           do_not_unroll_columns: true,
           pages: { merge_tables_across_pages_in_markdown: true },
@@ -147,6 +147,7 @@ describe('resource parsing', () => {
             trigger_mode: 'trigger_mode',
           },
         ],
+        disable_heuristics: true,
         ignore: {
           ignore_diagonal_text: true,
           ignore_hidden_text: true,
@@ -155,7 +156,6 @@ describe('resource parsing', () => {
         ocr_parameters: { languages: ['af'] },
       },
       source_url: 'https:',
-      version: '2026-01-08',
       webhook_configurations: [
         {
           webhook_events: ['string'],
@@ -216,32 +216,6 @@ describe('resource parsing', () => {
         {
           expand: ['string'],
           image_filenames: 'image_filenames',
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
-  });
-
-  // Prism tests are disabled
-  test.skip('uploadFile', async () => {
-    const responsePromise = client.parsing.uploadFile();
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('uploadFile: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.parsing.uploadFile(
-        {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         },

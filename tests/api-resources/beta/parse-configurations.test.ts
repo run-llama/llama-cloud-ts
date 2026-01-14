@@ -169,6 +169,7 @@ describe('resource parseConfigurations', () => {
         html_remove_navigation_elements: true,
         http_proxy: 'http_proxy',
         ignore_document_elements_for_layout_detection: true,
+        images_to_save: ['screenshot'],
         inline_images_in_markdown: true,
         input_s3_path: 'input_s3_path',
         input_s3_region: 'input_s3_region',

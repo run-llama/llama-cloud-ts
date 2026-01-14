@@ -56,12 +56,12 @@ export interface SchemaValidateSchemaResponse {
 
 export interface SchemaGenerateSchemaParams {
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 

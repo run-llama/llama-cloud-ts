@@ -85,8 +85,6 @@ import {
   ParsingListResponse,
   ParsingListResponsesPaginatedClassifyJobs,
   ParsingMode,
-  ParsingUploadFileParams,
-  ParsingUploadFileResponse,
   StatusEnum,
 } from './resources/parsing';
 import {
@@ -1055,12 +1053,10 @@ export declare namespace LlamaCloud {
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
     type ParsingGetResponse as ParsingGetResponse,
-    type ParsingUploadFileResponse as ParsingUploadFileResponse,
     type ParsingListResponsesPaginatedClassifyJobs as ParsingListResponsesPaginatedClassifyJobs,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingListParams as ParsingListParams,
     type ParsingGetParams as ParsingGetParams,
-    type ParsingUploadFileParams as ParsingUploadFileParams,
   };
 
   export { Classifier as Classifier };

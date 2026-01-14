@@ -27,14 +27,6 @@ export class Jobs extends APIResource {
   }
 
   /**
-   * Run Batch Jobs
-   */
-  batch(params: JobBatchParams, options?: RequestOptions): APIPromise<JobBatchResponse> {
-    const { from_ui, ...body } = params;
-    return this._client.post('/api/v1/extraction/jobs/batch', { query: { from_ui }, body, ...options });
-  }
-
-  /**
    * Run Job On File
    */
   file(params: JobFileParams, options?: RequestOptions): APIPromise<ExtractJob> {
@@ -139,8 +131,6 @@ export interface WebhookConfiguration {
 
 export type JobListResponse = Array<ExtractJob>;
 
-export type JobBatchResponse = Array<ExtractJob>;
-
 /**
  * Schema for an extraction resultset.
  */
@@ -183,7 +173,7 @@ export interface JobCreateParams {
   file_id: string;
 
   /**
-   * Query param:
+   * Query param
    */
   from_ui?: boolean;
 
@@ -216,41 +206,6 @@ export interface JobListParams {
   extraction_agent_id: string;
 }
 
-export interface JobBatchParams {
-  /**
-   * Body param: The id of the extraction agent
-   */
-  extraction_agent_id: string;
-
-  /**
-   * Body param: The ids of the files
-   */
-  file_ids: Array<string>;
-
-  /**
-   * Query param:
-   */
-  from_ui?: boolean;
-
-  /**
-   * Body param: Configuration parameters for the extraction agent.
-   */
-  config_override?: RunsAPI.ExtractConfig | null;
-
-  /**
-   * Body param: The data schema to override the extraction agent's data schema with
-   */
-  data_schema_override?:
-    | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
-    | string
-    | null;
-
-  /**
-   * Body param: The outbound webhook configurations
-   */
-  webhook_configurations?: Array<WebhookConfiguration> | null;
-}
-
 export interface JobFileParams {
   /**
    * Body param: The id of the extraction agent
@@ -263,7 +218,7 @@ export interface JobFileParams {
   file: Uploadable;
 
   /**
-   * Query param:
+   * Query param
    */
   from_ui?: boolean;
 
@@ -291,11 +246,9 @@ export declare namespace Jobs {
     type ExtractJob as ExtractJob,
     type WebhookConfiguration as WebhookConfiguration,
     type JobListResponse as JobListResponse,
-    type JobBatchResponse as JobBatchResponse,
     type JobGetResultResponse as JobGetResultResponse,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
-    type JobBatchParams as JobBatchParams,
     type JobFileParams as JobFileParams,
     type JobGetResultParams as JobGetResultParams,
   };

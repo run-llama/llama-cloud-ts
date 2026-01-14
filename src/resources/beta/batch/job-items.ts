@@ -346,6 +346,8 @@ export namespace JobItemGetProcessingResultsResponse {
 
         ignore_document_elements_for_layout_detection?: boolean | null;
 
+        images_to_save?: Array<'screenshot' | 'embedded' | 'layout'> | null;
+
         inline_images_in_markdown?: boolean | null;
 
         input_s3_path?: string | null;
