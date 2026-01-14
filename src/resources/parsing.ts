@@ -26,7 +26,7 @@ export class Parsing extends APIResource {
       const configuration = JSON.stringify(body);
 
       return this._client.post(
-        '/api/v2alpha1/parse/upload',
+        '/api/v2/parse',
         multipartFormRequestOptions(
           {
             query: { organization_id, project_id },
@@ -39,7 +39,7 @@ export class Parsing extends APIResource {
     }
 
     // Otherwise use regular JSON endpoint
-    return this._client.post('/api/v2alpha1/parse', {
+    return this._client.post('/api/v2/parse', {
       query: { organization_id, project_id },
       body,
       ...options,
@@ -54,7 +54,7 @@ export class Parsing extends APIResource {
     query: ParsingListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<ParsingListResponsesPaginatedClassifyJobs, ParsingListResponse> {
-    return this._client.getAPIList('/api/v2alpha1/parse', PaginatedClassifyJobs<ParsingListResponse>, {
+    return this._client.getAPIList('/api/v2/parse', PaginatedClassifyJobs<ParsingListResponse>, {
       query,
       ...options,
     });
@@ -305,6 +305,10 @@ export type LlamaParseSupportedFileExtensions =
   | '.sxi'
   | '.sti'
   | '.epub'
+  | '.vsd'
+  | '.vsdx'
+  | '.vdx'
+  | '.vsdm'
   | '.jpg'
   | '.jpeg'
   | '.png'
@@ -694,9 +698,19 @@ export namespace ParsingGetResponse {
       >;
 
       /**
+       * Height of the page in points
+       */
+      page_height: number;
+
+      /**
        * Page number of the document
        */
       page_number: number;
+
+      /**
+       * Width of the page in points
+       */
+      page_width: number;
 
       /**
        * Success indicator
@@ -1072,12 +1086,17 @@ export interface ParsingCreateParams {
   tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';
 
   /**
-   * Query param:
+   * Body param: Version of the tier configuration
+   */
+  version: '2026-01-08' | '2025-12-31' | '2025-12-18' | '2025-12-11' | 'latest' | (string & {});
+
+  /**
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -1145,11 +1164,6 @@ export interface ParsingCreateParams {
    * Body param: Source URL to fetch document from
    */
   source_url?: string | null;
-
-  /**
-   * Body param: Version of the tier configuration
-   */
-  version?: '2026-01-08' | '2025-12-31' | '2025-12-18' | '2025-12-11' | 'latest' | (string & {});
 
   /**
    * Body param: List of webhook configurations for notifications
@@ -1275,11 +1289,6 @@ export namespace ParsingCreateParams {
    */
   export interface OutputOptions {
     /**
-     * Embedded image extraction options
-     */
-    embedded_images?: OutputOptions.EmbeddedImages;
-
-    /**
      * PDF export options
      */
     export_pdf?: OutputOptions.ExportPdf;
@@ -1290,14 +1299,16 @@ export namespace ParsingCreateParams {
     extract_printed_page_number?: boolean | null;
 
     /**
+     * Image categories to save: 'screenshot' (full page), 'embedded' (images in
+     * document), 'layout' (cropped images from layout detection). If not set or empty,
+     * no images are saved.
+     */
+    images_to_save?: Array<'screenshot' | 'embedded' | 'layout'> | null;
+
+    /**
      * Markdown output formatting options
      */
     markdown?: OutputOptions.Markdown;
-
-    /**
-     * Screenshot generation options
-     */
-    screenshots?: OutputOptions.Screenshots;
 
     /**
      * Spatial text output options
@@ -1311,16 +1322,6 @@ export namespace ParsingCreateParams {
   }
 
   export namespace OutputOptions {
-    /**
-     * Embedded image extraction options
-     */
-    export interface EmbeddedImages {
-      /**
-       * Whether this option is enabled
-       */
-      enable?: boolean | null;
-    }
-
     /**
      * PDF export options
      */
@@ -1381,16 +1382,6 @@ export namespace ParsingCreateParams {
          */
         output_tables_as_markdown?: boolean | null;
       }
-    }
-
-    /**
-     * Screenshot generation options
-     */
-    export interface Screenshots {
-      /**
-       * Whether this option is enabled
-       */
-      enable?: boolean | null;
     }
 
     /**
@@ -1536,6 +1527,12 @@ export namespace ParsingCreateParams {
      * Configuration for auto mode parsing with triggers and parsing options
      */
     auto_mode_configuration?: Array<ProcessingOptions.AutoModeConfiguration> | null;
+
+    /**
+     * Whether to disable heuristics like outlined table extraction and adaptive long
+     * table handling
+     */
+    disable_heuristics?: boolean | null;
 
     /**
      * Options for ignoring specific text types

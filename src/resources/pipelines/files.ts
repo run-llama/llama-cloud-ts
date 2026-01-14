@@ -254,7 +254,7 @@ export namespace FileCreateParams {
 
 export interface FileUpdateParams {
   /**
-   * Path param:
+   * Path param
    */
   pipeline_id: string;
 

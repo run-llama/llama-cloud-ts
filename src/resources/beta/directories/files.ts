@@ -395,17 +395,17 @@ export interface FileUploadResponse {
 
 export interface FileUpdateParams {
   /**
-   * Path param:
+   * Path param
    */
   path_directory_id: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -443,17 +443,17 @@ export interface FileListParams extends PaginatedClassifyJobsParams {
 
 export interface FileDeleteParams {
   /**
-   * Path param:
+   * Path param
    */
   directory_id: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 }
@@ -465,12 +465,12 @@ export interface FileAddParams {
   file_id: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -489,49 +489,49 @@ export interface FileAddParams {
 
 export interface FileGetParams {
   /**
-   * Path param:
+   * Path param
    */
   directory_id: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 }
 
 export interface FileUploadParams {
   /**
-   * Body param:
+   * Body param
    */
   upload_file: Uploadable;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
   /**
-   * Body param:
+   * Body param
    */
   display_name?: string | null;
 
   /**
-   * Body param:
+   * Body param
    */
   external_file_id?: string | null;
 
   /**
-   * Body param:
+   * Body param
    */
   unique_id?: string | null;
 }

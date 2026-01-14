@@ -160,7 +160,7 @@ export interface DataSourceCreateParams {
   name: string;
 
   /**
-   * Body param:
+   * Body param
    */
   source_type:
     | 'S3'
@@ -176,12 +176,12 @@ export interface DataSourceCreateParams {
     | 'BOX';
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 

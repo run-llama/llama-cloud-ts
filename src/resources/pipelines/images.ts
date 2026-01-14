@@ -131,39 +131,39 @@ export namespace ImageListPageScreenshotsResponse {
 
 export interface ImageGetPageFigureParams {
   /**
-   * Path param:
+   * Path param
    */
   id: string;
 
   /**
-   * Path param:
+   * Path param
    */
   page_index: number;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 }
 
 export interface ImageGetPageScreenshotParams {
   /**
-   * Path param:
+   * Path param
    */
   id: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 }

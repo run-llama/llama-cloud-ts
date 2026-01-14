@@ -182,17 +182,17 @@ export interface AgentDataSearchResponse {
 
 export interface AgentDataUpdateParams {
   /**
-   * Body param:
+   * Body param
    */
   data: { [key: string]: unknown };
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 }
@@ -205,27 +205,27 @@ export interface AgentDataDeleteParams {
 
 export interface AgentDataAgentDataParams {
   /**
-   * Body param:
+   * Body param
    */
   data: { [key: string]: unknown };
 
   /**
-   * Body param:
+   * Body param
    */
   deployment_name: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
   /**
-   * Body param:
+   * Body param
    */
   collection?: string;
 }
@@ -237,12 +237,12 @@ export interface AgentDataAggregateParams {
   deployment_name: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -326,12 +326,12 @@ export interface AgentDataDeleteByQueryParams {
   deployment_name: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -378,12 +378,12 @@ export interface AgentDataSearchParams {
   deployment_name: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 

@@ -723,6 +723,8 @@ export interface LlamaParseParameters {
 
   ignore_document_elements_for_layout_detection?: boolean | null;
 
+  images_to_save?: Array<'screenshot' | 'embedded' | 'layout'> | null;
+
   inline_images_in_markdown?: boolean | null;
 
   input_s3_path?: string | null;
@@ -1733,17 +1735,17 @@ export type PipelineListResponse = Array<Pipeline>;
 
 export interface PipelineCreateParams {
   /**
-   * Body param:
+   * Body param
    */
   name: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -1759,7 +1761,7 @@ export interface PipelineCreateParams {
   data_sink_id?: string | null;
 
   /**
-   * Body param:
+   * Body param
    */
   embedding_config?:
     | AzureOpenAIEmbeddingConfig
@@ -1829,12 +1831,12 @@ export interface PipelineRetrieveParams {
   query: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -1845,7 +1847,7 @@ export interface PipelineRetrieveParams {
   alpha?: number | null;
 
   /**
-   * Body param:
+   * Body param
    */
   class_name?: string;
 
@@ -2006,17 +2008,17 @@ export interface PipelineGetStatusParams {
 
 export interface PipelineUpsertParams {
   /**
-   * Body param:
+   * Body param
    */
   name: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -2032,7 +2034,7 @@ export interface PipelineUpsertParams {
   data_sink_id?: string | null;
 
   /**
-   * Body param:
+   * Body param
    */
   embedding_config?:
     | AzureOpenAIEmbeddingConfig

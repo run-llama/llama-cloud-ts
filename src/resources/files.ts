@@ -55,10 +55,14 @@ export class Files extends APIResource {
   /**
    * Query files with flexible filtering and pagination.
    *
+   * **Deprecated**: Use GET /files instead for listing files with query parameters.
+   *
    * Args: request: The query request with filters and pagination project: Validated
    * project from dependency db: Database session
    *
    * Returns: Paginated response with files
+   *
+   * @deprecated
    */
   query(params: FileQueryParams, options?: RequestOptions): APIPromise<FileQueryResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -342,12 +346,12 @@ export interface FileCreateParams {
   purpose: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -373,12 +377,12 @@ export interface FileGetParams {
 
 export interface FileQueryParams {
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 

@@ -184,7 +184,7 @@ export type DataSourceUpdateDataSourcesResponse = Array<PipelineDataSource>;
 
 export interface DataSourceUpdateParams {
   /**
-   * Path param:
+   * Path param
    */
   pipeline_id: string;
 
@@ -200,12 +200,12 @@ export interface DataSourceGetStatusParams {
 
 export interface DataSourceSyncParams {
   /**
-   * Path param:
+   * Path param
    */
   pipeline_id: string;
 
   /**
-   * Body param:
+   * Body param
    */
   pipeline_file_ids?: Array<string> | null;
 }

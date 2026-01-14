@@ -277,14 +277,14 @@ export namespace JobGetResultsResponse {
     classify_job_id: string;
 
     /**
-     * The ID of the classified file
-     */
-    file_id: string;
-
-    /**
      * Creation datetime
      */
     created_at?: string | null;
+
+    /**
+     * The ID of the classified file
+     */
+    file_id?: string | null;
 
     /**
      * Result of classifying a single file.
@@ -333,12 +333,12 @@ export interface JobCreateParams {
   rules: Array<ClassifierRule>;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 

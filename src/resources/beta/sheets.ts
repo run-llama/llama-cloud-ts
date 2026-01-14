@@ -394,12 +394,12 @@ export interface SheetCreateParams {
   file_id: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -433,27 +433,27 @@ export interface SheetGetParams {
 
 export interface SheetGetResultTableParams {
   /**
-   * Path param:
+   * Path param
    */
   spreadsheet_job_id: string;
 
   /**
-   * Path param:
+   * Path param
    */
   region_id: string;
 
   /**
-   * Query param:
+   * Query param
    */
   expires_at_seconds?: number | null;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 }
