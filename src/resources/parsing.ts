@@ -39,11 +39,7 @@ export class Parsing extends APIResource {
     }
 
     // Otherwise use regular JSON endpoint
-    return this._client.post('/api/v2/parse', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    return this._client.post('/api/v2/parse', { query: { organization_id, project_id }, body, ...options });
   }
 
   /**
@@ -68,7 +64,7 @@ export class Parsing extends APIResource {
     query: ParsingGetParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ParsingGetResponse> {
-    return this._client.get(path`/api/v2alpha1/parse/${jobID}`, { query, ...options });
+    return this._client.get(path`/api/v2/parse/${jobID}`, { query, ...options });
   }
 
   /**
