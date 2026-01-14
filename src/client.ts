@@ -17,15 +17,13 @@ import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
 import {
   AbstractPage,
-  type PaginatedAgentDataAggregateParams,
-  PaginatedAgentDataAggregateResponse,
-  type PaginatedAgentDataSearchParams,
-  PaginatedAgentDataSearchResponse,
   type PaginatedBatchItemsParams,
   PaginatedBatchItemsResponse,
   type PaginatedCloudDocumentsParams,
   PaginatedCloudDocumentsResponse,
   type PaginatedCursorParams,
+  type PaginatedCursorPostParams,
+  PaginatedCursorPostResponse,
   PaginatedCursorResponse,
   type PaginatedExtractRunsParams,
   PaginatedExtractRunsResponse,
@@ -925,16 +923,10 @@ export declare namespace LlamaCloud {
     type PaginatedCursorResponse as PaginatedCursorResponse,
   };
 
-  export import PaginatedAgentDataSearch = Pagination.PaginatedAgentDataSearch;
+  export import PaginatedCursorPost = Pagination.PaginatedCursorPost;
   export {
-    type PaginatedAgentDataSearchParams as PaginatedAgentDataSearchParams,
-    type PaginatedAgentDataSearchResponse as PaginatedAgentDataSearchResponse,
-  };
-
-  export import PaginatedAgentDataAggregate = Pagination.PaginatedAgentDataAggregate;
-  export {
-    type PaginatedAgentDataAggregateParams as PaginatedAgentDataAggregateParams,
-    type PaginatedAgentDataAggregateResponse as PaginatedAgentDataAggregateResponse,
+    type PaginatedCursorPostParams as PaginatedCursorPostParams,
+    type PaginatedCursorPostResponse as PaginatedCursorPostResponse,
   };
 
   export {

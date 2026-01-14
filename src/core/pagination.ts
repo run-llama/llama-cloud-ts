@@ -576,13 +576,13 @@ export class PaginatedCursor<Item> extends AbstractPage<Item> implements Paginat
   }
 }
 
-export interface PaginatedAgentDataSearchResponse<Item> {
+export interface PaginatedCursorPostResponse<Item> {
   items: Array<Item>;
 
   next_page_token: string;
 }
 
-export interface PaginatedAgentDataSearchParams {
+export interface PaginatedCursorPostParams {
   /**
    * Token for retrieving next page
    */
@@ -594,9 +594,9 @@ export interface PaginatedAgentDataSearchParams {
   page_size?: number;
 }
 
-export class PaginatedAgentDataSearch<Item>
+export class PaginatedCursorPost<Item>
   extends AbstractPage<Item>
-  implements PaginatedAgentDataSearchResponse<Item>
+  implements PaginatedCursorPostResponse<Item>
 {
   items: Array<Item>;
 
@@ -605,65 +605,7 @@ export class PaginatedAgentDataSearch<Item>
   constructor(
     client: LlamaCloud,
     response: Response,
-    body: PaginatedAgentDataSearchResponse<Item>,
-    options: FinalRequestOptions,
-  ) {
-    super(client, response, body, options);
-
-    this.items = body.items || [];
-    this.next_page_token = body.next_page_token || '';
-  }
-
-  getPaginatedItems(): Item[] {
-    return this.items ?? [];
-  }
-
-  nextPageRequestOptions(): PageRequestOptions | null {
-    const cursor = this.next_page_token;
-    if (!cursor) {
-      return null;
-    }
-
-    return {
-      ...this.options,
-      body: {
-        ...maybeObj(this.options.body),
-        page_token: cursor,
-      },
-    };
-  }
-}
-
-export interface PaginatedAgentDataAggregateResponse<Item> {
-  items: Array<Item>;
-
-  next_page_token: string;
-}
-
-export interface PaginatedAgentDataAggregateParams {
-  /**
-   * Token for retrieving next page
-   */
-  page_token?: string;
-
-  /**
-   * Maximum number of items to return
-   */
-  page_size?: number;
-}
-
-export class PaginatedAgentDataAggregate<Item>
-  extends AbstractPage<Item>
-  implements PaginatedAgentDataAggregateResponse<Item>
-{
-  items: Array<Item>;
-
-  next_page_token: string;
-
-  constructor(
-    client: LlamaCloud,
-    response: Response,
-    body: PaginatedAgentDataAggregateResponse<Item>,
+    body: PaginatedCursorPostResponse<Item>,
     options: FinalRequestOptions,
   ) {
     super(client, response, body, options);

@@ -5,7 +5,6 @@ export {
   type AgentDataDeleteResponse,
   type AgentDataAggregateResponse,
   type AgentDataDeleteByQueryResponse,
-  type AgentDataSearchResponse,
   type AgentDataUpdateParams,
   type AgentDataDeleteParams,
   type AgentDataAgentDataParams,
@@ -13,6 +12,8 @@ export {
   type AgentDataDeleteByQueryParams,
   type AgentDataGetParams,
   type AgentDataSearchParams,
+  type AgentDataAggregateResponsesPaginatedCursorPost,
+  type AgentDataPaginatedCursorPost,
 } from './agent-data';
 export {
   Batch,
@@ -45,11 +46,12 @@ export {
   type ParseConfiguration,
   type ParseConfigurationCreate,
   type ParseConfigurationQueryResponse,
+  type ParseConfigurationCreateParams,
   type ParseConfigurationUpdateParams,
+  type ParseConfigurationListParams,
   type ParseConfigurationDeleteParams,
   type ParseConfigurationGetParams,
-  type ParseConfigurationGetParseConfigurationsParams,
-  type ParseConfigurationParseConfigurationsParams,
+  type ParseConfigurationsPaginatedCursor,
 } from './parse-configurations';
 export {
   Sheets,
