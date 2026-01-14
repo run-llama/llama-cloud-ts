@@ -22,9 +22,7 @@ async function parseDoc() {
     version: 'latest',
     output_options: {
       // Enable extraction of page screenshots
-      screenshots: { enable: true },
-      // Skip extraction of embedded images
-      embedded_images: { enable: false },
+      images_to_save: ['screenshot'],
     },
     expand: ['images_content_metadata'],
   });
