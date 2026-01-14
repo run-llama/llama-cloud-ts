@@ -94,6 +94,52 @@ export interface BBox {
  */
 export type FailPageMode = 'raw_text' | 'blank_page' | 'error_message';
 
+export interface ListItem {
+  /**
+   * List of nested text or list items
+   */
+  items: Array<ListItem.TextItem | ListItem>;
+
+  /**
+   * Whether the list is ordered or unordered
+   */
+  ordered: boolean;
+
+  /**
+   * List of bounding boxes
+   */
+  bBox?: Array<BBox> | null;
+
+  /**
+   * List item type
+   */
+  type?: 'list';
+}
+
+export namespace ListItem {
+  export interface TextItem {
+    /**
+     * Markdown representation preserving formatting
+     */
+    md: string;
+
+    /**
+     * Text content
+     */
+    value: string;
+
+    /**
+     * List of bounding boxes
+     */
+    bBox?: Array<ParsingAPI.BBox> | null;
+
+    /**
+     * Text item type
+     */
+    type?: 'text';
+  }
+}
+
 /**
  * Enum for supported file extensions.
  */
@@ -517,7 +563,7 @@ export namespace ParsingGetResponse {
       items: Array<
         | StructuredResultPage.TextItem
         | StructuredResultPage.HeadingItem
-        | StructuredResultPage.ListItem
+        | ParsingAPI.ListItem
         | StructuredResultPage.CodeItem
         | StructuredResultPage.TableItem
         | StructuredResultPage.ImageItem
@@ -593,52 +639,6 @@ export namespace ParsingGetResponse {
          * Heading item type
          */
         type?: 'heading';
-      }
-
-      export interface ListItem {
-        /**
-         * List of nested text or list items
-         */
-        items: Array<ListItem.TextItem | unknown>;
-
-        /**
-         * Whether the list is ordered or unordered
-         */
-        ordered: boolean;
-
-        /**
-         * List of bounding boxes
-         */
-        bBox?: Array<ParsingAPI.BBox> | null;
-
-        /**
-         * List item type
-         */
-        type?: 'list';
-      }
-
-      export namespace ListItem {
-        export interface TextItem {
-          /**
-           * Markdown representation preserving formatting
-           */
-          md: string;
-
-          /**
-           * Text content
-           */
-          value: string;
-
-          /**
-           * List of bounding boxes
-           */
-          bBox?: Array<ParsingAPI.BBox> | null;
-
-          /**
-           * Text item type
-           */
-          type?: 'text';
-        }
       }
 
       export interface CodeItem {
@@ -1802,6 +1802,7 @@ export declare namespace Parsing {
   export {
     type BBox as BBox,
     type FailPageMode as FailPageMode,
+    type ListItem as ListItem,
     type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
     type ParsingJob as ParsingJob,
     type ParsingLanguages as ParsingLanguages,

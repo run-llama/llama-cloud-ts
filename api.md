@@ -255,6 +255,7 @@ Types:
 
 - <code><a href="./src/resources/parsing.ts">BBox</a></code>
 - <code><a href="./src/resources/parsing.ts">FailPageMode</a></code>
+- <code><a href="./src/resources/parsing.ts">ListItem</a></code>
 - <code><a href="./src/resources/parsing.ts">LlamaParseSupportedFileExtensions</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingJob</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingLanguages</a></code>
