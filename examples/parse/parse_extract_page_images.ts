@@ -22,7 +22,7 @@ async function parseDoc() {
     version: 'latest',
     output_options: {
       // Enable extraction of page screenshots
-      images_to_save: ['screenshot']
+      images_to_save: ['screenshot'],
     },
     expand: ['images_content_metadata'],
   });
