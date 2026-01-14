@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.13.1 (2026-01-14)
+
+Full Changelog: [v0.13.0...v0.13.1](https://github.com/run-llama/llama-cloud-ts/compare/v0.13.0...v0.13.1)
+
+### Chores
+
+* configure new SDK language ([c997afd](https://github.com/run-llama/llama-cloud-ts/commit/c997afd2d11ca230a094a868ce86f87b31c0ef3f))
+* **internal:** configure MCP Server hosting ([3388583](https://github.com/run-llama/llama-cloud-ts/commit/33885835e3c033b4cdf8c19cd2d96933154d44df))
+
 ## 0.13.0 (2026-01-10)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.12.0...v0.13.0)
