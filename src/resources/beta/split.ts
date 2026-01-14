@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
-import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../../core/pagination';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -27,8 +27,8 @@ export class Split extends APIResource {
   list(
     query: SplitListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<SplitListResponsesPaginatedClassifyJobs, SplitListResponse> {
-    return this._client.getAPIList('/api/v1/beta/split/jobs', PaginatedClassifyJobs<SplitListResponse>, {
+  ): PagePromise<SplitListResponsesPaginatedCursor, SplitListResponse> {
+    return this._client.getAPIList('/api/v1/beta/split/jobs', PaginatedCursor<SplitListResponse>, {
       query,
       ...options,
     });
@@ -49,7 +49,7 @@ export class Split extends APIResource {
   }
 }
 
-export type SplitListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<SplitListResponse>;
+export type SplitListResponsesPaginatedCursor = PaginatedCursor<SplitListResponse>;
 
 /**
  * Category definition for document splitting.
@@ -319,7 +319,7 @@ export namespace SplitCreateParams {
   }
 }
 
-export interface SplitListParams extends PaginatedClassifyJobsParams {
+export interface SplitListParams extends PaginatedCursorParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -340,7 +340,7 @@ export declare namespace Split {
     type SplitCreateResponse as SplitCreateResponse,
     type SplitListResponse as SplitListResponse,
     type SplitGetResponse as SplitGetResponse,
-    type SplitListResponsesPaginatedClassifyJobs as SplitListResponsesPaginatedClassifyJobs,
+    type SplitListResponsesPaginatedCursor as SplitListResponsesPaginatedCursor,
     type SplitCreateParams as SplitCreateParams,
     type SplitListParams as SplitListParams,
     type SplitGetParams as SplitGetParams,

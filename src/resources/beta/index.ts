@@ -38,7 +38,7 @@ export {
   type DirectoryListParams,
   type DirectoryDeleteParams,
   type DirectoryGetParams,
-  type DirectoryListResponsesPaginatedClassifyJobs,
+  type DirectoryListResponsesPaginatedCursor,
 } from './directories/index';
 export {
   ParseConfigurations,
@@ -61,7 +61,7 @@ export {
   type SheetDeleteJobParams,
   type SheetGetParams,
   type SheetGetResultTableParams,
-  type SheetsJobsPaginatedClassifyJobs,
+  type SheetsJobsPaginatedCursor,
 } from './sheets';
 export {
   Split,
@@ -75,5 +75,5 @@ export {
   type SplitCreateParams,
   type SplitListParams,
   type SplitGetParams,
-  type SplitListResponsesPaginatedClassifyJobs,
+  type SplitListResponsesPaginatedCursor,
 } from './split';

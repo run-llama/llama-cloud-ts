@@ -2,11 +2,7 @@
 
 import { APIResource } from '../../../core/resource';
 import { APIPromise } from '../../../core/api-promise';
-import {
-  PagePromise,
-  PaginatedClassifyJobs,
-  type PaginatedClassifyJobsParams,
-} from '../../../core/pagination';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../../core/pagination';
 import { type Uploadable } from '../../../core/uploads';
 import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
@@ -44,10 +40,10 @@ export class Files extends APIResource {
     directoryID: string,
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<FileListResponsesPaginatedClassifyJobs, FileListResponse> {
+  ): PagePromise<FileListResponsesPaginatedCursor, FileListResponse> {
     return this._client.getAPIList(
       path`/api/v1/beta/directories/${directoryID}/files`,
-      PaginatedClassifyJobs<FileListResponse>,
+      PaginatedCursor<FileListResponse>,
       { query, ...options },
     );
   }
@@ -116,7 +112,7 @@ export class Files extends APIResource {
   }
 }
 
-export type FileListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<FileListResponse>;
+export type FileListResponsesPaginatedCursor = PaginatedCursor<FileListResponse>;
 
 /**
  * API response schema for a directory file.
@@ -425,7 +421,7 @@ export interface FileUpdateParams {
   unique_id?: string | null;
 }
 
-export interface FileListParams extends PaginatedClassifyJobsParams {
+export interface FileListParams extends PaginatedCursorParams {
   display_name?: string | null;
 
   display_name_contains?: string | null;
@@ -543,7 +539,7 @@ export declare namespace Files {
     type FileAddResponse as FileAddResponse,
     type FileGetResponse as FileGetResponse,
     type FileUploadResponse as FileUploadResponse,
-    type FileListResponsesPaginatedClassifyJobs as FileListResponsesPaginatedClassifyJobs,
+    type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,

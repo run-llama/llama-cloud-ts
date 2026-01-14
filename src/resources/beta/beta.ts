@@ -38,7 +38,7 @@ import {
   SheetListParams,
   Sheets,
   SheetsJob,
-  SheetsJobsPaginatedClassifyJobs,
+  SheetsJobsPaginatedCursor,
   SheetsParsingConfig,
 } from './sheets';
 import * as SplitAPI from './split';
@@ -52,7 +52,7 @@ import {
   SplitGetResponse,
   SplitListParams,
   SplitListResponse,
-  SplitListResponsesPaginatedClassifyJobs,
+  SplitListResponsesPaginatedCursor,
   SplitResultResponse,
   SplitSegmentResponse,
 } from './split';
@@ -79,7 +79,7 @@ import {
   DirectoryGetResponse,
   DirectoryListParams,
   DirectoryListResponse,
-  DirectoryListResponsesPaginatedClassifyJobs,
+  DirectoryListResponsesPaginatedCursor,
   DirectoryUpdateParams,
   DirectoryUpdateResponse,
 } from './directories/directories';
@@ -133,7 +133,7 @@ export declare namespace Beta {
     type SheetsJob as SheetsJob,
     type SheetsParsingConfig as SheetsParsingConfig,
     type SheetDeleteJobResponse as SheetDeleteJobResponse,
-    type SheetsJobsPaginatedClassifyJobs as SheetsJobsPaginatedClassifyJobs,
+    type SheetsJobsPaginatedCursor as SheetsJobsPaginatedCursor,
     type SheetCreateParams as SheetCreateParams,
     type SheetListParams as SheetListParams,
     type SheetDeleteJobParams as SheetDeleteJobParams,
@@ -147,7 +147,7 @@ export declare namespace Beta {
     type DirectoryUpdateResponse as DirectoryUpdateResponse,
     type DirectoryListResponse as DirectoryListResponse,
     type DirectoryGetResponse as DirectoryGetResponse,
-    type DirectoryListResponsesPaginatedClassifyJobs as DirectoryListResponsesPaginatedClassifyJobs,
+    type DirectoryListResponsesPaginatedCursor as DirectoryListResponsesPaginatedCursor,
     type DirectoryCreateParams as DirectoryCreateParams,
     type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryListParams as DirectoryListParams,
@@ -177,7 +177,7 @@ export declare namespace Beta {
     type SplitCreateResponse as SplitCreateResponse,
     type SplitListResponse as SplitListResponse,
     type SplitGetResponse as SplitGetResponse,
-    type SplitListResponsesPaginatedClassifyJobs as SplitListResponsesPaginatedClassifyJobs,
+    type SplitListResponsesPaginatedCursor as SplitListResponsesPaginatedCursor,
     type SplitCreateParams as SplitCreateParams,
     type SplitListParams as SplitListParams,
     type SplitGetParams as SplitGetParams,

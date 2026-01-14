@@ -10,7 +10,7 @@ import {
   FileGetResponse,
   FileListParams,
   FileListResponse,
-  FileListResponsesPaginatedClassifyJobs,
+  FileListResponsesPaginatedCursor,
   FileUpdateParams,
   FileUpdateResponse,
   FileUploadParams,
@@ -18,11 +18,7 @@ import {
   Files,
 } from './files';
 import { APIPromise } from '../../../core/api-promise';
-import {
-  PagePromise,
-  PaginatedClassifyJobs,
-  type PaginatedClassifyJobsParams,
-} from '../../../core/pagination';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../../core/pagination';
 import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -67,8 +63,8 @@ export class Directories extends APIResource {
   list(
     query: DirectoryListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<DirectoryListResponsesPaginatedClassifyJobs, DirectoryListResponse> {
-    return this._client.getAPIList('/api/v1/beta/directories', PaginatedClassifyJobs<DirectoryListResponse>, {
+  ): PagePromise<DirectoryListResponsesPaginatedCursor, DirectoryListResponse> {
+    return this._client.getAPIList('/api/v1/beta/directories', PaginatedCursor<DirectoryListResponse>, {
       query,
       ...options,
     });
@@ -102,7 +98,7 @@ export class Directories extends APIResource {
   }
 }
 
-export type DirectoryListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<DirectoryListResponse>;
+export type DirectoryListResponsesPaginatedCursor = PaginatedCursor<DirectoryListResponse>;
 
 /**
  * API response schema for a directory.
@@ -333,7 +329,7 @@ export interface DirectoryUpdateParams {
   name?: string | null;
 }
 
-export interface DirectoryListParams extends PaginatedClassifyJobsParams {
+export interface DirectoryListParams extends PaginatedCursorParams {
   data_source_id?: string | null;
 
   include_deleted?: boolean;
@@ -365,7 +361,7 @@ export declare namespace Directories {
     type DirectoryUpdateResponse as DirectoryUpdateResponse,
     type DirectoryListResponse as DirectoryListResponse,
     type DirectoryGetResponse as DirectoryGetResponse,
-    type DirectoryListResponsesPaginatedClassifyJobs as DirectoryListResponsesPaginatedClassifyJobs,
+    type DirectoryListResponsesPaginatedCursor as DirectoryListResponsesPaginatedCursor,
     type DirectoryCreateParams as DirectoryCreateParams,
     type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryListParams as DirectoryListParams,
@@ -380,7 +376,7 @@ export declare namespace Directories {
     type FileAddResponse as FileAddResponse,
     type FileGetResponse as FileGetResponse,
     type FileUploadResponse as FileUploadResponse,
-    type FileListResponsesPaginatedClassifyJobs as FileListResponsesPaginatedClassifyJobs,
+    type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,

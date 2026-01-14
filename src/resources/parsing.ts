@@ -3,7 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as ParsingAPI from './parsing';
 import { APIPromise } from '../core/api-promise';
-import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../core/pagination';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -23,8 +23,8 @@ export class Parsing extends APIResource {
   list(
     query: ParsingListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<ParsingListResponsesPaginatedClassifyJobs, ParsingListResponse> {
-    return this._client.getAPIList('/api/v2/parse', PaginatedClassifyJobs<ParsingListResponse>, {
+  ): PagePromise<ParsingListResponsesPaginatedCursor, ParsingListResponse> {
+    return this._client.getAPIList('/api/v2/parse', PaginatedCursor<ParsingListResponse>, {
       query,
       ...options,
     });
@@ -42,7 +42,7 @@ export class Parsing extends APIResource {
   }
 }
 
-export type ParsingListResponsesPaginatedClassifyJobs = PaginatedClassifyJobs<ParsingListResponse>;
+export type ParsingListResponsesPaginatedCursor = PaginatedCursor<ParsingListResponse>;
 
 /**
  * Bounding box with coordinates and optional metadata.
@@ -1768,7 +1768,7 @@ export namespace ParsingCreateParams {
   }
 }
 
-export interface ParsingListParams extends PaginatedClassifyJobsParams {
+export interface ParsingListParams extends PaginatedCursorParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -1811,7 +1811,7 @@ export declare namespace Parsing {
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
     type ParsingGetResponse as ParsingGetResponse,
-    type ParsingListResponsesPaginatedClassifyJobs as ParsingListResponsesPaginatedClassifyJobs,
+    type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingListParams as ParsingListParams,
     type ParsingGetParams as ParsingGetParams,
