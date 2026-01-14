@@ -20,11 +20,8 @@ Use the Llama Cloud MCP Server to enable AI assistants to interact with this API
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:run-llama/llama-cloud-ts.git
+npm install @llamaindex/llama-cloud
 ```
-
-> [!NOTE]
-> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install @llamaindex/llama-cloud`
 
 ## Usage
 
