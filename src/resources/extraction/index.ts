@@ -15,11 +15,9 @@ export {
   type ExtractJob,
   type WebhookConfiguration,
   type JobListResponse,
-  type JobBatchResponse,
   type JobGetResultResponse,
   type JobCreateParams,
   type JobListParams,
-  type JobBatchParams,
   type JobFileParams,
   type JobGetResultParams,
 } from './jobs';

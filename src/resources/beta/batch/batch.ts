@@ -409,12 +409,12 @@ export interface BatchCreateParams {
   job_config: BatchCreateParams.BatchParseJobRecordCreate | JobsAPI.ClassifyJob;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -443,7 +443,7 @@ export interface BatchCreateParams {
   page_size?: number;
 
   /**
-   * Header param:
+   * Header param
    */
   'temporal-namespace'?: string;
 }
@@ -621,6 +621,8 @@ export namespace BatchCreateParams {
       http_proxy?: string | null;
 
       ignore_document_elements_for_layout_detection?: boolean | null;
+
+      images_to_save?: Array<'screenshot' | 'embedded' | 'layout'> | null;
 
       inline_images_in_markdown?: boolean | null;
 
@@ -839,12 +841,12 @@ export interface BatchListParams extends PaginatedBatchItemsParams {
 
 export interface BatchCancelParams {
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -854,7 +856,7 @@ export interface BatchCancelParams {
   reason?: string | null;
 
   /**
-   * Header param:
+   * Header param
    */
   'temporal-namespace'?: string;
 }

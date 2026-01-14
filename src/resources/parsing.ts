@@ -26,7 +26,7 @@ export class Parsing extends APIResource {
       const configuration = JSON.stringify(body);
 
       return this._client.post(
-        '/api/v2alpha1/parse/upload',
+        '/api/v2/parse',
         multipartFormRequestOptions(
           {
             query: { organization_id, project_id },
@@ -39,11 +39,7 @@ export class Parsing extends APIResource {
     }
 
     // Otherwise use regular JSON endpoint
-    return this._client.post('/api/v2alpha1/parse', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    return this._client.post('/api/v2/parse', { query: { organization_id, project_id }, body, ...options });
   }
 
   /**
@@ -54,7 +50,7 @@ export class Parsing extends APIResource {
     query: ParsingListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<ParsingListResponsesPaginatedClassifyJobs, ParsingListResponse> {
-    return this._client.getAPIList('/api/v2alpha1/parse', PaginatedClassifyJobs<ParsingListResponse>, {
+    return this._client.getAPIList('/api/v2/parse', PaginatedClassifyJobs<ParsingListResponse>, {
       query,
       ...options,
     });
@@ -68,7 +64,7 @@ export class Parsing extends APIResource {
     query: ParsingGetParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ParsingGetResponse> {
-    return this._client.get(path`/api/v2alpha1/parse/${jobID}`, { query, ...options });
+    return this._client.get(path`/api/v2/parse/${jobID}`, { query, ...options });
   }
 
   /**
@@ -93,6 +89,7 @@ export class Parsing extends APIResource {
    * // Create a parse job
    * const job = await client.parsing.create({
    *   tier: 'fast',
+   *   version: 'latest',
    *   source_url: 'https://example.com/document.pdf'
    * });
    *
@@ -160,6 +157,7 @@ export class Parsing extends APIResource {
    * // One-shot: parse, wait for completion, and get result
    * const result = await client.parsing.parse({
    *   tier: 'fast',
+   *   version: 'latest',
    *   source_url: 'https://example.com/document.pdf',
    *   expand: ['text', 'markdown']
    * }, { verbose: true });
@@ -176,6 +174,7 @@ export class Parsing extends APIResource {
    *
    * const result = await client.parsing.parse({
    *   tier: 'fast',
+   *   version: 'latest',
    *   upload_file: fs.createReadStream('./document.pdf'),
    *   expand: ['text', 'markdown']
    * });
@@ -267,6 +266,52 @@ export interface BBox {
  */
 export type FailPageMode = 'raw_text' | 'blank_page' | 'error_message';
 
+export interface ListItem {
+  /**
+   * List of nested text or list items
+   */
+  items: Array<ListItem.TextItem | ListItem>;
+
+  /**
+   * Whether the list is ordered or unordered
+   */
+  ordered: boolean;
+
+  /**
+   * List of bounding boxes
+   */
+  bBox?: Array<BBox> | null;
+
+  /**
+   * List item type
+   */
+  type?: 'list';
+}
+
+export namespace ListItem {
+  export interface TextItem {
+    /**
+     * Markdown representation preserving formatting
+     */
+    md: string;
+
+    /**
+     * Text content
+     */
+    value: string;
+
+    /**
+     * List of bounding boxes
+     */
+    bBox?: Array<ParsingAPI.BBox> | null;
+
+    /**
+     * Text item type
+     */
+    type?: 'text';
+  }
+}
+
 /**
  * Enum for supported file extensions.
  */
@@ -305,6 +350,10 @@ export type LlamaParseSupportedFileExtensions =
   | '.sxi'
   | '.sti'
   | '.epub'
+  | '.vsd'
+  | '.vsdx'
+  | '.vdx'
+  | '.vsdm'
   | '.jpg'
   | '.jpeg'
   | '.png'
@@ -686,7 +735,7 @@ export namespace ParsingGetResponse {
       items: Array<
         | StructuredResultPage.TextItem
         | StructuredResultPage.HeadingItem
-        | StructuredResultPage.ListItem
+        | ParsingAPI.ListItem
         | StructuredResultPage.CodeItem
         | StructuredResultPage.TableItem
         | StructuredResultPage.ImageItem
@@ -694,9 +743,19 @@ export namespace ParsingGetResponse {
       >;
 
       /**
+       * Height of the page in points
+       */
+      page_height: number;
+
+      /**
        * Page number of the document
        */
       page_number: number;
+
+      /**
+       * Width of the page in points
+       */
+      page_width: number;
 
       /**
        * Success indicator
@@ -752,52 +811,6 @@ export namespace ParsingGetResponse {
          * Heading item type
          */
         type?: 'heading';
-      }
-
-      export interface ListItem {
-        /**
-         * List of nested text or list items
-         */
-        items: Array<ListItem.TextItem | unknown>;
-
-        /**
-         * Whether the list is ordered or unordered
-         */
-        ordered: boolean;
-
-        /**
-         * List of bounding boxes
-         */
-        bBox?: Array<ParsingAPI.BBox> | null;
-
-        /**
-         * List item type
-         */
-        type?: 'list';
-      }
-
-      export namespace ListItem {
-        export interface TextItem {
-          /**
-           * Markdown representation preserving formatting
-           */
-          md: string;
-
-          /**
-           * Text content
-           */
-          value: string;
-
-          /**
-           * List of bounding boxes
-           */
-          bBox?: Array<ParsingAPI.BBox> | null;
-
-          /**
-           * Text item type
-           */
-          type?: 'text';
-        }
       }
 
       export interface CodeItem {
@@ -1072,12 +1085,17 @@ export interface ParsingCreateParams {
   tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';
 
   /**
-   * Query param:
+   * Body param: Version of the tier configuration
+   */
+  version: '2026-01-08' | '2025-12-31' | '2025-12-18' | '2025-12-11' | 'latest' | (string & {});
+
+  /**
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -1145,11 +1163,6 @@ export interface ParsingCreateParams {
    * Body param: Source URL to fetch document from
    */
   source_url?: string | null;
-
-  /**
-   * Body param: Version of the tier configuration
-   */
-  version?: '2026-01-08' | '2025-12-31' | '2025-12-18' | '2025-12-11' | 'latest' | (string & {});
 
   /**
    * Body param: List of webhook configurations for notifications
@@ -1275,11 +1288,6 @@ export namespace ParsingCreateParams {
    */
   export interface OutputOptions {
     /**
-     * Embedded image extraction options
-     */
-    embedded_images?: OutputOptions.EmbeddedImages;
-
-    /**
      * PDF export options
      */
     export_pdf?: OutputOptions.ExportPdf;
@@ -1290,14 +1298,16 @@ export namespace ParsingCreateParams {
     extract_printed_page_number?: boolean | null;
 
     /**
+     * Image categories to save: 'screenshot' (full page), 'embedded' (images in
+     * document), 'layout' (cropped images from layout detection). If not set or empty,
+     * no images are saved.
+     */
+    images_to_save?: Array<'screenshot' | 'embedded' | 'layout'> | null;
+
+    /**
      * Markdown output formatting options
      */
     markdown?: OutputOptions.Markdown;
-
-    /**
-     * Screenshot generation options
-     */
-    screenshots?: OutputOptions.Screenshots;
 
     /**
      * Spatial text output options
@@ -1311,16 +1321,6 @@ export namespace ParsingCreateParams {
   }
 
   export namespace OutputOptions {
-    /**
-     * Embedded image extraction options
-     */
-    export interface EmbeddedImages {
-      /**
-       * Whether this option is enabled
-       */
-      enable?: boolean | null;
-    }
-
     /**
      * PDF export options
      */
@@ -1381,16 +1381,6 @@ export namespace ParsingCreateParams {
          */
         output_tables_as_markdown?: boolean | null;
       }
-    }
-
-    /**
-     * Screenshot generation options
-     */
-    export interface Screenshots {
-      /**
-       * Whether this option is enabled
-       */
-      enable?: boolean | null;
     }
 
     /**
@@ -1536,6 +1526,12 @@ export namespace ParsingCreateParams {
      * Configuration for auto mode parsing with triggers and parsing options
      */
     auto_mode_configuration?: Array<ProcessingOptions.AutoModeConfiguration> | null;
+
+    /**
+     * Whether to disable heuristics like outlined table extraction and adaptive long
+     * table handling
+     */
+    disable_heuristics?: boolean | null;
 
     /**
      * Options for ignoring specific text types
@@ -1978,6 +1974,7 @@ export declare namespace Parsing {
   export {
     type BBox as BBox,
     type FailPageMode as FailPageMode,
+    type ListItem as ListItem,
     type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
     type ParsingJob as ParsingJob,
     type ParsingLanguages as ParsingLanguages,

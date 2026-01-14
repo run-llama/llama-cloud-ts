@@ -213,12 +213,12 @@ export interface ParseConfigurationQueryResponse {
 
 export interface ParseConfigurationUpdateParams {
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -274,12 +274,12 @@ export interface ParseConfigurationParseConfigurationsParams {
   version: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 

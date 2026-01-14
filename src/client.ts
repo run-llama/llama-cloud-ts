@@ -73,6 +73,7 @@ import {
 import {
   BBox,
   FailPageMode,
+  ListItem,
   LlamaParseSupportedFileExtensions,
   Parsing,
   ParsingCreateParams,
@@ -1045,6 +1046,7 @@ export declare namespace LlamaCloud {
     Parsing as Parsing,
     type BBox as BBox,
     type FailPageMode as FailPageMode,
+    type ListItem as ListItem,
     type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
     type ParsingJob as ParsingJob,
     type ParsingLanguages as ParsingLanguages,

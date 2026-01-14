@@ -291,12 +291,12 @@ export interface DirectoryCreateParams {
   name: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -313,12 +313,12 @@ export interface DirectoryCreateParams {
 
 export interface DirectoryUpdateParams {
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 

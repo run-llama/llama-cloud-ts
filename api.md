@@ -255,6 +255,7 @@ Types:
 
 - <code><a href="./src/resources/parsing.ts">BBox</a></code>
 - <code><a href="./src/resources/parsing.ts">FailPageMode</a></code>
+- <code><a href="./src/resources/parsing.ts">ListItem</a></code>
 - <code><a href="./src/resources/parsing.ts">LlamaParseSupportedFileExtensions</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingJob</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingLanguages</a></code>
@@ -263,14 +264,12 @@ Types:
 - <code><a href="./src/resources/parsing.ts">ParsingCreateResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingListResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingGetResponse</a></code>
-- <code><a href="./src/resources/parsing.ts">ParsingUploadFileResponse</a></code>
 
 Methods:
 
-- <code title="post /api/v2alpha1/parse">client.parsing.<a href="./src/resources/parsing.ts">create</a>({ ...params }) -> ParsingCreateResponse</code>
-- <code title="get /api/v2alpha1/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedClassifyJobs</code>
-- <code title="get /api/v2alpha1/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
-- <code title="post /api/v2alpha1/parse/upload">client.parsing.<a href="./src/resources/parsing.ts">uploadFile</a>({ ...params }) -> ParsingUploadFileResponse</code>
+- <code title="post /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">create</a>({ ...params }) -> ParsingCreateResponse</code>
+- <code title="get /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedClassifyJobs</code>
+- <code title="get /api/v2/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
 
 # Classifier
 
@@ -303,14 +302,12 @@ Types:
 - <code><a href="./src/resources/extraction/jobs.ts">ExtractJob</a></code>
 - <code><a href="./src/resources/extraction/jobs.ts">WebhookConfiguration</a></code>
 - <code><a href="./src/resources/extraction/jobs.ts">JobListResponse</a></code>
-- <code><a href="./src/resources/extraction/jobs.ts">JobBatchResponse</a></code>
 - <code><a href="./src/resources/extraction/jobs.ts">JobGetResultResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v1/extraction/jobs">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">create</a>({ ...params }) -> ExtractJob</code>
 - <code title="get /api/v1/extraction/jobs">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">list</a>({ ...params }) -> JobListResponse</code>
-- <code title="post /api/v1/extraction/jobs/batch">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">batch</a>({ ...params }) -> JobBatchResponse</code>
 - <code title="post /api/v1/extraction/jobs/file">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">file</a>({ ...params }) -> ExtractJob</code>
 - <code title="get /api/v1/extraction/jobs/{job_id}">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">get</a>(jobID) -> ExtractJob</code>
 - <code title="get /api/v1/extraction/jobs/{job_id}/result">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">getResult</a>(jobID, { ...params }) -> JobGetResultResponse</code>

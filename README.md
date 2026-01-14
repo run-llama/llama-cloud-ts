@@ -40,8 +40,8 @@ const client = new LlamaCloud({
 
 const parsing = await client.parsing.create({
   tier: 'agentic',
-  file_id: 'abc1234',
   version: 'latest',
+  file_id: 'abc1234',
 });
 
 console.log(parsing.id);

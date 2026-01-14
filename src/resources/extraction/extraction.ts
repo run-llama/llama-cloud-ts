@@ -4,8 +4,6 @@ import { APIResource } from '../../core/resource';
 import * as JobsAPI from './jobs';
 import {
   ExtractJob,
-  JobBatchParams,
-  JobBatchResponse,
   JobCreateParams,
   JobFileParams,
   JobGetResultParams,
@@ -136,12 +134,12 @@ export interface ExtractionRunParams {
     | string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 
@@ -195,11 +193,9 @@ export declare namespace Extraction {
     type ExtractJob as ExtractJob,
     type WebhookConfiguration as WebhookConfiguration,
     type JobListResponse as JobListResponse,
-    type JobBatchResponse as JobBatchResponse,
     type JobGetResultResponse as JobGetResultResponse,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
-    type JobBatchParams as JobBatchParams,
     type JobFileParams as JobFileParams,
     type JobGetResultParams as JobGetResultParams,
   };

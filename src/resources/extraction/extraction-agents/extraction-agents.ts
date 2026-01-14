@@ -139,12 +139,12 @@ export interface ExtractionAgentCreateParams {
   name: string;
 
   /**
-   * Query param:
+   * Query param
    */
   organization_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   project_id?: string | null;
 }
