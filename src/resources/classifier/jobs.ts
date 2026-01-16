@@ -3,7 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as ParsingAPI from '../parsing';
 import { APIPromise } from '../../core/api-promise';
-import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../../core/pagination';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 import { pollUntilComplete, PollingOptions } from '../../core/polling';
@@ -29,8 +29,8 @@ export class Jobs extends APIResource {
   list(
     query: JobListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<ClassifyJobsPaginatedClassifyJobs, ClassifyJob> {
-    return this._client.getAPIList('/api/v1/classifier/jobs', PaginatedClassifyJobs<ClassifyJob>, {
+  ): PagePromise<ClassifyJobsPaginatedCursor, ClassifyJob> {
+    return this._client.getAPIList('/api/v1/classifier/jobs', PaginatedCursor<ClassifyJob>, {
       query,
       ...options,
     });
@@ -134,7 +134,7 @@ export class Jobs extends APIResource {
   }
 }
 
-export type ClassifyJobsPaginatedClassifyJobs = PaginatedClassifyJobs<ClassifyJob>;
+export type ClassifyJobsPaginatedCursor = PaginatedCursor<ClassifyJob>;
 
 /**
  * A rule for classifying documents - v0 simplified version.
@@ -353,7 +353,7 @@ export interface JobCreateParams {
   parsing_configuration?: ClassifyParsingConfiguration;
 }
 
-export interface JobListParams extends PaginatedClassifyJobsParams {
+export interface JobListParams extends PaginatedCursorParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -377,7 +377,7 @@ export declare namespace Jobs {
     type ClassifyJob as ClassifyJob,
     type ClassifyParsingConfiguration as ClassifyParsingConfiguration,
     type JobGetResultsResponse as JobGetResultsResponse,
-    type ClassifyJobsPaginatedClassifyJobs as ClassifyJobsPaginatedClassifyJobs,
+    type ClassifyJobsPaginatedCursor as ClassifyJobsPaginatedCursor,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
     type JobGetParams as JobGetParams,

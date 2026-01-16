@@ -7,7 +7,7 @@ import * as JobsAPI from './jobs';
 import {
   ClassifierRule,
   ClassifyJob,
-  ClassifyJobsPaginatedClassifyJobs,
+  ClassifyJobsPaginatedCursor,
   ClassifyParsingConfiguration,
   JobCreateParams,
   JobGetParams,
@@ -83,7 +83,7 @@ export declare namespace Classifier {
     type ClassifyJob as ClassifyJob,
     type ClassifyParsingConfiguration as ClassifyParsingConfiguration,
     type JobGetResultsResponse as JobGetResultsResponse,
-    type ClassifyJobsPaginatedClassifyJobs as ClassifyJobsPaginatedClassifyJobs,
+    type ClassifyJobsPaginatedCursor as ClassifyJobsPaginatedCursor,
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
     type JobGetParams as JobGetParams,

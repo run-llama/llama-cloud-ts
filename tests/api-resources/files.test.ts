@@ -35,6 +35,38 @@ describe('resource files', () => {
   });
 
   // Prism tests are disabled
+  test.skip('list', async () => {
+    const responsePromise = client.files.list();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.files.list(
+        {
+          external_file_id: 'external_file_id',
+          file_ids: ['182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'],
+          file_name: 'file_name',
+          order_by: 'order_by',
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          page_size: 1,
+          page_token: 'page_token',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.files.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();

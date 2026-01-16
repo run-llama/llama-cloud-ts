@@ -5,7 +5,6 @@ export {
   type AgentDataDeleteResponse,
   type AgentDataAggregateResponse,
   type AgentDataDeleteByQueryResponse,
-  type AgentDataSearchResponse,
   type AgentDataUpdateParams,
   type AgentDataDeleteParams,
   type AgentDataAgentDataParams,
@@ -13,6 +12,8 @@ export {
   type AgentDataDeleteByQueryParams,
   type AgentDataGetParams,
   type AgentDataSearchParams,
+  type AgentDataAggregateResponsesPaginatedCursorPost,
+  type AgentDataPaginatedCursorPost,
 } from './agent-data';
 export {
   Batch,
@@ -38,18 +39,19 @@ export {
   type DirectoryListParams,
   type DirectoryDeleteParams,
   type DirectoryGetParams,
-  type DirectoryListResponsesPaginatedClassifyJobs,
+  type DirectoryListResponsesPaginatedCursor,
 } from './directories/index';
 export {
   ParseConfigurations,
   type ParseConfiguration,
   type ParseConfigurationCreate,
   type ParseConfigurationQueryResponse,
+  type ParseConfigurationCreateParams,
   type ParseConfigurationUpdateParams,
+  type ParseConfigurationListParams,
   type ParseConfigurationDeleteParams,
   type ParseConfigurationGetParams,
-  type ParseConfigurationGetParseConfigurationsParams,
-  type ParseConfigurationParseConfigurationsParams,
+  type ParseConfigurationsPaginatedCursor,
 } from './parse-configurations';
 export {
   Sheets,
@@ -61,7 +63,7 @@ export {
   type SheetDeleteJobParams,
   type SheetGetParams,
   type SheetGetResultTableParams,
-  type SheetsJobsPaginatedClassifyJobs,
+  type SheetsJobsPaginatedCursor,
 } from './sheets';
 export {
   Split,
@@ -75,5 +77,5 @@ export {
   type SplitCreateParams,
   type SplitListParams,
   type SplitGetParams,
-  type SplitListResponsesPaginatedClassifyJobs,
+  type SplitListResponsesPaginatedCursor,
 } from './split';

@@ -3,11 +3,29 @@
 import { APIResource } from '../../core/resource';
 import * as PipelinesAPI from '../pipelines/pipelines';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class ParseConfigurations extends APIResource {
+  /**
+   * Create a new parse configuration.
+   *
+   * Args: config_create: Parse configuration creation data project: Validated
+   * project from dependency user: Current user db: Database session
+   *
+   * Returns: The created parse configuration
+   */
+  create(params: ParseConfigurationCreateParams, options?: RequestOptions): APIPromise<ParseConfiguration> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/beta/parse-configurations', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
+
   /**
    * Update a parse configuration.
    *
@@ -26,6 +44,26 @@ export class ParseConfigurations extends APIResource {
     return this._client.put(path`/api/v1/beta/parse-configurations/${configID}`, {
       query: { organization_id, project_id },
       body,
+      ...options,
+    });
+  }
+
+  /**
+   * List parse configurations for the current project.
+   *
+   * Args: project: Validated project from dependency user: Current user db: Database
+   * session page_size: Number of items per page page_token: Token for pagination
+   * name: Filter by configuration name creator: Filter by creator version: Filter by
+   * version
+   *
+   * Returns: Paginated response with parse configurations
+   */
+  list(
+    query: ParseConfigurationListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ParseConfigurationsPaginatedCursor, ParseConfiguration> {
+    return this._client.getAPIList('/api/v1/beta/parse-configurations', PaginatedCursor<ParseConfiguration>, {
+      query,
       ...options,
     });
   }
@@ -64,44 +102,9 @@ export class ParseConfigurations extends APIResource {
   ): APIPromise<ParseConfiguration> {
     return this._client.get(path`/api/v1/beta/parse-configurations/${configID}`, { query, ...options });
   }
-
-  /**
-   * List parse configurations for the current project.
-   *
-   * Args: project: Validated project from dependency user: Current user db: Database
-   * session page_size: Number of items per page page_token: Token for pagination
-   * name: Filter by configuration name creator: Filter by creator version: Filter by
-   * version
-   *
-   * Returns: Paginated response with parse configurations
-   */
-  getParseConfigurations(
-    query: ParseConfigurationGetParseConfigurationsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ParseConfigurationQueryResponse> {
-    return this._client.get('/api/v1/beta/parse-configurations', { query, ...options });
-  }
-
-  /**
-   * Create a new parse configuration.
-   *
-   * Args: config_create: Parse configuration creation data project: Validated
-   * project from dependency user: Current user db: Database session
-   *
-   * Returns: The created parse configuration
-   */
-  parseConfigurations(
-    params: ParseConfigurationParseConfigurationsParams,
-    options?: RequestOptions,
-  ): APIPromise<ParseConfiguration> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/parse-configurations', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
 }
+
+export type ParseConfigurationsPaginatedCursor = PaginatedCursor<ParseConfiguration>;
 
 /**
  * Parse configuration schema.
@@ -211,53 +214,7 @@ export interface ParseConfigurationQueryResponse {
   total_size?: number | null;
 }
 
-export interface ParseConfigurationUpdateParams {
-  /**
-   * Query param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Settings that can be configured for how to use LlamaParse to parse
-   * files within a LlamaCloud pipeline.
-   */
-  parameters?: PipelinesAPI.LlamaParseParameters | null;
-}
-
-export interface ParseConfigurationDeleteParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface ParseConfigurationGetParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface ParseConfigurationGetParseConfigurationsParams {
-  creator?: string | null;
-
-  name?: string | null;
-
-  organization_id?: string | null;
-
-  page_size?: number | null;
-
-  page_token?: string | null;
-
-  project_id?: string | null;
-
-  version?: string | null;
-}
-
-export interface ParseConfigurationParseConfigurationsParams {
+export interface ParseConfigurationCreateParams {
   /**
    * Body param: Name of the parse configuration
    */
@@ -299,15 +256,58 @@ export interface ParseConfigurationParseConfigurationsParams {
   source_type?: string | null;
 }
 
+export interface ParseConfigurationUpdateParams {
+  /**
+   * Query param
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: Settings that can be configured for how to use LlamaParse to parse
+   * files within a LlamaCloud pipeline.
+   */
+  parameters?: PipelinesAPI.LlamaParseParameters | null;
+}
+
+export interface ParseConfigurationListParams extends PaginatedCursorParams {
+  creator?: string | null;
+
+  name?: string | null;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+
+  version?: string | null;
+}
+
+export interface ParseConfigurationDeleteParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface ParseConfigurationGetParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export declare namespace ParseConfigurations {
   export {
     type ParseConfiguration as ParseConfiguration,
     type ParseConfigurationCreate as ParseConfigurationCreate,
     type ParseConfigurationQueryResponse as ParseConfigurationQueryResponse,
+    type ParseConfigurationsPaginatedCursor as ParseConfigurationsPaginatedCursor,
+    type ParseConfigurationCreateParams as ParseConfigurationCreateParams,
     type ParseConfigurationUpdateParams as ParseConfigurationUpdateParams,
+    type ParseConfigurationListParams as ParseConfigurationListParams,
     type ParseConfigurationDeleteParams as ParseConfigurationDeleteParams,
     type ParseConfigurationGetParams as ParseConfigurationGetParams,
-    type ParseConfigurationGetParseConfigurationsParams as ParseConfigurationGetParseConfigurationsParams,
-    type ParseConfigurationParseConfigurationsParams as ParseConfigurationParseConfigurationsParams,
   };
 }

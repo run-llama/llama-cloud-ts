@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
 import { type Uploadable } from '../core/uploads';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -18,6 +19,22 @@ export class Files extends APIResource {
       '/api/v1/beta/files',
       multipartFormRequestOptions({ query: { organization_id, project_id }, body, ...options }, this._client),
     );
+  }
+
+  /**
+   * List files with optional filtering and pagination.
+   *
+   * This endpoint retrieves files for the specified project with support for
+   * filtering by various criteria and cursor-based pagination.
+   */
+  list(
+    query: FileListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<FileListResponsesPaginatedCursor, FileListResponse> {
+    return this._client.getAPIList('/api/v1/beta/files', PaginatedCursor<FileListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -62,7 +79,7 @@ export class Files extends APIResource {
    *
    * Returns: Paginated response with files
    *
-   * @deprecated
+   * @deprecated Use the GET /files endpoint instead
    */
   query(params: FileQueryParams, options?: RequestOptions): APIPromise<FileQueryResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -73,6 +90,8 @@ export class Files extends APIResource {
     });
   }
 }
+
+export type FileListResponsesPaginatedCursor = PaginatedCursor<FileListResponse>;
 
 /**
  * Schema for a file.
@@ -266,6 +285,49 @@ export interface FileCreateResponse {
 }
 
 /**
+ * Schema for a file in the v2 API.
+ */
+export interface FileListResponse {
+  /**
+   * Unique identifier
+   */
+  id: string;
+
+  name: string;
+
+  /**
+   * The ID of the project that the file belongs to
+   */
+  project_id: string;
+
+  /**
+   * The expiration date for the file. Files past this date can be deleted.
+   */
+  expires_at?: string | null;
+
+  /**
+   * The ID of the file in the external system
+   */
+  external_file_id?: string | null;
+
+  /**
+   * File type (e.g. pdf, docx, etc.)
+   */
+  file_type?: string | null;
+
+  /**
+   * The last modified time of the file
+   */
+  last_modified_at?: string | null;
+
+  /**
+   * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
+   * 'split', 'classify', 'sheet')
+   */
+  purpose?: string | null;
+}
+
+/**
  * Response schema for paginated file queries in V2 API.
  */
 export interface FileQueryResponse {
@@ -361,6 +423,33 @@ export interface FileCreateParams {
   external_file_id?: string | null;
 }
 
+export interface FileListParams extends PaginatedCursorParams {
+  /**
+   * Filter by external file ID.
+   */
+  external_file_id?: string | null;
+
+  /**
+   * Filter by specific file IDs.
+   */
+  file_ids?: Array<string> | null;
+
+  /**
+   * Filter by file name (exact match).
+   */
+  file_name?: string | null;
+
+  /**
+   * A comma-separated list of fields to order by, sorted in ascending order. Use
+   * 'field_name desc' to specify descending order.
+   */
+  order_by?: string | null;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface FileDeleteParams {
   organization_id?: string | null;
 
@@ -454,8 +543,11 @@ export declare namespace Files {
     type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
     type FileCreateResponse as FileCreateResponse,
+    type FileListResponse as FileListResponse,
     type FileQueryResponse as FileQueryResponse,
+    type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
     type FileCreateParams as FileCreateParams,
+    type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGetParams as FileGetParams,
     type FileQueryParams as FileQueryParams,

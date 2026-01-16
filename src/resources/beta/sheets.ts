@@ -4,7 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as FilesAPI from '../files';
 import * as ParsingAPI from '../parsing';
 import { APIPromise } from '../../core/api-promise';
-import { PagePromise, PaginatedClassifyJobs, type PaginatedClassifyJobsParams } from '../../core/pagination';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 import { pollUntilComplete, PollingOptions } from '../../core/polling';
@@ -30,8 +30,8 @@ export class Sheets extends APIResource {
   list(
     query: SheetListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<SheetsJobsPaginatedClassifyJobs, SheetsJob> {
-    return this._client.getAPIList('/api/v1/beta/sheets/jobs', PaginatedClassifyJobs<SheetsJob>, {
+  ): PagePromise<SheetsJobsPaginatedCursor, SheetsJob> {
+    return this._client.getAPIList('/api/v1/beta/sheets/jobs', PaginatedCursor<SheetsJob>, {
       query,
       ...options,
     });
@@ -210,7 +210,7 @@ export class Sheets extends APIResource {
   }
 }
 
-export type SheetsJobsPaginatedClassifyJobs = PaginatedClassifyJobs<SheetsJob>;
+export type SheetsJobsPaginatedCursor = PaginatedCursor<SheetsJob>;
 
 /**
  * A spreadsheet parsing job
@@ -409,7 +409,7 @@ export interface SheetCreateParams {
   config?: SheetsParsingConfig;
 }
 
-export interface SheetListParams extends PaginatedClassifyJobsParams {
+export interface SheetListParams extends PaginatedCursorParams {
   include_results?: boolean;
 
   organization_id?: string | null;
@@ -473,7 +473,7 @@ export declare namespace Sheets {
     type SheetsJob as SheetsJob,
     type SheetsParsingConfig as SheetsParsingConfig,
     type SheetDeleteJobResponse as SheetDeleteJobResponse,
-    type SheetsJobsPaginatedClassifyJobs as SheetsJobsPaginatedClassifyJobs,
+    type SheetsJobsPaginatedCursor as SheetsJobsPaginatedCursor,
     type SheetCreateParams as SheetCreateParams,
     type SheetListParams as SheetListParams,
     type SheetDeleteJobParams as SheetDeleteJobParams,

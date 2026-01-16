@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.15.0 (2026-01-16)
+
+Full Changelog: [v0.14.1...v0.15.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.14.1...v0.15.0)
+
+### Features
+
+* **api:** adding oidc for npm publishing ([9b5f1e6](https://github.com/run-llama/llama-cloud-ts/commit/9b5f1e600566d016cfedc2ded7a1fc851376d5c5))
+* **api:** Consolidate more pagination, rename functions ([6156441](https://github.com/run-llama/llama-cloud-ts/commit/6156441eb6617d9394530eb63eca14054f974b25))
+* **api:** manual updates ([741ea9c](https://github.com/run-llama/llama-cloud-ts/commit/741ea9c3bf38b9d9c4457164d329f8c9d441316c))
+
+
+### Chores
+
+* **internal:** upgrade babel, qs, js-yaml ([e212b85](https://github.com/run-llama/llama-cloud-ts/commit/e212b856be7f01ff437aeae9a1eaf84f5f9b8fa8))
+* **mcp:** add intent param to execute tool ([1743c32](https://github.com/run-llama/llama-cloud-ts/commit/1743c32d59534b7c6833105a981639f60481da19))
+* **mcp:** pass intent param to execute handler ([501b60e](https://github.com/run-llama/llama-cloud-ts/commit/501b60e460e21a1e80c6b1f90c99cc4e8c2328a3))
+* **mcp:** upgrade dependencies ([c9bbf4c](https://github.com/run-llama/llama-cloud-ts/commit/c9bbf4ce9bef23ac44e56dce8cf1370d35a3ca1f))
+
 ## 0.14.1 (2026-01-14)
 
 Full Changelog: [v0.14.0...v0.14.1](https://github.com/run-llama/llama-cloud-ts/compare/v0.14.0...v0.14.1)

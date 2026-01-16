@@ -521,13 +521,13 @@ export class PaginatedQuotaConfigurations<Item>
   }
 }
 
-export interface PaginatedClassifyJobsResponse<Item> {
+export interface PaginatedCursorResponse<Item> {
   items: Array<Item>;
 
   next_page_token: string;
 }
 
-export interface PaginatedClassifyJobsParams {
+export interface PaginatedCursorParams {
   /**
    * Token for retrieving next page
    */
@@ -539,10 +539,7 @@ export interface PaginatedClassifyJobsParams {
   page_size?: number;
 }
 
-export class PaginatedClassifyJobs<Item>
-  extends AbstractPage<Item>
-  implements PaginatedClassifyJobsResponse<Item>
-{
+export class PaginatedCursor<Item> extends AbstractPage<Item> implements PaginatedCursorResponse<Item> {
   items: Array<Item>;
 
   next_page_token: string;
@@ -550,7 +547,7 @@ export class PaginatedClassifyJobs<Item>
   constructor(
     client: LlamaCloud,
     response: Response,
-    body: PaginatedClassifyJobsResponse<Item>,
+    body: PaginatedCursorResponse<Item>,
     options: FinalRequestOptions,
   ) {
     super(client, response, body, options);
@@ -579,13 +576,13 @@ export class PaginatedClassifyJobs<Item>
   }
 }
 
-export interface PaginatedSpreadsheetJobsResponse<Item> {
+export interface PaginatedCursorPostResponse<Item> {
   items: Array<Item>;
 
   next_page_token: string;
 }
 
-export interface PaginatedSpreadsheetJobsParams {
+export interface PaginatedCursorPostParams {
   /**
    * Token for retrieving next page
    */
@@ -597,9 +594,9 @@ export interface PaginatedSpreadsheetJobsParams {
   page_size?: number;
 }
 
-export class PaginatedSpreadsheetJobs<Item>
+export class PaginatedCursorPost<Item>
   extends AbstractPage<Item>
-  implements PaginatedSpreadsheetJobsResponse<Item>
+  implements PaginatedCursorPostResponse<Item>
 {
   items: Array<Item>;
 
@@ -608,123 +605,7 @@ export class PaginatedSpreadsheetJobs<Item>
   constructor(
     client: LlamaCloud,
     response: Response,
-    body: PaginatedSpreadsheetJobsResponse<Item>,
-    options: FinalRequestOptions,
-  ) {
-    super(client, response, body, options);
-
-    this.items = body.items || [];
-    this.next_page_token = body.next_page_token || '';
-  }
-
-  getPaginatedItems(): Item[] {
-    return this.items ?? [];
-  }
-
-  nextPageRequestOptions(): PageRequestOptions | null {
-    const cursor = this.next_page_token;
-    if (!cursor) {
-      return null;
-    }
-
-    return {
-      ...this.options,
-      query: {
-        ...maybeObj(this.options.query),
-        page_token: cursor,
-      },
-    };
-  }
-}
-
-export interface PaginatedAgentDataSearchResponse<Item> {
-  items: Array<Item>;
-
-  next_page_token: string;
-}
-
-export interface PaginatedAgentDataSearchParams {
-  /**
-   * Token for retrieving next page
-   */
-  page_token?: string;
-
-  /**
-   * Maximum number of items to return
-   */
-  page_size?: number;
-}
-
-export class PaginatedAgentDataSearch<Item>
-  extends AbstractPage<Item>
-  implements PaginatedAgentDataSearchResponse<Item>
-{
-  items: Array<Item>;
-
-  next_page_token: string;
-
-  constructor(
-    client: LlamaCloud,
-    response: Response,
-    body: PaginatedAgentDataSearchResponse<Item>,
-    options: FinalRequestOptions,
-  ) {
-    super(client, response, body, options);
-
-    this.items = body.items || [];
-    this.next_page_token = body.next_page_token || '';
-  }
-
-  getPaginatedItems(): Item[] {
-    return this.items ?? [];
-  }
-
-  nextPageRequestOptions(): PageRequestOptions | null {
-    const cursor = this.next_page_token;
-    if (!cursor) {
-      return null;
-    }
-
-    return {
-      ...this.options,
-      body: {
-        ...maybeObj(this.options.body),
-        page_token: cursor,
-      },
-    };
-  }
-}
-
-export interface PaginatedAgentDataAggregateResponse<Item> {
-  items: Array<Item>;
-
-  next_page_token: string;
-}
-
-export interface PaginatedAgentDataAggregateParams {
-  /**
-   * Token for retrieving next page
-   */
-  page_token?: string;
-
-  /**
-   * Maximum number of items to return
-   */
-  page_size?: number;
-}
-
-export class PaginatedAgentDataAggregate<Item>
-  extends AbstractPage<Item>
-  implements PaginatedAgentDataAggregateResponse<Item>
-{
-  items: Array<Item>;
-
-  next_page_token: string;
-
-  constructor(
-    client: LlamaCloud,
-    response: Response,
-    body: PaginatedAgentDataAggregateResponse<Item>,
+    body: PaginatedCursorPostResponse<Item>,
     options: FinalRequestOptions,
   ) {
     super(client, response, body, options);

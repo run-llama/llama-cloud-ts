@@ -11,5 +11,5 @@ export {
   type JobListParams,
   type JobGetParams,
   type JobGetResultsParams,
-  type ClassifyJobsPaginatedClassifyJobs,
+  type ClassifyJobsPaginatedCursor,
 } from './jobs';

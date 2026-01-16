@@ -7,26 +7,28 @@ import {
   AgentDataAgentDataParams,
   AgentDataAggregateParams,
   AgentDataAggregateResponse,
+  AgentDataAggregateResponsesPaginatedCursorPost,
   AgentDataDeleteByQueryParams,
   AgentDataDeleteByQueryResponse,
   AgentDataDeleteParams,
   AgentDataDeleteResponse,
   AgentDataGetParams,
+  AgentDataPaginatedCursorPost,
   AgentDataSearchParams,
-  AgentDataSearchResponse,
   AgentDataUpdateParams,
 } from './agent-data';
 import * as ParseConfigurationsAPI from './parse-configurations';
 import {
   ParseConfiguration,
   ParseConfigurationCreate,
+  ParseConfigurationCreateParams,
   ParseConfigurationDeleteParams,
   ParseConfigurationGetParams,
-  ParseConfigurationGetParseConfigurationsParams,
-  ParseConfigurationParseConfigurationsParams,
+  ParseConfigurationListParams,
   ParseConfigurationQueryResponse,
   ParseConfigurationUpdateParams,
   ParseConfigurations,
+  ParseConfigurationsPaginatedCursor,
 } from './parse-configurations';
 import * as SheetsAPI from './sheets';
 import {
@@ -38,7 +40,7 @@ import {
   SheetListParams,
   Sheets,
   SheetsJob,
-  SheetsJobsPaginatedClassifyJobs,
+  SheetsJobsPaginatedCursor,
   SheetsParsingConfig,
 } from './sheets';
 import * as SplitAPI from './split';
@@ -52,7 +54,7 @@ import {
   SplitGetResponse,
   SplitListParams,
   SplitListResponse,
-  SplitListResponsesPaginatedClassifyJobs,
+  SplitListResponsesPaginatedCursor,
   SplitResultResponse,
   SplitSegmentResponse,
 } from './split';
@@ -79,7 +81,7 @@ import {
   DirectoryGetResponse,
   DirectoryListParams,
   DirectoryListResponse,
-  DirectoryListResponsesPaginatedClassifyJobs,
+  DirectoryListResponsesPaginatedCursor,
   DirectoryUpdateParams,
   DirectoryUpdateResponse,
 } from './directories/directories';
@@ -106,7 +108,8 @@ export declare namespace Beta {
     type AgentDataDeleteResponse as AgentDataDeleteResponse,
     type AgentDataAggregateResponse as AgentDataAggregateResponse,
     type AgentDataDeleteByQueryResponse as AgentDataDeleteByQueryResponse,
-    type AgentDataSearchResponse as AgentDataSearchResponse,
+    type AgentDataAggregateResponsesPaginatedCursorPost as AgentDataAggregateResponsesPaginatedCursorPost,
+    type AgentDataPaginatedCursorPost as AgentDataPaginatedCursorPost,
     type AgentDataUpdateParams as AgentDataUpdateParams,
     type AgentDataDeleteParams as AgentDataDeleteParams,
     type AgentDataAgentDataParams as AgentDataAgentDataParams,
@@ -121,11 +124,12 @@ export declare namespace Beta {
     type ParseConfiguration as ParseConfiguration,
     type ParseConfigurationCreate as ParseConfigurationCreate,
     type ParseConfigurationQueryResponse as ParseConfigurationQueryResponse,
+    type ParseConfigurationsPaginatedCursor as ParseConfigurationsPaginatedCursor,
+    type ParseConfigurationCreateParams as ParseConfigurationCreateParams,
     type ParseConfigurationUpdateParams as ParseConfigurationUpdateParams,
+    type ParseConfigurationListParams as ParseConfigurationListParams,
     type ParseConfigurationDeleteParams as ParseConfigurationDeleteParams,
     type ParseConfigurationGetParams as ParseConfigurationGetParams,
-    type ParseConfigurationGetParseConfigurationsParams as ParseConfigurationGetParseConfigurationsParams,
-    type ParseConfigurationParseConfigurationsParams as ParseConfigurationParseConfigurationsParams,
   };
 
   export {
@@ -133,7 +137,7 @@ export declare namespace Beta {
     type SheetsJob as SheetsJob,
     type SheetsParsingConfig as SheetsParsingConfig,
     type SheetDeleteJobResponse as SheetDeleteJobResponse,
-    type SheetsJobsPaginatedClassifyJobs as SheetsJobsPaginatedClassifyJobs,
+    type SheetsJobsPaginatedCursor as SheetsJobsPaginatedCursor,
     type SheetCreateParams as SheetCreateParams,
     type SheetListParams as SheetListParams,
     type SheetDeleteJobParams as SheetDeleteJobParams,
@@ -147,7 +151,7 @@ export declare namespace Beta {
     type DirectoryUpdateResponse as DirectoryUpdateResponse,
     type DirectoryListResponse as DirectoryListResponse,
     type DirectoryGetResponse as DirectoryGetResponse,
-    type DirectoryListResponsesPaginatedClassifyJobs as DirectoryListResponsesPaginatedClassifyJobs,
+    type DirectoryListResponsesPaginatedCursor as DirectoryListResponsesPaginatedCursor,
     type DirectoryCreateParams as DirectoryCreateParams,
     type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryListParams as DirectoryListParams,
@@ -177,7 +181,7 @@ export declare namespace Beta {
     type SplitCreateResponse as SplitCreateResponse,
     type SplitListResponse as SplitListResponse,
     type SplitGetResponse as SplitGetResponse,
-    type SplitListResponsesPaginatedClassifyJobs as SplitListResponsesPaginatedClassifyJobs,
+    type SplitListResponsesPaginatedCursor as SplitListResponsesPaginatedCursor,
     type SplitCreateParams as SplitCreateParams,
     type SplitListParams as SplitListParams,
     type SplitGetParams as SplitGetParams,
