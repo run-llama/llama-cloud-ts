@@ -88,7 +88,7 @@ export class Parsing extends APIResource {
    *
    * // Create a parse job
    * const job = await client.parsing.create({
-   *   tier: 'fast',
+   *   tier: 'cost_effective',
    *   version: 'latest',
    *   source_url: 'https://example.com/document.pdf'
    * });
@@ -156,7 +156,7 @@ export class Parsing extends APIResource {
    *
    * // One-shot: parse, wait for completion, and get result
    * const result = await client.parsing.parse({
-   *   tier: 'fast',
+   *   tier: 'cost_effective',
    *   version: 'latest',
    *   source_url: 'https://example.com/document.pdf',
    *   expand: ['text', 'markdown']
@@ -173,7 +173,7 @@ export class Parsing extends APIResource {
    * import fs from 'fs';
    *
    * const result = await client.parsing.parse({
-   *   tier: 'fast',
+   *   tier: 'cost_effective',
    *   version: 'latest',
    *   upload_file: fs.createReadStream('./document.pdf'),
    *   expand: ['text', 'markdown']
