@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.15.3 (2026-01-16)
+
+Full Changelog: [v0.15.2...v0.15.3](https://github.com/run-llama/llama-cloud-ts/compare/v0.15.2...v0.15.3)
+
 ## 0.15.2 (2026-01-16)
 
 Full Changelog: [v0.15.1...v0.15.2](https://github.com/run-llama/llama-cloud-ts/compare/v0.15.1...v0.15.2)
