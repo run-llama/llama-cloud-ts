@@ -1127,10 +1127,10 @@ export namespace ParsingCreateParams {
 
     /**
      * Image categories to save: 'screenshot' (full page), 'embedded' (images in
-     * document), 'layout' (cropped images from layout detection). If not set or empty,
-     * no images are saved.
+     * document), 'layout' (cropped images from layout detection). Empty list means no
+     * images are saved.
      */
-    images_to_save?: Array<'screenshot' | 'embedded' | 'layout'> | null;
+    images_to_save?: Array<'screenshot' | 'embedded' | 'layout'>;
 
     /**
      * Markdown output formatting options
@@ -1221,11 +1221,6 @@ export namespace ParsingCreateParams {
       do_not_unroll_columns?: boolean | null;
 
       /**
-       * Page formatting options for spatial text
-       */
-      pages?: SpatialText.Pages | null;
-
-      /**
        * Preserve text alignment across page boundaries
        */
       preserve_layout_alignment_across_pages?: boolean | null;
@@ -1234,18 +1229,6 @@ export namespace ParsingCreateParams {
        * Include very small text in spatial output
        */
       preserve_very_small_text?: boolean | null;
-    }
-
-    export namespace SpatialText {
-      /**
-       * Page formatting options for spatial text
-       */
-      export interface Pages {
-        /**
-         * Merge tables that span across pages in markdown output
-         */
-        merge_tables_across_pages_in_markdown?: boolean | null;
-      }
     }
 
     /**
@@ -1370,6 +1353,12 @@ export namespace ParsingCreateParams {
      * OCR configuration parameters
      */
     ocr_parameters?: ProcessingOptions.OcrParameters;
+
+    /**
+     * Enable specialized chart parsing with the specified mode: 'agentic',
+     * 'agentic_plus', or 'efficient'
+     */
+    specialized_chart_parsing?: 'agentic' | 'agentic_plus' | 'efficient' | null;
   }
 
   export namespace ProcessingOptions {
@@ -1611,6 +1600,11 @@ export namespace ParsingCreateParams {
         language?: string | null;
 
         /**
+         * Markdown options for auto mode parsing configuration.
+         */
+        markdown?: ParsingConf.Markdown | null;
+
+        /**
          * Whether to use outlined table extraction
          */
         outlined_table_extraction?: boolean | null;
@@ -1678,6 +1672,16 @@ export namespace ParsingCreateParams {
         }
 
         /**
+         * Markdown options for auto mode parsing configuration.
+         */
+        export interface Markdown {
+          /**
+           * Merge tables that span across pages in markdown output
+           */
+          merge_tables_across_pages_in_markdown?: boolean | null;
+        }
+
+        /**
          * Presentation-specific options for auto mode parsing configuration.
          */
         export interface Presentation {
@@ -1700,11 +1704,6 @@ export namespace ParsingCreateParams {
            * Keep column structure intact without unrolling
            */
           do_not_unroll_columns?: boolean | null;
-
-          /**
-           * Merge tables that span across pages in markdown output
-           */
-          merge_tables_across_pages_in_markdown?: boolean | null;
 
           /**
            * Preserve text alignment across page boundaries
