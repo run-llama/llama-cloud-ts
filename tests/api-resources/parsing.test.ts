@@ -64,7 +64,6 @@ describe('resource parsing', () => {
         },
         spatial_text: {
           do_not_unroll_columns: true,
-          pages: { merge_tables_across_pages_in_markdown: true },
           preserve_layout_alignment_across_pages: true,
           preserve_very_small_text: true,
         },
@@ -99,11 +98,11 @@ describe('resource parsing', () => {
               high_res_ocr: true,
               ignore: { ignore_diagonal_text: true, ignore_hidden_text: true },
               language: 'language',
+              markdown: { merge_tables_across_pages_in_markdown: true },
               outlined_table_extraction: true,
               presentation: { out_of_bounds_content: true, skip_embedded_data: true },
               spatial_text: {
                 do_not_unroll_columns: true,
-                merge_tables_across_pages_in_markdown: true,
                 preserve_layout_alignment_across_pages: true,
                 preserve_very_small_text: true,
               },
@@ -154,6 +153,7 @@ describe('resource parsing', () => {
           ignore_text_in_image: true,
         },
         ocr_parameters: { languages: ['af'] },
+        specialized_chart_parsing: 'agentic',
       },
       source_url: 'https:',
       webhook_configurations: [
