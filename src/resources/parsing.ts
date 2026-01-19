@@ -1527,10 +1527,9 @@ export namespace ParsingCreateParams {
     ocr_parameters?: ProcessingOptions.OcrParameters;
 
     /**
-     * Enable specialized chart parsing with the specified mode: 'agentic',
-     * 'agentic_plus', or 'efficient'
+     * Enable specialized chart parsing with the specified mode
      */
-    specialized_chart_parsing?: 'agentic' | 'agentic_plus' | 'efficient' | null;
+    specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient' | null;
   }
 
   export namespace ProcessingOptions {
@@ -1790,6 +1789,11 @@ export namespace ParsingCreateParams {
          * Spatial text options for auto mode parsing configuration.
          */
         spatial_text?: ParsingConf.SpatialText | null;
+
+        /**
+         * Enable specialized chart parsing with the specified mode
+         */
+        specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient' | null;
 
         /**
          * The parsing tier to use
