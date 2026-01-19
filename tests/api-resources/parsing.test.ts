@@ -106,6 +106,7 @@ describe('resource parsing', () => {
                 preserve_layout_alignment_across_pages: true,
                 preserve_very_small_text: true,
               },
+              specialized_chart_parsing: 'agentic_plus',
               tier: 'fast',
               version: '2026-01-08',
             },
@@ -153,7 +154,7 @@ describe('resource parsing', () => {
           ignore_text_in_image: true,
         },
         ocr_parameters: { languages: ['af'] },
-        specialized_chart_parsing: 'agentic',
+        specialized_chart_parsing: 'agentic_plus',
       },
       source_url: 'https:',
       webhook_configurations: [
