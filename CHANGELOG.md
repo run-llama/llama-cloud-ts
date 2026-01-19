@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.17.0 (2026-01-19)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* **api:** api update ([a76b3b5](https://github.com/run-llama/llama-cloud-ts/commit/a76b3b550304bcd67d17e7b806a50ab57596020f))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([f7a7aa1](https://github.com/run-llama/llama-cloud-ts/commit/f7a7aa168d2e099d9e3fc7fe989d570482bfaefc))
+
 ## 0.16.0 (2026-01-17)
 
 Full Changelog: [v0.15.3...v0.16.0](https://github.com/run-llama/llama-cloud-ts/compare/v0.15.3...v0.16.0)
