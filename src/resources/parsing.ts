@@ -76,7 +76,7 @@ export interface BBox {
   /**
    * End index in the text
    */
-  endIndex?: number | null;
+  end_index?: number | null;
 
   /**
    * Label for the bounding box
@@ -86,7 +86,7 @@ export interface BBox {
   /**
    * Start index in the text
    */
-  startIndex?: number | null;
+  start_index?: number | null;
 }
 
 /**
@@ -108,7 +108,7 @@ export interface ListItem {
   /**
    * List of bounding boxes
    */
-  bBox?: Array<BBox> | null;
+  bbox?: Array<BBox> | null;
 
   /**
    * List item type
@@ -131,7 +131,7 @@ export namespace ListItem {
     /**
      * List of bounding boxes
      */
-    bBox?: Array<ParsingAPI.BBox> | null;
+    bbox?: Array<ParsingAPI.BBox> | null;
 
     /**
      * Text item type
@@ -145,70 +145,106 @@ export namespace ListItem {
  */
 export type LlamaParseSupportedFileExtensions =
   | '.pdf'
+  | '.abw'
+  | '.awt'
+  | '.cgm'
+  | '.cwk'
   | '.doc'
-  | '.docx'
   | '.docm'
+  | '.docx'
   | '.dot'
-  | '.dotx'
   | '.dotm'
-  | '.rtf'
-  | '.wps'
-  | '.wpd'
-  | '.sxw'
-  | '.stw'
-  | '.sxg'
-  | '.pages'
-  | '.mw'
+  | '.dotx'
+  | '.fodg'
+  | '.fodp'
+  | '.fopd'
+  | '.fodt'
+  | '.fb2'
+  | '.hwp'
+  | '.lwp'
   | '.mcw'
-  | '.uot'
+  | '.mw'
+  | '.mwd'
+  | '.odf'
+  | '.odt'
+  | '.otg'
+  | '.ott'
+  | '.pages'
+  | '.pbd'
+  | '.psw'
+  | '.rtf'
+  | '.sda'
+  | '.sdd'
+  | '.sdp'
+  | '.sdw'
+  | '.sgl'
+  | '.std'
+  | '.stw'
+  | '.sxd'
+  | '.sxg'
+  | '.sxm'
+  | '.sxw'
   | '.uof'
-  | '.uos'
   | '.uop'
-  | '.ppt'
-  | '.pptx'
-  | '.pot'
-  | '.pptm'
-  | '.potx'
-  | '.potm'
+  | '.uot'
+  | '.vor'
+  | '.wpd'
+  | '.wps'
+  | '.wpt'
+  | '.wri'
+  | '.wn'
+  | '.xml'
+  | '.zabw'
   | '.key'
   | '.odp'
   | '.odg'
   | '.otp'
-  | '.fopd'
-  | '.sxi'
+  | '.pot'
+  | '.potm'
+  | '.potx'
+  | '.ppt'
+  | '.pptm'
+  | '.pptx'
   | '.sti'
-  | '.epub'
+  | '.sxi'
   | '.vsd'
+  | '.vsdm'
   | '.vsdx'
   | '.vdx'
-  | '.vsdm'
+  | '.bmp'
+  | '.gif'
   | '.jpg'
   | '.jpeg'
   | '.png'
-  | '.gif'
-  | '.bmp'
   | '.svg'
+  | '.tif'
   | '.tiff'
   | '.webp'
-  | '.html'
   | '.htm'
-  | '.xls'
-  | '.xlsx'
-  | '.xlsm'
-  | '.xlsb'
-  | '.xlw'
+  | '.html'
+  | '.xhtm'
   | '.csv'
+  | '.dbf'
   | '.dif'
-  | '.sylk'
-  | '.slk'
-  | '.prn'
-  | '.numbers'
   | '.et'
-  | '.ods'
+  | '.eth'
   | '.fods'
+  | '.numbers'
+  | '.ods'
+  | '.ots'
+  | '.prn'
+  | '.qpw'
+  | '.slk'
+  | '.stc'
+  | '.sxc'
+  | '.sylk'
+  | '.tsv'
   | '.uos1'
   | '.uos2'
-  | '.dbf'
+  | '.uos'
+  | '.wb1'
+  | '.wb2'
+  | '.wb3'
   | '.wk1'
   | '.wk2'
   | '.wk3'
@@ -216,13 +252,42 @@ export type LlamaParseSupportedFileExtensions =
   | '.wks'
   | '.wq1'
   | '.wq2'
-  | '.wb1'
-  | '.wb2'
-  | '.wb3'
-  | '.qpw'
   | '.xlr'
-  | '.eth'
-  | '.tsv';
+  | '.xls'
+  | '.xlsb'
+  | '.xlsm'
+  | '.xlsx'
+  | '.xlw'
+  | '.azw'
+  | '.azw3'
+  | '.azw4'
+  | '.cb7'
+  | '.cbc'
+  | '.cbr'
+  | '.cbz'
+  | '.chm'
+  | '.djvu'
+  | '.epub'
+  | '.fbz'
+  | '.htmlz'
+  | '.lit'
+  | '.lrf'
+  | '.md'
+  | '.mobi'
+  | '.pdb'
+  | '.pml'
+  | '.prc'
+  | '.rb'
+  | '.snb'
+  | '.tcr'
+  | '.txtz'
+  | '.m4a'
+  | '.mp3'
+  | '.mp4'
+  | '.mpeg'
+  | '.mpga'
+  | '.wav'
+  | '.webm';
 
 /**
  * Response schema for a parsing job.
@@ -379,6 +444,11 @@ export interface ParsingCreateResponse {
   error_message?: string | null;
 
   /**
+   * User friendly name
+   */
+  name?: string | null;
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -412,6 +482,11 @@ export interface ParsingListResponse {
    * Error message if job failed
    */
   error_message?: string | null;
+
+  /**
+   * User friendly name
+   */
+  name?: string | null;
 
   /**
    * Update datetime
@@ -491,6 +566,11 @@ export namespace ParsingGetResponse {
      * Error message if job failed
      */
     error_message?: string | null;
+
+    /**
+     * User friendly name
+     */
+    name?: string | null;
 
     /**
      * Update datetime
@@ -606,7 +686,7 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<ParsingAPI.BBox> | null;
+        bbox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Text item type
@@ -633,7 +713,7 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<ParsingAPI.BBox> | null;
+        bbox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Heading item type
@@ -655,7 +735,7 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<ParsingAPI.BBox> | null;
+        bbox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Programming language identifier
@@ -692,7 +772,7 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<ParsingAPI.BBox> | null;
+        bbox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Table item type
@@ -719,7 +799,7 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<ParsingAPI.BBox> | null;
+        bbox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Image item type
@@ -741,7 +821,7 @@ export namespace ParsingGetResponse {
         /**
          * List of bounding boxes
          */
-        bBox?: Array<ParsingAPI.BBox> | null;
+        bbox?: Array<ParsingAPI.BBox> | null;
 
         /**
          * Link item type
@@ -915,7 +995,15 @@ export interface ParsingCreateParams {
   /**
    * Body param: Version of the tier configuration
    */
-  version: '2026-01-08' | '2025-12-31' | '2025-12-18' | '2025-12-11' | 'latest' | (string & {});
+  version:
+    | '2026-01-08'
+    | '2025-12-31'
+    | '2025-12-18'
+    | '2025-12-11'
+    | '2026-01-16'
+    | '2026-01-21'
+    | 'latest'
+    | (string & {});
 
   /**
    * Query param
@@ -1116,11 +1204,6 @@ export namespace ParsingCreateParams {
    */
   export interface OutputOptions {
     /**
-     * PDF export options
-     */
-    export_pdf?: OutputOptions.ExportPdf;
-
-    /**
      * Extract printed page numbers from the document
      */
     extract_printed_page_number?: boolean | null;
@@ -1150,16 +1233,6 @@ export namespace ParsingCreateParams {
 
   export namespace OutputOptions {
     /**
-     * PDF export options
-     */
-    export interface ExportPdf {
-      /**
-       * Whether this option is enabled
-       */
-      enable?: boolean | null;
-    }
-
-    /**
      * Markdown output formatting options
      */
     export interface Markdown {
@@ -1169,27 +1242,12 @@ export namespace ParsingCreateParams {
       annotate_links?: boolean | null;
 
       /**
-       * Page formatting options for markdown
-       */
-      pages?: Markdown.Pages;
-
-      /**
        * Table formatting options for markdown
        */
       tables?: Markdown.Tables;
     }
 
     export namespace Markdown {
-      /**
-       * Page formatting options for markdown
-       */
-      export interface Pages {
-        /**
-         * Merge tables that span across pages in markdown output
-         */
-        merge_tables_across_pages_in_markdown?: boolean | null;
-      }
-
       /**
        * Table formatting options for markdown
        */
@@ -1599,11 +1657,6 @@ export namespace ParsingCreateParams {
         language?: string | null;
 
         /**
-         * Markdown options for auto mode parsing configuration.
-         */
-        markdown?: ParsingConf.Markdown | null;
-
-        /**
          * Whether to use outlined table extraction
          */
         outlined_table_extraction?: boolean | null;
@@ -1631,7 +1684,16 @@ export namespace ParsingCreateParams {
         /**
          * Version of the tier configuration
          */
-        version?: '2026-01-08' | '2025-12-31' | '2025-12-18' | '2025-12-11' | 'latest' | (string & {}) | null;
+        version?:
+          | '2026-01-08'
+          | '2025-12-31'
+          | '2025-12-18'
+          | '2025-12-11'
+          | '2026-01-16'
+          | '2026-01-21'
+          | 'latest'
+          | (string & {})
+          | null;
       }
 
       export namespace ParsingConf {
@@ -1673,16 +1735,6 @@ export namespace ParsingCreateParams {
            * Whether to ignore hidden text in the document
            */
           ignore_hidden_text?: boolean | null;
-        }
-
-        /**
-         * Markdown options for auto mode parsing configuration.
-         */
-        export interface Markdown {
-          /**
-           * Merge tables that span across pages in markdown output
-           */
-          merge_tables_across_pages_in_markdown?: boolean | null;
         }
 
         /**
