@@ -21,7 +21,7 @@ export const newMcpServer = () =>
   new McpServer(
     {
       name: 'llamaindex_llama_cloud_api',
-      version: '0.17.0',
+      version: '1.0.0',
     },
     { capabilities: { tools: {}, logging: {} } },
   );
