@@ -50,12 +50,10 @@ describe('resource parsing', () => {
         spreadsheet: { detect_sub_tables_in_sheets: true, force_formula_computation_in_sheets: true },
       },
       output_options: {
-        export_pdf: { enable: true },
         extract_printed_page_number: true,
         images_to_save: ['screenshot'],
         markdown: {
           annotate_links: true,
-          pages: { merge_tables_across_pages_in_markdown: true },
           tables: {
             compact_markdown_tables: true,
             markdown_table_multiline_separator: 'markdown_table_multiline_separator',
@@ -98,7 +96,6 @@ describe('resource parsing', () => {
               high_res_ocr: true,
               ignore: { ignore_diagonal_text: true, ignore_hidden_text: true },
               language: 'language',
-              markdown: { merge_tables_across_pages_in_markdown: true },
               outlined_table_extraction: true,
               presentation: { out_of_bounds_content: true, skip_embedded_data: true },
               spatial_text: {
