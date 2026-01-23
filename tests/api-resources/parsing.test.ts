@@ -54,9 +54,11 @@ describe('resource parsing', () => {
         images_to_save: ['screenshot'],
         markdown: {
           annotate_links: true,
+          inline_images: true,
           tables: {
             compact_markdown_tables: true,
             markdown_table_multiline_separator: 'markdown_table_multiline_separator',
+            merge_continued_tables: true,
             output_tables_as_markdown: true,
           },
         },
@@ -144,6 +146,7 @@ describe('resource parsing', () => {
             trigger_mode: 'trigger_mode',
           },
         ],
+        cost_optimizer: { enable: true },
         disable_heuristics: true,
         ignore: {
           ignore_diagonal_text: true,
