@@ -279,7 +279,7 @@ export interface FileCreateResponse {
 
   /**
    * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-   * 'split', 'classify', 'sheet')
+   * 'split', 'classify', 'sheet', 'agent_app')
    */
   purpose?: string | null;
 }
@@ -322,7 +322,7 @@ export interface FileListResponse {
 
   /**
    * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-   * 'split', 'classify', 'sheet')
+   * 'split', 'classify', 'sheet', 'agent_app')
    */
   purpose?: string | null;
 }
@@ -389,7 +389,7 @@ export namespace FileQueryResponse {
 
     /**
      * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-     * 'split', 'classify', 'sheet')
+     * 'split', 'classify', 'sheet', 'agent_app')
      */
     purpose?: string | null;
   }
@@ -403,7 +403,7 @@ export interface FileCreateParams {
 
   /**
    * Body param: The intended purpose of the file. Valid values: 'user_data',
-   * 'parse', 'extract', 'split', 'classify', 'sheet'
+   * 'parse', 'extract', 'split', 'classify', 'sheet', 'agent_app'
    */
   purpose: string;
 
