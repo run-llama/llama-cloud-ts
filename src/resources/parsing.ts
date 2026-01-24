@@ -273,11 +273,6 @@ export interface ListItem {
   items: Array<ListItem.TextItem | ListItem>;
 
   /**
-   * Markdown representation preserving formatting
-   */
-  md: string;
-
-  /**
    * Whether the list is ordered or unordered
    */
   ordered: boolean;
@@ -286,6 +281,11 @@ export interface ListItem {
    * List of bounding boxes
    */
   bbox?: Array<BBox> | null;
+
+  /**
+   * Markdown representation preserving formatting
+   */
+  md?: string;
 
   /**
    * List item type
@@ -1003,11 +1003,6 @@ export namespace ParsingGetResponse {
 
       export interface LinkItem {
         /**
-         * Markdown representation preserving formatting
-         */
-        md: string;
-
-        /**
          * Display text of the link
          */
         text: string;
@@ -1021,6 +1016,11 @@ export namespace ParsingGetResponse {
          * List of bounding boxes
          */
         bbox?: Array<ParsingAPI.BBox> | null;
+
+        /**
+         * Markdown representation preserving formatting
+         */
+        md?: string;
 
         /**
          * Link item type
