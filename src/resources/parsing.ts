@@ -283,6 +283,11 @@ export interface ListItem {
   bbox?: Array<BBox> | null;
 
   /**
+   * Markdown representation preserving formatting
+   */
+  md?: string;
+
+  /**
    * List item type
    */
   type?: 'list';
@@ -694,6 +699,11 @@ export interface ParsingGetResponse {
   markdown?: ParsingGetResponse.Markdown | null;
 
   /**
+   * Full raw markdown content (if requested)
+   */
+  markdown_full?: string | null;
+
+  /**
    * Result containing page-level metadata for the parsed document.
    */
   metadata?: ParsingGetResponse.Metadata | null;
@@ -895,7 +905,7 @@ export namespace ParsingGetResponse {
 
       export interface CodeItem {
         /**
-         * Markdown representation with code fences
+         * Markdown representation preserving formatting
          */
         md: string;
 
@@ -932,7 +942,7 @@ export namespace ParsingGetResponse {
         html: string;
 
         /**
-         * Markdown representation of the table
+         * Markdown representation preserving formatting
          */
         md: string;
 
@@ -947,6 +957,18 @@ export namespace ParsingGetResponse {
         bbox?: Array<ParsingAPI.BBox> | null;
 
         /**
+         * List of page numbers with tables that were merged into this table (e.g., [1, 2,
+         * 3, 4])
+         */
+        merged_from_pages?: Array<number> | null;
+
+        /**
+         * Populated when merged into another table. Page number where the full merged
+         * table begins (used on empty tables).
+         */
+        merged_into_page?: number | null;
+
+        /**
          * Table item type
          */
         type?: 'table';
@@ -959,7 +981,7 @@ export namespace ParsingGetResponse {
         caption: string;
 
         /**
-         * Markdown representation of the image
+         * Markdown representation preserving formatting
          */
         md: string;
 
@@ -994,6 +1016,11 @@ export namespace ParsingGetResponse {
          * List of bounding boxes
          */
         bbox?: Array<ParsingAPI.BBox> | null;
+
+        /**
+         * Markdown representation preserving formatting
+         */
+        md?: string;
 
         /**
          * Link item type
@@ -1092,6 +1119,11 @@ export namespace ParsingGetResponse {
       confidence?: number | null;
 
       /**
+       * Whether cost-optimized parsing was used for the page
+       */
+      cost_optimized?: boolean | null;
+
+      /**
        * Original orientation angle of the page in degrees
        */
       original_orientation_angle?: number | null;
@@ -1110,6 +1142,11 @@ export namespace ParsingGetResponse {
        * Speaker notes from presentation slides
        */
       speaker_notes?: string | null;
+
+      /**
+       * Whether auto mode was triggered for the page
+       */
+      triggered_auto_mode?: boolean | null;
     }
   }
 
@@ -1174,6 +1211,7 @@ export interface ParsingCreateParams {
     | '2025-12-11'
     | '2026-01-16'
     | '2026-01-21'
+    | '2026-01-22'
     | 'latest'
     | (string & {});
 
@@ -1414,6 +1452,11 @@ export namespace ParsingCreateParams {
       annotate_links?: boolean | null;
 
       /**
+       * Instead of transcribing images, inline them in the markdown output
+       */
+      inline_images?: boolean | null;
+
+      /**
        * Table formatting options for markdown
        */
       tables?: Markdown.Tables;
@@ -1433,6 +1476,11 @@ export namespace ParsingCreateParams {
          * Separator for multiline content in markdown tables
          */
         markdown_table_multiline_separator?: string | null;
+
+        /**
+         * Merge tables that continue across or within pages. Affects markdown and items
+         */
+        merge_continued_tables?: boolean | null;
 
         /**
          * Output tables in markdown format
@@ -1567,6 +1615,11 @@ export namespace ParsingCreateParams {
      * Configuration for auto mode parsing with triggers and parsing options
      */
     auto_mode_configuration?: Array<ProcessingOptions.AutoModeConfiguration> | null;
+
+    /**
+     * Cost optimizer parameters for parsing configuration.
+     */
+    cost_optimizer?: ProcessingOptions.CostOptimizer | null;
 
     /**
      * Whether to disable heuristics like outlined table extraction and adaptive long
@@ -1863,6 +1916,7 @@ export namespace ParsingCreateParams {
           | '2025-12-11'
           | '2026-01-16'
           | '2026-01-21'
+          | '2026-01-22'
           | 'latest'
           | (string & {})
           | null;
@@ -1944,6 +1998,17 @@ export namespace ParsingCreateParams {
           preserve_very_small_text?: boolean | null;
         }
       }
+    }
+
+    /**
+     * Cost optimizer parameters for parsing configuration.
+     */
+    export interface CostOptimizer {
+      /**
+       * Use cost-optimized parsing for the document. May negatively impact parsing speed
+       * and quality.
+       */
+      enable?: boolean | null;
     }
 
     /**

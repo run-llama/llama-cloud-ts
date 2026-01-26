@@ -56,6 +56,7 @@ describe('resource parseConfigurations', () => {
         disable_reconstruction: true,
         do_not_cache: true,
         do_not_unroll_columns: true,
+        enable_cost_optimizer: true,
         extract_charts: true,
         extract_layout: true,
         extract_printed_page_number: true,

@@ -691,6 +691,8 @@ export interface LlamaParseParameters {
 
   do_not_unroll_columns?: boolean | null;
 
+  enable_cost_optimizer?: boolean | null;
+
   extract_charts?: boolean | null;
 
   extract_layout?: boolean | null;
