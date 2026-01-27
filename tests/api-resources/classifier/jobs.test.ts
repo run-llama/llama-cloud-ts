@@ -36,6 +36,13 @@ describe('resource jobs', () => {
         max_pages: 0,
         target_pages: [0],
       },
+      webhook_configurations: [
+        {
+          webhook_events: ['string'],
+          webhook_headers: { foo: 'bar' },
+          webhook_url: 'https:',
+        },
+      ],
     });
   });
 
