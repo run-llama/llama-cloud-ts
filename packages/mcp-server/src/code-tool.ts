@@ -4,6 +4,7 @@ import { McpTool, Metadata, ToolCallResult, asErrorResult, asTextContentResult }
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { readEnv, readEnvOrError } from './server';
 import { WorkerInput, WorkerOutput } from './code-tool-types';
+import { LlamaCloud } from '@llamaindex/llama-cloud';
 
 const prompt = `Runs JavaScript code to interact with the Llama Cloud API.
 
@@ -58,7 +59,7 @@ export function codeTool(): McpTool {
       required: ['code'],
     },
   };
-  const handler = async (_: unknown, args: any): Promise<ToolCallResult> => {
+  const handler = async (client: LlamaCloud, args: any): Promise<ToolCallResult> => {
     const code = args.code as string;
     const intent = args.intent as string | undefined;
 
@@ -74,8 +75,8 @@ export function codeTool(): McpTool {
         ...(stainlessAPIKey && { Authorization: stainlessAPIKey }),
         'Content-Type': 'application/json',
         client_envs: JSON.stringify({
-          LLAMA_CLOUD_API_KEY: readEnvOrError('LLAMA_CLOUD_API_KEY'),
-          LLAMA_CLOUD_BASE_URL: readEnv('LLAMA_CLOUD_BASE_URL'),
+          LLAMA_CLOUD_API_KEY: readEnvOrError('LLAMA_CLOUD_API_KEY') ?? client.apiKey ?? undefined,
+          LLAMA_CLOUD_BASE_URL: readEnv('LLAMA_CLOUD_BASE_URL') ?? client.baseURL ?? undefined,
         }),
       },
       body: JSON.stringify({
