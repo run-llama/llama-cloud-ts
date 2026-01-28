@@ -2,7 +2,7 @@
 
 import { McpTool, Metadata, ToolCallResult, asErrorResult, asTextContentResult } from './types';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import { readEnv, readEnvOrError } from './server';
+import { readEnv, requireValue } from './server';
 import { WorkerInput, WorkerOutput } from './code-tool-types';
 import { LlamaCloud } from '@llamaindex/llama-cloud';
 
@@ -75,7 +75,10 @@ export function codeTool(): McpTool {
         ...(stainlessAPIKey && { Authorization: stainlessAPIKey }),
         'Content-Type': 'application/json',
         client_envs: JSON.stringify({
-          LLAMA_CLOUD_API_KEY: readEnvOrError('LLAMA_CLOUD_API_KEY') ?? client.apiKey ?? undefined,
+          LLAMA_CLOUD_API_KEY: requireValue(
+            readEnv('LLAMA_CLOUD_API_KEY') ?? client.apiKey,
+            'set LLAMA_CLOUD_API_KEY environment variable or provide apiKey client option',
+          ),
           LLAMA_CLOUD_BASE_URL: readEnv('LLAMA_CLOUD_BASE_URL') ?? client.baseURL ?? undefined,
         }),
       },
