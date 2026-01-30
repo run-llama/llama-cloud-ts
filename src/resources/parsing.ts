@@ -704,7 +704,7 @@ export interface ParsingGetResponse {
   markdown_full?: string | null;
 
   /**
-   * Result containing page-level metadata for the parsed document.
+   * Result containing metadata (page level and general) for the parsed document.
    */
   metadata?: ParsingGetResponse.Metadata | null;
 
@@ -1094,7 +1094,7 @@ export namespace ParsingGetResponse {
   }
 
   /**
-   * Result containing page-level metadata for the parsed document.
+   * Result containing metadata (page level and general) for the parsed document.
    */
   export interface Metadata {
     /**
