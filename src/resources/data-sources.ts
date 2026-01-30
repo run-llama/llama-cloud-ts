@@ -76,7 +76,7 @@ export interface DataSource {
     | { [key: string]: unknown }
     | Shared.CloudS3DataSource
     | Shared.CloudAzStorageBlobDataSource
-    | DataSource.CloudGoogleDriveDataSource
+    | Shared.CloudGoogleDriveDataSource
     | Shared.CloudOneDriveDataSource
     | Shared.CloudSharepointDataSource
     | Shared.CloudSlackDataSource
@@ -129,24 +129,6 @@ export interface DataSource {
   version_metadata?: DataSourceReaderVersionMetadata | null;
 }
 
-export namespace DataSource {
-  export interface CloudGoogleDriveDataSource {
-    /**
-     * The ID of the Google Drive folder to read from.
-     */
-    folder_id: string;
-
-    class_name?: string;
-
-    /**
-     * A dictionary containing secret values
-     */
-    service_account_key?: { [key: string]: string } | null;
-
-    supports_access_control?: boolean;
-  }
-}
-
 export interface DataSourceReaderVersionMetadata {
   /**
    * The version of the reader to use for this data source.
@@ -164,7 +146,7 @@ export interface DataSourceCreateParams {
     | { [key: string]: unknown }
     | Shared.CloudS3DataSource
     | Shared.CloudAzStorageBlobDataSource
-    | DataSourceCreateParams.CloudGoogleDriveDataSource
+    | Shared.CloudGoogleDriveDataSource
     | Shared.CloudOneDriveDataSource
     | Shared.CloudSharepointDataSource
     | Shared.CloudSlackDataSource
@@ -214,24 +196,6 @@ export interface DataSourceCreateParams {
   } | null;
 }
 
-export namespace DataSourceCreateParams {
-  export interface CloudGoogleDriveDataSource {
-    /**
-     * The ID of the Google Drive folder to read from.
-     */
-    folder_id: string;
-
-    class_name?: string;
-
-    /**
-     * A dictionary containing secret values
-     */
-    service_account_key?: { [key: string]: string } | null;
-
-    supports_access_control?: boolean;
-  }
-}
-
 export interface DataSourceUpdateParams {
   source_type:
     | 'S3'
@@ -253,7 +217,7 @@ export interface DataSourceUpdateParams {
     | { [key: string]: unknown }
     | Shared.CloudS3DataSource
     | Shared.CloudAzStorageBlobDataSource
-    | DataSourceUpdateParams.CloudGoogleDriveDataSource
+    | Shared.CloudGoogleDriveDataSource
     | Shared.CloudOneDriveDataSource
     | Shared.CloudSharepointDataSource
     | Shared.CloudSlackDataSource
@@ -275,24 +239,6 @@ export interface DataSourceUpdateParams {
    * The name of the data source.
    */
   name?: string | null;
-}
-
-export namespace DataSourceUpdateParams {
-  export interface CloudGoogleDriveDataSource {
-    /**
-     * The ID of the Google Drive folder to read from.
-     */
-    folder_id: string;
-
-    class_name?: string;
-
-    /**
-     * A dictionary containing secret values
-     */
-    service_account_key?: { [key: string]: string } | null;
-
-    supports_access_control?: boolean;
-  }
 }
 
 export interface DataSourceListParams {
