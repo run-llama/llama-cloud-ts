@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.2.0 (2026-01-30)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** api update ([986df16](https://github.com/run-llama/llama-cloud-ts/commit/986df16ed546557eb6cb8d2b21e9e3cdc538dbcd))
+* **api:** api update ([799ccd4](https://github.com/run-llama/llama-cloud-ts/commit/799ccd45d13fd6143c72da6178bb125839d2f60b))
+* **api:** api update ([8abbae2](https://github.com/run-llama/llama-cloud-ts/commit/8abbae2cf8348297c775ce8e20c5adcb4782b21f))
+* **api:** api update ([37cc9d9](https://github.com/run-llama/llama-cloud-ts/commit/37cc9d915c5268396db0284ef986258443185636))
+* **api:** manual updates - Google Drive ([f501366](https://github.com/run-llama/llama-cloud-ts/commit/f50136685b257654bf92245f56c182dc495fca41))
+* **api:** Reordering resources ([e4bc61f](https://github.com/run-llama/llama-cloud-ts/commit/e4bc61fe8003d10e6261b34843c43598af3ad885))
+
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([64b5e1c](https://github.com/run-llama/llama-cloud-ts/commit/64b5e1cb34aca06a89416dc32d6a2aa8a14b1423))
+* **mcp:** allow falling back for required env variables ([52e2cb9](https://github.com/run-llama/llama-cloud-ts/commit/52e2cb9ac2240b3b5c81b2d6887d698590bfe326))
+* **publish:** use npm registry directly for trusted publishing support ([45312cc](https://github.com/run-llama/llama-cloud-ts/commit/45312cceab939805f073e6871411c94e1989694b))
+
+
+### Chores
+
+* **internal:** codegen related update ([ef15441](https://github.com/run-llama/llama-cloud-ts/commit/ef15441ce7c2c5d33b0944515796ab47170c3b41))
+* **internal:** codegen related update ([6f4e1eb](https://github.com/run-llama/llama-cloud-ts/commit/6f4e1eb5738522a85f687ad1fe120eeaa6f9c9bd))
+* **mcp:** up tsconfig lib version to es2022 ([6bbfcf2](https://github.com/run-llama/llama-cloud-ts/commit/6bbfcf2137ef1510e5a7e02d6d0e1daf446da373))
+
 ## 1.1.0 (2026-01-24)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.0.0...v1.1.0)
