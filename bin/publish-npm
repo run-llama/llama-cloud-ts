@@ -66,4 +66,5 @@ fi
 npm install --prefix ../oidc/ npm@11.6.2
 
 # Publish with the appropriate tag
-../oidc/node_modules/.bin/npm publish --tag "$TAG" --registry https://registry.npmjs.org
+export npm_config_registry='https://registry.npmjs.org'
+../oidc/node_modules/.bin/npm publish --tag "$TAG"
