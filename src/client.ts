@@ -1062,6 +1062,7 @@ export declare namespace LlamaCloud {
   export type CloudAzureAISearchVectorStore = API.CloudAzureAISearchVectorStore;
   export type CloudBoxDataSource = API.CloudBoxDataSource;
   export type CloudConfluenceDataSource = API.CloudConfluenceDataSource;
+  export type CloudGoogleDriveDataSource = API.CloudGoogleDriveDataSource;
   export type CloudJiraDataSource = API.CloudJiraDataSource;
   export type CloudJiraDataSourceV2 = API.CloudJiraDataSourceV2;
   export type CloudMilvusVectorStore = API.CloudMilvusVectorStore;

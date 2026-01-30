@@ -91,7 +91,7 @@ export interface PipelineDataSource {
     | { [key: string]: unknown }
     | Shared.CloudS3DataSource
     | Shared.CloudAzStorageBlobDataSource
-    | PipelineDataSource.CloudGoogleDriveDataSource
+    | Shared.CloudGoogleDriveDataSource
     | Shared.CloudOneDriveDataSource
     | Shared.CloudSharepointDataSource
     | Shared.CloudSlackDataSource
@@ -177,24 +177,6 @@ export interface PipelineDataSource {
    * Version metadata for the data source
    */
   version_metadata?: DataSourcesAPI.DataSourceReaderVersionMetadata | null;
-}
-
-export namespace PipelineDataSource {
-  export interface CloudGoogleDriveDataSource {
-    /**
-     * The ID of the Google Drive folder to read from.
-     */
-    folder_id: string;
-
-    class_name?: string;
-
-    /**
-     * A dictionary containing secret values
-     */
-    service_account_key?: { [key: string]: string } | null;
-
-    supports_access_control?: boolean;
-  }
 }
 
 export type DataSourceGetDataSourcesResponse = Array<PipelineDataSource>;

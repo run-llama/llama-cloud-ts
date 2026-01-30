@@ -7,6 +7,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">CloudAzureAISearchVectorStore</a></code>
 - <code><a href="./src/resources/shared.ts">CloudBoxDataSource</a></code>
 - <code><a href="./src/resources/shared.ts">CloudConfluenceDataSource</a></code>
+- <code><a href="./src/resources/shared.ts">CloudGoogleDriveDataSource</a></code>
 - <code><a href="./src/resources/shared.ts">CloudJiraDataSource</a></code>
 - <code><a href="./src/resources/shared.ts">CloudJiraDataSourceV2</a></code>
 - <code><a href="./src/resources/shared.ts">CloudMilvusVectorStore</a></code>
