@@ -855,27 +855,27 @@ export class LlamaCloud {
 
   static toFile = Uploads.toFile;
 
+  files: API.Files = new API.Files(this);
+  parsing: API.Parsing = new API.Parsing(this);
+  extraction: API.Extraction = new API.Extraction(this);
+  classifier: API.Classifier = new API.Classifier(this);
   projects: API.Projects = new API.Projects(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
-  files: API.Files = new API.Files(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
   retrievers: API.Retrievers = new API.Retrievers(this);
-  parsing: API.Parsing = new API.Parsing(this);
-  classifier: API.Classifier = new API.Classifier(this);
-  extraction: API.Extraction = new API.Extraction(this);
   beta: API.Beta = new API.Beta(this);
 }
 
+LlamaCloud.Files = Files;
+LlamaCloud.Parsing = Parsing;
+LlamaCloud.Extraction = Extraction;
+LlamaCloud.Classifier = Classifier;
 LlamaCloud.Projects = Projects;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
-LlamaCloud.Files = Files;
 LlamaCloud.Pipelines = Pipelines;
 LlamaCloud.Retrievers = Retrievers;
-LlamaCloud.Parsing = Parsing;
-LlamaCloud.Classifier = Classifier;
-LlamaCloud.Extraction = Extraction;
 LlamaCloud.Beta = Beta;
 
 export declare namespace LlamaCloud {
@@ -930,6 +930,45 @@ export declare namespace LlamaCloud {
   };
 
   export {
+    Files as Files,
+    type File as File,
+    type FileCreate as FileCreate,
+    type PresignedURL as PresignedURL,
+    type FileCreateResponse as FileCreateResponse,
+    type FileListResponse as FileListResponse,
+    type FileQueryResponse as FileQueryResponse,
+    type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
+    type FileCreateParams as FileCreateParams,
+    type FileListParams as FileListParams,
+    type FileDeleteParams as FileDeleteParams,
+    type FileGetParams as FileGetParams,
+    type FileQueryParams as FileQueryParams,
+  };
+
+  export {
+    Parsing as Parsing,
+    type BBox as BBox,
+    type FailPageMode as FailPageMode,
+    type ListItem as ListItem,
+    type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
+    type ParsingJob as ParsingJob,
+    type ParsingLanguages as ParsingLanguages,
+    type ParsingMode as ParsingMode,
+    type StatusEnum as StatusEnum,
+    type ParsingCreateResponse as ParsingCreateResponse,
+    type ParsingListResponse as ParsingListResponse,
+    type ParsingGetResponse as ParsingGetResponse,
+    type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
+    type ParsingCreateParams as ParsingCreateParams,
+    type ParsingListParams as ParsingListParams,
+    type ParsingGetParams as ParsingGetParams,
+  };
+
+  export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
+
+  export { Classifier as Classifier };
+
+  export {
     Projects as Projects,
     type Project as Project,
     type ProjectListResponse as ProjectListResponse,
@@ -954,22 +993,6 @@ export declare namespace LlamaCloud {
     type DataSourceCreateParams as DataSourceCreateParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceListParams as DataSourceListParams,
-  };
-
-  export {
-    Files as Files,
-    type File as File,
-    type FileCreate as FileCreate,
-    type PresignedURL as PresignedURL,
-    type FileCreateResponse as FileCreateResponse,
-    type FileListResponse as FileListResponse,
-    type FileQueryResponse as FileQueryResponse,
-    type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
-    type FileCreateParams as FileCreateParams,
-    type FileListParams as FileListParams,
-    type FileDeleteParams as FileDeleteParams,
-    type FileGetParams as FileGetParams,
-    type FileQueryParams as FileQueryParams,
   };
 
   export {
@@ -1031,29 +1054,6 @@ export declare namespace LlamaCloud {
     type RetrieverSearchParams as RetrieverSearchParams,
     type RetrieverUpsertParams as RetrieverUpsertParams,
   };
-
-  export {
-    Parsing as Parsing,
-    type BBox as BBox,
-    type FailPageMode as FailPageMode,
-    type ListItem as ListItem,
-    type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
-    type ParsingJob as ParsingJob,
-    type ParsingLanguages as ParsingLanguages,
-    type ParsingMode as ParsingMode,
-    type StatusEnum as StatusEnum,
-    type ParsingCreateResponse as ParsingCreateResponse,
-    type ParsingListResponse as ParsingListResponse,
-    type ParsingGetResponse as ParsingGetResponse,
-    type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
-    type ParsingCreateParams as ParsingCreateParams,
-    type ParsingListParams as ParsingListParams,
-    type ParsingGetParams as ParsingGetParams,
-  };
-
-  export { Classifier as Classifier };
-
-  export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
 
   export { Beta as Beta };
 
