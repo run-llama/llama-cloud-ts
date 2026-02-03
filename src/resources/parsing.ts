@@ -9,6 +9,7 @@ import { path } from '../internal/utils/path';
 import { type Uploadable } from '../core/uploads';
 import { multipartFormRequestOptions } from '../internal/uploads';
 import { pollUntilComplete, PollingOptions } from '../core/polling';
+import { APIError } from '../error';
 
 export class Parsing extends APIResource {
   /**
@@ -186,6 +187,10 @@ export class Parsing extends APIResource {
   ): Promise<ParsingGetResponse> {
     const { expand, ...createParams } = params;
     const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    if (!expand || (expand && expand.length == 0)) {
+      throw new Error('you should pass a non-empty array as a parameter for `expand`');
+    }
 
     // Create the parsing job
     const job = await this.create(createParams, requestOptions);
