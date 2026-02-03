@@ -26,7 +26,7 @@ export class Parsing extends APIResource {
       const configuration = JSON.stringify(body);
 
       return this._client.post(
-        '/api/v2/parse',
+        '/api/v2/parse/upload',
         multipartFormRequestOptions(
           {
             query: { organization_id, project_id },
