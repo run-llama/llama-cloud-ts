@@ -741,6 +741,9 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@llamaindex/llama-cloud@file:../../dist":
+  version "1.2.0"
+
 "@modelcontextprotocol/sdk@^1.25.2":
   version "1.25.2"
   resolved "https://registry.yarnpkg.com/@modelcontextprotocol/sdk/-/sdk-1.25.2.tgz#2284560b4e044b4ce5f328ee180931110cb8c5cf"

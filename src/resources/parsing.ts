@@ -9,7 +9,6 @@ import { path } from '../internal/utils/path';
 import { type Uploadable } from '../core/uploads';
 import { multipartFormRequestOptions } from '../internal/uploads';
 import { pollUntilComplete, PollingOptions } from '../core/polling';
-import { APIError } from '../error';
 
 export class Parsing extends APIResource {
   /**
