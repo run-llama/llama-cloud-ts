@@ -545,6 +545,11 @@ export interface ParsingGetResponse {
    * Plain text result (if requested)
    */
   text?: ParsingGetResponse.Text | null;
+
+  /**
+   * Full raw text content (if requested)
+   */
+  text_full?: string | null;
 }
 
 export namespace ParsingGetResponse {
@@ -658,6 +663,8 @@ export namespace ParsingGetResponse {
         | StructuredResultPage.TableItem
         | StructuredResultPage.ImageItem
         | StructuredResultPage.LinkItem
+        | StructuredResultPage.HeaderItem
+        | StructuredResultPage.FooterItem
       >;
 
       /**
@@ -678,7 +685,7 @@ export namespace ParsingGetResponse {
       /**
        * Success indicator
        */
-      success?: true;
+      success: true;
     }
 
     export namespace StructuredResultPage {
@@ -855,6 +862,418 @@ export namespace ParsingGetResponse {
          */
         type?: 'link';
       }
+
+      export interface HeaderItem {
+        /**
+         * List of items within the header
+         */
+        items: Array<
+          | HeaderItem.TextItem
+          | HeaderItem.HeadingItem
+          | ParsingAPI.ListItem
+          | HeaderItem.CodeItem
+          | HeaderItem.TableItem
+          | HeaderItem.ImageItem
+          | HeaderItem.LinkItem
+        >;
+
+        /**
+         * Markdown representation preserving formatting
+         */
+        md: string;
+
+        /**
+         * List of bounding boxes
+         */
+        bbox?: Array<ParsingAPI.BBox> | null;
+
+        /**
+         * Page header container
+         */
+        type?: 'header';
+      }
+
+      export namespace HeaderItem {
+        export interface TextItem {
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * Text content
+           */
+          value: string;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * Text item type
+           */
+          type?: 'text';
+        }
+
+        export interface HeadingItem {
+          /**
+           * Heading level (1-6)
+           */
+          level: number;
+
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * Heading text content
+           */
+          value: string;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * Heading item type
+           */
+          type?: 'heading';
+        }
+
+        export interface CodeItem {
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * Code content
+           */
+          value: string;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * Programming language identifier
+           */
+          language?: string | null;
+
+          /**
+           * Code block item type
+           */
+          type?: 'code';
+        }
+
+        export interface TableItem {
+          /**
+           * CSV representation of the table
+           */
+          csv: string;
+
+          /**
+           * HTML representation of the table
+           */
+          html: string;
+
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * Table data as array of arrays (string, number, or null)
+           */
+          rows: Array<Array<string | number | null>>;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * List of page numbers with tables that were merged into this table (e.g., [1, 2,
+           * 3, 4])
+           */
+          merged_from_pages?: Array<number> | null;
+
+          /**
+           * Populated when merged into another table. Page number where the full merged
+           * table begins (used on empty tables).
+           */
+          merged_into_page?: number | null;
+
+          /**
+           * Table item type
+           */
+          type?: 'table';
+        }
+
+        export interface ImageItem {
+          /**
+           * Image caption
+           */
+          caption: string;
+
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * URL to the image
+           */
+          url: string;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * Image item type
+           */
+          type?: 'image';
+        }
+
+        export interface LinkItem {
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * Display text of the link
+           */
+          text: string;
+
+          /**
+           * URL of the link
+           */
+          url: string;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * Link item type
+           */
+          type?: 'link';
+        }
+      }
+
+      export interface FooterItem {
+        /**
+         * List of items within the footer
+         */
+        items: Array<
+          | FooterItem.TextItem
+          | FooterItem.HeadingItem
+          | ParsingAPI.ListItem
+          | FooterItem.CodeItem
+          | FooterItem.TableItem
+          | FooterItem.ImageItem
+          | FooterItem.LinkItem
+        >;
+
+        /**
+         * Markdown representation preserving formatting
+         */
+        md: string;
+
+        /**
+         * List of bounding boxes
+         */
+        bbox?: Array<ParsingAPI.BBox> | null;
+
+        /**
+         * Page footer container
+         */
+        type?: 'footer';
+      }
+
+      export namespace FooterItem {
+        export interface TextItem {
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * Text content
+           */
+          value: string;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * Text item type
+           */
+          type?: 'text';
+        }
+
+        export interface HeadingItem {
+          /**
+           * Heading level (1-6)
+           */
+          level: number;
+
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * Heading text content
+           */
+          value: string;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * Heading item type
+           */
+          type?: 'heading';
+        }
+
+        export interface CodeItem {
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * Code content
+           */
+          value: string;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * Programming language identifier
+           */
+          language?: string | null;
+
+          /**
+           * Code block item type
+           */
+          type?: 'code';
+        }
+
+        export interface TableItem {
+          /**
+           * CSV representation of the table
+           */
+          csv: string;
+
+          /**
+           * HTML representation of the table
+           */
+          html: string;
+
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * Table data as array of arrays (string, number, or null)
+           */
+          rows: Array<Array<string | number | null>>;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * List of page numbers with tables that were merged into this table (e.g., [1, 2,
+           * 3, 4])
+           */
+          merged_from_pages?: Array<number> | null;
+
+          /**
+           * Populated when merged into another table. Page number where the full merged
+           * table begins (used on empty tables).
+           */
+          merged_into_page?: number | null;
+
+          /**
+           * Table item type
+           */
+          type?: 'table';
+        }
+
+        export interface ImageItem {
+          /**
+           * Image caption
+           */
+          caption: string;
+
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * URL to the image
+           */
+          url: string;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * Image item type
+           */
+          type?: 'image';
+        }
+
+        export interface LinkItem {
+          /**
+           * Markdown representation preserving formatting
+           */
+          md: string;
+
+          /**
+           * Display text of the link
+           */
+          text: string;
+
+          /**
+           * URL of the link
+           */
+          url: string;
+
+          /**
+           * List of bounding boxes
+           */
+          bbox?: Array<ParsingAPI.BBox> | null;
+
+          /**
+           * Link item type
+           */
+          type?: 'link';
+        }
+      }
     }
 
     export interface FailedStructuredPage {
@@ -871,7 +1290,7 @@ export namespace ParsingGetResponse {
       /**
        * Failure indicator
        */
-      success?: boolean;
+      success: boolean;
     }
   }
 
@@ -900,7 +1319,17 @@ export namespace ParsingGetResponse {
       /**
        * Success indicator
        */
-      success?: true;
+      success: true;
+
+      /**
+       * Footer of the page in markdown
+       */
+      footer?: string | null;
+
+      /**
+       * Header of the page in markdown
+       */
+      header?: string | null;
     }
 
     export interface FailedMarkdownPage {
@@ -917,7 +1346,7 @@ export namespace ParsingGetResponse {
       /**
        * Failure indicator
        */
-      success?: boolean;
+      success: boolean;
     }
   }
 
