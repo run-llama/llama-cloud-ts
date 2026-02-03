@@ -187,6 +187,10 @@ export class Parsing extends APIResource {
     const { expand, ...createParams } = params;
     const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
 
+    if (!expand || (expand && expand.length == 0)) {
+      throw new Error('you should pass a non-empty array as a parameter for `expand`');
+    }
+
     // Create the parsing job
     const job = await this.create(createParams, requestOptions);
 
