@@ -8,7 +8,7 @@ import { sleep } from './internal/utils/sleep';
 export type { Logger, LogLevel } from './internal/utils/log';
 import { castToError, isAbortError } from './internal/errors';
 import type { APIResponseProps } from './internal/parse';
-import { getPlatformHeaders } from './internal/detect-platform';
+import { getPlatformHeaders, isRunningInBrowser } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import * as qs from './internal/qs';
@@ -247,7 +247,7 @@ export interface ClientOptions {
  * API Client for interfacing with the Llama Cloud API.
  */
 export class LlamaCloud {
-  apiKey: string;
+  apiKey: string | undefined;
 
   baseURL: string;
   maxRetries: number;
@@ -278,7 +278,7 @@ export class LlamaCloud {
     apiKey = readEnv('LLAMA_CLOUD_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
-    if (apiKey === undefined) {
+    if (apiKey === undefined && !isRunningInBrowser()) {
       throw new Errors.LlamaCloudError(
         "The LLAMA_CLOUD_API_KEY environment variable is missing or empty; either provide it, or instantiate the LlamaCloud client with an apiKey option, like new LlamaCloud({ apiKey: 'My API Key' }).",
       );
@@ -289,6 +289,10 @@ export class LlamaCloud {
       ...opts,
       baseURL: baseURL || `https://api.cloud.llamaindex.ai`,
     };
+
+    if (apiKey === undefined && isRunningInBrowser()) {
+      options.fetchOptions = { credentials: 'include', ...options.fetchOptions } as MergedRequestInit;
+    }
 
     this.baseURL = options.baseURL!;
     this.timeout = options.timeout ?? LlamaCloud.DEFAULT_TIMEOUT /* 1 minute */;
@@ -345,7 +349,10 @@ export class LlamaCloud {
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
+    if (this.apiKey) {
+      return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
+    }
+    return undefined;
   }
 
   protected stringifyQuery(query: Record<string, unknown>): string {
