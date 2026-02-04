@@ -47,13 +47,21 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/parsing.ts">BBox</a></code>
+- <code><a href="./src/resources/parsing.ts">CodeItem</a></code>
 - <code><a href="./src/resources/parsing.ts">FailPageMode</a></code>
+- <code><a href="./src/resources/parsing.ts">FooterItem</a></code>
+- <code><a href="./src/resources/parsing.ts">HeaderItem</a></code>
+- <code><a href="./src/resources/parsing.ts">HeadingItem</a></code>
+- <code><a href="./src/resources/parsing.ts">ImageItem</a></code>
+- <code><a href="./src/resources/parsing.ts">LinkItem</a></code>
 - <code><a href="./src/resources/parsing.ts">ListItem</a></code>
 - <code><a href="./src/resources/parsing.ts">LlamaParseSupportedFileExtensions</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingJob</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingLanguages</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingMode</a></code>
 - <code><a href="./src/resources/parsing.ts">StatusEnum</a></code>
+- <code><a href="./src/resources/parsing.ts">TableItem</a></code>
+- <code><a href="./src/resources/parsing.ts">TextItem</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingCreateResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingListResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingGetResponse</a></code>

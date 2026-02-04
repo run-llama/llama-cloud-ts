@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.3.0 (2026-02-04)
+
+Full Changelog: [v1.2.0...v1.3.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.2.0...v1.3.0)
+
+### Features
+
+* add cookie-based auth support for browser environments ([#36](https://github.com/run-llama/llama-cloud-ts/issues/36)) ([52fdba3](https://github.com/run-llama/llama-cloud-ts/commit/52fdba34380ae3336e0ba917be2fe821c0c6d0e2))
+* **api:** api update ([fbdfe8d](https://github.com/run-llama/llama-cloud-ts/commit/fbdfe8d1ff00643bd297c71bf8c2c212c493eee5))
+* **api:** manual updates ([0e6388f](https://github.com/run-llama/llama-cloud-ts/commit/0e6388f0c27aad159e77bba1204fa6256190a8c3))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([609080b](https://github.com/run-llama/llama-cloud-ts/commit/609080b4d8698abdec7aafc6bfcec6f0cc42d23a))
+* throw error on empty expand parameter in e2e 'parse' method ([ac77e24](https://github.com/run-llama/llama-cloud-ts/commit/ac77e2498245e5cf2a1e9072cfad6de5c9ece4e4))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([162b998](https://github.com/run-llama/llama-cloud-ts/commit/162b9981c2687bf5ae7811478e99f6c9f1273752))
+* **internal:** support oauth authorization code flow for MCP servers ([d661ac4](https://github.com/run-llama/llama-cloud-ts/commit/d661ac4bc9b0aaa25c9c076e77cad9a078e1f8c4))
+
 ## 1.2.0 (2026-01-30)
 
 Full Changelog: [v1.1.0...v1.2.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.1.0...v1.2.0)

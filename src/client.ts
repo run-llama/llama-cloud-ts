@@ -71,7 +71,13 @@ import {
 } from './resources/files';
 import {
   BBox,
+  CodeItem,
   FailPageMode,
+  FooterItem,
+  HeaderItem,
+  HeadingItem,
+  ImageItem,
+  LinkItem,
   ListItem,
   LlamaParseSupportedFileExtensions,
   Parsing,
@@ -86,6 +92,8 @@ import {
   ParsingListResponsesPaginatedCursor,
   ParsingMode,
   StatusEnum,
+  TableItem,
+  TextItem,
 } from './resources/parsing';
 import {
   Project,
@@ -637,9 +645,10 @@ export class LlamaCloud {
     controller: AbortController,
   ): Promise<Response> {
     const { signal, method, ...options } = init || {};
-    if (signal) signal.addEventListener('abort', () => controller.abort());
+    const abort = controller.abort.bind(controller);
+    if (signal) signal.addEventListener('abort', abort, { once: true });
 
-    const timeout = setTimeout(() => controller.abort(), ms);
+    const timeout = setTimeout(abort, ms);
 
     const isReadableBody =
       ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
@@ -955,13 +964,21 @@ export declare namespace LlamaCloud {
   export {
     Parsing as Parsing,
     type BBox as BBox,
+    type CodeItem as CodeItem,
     type FailPageMode as FailPageMode,
+    type FooterItem as FooterItem,
+    type HeaderItem as HeaderItem,
+    type HeadingItem as HeadingItem,
+    type ImageItem as ImageItem,
+    type LinkItem as LinkItem,
     type ListItem as ListItem,
     type LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
     type ParsingJob as ParsingJob,
     type ParsingLanguages as ParsingLanguages,
     type ParsingMode as ParsingMode,
     type StatusEnum as StatusEnum,
+    type TableItem as TableItem,
+    type TextItem as TextItem,
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
     type ParsingGetResponse as ParsingGetResponse,
