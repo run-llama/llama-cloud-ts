@@ -57,7 +57,7 @@ export const newMcpServer = async () =>
   new McpServer(
     {
       name: 'llamaindex_llama_cloud_api',
-      version: '1.3.0',
+      version: '1.4.0',
     },
     {
       instructions: await getInstructions(),
