@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.4.0 (2026-02-05)
+
+Full Changelog: [v1.3.0...v1.4.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.3.0...v1.4.0)
+
+### Features
+
+* **mcp:** add initial server instructions ([4d00a81](https://github.com/run-llama/llama-cloud-ts/commit/4d00a818b4de576d34422cb00a13a34b38fe4dfa))
+
+
+### Chores
+
+* **client:** restructure abort controller binding ([17ad7cf](https://github.com/run-llama/llama-cloud-ts/commit/17ad7cf1fc18b949eee92ff9842c7d00fe062280))
+* **internal:** refactor flag parsing for MCP servers and add debug flag ([6d493d7](https://github.com/run-llama/llama-cloud-ts/commit/6d493d7cd0ba5582aba4f3894e447f806d67bb6c))
+
 ## 1.3.0 (2026-02-04)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.2.0...v1.3.0)

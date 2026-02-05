@@ -4,11 +4,12 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express from 'express';
 import morgan from 'morgan';
+import morganBody from 'morgan-body';
 import { McpOptions } from './options';
 import { ClientOptions, initMcpServer, newMcpServer } from './server';
 import { parseAuthHeaders } from './headers';
 
-const newServer = ({
+const newServer = async ({
   clientOptions,
   req,
   res,
@@ -16,12 +17,12 @@ const newServer = ({
   clientOptions: ClientOptions;
   req: express.Request;
   res: express.Response;
-}): McpServer | null => {
-  const server = newMcpServer();
+}): Promise<McpServer | null> => {
+  const server = await newMcpServer();
 
   try {
     const authOptions = parseAuthHeaders(req, false);
-    initMcpServer({
+    await initMcpServer({
       server: server,
       clientOptions: {
         ...clientOptions,
@@ -45,7 +46,7 @@ const newServer = ({
 const post =
   (options: { clientOptions: ClientOptions; mcpOptions: McpOptions }) =>
   async (req: express.Request, res: express.Response) => {
-    const server = newServer({ ...options, req, res });
+    const server = await newServer({ ...options, req, res });
     // If we return null, we already set the authorization error.
     if (server === null) return;
     const transport = new StreamableHTTPServerTransport();
@@ -76,14 +77,26 @@ const del = async (req: express.Request, res: express.Response) => {
 export const streamableHTTPApp = ({
   clientOptions = {},
   mcpOptions,
+  debug,
 }: {
   clientOptions?: ClientOptions;
   mcpOptions: McpOptions;
+  debug: boolean;
 }): express.Express => {
   const app = express();
   app.set('query parser', 'extended');
   app.use(express.json());
-  app.use(morgan('combined'));
+
+  if (debug) {
+    morganBody(app, {
+      logAllReqHeader: true,
+      logAllResHeader: true,
+      logRequestBody: true,
+      logResponseBody: true,
+    });
+  } else {
+    app.use(morgan('combined'));
+  }
 
   app.get('/', get);
   app.post('/', post({ clientOptions, mcpOptions }));
@@ -92,9 +105,13 @@ export const streamableHTTPApp = ({
   return app;
 };
 
-export const launchStreamableHTTPServer = async (options: McpOptions, port: number | string | undefined) => {
-  const app = streamableHTTPApp({ mcpOptions: options });
-  const server = app.listen(port);
+export const launchStreamableHTTPServer = async (params: {
+  mcpOptions: McpOptions;
+  debug: boolean;
+  port: number | string | undefined;
+}) => {
+  const app = streamableHTTPApp({ mcpOptions: params.mcpOptions, debug: params.debug });
+  const server = app.listen(params.port);
   const address = server.address();
 
   if (typeof address === 'string') {
@@ -102,6 +119,6 @@ export const launchStreamableHTTPServer = async (options: McpOptions, port: numb
   } else if (address !== null) {
     console.error(`MCP Server running on streamable HTTP on port ${address.port}`);
   } else {
-    console.error(`MCP Server running on streamable HTTP on port ${port}`);
+    console.error(`MCP Server running on streamable HTTP on port ${params.port}`);
   }
 };
