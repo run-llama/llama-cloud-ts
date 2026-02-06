@@ -105,6 +105,7 @@ export interface WebhookConfiguration {
     | 'extract.partial_success'
     | 'extract.cancelled'
     | 'parse.pending'
+    | 'parse.running'
     | 'parse.success'
     | 'parse.error'
     | 'parse.partial_success'
