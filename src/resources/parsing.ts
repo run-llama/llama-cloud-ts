@@ -896,7 +896,7 @@ export namespace ParsingGetResponse {
       /**
        * Failure indicator
        */
-      success: boolean;
+      success: false;
     }
   }
 
@@ -952,7 +952,7 @@ export namespace ParsingGetResponse {
       /**
        * Failure indicator
        */
-      success: boolean;
+      success: false;
     }
   }
 
