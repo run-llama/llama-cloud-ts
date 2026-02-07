@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.5.0 (2026-02-07)
+
+Full Changelog: [v1.4.0...v1.5.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.4.0...v1.5.0)
+
+### Features
+
+* **api:** api update ([497bf51](https://github.com/run-llama/llama-cloud-ts/commit/497bf51dd9197d00ced688523ac290b6970cee59))
+
+
+### Bug Fixes
+
+* **client:** avoid removing abort listener too early ([35ed735](https://github.com/run-llama/llama-cloud-ts/commit/35ed73563d7626c6f6c87e1e622eabe53574bb99))
+* **types:** correctly define false enum ([eb774cf](https://github.com/run-llama/llama-cloud-ts/commit/eb774cf9334b06639b78fc8f27ce7d6b223eec72))
+
+
+### Chores
+
+* **internal:** add health check to MCP server when running in HTTP mode ([2aafc6b](https://github.com/run-llama/llama-cloud-ts/commit/2aafc6b869a719b903f2d7539ea7f8afa270ec8a))
+* **internal:** fix pagination internals not accepting option promises ([8ce5e8f](https://github.com/run-llama/llama-cloud-ts/commit/8ce5e8fc342ef4c3a1724df2acb75f3f2f53a344))
+
 ## 1.4.0 (2026-02-05)
 
 Full Changelog: [v1.3.0...v1.4.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.3.0...v1.4.0)
