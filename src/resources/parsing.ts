@@ -730,6 +730,8 @@ export interface ParsingGetResponse {
    */
   metadata?: ParsingGetResponse.Metadata | null;
 
+  raw_parameters?: { [key: string]: unknown } | null;
+
   /**
    * Metadata including size, existence, and presigned URLs for result files
    */
@@ -1068,15 +1070,18 @@ export interface ParsingCreateParams {
    * Body param: Version of the tier configuration
    */
   version:
-    | '2026-01-08'
-    | '2025-12-31'
-    | '2025-12-18'
     | '2025-12-11'
+    | '2025-12-18'
+    | '2025-12-31'
+    | '2026-01-08'
+    | '2026-01-09'
     | '2026-01-16'
     | '2026-01-21'
     | '2026-01-22'
     | '2026-01-24'
     | '2026-01-29'
+    | '2026-01-30'
+    | '2026-02-03'
     | 'latest'
     | (string & {});
 
@@ -1271,6 +1276,11 @@ export namespace ParsingCreateParams {
        * Force re-computation of spreadsheet cells containing formulas
        */
       force_formula_computation_in_sheets?: boolean | null;
+
+      /**
+       * Include hidden sheets when parsing spreadsheet files
+       */
+      include_hidden_sheets?: boolean | null;
     }
   }
 
@@ -1775,15 +1785,18 @@ export namespace ParsingCreateParams {
          * Version of the tier configuration
          */
         version?:
-          | '2026-01-08'
-          | '2025-12-31'
-          | '2025-12-18'
           | '2025-12-11'
+          | '2025-12-18'
+          | '2025-12-31'
+          | '2026-01-08'
+          | '2026-01-09'
           | '2026-01-16'
           | '2026-01-21'
           | '2026-01-22'
           | '2026-01-24'
           | '2026-01-29'
+          | '2026-01-30'
+          | '2026-02-03'
           | 'latest'
           | (string & {})
           | null;

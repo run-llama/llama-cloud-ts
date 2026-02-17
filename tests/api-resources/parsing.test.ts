@@ -10,7 +10,7 @@ const client = new LlamaCloud({
 describe('resource parsing', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.parsing.create({ tier: 'fast', version: '2026-01-08' });
+    const responsePromise = client.parsing.create({ tier: 'fast', version: '2025-12-11' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,7 +24,7 @@ describe('resource parsing', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.parsing.create({
       tier: 'fast',
-      version: '2026-01-08',
+      version: '2025-12-11',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       agentic_options: { custom_prompt: 'custom_prompt' },
@@ -47,7 +47,11 @@ describe('resource parsing', () => {
         },
         pdf: {},
         presentation: { out_of_bounds_content: true, skip_embedded_data: true },
-        spreadsheet: { detect_sub_tables_in_sheets: true, force_formula_computation_in_sheets: true },
+        spreadsheet: {
+          detect_sub_tables_in_sheets: true,
+          force_formula_computation_in_sheets: true,
+          include_hidden_sheets: true,
+        },
       },
       output_options: {
         extract_printed_page_number: true,
@@ -107,7 +111,7 @@ describe('resource parsing', () => {
               },
               specialized_chart_parsing: 'agentic_plus',
               tier: 'fast',
-              version: '2026-01-08',
+              version: '2025-12-11',
             },
             filename_match_glob: 'filename_match_glob',
             filename_match_glob_list: ['string'],
