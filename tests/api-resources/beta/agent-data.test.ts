@@ -105,11 +105,13 @@ describe('resource agentData', () => {
       filter: {
         foo: {
           eq: 0,
+          excludes: [0],
           gt: 0,
           gte: 0,
           includes: [0],
           lt: 0,
           lte: 0,
+          ne: 0,
         },
       },
       first: true,
@@ -143,11 +145,13 @@ describe('resource agentData', () => {
       filter: {
         foo: {
           eq: 0,
+          excludes: [0],
           gt: 0,
           gte: 0,
           includes: [0],
           lt: 0,
           lte: 0,
+          ne: 0,
         },
       },
     });
@@ -202,11 +206,13 @@ describe('resource agentData', () => {
       filter: {
         foo: {
           eq: 0,
+          excludes: [0],
           gt: 0,
           gte: 0,
           includes: [0],
           lt: 0,
           lte: 0,
+          ne: 0,
         },
       },
       include_total: true,
