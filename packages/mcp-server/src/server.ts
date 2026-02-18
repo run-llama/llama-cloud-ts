@@ -56,7 +56,7 @@ export const newMcpServer = async (stainlessApiKey: string | undefined) =>
   new McpServer(
     {
       name: 'llamaindex_llama_cloud_api',
-      version: '1.5.0',
+      version: '1.6.0',
     },
     {
       instructions: await getInstructions(stainlessApiKey),

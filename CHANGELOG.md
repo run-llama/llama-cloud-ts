@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.6.0 (2026-02-18)
+
+Full Changelog: [v1.5.0...v1.6.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.5.0...v1.6.0)
+
+### Features
+
+* **api:** api update ([73206e4](https://github.com/run-llama/llama-cloud-ts/commit/73206e482c7a384aa592fa19bc87d7c71484557c))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([2d71aaa](https://github.com/run-llama/llama-cloud-ts/commit/2d71aaa42e346dfe749c57e85c00e9b8e545457e))
+* **internal:** allow setting x-stainless-api-key header on mcp server requests ([be4f208](https://github.com/run-llama/llama-cloud-ts/commit/be4f20865fd505dbc771b7b7299fde7045083297))
+* **internal:** avoid type checking errors with ts-reset ([b72cbf3](https://github.com/run-llama/llama-cloud-ts/commit/b72cbf3ce1fa2bfd7b9a58e1c5651417580a136e))
+* **internal:** improve layout of generated MCP server files ([9bbf5a2](https://github.com/run-llama/llama-cloud-ts/commit/9bbf5a29a9154c852fcd90942a798b14c71d62d9))
+* **mcp:** forward STAINLESS_API_KEY to docs search endpoint ([5ce3838](https://github.com/run-llama/llama-cloud-ts/commit/5ce3838f31c015457f04152ee704631ee39a1f37))
+
 ## 1.5.0 (2026-02-12)
 
 Full Changelog: [v1.4.0...v1.5.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.4.0...v1.5.0)
