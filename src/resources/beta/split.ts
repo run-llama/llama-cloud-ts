@@ -423,7 +423,7 @@ export interface SplitGetResponse {
 
 export interface SplitCreateParams {
   /**
-   * Body param: Categories to split the document into.
+   * Body param: Categories to split documents into.
    */
   categories: Array<SplitCategory>;
 
@@ -443,14 +443,14 @@ export interface SplitCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Strategy for splitting the document.
+   * Body param: Strategy for splitting documents.
    */
   splitting_strategy?: SplitCreateParams.SplittingStrategy;
 }
 
 export namespace SplitCreateParams {
   /**
-   * Strategy for splitting the document.
+   * Strategy for splitting documents.
    */
   export interface SplittingStrategy {
     /**

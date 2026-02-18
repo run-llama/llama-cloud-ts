@@ -131,6 +131,7 @@ describe('resource batch', () => {
           specialized_image_parsing: true,
           spreadsheet_extract_sub_tables: true,
           spreadsheet_force_formula_computation: true,
+          spreadsheet_include_hidden_sheets: true,
           strict_mode_buggy_font: true,
           strict_mode_image_extraction: true,
           strict_mode_image_ocr: true,

@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Metadata, asTextContentResult } from './types';
-
+import { Metadata, McpRequestContext, asTextContentResult } from './types';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 export const metadata: Metadata = {
@@ -42,10 +41,20 @@ export const tool: Tool = {
 const docsSearchURL =
   process.env['DOCS_SEARCH_URL'] || 'https://api.stainless.com/api/projects/llamacloud-prod/docs/search';
 
-export const handler = async (_: unknown, args: Record<string, unknown> | undefined) => {
+export const handler = async ({
+  reqContext,
+  args,
+}: {
+  reqContext: McpRequestContext;
+  args: Record<string, unknown> | undefined;
+}) => {
   const body = args as any;
   const query = new URLSearchParams(body).toString();
-  const result = await fetch(`${docsSearchURL}?${query}`);
+  const result = await fetch(`${docsSearchURL}?${query}`, {
+    headers: {
+      ...(reqContext.stainlessApiKey && { Authorization: reqContext.stainlessApiKey }),
+    },
+  });
 
   if (!result.ok) {
     throw new Error(
