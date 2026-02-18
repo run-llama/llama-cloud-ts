@@ -8,7 +8,7 @@ import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 import { type Uploadable } from '../core/uploads';
 import { multipartFormRequestOptions } from '../internal/uploads';
-import { pollUntilComplete, PollingOptions } from '../core/polling';
+import { pollUntilComplete, PollingOptions, DEFAULT_TIMEOUT } from '../core/polling';
 
 export class Parsing extends APIResource {
   /**
@@ -130,7 +130,7 @@ export class Parsing extends APIResource {
     return await pollUntilComplete(getStatus, isComplete, isError, getErrorMessage, {
       pollingInterval,
       maxInterval,
-      timeout: timeout || 2000.0,
+      timeout: timeout || DEFAULT_TIMEOUT,
       backoff,
       verbose,
     });
@@ -210,7 +210,7 @@ export class Parsing extends APIResource {
     return await this.waitForCompletion(job.id, getQuery, {
       pollingInterval,
       maxInterval,
-      timeout: timeout || 2000.0,
+      timeout: timeout || DEFAULT_TIMEOUT,
       backoff,
       verbose,
       ...requestOptions,

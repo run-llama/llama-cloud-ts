@@ -5,7 +5,7 @@ import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
-import { pollUntilComplete, PollingOptions } from '../../core/polling';
+import { pollUntilComplete, PollingOptions, DEFAULT_TIMEOUT } from '../../core/polling';
 
 export class Split extends APIResource {
   /**
@@ -101,7 +101,7 @@ export class Split extends APIResource {
     const pollingOptions: PollingOptions = {
       pollingInterval: pollingInterval ?? 1.0,
       maxInterval: maxInterval ?? 5.0,
-      timeout: timeout ?? 2000.0,
+      timeout: timeout ?? DEFAULT_TIMEOUT,
       backoff: backoff ?? 'linear',
       verbose: verbose ?? false,
     };
