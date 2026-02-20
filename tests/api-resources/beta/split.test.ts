@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource split', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.beta.split.create({
       categories: [{ name: 'x' }],
@@ -23,7 +23,7 @@ describe('resource split', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.beta.split.create({
       categories: [{ name: 'x', description: 'x' }],
@@ -34,7 +34,7 @@ describe('resource split', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.beta.split.list();
     const rawResponse = await responsePromise.asResponse();
@@ -46,7 +46,7 @@ describe('resource split', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -62,7 +62,7 @@ describe('resource split', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.beta.split.get('split_job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -74,7 +74,7 @@ describe('resource split', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(

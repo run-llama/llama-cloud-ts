@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource documents', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.pipelines.documents.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       body: [
@@ -27,7 +27,7 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.pipelines.documents.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       body: [
@@ -43,7 +43,7 @@ describe('resource documents', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.pipelines.documents.list('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -55,7 +55,7 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -74,7 +74,7 @@ describe('resource documents', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.pipelines.documents.delete('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -88,14 +88,14 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.pipelines.documents.delete('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.pipelines.documents.get('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -109,14 +109,14 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: required and optional params', async () => {
     const response = await client.pipelines.documents.get('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getChunks: only required params', async () => {
     const responsePromise = client.pipelines.documents.getChunks('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -130,14 +130,14 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getChunks: required and optional params', async () => {
     const response = await client.pipelines.documents.getChunks('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getStatus: only required params', async () => {
     const responsePromise = client.pipelines.documents.getStatus('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -151,14 +151,14 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getStatus: required and optional params', async () => {
     const response = await client.pipelines.documents.getStatus('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('sync: only required params', async () => {
     const responsePromise = client.pipelines.documents.sync('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -172,14 +172,14 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('sync: required and optional params', async () => {
     const response = await client.pipelines.documents.sync('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.pipelines.documents.upsert('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       body: [
@@ -198,7 +198,7 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.pipelines.documents.upsert('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       body: [

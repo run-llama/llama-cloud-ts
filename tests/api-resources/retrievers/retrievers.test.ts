@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource retrievers', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.retrievers.create({ name: 'x' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource retrievers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.retrievers.create({
       name: 'x',
@@ -61,7 +61,7 @@ describe('resource retrievers', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.retrievers.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipelines: [
@@ -81,7 +81,7 @@ describe('resource retrievers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.retrievers.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipelines: [
@@ -120,7 +120,7 @@ describe('resource retrievers', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.retrievers.list();
     const rawResponse = await responsePromise.asResponse();
@@ -132,7 +132,7 @@ describe('resource retrievers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -147,7 +147,7 @@ describe('resource retrievers', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.retrievers.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -159,7 +159,7 @@ describe('resource retrievers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.retrievers.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -171,7 +171,7 @@ describe('resource retrievers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -186,7 +186,7 @@ describe('resource retrievers', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: only required params', async () => {
     const responsePromise = client.retrievers.search({ query: 'x' });
     const rawResponse = await responsePromise.asResponse();
@@ -198,7 +198,7 @@ describe('resource retrievers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: required and optional params', async () => {
     const response = await client.retrievers.search({
       query: 'x',
@@ -242,7 +242,7 @@ describe('resource retrievers', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.retrievers.upsert({ name: 'x' });
     const rawResponse = await responsePromise.asResponse();
@@ -254,7 +254,7 @@ describe('resource retrievers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.retrievers.upsert({
       name: 'x',

@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource images', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getPageFigure: only required params', async () => {
     const responsePromise = client.pipelines.images.getPageFigure('figure_name', {
       id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -23,7 +23,7 @@ describe('resource images', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getPageFigure: required and optional params', async () => {
     const response = await client.pipelines.images.getPageFigure('figure_name', {
       id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -33,7 +33,7 @@ describe('resource images', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getPageScreenshot: only required params', async () => {
     const responsePromise = client.pipelines.images.getPageScreenshot(0, {
       id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -47,7 +47,7 @@ describe('resource images', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getPageScreenshot: required and optional params', async () => {
     const response = await client.pipelines.images.getPageScreenshot(0, {
       id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -56,7 +56,7 @@ describe('resource images', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listPageFigures', async () => {
     const responsePromise = client.pipelines.images.listPageFigures('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -68,7 +68,7 @@ describe('resource images', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listPageFigures: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -83,7 +83,7 @@ describe('resource images', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listPageScreenshots', async () => {
     const responsePromise = client.pipelines.images.listPageScreenshots(
       '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -97,7 +97,7 @@ describe('resource images', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listPageScreenshots: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(

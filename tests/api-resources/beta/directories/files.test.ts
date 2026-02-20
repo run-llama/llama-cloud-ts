@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource files', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.beta.directories.files.update('directory_file_id', {
       path_directory_id: 'directory_id',
@@ -22,7 +22,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.beta.directories.files.update('directory_file_id', {
       path_directory_id: 'directory_id',
@@ -34,7 +34,7 @@ describe('resource files', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.beta.directories.files.list('directory_id');
     const rawResponse = await responsePromise.asResponse();
@@ -46,7 +46,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -68,7 +68,7 @@ describe('resource files', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.beta.directories.files.delete('directory_file_id', {
       directory_id: 'directory_id',
@@ -82,7 +82,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.beta.directories.files.delete('directory_file_id', {
       directory_id: 'directory_id',
@@ -91,7 +91,7 @@ describe('resource files', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('add: only required params', async () => {
     const responsePromise = client.beta.directories.files.add('directory_id', { file_id: 'file_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -103,7 +103,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('add: required and optional params', async () => {
     const response = await client.beta.directories.files.add('directory_id', {
       file_id: 'file_id',
@@ -114,7 +114,7 @@ describe('resource files', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.beta.directories.files.get('directory_file_id', {
       directory_id: 'directory_id',
@@ -128,7 +128,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: required and optional params', async () => {
     const response = await client.beta.directories.files.get('directory_file_id', {
       directory_id: 'directory_id',
@@ -137,7 +137,7 @@ describe('resource files', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('upload: only required params', async () => {
     const responsePromise = client.beta.directories.files.upload('directory_id', {
       upload_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
@@ -151,7 +151,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('upload: required and optional params', async () => {
     const response = await client.beta.directories.files.upload('directory_id', {
       upload_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
