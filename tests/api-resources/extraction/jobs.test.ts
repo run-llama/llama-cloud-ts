@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource jobs', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.extraction.jobs.create({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -23,7 +23,7 @@ describe('resource jobs', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.extraction.jobs.create({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -60,7 +60,7 @@ describe('resource jobs', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.extraction.jobs.list({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -74,14 +74,14 @@ describe('resource jobs', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.extraction.jobs.list({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('file: only required params', async () => {
     const responsePromise = client.extraction.jobs.file({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -96,7 +96,7 @@ describe('resource jobs', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('file: required and optional params', async () => {
     const response = await client.extraction.jobs.file({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -107,7 +107,7 @@ describe('resource jobs', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.extraction.jobs.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -119,7 +119,7 @@ describe('resource jobs', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getResult', async () => {
     const responsePromise = client.extraction.jobs.getResult('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -131,7 +131,7 @@ describe('resource jobs', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getResult: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(

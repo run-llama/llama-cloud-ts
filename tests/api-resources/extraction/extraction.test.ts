@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource extraction', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('run: only required params', async () => {
     const responsePromise = client.extraction.run({
       config: {},
@@ -23,7 +23,7 @@ describe('resource extraction', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.extraction.run({
       config: {
