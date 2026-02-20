@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource schema', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('generateSchema', async () => {
     const responsePromise = client.extraction.extractionAgents.schema.generateSchema({});
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource schema', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('validateSchema: only required params', async () => {
     const responsePromise = client.extraction.extractionAgents.schema.validateSchema({
       data_schema: { foo: { foo: 'bar' } },
@@ -34,7 +34,7 @@ describe('resource schema', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('validateSchema: required and optional params', async () => {
     const response = await client.extraction.extractionAgents.schema.validateSchema({
       data_schema: { foo: { foo: 'bar' } },
