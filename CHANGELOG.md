@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.7.0 (2026-02-20)
+
+Full Changelog: [v1.6.0...v1.7.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.6.0...v1.7.0)
+
+### Features
+
+* **api:** api update ([82bfb14](https://github.com/run-llama/llama-cloud-ts/commit/82bfb14249d77e6fd95e18a3ff2155259d7bd7eb))
+
+
+### Bug Fixes
+
+* **mcp:** initialize SDK lazily to avoid failing the connection on init errors ([1c6ee27](https://github.com/run-llama/llama-cloud-ts/commit/1c6ee27b25399239401c50448443f2ecb88d0f10))
+
+
+### Chores
+
+* **internal:** cache fetch instruction calls in MCP server ([934ca85](https://github.com/run-llama/llama-cloud-ts/commit/934ca858369dfc01b322693ea24523efd48ec4eb))
+* **internal:** remove mock server code ([b91b761](https://github.com/run-llama/llama-cloud-ts/commit/b91b761cb01e3828f5332e2ccf0377c49fedaed2))
+* **mcp:** correctly update version in sync with sdk ([e22a422](https://github.com/run-llama/llama-cloud-ts/commit/e22a4225e362278b61b40ed464493de5c386f2d8))
+* update mock server docs ([5e1ee2d](https://github.com/run-llama/llama-cloud-ts/commit/5e1ee2d2c234722b78682a5b257501e9ae4b5942))
+
 ## 1.6.0 (2026-02-18)
 
 Full Changelog: [v1.5.0...v1.6.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.5.0...v1.6.0)
