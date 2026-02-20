@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource dataSinks', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.dataSinks.create({
       component: { foo: 'bar' },
@@ -24,7 +24,7 @@ describe('resource dataSinks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.dataSinks.create({
       component: { foo: 'bar' },
@@ -35,7 +35,7 @@ describe('resource dataSinks', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.dataSinks.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       sink_type: 'PINECONE',
@@ -49,7 +49,7 @@ describe('resource dataSinks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.dataSinks.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       sink_type: 'PINECONE',
@@ -58,7 +58,7 @@ describe('resource dataSinks', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.dataSinks.list();
     const rawResponse = await responsePromise.asResponse();
@@ -70,7 +70,7 @@ describe('resource dataSinks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -84,7 +84,7 @@ describe('resource dataSinks', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.dataSinks.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -96,7 +96,7 @@ describe('resource dataSinks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.dataSinks.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();

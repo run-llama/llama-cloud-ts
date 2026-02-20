@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource agentData', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.beta.agentData.update('item_id', { data: { foo: 'bar' } });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource agentData', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.beta.agentData.update('item_id', {
       data: { foo: 'bar' },
@@ -29,7 +29,7 @@ describe('resource agentData', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.beta.agentData.delete('item_id');
     const rawResponse = await responsePromise.asResponse();
@@ -41,7 +41,7 @@ describe('resource agentData', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -56,7 +56,7 @@ describe('resource agentData', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('agentData: only required params', async () => {
     const responsePromise = client.beta.agentData.agentData({
       data: { foo: 'bar' },
@@ -71,7 +71,7 @@ describe('resource agentData', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('agentData: required and optional params', async () => {
     const response = await client.beta.agentData.agentData({
       data: { foo: 'bar' },
@@ -82,7 +82,7 @@ describe('resource agentData', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('aggregate: only required params', async () => {
     const responsePromise = client.beta.agentData.aggregate({ deployment_name: 'deployment_name' });
     const rawResponse = await responsePromise.asResponse();
@@ -94,7 +94,7 @@ describe('resource agentData', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('aggregate: required and optional params', async () => {
     const response = await client.beta.agentData.aggregate({
       deployment_name: 'deployment_name',
@@ -123,7 +123,7 @@ describe('resource agentData', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deleteByQuery: only required params', async () => {
     const responsePromise = client.beta.agentData.deleteByQuery({ deployment_name: 'deployment_name' });
     const rawResponse = await responsePromise.asResponse();
@@ -135,7 +135,7 @@ describe('resource agentData', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deleteByQuery: required and optional params', async () => {
     const response = await client.beta.agentData.deleteByQuery({
       deployment_name: 'deployment_name',
@@ -157,7 +157,7 @@ describe('resource agentData', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.beta.agentData.get('item_id');
     const rawResponse = await responsePromise.asResponse();
@@ -169,7 +169,7 @@ describe('resource agentData', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -184,7 +184,7 @@ describe('resource agentData', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: only required params', async () => {
     const responsePromise = client.beta.agentData.search({ deployment_name: 'deployment_name' });
     const rawResponse = await responsePromise.asResponse();
@@ -196,7 +196,7 @@ describe('resource agentData', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: required and optional params', async () => {
     const response = await client.beta.agentData.search({
       deployment_name: 'deployment_name',

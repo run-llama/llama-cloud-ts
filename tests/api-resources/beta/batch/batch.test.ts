@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource batch', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.beta.batch.create({ job_config: {} });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource batch', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.beta.batch.create({
       job_config: {
@@ -177,7 +177,7 @@ describe('resource batch', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.beta.batch.list();
     const rawResponse = await responsePromise.asResponse();
@@ -189,7 +189,7 @@ describe('resource batch', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -208,7 +208,7 @@ describe('resource batch', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('cancel', async () => {
     const responsePromise = client.beta.batch.cancel('job_id', {});
     const rawResponse = await responsePromise.asResponse();
@@ -220,7 +220,7 @@ describe('resource batch', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getStatus', async () => {
     const responsePromise = client.beta.batch.getStatus('job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -232,7 +232,7 @@ describe('resource batch', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getStatus: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(

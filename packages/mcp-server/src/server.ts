@@ -11,52 +11,16 @@ import { ClientOptions } from '@llamaindex/llama-cloud';
 import LlamaCloud from '@llamaindex/llama-cloud';
 import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
+import { getInstructions } from './instructions';
 import { McpOptions } from './options';
 import { blockedMethodsForCodeTool } from './methods';
 import { HandlerFunction, McpRequestContext, ToolCallResult, McpTool } from './types';
-import { readEnv } from './util';
-
-async function getInstructions(stainlessApiKey: string | undefined): Promise<string> {
-  // Setting the stainless API key is optional, but may be required
-  // to authenticate requests to the Stainless API.
-  const response = await fetch(
-    readEnv('CODE_MODE_INSTRUCTIONS_URL') ?? 'https://api.stainless.com/api/ai/instructions/llamacloud-prod',
-    {
-      method: 'GET',
-      headers: { ...(stainlessApiKey && { Authorization: stainlessApiKey }) },
-    },
-  );
-
-  let instructions: string | undefined;
-  if (!response.ok) {
-    console.warn(
-      'Warning: failed to retrieve MCP server instructions. Proceeding with default instructions...',
-    );
-
-    instructions = `
-      This is the llamacloud-prod MCP server. You will use Code Mode to help the user perform
-      actions. You can use search_docs tool to learn about how to take action with this server. Then,
-      you will write TypeScript code using the execute tool take action. It is CRITICAL that you be
-      thoughtful and deliberate when executing code. Always try to entirely solve the problem in code
-      block: it can be as long as you need to get the job done!
-    `;
-  }
-
-  instructions ??= ((await response.json()) as { instructions: string }).instructions;
-  instructions = `
-    The current time in Unix timestamps is ${Date.now()}.
-
-    ${instructions}
-  `;
-
-  return instructions;
-}
 
 export const newMcpServer = async (stainlessApiKey: string | undefined) =>
   new McpServer(
     {
       name: 'llamaindex_llama_cloud_api',
-      version: '1.6.0',
+      version: '1.7.0',
     },
     {
       instructions: await getInstructions(stainlessApiKey),
@@ -91,14 +55,32 @@ export async function initMcpServer(params: {
     error: logAtLevel('error'),
   };
 
-  let client = new LlamaCloud({
-    logger,
-    ...params.clientOptions,
-    defaultHeaders: {
-      ...params.clientOptions?.defaultHeaders,
-      'X-Stainless-MCP': 'true',
-    },
-  });
+  let _client: LlamaCloud | undefined;
+  let _clientError: Error | undefined;
+  let _logLevel: 'debug' | 'info' | 'warn' | 'error' | 'off' | undefined;
+
+  const getClient = (): LlamaCloud => {
+    if (_clientError) throw _clientError;
+    if (!_client) {
+      try {
+        _client = new LlamaCloud({
+          logger,
+          ...params.clientOptions,
+          defaultHeaders: {
+            ...params.clientOptions?.defaultHeaders,
+            'X-Stainless-MCP': 'true',
+          },
+        });
+        if (_logLevel) {
+          _client = _client.withOptions({ logLevel: _logLevel });
+        }
+      } catch (e) {
+        _clientError = e instanceof Error ? e : new Error(String(e));
+        throw _clientError;
+      }
+    }
+    return _client;
+  };
 
   const providedTools = selectTools(params.mcpOptions);
   const toolMap = Object.fromEntries(providedTools.map((mcpTool) => [mcpTool.tool.name, mcpTool]));
@@ -116,6 +98,21 @@ export async function initMcpServer(params: {
       throw new Error(`Unknown tool: ${name}`);
     }
 
+    let client: LlamaCloud;
+    try {
+      client = getClient();
+    } catch (error) {
+      return {
+        content: [
+          {
+            type: 'text' as const,
+            text: `Failed to initialize client: ${error instanceof Error ? error.message : String(error)}`,
+          },
+        ],
+        isError: true,
+      };
+    }
+
     return executeHandler({
       handler: mcpTool.handler,
       reqContext: {
@@ -128,23 +125,28 @@ export async function initMcpServer(params: {
 
   server.setRequestHandler(SetLevelRequestSchema, async (request) => {
     const { level } = request.params;
+    let logLevel: 'debug' | 'info' | 'warn' | 'error' | 'off';
     switch (level) {
       case 'debug':
-        client = client.withOptions({ logLevel: 'debug' });
+        logLevel = 'debug';
         break;
       case 'info':
-        client = client.withOptions({ logLevel: 'info' });
+        logLevel = 'info';
         break;
       case 'notice':
       case 'warning':
-        client = client.withOptions({ logLevel: 'warn' });
+        logLevel = 'warn';
         break;
       case 'error':
-        client = client.withOptions({ logLevel: 'error' });
+        logLevel = 'error';
         break;
       default:
-        client = client.withOptions({ logLevel: 'off' });
+        logLevel = 'off';
         break;
+    }
+    _logLevel = logLevel;
+    if (_client) {
+      _client = _client.withOptions({ logLevel });
     }
     return {};
   });

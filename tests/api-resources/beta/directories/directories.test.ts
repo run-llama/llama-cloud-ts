@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource directories', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.beta.directories.create({ name: 'x' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource directories', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.beta.directories.create({
       name: 'x',
@@ -31,7 +31,7 @@ describe('resource directories', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.beta.directories.update('directory_id', {});
     const rawResponse = await responsePromise.asResponse();
@@ -43,7 +43,7 @@ describe('resource directories', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.beta.directories.list();
     const rawResponse = await responsePromise.asResponse();
@@ -55,7 +55,7 @@ describe('resource directories', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -74,7 +74,7 @@ describe('resource directories', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.beta.directories.delete('directory_id');
     const rawResponse = await responsePromise.asResponse();
@@ -86,7 +86,7 @@ describe('resource directories', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -101,7 +101,7 @@ describe('resource directories', () => {
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.beta.directories.get('directory_id');
     const rawResponse = await responsePromise.asResponse();
@@ -113,7 +113,7 @@ describe('resource directories', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
