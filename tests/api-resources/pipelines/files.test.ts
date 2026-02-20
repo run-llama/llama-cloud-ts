@@ -81,6 +81,7 @@ describe('resource files', () => {
           offset: 0,
           only_manually_uploaded: true,
           order_by: 'order_by',
+          statuses: ['NOT_STARTED', 'IN_PROGRESS'],
         },
         { path: '/_stainless_unknown_path' },
       ),

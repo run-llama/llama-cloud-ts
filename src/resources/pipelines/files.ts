@@ -34,12 +34,7 @@ export class Files extends APIResource {
   }
 
   /**
-   * Get files for a pipeline.
-   *
-   * Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
-   * source ID only_manually_uploaded: Filter for only manually uploaded files
-   * file_name_contains: Optional filter by file name (substring match) limit: Limit
-   * number of results offset: Offset for pagination order_by: Field to order by
+   * List files for a pipeline with optional filtering, sorting, and pagination.
    *
    * @deprecated
    */
@@ -274,6 +269,11 @@ export interface FileListParams extends PaginatedPipelineFilesParams {
   only_manually_uploaded?: boolean;
 
   order_by?: string | null;
+
+  /**
+   * Filter by file statuses
+   */
+  statuses?: Array<'NOT_STARTED' | 'IN_PROGRESS' | 'SUCCESS' | 'ERROR' | 'CANCELLED'> | null;
 }
 
 export interface FileDeleteParams {
