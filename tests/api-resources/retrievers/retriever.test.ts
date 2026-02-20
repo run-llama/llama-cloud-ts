@@ -8,7 +8,7 @@ const client = new LlamaCloud({
 });
 
 describe('resource retriever', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: only required params', async () => {
     const responsePromise = client.retrievers.retriever.search('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       query: 'x',
@@ -22,7 +22,7 @@ describe('resource retriever', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: required and optional params', async () => {
     const response = await client.retrievers.retriever.search('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       query: 'x',
