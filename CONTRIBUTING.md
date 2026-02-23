@@ -60,7 +60,7 @@ $ yarn link @llamaindex/llama-cloud
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global @llamaindex/llama-cloud
+$ pnpm link --global @llamaindex/llama-cloud
 ```
 
 ## Running tests
