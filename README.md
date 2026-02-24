@@ -16,7 +16,7 @@ With this SDK, create powerful workflows across many features:
 
 - [Get an API Key](https://cloud.llamaindex.ai)
 - [Getting Started Guide](https://developers.llamaindex.ai/typescript/cloud/)
-- [Full API Reference](./api.md)
+- [Full API Reference](https://developers.api.llamaindex.ai/api/typescript)
 
 ## Installation
 
