@@ -373,6 +373,13 @@ export interface SheetsParsingConfig {
   sheet_names?: Array<string> | null;
 
   /**
+   * Optional specialization mode for domain-specific extraction. Supported values:
+   * 'financial-standard', 'financial-enhanced', 'financial-precise'. Default None
+   * uses the general-purpose pipeline.
+   */
+  specialization?: string | null;
+
+  /**
    * Influences how likely similar-looking regions are merged into a single table.
    * Useful for spreadsheets that either have sparse tables (strong merging) or many
    * distinct tables close together (weak merging).
