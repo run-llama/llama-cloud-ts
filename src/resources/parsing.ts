@@ -762,6 +762,12 @@ export interface TableItem {
   merged_into_page?: number | null;
 
   /**
+   * Quality concerns detected during table extraction, indicating the table may have
+   * issues
+   */
+  parse_concerns?: Array<string> | null;
+
+  /**
    * Table item type
    */
   type?: 'table';
@@ -1258,6 +1264,8 @@ export interface ParsingCreateParams {
     | '2026-01-29'
     | '2026-01-30'
     | '2026-02-03'
+    | '2026-02-18'
+    | '2026-02-24'
     | 'latest'
     | (string & {});
 
@@ -1973,6 +1981,8 @@ export namespace ParsingCreateParams {
           | '2026-01-29'
           | '2026-01-30'
           | '2026-02-03'
+          | '2026-02-18'
+          | '2026-02-24'
           | 'latest'
           | (string & {})
           | null;
