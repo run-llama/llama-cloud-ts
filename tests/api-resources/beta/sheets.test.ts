@@ -32,6 +32,7 @@ describe('resource sheets', () => {
         generate_additional_metadata: true,
         include_hidden_cells: true,
         sheet_names: ['string'],
+        specialization: 'specialization',
         table_merge_sensitivity: 'strong',
         use_experimental_processing: true,
       },
