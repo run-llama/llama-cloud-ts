@@ -452,6 +452,22 @@ describe('instantiate client', () => {
     const client = new LlamaCloud({ apiKey: 'My API Key' });
     expect(client.apiKey).toBe('My API Key');
   });
+
+  test('with LLAMA_PARSE_API_KEY environment variable', () => {
+    // set options via LLAMA_PARSE_API_KEY env var
+    process.env['LLAMA_CLOUD_API_KEY'] = undefined;
+    process.env['LLAMA_PARSE_API_KEY'] = 'My Parse API Key';
+    const client = new LlamaCloud();
+    expect(client.apiKey).toBe('My Parse API Key');
+  });
+
+  test('LLAMA_CLOUD_API_KEY takes precedence over LLAMA_PARSE_API_KEY', () => {
+    // when both are set, LLAMA_CLOUD_API_KEY should take precedence
+    process.env['LLAMA_CLOUD_API_KEY'] = 'Cloud API Key';
+    process.env['LLAMA_PARSE_API_KEY'] = 'Parse API Key';
+    const client = new LlamaCloud();
+    expect(client.apiKey).toBe('Cloud API Key');
+  });
 });
 
 describe('request building', () => {

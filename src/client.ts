@@ -178,7 +178,7 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['LLAMA_CLOUD_API_KEY'].
+   * Defaults to process.env['LLAMA_CLOUD_API_KEY'] or process.env['LLAMA_PARSE_API_KEY'].
    */
   apiKey?: string | undefined;
 
@@ -272,7 +272,7 @@ export class LlamaCloud {
   /**
    * API Client for interfacing with the Llama Cloud API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['LLAMA_CLOUD_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey=process.env['LLAMA_CLOUD_API_KEY'] ?? process.env['LLAMA_PARSE_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['LLAMA_CLOUD_BASE_URL'] ?? https://api.cloud.llamaindex.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -283,12 +283,12 @@ export class LlamaCloud {
    */
   constructor({
     baseURL = readEnv('LLAMA_CLOUD_BASE_URL'),
-    apiKey = readEnv('LLAMA_CLOUD_API_KEY'),
+    apiKey = readEnv('LLAMA_CLOUD_API_KEY') ?? readEnv('LLAMA_PARSE_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined && !isRunningInBrowser()) {
       throw new Errors.LlamaCloudError(
-        "The LLAMA_CLOUD_API_KEY environment variable is missing or empty; either provide it, or instantiate the LlamaCloud client with an apiKey option, like new LlamaCloud({ apiKey: 'My API Key' }).",
+        "The LLAMA_CLOUD_API_KEY or LLAMA_PARSE_API_KEY environment variable is missing or empty; either provide it, or instantiate the LlamaCloud client with an apiKey option, like new LlamaCloud({ apiKey: 'My API Key' }).",
       );
     }
 
