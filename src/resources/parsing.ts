@@ -765,12 +765,27 @@ export interface TableItem {
    * Quality concerns detected during table extraction, indicating the table may have
    * issues
    */
-  parse_concerns?: Array<string> | null;
+  parse_concerns?: Array<TableItem.ParseConcern> | null;
 
   /**
    * Table item type
    */
   type?: 'table';
+}
+
+export namespace TableItem {
+  export interface ParseConcern {
+    /**
+     * Human-readable details about the concern
+     */
+    details: string;
+
+    /**
+     * Type of parse concern (e.g. header_value_type_mismatch,
+     * inconsistent_row_cell_count)
+     */
+    type: string;
+  }
 }
 
 export interface TextItem {
@@ -1265,7 +1280,9 @@ export interface ParsingCreateParams {
     | '2026-01-30'
     | '2026-02-03'
     | '2026-02-18'
+    | '2026-02-20'
     | '2026-02-24'
+    | '2026-02-26'
     | 'latest'
     | (string & {});
 
@@ -1982,7 +1999,9 @@ export namespace ParsingCreateParams {
           | '2026-01-30'
           | '2026-02-03'
           | '2026-02-18'
+          | '2026-02-20'
           | '2026-02-24'
+          | '2026-02-26'
           | 'latest'
           | (string & {})
           | null;

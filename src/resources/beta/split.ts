@@ -454,10 +454,12 @@ export namespace SplitCreateParams {
    */
   export interface SplittingStrategy {
     /**
-     * Whether to allow pages that don't match any category to be grouped as
-     * 'uncategorized'. If False, all pages must be assigned to a defined category.
+     * Controls handling of pages that don't match any category. 'include': pages can
+     * be grouped as 'uncategorized' and included in results. 'forbid': all pages must
+     * be assigned to a defined category. 'omit': pages can be classified as
+     * 'uncategorized' but are excluded from results.
      */
-    allow_uncategorized?: boolean;
+    allow_uncategorized?: 'include' | 'forbid' | 'omit';
   }
 }
 
