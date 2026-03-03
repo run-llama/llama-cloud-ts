@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.7.0 (2026-03-03)
+
+Full Changelog: [v1.6.0...v1.7.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.6.0...v1.7.0)
+
+### Features
+
+* **api:** api update ([1118a71](https://github.com/run-llama/llama-cloud-ts/commit/1118a71e1a81b008a0f010171055363fff91d029))
+* **api:** api update ([3e86820](https://github.com/run-llama/llama-cloud-ts/commit/3e868203b1802b41fab57d8c23a8b929c7a31abe))
+* **api:** api update ([e53cdc7](https://github.com/run-llama/llama-cloud-ts/commit/e53cdc779e95a2b7a3cfb0e1cff5603f6dfbd8ec))
+* **mcp:** add an option to disable code tool ([59a4382](https://github.com/run-llama/llama-cloud-ts/commit/59a43823a951cf488f29da4af3136a71eec9d437))
+
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([8ebcd1e](https://github.com/run-llama/llama-cloud-ts/commit/8ebcd1eb8a1276b5d774d4a7c35a99dc58de767e))
+* **mcp:** initialize SDK lazily to avoid failing the connection on init errors ([586ef99](https://github.com/run-llama/llama-cloud-ts/commit/586ef99cc38543cae92003a6ad3c076b97b5e15a))
+* **mcp:** update prompt ([51ff157](https://github.com/run-llama/llama-cloud-ts/commit/51ff1578bb202b50c9df2d900ae868f918bec825))
+
+
+### Chores
+
+* **internal:** cache fetch instruction calls in MCP server ([1910716](https://github.com/run-llama/llama-cloud-ts/commit/1910716b6965286951b05e2cbae6839117df7d81))
+* **internal:** fix MCP Dockerfiles so they can be built without buildkit ([c71507a](https://github.com/run-llama/llama-cloud-ts/commit/c71507adf02a899adb554e0feadfa161477253c9))
+* **internal:** fix MCP Dockerfiles so they can be built without buildkit ([8cafa3b](https://github.com/run-llama/llama-cloud-ts/commit/8cafa3b5ebdcf3cde636edacb5a8fe81c1537df7))
+* **internal:** make MCP code execution location configurable via a flag ([753240c](https://github.com/run-llama/llama-cloud-ts/commit/753240c9d3e0e813ca22b999076cd86bcb923107))
+* **internal:** move stringifyQuery implementation to internal function ([c5931c5](https://github.com/run-llama/llama-cloud-ts/commit/c5931c55cd5e961173c4ffbf7485496bc6280579))
+* **internal:** remove mock server code ([28fd07f](https://github.com/run-llama/llama-cloud-ts/commit/28fd07f362276fbda68955d0ef27ea3e53f2380e))
+* **internal:** switch MCP servers to use pino for logging ([f4b2326](https://github.com/run-llama/llama-cloud-ts/commit/f4b232620c447f2043b3ccc4a7eda0799f6e38dc))
+* **internal:** upgrade @modelcontextprotocol/sdk and hono ([4161193](https://github.com/run-llama/llama-cloud-ts/commit/4161193bf554873976f442c0f62511af9a2dfbca))
+* **mcp-server:** return access instructions for 404 without API key ([fe1526d](https://github.com/run-llama/llama-cloud-ts/commit/fe1526d4d9e09feb074affe5c2690bc0ca0167d8))
+* **mcp:** correctly update version in sync with sdk ([89f6113](https://github.com/run-llama/llama-cloud-ts/commit/89f6113e42525fd8533b18e58a77d8b859b85d39))
+* update mock server docs ([9536239](https://github.com/run-llama/llama-cloud-ts/commit/9536239d4291dac002823d687ba74055ed7e175d))
+
 ## 1.6.0 (2026-02-18)
 
 Full Changelog: [v1.5.0...v1.6.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.5.0...v1.6.0)
