@@ -44,7 +44,7 @@ async function splitDocumentLowLevel() {
     categories,
     document_input: { type: 'file_id', value: fileId },
     splitting_strategy: {
-      allow_uncategorized: true,
+      allow_uncategorized: 'include',
     },
   });
 
