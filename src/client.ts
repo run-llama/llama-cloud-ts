@@ -38,6 +38,19 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  Classify,
+  ClassifyConfiguration,
+  ClassifyCreateParams,
+  ClassifyCreateRequest,
+  ClassifyCreateResponse,
+  ClassifyGetParams,
+  ClassifyGetResponse,
+  ClassifyListParams,
+  ClassifyListResponse,
+  ClassifyListResponsesPaginatedCursor,
+  ClassifyResult,
+} from './resources/classify';
+import {
   DataSink,
   DataSinkCreateParams,
   DataSinkListParams,
@@ -887,6 +900,7 @@ export class LlamaCloud {
   parsing: API.Parsing = new API.Parsing(this);
   extraction: API.Extraction = new API.Extraction(this);
   classifier: API.Classifier = new API.Classifier(this);
+  classify: API.Classify = new API.Classify(this);
   projects: API.Projects = new API.Projects(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
@@ -899,6 +913,7 @@ LlamaCloud.Files = Files;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Extraction = Extraction;
 LlamaCloud.Classifier = Classifier;
+LlamaCloud.Classify = Classify;
 LlamaCloud.Projects = Projects;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
@@ -1003,6 +1018,20 @@ export declare namespace LlamaCloud {
   export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
 
   export { Classifier as Classifier };
+
+  export {
+    Classify as Classify,
+    type ClassifyConfiguration as ClassifyConfiguration,
+    type ClassifyCreateRequest as ClassifyCreateRequest,
+    type ClassifyResult as ClassifyResult,
+    type ClassifyCreateResponse as ClassifyCreateResponse,
+    type ClassifyListResponse as ClassifyListResponse,
+    type ClassifyGetResponse as ClassifyGetResponse,
+    type ClassifyListResponsesPaginatedCursor as ClassifyListResponsesPaginatedCursor,
+    type ClassifyCreateParams as ClassifyCreateParams,
+    type ClassifyListParams as ClassifyListParams,
+    type ClassifyGetParams as ClassifyGetParams,
+  };
 
   export {
     Projects as Projects,

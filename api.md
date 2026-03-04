@@ -156,6 +156,23 @@ Methods:
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">get</a>(classifyJobID, { ...params }) -> ClassifyJob</code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}/results">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">getResults</a>(classifyJobID, { ...params }) -> JobGetResultsResponse</code>
 
+# Classify
+
+Types:
+
+- <code><a href="./src/resources/classify.ts">ClassifyConfiguration</a></code>
+- <code><a href="./src/resources/classify.ts">ClassifyCreateRequest</a></code>
+- <code><a href="./src/resources/classify.ts">ClassifyResult</a></code>
+- <code><a href="./src/resources/classify.ts">ClassifyCreateResponse</a></code>
+- <code><a href="./src/resources/classify.ts">ClassifyListResponse</a></code>
+- <code><a href="./src/resources/classify.ts">ClassifyGetResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v2/classify">client.classify.<a href="./src/resources/classify.ts">create</a>({ ...params }) -> ClassifyCreateResponse</code>
+- <code title="get /api/v2/classify">client.classify.<a href="./src/resources/classify.ts">list</a>({ ...params }) -> ClassifyListResponsesPaginatedCursor</code>
+- <code title="get /api/v2/classify/{job_id}">client.classify.<a href="./src/resources/classify.ts">get</a>(jobID, { ...params }) -> ClassifyGetResponse</code>
+
 # Projects
 
 Types:
