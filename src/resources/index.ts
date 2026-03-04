@@ -4,6 +4,19 @@ export * from './shared';
 export { Beta } from './beta/beta';
 export { Classifier } from './classifier/classifier';
 export {
+  Classify,
+  type ClassifyConfiguration,
+  type ClassifyCreateRequest,
+  type ClassifyResult,
+  type ClassifyCreateResponse,
+  type ClassifyListResponse,
+  type ClassifyGetResponse,
+  type ClassifyCreateParams,
+  type ClassifyListParams,
+  type ClassifyGetParams,
+  type ClassifyListResponsesPaginatedCursor,
+} from './classify';
+export {
   DataSinks,
   type DataSink,
   type DataSinkListResponse,

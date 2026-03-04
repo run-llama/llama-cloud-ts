@@ -17,6 +17,9 @@ import {
   Jobs,
 } from './jobs';
 
+/**
+ * @deprecated Please us the 'classify' client
+ */
 export class Classifier extends APIResource {
   jobs: JobsAPI.Jobs = new JobsAPI.Jobs(this._client);
 
