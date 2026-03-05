@@ -1017,6 +1017,17 @@ export namespace ParsingGetResponse {
       index: number;
 
       /**
+       * Bounding box for an image on its page.
+       */
+      bbox?: Image.Bbox | null;
+
+      /**
+       * Image category: 'screenshot' (full page), 'embedded' (images in document), or
+       * 'layout' (cropped from layout detection)
+       */
+      category?: 'screenshot' | 'embedded' | 'layout' | null;
+
+      /**
        * MIME type of the image
        */
       content_type?: string | null;
@@ -1030,6 +1041,33 @@ export namespace ParsingGetResponse {
        * Size of the image file in bytes
        */
       size_bytes?: number | null;
+    }
+
+    export namespace Image {
+      /**
+       * Bounding box for an image on its page.
+       */
+      export interface Bbox {
+        /**
+         * Height of the bounding box
+         */
+        h: number;
+
+        /**
+         * Width of the bounding box
+         */
+        w: number;
+
+        /**
+         * X coordinate of the bounding box
+         */
+        x: number;
+
+        /**
+         * Y coordinate of the bounding box
+         */
+        y: number;
+      }
     }
   }
 
@@ -1283,6 +1321,9 @@ export interface ParsingCreateParams {
     | '2026-02-20'
     | '2026-02-24'
     | '2026-02-26'
+    | '2026-03-02'
+    | '2026-03-03'
+    | '2026-03-04'
     | 'latest'
     | (string & {});
 
@@ -2002,6 +2043,9 @@ export namespace ParsingCreateParams {
           | '2026-02-20'
           | '2026-02-24'
           | '2026-02-26'
+          | '2026-03-02'
+          | '2026-03-03'
+          | '2026-03-04'
           | 'latest'
           | (string & {})
           | null;
