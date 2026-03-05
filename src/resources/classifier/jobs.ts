@@ -7,15 +7,12 @@ import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-/**
- * @deprecated Please use 'client.classify'
- */
 export class Jobs extends APIResource {
   /**
    * Create a classify job. Experimental: This endpoint is not yet ready for
    * production use and is subject to change at any time.
    *
-   * @deprecated Please use 'client.classify'
+   * @deprecated Please use `client.classify.create()`
    */
   create(params: JobCreateParams, options?: RequestOptions): APIPromise<ClassifyJob> {
     const { organization_id, project_id, ...body } = params;
@@ -30,7 +27,7 @@ export class Jobs extends APIResource {
    * List classify jobs. Experimental: This endpoint is not yet ready for production
    * use and is subject to change at any time.
    *
-   * @deprecated Please use 'client.classify'
+   * @deprecated Please use `client.classify.list()`
    */
   list(
     query: JobListParams | null | undefined = {},
@@ -46,7 +43,7 @@ export class Jobs extends APIResource {
    * Get a classify job. Experimental: This endpoint is not yet ready for production
    * use and is subject to change at any time.
    *
-   * @deprecated Please use 'client.classify'
+   * @deprecated Please use `client.classify.get()`
    */
   get(
     classifyJobID: string,
@@ -60,7 +57,7 @@ export class Jobs extends APIResource {
    * Get the results of a classify job. Experimental: This endpoint is not yet ready
    * for production use and is subject to change at any time.
    *
-   * @deprecated Please use 'client.classify'
+   * @deprecated Please use `client.classify.get()`
    */
   getResults(
     classifyJobID: string,
