@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.8.0 (2026-03-05)
+
+Full Changelog: [v1.7.0...v1.8.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.7.0...v1.8.0)
+
+### Features
+
+* **api:** add better deprecation messages ([249c29c](https://github.com/run-llama/llama-cloud-ts/commit/249c29c7eae0343136d84180305dfa4c9c833200))
+* **api:** Add Classify V2 API ([466e946](https://github.com/run-llama/llama-cloud-ts/commit/466e946aa23b0d00ede11608a3d1b136560ed9bc))
+* **api:** api update ([fffb54f](https://github.com/run-llama/llama-cloud-ts/commit/fffb54f32b7a4e31cd3631d8a150e6aecd0509c4))
+* **api:** better deprecation config ([222f946](https://github.com/run-llama/llama-cloud-ts/commit/222f946dda7d71c29788c64c58f89d70e2c84800))
+* support LLAMA_PARSE_API_KEY as fallback env var for authentication ([756b8de](https://github.com/run-llama/llama-cloud-ts/commit/756b8dedcf354cb28a981bf341eb0a442b1d39e5))
+
+
+### Bug Fixes
+
+* fix request delays for retrying to be more respectful of high requested delays ([b191726](https://github.com/run-llama/llama-cloud-ts/commit/b191726c37e8eaf7870151a4e6cdebc1f27294c8))
+
+
+### Chores
+
+* **internal:** use x-stainless-mcp-client-envs header for MCP remote code tool calls ([43a1bf2](https://github.com/run-llama/llama-cloud-ts/commit/43a1bf2fe8d25742442815b42e3b22305b89a33b))
+
 ## 1.7.0 (2026-03-03)
 
 Full Changelog: [v1.6.0...v1.7.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.6.0...v1.7.0)

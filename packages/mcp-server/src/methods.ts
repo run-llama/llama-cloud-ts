@@ -185,6 +185,24 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/classifier/jobs/{classify_job_id}/results',
   },
   {
+    clientCallName: 'client.classify.create',
+    fullyQualifiedName: 'classify.create',
+    httpMethod: 'post',
+    httpPath: '/api/v2/classify',
+  },
+  {
+    clientCallName: 'client.classify.list',
+    fullyQualifiedName: 'classify.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/classify',
+  },
+  {
+    clientCallName: 'client.classify.get',
+    fullyQualifiedName: 'classify.get',
+    httpMethod: 'get',
+    httpPath: '/api/v2/classify/{job_id}',
+  },
+  {
     clientCallName: 'client.projects.list',
     fullyQualifiedName: 'projects.list',
     httpMethod: 'get',
