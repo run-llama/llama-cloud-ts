@@ -85,7 +85,7 @@ describe('resource jobs', () => {
   test.skip('file: only required params', async () => {
     const responsePromise = client.extraction.jobs.file({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -100,7 +100,7 @@ describe('resource jobs', () => {
   test.skip('file: required and optional params', async () => {
     const response = await client.extraction.jobs.file({
       extraction_agent_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
       from_ui: true,
       config_override: 'config_override',
       data_schema_override: 'data_schema_override',

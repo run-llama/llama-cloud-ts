@@ -11,7 +11,7 @@ describe('resource metadata', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.pipelines.metadata.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      upload_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      upload_file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -25,7 +25,7 @@ describe('resource metadata', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.pipelines.metadata.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      upload_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      upload_file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
   });
 
