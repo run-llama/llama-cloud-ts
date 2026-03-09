@@ -913,6 +913,11 @@ export interface ParsingGetResponse {
   items?: ParsingGetResponse.Items | null;
 
   /**
+   * Job execution metadata (if requested)
+   */
+  job_metadata?: { [key: string]: unknown } | null;
+
+  /**
    * Markdown result (if requested)
    */
   markdown?: ParsingGetResponse.Markdown | null;
@@ -1324,6 +1329,8 @@ export interface ParsingCreateParams {
     | '2026-03-02'
     | '2026-03-03'
     | '2026-03-04'
+    | '2026-03-05'
+    | '2026-03-09'
     | 'latest'
     | (string & {});
 
@@ -2046,6 +2053,8 @@ export namespace ParsingCreateParams {
           | '2026-03-02'
           | '2026-03-03'
           | '2026-03-04'
+          | '2026-03-05'
+          | '2026-03-09'
           | 'latest'
           | (string & {})
           | null;
@@ -2202,10 +2211,10 @@ export interface ParsingListParams extends PaginatedCursorParams {
 
 export interface ParsingGetParams {
   /**
-   * Fields to include: text, markdown, items, metadata, text_content_metadata,
-   * markdown_content_metadata, items_content_metadata, metadata_content_metadata,
-   * xlsx_content_metadata, output_pdf_content_metadata, images_content_metadata.
-   * Metadata fields include presigned URLs.
+   * Fields to include: text, markdown, items, metadata, job_metadata,
+   * text_content_metadata, markdown_content_metadata, items_content_metadata,
+   * metadata_content_metadata, xlsx_content_metadata, output_pdf_content_metadata,
+   * images_content_metadata. Metadata fields include presigned URLs.
    */
   expand?: Array<string>;
 
