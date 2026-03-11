@@ -39,6 +39,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { PollingOptions, DEFAULT_TIMEOUT } from '../../core/polling';
 
+/**
+ * @deprecated Use `client.extract` instead
+ */
 export class Extraction extends APIResource {
   jobs: JobsAPI.Jobs = new JobsAPI.Jobs(this._client);
   runs: RunsAPI.Runs = new RunsAPI.Runs(this._client);
@@ -50,6 +53,8 @@ export class Extraction extends APIResource {
    * Stateless extraction endpoint that uses a default extraction agent in the user's
    * default project. Requires data_schema, config, and either file_id, text, or
    * base64 encoded file data.
+   *
+   * @deprecated Use `client.extract` instead
    */
   run(params: ExtractionRunParams, options?: RequestOptions): APIPromise<JobsAPI.ExtractJob> {
     const { organization_id, project_id, ...body } = params;

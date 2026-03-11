@@ -68,6 +68,29 @@ import {
   DataSources,
 } from './resources/data-sources';
 import {
+  Extract,
+  ExtractConfiguration,
+  ExtractCreateParams,
+  ExtractDeleteParams,
+  ExtractDeleteResponse,
+  ExtractGenerateSchemaParams,
+  ExtractGenerateSchemaResponse,
+  ExtractGetParams,
+  ExtractJobMetadata,
+  ExtractJobUsage,
+  ExtractListParams,
+  ExtractOptions,
+  ExtractV2Job,
+  ExtractV2JobCreate,
+  ExtractV2JobQueryResponse,
+  ExtractV2JobsPaginatedCursor,
+  ExtractV2SchemaGenerateRequest,
+  ExtractV2SchemaValidateRequest,
+  ExtractV2SchemaValidateResponse,
+  ExtractValidateSchemaParams,
+  ExtractedFieldMetadata,
+} from './resources/extract';
+import {
   File,
   FileCreate,
   FileCreateParams,
@@ -906,6 +929,7 @@ export class LlamaCloud {
 
   files: API.Files = new API.Files(this);
   parsing: API.Parsing = new API.Parsing(this);
+  extract: API.Extract = new API.Extract(this);
   extraction: API.Extraction = new API.Extraction(this);
   classifier: API.Classifier = new API.Classifier(this);
   classify: API.Classify = new API.Classify(this);
@@ -919,6 +943,7 @@ export class LlamaCloud {
 
 LlamaCloud.Files = Files;
 LlamaCloud.Parsing = Parsing;
+LlamaCloud.Extract = Extract;
 LlamaCloud.Extraction = Extraction;
 LlamaCloud.Classifier = Classifier;
 LlamaCloud.Classify = Classify;
@@ -1021,6 +1046,30 @@ export declare namespace LlamaCloud {
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingListParams as ParsingListParams,
     type ParsingGetParams as ParsingGetParams,
+  };
+
+  export {
+    Extract as Extract,
+    type ExtractConfiguration as ExtractConfiguration,
+    type ExtractJobMetadata as ExtractJobMetadata,
+    type ExtractJobUsage as ExtractJobUsage,
+    type ExtractOptions as ExtractOptions,
+    type ExtractV2Job as ExtractV2Job,
+    type ExtractV2JobCreate as ExtractV2JobCreate,
+    type ExtractV2JobQueryResponse as ExtractV2JobQueryResponse,
+    type ExtractV2SchemaGenerateRequest as ExtractV2SchemaGenerateRequest,
+    type ExtractV2SchemaValidateRequest as ExtractV2SchemaValidateRequest,
+    type ExtractV2SchemaValidateResponse as ExtractV2SchemaValidateResponse,
+    type ExtractedFieldMetadata as ExtractedFieldMetadata,
+    type ExtractDeleteResponse as ExtractDeleteResponse,
+    type ExtractGenerateSchemaResponse as ExtractGenerateSchemaResponse,
+    type ExtractV2JobsPaginatedCursor as ExtractV2JobsPaginatedCursor,
+    type ExtractCreateParams as ExtractCreateParams,
+    type ExtractListParams as ExtractListParams,
+    type ExtractDeleteParams as ExtractDeleteParams,
+    type ExtractGenerateSchemaParams as ExtractGenerateSchemaParams,
+    type ExtractGetParams as ExtractGetParams,
+    type ExtractValidateSchemaParams as ExtractValidateSchemaParams,
   };
 
   export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
