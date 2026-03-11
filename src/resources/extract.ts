@@ -8,6 +8,7 @@ import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
+import { pollUntilComplete, PollingOptions, DEFAULT_TIMEOUT } from '../core/polling';
 
 export class Extract extends APIResource {
   /**
@@ -79,6 +80,113 @@ export class Extract extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ExtractV2SchemaValidateResponse> {
     return this._client.post('/api/v2/extract/schema/validation', { body, ...options });
+  }
+
+  /**
+   * Wait for an extraction job to complete by polling until it reaches a terminal state.
+   *
+   * @param jobID - The ID of the extraction job to wait for
+   * @param query - Optional query parameters (organization_id, project_id)
+   * @param options - Polling configuration and request options
+   * @returns The completed extraction job
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails or is cancelled
+   *
+   * @example
+   * ```typescript
+   * const job = await client.extract.create({ type: 'file_id', value: 'file-abc123' });
+   *
+   * const completed = await client.extract.waitForCompletion(job.id, undefined, { verbose: true });
+   * console.log(completed.extract_result);
+   * ```
+   */
+  async waitForCompletion(
+    jobID: string,
+    query?: ExtractGetParams,
+    options?: PollingOptions & RequestOptions,
+  ): Promise<ExtractV2Job> {
+    const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    const getStatus = async (): Promise<ExtractV2Job> => {
+      return await this.get(jobID, query, requestOptions);
+    };
+
+    const isComplete = (job: ExtractV2Job): boolean => {
+      return job.status === 'COMPLETED';
+    };
+
+    const isError = (job: ExtractV2Job): boolean => {
+      return job.status === 'FAILED' || job.status === 'CANCELLED';
+    };
+
+    const getErrorMessage = (job: ExtractV2Job): string => {
+      const errorParts = [`Job ${jobID} failed with status: ${job.status}`];
+      if (job.error_message) {
+        errorParts.push(`Error: ${job.error_message}`);
+      }
+      return errorParts.join(' | ');
+    };
+
+    return await pollUntilComplete(getStatus, isComplete, isError, getErrorMessage, {
+      pollingInterval,
+      maxInterval,
+      timeout: timeout || DEFAULT_TIMEOUT,
+      backoff,
+      verbose,
+    });
+  }
+
+  /**
+   * Create an extraction job, wait for it to complete, and return the result.
+   *
+   * This is a convenience method that combines create() and waitForCompletion()
+   * into a single call for the most common end-to-end workflow.
+   *
+   * @param params - Extract job creation parameters
+   * @param options - Polling configuration and request options
+   * @returns The completed extraction job with extract_result populated
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails or is cancelled
+   *
+   * @example
+   * ```typescript
+   * import { LlamaCloud } from 'llama-cloud';
+   *
+   * const client = new LlamaCloud({ apiKey: '...' });
+   *
+   * const result = await client.extract.run({
+   *   type: 'file_id',
+   *   value: 'file-abc123',
+   *   config: { extract_options: { data_schema: { ... } } },
+   * }, { verbose: true });
+   *
+   * console.log(result.extract_result);
+   * ```
+   */
+  async run(
+    params: ExtractCreateParams,
+    options?: PollingOptions & RequestOptions,
+  ): Promise<ExtractV2Job> {
+    const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    const job = await this.create(params, requestOptions);
+
+    const getQuery: ExtractGetParams = {};
+    if (params.organization_id !== undefined) {
+      getQuery.organization_id = params.organization_id;
+    }
+    if (params.project_id !== undefined) {
+      getQuery.project_id = params.project_id;
+    }
+
+    return await this.waitForCompletion(job.id, getQuery, {
+      pollingInterval,
+      maxInterval,
+      timeout: timeout || DEFAULT_TIMEOUT,
+      backoff,
+      verbose,
+      ...requestOptions,
+    });
   }
 }
 
