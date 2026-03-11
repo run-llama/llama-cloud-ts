@@ -179,28 +179,22 @@ List methods in the LlamaCloud API are paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
-async function fetchAllExtractRuns(params) {
-  const allExtractRuns = [];
+async function fetchAllExtractV2Jobs(params) {
+  const allExtractV2Jobs = [];
   // Automatically fetches more pages as needed.
-  for await (const extractRun of client.extraction.runs.list({
-    extraction_agent_id: '30988414-9163-4a0b-a7e0-35dd760109d7',
-    limit: 20,
-  })) {
-    allExtractRuns.push(extractRun);
+  for await (const extractV2Job of client.extract.list({ page_size: 20 })) {
+    allExtractV2Jobs.push(extractV2Job);
   }
-  return allExtractRuns;
+  return allExtractV2Jobs;
 }
 ```
 
 Alternatively, you can request a single page at a time:
 
 ```ts
-let page = await client.extraction.runs.list({
-  extraction_agent_id: '30988414-9163-4a0b-a7e0-35dd760109d7',
-  limit: 20,
-});
-for (const extractRun of page.items) {
-  console.log(extractRun);
+let page = await client.extract.list({ page_size: 20 });
+for (const extractV2Job of page.items) {
+  console.log(extractV2Job);
 }
 
 // Convenience methods are provided for manually paginating:

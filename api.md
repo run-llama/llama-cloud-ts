@@ -72,6 +72,33 @@ Methods:
 - <code title="get /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedCursor</code>
 - <code title="get /api/v2/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
 
+# Extract
+
+Types:
+
+- <code><a href="./src/resources/extract.ts">ExtractConfiguration</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractJobMetadata</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractJobUsage</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractOptions</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2Job</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2JobCreate</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2JobQueryResponse</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2SchemaGenerateRequest</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2SchemaValidateRequest</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2SchemaValidateResponse</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractedFieldMetadata</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractDeleteResponse</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractGenerateSchemaResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v2/extract">client.extract.<a href="./src/resources/extract.ts">create</a>({ ...params }) -> ExtractV2Job</code>
+- <code title="get /api/v2/extract">client.extract.<a href="./src/resources/extract.ts">list</a>({ ...params }) -> ExtractV2JobsPaginatedCursor</code>
+- <code title="delete /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract.ts">delete</a>(jobID, { ...params }) -> unknown</code>
+- <code title="post /api/v2/extract/schema/generate">client.extract.<a href="./src/resources/extract.ts">generateSchema</a>({ ...params }) -> ExtractGenerateSchemaResponse</code>
+- <code title="get /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract.ts">get</a>(jobID, { ...params }) -> ExtractV2Job</code>
+- <code title="post /api/v2/extract/schema/validation">client.extract.<a href="./src/resources/extract.ts">validateSchema</a>({ ...params }) -> ExtractV2SchemaValidateResponse</code>
+
 # Extraction
 
 Methods:

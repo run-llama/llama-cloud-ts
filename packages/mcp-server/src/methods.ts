@@ -59,6 +59,42 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/parse/{job_id}',
   },
   {
+    clientCallName: 'client.extract.create',
+    fullyQualifiedName: 'extract.create',
+    httpMethod: 'post',
+    httpPath: '/api/v2/extract',
+  },
+  {
+    clientCallName: 'client.extract.list',
+    fullyQualifiedName: 'extract.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/extract',
+  },
+  {
+    clientCallName: 'client.extract.delete',
+    fullyQualifiedName: 'extract.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v2/extract/{job_id}',
+  },
+  {
+    clientCallName: 'client.extract.generateSchema',
+    fullyQualifiedName: 'extract.generateSchema',
+    httpMethod: 'post',
+    httpPath: '/api/v2/extract/schema/generate',
+  },
+  {
+    clientCallName: 'client.extract.get',
+    fullyQualifiedName: 'extract.get',
+    httpMethod: 'get',
+    httpPath: '/api/v2/extract/{job_id}',
+  },
+  {
+    clientCallName: 'client.extract.validateSchema',
+    fullyQualifiedName: 'extract.validateSchema',
+    httpMethod: 'post',
+    httpPath: '/api/v2/extract/schema/validation',
+  },
+  {
     clientCallName: 'client.extraction.run',
     fullyQualifiedName: 'extraction.run',
     httpMethod: 'post',
