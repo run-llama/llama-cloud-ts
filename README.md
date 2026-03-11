@@ -111,20 +111,22 @@ const client = new LlamaCloud({
 List methods support auto-pagination with `for await...of`:
 
 ```ts
-for await (const run of client.extraction.runs.list({
-  extraction_agent_id: 'agent-id',
-  limit: 20,
-})) {
-  console.log(run);
+async function fetchAllExtractV2Jobs(params) {
+  const allExtractV2Jobs = [];
+  // Automatically fetches more pages as needed.
+  for await (const extractV2Job of client.extract.list({ page_size: 20 })) {
+    allExtractV2Jobs.push(extractV2Job);
+  }
+  return allExtractV2Jobs;
 }
 ```
 
 Or fetch one page at a time:
 
 ```ts
-let page = await client.extraction.runs.list({ extraction_agent_id: 'agent-id', limit: 20 });
-for (const run of page.items) {
-  console.log(run);
+let page = await client.extract.list({ page_size: 20 });
+for (const extractV2Job of page.items) {
+  console.log(extractV2Job);
 }
 
 while (page.hasNextPage()) {
