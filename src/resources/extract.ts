@@ -163,10 +163,7 @@ export class Extract extends APIResource {
    * console.log(result.extract_result);
    * ```
    */
-  async run(
-    params: ExtractCreateParams,
-    options?: PollingOptions & RequestOptions,
-  ): Promise<ExtractV2Job> {
+  async run(params: ExtractCreateParams, options?: PollingOptions & RequestOptions): Promise<ExtractV2Job> {
     const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
 
     const job = await this.create(params, requestOptions);
