@@ -1157,6 +1157,7 @@ export interface ParsingCreateParams {
     | '2026-03-09'
     | '2026-03-10'
     | '2026-03-11'
+    | '2026-03-12'
     | 'latest'
     | (string & {});
 
@@ -1370,8 +1371,7 @@ export namespace ParsingCreateParams {
 
     /**
      * Image categories to save: 'screenshot' (full page), 'embedded' (images in
-     * document), 'layout' (cropped images from layout detection). Empty list means no
-     * images are saved.
+     * document), 'layout' (cropped images from layout detection).
      */
     images_to_save?: Array<'screenshot' | 'embedded' | 'layout'>;
 
@@ -1883,6 +1883,7 @@ export namespace ParsingCreateParams {
           | '2026-03-09'
           | '2026-03-10'
           | '2026-03-11'
+          | '2026-03-12'
           | 'latest'
           | (string & {})
           | null;
