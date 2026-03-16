@@ -403,7 +403,8 @@ export interface FileCreateParams {
 
   /**
    * Body param: The intended purpose of the file. Valid values: 'user_data',
-   * 'parse', 'extract', 'split', 'classify', 'sheet', 'agent_app'
+   * 'parse', 'extract', 'split', 'classify', 'sheet', 'agent_app'. This determines
+   * the storage and retention policy for the file.
    */
   purpose: string;
 
