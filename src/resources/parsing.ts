@@ -1547,7 +1547,8 @@ export namespace ParsingCreateParams {
 
     /**
      * Image categories to save: 'screenshot' (full page), 'embedded' (images in
-     * document), 'layout' (cropped images from layout detection).
+     * document), 'layout' (cropped images from layout detection). Empty list means no
+     * images are saved.
      */
     images_to_save?: Array<'screenshot' | 'embedded' | 'layout'>;
 
