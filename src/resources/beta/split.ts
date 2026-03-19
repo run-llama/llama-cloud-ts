@@ -279,7 +279,7 @@ export interface SplitCreateResponse {
 
   /**
    * Current status of the job. Valid values are: pending, processing, completed,
-   * failed.
+   * failed, cancelled.
    */
   status: string;
 
@@ -335,7 +335,7 @@ export interface SplitListResponse {
 
   /**
    * Current status of the job. Valid values are: pending, processing, completed,
-   * failed.
+   * failed, cancelled.
    */
   status: string;
 
@@ -391,7 +391,7 @@ export interface SplitGetResponse {
 
   /**
    * Current status of the job. Valid values are: pending, processing, completed,
-   * failed.
+   * failed, cancelled.
    */
   status: string;
 

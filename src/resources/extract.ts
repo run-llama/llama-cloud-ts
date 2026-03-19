@@ -15,6 +15,13 @@ export class Extract extends APIResource {
    * Create a new extraction job.
    *
    * Provide exactly one of configuration_id (saved configuration) or inline config.
+   *
+   * @example
+   * ```ts
+   * const extractV2Job = await client.extract.create({
+   *   document_input_value: 'document_input_value',
+   * });
+   * ```
    */
   create(params: ExtractCreateParams, options?: RequestOptions): APIPromise<ExtractV2Job> {
     const { organization_id, project_id, ...body } = params;
@@ -23,6 +30,14 @@ export class Extract extends APIResource {
 
   /**
    * List extraction jobs with optional filtering and pagination.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const extractV2Job of client.extract.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: ExtractListParams | null | undefined = {},
@@ -33,6 +48,11 @@ export class Extract extends APIResource {
 
   /**
    * Delete an extraction job.
+   *
+   * @example
+   * ```ts
+   * const extract = await client.extract.delete('job_id');
+   * ```
    */
   delete(
     jobID: string,
@@ -48,6 +68,11 @@ export class Extract extends APIResource {
 
   /**
    * Generate a JSON schema and return a product configuration request.
+   *
+   * @example
+   * ```ts
+   * const response = await client.extract.generateSchema();
+   * ```
    */
   generateSchema(
     params: ExtractGenerateSchemaParams,
@@ -63,6 +88,11 @@ export class Extract extends APIResource {
 
   /**
    * Get a single extraction job by ID.
+   *
+   * @example
+   * ```ts
+   * const extractV2Job = await client.extract.get('job_id');
+   * ```
    */
   get(
     jobID: string,
@@ -74,6 +104,14 @@ export class Extract extends APIResource {
 
   /**
    * Validate a JSON schema for extraction.
+   *
+   * @example
+   * ```ts
+   * const extractV2SchemaValidateResponse =
+   *   await client.extract.validateSchema({
+   *     data_schema: { foo: { foo: 'bar' } },
+   *   });
+   * ```
    */
   validateSchema(
     body: ExtractValidateSchemaParams,
@@ -259,7 +297,7 @@ export interface ExtractJobUsage {
  */
 export interface ExtractOptions {
   /**
-   * JSON schema used for extraction
+   * JSON schema for structured extraction
    */
   data_schema: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
@@ -286,12 +324,28 @@ export interface ExtractOptions {
   extraction_target?: 'per_doc' | 'per_page' | 'per_table_row';
 
   /**
+   * Language of the document
+   */
+  lang?: string;
+
+  /**
+   * Maximum number of pages to process
+   */
+  max_pages?: number | null;
+
+  /**
    * Custom system prompt for extraction
    */
   system_prompt?: string | null;
 
   /**
-   * Extraction tier: cost_effective (10 credits) or agentic (20 credits)
+   * Comma-separated list of page numbers or ranges to process (1-based, e.g.,
+   * '1,3,5-7,9' or '1-3,8-10')
+   */
+  target_pages?: string | null;
+
+  /**
+   * Extraction tier: cost_effective (4 credits/page) or agentic (15 credits/page)
    */
   tier?: 'cost_effective' | 'agentic';
 }
@@ -311,6 +365,11 @@ export interface ExtractV2Job {
   created_at: string;
 
   /**
+   * File ID or Parse Job ID used for this job
+   */
+  document_input_value: string;
+
+  /**
    * Job configuration parameters (includes parse_config_id, extract_options)
    */
   parameters: {
@@ -323,24 +382,14 @@ export interface ExtractV2Job {
   project_id: string;
 
   /**
-   * Current status of the job
+   * Current status: PENDING, THROTTLED, RUNNING, COMPLETED, FAILED, CANCELLED
    */
-  status: 'PENDING' | 'THROTTLED' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
-
-  /**
-   * Type of document input.
-   */
-  type: 'url' | 'file_id' | 'parse_job_id';
+  status: string;
 
   /**
    * Last update timestamp
    */
   updated_at: string;
-
-  /**
-   * Document identifier (URL, file ID, or parse job ID).
-   */
-  value: string;
 
   /**
    * Extract configuration ID (ProductConfiguration) used for this job (if any)
@@ -371,14 +420,9 @@ export interface ExtractV2Job {
  */
 export interface ExtractV2JobCreate {
   /**
-   * Type of document input.
+   * File ID or Parse Job ID to extract from
    */
-  type: 'url' | 'file_id' | 'parse_job_id';
-
-  /**
-   * Document identifier (URL, file ID, or parse job ID).
-   */
-  value: string;
+  document_input_value: string;
 
   /**
    * Extraction configuration combining parse and extract settings.
@@ -426,10 +470,9 @@ export interface ExtractV2SchemaGenerateRequest {
   /**
    * Optional schema to validate, refine, or extend
    */
-  data_schema?:
-    | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
-    | string
-    | null;
+  data_schema?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
 
   /**
    * Optional file ID to analyze for schema generation
@@ -452,11 +495,11 @@ export interface ExtractV2SchemaGenerateRequest {
  */
 export interface ExtractV2SchemaValidateRequest {
   /**
-   * Schema to validate
+   * JSON schema to validate
    */
-  data_schema:
-    | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
-    | string;
+  data_schema: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  };
 }
 
 /**
@@ -588,6 +631,11 @@ export namespace ExtractGenerateSchemaResponse {
      * Classification execution mode
      */
     mode?: 'FAST';
+
+    /**
+     * Parsing configuration for classify jobs.
+     */
+    parsing_configuration?: ClassifyV2Parameters.ParsingConfiguration | null;
   }
 
   export namespace ClassifyV2Parameters {
@@ -604,6 +652,27 @@ export namespace ExtractGenerateSchemaResponse {
        * Document type to assign when rule matches
        */
       type: string;
+    }
+
+    /**
+     * Parsing configuration for classify jobs.
+     */
+    export interface ParsingConfiguration {
+      /**
+       * Language of the document
+       */
+      lang?: string;
+
+      /**
+       * Maximum number of pages to process
+       */
+      max_pages?: number | null;
+
+      /**
+       * Comma-separated list of page numbers or ranges to process (1-based, e.g.,
+       * '1,3,5-7,9' or '1-3,8-10')
+       */
+      target_pages?: string | null;
     }
   }
 
@@ -625,14 +694,9 @@ export namespace ExtractGenerateSchemaResponse {
 
 export interface ExtractCreateParams {
   /**
-   * Body param: Type of document input.
+   * Body param: File ID or Parse Job ID to extract from
    */
-  type: 'url' | 'file_id' | 'parse_job_id';
-
-  /**
-   * Body param: Document identifier (URL, file ID, or parse job ID).
-   */
-  value: string;
+  document_input_value: string;
 
   /**
    * Query param
@@ -665,6 +729,16 @@ export interface ExtractListParams extends PaginatedCursorParams {
    * Filter by configuration ID
    */
   configuration_id?: string | null;
+
+  /**
+   * Include jobs created at or after this timestamp (inclusive)
+   */
+  created_at_on_or_after?: string | null;
+
+  /**
+   * Include jobs created at or before this timestamp (inclusive)
+   */
+  created_at_on_or_before?: string | null;
 
   /**
    * Filter by document input type (file_id or parse_job_id)
@@ -706,10 +780,9 @@ export interface ExtractGenerateSchemaParams {
   /**
    * Body param: Optional schema to validate, refine, or extend
    */
-  data_schema?:
-    | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
-    | string
-    | null;
+  data_schema?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
 
   /**
    * Body param: Optional file ID to analyze for schema generation
@@ -728,6 +801,11 @@ export interface ExtractGenerateSchemaParams {
 }
 
 export interface ExtractGetParams {
+  /**
+   * Additional fields to include: extract_metadata
+   */
+  expand?: Array<string>;
+
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -735,11 +813,11 @@ export interface ExtractGetParams {
 
 export interface ExtractValidateSchemaParams {
   /**
-   * Schema to validate
+   * JSON schema to validate
    */
-  data_schema:
-    | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
-    | string;
+  data_schema: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  };
 }
 
 export declare namespace Extract {

@@ -110,10 +110,10 @@ describe('resource parsing', () => {
                 preserve_very_small_text: true,
               },
               specialized_chart_parsing: 'agentic_plus',
-              tier: 'fast',
-              version: '2025-12-11',
+              tier: 'agentic',
+              version: 'latest',
             },
-            filename_match_glob: 'filename_match_glob',
+            filename_match_glob: '*.txt',
             filename_match_glob_list: ['string'],
             filename_regexp: 'filename_regexp',
             filename_regexp_mode: 'filename_regexp_mode',
@@ -189,6 +189,8 @@ describe('resource parsing', () => {
     await expect(
       client.parsing.list(
         {
+          created_at_on_or_after: '2019-12-27T18:11:19.117Z',
+          created_at_on_or_before: '2019-12-27T18:11:19.117Z',
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           page_size: 0,
           page_token: 'page_token',

@@ -10,7 +10,7 @@ const client = new LlamaCloud({
 describe('resource extract', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.extract.create({ type: 'url', value: 'value' });
+    const responsePromise = client.extract.create({ document_input_value: 'document_input_value' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,8 +23,7 @@ describe('resource extract', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.extract.create({
-      type: 'url',
-      value: 'value',
+      document_input_value: 'document_input_value',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       config: {
@@ -34,7 +33,10 @@ describe('resource extract', () => {
           confidence_scores: true,
           extract_version: 'extract_version',
           extraction_target: 'per_doc',
+          lang: 'lang',
+          max_pages: 1,
           system_prompt: 'system_prompt',
+          target_pages: 'target_pages',
           tier: 'cost_effective',
         },
         parse_config_id: 'parse_config_id',
@@ -71,6 +73,8 @@ describe('resource extract', () => {
       client.extract.list(
         {
           configuration_id: 'configuration_id',
+          created_at_on_or_after: '2019-12-27T18:11:19.117Z',
+          created_at_on_or_before: '2019-12-27T18:11:19.117Z',
           document_input_type: 'document_input_type',
           document_input_value: 'document_input_value',
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -142,6 +146,7 @@ describe('resource extract', () => {
       client.extract.get(
         'job_id',
         {
+          expand: ['string'],
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         },

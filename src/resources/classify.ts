@@ -59,6 +59,11 @@ export interface ClassifyConfiguration {
    * Classification execution mode
    */
   mode?: 'FAST';
+
+  /**
+   * Parsing configuration for classify jobs.
+   */
+  parsing_configuration?: ClassifyConfiguration.ParsingConfiguration | null;
 }
 
 export namespace ClassifyConfiguration {
@@ -75,6 +80,27 @@ export namespace ClassifyConfiguration {
      * Document type to assign when rule matches
      */
     type: string;
+  }
+
+  /**
+   * Parsing configuration for classify jobs.
+   */
+  export interface ParsingConfiguration {
+    /**
+     * Language of the document
+     */
+    lang?: string;
+
+    /**
+     * Maximum number of pages to process
+     */
+    max_pages?: number | null;
+
+    /**
+     * Comma-separated list of page numbers or ranges to process (1-based, e.g.,
+     * '1,3,5-7,9' or '1-3,8-10')
+     */
+    target_pages?: string | null;
   }
 }
 
@@ -395,6 +421,16 @@ export interface ClassifyListParams extends PaginatedCursorParams {
    * Filter by configuration ID
    */
   configuration_id?: string | null;
+
+  /**
+   * Include jobs created at or after this timestamp (inclusive)
+   */
+  created_at_on_or_after?: string | null;
+
+  /**
+   * Include jobs created at or before this timestamp (inclusive)
+   */
+  created_at_on_or_before?: string | null;
 
   /**
    * Filter by specific job IDs
