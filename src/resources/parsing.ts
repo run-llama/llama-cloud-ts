@@ -17,8 +17,7 @@ export class Parsing extends APIResource {
   }
 
   /**
-   * List parse jobs for the current project with optional status filtering and
-   * pagination.
+   * List parse jobs for the current project with optional filtering and pagination.
    */
   list(
     query: ParsingListParams | null | undefined = {},
@@ -1126,12 +1125,15 @@ export namespace ParsingGetResponse {
 
 export interface ParsingCreateParams {
   /**
-   * Body param: The parsing tier to use
+   * Body param: Parsing tier: 'fast' (rule-based, cheapest), 'cost_effective'
+   * (balanced), 'agentic' (AI-powered with custom prompts), or 'agentic_plus'
+   * (premium AI with highest accuracy)
    */
   tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';
 
   /**
-   * Body param: Version of the tier configuration
+   * Body param: Tier version. Use 'latest' for the current stable version, or
+   * specify a specific version (e.g., '1.0', '2.0') for reproducible results
    */
   version:
     | '2025-12-11'
@@ -1158,6 +1160,8 @@ export interface ParsingCreateParams {
     | '2026-03-10'
     | '2026-03-11'
     | '2026-03-12'
+    | '2026-03-17'
+    | '2026-03-19'
     | 'latest'
     | (string & {});
 
@@ -1172,296 +1176,340 @@ export interface ParsingCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Options for agentic tier parsing (with AI agents).
+   * Body param: Options for AI-powered parsing tiers (cost_effective, agentic,
+   * agentic_plus).
+   *
+   * These options customize how the AI processes and interprets document content.
+   * Only applicable when using non-fast tiers.
    */
   agentic_options?: ParsingCreateParams.AgenticOptions | null;
 
   /**
-   * Body param: Name of the client making the parsing request
+   * Body param: Identifier for the client/application making the request. Used for
+   * analytics and debugging. Example: 'my-app-v2'
    */
   client_name?: string | null;
 
   /**
-   * Body param: Document crop box boundaries
+   * Body param: Crop boundaries to process only a portion of each page. Values are
+   * ratios 0-1 from page edges
    */
   crop_box?: ParsingCreateParams.CropBox;
 
   /**
-   * Body param: Whether to disable caching for this parsing job
+   * Body param: Bypass result caching and force re-parsing. Use when document
+   * content may have changed or you need fresh results
    */
   disable_cache?: boolean | null;
 
   /**
-   * Body param: Options for fast tier parsing (without AI).
+   * Body param: Options for fast tier parsing (rule-based, no AI).
+   *
+   * Fast tier uses deterministic algorithms for text extraction without AI
+   * enhancement. It's the fastest and most cost-effective option, best suited for
+   * simple documents with standard layouts. Currently has no configurable options
+   * but reserved for future expansion.
    */
   fast_options?: unknown | null;
 
   /**
-   * Body param: ID of an existing file in the project to parse
+   * Body param: ID of an existing file in the project to parse. Mutually exclusive
+   * with source_url
    */
   file_id?: string | null;
 
   /**
-   * Body param: HTTP proxy URL for network requests (only used with source_url)
+   * Body param: HTTP/HTTPS proxy for fetching source_url. Ignored if using file_id
    */
   http_proxy?: string | null;
 
   /**
-   * Body param: Input format-specific parsing options
+   * Body param: Format-specific options (HTML, PDF, spreadsheet, presentation).
+   * Applied based on detected input file type
    */
   input_options?: ParsingCreateParams.InputOptions;
 
   /**
-   * Body param: Output format and styling options
+   * Body param: Output formatting options for markdown, text, and extracted images
    */
   output_options?: ParsingCreateParams.OutputOptions;
 
   /**
-   * Body param: Page range selection options
+   * Body param: Page selection: limit total pages or specify exact pages to process
    */
   page_ranges?: ParsingCreateParams.PageRanges;
 
   /**
-   * Body param: Job processing control and failure handling
+   * Body param: Job execution controls including timeouts and failure thresholds
    */
   processing_control?: ParsingCreateParams.ProcessingControl;
 
   /**
-   * Body param: Processing options shared across all tiers
+   * Body param: Document processing options including OCR, table extraction, and
+   * chart parsing
    */
   processing_options?: ParsingCreateParams.ProcessingOptions;
 
   /**
-   * Body param: Source URL to fetch document from
+   * Body param: Public URL of the document to parse. Mutually exclusive with file_id
    */
   source_url?: string | null;
 
   /**
-   * Body param: List of webhook configurations for notifications
+   * Body param: Webhook endpoints for job status notifications. Multiple webhooks
+   * can be configured for different events or services
    */
   webhook_configurations?: Array<ParsingCreateParams.WebhookConfiguration>;
 }
 
 export namespace ParsingCreateParams {
   /**
-   * Options for agentic tier parsing (with AI agents).
+   * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
+   *
+   * These options customize how the AI processes and interprets document content.
+   * Only applicable when using non-fast tiers.
    */
   export interface AgenticOptions {
     /**
-     * Custom prompt for AI-powered parsing
+     * Custom instructions for the AI parser. Use to guide extraction behavior, specify
+     * output formatting, or provide domain-specific context. Example: 'Extract
+     * financial tables with currency symbols. Format dates as YYYY-MM-DD.'
      */
     custom_prompt?: string | null;
   }
 
   /**
-   * Document crop box boundaries
+   * Crop boundaries to process only a portion of each page. Values are ratios 0-1
+   * from page edges
    */
   export interface CropBox {
     /**
-     * Bottom boundary of crop box as ratio (0-1)
+     * Bottom boundary as ratio (0-1). 0=top edge, 1=bottom edge. Content below this
+     * line is excluded
      */
     bottom?: number | null;
 
     /**
-     * Left boundary of crop box as ratio (0-1)
+     * Left boundary as ratio (0-1). 0=left edge, 1=right edge. Content left of this
+     * line is excluded
      */
     left?: number | null;
 
     /**
-     * Right boundary of crop box as ratio (0-1)
+     * Right boundary as ratio (0-1). 0=left edge, 1=right edge. Content right of this
+     * line is excluded
      */
     right?: number | null;
 
     /**
-     * Top boundary of crop box as ratio (0-1)
+     * Top boundary as ratio (0-1). 0=top edge, 1=bottom edge. Content above this line
+     * is excluded
      */
     top?: number | null;
   }
 
   /**
-   * Input format-specific parsing options
+   * Format-specific options (HTML, PDF, spreadsheet, presentation). Applied based on
+   * detected input file type
    */
   export interface InputOptions {
     /**
-     * HTML-specific parsing options
+     * HTML/web page parsing options (applies to .html, .htm files)
      */
     html?: InputOptions.HTML;
 
     /**
-     * PDF-specific parsing options
+     * PDF-specific parsing options (applies to .pdf files)
      */
     pdf?: unknown;
 
     /**
-     * Presentation-specific parsing options
+     * Presentation parsing options (applies to .pptx, .ppt, .odp, .key files)
      */
     presentation?: InputOptions.Presentation;
 
     /**
-     * Spreadsheet-specific parsing options
+     * Spreadsheet parsing options (applies to .xlsx, .xls, .csv, .ods files)
      */
     spreadsheet?: InputOptions.Spreadsheet;
   }
 
   export namespace InputOptions {
     /**
-     * HTML-specific parsing options
+     * HTML/web page parsing options (applies to .html, .htm files)
      */
     export interface HTML {
       /**
-       * Make all HTML elements visible during parsing
+       * Force all HTML elements to be visible by overriding CSS display/visibility
+       * properties. Useful for parsing pages with hidden content or collapsed sections
        */
       make_all_elements_visible?: boolean | null;
 
       /**
-       * Remove fixed position elements from HTML
+       * Remove fixed-position elements (headers, footers, floating buttons) that appear
+       * on every page render
        */
       remove_fixed_elements?: boolean | null;
 
       /**
-       * Remove navigation elements from HTML
+       * Remove navigation elements (nav bars, sidebars, menus) to focus on main content
        */
       remove_navigation_elements?: boolean | null;
     }
 
     /**
-     * Presentation-specific parsing options
+     * Presentation parsing options (applies to .pptx, .ppt, .odp, .key files)
      */
     export interface Presentation {
       /**
-       * Extract out of bounds content in presentation slides
+       * Extract content positioned outside the visible slide area. Some presentations
+       * have hidden notes or content that extends beyond slide boundaries
        */
       out_of_bounds_content?: boolean | null;
 
       /**
-       * Skip extraction of embedded data for charts in presentation slides
+       * Skip extraction of embedded chart data tables. When true, only the visual
+       * representation of charts is captured, not the underlying data
        */
       skip_embedded_data?: boolean | null;
     }
 
     /**
-     * Spreadsheet-specific parsing options
+     * Spreadsheet parsing options (applies to .xlsx, .xls, .csv, .ods files)
      */
     export interface Spreadsheet {
       /**
-       * Detect and extract sub-tables within spreadsheet cells
+       * Detect and extract multiple tables within a single sheet. Useful when
+       * spreadsheets contain several data regions separated by blank rows/columns
        */
       detect_sub_tables_in_sheets?: boolean | null;
 
       /**
-       * Force re-computation of spreadsheet cells containing formulas
+       * Compute formula results instead of extracting formula text. Use when you need
+       * calculated values rather than formula definitions
        */
       force_formula_computation_in_sheets?: boolean | null;
 
       /**
-       * Include hidden sheets when parsing spreadsheet files
+       * Parse hidden sheets in addition to visible ones. By default, hidden sheets are
+       * skipped
        */
       include_hidden_sheets?: boolean | null;
     }
   }
 
   /**
-   * Output format and styling options
+   * Output formatting options for markdown, text, and extracted images
    */
   export interface OutputOptions {
     /**
-     * Extract printed page numbers from the document
+     * Extract the printed page number as it appears in the document (e.g., 'Page 5 of
+     * 10', 'v', 'A-3'). Useful for referencing original page numbers
      */
     extract_printed_page_number?: boolean | null;
 
     /**
-     * Image categories to save: 'screenshot' (full page), 'embedded' (images in
-     * document), 'layout' (cropped images from layout detection). Empty list means no
-     * images are saved.
+     * Image categories to extract and save. Options: 'screenshot' (full page renders
+     * useful for visual QA), 'embedded' (images found within the document), 'layout'
+     * (cropped regions from layout detection like figures and diagrams). Empty list
+     * saves no images
      */
     images_to_save?: Array<'screenshot' | 'embedded' | 'layout'>;
 
     /**
-     * Markdown output formatting options
+     * Markdown formatting options including table styles and link annotations
      */
     markdown?: OutputOptions.Markdown;
 
     /**
-     * Spatial text output options
+     * Spatial text output options for preserving document layout structure
      */
     spatial_text?: OutputOptions.SpatialText;
 
     /**
-     * Table export as spreadsheet options
+     * Options for exporting tables as XLSX spreadsheets
      */
     tables_as_spreadsheet?: OutputOptions.TablesAsSpreadsheet;
   }
 
   export namespace OutputOptions {
     /**
-     * Markdown output formatting options
+     * Markdown formatting options including table styles and link annotations
      */
     export interface Markdown {
       /**
-       * Add annotations to links in markdown output
+       * Add link annotations to markdown output in the format [text](url). When false,
+       * only the link text is included
        */
       annotate_links?: boolean | null;
 
       /**
-       * Instead of transcribing images, inline them in the markdown output
+       * Embed images directly in markdown as base64 data URIs instead of extracting them
+       * as separate files. Useful for self-contained markdown output
        */
       inline_images?: boolean | null;
 
       /**
-       * Table formatting options for markdown
+       * Table formatting options including markdown vs HTML format and merging behavior
        */
       tables?: Markdown.Tables;
     }
 
     export namespace Markdown {
       /**
-       * Table formatting options for markdown
+       * Table formatting options including markdown vs HTML format and merging behavior
        */
       export interface Tables {
         /**
-         * Use compact formatting for markdown tables
+         * Remove extra whitespace padding in markdown table cells for more compact output
          */
         compact_markdown_tables?: boolean | null;
 
         /**
-         * Separator for multiline content in markdown tables
+         * Separator string for multiline cell content in markdown tables. Example: ' ' to
+         * preserve line breaks, ' ' to join with spaces
          */
         markdown_table_multiline_separator?: string | null;
 
         /**
-         * Merge tables that continue across or within pages. Affects markdown and items
+         * Automatically merge tables that span multiple pages into a single table. The
+         * merged table appears on the first page with merged_from_pages metadata
          */
         merge_continued_tables?: boolean | null;
 
         /**
-         * Output tables in markdown format
+         * Output tables as markdown pipe tables instead of HTML <table> tags. Markdown
+         * tables are simpler but cannot represent complex structures like merged cells
          */
         output_tables_as_markdown?: boolean | null;
       }
     }
 
     /**
-     * Spatial text output options
+     * Spatial text output options for preserving document layout structure
      */
     export interface SpatialText {
       /**
-       * Keep column structure intact without unrolling
+       * Keep multi-column layouts intact instead of linearizing columns into sequential
+       * text. Automatically enabled for non-fast tiers
        */
       do_not_unroll_columns?: boolean | null;
 
       /**
-       * Preserve text alignment across page boundaries
+       * Maintain consistent text column alignment across page boundaries. Automatically
+       * enabled for document-level parsing modes
        */
       preserve_layout_alignment_across_pages?: boolean | null;
 
       /**
-       * Include very small text in spatial output
+       * Include text below the normal size threshold. Useful for footnotes, watermarks,
+       * or fine print that might otherwise be filtered out
        */
       preserve_very_small_text?: boolean | null;
     }
 
     /**
-     * Table export as spreadsheet options
+     * Options for exporting tables as XLSX spreadsheets
      */
     export interface TablesAsSpreadsheet {
       /**
@@ -1470,140 +1518,165 @@ export namespace ParsingCreateParams {
       enable?: boolean | null;
 
       /**
-       * Automatically guess sheet names when exporting tables
+       * Automatically generate descriptive sheet names from table context (headers,
+       * surrounding text) instead of using generic names like 'Table_1'
        */
       guess_sheet_name?: boolean;
     }
   }
 
   /**
-   * Page range selection options
+   * Page selection: limit total pages or specify exact pages to process
    */
   export interface PageRanges {
     /**
-     * Maximum number of pages to process
+     * Maximum number of pages to process. Pages are processed in order starting from
+     * page 1. If both max_pages and target_pages are set, target_pages takes
+     * precedence
      */
     max_pages?: number | null;
 
     /**
-     * Specific pages to process (e.g., '1,3,5-8') using 1-based indexing
+     * Comma-separated list of specific pages to process using 1-based indexing.
+     * Supports individual pages and ranges. Examples: '1,3,5' (pages 1, 3, 5), '1-5'
+     * (pages 1 through 5 inclusive), '1,3,5-8,10' (pages 1, 3, 5-8, and 10). Pages are
+     * sorted and deduplicated automatically. Duplicate pages cause an error
      */
     target_pages?: string | null;
   }
 
   /**
-   * Job processing control and failure handling
+   * Job execution controls including timeouts and failure thresholds
    */
   export interface ProcessingControl {
     /**
-     * Conditions that determine job failure
+     * Quality thresholds that determine when a job should fail vs complete with
+     * partial results
      */
     job_failure_conditions?: ProcessingControl.JobFailureConditions;
 
     /**
-     * Timeout configuration for parsing jobs
+     * Timeout settings for job execution. Increase for large or complex documents
      */
     timeouts?: ProcessingControl.Timeouts;
   }
 
   export namespace ProcessingControl {
     /**
-     * Conditions that determine job failure
+     * Quality thresholds that determine when a job should fail vs complete with
+     * partial results
      */
     export interface JobFailureConditions {
       /**
-       * Maximum ratio of pages allowed to fail (0-1)
+       * Maximum ratio of pages allowed to fail before the job fails (0-1). Example: 0.1
+       * means job fails if more than 10% of pages fail. Default is 0.05 (5%)
        */
       allowed_page_failure_ratio?: number | null;
 
       /**
-       * Fail job if buggy fonts are detected
+       * Fail the job if a problematic font is detected that may cause incorrect text
+       * extraction. Buggy fonts can produce garbled or missing characters
        */
       fail_on_buggy_font?: boolean | null;
 
       /**
-       * Fail job if image extraction encounters errors
+       * Fail the entire job if any embedded image cannot be extracted. By default, image
+       * extraction errors are logged but don't fail the job
        */
       fail_on_image_extraction_error?: boolean | null;
 
       /**
-       * Fail job if image OCR encounters errors
+       * Fail the entire job if OCR fails on any image. By default, OCR errors result in
+       * empty text for that image
        */
       fail_on_image_ocr_error?: boolean | null;
 
       /**
-       * Fail job if markdown reconstruction encounters errors
+       * Fail the entire job if markdown cannot be reconstructed for any page. By
+       * default, failed pages use fallback text extraction
        */
       fail_on_markdown_reconstruction_error?: boolean | null;
     }
 
     /**
-     * Timeout configuration for parsing jobs
+     * Timeout settings for job execution. Increase for large or complex documents
      */
     export interface Timeouts {
       /**
-       * Base timeout in seconds (max 30 minutes)
+       * Base timeout for the job in seconds (max 1800 = 30 minutes). This is the minimum
+       * time allowed regardless of document size
        */
       base_in_seconds?: number | null;
 
       /**
-       * Additional timeout per page in seconds (max 5 minutes)
+       * Additional timeout per page in seconds (max 300 = 5 minutes). Total timeout =
+       * base + (this value × page count)
        */
       extra_time_per_page_in_seconds?: number | null;
     }
   }
 
   /**
-   * Processing options shared across all tiers
+   * Document processing options including OCR, table extraction, and chart parsing
    */
   export interface ProcessingOptions {
     /**
-     * Whether to use aggressive table extraction
+     * Use aggressive heuristics to detect table boundaries, even without visible
+     * borders. Useful for documents with borderless or complex tables
      */
     aggressive_table_extraction?: boolean | null;
 
     /**
-     * Configuration for auto mode parsing with triggers and parsing options
+     * Conditional processing rules that apply different parsing options based on page
+     * content, document structure, or filename patterns. Each entry defines trigger
+     * conditions and the parsing configuration to apply when triggered
      */
     auto_mode_configuration?: Array<ProcessingOptions.AutoModeConfiguration> | null;
 
     /**
-     * Cost optimizer parameters for parsing configuration.
+     * Cost optimizer configuration for reducing parsing costs on simpler pages.
+     *
+     * When enabled, the parser analyzes each page and routes simpler pages to faster,
+     * cheaper processing while preserving quality for complex pages. Only works with
+     * 'agentic' or 'agentic_plus' tiers.
      */
     cost_optimizer?: ProcessingOptions.CostOptimizer | null;
 
     /**
-     * Whether to disable heuristics like outlined table extraction and adaptive long
-     * table handling
+     * Disable automatic heuristics including outlined table extraction and adaptive
+     * long table handling. Use when heuristics produce incorrect results
      */
     disable_heuristics?: boolean | null;
 
     /**
-     * Options for ignoring specific text types
+     * Options for ignoring specific text types (diagonal, hidden, text in images)
      */
     ignore?: ProcessingOptions.Ignore;
 
     /**
-     * OCR configuration parameters
+     * OCR configuration including language detection settings
      */
     ocr_parameters?: ProcessingOptions.OcrParameters;
 
     /**
-     * Enable specialized chart parsing with the specified mode
+     * Enable AI-powered chart analysis. Modes: 'efficient' (fast, lower cost),
+     * 'agentic' (balanced), 'agentic_plus' (highest accuracy). Automatically enables
+     * extract_layout and precise_bounding_box when set
      */
     specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient' | null;
   }
 
   export namespace ProcessingOptions {
     /**
-     * A single entry in the auto mode configuration array.
+     * A single auto mode rule with trigger conditions and parsing configuration.
+     *
+     * Auto mode allows conditional parsing where different configurations are applied
+     * based on page content, structure, or filename. When triggers match, the
+     * parsing_conf overrides default settings for that page.
      */
     export interface AutoModeConfiguration {
       /**
-       * Configuration for parsing in auto mode (V2 format).
-       *
-       * This uses V2 API naming conventions. The backend service will convert these to
-       * the V1 format expected by the llamaparse worker.
+       * Parsing configuration to apply when trigger conditions are met
        */
       parsing_conf: AutoModeConfiguration.ParsingConf;
 
@@ -1778,18 +1851,15 @@ export namespace ParsingCreateParams {
       text_in_page?: string | null;
 
       /**
-       * How to combine multiple trigger conditions: 'and' (all must match, default) or
-       * 'or' (any can match)
+       * How to combine multiple trigger conditions: 'and' (all conditions must match,
+       * this is the default) or 'or' (any single condition can trigger)
        */
       trigger_mode?: string | null;
     }
 
     export namespace AutoModeConfiguration {
       /**
-       * Configuration for parsing in auto mode (V2 format).
-       *
-       * This uses V2 API naming conventions. The backend service will convert these to
-       * the V1 format expected by the llamaparse worker.
+       * Parsing configuration to apply when trigger conditions are met
        */
       export interface ParsingConf {
         /**
@@ -1808,7 +1878,7 @@ export namespace ParsingCreateParams {
         crop_box?: ParsingConf.CropBox | null;
 
         /**
-         * Custom prompt for AI-powered parsing
+         * Custom AI instructions for matched pages. Overrides the base custom_prompt
          */
         custom_prompt?: string | null;
 
@@ -1853,12 +1923,12 @@ export namespace ParsingCreateParams {
         specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient' | null;
 
         /**
-         * The parsing tier to use
+         * Override the parsing tier for matched pages. Must be paired with version
          */
         tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus' | null;
 
         /**
-         * Version of the tier configuration
+         * Tier version when overriding tier. Required when tier is specified
          */
         version?:
           | '2025-12-11'
@@ -1885,6 +1955,8 @@ export namespace ParsingCreateParams {
           | '2026-03-10'
           | '2026-03-11'
           | '2026-03-12'
+          | '2026-03-17'
+          | '2026-03-19'
           | 'latest'
           | (string & {})
           | null;
@@ -1969,66 +2041,95 @@ export namespace ParsingCreateParams {
     }
 
     /**
-     * Cost optimizer parameters for parsing configuration.
+     * Cost optimizer configuration for reducing parsing costs on simpler pages.
+     *
+     * When enabled, the parser analyzes each page and routes simpler pages to faster,
+     * cheaper processing while preserving quality for complex pages. Only works with
+     * 'agentic' or 'agentic_plus' tiers.
      */
     export interface CostOptimizer {
       /**
-       * Use cost-optimized parsing for the document. May negatively impact parsing speed
-       * and quality.
+       * Enable cost-optimized parsing. Routes simpler pages to faster processing while
+       * complex pages use full AI analysis. May reduce speed on some documents.
+       * IMPORTANT: Only available with 'agentic' or 'agentic_plus' tiers
        */
       enable?: boolean | null;
     }
 
     /**
-     * Options for ignoring specific text types
+     * Options for ignoring specific text types (diagonal, hidden, text in images)
      */
     export interface Ignore {
       /**
-       * Whether to ignore diagonal text in the document
+       * Skip text rotated at an angle (not horizontal/vertical). Useful for ignoring
+       * watermarks or decorative angled text
        */
       ignore_diagonal_text?: boolean | null;
 
       /**
-       * Whether to ignore hidden text in the document
+       * Skip text marked as hidden in the document structure. Some PDFs contain
+       * invisible text layers used for accessibility or search indexing
        */
       ignore_hidden_text?: boolean | null;
 
       /**
-       * Whether to ignore text that appears within images
+       * Skip OCR text extraction from embedded images. Use when images contain
+       * irrelevant text (watermarks, logos) that shouldn't be in the output
        */
       ignore_text_in_image?: boolean | null;
     }
 
     /**
-     * OCR configuration parameters
+     * OCR configuration including language detection settings
      */
     export interface OcrParameters {
       /**
-       * List of languages to use for OCR processing
+       * Languages to use for OCR text recognition. Specify multiple languages if
+       * document contains mixed-language content. Order matters - put primary language
+       * first. Example: ['en', 'es'] for English with Spanish
        */
       languages?: Array<ParsingAPI.ParsingLanguages> | null;
     }
   }
 
+  /**
+   * Webhook configuration for receiving parsing job notifications.
+   *
+   * Webhooks are called when specified events occur during job processing. Configure
+   * multiple webhook configurations to send to different endpoints.
+   */
   export interface WebhookConfiguration {
     /**
-     * List of events that trigger webhook notifications
+     * Events that trigger this webhook. Options: 'parse.success' (job completed),
+     * 'parse.failure' (job failed), 'parse.partial' (some pages failed). If not
+     * specified, webhook fires for all events
      */
     webhook_events?: Array<string> | null;
 
     /**
-     * Custom headers to include in webhook requests
+     * Custom HTTP headers to include in webhook requests. Use for authentication
+     * tokens or custom routing. Example: {'Authorization': 'Bearer xyz'}
      */
     webhook_headers?: { [key: string]: unknown } | null;
 
     /**
-     * Webhook URL for receiving parsing notifications
+     * HTTPS URL to receive webhook POST requests. Must be publicly accessible
      */
     webhook_url?: string | null;
   }
 }
 
 export interface ParsingListParams extends PaginatedCursorParams {
+  /**
+   * Include jobs created at or after this timestamp (inclusive)
+   */
+  created_at_on_or_after?: string | null;
+
+  /**
+   * Include jobs created at or before this timestamp (inclusive)
+   */
+  created_at_on_or_before?: string | null;
+
   organization_id?: string | null;
 
   project_id?: string | null;
