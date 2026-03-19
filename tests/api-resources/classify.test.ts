@@ -39,6 +39,8 @@ describe('resource classify', () => {
       client.classify.list(
         {
           configuration_id: 'configuration_id',
+          created_at_on_or_after: '2019-12-27T18:11:19.117Z',
+          created_at_on_or_before: '2019-12-27T18:11:19.117Z',
           job_ids: ['string', 'string'],
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           page_size: 1,
