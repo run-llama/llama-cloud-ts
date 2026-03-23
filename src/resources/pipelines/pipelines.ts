@@ -527,6 +527,13 @@ export interface GeminiEmbedding {
   num_workers?: number | null;
 
   /**
+   * Optional reduced dimension for output embeddings. Supported by
+   * models/text-embedding-004 and newer (e.g. gemini-embedding-001). Not supported
+   * by models/embedding-001.
+   */
+  output_dimensionality?: number | null;
+
+  /**
    * The task for embedding model.
    */
   task_type?: string | null;
