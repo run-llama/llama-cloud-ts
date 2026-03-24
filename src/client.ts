@@ -326,7 +326,7 @@ export class LlamaCloud {
       parseLogLevel(readEnv('LLAMA_CLOUD_LOG'), "process.env['LLAMA_CLOUD_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
-    this.maxRetries = options.maxRetries ?? 2;
+    this.maxRetries = options.maxRetries ?? 5;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
 
