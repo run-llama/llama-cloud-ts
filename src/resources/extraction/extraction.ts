@@ -104,7 +104,7 @@ export interface ExtractionRunParams {
   text?: string | null;
 
   /**
-   * Body param: The outbound webhook configurations
+   * Body param: Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<JobsAPI.WebhookConfiguration> | null;
 }

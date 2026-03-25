@@ -10,7 +10,9 @@ const client = new LlamaCloud({
 describe('resource extract', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.extract.create({ document_input_value: 'document_input_value' });
+    const responsePromise = client.extract.create({
+      document_input_value: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,32 +25,30 @@ describe('resource extract', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.extract.create({
-      document_input_value: 'document_input_value',
+      document_input_value: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      config: {
-        extract_options: {
-          data_schema: { foo: { foo: 'bar' } },
-          cite_sources: true,
-          confidence_scores: true,
-          extract_version: 'extract_version',
-          extraction_target: 'per_doc',
-          lang: 'lang',
-          max_pages: 1,
-          system_prompt: 'system_prompt',
-          target_pages: 'target_pages',
-          tier: 'cost_effective',
-        },
-        parse_config_id: 'parse_config_id',
-        parse_tier: 'parse_tier',
+      configuration: {
+        data_schema: { foo: { foo: 'bar' } },
+        cite_sources: true,
+        confidence_scores: true,
+        extract_version: 'latest',
+        extraction_target: 'per_doc',
+        lang: 'en',
+        max_pages: 10,
+        parse_config_id: 'cfg-11111111-2222-3333-4444-555555555555',
+        parse_tier: 'fast',
+        system_prompt: 'Extract all monetary values in USD. If a currency is not specified, assume USD.',
+        target_pages: '1,3,5-7',
+        tier: 'cost_effective',
       },
-      configuration_id: 'configuration_id',
+      configuration_id: 'cfg-11111111-2222-3333-4444-555555555555',
       webhook_configurations: [
         {
-          webhook_events: ['extract.pending'],
-          webhook_headers: { foo: 'string' },
-          webhook_output_format: 'webhook_output_format',
-          webhook_url: 'webhook_url',
+          webhook_events: ['parse.success', 'parse.error'],
+          webhook_headers: { Authorization: 'Bearer sk-...' },
+          webhook_output_format: 'json',
+          webhook_url: 'https://example.com/webhooks/llamacloud',
         },
       ],
     });
@@ -77,6 +77,7 @@ describe('resource extract', () => {
           created_at_on_or_before: '2019-12-27T18:11:19.117Z',
           document_input_type: 'document_input_type',
           document_input_value: 'document_input_value',
+          job_ids: ['string', 'string'],
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           page_size: 0,
           page_token: 'page_token',

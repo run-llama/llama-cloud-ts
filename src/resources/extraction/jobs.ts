@@ -92,11 +92,12 @@ export interface ExtractJob {
 }
 
 /**
- * Allows the user to configure webhook options for notifications and callbacks.
+ * Configuration for a single outbound webhook endpoint.
  */
 export interface WebhookConfiguration {
   /**
-   * List of event names to subscribe to
+   * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
+   * events are delivered.
    */
   webhook_events?: Array<
     | 'extract.pending'
@@ -119,18 +120,17 @@ export interface WebhookConfiguration {
   > | null;
 
   /**
-   * Custom HTTP headers to include with webhook requests.
+   * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
    */
   webhook_headers?: { [key: string]: string } | null;
 
   /**
-   * The output format to use for the webhook. Defaults to string if none supplied.
-   * Currently supported values: string, json
+   * Response format sent to the webhook: 'string' (default) or 'json'
    */
   webhook_output_format?: string | null;
 
   /**
-   * The URL to send webhook notifications to.
+   * URL to receive webhook POST notifications
    */
   webhook_url?: string | null;
 }
@@ -203,7 +203,7 @@ export interface JobCreateParams {
   priority?: 'low' | 'medium' | 'high' | 'critical' | null;
 
   /**
-   * Body param: The outbound webhook configurations
+   * Body param: Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<WebhookConfiguration> | null;
 }

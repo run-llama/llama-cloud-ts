@@ -296,11 +296,31 @@ export interface SheetCreateParams {
 }
 
 export interface SheetListParams extends PaginatedCursorParams {
+  /**
+   * Include jobs created at or after this timestamp (inclusive)
+   */
+  created_at_on_or_after?: string | null;
+
+  /**
+   * Include jobs created at or before this timestamp (inclusive)
+   */
+  created_at_on_or_before?: string | null;
+
   include_results?: boolean;
+
+  /**
+   * Filter by specific job IDs
+   */
+  job_ids?: Array<string> | null;
 
   organization_id?: string | null;
 
   project_id?: string | null;
+
+  /**
+   * Filter by job status
+   */
+  status?: ParsingAPI.StatusEnum | null;
 }
 
 export interface SheetDeleteJobParams {
