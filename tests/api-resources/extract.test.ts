@@ -77,6 +77,7 @@ describe('resource extract', () => {
           created_at_on_or_before: '2019-12-27T18:11:19.117Z',
           document_input_type: 'document_input_type',
           document_input_value: 'document_input_value',
+          expand: ['string'],
           job_ids: ['string', 'string'],
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           page_size: 0,

@@ -48,7 +48,9 @@ export class Extract extends APIResource {
    * List extraction jobs with optional filtering and pagination.
    *
    * Filter by `configuration_id`, `status`, `document_input_value`, or creation date
-   * range. Results are returned newest-first.
+   * range. Results are returned newest-first. Use `expand=configuration` to include
+   * the full configuration used, and `expand=extract_metadata` for usage metrics and
+   * per-field metadata.
    *
    * @example
    * ```ts
@@ -108,9 +110,9 @@ export class Extract extends APIResource {
   /**
    * Get a single extraction job by ID.
    *
-   * Returns the job status, configuration, and results when complete. Use
-   * `expand=extract_metadata` to include usage metrics and per-field metadata
-   * (citations, confidence scores).
+   * Returns the job status and results when complete. Use `expand=configuration` to
+   * include the full configuration used, and `expand=extract_metadata` for usage
+   * metrics and per-field metadata.
    *
    * @example
    * ```ts
@@ -282,11 +284,6 @@ export interface ExtractV2Job {
   document_input_value: string;
 
   /**
-   * Full configuration used for this job (extract options, parse config)
-   */
-  parameters: ExtractConfiguration;
-
-  /**
    * Project this job belongs to
    */
   project_id: string;
@@ -306,6 +303,11 @@ export interface ExtractV2Job {
    * Last update timestamp
    */
   updated_at: string;
+
+  /**
+   * Extract configuration combining parse and extract settings.
+   */
+  configuration?: ExtractConfiguration | null;
 
   /**
    * Saved extract configuration ID used for this job, if any
@@ -710,6 +712,7 @@ export namespace ExtractGenerateSchemaResponse {
       | '2026-03-22'
       | '2026-03-23'
       | '2026-03-24'
+      | '2026-03-25'
       | 'latest'
       | (string & {});
 
@@ -1481,6 +1484,7 @@ export namespace ExtractGenerateSchemaResponse {
             | '2026-03-22'
             | '2026-03-23'
             | '2026-03-24'
+            | '2026-03-25'
             | 'latest'
             | (string & {})
             | null;
@@ -1718,6 +1722,11 @@ export interface ExtractListParams extends PaginatedCursorParams {
   document_input_value?: string | null;
 
   /**
+   * Additional fields to include: configuration, extract_metadata
+   */
+  expand?: Array<string>;
+
+  /**
    * Filter by specific job IDs
    */
   job_ids?: Array<string> | null;
@@ -1774,7 +1783,7 @@ export interface ExtractGenerateSchemaParams {
 
 export interface ExtractGetParams {
   /**
-   * Additional fields to include: extract_metadata
+   * Additional fields to include: configuration, extract_metadata
    */
   expand?: Array<string>;
 

@@ -704,6 +704,11 @@ export interface ParsingCreateResponse {
   name?: string | null;
 
   /**
+   * Parsing tier used for this job
+   */
+  tier?: string | null;
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -742,6 +747,11 @@ export interface ParsingListResponse {
    * Optional display name for this parse job
    */
   name?: string | null;
+
+  /**
+   * Parsing tier used for this job
+   */
+  tier?: string | null;
 
   /**
    * Update datetime
@@ -843,6 +853,11 @@ export namespace ParsingGetResponse {
      * Optional display name for this parse job
      */
     name?: string | null;
+
+    /**
+     * Parsing tier used for this job
+     */
+    tier?: string | null;
 
     /**
      * Update datetime
@@ -1202,6 +1217,7 @@ export interface ParsingCreateParams {
     | '2026-03-22'
     | '2026-03-23'
     | '2026-03-24'
+    | '2026-03-25'
     | 'latest'
     | (string & {});
 
@@ -2001,6 +2017,7 @@ export namespace ParsingCreateParams {
           | '2026-03-22'
           | '2026-03-23'
           | '2026-03-24'
+          | '2026-03-25'
           | 'latest'
           | (string & {})
           | null;
