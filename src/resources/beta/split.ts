@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as SplitAPI from './split';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -289,6 +290,11 @@ export interface SplitCreateResponse {
   user_id: string;
 
   /**
+   * Split configuration ID used for this job.
+   */
+  configuration_id?: string | null;
+
+  /**
    * Creation datetime
    */
   created_at?: string | null;
@@ -343,6 +349,11 @@ export interface SplitListResponse {
    * User ID who created this job.
    */
   user_id: string;
+
+  /**
+   * Split configuration ID used for this job.
+   */
+  configuration_id?: string | null;
 
   /**
    * Creation datetime
@@ -401,6 +412,11 @@ export interface SplitGetResponse {
   user_id: string;
 
   /**
+   * Split configuration ID used for this job.
+   */
+  configuration_id?: string | null;
+
+  /**
    * Creation datetime
    */
   created_at?: string | null;
@@ -423,11 +439,6 @@ export interface SplitGetResponse {
 
 export interface SplitCreateParams {
   /**
-   * Body param: Categories to split documents into.
-   */
-  categories: Array<SplitCategory>;
-
-  /**
    * Body param: Document to be split.
    */
   document_input: SplitDocumentInput;
@@ -443,23 +454,45 @@ export interface SplitCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Strategy for splitting documents.
+   * Body param: Split configuration with categories and splitting strategy.
    */
-  splitting_strategy?: SplitCreateParams.SplittingStrategy;
+  configuration?: SplitCreateParams.Configuration | null;
+
+  /**
+   * Body param: Saved split configuration ID.
+   */
+  configuration_id?: string | null;
 }
 
 export namespace SplitCreateParams {
   /**
-   * Strategy for splitting documents.
+   * Split configuration with categories and splitting strategy.
    */
-  export interface SplittingStrategy {
+  export interface Configuration {
     /**
-     * Controls handling of pages that don't match any category. 'include': pages can
-     * be grouped as 'uncategorized' and included in results. 'forbid': all pages must
-     * be assigned to a defined category. 'omit': pages can be classified as
-     * 'uncategorized' but are excluded from results.
+     * Categories to split documents into.
      */
-    allow_uncategorized?: 'include' | 'forbid' | 'omit';
+    categories: Array<SplitAPI.SplitCategory>;
+
+    /**
+     * Strategy for splitting documents.
+     */
+    splitting_strategy?: Configuration.SplittingStrategy;
+  }
+
+  export namespace Configuration {
+    /**
+     * Strategy for splitting documents.
+     */
+    export interface SplittingStrategy {
+      /**
+       * Controls handling of pages that don't match any category. 'include': pages can
+       * be grouped as 'uncategorized' and included in results. 'forbid': all pages must
+       * be assigned to a defined category. 'omit': pages can be classified as
+       * 'uncategorized' but are excluded from results.
+       */
+      allow_uncategorized?: 'include' | 'forbid' | 'omit';
+    }
   }
 }
 
