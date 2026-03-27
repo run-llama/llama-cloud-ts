@@ -5,7 +5,6 @@ import * as PipelinesAPI from './pipelines';
 import * as DataSinksAPI from '../data-sinks';
 import * as ParsingAPI from '../parsing';
 import * as Shared from '../shared';
-import * as JobsAPI from '../extraction/jobs';
 import * as DataSourcesAPI from './data-sources';
 import {
   DataSourceGetDataSourcesResponse,
@@ -906,9 +905,55 @@ export interface LlamaParseParameters {
   /**
    * Outbound webhook endpoints to notify on job status changes
    */
-  webhook_configurations?: Array<JobsAPI.WebhookConfiguration> | null;
+  webhook_configurations?: Array<LlamaParseParameters.WebhookConfiguration> | null;
 
   webhook_url?: string | null;
+}
+
+export namespace LlamaParseParameters {
+  /**
+   * Configuration for a single outbound webhook endpoint.
+   */
+  export interface WebhookConfiguration {
+    /**
+     * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
+     * events are delivered.
+     */
+    webhook_events?: Array<
+      | 'extract.pending'
+      | 'extract.success'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.cancelled'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.cancelled'
+      | 'classify.pending'
+      | 'classify.success'
+      | 'classify.error'
+      | 'classify.partial_success'
+      | 'classify.cancelled'
+      | 'unmapped_event'
+    > | null;
+
+    /**
+     * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
+     */
+    webhook_headers?: { [key: string]: string } | null;
+
+    /**
+     * Response format sent to the webhook: 'string' (default) or 'json'
+     */
+    webhook_output_format?: string | null;
+
+    /**
+     * URL to receive webhook POST notifications
+     */
+    webhook_url?: string | null;
+  }
 }
 
 export interface LlmParameters {

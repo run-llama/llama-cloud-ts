@@ -55,7 +55,6 @@ export {
   type ExtractValidateSchemaParams,
   type ExtractV2JobsPaginatedCursor,
 } from './extract';
-export { Extraction, type ExtractionRunParams } from './extraction/extraction';
 export {
   Files,
   type File,

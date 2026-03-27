@@ -25,8 +25,6 @@ import {
   type PaginatedCursorPostParams,
   PaginatedCursorPostResponse,
   PaginatedCursorResponse,
-  type PaginatedExtractRunsParams,
-  PaginatedExtractRunsResponse,
   type PaginatedJobsHistoryParams,
   PaginatedJobsHistoryResponse,
   type PaginatedPipelineFilesParams,
@@ -139,7 +137,6 @@ import {
 } from './resources/projects';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
-import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
 import {
   AdvancedModeTransformConfig,
   AutoTransformConfig,
@@ -929,7 +926,6 @@ export class LlamaCloud {
   files: API.Files = new API.Files(this);
   parsing: API.Parsing = new API.Parsing(this);
   extract: API.Extract = new API.Extract(this);
-  extraction: API.Extraction = new API.Extraction(this);
   classifier: API.Classifier = new API.Classifier(this);
   classify: API.Classify = new API.Classify(this);
   projects: API.Projects = new API.Projects(this);
@@ -943,7 +939,6 @@ export class LlamaCloud {
 LlamaCloud.Files = Files;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Extract = Extract;
-LlamaCloud.Extraction = Extraction;
 LlamaCloud.Classifier = Classifier;
 LlamaCloud.Classify = Classify;
 LlamaCloud.Projects = Projects;
@@ -972,12 +967,6 @@ export declare namespace LlamaCloud {
   export {
     type PaginatedBatchItemsParams as PaginatedBatchItemsParams,
     type PaginatedBatchItemsResponse as PaginatedBatchItemsResponse,
-  };
-
-  export import PaginatedExtractRuns = Pagination.PaginatedExtractRuns;
-  export {
-    type PaginatedExtractRunsParams as PaginatedExtractRunsParams,
-    type PaginatedExtractRunsResponse as PaginatedExtractRunsResponse,
   };
 
   export import PaginatedCloudDocuments = Pagination.PaginatedCloudDocuments;
@@ -1069,8 +1058,6 @@ export declare namespace LlamaCloud {
     type ExtractGetParams as ExtractGetParams,
     type ExtractValidateSchemaParams as ExtractValidateSchemaParams,
   };
-
-  export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
 
   export { Classifier as Classifier };
 
