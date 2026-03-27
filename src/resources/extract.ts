@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as ExtractAPI from './extract';
 import * as ParsingAPI from './parsing';
 import * as SplitAPI from './beta/split';
 import * as JobsAPI from './extraction/jobs';
@@ -50,8 +51,8 @@ export class Extract extends APIResource {
    *
    * Filter by `configuration_id`, `status`, `document_input_value`, or creation date
    * range. Results are returned newest-first. Use `expand=configuration` to include
-   * the full configuration used, and `expand=extract_metadata` for usage metrics and
-   * per-field metadata.
+   * the full configuration used, and `expand=extract_metadata` for per-field
+   * metadata.
    *
    * @example
    * ```ts
@@ -112,8 +113,8 @@ export class Extract extends APIResource {
    * Get a single extraction job by ID.
    *
    * Returns the job status and results when complete. Use `expand=configuration` to
-   * include the full configuration used, and `expand=extract_metadata` for usage
-   * metrics and per-field metadata.
+   * include the full configuration used, and `expand=extract_metadata` for per-field
+   * metadata.
    *
    * @example
    * ```ts
@@ -342,11 +343,6 @@ export interface ExtractJobMetadata {
    * Parse tier used for parsing the document
    */
   parse_tier?: string | null;
-
-  /**
-   * Extraction usage metrics.
-   */
-  usage?: ExtractJobUsage | null;
 }
 
 /**
@@ -437,6 +433,25 @@ export interface ExtractV2Job {
     | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
     | Array<{ [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }>
     | null;
+
+  /**
+   * Job-level metadata.
+   */
+  metadata?: ExtractV2Job.Metadata | null;
+}
+
+export namespace ExtractV2Job {
+  /**
+   * Job-level metadata.
+   */
+  export interface Metadata {
+    /**
+     * Extraction usage metrics.
+     */
+    usage?: ExtractAPI.ExtractJobUsage | null;
+
+    [k: string]: unknown;
+  }
 }
 
 /**
