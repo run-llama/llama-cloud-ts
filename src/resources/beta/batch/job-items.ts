@@ -13,9 +13,8 @@ export class JobItems extends APIResource {
   /**
    * List items in a batch job with optional status filtering.
    *
-   * Useful for finding failed items, viewing completed items, or debugging issues.
-   * Results are paginated for performance with configurable limit and offset
-   * parameters.
+   * Useful for finding failed items, viewing completed items, or debugging
+   * processing issues.
    */
   list(
     jobID: string,
@@ -30,12 +29,11 @@ export class JobItems extends APIResource {
   }
 
   /**
-   * Get all processing results for a specific item (lineage query).
+   * Get all processing results for a specific item.
    *
-   * Shows complete processing history including what operations have been performed,
-   * with what parameters, and where outputs are stored. Useful for understanding
-   * what processing has already been done to avoid redundant work. Optionally filter
-   * by job type to see only specific processing operations.
+   * Returns the complete processing history for an item including what operations
+   * were performed, parameters used, and where outputs are stored. Optionally filter
+   * by `job_type`.
    */
   getProcessingResults(
     itemID: string,
@@ -144,12 +142,12 @@ export namespace JobItemGetProcessingResultsResponse {
     job_type: 'parse' | 'extract' | 'classify';
 
     /**
-     * S3 location of processing output
+     * Location of the processing output
      */
     output_s3_path: string;
 
     /**
-     * Hash of parameters for deduplication
+     * Content hash of the job configuration for dedup
      */
     parameters_hash: string;
 
@@ -537,7 +535,7 @@ export namespace JobItemGetProcessingResultsResponse {
         version?: string | null;
 
         /**
-         * The outbound webhook configurations
+         * Outbound webhook endpoints to notify on job status changes
          */
         webhook_configurations?: Array<ExtractionJobsAPI.WebhookConfiguration> | null;
 

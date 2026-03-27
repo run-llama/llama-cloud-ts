@@ -81,7 +81,10 @@ export class Pipelines extends APIResource {
   documents: DocumentsAPI.Documents = new DocumentsAPI.Documents(this._client);
 
   /**
-   * Create a new pipeline for a project.
+   * Create a new managed ingestion pipeline.
+   *
+   * A pipeline connects data sources to a vector store for RAG. After creation, call
+   * `POST /pipelines/{id}/sync` to start ingesting documents.
    */
   create(params: PipelineCreateParams, options?: RequestOptions): APIPromise<Pipeline> {
     const { organization_id, project_id, ...body } = params;
@@ -93,7 +96,11 @@ export class Pipelines extends APIResource {
   }
 
   /**
-   * Get retrieval results for a managed pipeline and a query
+   * Run a retrieval query against a managed pipeline.
+   *
+   * Searches the pipeline's vector store using the provided query and retrieval
+   * parameters. Supports dense, sparse, and hybrid search modes with configurable
+   * top-k and reranking.
    */
   retrieve(
     pipelineID: string,
@@ -109,14 +116,14 @@ export class Pipelines extends APIResource {
   }
 
   /**
-   * Update an existing pipeline for a project.
+   * Update an existing pipeline's configuration.
    */
   update(pipelineID: string, body: PipelineUpdateParams, options?: RequestOptions): APIPromise<Pipeline> {
     return this._client.put(path`/api/v1/pipelines/${pipelineID}`, { body, ...options });
   }
 
   /**
-   * Search for pipelines by various parameters.
+   * Search for pipelines by name, type, or project.
    */
   list(
     query: PipelineListParams | null | undefined = {},
@@ -126,7 +133,10 @@ export class Pipelines extends APIResource {
   }
 
   /**
-   * Delete a pipeline by ID.
+   * Delete a pipeline and all associated resources.
+   *
+   * Removes pipeline files, data sources, and vector store data. This operation is
+   * irreversible.
    */
   delete(pipelineID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/v1/pipelines/${pipelineID}`, {
@@ -136,14 +146,17 @@ export class Pipelines extends APIResource {
   }
 
   /**
-   * Get a pipeline by ID for a given project.
+   * Get a pipeline by ID.
    */
   get(pipelineID: string, options?: RequestOptions): APIPromise<Pipeline> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}`, options);
   }
 
   /**
-   * Get the status of a pipeline by ID.
+   * Get the ingestion status of a managed pipeline.
+   *
+   * Returns document counts, sync progress, and the last effective timestamp. Only
+   * available for managed pipelines.
    */
   getStatus(
     pipelineID: string,
@@ -154,8 +167,10 @@ export class Pipelines extends APIResource {
   }
 
   /**
-   * Upsert a pipeline for a project. Updates if a pipeline with the same name and
-   * project_id already exists. Otherwise, creates a new pipeline.
+   * Upsert a pipeline.
+   *
+   * Updates the pipeline if one with the same name and project already exists,
+   * otherwise creates a new one.
    */
   upsert(params: PipelineUpsertParams, options?: RequestOptions): APIPromise<Pipeline> {
     const { organization_id, project_id, ...body } = params;
@@ -889,7 +904,7 @@ export interface LlamaParseParameters {
   version?: string | null;
 
   /**
-   * The outbound webhook configurations
+   * Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<JobsAPI.WebhookConfiguration> | null;
 

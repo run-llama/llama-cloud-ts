@@ -51,10 +51,10 @@ describe('resource jobs', () => {
       priority: 'low',
       webhook_configurations: [
         {
-          webhook_events: ['extract.pending'],
-          webhook_headers: { foo: 'string' },
-          webhook_output_format: 'webhook_output_format',
-          webhook_url: 'webhook_url',
+          webhook_events: ['parse.success', 'parse.error'],
+          webhook_headers: { Authorization: 'Bearer sk-...' },
+          webhook_output_format: 'json',
+          webhook_url: 'https://example.com/webhooks/llamacloud',
         },
       ],
     });

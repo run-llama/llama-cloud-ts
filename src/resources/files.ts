@@ -12,6 +12,12 @@ import { path } from '../internal/utils/path';
 export class Files extends APIResource {
   /**
    * Upload a file using multipart/form-data.
+   *
+   * Set `purpose` to indicate how the file will be used: `user_data`, `parse`,
+   * `extract`, `classify`, `split`, `sheet`, or `agent_app`.
+   *
+   * Returns the created file metadata including its ID for use in subsequent parse,
+   * extract, or classify operations.
    */
   create(params: FileCreateParams, options?: RequestOptions): APIPromise<FileCreateResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -24,8 +30,8 @@ export class Files extends APIResource {
   /**
    * List files with optional filtering and pagination.
    *
-   * This endpoint retrieves files for the specified project with support for
-   * filtering by various criteria and cursor-based pagination.
+   * Filter by `file_name`, `file_ids`, or `external_file_id`. Supports cursor-based
+   * pagination and custom ordering.
    */
   list(
     query: FileListParams | null | undefined = {},
@@ -38,12 +44,7 @@ export class Files extends APIResource {
   }
 
   /**
-   * Delete a single file from the project.
-   *
-   * Args: file_id: The ID of the file to delete project: Validated project from
-   * dependency db: Database session
-   *
-   * Returns: None (204 No Content on success)
+   * Delete a file from the project.
    */
   delete(
     fileID: string,
@@ -59,7 +60,7 @@ export class Files extends APIResource {
   }
 
   /**
-   * Returns a presigned url to read the file content.
+   * Get a presigned URL to download the file content.
    */
   get(
     fileID: string,
@@ -242,93 +243,101 @@ export interface PresignedURL {
 }
 
 /**
- * Schema for a file in the v2 API.
+ * An uploaded file.
  */
 export interface FileCreateResponse {
   /**
-   * Unique identifier
+   * Unique file identifier
    */
   id: string;
 
+  /**
+   * File name including extension
+   */
   name: string;
 
   /**
-   * The ID of the project that the file belongs to
+   * Project this file belongs to
    */
   project_id: string;
 
   /**
-   * The expiration date for the file. Files past this date can be deleted.
+   * When the file expires and may be automatically removed. Null means no
+   * expiration.
    */
   expires_at?: string | null;
 
   /**
-   * The ID of the file in the external system
+   * Optional ID for correlating with an external system
    */
   external_file_id?: string | null;
 
   /**
-   * File type (e.g. pdf, docx, etc.)
+   * File extension (pdf, docx, png, etc.)
    */
   file_type?: string | null;
 
   /**
-   * The last modified time of the file
+   * When the file was last modified (ISO 8601)
    */
   last_modified_at?: string | null;
 
   /**
-   * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-   * 'split', 'classify', 'sheet', 'agent_app')
+   * How the file will be used: user_data, parse, extract, classify, split, sheet, or
+   * agent_app
    */
   purpose?: string | null;
 }
 
 /**
- * Schema for a file in the v2 API.
+ * An uploaded file.
  */
 export interface FileListResponse {
   /**
-   * Unique identifier
+   * Unique file identifier
    */
   id: string;
 
+  /**
+   * File name including extension
+   */
   name: string;
 
   /**
-   * The ID of the project that the file belongs to
+   * Project this file belongs to
    */
   project_id: string;
 
   /**
-   * The expiration date for the file. Files past this date can be deleted.
+   * When the file expires and may be automatically removed. Null means no
+   * expiration.
    */
   expires_at?: string | null;
 
   /**
-   * The ID of the file in the external system
+   * Optional ID for correlating with an external system
    */
   external_file_id?: string | null;
 
   /**
-   * File type (e.g. pdf, docx, etc.)
+   * File extension (pdf, docx, png, etc.)
    */
   file_type?: string | null;
 
   /**
-   * The last modified time of the file
+   * When the file was last modified (ISO 8601)
    */
   last_modified_at?: string | null;
 
   /**
-   * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-   * 'split', 'classify', 'sheet', 'agent_app')
+   * How the file will be used: user_data, parse, extract, classify, split, sheet, or
+   * agent_app
    */
   purpose?: string | null;
 }
 
 /**
- * Response schema for paginated file queries in V2 API.
+ * Paginated list of files.
  */
 export interface FileQueryResponse {
   /**
@@ -352,44 +361,48 @@ export interface FileQueryResponse {
 
 export namespace FileQueryResponse {
   /**
-   * Schema for a file in the v2 API.
+   * An uploaded file.
    */
   export interface Item {
     /**
-     * Unique identifier
+     * Unique file identifier
      */
     id: string;
 
+    /**
+     * File name including extension
+     */
     name: string;
 
     /**
-     * The ID of the project that the file belongs to
+     * Project this file belongs to
      */
     project_id: string;
 
     /**
-     * The expiration date for the file. Files past this date can be deleted.
+     * When the file expires and may be automatically removed. Null means no
+     * expiration.
      */
     expires_at?: string | null;
 
     /**
-     * The ID of the file in the external system
+     * Optional ID for correlating with an external system
      */
     external_file_id?: string | null;
 
     /**
-     * File type (e.g. pdf, docx, etc.)
+     * File extension (pdf, docx, png, etc.)
      */
     file_type?: string | null;
 
     /**
-     * The last modified time of the file
+     * When the file was last modified (ISO 8601)
      */
     last_modified_at?: string | null;
 
     /**
-     * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-     * 'split', 'classify', 'sheet', 'agent_app')
+     * How the file will be used: user_data, parse, extract, classify, split, sheet, or
+     * agent_app
      */
     purpose?: string | null;
   }

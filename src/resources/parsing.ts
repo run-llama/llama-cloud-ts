@@ -12,7 +12,21 @@ import { pollUntilComplete, PollingOptions, DEFAULT_TIMEOUT } from '../core/poll
 
 export class Parsing extends APIResource {
   /**
-   * Parse a file by file ID, URL, or direct file upload.
+   * Parse a file by file ID or URL.
+   *
+   * Provide either `file_id` (a previously uploaded file) or `source_url` (a
+   * publicly accessible URL). Configure parsing with options like `tier`,
+   * `target_pages`, and `lang`.
+   *
+   * ## Tiers
+   *
+   * - `fast` — rule-based, cheapest, no AI
+   * - `cost_effective` — balanced speed and quality
+   * - `agentic` — full AI-powered parsing
+   * - `agentic_plus` — premium AI with specialized features
+   *
+   * The job runs asynchronously. Poll `GET /parse/{job_id}` with `expand=text` or
+   * `expand=markdown` to retrieve results.
    */
   create(
     params: ParsingCreateParams & { upload_file?: Uploadable },
@@ -43,7 +57,10 @@ export class Parsing extends APIResource {
   }
 
   /**
-   * List parse jobs for the current project with optional filtering and pagination.
+   * List parse jobs for the current project.
+   *
+   * Filter by `status` or creation date range. Results are paginated — use
+   * `page_token` from the response to fetch subsequent pages.
    */
   list(
     query: ParsingListParams | null | undefined = {},
@@ -56,7 +73,17 @@ export class Parsing extends APIResource {
   }
 
   /**
-   * Retrieve parse job with optional content or metadata.
+   * Retrieve a parse job with optional expanded content.
+   *
+   * By default returns job metadata only. Use `expand` to include parsed content:
+   *
+   * - `text` — plain text output
+   * - `markdown` — markdown output
+   * - `items` — structured page-by-page output
+   * - `job_metadata` — usage and processing details
+   *
+   * Content metadata fields (e.g. `text_content_metadata`) return presigned URLs for
+   * downloading large results.
    */
   get(
     jobID: string,
@@ -598,18 +625,27 @@ export type LlamaParseSupportedFileExtensions =
   | '.webm';
 
 /**
- * Response schema for a parsing job.
+ * A parse job (v1).
  */
 export interface ParsingJob {
+  /**
+   * Unique parse job identifier
+   */
   id: string;
 
   /**
-   * Enum for representing the status of a job
+   * Current job status
    */
   status: StatusEnum;
 
+  /**
+   * Machine-readable error code when failed
+   */
   error_code?: string | null;
 
+  /**
+   * Human-readable error details when failed
+   */
   error_message?: string | null;
 }
 
@@ -810,11 +846,11 @@ export interface TextItem {
 }
 
 /**
- * Response schema for a parse job.
+ * A parse job.
  */
 export interface ParsingCreateResponse {
   /**
-   * Unique identifier for the parse job
+   * Unique parse job identifier
    */
   id: string;
 
@@ -824,7 +860,7 @@ export interface ParsingCreateResponse {
   project_id: string;
 
   /**
-   * Current status of the job (e.g., pending, running, completed, failed, cancelled)
+   * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
    */
   status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 
@@ -834,12 +870,12 @@ export interface ParsingCreateResponse {
   created_at?: string | null;
 
   /**
-   * Error message if job failed
+   * Error details when status is FAILED
    */
   error_message?: string | null;
 
   /**
-   * User friendly name
+   * Optional display name for this parse job
    */
   name?: string | null;
 
@@ -850,11 +886,11 @@ export interface ParsingCreateResponse {
 }
 
 /**
- * Response schema for a parse job.
+ * A parse job.
  */
 export interface ParsingListResponse {
   /**
-   * Unique identifier for the parse job
+   * Unique parse job identifier
    */
   id: string;
 
@@ -864,7 +900,7 @@ export interface ParsingListResponse {
   project_id: string;
 
   /**
-   * Current status of the job (e.g., pending, running, completed, failed, cancelled)
+   * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
    */
   status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 
@@ -874,12 +910,12 @@ export interface ParsingListResponse {
   created_at?: string | null;
 
   /**
-   * Error message if job failed
+   * Error details when status is FAILED
    */
   error_message?: string | null;
 
   /**
-   * User friendly name
+   * Optional display name for this parse job
    */
   name?: string | null;
 
@@ -955,7 +991,7 @@ export namespace ParsingGetResponse {
    */
   export interface Job {
     /**
-     * Unique identifier for the parse job
+     * Unique parse job identifier
      */
     id: string;
 
@@ -965,7 +1001,7 @@ export namespace ParsingGetResponse {
     project_id: string;
 
     /**
-     * Current status of the job (e.g., pending, running, completed, failed, cancelled)
+     * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
      */
     status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 
@@ -975,12 +1011,12 @@ export namespace ParsingGetResponse {
     created_at?: string | null;
 
     /**
-     * Error message if job failed
+     * Error details when status is FAILED
      */
     error_message?: string | null;
 
     /**
-     * User friendly name
+     * Optional display name for this parse job
      */
     name?: string | null;
 
@@ -1340,6 +1376,8 @@ export interface ParsingCreateParams {
     | '2026-03-19'
     | '2026-03-20'
     | '2026-03-22'
+    | '2026-03-23'
+    | '2026-03-24'
     | 'latest'
     | (string & {});
 
@@ -2137,6 +2175,8 @@ export namespace ParsingCreateParams {
           | '2026-03-19'
           | '2026-03-20'
           | '2026-03-22'
+          | '2026-03-23'
+          | '2026-03-24'
           | 'latest'
           | (string & {})
           | null;
@@ -2309,6 +2349,11 @@ export interface ParsingListParams extends PaginatedCursorParams {
    * Include jobs created at or before this timestamp (inclusive)
    */
   created_at_on_or_before?: string | null;
+
+  /**
+   * Filter by specific job IDs
+   */
+  job_ids?: Array<string> | null;
 
   organization_id?: string | null;
 

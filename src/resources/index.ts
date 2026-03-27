@@ -38,7 +38,6 @@ export {
   type ExtractConfiguration,
   type ExtractJobMetadata,
   type ExtractJobUsage,
-  type ExtractOptions,
   type ExtractV2Job,
   type ExtractV2JobCreate,
   type ExtractV2JobQueryResponse,

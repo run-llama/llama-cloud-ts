@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as ExtractAPI from './extract';
 import * as ParsingAPI from './parsing';
 import * as SplitAPI from './beta/split';
 import * as JobsAPI from './extraction/jobs';
@@ -13,14 +12,31 @@ import { pollUntilComplete, PollingOptions, DEFAULT_TIMEOUT } from '../core/poll
 
 export class Extract extends APIResource {
   /**
-   * Create a new extraction job.
+   * Create an extraction job.
    *
-   * Provide exactly one of configuration_id (saved configuration) or inline config.
+   * Extracts structured data from a document using either a saved configuration or
+   * an inline JSON Schema.
+   *
+   * ## Input
+   *
+   * Provide exactly one of:
+   *
+   * - `configuration_id` — reference a saved extraction config
+   * - `configuration` — inline configuration with a `data_schema`
+   *
+   * ## Document input
+   *
+   * Set `document_input_value` to a file ID (`dfl-...`) or a completed parse job ID
+   * (`pjb-...`).
+   *
+   * The job runs asynchronously. Poll `GET /extract/{job_id}` or register a webhook
+   * to monitor completion.
    *
    * @example
    * ```ts
    * const extractV2Job = await client.extract.create({
-   *   document_input_value: 'document_input_value',
+   *   document_input_value:
+   *     'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
    * });
    * ```
    */
@@ -31,6 +47,9 @@ export class Extract extends APIResource {
 
   /**
    * List extraction jobs with optional filtering and pagination.
+   *
+   * Filter by `configuration_id`, `status`, `document_input_value`, or creation date
+   * range. Results are returned newest-first.
    *
    * @example
    * ```ts
@@ -48,7 +67,7 @@ export class Extract extends APIResource {
   }
 
   /**
-   * Delete an extraction job.
+   * Delete an extraction job and its results.
    *
    * @example
    * ```ts
@@ -89,6 +108,10 @@ export class Extract extends APIResource {
 
   /**
    * Get a single extraction job by ID.
+   *
+   * Returns the job status, configuration, and results when complete. Use
+   * `expand=extract_metadata` to include usage metrics and per-field metadata
+   * (citations, confidence scores).
    *
    * @example
    * ```ts
@@ -229,23 +252,74 @@ export class Extract extends APIResource {
 export type ExtractV2JobsPaginatedCursor = PaginatedCursor<ExtractV2Job>;
 
 /**
- * Extraction configuration combining parse and extract settings.
+ * Extract configuration combining parse and extract settings.
  */
 export interface ExtractConfiguration {
   /**
-   * Extract-specific configuration options including the data schema
+   * JSON Schema defining the fields to extract. Validate with the /schema/validate
+   * endpoint first.
    */
-  extract_options: ExtractOptions;
+  data_schema: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  };
 
   /**
-   * Parse config ID used for extraction
+   * Include citations in results
+   */
+  cite_sources?: boolean;
+
+  /**
+   * Include confidence scores in results
+   */
+  confidence_scores?: boolean;
+
+  /**
+   * Extract algorithm version. Use 'latest' or a date string.
+   */
+  extract_version?: string;
+
+  /**
+   * Granularity of extraction: per_doc returns one object per document, per_page
+   * returns one object per page, per_table_row returns one object per table row
+   */
+  extraction_target?: 'per_doc' | 'per_page' | 'per_table_row';
+
+  /**
+   * ISO 639-1 language code for the document
+   */
+  lang?: string;
+
+  /**
+   * Maximum number of pages to process. Omit for no limit.
+   */
+  max_pages?: number | null;
+
+  /**
+   * Saved parse configuration ID to control how the document is parsed before
+   * extraction
    */
   parse_config_id?: string | null;
 
   /**
-   * Parse tier to use for extraction (e.g. fast, cost_effective, agentic).
+   * Parse tier to use before extraction (fast, cost_effective, or agentic)
    */
   parse_tier?: string | null;
+
+  /**
+   * Custom system prompt to guide extraction behavior
+   */
+  system_prompt?: string | null;
+
+  /**
+   * Comma-separated page numbers or ranges to process (1-based). Omit to process all
+   * pages.
+   */
+  target_pages?: string | null;
+
+  /**
+   * Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)
+   */
+  tier?: 'cost_effective' | 'agentic';
 }
 
 /**
@@ -294,64 +368,6 @@ export interface ExtractJobUsage {
 }
 
 /**
- * Extract-specific configuration options.
- */
-export interface ExtractOptions {
-  /**
-   * JSON schema for structured extraction
-   */
-  data_schema: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  };
-
-  /**
-   * Include citations in results
-   */
-  cite_sources?: boolean;
-
-  /**
-   * Include confidence scores in results
-   */
-  confidence_scores?: boolean;
-
-  /**
-   * Extraction algorithm version to use (e.g., '2026-01-08', 'latest')
-   */
-  extract_version?: string;
-
-  /**
-   * Extraction scope: per_doc, per_page, or per_table_row
-   */
-  extraction_target?: 'per_doc' | 'per_page' | 'per_table_row';
-
-  /**
-   * Language of the document
-   */
-  lang?: string;
-
-  /**
-   * Maximum number of pages to process
-   */
-  max_pages?: number | null;
-
-  /**
-   * Custom system prompt for extraction
-   */
-  system_prompt?: string | null;
-
-  /**
-   * Comma-separated list of page numbers or ranges to process (1-based, e.g.,
-   * '1,3,5-7,9' or '1-3,8-10')
-   */
-  target_pages?: string | null;
-
-  /**
-   * Extraction tier: cost_effective (5 credits/page) or agentic (15 credits/page)
-   */
-  tier?: 'cost_effective' | 'agentic';
-}
-
-/**
  * An extraction job.
  */
 export interface ExtractV2Job {
@@ -366,16 +382,14 @@ export interface ExtractV2Job {
   created_at: string;
 
   /**
-   * File ID or Parse Job ID used for this job
+   * File ID or parse job ID that was extracted
    */
   document_input_value: string;
 
   /**
-   * Job configuration parameters (includes parse_config_id, extract_options)
+   * Full configuration used for this job (extract options, parse config)
    */
-  parameters: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  };
+  parameters: ExtractConfiguration;
 
   /**
    * Project this job belongs to
@@ -383,7 +397,13 @@ export interface ExtractV2Job {
   project_id: string;
 
   /**
-   * Current status: PENDING, THROTTLED, RUNNING, COMPLETED, FAILED, CANCELLED
+   * Current job status.
+   *
+   * - `PENDING` — queued, not yet started
+   * - `RUNNING` — actively processing
+   * - `COMPLETED` — finished successfully
+   * - `FAILED` — terminated with an error
+   * - `CANCELLED` — cancelled by user
    */
   status: string;
 
@@ -393,12 +413,12 @@ export interface ExtractV2Job {
   updated_at: string;
 
   /**
-   * Extract configuration ID (ProductConfiguration) used for this job (if any)
+   * Saved extract configuration ID used for this job, if any
    */
   configuration_id?: string | null;
 
   /**
-   * Error message if failed
+   * Error details when status is FAILED
    */
   error_message?: string | null;
 
@@ -408,7 +428,8 @@ export interface ExtractV2Job {
   extract_metadata?: ExtractJobMetadata | null;
 
   /**
-   * Extracted data (object or array depending on extraction_target)
+   * Extracted data conforming to the data_schema. Returns a single object for
+   * per_doc, or an array for per_page / per_table_row.
    */
   extract_result?:
     | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
@@ -417,7 +438,8 @@ export interface ExtractV2Job {
 }
 
 /**
- * Request to create an extraction job. Provide configuration_id or inline config.
+ * Request to create an extraction job. Provide configuration_id or inline
+ * configuration.
  */
 export interface ExtractV2JobCreate {
   /**
@@ -426,17 +448,17 @@ export interface ExtractV2JobCreate {
   document_input_value: string;
 
   /**
-   * Extraction configuration combining parse and extract settings.
+   * Extract configuration combining parse and extract settings.
    */
-  config?: ExtractConfiguration | null;
+  configuration?: ExtractConfiguration | null;
 
   /**
-   * Saved extract configuration ID (mutually exclusive with config)
+   * Saved extract configuration ID (mutually exclusive with configuration)
    */
   configuration_id?: string | null;
 
   /**
-   * The outbound webhook configurations
+   * Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<JobsAPI.WebhookConfiguration> | null;
 }
@@ -496,7 +518,7 @@ export interface ExtractV2SchemaGenerateRequest {
  */
 export interface ExtractV2SchemaValidateRequest {
   /**
-   * JSON schema to validate
+   * JSON Schema to validate for use with extract jobs
    */
   data_schema: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
@@ -508,7 +530,7 @@ export interface ExtractV2SchemaValidateRequest {
  */
 export interface ExtractV2SchemaValidateResponse {
   /**
-   * Validated JSON schema
+   * Validated JSON Schema, ready for use in extract jobs
    */
   data_schema: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
@@ -519,14 +541,23 @@ export interface ExtractV2SchemaValidateResponse {
  * Metadata for extracted fields including document, page, and row level info.
  */
 export interface ExtractedFieldMetadata {
+  /**
+   * Document-level metadata (citations, confidence) keyed by field name
+   */
   document_metadata?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
   } | null;
 
+  /**
+   * Per-page metadata when extraction_target is per_page
+   */
   page_metadata?: Array<{
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
   }> | null;
 
+  /**
+   * Per-row metadata when extraction_target is per_table_row
+   */
   row_metadata?: Array<{
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
   }> | null;
@@ -595,9 +626,12 @@ export namespace ExtractGenerateSchemaResponse {
    */
   export interface ExtractV2Parameters {
     /**
-     * Extract-specific configuration options including the data schema
+     * JSON Schema defining the fields to extract. Validate with the /schema/validate
+     * endpoint first.
      */
-    extract_options: ExtractAPI.ExtractOptions;
+    data_schema: {
+      [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+    };
 
     /**
      * Product type.
@@ -605,14 +639,62 @@ export namespace ExtractGenerateSchemaResponse {
     product_type: 'extract_v2';
 
     /**
-     * Parse config ID used for extraction
+     * Include citations in results
+     */
+    cite_sources?: boolean;
+
+    /**
+     * Include confidence scores in results
+     */
+    confidence_scores?: boolean;
+
+    /**
+     * Extract algorithm version. Use 'latest' or a date string.
+     */
+    extract_version?: string;
+
+    /**
+     * Granularity of extraction: per_doc returns one object per document, per_page
+     * returns one object per page, per_table_row returns one object per table row
+     */
+    extraction_target?: 'per_doc' | 'per_page' | 'per_table_row';
+
+    /**
+     * ISO 639-1 language code for the document
+     */
+    lang?: string;
+
+    /**
+     * Maximum number of pages to process. Omit for no limit.
+     */
+    max_pages?: number | null;
+
+    /**
+     * Saved parse configuration ID to control how the document is parsed before
+     * extraction
      */
     parse_config_id?: string | null;
 
     /**
-     * Parse tier to use for extraction (e.g. fast, cost_effective, agentic).
+     * Parse tier to use before extraction (fast, cost_effective, or agentic)
      */
     parse_tier?: string | null;
+
+    /**
+     * Custom system prompt to guide extraction behavior
+     */
+    system_prompt?: string | null;
+
+    /**
+     * Comma-separated page numbers or ranges to process (1-based). Omit to process all
+     * pages.
+     */
+    target_pages?: string | null;
+
+    /**
+     * Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)
+     */
+    tier?: 'cost_effective' | 'agentic';
   }
 
   /**
@@ -625,12 +707,12 @@ export namespace ExtractGenerateSchemaResponse {
     product_type: 'classify_v2';
 
     /**
-     * Classification rules to apply (at least one required)
+     * Classify rules to evaluate against the document (at least one required)
      */
     rules: Array<ClassifyV2Parameters.Rule>;
 
     /**
-     * Classification execution mode
+     * Classify execution mode
      */
     mode?: 'FAST';
 
@@ -646,7 +728,7 @@ export namespace ExtractGenerateSchemaResponse {
      */
     export interface Rule {
       /**
-       * Natural language description of what to classify
+       * Natural language criteria for matching this rule
        */
       description: string;
 
@@ -661,18 +743,18 @@ export namespace ExtractGenerateSchemaResponse {
      */
     export interface ParsingConfiguration {
       /**
-       * Language of the document
+       * ISO 639-1 language code for the document
        */
       lang?: string;
 
       /**
-       * Maximum number of pages to process
+       * Maximum number of pages to process. Omit for no limit.
        */
       max_pages?: number | null;
 
       /**
-       * Comma-separated list of page numbers or ranges to process (1-based, e.g.,
-       * '1,3,5-7,9' or '1-3,8-10')
+       * Comma-separated page numbers or ranges to process (1-based). Omit to process all
+       * pages.
        */
       target_pages?: string | null;
     }
@@ -731,6 +813,8 @@ export namespace ExtractGenerateSchemaResponse {
       | '2026-03-19'
       | '2026-03-20'
       | '2026-03-22'
+      | '2026-03-23'
+      | '2026-03-24'
       | 'latest'
       | (string & {});
 
@@ -1500,6 +1584,8 @@ export namespace ExtractGenerateSchemaResponse {
             | '2026-03-19'
             | '2026-03-20'
             | '2026-03-22'
+            | '2026-03-23'
+            | '2026-03-24'
             | 'latest'
             | (string & {})
             | null;
@@ -1694,17 +1780,18 @@ export interface ExtractCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Extraction configuration combining parse and extract settings.
+   * Body param: Extract configuration combining parse and extract settings.
    */
-  config?: ExtractConfiguration | null;
+  configuration?: ExtractConfiguration | null;
 
   /**
-   * Body param: Saved extract configuration ID (mutually exclusive with config)
+   * Body param: Saved extract configuration ID (mutually exclusive with
+   * configuration)
    */
   configuration_id?: string | null;
 
   /**
-   * Body param: The outbound webhook configurations
+   * Body param: Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<JobsAPI.WebhookConfiguration> | null;
 }
@@ -1734,6 +1821,11 @@ export interface ExtractListParams extends PaginatedCursorParams {
    * Filter by document input value
    */
   document_input_value?: string | null;
+
+  /**
+   * Filter by specific job IDs
+   */
+  job_ids?: Array<string> | null;
 
   organization_id?: string | null;
 
@@ -1798,7 +1890,7 @@ export interface ExtractGetParams {
 
 export interface ExtractValidateSchemaParams {
   /**
-   * JSON schema to validate
+   * JSON Schema to validate for use with extract jobs
    */
   data_schema: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
@@ -1810,7 +1902,6 @@ export declare namespace Extract {
     type ExtractConfiguration as ExtractConfiguration,
     type ExtractJobMetadata as ExtractJobMetadata,
     type ExtractJobUsage as ExtractJobUsage,
-    type ExtractOptions as ExtractOptions,
     type ExtractV2Job as ExtractV2Job,
     type ExtractV2JobCreate as ExtractV2JobCreate,
     type ExtractV2JobQueryResponse as ExtractV2JobQueryResponse,

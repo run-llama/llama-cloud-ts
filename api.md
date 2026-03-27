@@ -79,7 +79,6 @@ Types:
 - <code><a href="./src/resources/extract.ts">ExtractConfiguration</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractJobMetadata</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractJobUsage</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractOptions</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractV2Job</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractV2JobCreate</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractV2JobQueryResponse</a></code>
