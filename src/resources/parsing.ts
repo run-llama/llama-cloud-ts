@@ -1394,6 +1394,8 @@ export interface ParsingCreateParams {
     | '2026-03-23'
     | '2026-03-24'
     | '2026-03-25'
+    | '2026-03-26'
+    | '2026-03-27'
     | 'latest'
     | (string & {});
 
@@ -2194,6 +2196,8 @@ export namespace ParsingCreateParams {
           | '2026-03-23'
           | '2026-03-24'
           | '2026-03-25'
+          | '2026-03-26'
+          | '2026-03-27'
           | 'latest'
           | (string & {})
           | null;
