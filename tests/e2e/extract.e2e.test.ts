@@ -46,13 +46,12 @@ describeE2E('Extract V2 E2E', () => {
 
   test('create and get', async () => {
     const job = await client.extract.create({
-      type: 'file_id',
-      value: fileId,
-      config: { extract_options: { data_schema: SIMPLE_SCHEMA } },
+      document_input_value: fileId,
+      configuration: { data_schema: SIMPLE_SCHEMA, extraction_target: 'per_doc' },
     });
 
     expect(job.id).toBeTruthy();
-    expect(['PENDING', 'THROTTLED', 'RUNNING', 'COMPLETED']).toContain(job.status);
+    expect(['PENDING', 'RUNNING', 'COMPLETED']).toContain(job.status);
 
     const fetched = await client.extract.get(job.id);
     expect(fetched.id).toBe(job.id);
@@ -60,9 +59,8 @@ describeE2E('Extract V2 E2E', () => {
 
   test('waitForCompletion', async () => {
     const job = await client.extract.create({
-      type: 'file_id',
-      value: fileId,
-      config: { extract_options: { data_schema: SIMPLE_SCHEMA } },
+      document_input_value: fileId,
+      configuration: { data_schema: SIMPLE_SCHEMA, extraction_target: 'per_doc' },
     });
 
     const completed = await client.extract.waitForCompletion(job.id, undefined, {
@@ -77,9 +75,8 @@ describeE2E('Extract V2 E2E', () => {
   test('run (end-to-end convenience method)', async () => {
     const result = await client.extract.run(
       {
-        type: 'file_id',
-        value: fileId,
-        config: { extract_options: { data_schema: SIMPLE_SCHEMA } },
+        document_input_value: fileId,
+        configuration: { data_schema: SIMPLE_SCHEMA, extraction_target: 'per_doc' },
       },
       {
         pollingInterval: 2,
