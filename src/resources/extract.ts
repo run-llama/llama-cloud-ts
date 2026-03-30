@@ -158,7 +158,9 @@ export class Extract extends APIResource {
    *
    * @example
    * ```typescript
-   * const job = await client.extract.create({ type: 'file_id', value: 'file-abc123' });
+   * const job = await client.extract.create({
+   *   document_input_value: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+   * });
    *
    * const completed = await client.extract.waitForCompletion(job.id, undefined, { verbose: true });
    * console.log(completed.extract_result);
@@ -219,9 +221,10 @@ export class Extract extends APIResource {
    * const client = new LlamaCloud({ apiKey: '...' });
    *
    * const result = await client.extract.run({
-   *   type: 'file_id',
-   *   value: 'file-abc123',
-   *   config: { extract_options: { data_schema: { ... } } },
+   *   document_input_value: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+   *   configuration: {
+   *     data_schema: { name: { type: 'string' }, age: { type: 'number' } },
+   *   },
    * }, { verbose: true });
    *
    * console.log(result.extract_result);
