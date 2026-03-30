@@ -1524,8 +1524,8 @@ export namespace ParsingCreateParams {
         compact_markdown_tables?: boolean | null;
 
         /**
-         * Separator string for multiline cell content in markdown tables. Example: ' ' to
-         * preserve line breaks, ' ' to join with spaces
+         * Separator string for multiline cell content in markdown tables. Example:
+         * '&lt;br&gt;' to preserve line breaks, ' ' to join with spaces
          */
         markdown_table_multiline_separator?: string | null;
 
@@ -1536,8 +1536,9 @@ export namespace ParsingCreateParams {
         merge_continued_tables?: boolean | null;
 
         /**
-         * Output tables as markdown pipe tables instead of HTML <table> tags. Markdown
-         * tables are simpler but cannot represent complex structures like merged cells
+         * Output tables as markdown pipe tables instead of HTML &lt;table&gt; tags.
+         * Markdown tables are simpler but cannot represent complex structures like merged
+         * cells
          */
         output_tables_as_markdown?: boolean | null;
       }
