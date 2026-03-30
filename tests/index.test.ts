@@ -360,7 +360,7 @@ describe('instantiate client', () => {
 
     // default
     const client2 = new LlamaCloud({ apiKey: 'My API Key' });
-    expect(client2.maxRetries).toEqual(2);
+    expect(client2.maxRetries).toEqual(5);
   });
 
   describe('withOptions', () => {
