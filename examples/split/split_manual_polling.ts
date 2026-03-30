@@ -41,11 +41,13 @@ async function splitDocumentLowLevel() {
 
   // Create a split job with allow_uncategorized enabled
   const job = await client.beta.split.create({
-    categories,
-    document_input: { type: 'file_id', value: fileId },
-    splitting_strategy: {
-      allow_uncategorized: 'include',
+    configuration: {
+      categories,
+      splitting_strategy: {
+        allow_uncategorized: 'include',
+      },
     },
+    document_input: { type: 'file_id', value: fileId },
   });
 
   console.log(`Created split job with ID: ${job.id}`);
@@ -106,7 +108,7 @@ async function splitDocumentWithWaitForCompletion() {
 
   // Create a split job
   const job = await client.beta.split.create({
-    categories,
+    configuration: { categories },
     document_input: { type: 'file_id', value: fileId },
   });
 
