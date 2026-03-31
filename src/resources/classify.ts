@@ -131,7 +131,7 @@ export interface ClassifyCreateRequest {
   configuration?: ClassifyConfiguration | null;
 
   /**
-   * Product configuration ID for reusable presets
+   * Saved configuration ID
    */
   configuration_id?: string | null;
 
@@ -413,7 +413,7 @@ export interface ClassifyCreateParams {
   configuration?: ClassifyConfiguration | null;
 
   /**
-   * Body param: Product configuration ID for reusable presets
+   * Body param: Saved configuration ID
    */
   configuration_id?: string | null;
 
@@ -440,12 +440,12 @@ export interface ClassifyListParams extends PaginatedCursorParams {
   configuration_id?: string | null;
 
   /**
-   * Include jobs created at or after this timestamp (inclusive)
+   * Include items created at or after this timestamp (inclusive)
    */
   created_at_on_or_after?: string | null;
 
   /**
-   * Include jobs created at or before this timestamp (inclusive)
+   * Include items created at or before this timestamp (inclusive)
    */
   created_at_on_or_before?: string | null;
 

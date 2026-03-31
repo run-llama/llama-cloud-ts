@@ -1220,6 +1220,8 @@ export interface ParsingCreateParams {
     | '2026-03-25'
     | '2026-03-26'
     | '2026-03-27'
+    | '2026-03-30'
+    | '2026-03-31'
     | 'latest'
     | (string & {});
 
@@ -2023,6 +2025,8 @@ export namespace ParsingCreateParams {
           | '2026-03-25'
           | '2026-03-26'
           | '2026-03-27'
+          | '2026-03-30'
+          | '2026-03-31'
           | 'latest'
           | (string & {})
           | null;
@@ -2187,12 +2191,12 @@ export namespace ParsingCreateParams {
 
 export interface ParsingListParams extends PaginatedCursorParams {
   /**
-   * Include jobs created at or after this timestamp (inclusive)
+   * Include items created at or after this timestamp (inclusive)
    */
   created_at_on_or_after?: string | null;
 
   /**
-   * Include jobs created at or before this timestamp (inclusive)
+   * Include items created at or before this timestamp (inclusive)
    */
   created_at_on_or_before?: string | null;
 
