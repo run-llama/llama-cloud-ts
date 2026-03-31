@@ -472,7 +472,7 @@ export interface ExtractV2JobCreate {
   configuration?: ExtractConfiguration | null;
 
   /**
-   * Saved extract configuration ID (mutually exclusive with configuration)
+   * Saved configuration ID
    */
   configuration_id?: string | null;
 
@@ -607,7 +607,11 @@ export interface ExtractV2SchemaValidateResponse {
  */
 export interface ExtractedFieldMetadata {
   /**
-   * Document-level metadata (citations, confidence) keyed by field name
+   * Per-field metadata keyed by field name from your schema. Scalar fields (e.g.
+   * `vendor`) map to a FieldMetadataEntry with citation and confidence. Array fields
+   * (e.g. `items`) map to a list where each element contains per-sub-field
+   * FieldMetadataEntry objects, indexed by array position. Nested objects contain
+   * sub-field entries recursively.
    */
   document_metadata?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
@@ -883,6 +887,8 @@ export namespace ExtractGenerateSchemaResponse {
       | '2026-03-25'
       | '2026-03-26'
       | '2026-03-27'
+      | '2026-03-30'
+      | '2026-03-31'
       | 'latest'
       | (string & {});
 
@@ -1658,6 +1664,8 @@ export namespace ExtractGenerateSchemaResponse {
             | '2026-03-25'
             | '2026-03-26'
             | '2026-03-27'
+            | '2026-03-30'
+            | '2026-03-31'
             | 'latest'
             | (string & {})
             | null;
@@ -1857,8 +1865,7 @@ export interface ExtractCreateParams {
   configuration?: ExtractConfiguration | null;
 
   /**
-   * Body param: Saved extract configuration ID (mutually exclusive with
-   * configuration)
+   * Body param: Saved configuration ID
    */
   configuration_id?: string | null;
 
@@ -1921,12 +1928,12 @@ export interface ExtractListParams extends PaginatedCursorParams {
   configuration_id?: string | null;
 
   /**
-   * Include jobs created at or after this timestamp (inclusive)
+   * Include items created at or after this timestamp (inclusive)
    */
   created_at_on_or_after?: string | null;
 
   /**
-   * Include jobs created at or before this timestamp (inclusive)
+   * Include items created at or before this timestamp (inclusive)
    */
   created_at_on_or_before?: string | null;
 

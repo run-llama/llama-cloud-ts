@@ -76,7 +76,7 @@ export class Files extends APIResource {
    * **Deprecated**: Use GET /files instead for listing files with query parameters.
    *
    * Args: request: The query request with filters and pagination project: Validated
-   * project from dependency db: Database session
+   * project from dependency
    *
    * Returns: Paginated response with files
    *

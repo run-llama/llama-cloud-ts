@@ -13,7 +13,7 @@ export class ParseConfigurations extends APIResource {
    * Create a new parse configuration.
    *
    * Args: config_create: Parse configuration creation data project: Validated
-   * project from dependency user: Current user db: Database session
+   * project from dependency user: Current user
    *
    * Returns: The created parse configuration
    */
@@ -30,8 +30,7 @@ export class ParseConfigurations extends APIResource {
    * Update a parse configuration.
    *
    * Args: config_id: The ID of the parse configuration to update config_update:
-   * Update data project: Validated project from dependency user: Current user db:
-   * Database session
+   * Update data project: Validated project from dependency user: Current user
    *
    * Returns: The updated parse configuration
    */
@@ -51,10 +50,9 @@ export class ParseConfigurations extends APIResource {
   /**
    * List parse configurations for the current project.
    *
-   * Args: project: Validated project from dependency user: Current user db: Database
-   * session page_size: Number of items per page page_token: Token for pagination
-   * name: Filter by configuration name creator: Filter by creator version: Filter by
-   * version
+   * Args: project: Validated project from dependency user: Current user page_size:
+   * Number of items per page page_token: Token for pagination name: Filter by
+   * configuration name creator: Filter by creator version: Filter by version
    *
    * Returns: Paginated response with parse configurations
    */
@@ -72,7 +70,7 @@ export class ParseConfigurations extends APIResource {
    * Delete a parse configuration.
    *
    * Args: config_id: The ID of the parse configuration to delete project: Validated
-   * project from dependency user: Current user db: Database session
+   * project from dependency user: Current user
    */
   delete(
     configID: string,
@@ -91,7 +89,7 @@ export class ParseConfigurations extends APIResource {
    * Get a parse configuration by ID.
    *
    * Args: config_id: The ID of the parse configuration project: Validated project
-   * from dependency user: Current user db: Database session
+   * from dependency user: Current user
    *
    * Returns: The parse configuration
    */
