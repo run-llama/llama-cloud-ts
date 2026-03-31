@@ -10,10 +10,7 @@ const client = new LlamaCloud({
 describe('resource split', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.beta.split.create({
-      categories: [{ name: 'x' }],
-      document_input: { type: 'type', value: 'value' },
-    });
+    const responsePromise = client.beta.split.create({ document_input: { type: 'type', value: 'value' } });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,11 +23,14 @@ describe('resource split', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.beta.split.create({
-      categories: [{ name: 'x', description: 'x' }],
       document_input: { type: 'type', value: 'value' },
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      splitting_strategy: { allow_uncategorized: 'include' },
+      configuration: {
+        categories: [{ name: 'x', description: 'x' }],
+        splitting_strategy: { allow_uncategorized: 'include' },
+      },
+      configuration_id: 'configuration_id',
     });
   });
 
@@ -52,10 +52,14 @@ describe('resource split', () => {
     await expect(
       client.beta.split.list(
         {
+          created_at_on_or_after: '2019-12-27T18:11:19.117Z',
+          created_at_on_or_before: '2019-12-27T18:11:19.117Z',
+          job_ids: ['string', 'string'],
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           page_size: 0,
           page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          status: 'pending',
         },
         { path: '/_stainless_unknown_path' },
       ),

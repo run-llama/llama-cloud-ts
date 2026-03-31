@@ -1,10 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import fs from 'node:fs';
-import path from 'node:path';
-import url from 'node:url';
-import { newDenoHTTPWorker } from '@valtown/deno-http-worker';
-import { workerPath } from './code-tool-paths.cjs';
 import {
   ContentBlock,
   McpRequestContext,
@@ -153,19 +148,23 @@ const remoteStainlessHandler = async ({
 
   const codeModeEndpoint = readEnv('CODE_MODE_ENDPOINT_URL') ?? 'https://api.stainless.com/api/ai/code-tool';
 
+  const localClientEnvs = {
+    LLAMA_CLOUD_API_KEY: requireValue(
+      readEnv('LLAMA_CLOUD_API_KEY') ?? client.apiKey,
+      'set LLAMA_CLOUD_API_KEY environment variable or provide apiKey client option',
+    ),
+    LLAMA_CLOUD_BASE_URL: readEnv('LLAMA_CLOUD_BASE_URL') ?? client.baseURL ?? undefined,
+  };
+  // Merge any upstream client envs from the request header, with upstream values taking precedence.
+  const mergedClientEnvs = { ...localClientEnvs, ...reqContext.upstreamClientEnvs };
+
   // Setting a Stainless API key authenticates requests to the code tool endpoint.
   const res = await fetch(codeModeEndpoint, {
     method: 'POST',
     headers: {
       ...(reqContext.stainlessApiKey && { Authorization: reqContext.stainlessApiKey }),
       'Content-Type': 'application/json',
-      'x-stainless-mcp-client-envs': JSON.stringify({
-        LLAMA_CLOUD_API_KEY: requireValue(
-          readEnv('LLAMA_CLOUD_API_KEY') ?? client.apiKey,
-          'set LLAMA_CLOUD_API_KEY environment variable or provide apiKey client option',
-        ),
-        LLAMA_CLOUD_BASE_URL: readEnv('LLAMA_CLOUD_BASE_URL') ?? client.baseURL ?? undefined,
-      }),
+      'x-stainless-mcp-client-envs': JSON.stringify(mergedClientEnvs),
     },
     body: JSON.stringify({
       project_name: 'llamacloud-prod',
@@ -208,6 +207,13 @@ const localDenoHandler = async ({
   reqContext: McpRequestContext;
   args: unknown;
 }): Promise<ToolCallResult> => {
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const url = await import('node:url');
+  const { newDenoHTTPWorker } = await import('@valtown/deno-http-worker');
+  const { getWorkerPath } = await import('./code-tool-paths.cjs');
+  const workerPath = getWorkerPath();
+
   const client = reqContext.client;
   const baseURLHostname = new URL(client.baseURL).hostname;
   const { code } = args as { code: string };
@@ -269,6 +275,9 @@ const localDenoHandler = async ({
     printOutput: true,
     spawnOptions: {
       cwd: path.dirname(workerPath),
+      // Merge any upstream client envs into the Deno subprocess environment,
+      // with the upstream env vars taking precedence.
+      env: { ...process.env, ...reqContext.upstreamClientEnvs },
     },
   });
 
@@ -278,13 +287,15 @@ const localDenoHandler = async ({
         reject(new Error(`Worker exited with code ${exitCode}`));
       });
 
-      const opts: ClientOptions = {
-        baseURL: client.baseURL,
-        apiKey: client.apiKey,
+      // Strip null/undefined values so that the worker SDK client can fall back to
+      // reading from environment variables (including any upstreamClientEnvs).
+      const opts = {
+        ...(client.baseURL != null ? { baseURL: client.baseURL } : undefined),
+        ...(client.apiKey != null ? { apiKey: client.apiKey } : undefined),
         defaultHeaders: {
           'X-Stainless-MCP': 'true',
         },
-      };
+      } satisfies Partial<ClientOptions> as ClientOptions;
 
       const req = worker.request(
         'http://localhost',

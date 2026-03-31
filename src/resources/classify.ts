@@ -9,6 +9,17 @@ import { path } from '../internal/utils/path';
 export class Classify extends APIResource {
   /**
    * Create a classify job.
+   *
+   * Classifies a document against a set of rules. Provide either `file_id` or
+   * `parse_job_id` as the document input, and either inline `configuration` with
+   * rules or a `configuration_id` referencing a saved preset.
+   *
+   * Each rule has a `type` (the label to assign) and a `description` (natural
+   * language criteria). The classifier returns the best matching rule with a
+   * confidence score.
+   *
+   * The job runs asynchronously. Poll `GET /classify/{job_id}` to check status and
+   * retrieve results.
    */
   create(params: ClassifyCreateParams, options?: RequestOptions): APIPromise<ClassifyCreateResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -20,7 +31,10 @@ export class Classify extends APIResource {
   }
 
   /**
-   * List classify jobs.
+   * List classify jobs with optional filtering and pagination.
+   *
+   * Filter by `status`, `configuration_id`, specific `job_ids`, or creation date
+   * range.
    */
   list(
     query: ClassifyListParams | null | undefined = {},
@@ -33,7 +47,10 @@ export class Classify extends APIResource {
   }
 
   /**
-   * Retrieve classify job by ID.
+   * Get a classify job by ID.
+   *
+   * Returns the job status, configuration, and classify result when complete. The
+   * result includes the matched document type, confidence score, and reasoning.
    */
   get(
     jobID: string,
@@ -47,18 +64,23 @@ export class Classify extends APIResource {
 export type ClassifyListResponsesPaginatedCursor = PaginatedCursor<ClassifyListResponse>;
 
 /**
- * Configuration for classification.
+ * Configuration for a classify job.
  */
 export interface ClassifyConfiguration {
   /**
-   * Classification rules to apply (at least one required)
+   * Classify rules to evaluate against the document (at least one required)
    */
   rules: Array<ClassifyConfiguration.Rule>;
 
   /**
-   * Classification execution mode
+   * Classify execution mode
    */
   mode?: 'FAST';
+
+  /**
+   * Parsing configuration for classify jobs.
+   */
+  parsing_configuration?: ClassifyConfiguration.ParsingConfiguration | null;
 }
 
 export namespace ClassifyConfiguration {
@@ -67,7 +89,7 @@ export namespace ClassifyConfiguration {
    */
   export interface Rule {
     /**
-     * Natural language description of what to classify
+     * Natural language criteria for matching this rule
      */
     description: string;
 
@@ -76,6 +98,27 @@ export namespace ClassifyConfiguration {
      */
     type: string;
   }
+
+  /**
+   * Parsing configuration for classify jobs.
+   */
+  export interface ParsingConfiguration {
+    /**
+     * ISO 639-1 language code for the document
+     */
+    lang?: string;
+
+    /**
+     * Maximum number of pages to process. Omit for no limit.
+     */
+    max_pages?: number | null;
+
+    /**
+     * Comma-separated page numbers or ranges to process (1-based). Omit to process all
+     * pages.
+     */
+    target_pages?: string | null;
+  }
 }
 
 /**
@@ -83,7 +126,7 @@ export namespace ClassifyConfiguration {
  */
 export interface ClassifyCreateRequest {
   /**
-   * Configuration for classification.
+   * Configuration for a classify job.
    */
   configuration?: ClassifyConfiguration | null;
 
@@ -113,17 +156,17 @@ export interface ClassifyCreateRequest {
  */
 export interface ClassifyResult {
   /**
-   * Confidence score (0.0-1.0)
+   * Confidence score between 0.0 and 1.0
    */
   confidence: number;
 
   /**
-   * Explanation of classification decision
+   * Why the document matched (or didn't match) the returned rule
    */
   reasoning: string;
 
   /**
-   * Document type that matches, or None
+   * Matched rule type, or null if no rule matched
    */
   type: string | null;
 }
@@ -138,32 +181,32 @@ export interface ClassifyCreateResponse {
   id: string;
 
   /**
-   * Classification configuration
+   * Classify configuration used for this job
    */
   configuration: ClassifyConfiguration;
 
   /**
-   * Type of document input
+   * Whether the input was a file or parse job (FILE or PARSE_JOB)
    */
   document_input_type: 'url' | 'file_id' | 'parse_job_id';
 
   /**
-   * Document identifier
+   * ID of the input file or parse job
    */
   document_input_value: string;
 
   /**
-   * Project ID
+   * Project this job belongs to
    */
   project_id: string;
 
   /**
-   * Job status
+   * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
    */
   status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED';
 
   /**
-   * User ID
+   * User who created this job
    */
   user_id: string;
 
@@ -213,32 +256,32 @@ export interface ClassifyListResponse {
   id: string;
 
   /**
-   * Classification configuration
+   * Classify configuration used for this job
    */
   configuration: ClassifyConfiguration;
 
   /**
-   * Type of document input
+   * Whether the input was a file or parse job (FILE or PARSE_JOB)
    */
   document_input_type: 'url' | 'file_id' | 'parse_job_id';
 
   /**
-   * Document identifier
+   * ID of the input file or parse job
    */
   document_input_value: string;
 
   /**
-   * Project ID
+   * Project this job belongs to
    */
   project_id: string;
 
   /**
-   * Job status
+   * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
    */
   status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED';
 
   /**
-   * User ID
+   * User who created this job
    */
   user_id: string;
 
@@ -288,32 +331,32 @@ export interface ClassifyGetResponse {
   id: string;
 
   /**
-   * Classification configuration
+   * Classify configuration used for this job
    */
   configuration: ClassifyConfiguration;
 
   /**
-   * Type of document input
+   * Whether the input was a file or parse job (FILE or PARSE_JOB)
    */
   document_input_type: 'url' | 'file_id' | 'parse_job_id';
 
   /**
-   * Document identifier
+   * ID of the input file or parse job
    */
   document_input_value: string;
 
   /**
-   * Project ID
+   * Project this job belongs to
    */
   project_id: string;
 
   /**
-   * Job status
+   * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
    */
   status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED';
 
   /**
-   * User ID
+   * User who created this job
    */
   user_id: string;
 
@@ -365,7 +408,7 @@ export interface ClassifyCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Configuration for classification.
+   * Body param: Configuration for a classify job.
    */
   configuration?: ClassifyConfiguration | null;
 
@@ -395,6 +438,16 @@ export interface ClassifyListParams extends PaginatedCursorParams {
    * Filter by configuration ID
    */
   configuration_id?: string | null;
+
+  /**
+   * Include jobs created at or after this timestamp (inclusive)
+   */
+  created_at_on_or_after?: string | null;
+
+  /**
+   * Include jobs created at or before this timestamp (inclusive)
+   */
+  created_at_on_or_before?: string | null;
 
   /**
    * Filter by specific job IDs

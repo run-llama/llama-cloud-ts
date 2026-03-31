@@ -3,7 +3,6 @@
 import { APIResource } from '../../../core/resource';
 import * as ParsingAPI from '../../parsing';
 import * as JobsAPI from '../../classifier/jobs';
-import * as ExtractionJobsAPI from '../../extraction/jobs';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, PaginatedBatchItems, type PaginatedBatchItemsParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
@@ -13,9 +12,8 @@ export class JobItems extends APIResource {
   /**
    * List items in a batch job with optional status filtering.
    *
-   * Useful for finding failed items, viewing completed items, or debugging issues.
-   * Results are paginated for performance with configurable limit and offset
-   * parameters.
+   * Useful for finding failed items, viewing completed items, or debugging
+   * processing issues.
    */
   list(
     jobID: string,
@@ -30,12 +28,11 @@ export class JobItems extends APIResource {
   }
 
   /**
-   * Get all processing results for a specific item (lineage query).
+   * Get all processing results for a specific item.
    *
-   * Shows complete processing history including what operations have been performed,
-   * with what parameters, and where outputs are stored. Useful for understanding
-   * what processing has already been done to avoid redundant work. Optionally filter
-   * by job type to see only specific processing operations.
+   * Returns the complete processing history for an item including what operations
+   * were performed, parameters used, and where outputs are stored. Optionally filter
+   * by `job_type`.
    */
   getProcessingResults(
     itemID: string,
@@ -144,12 +141,12 @@ export namespace JobItemGetProcessingResultsResponse {
     job_type: 'parse' | 'extract' | 'classify';
 
     /**
-     * S3 location of processing output
+     * Location of the processing output
      */
     output_s3_path: string;
 
     /**
-     * Hash of parameters for deduplication
+     * Content hash of the job configuration for dedup
      */
     parameters_hash: string;
 
@@ -537,11 +534,57 @@ export namespace JobItemGetProcessingResultsResponse {
         version?: string | null;
 
         /**
-         * The outbound webhook configurations
+         * Outbound webhook endpoints to notify on job status changes
          */
-        webhook_configurations?: Array<ExtractionJobsAPI.WebhookConfiguration> | null;
+        webhook_configurations?: Array<Parameters.WebhookConfiguration> | null;
 
         webhook_url?: string | null;
+      }
+
+      export namespace Parameters {
+        /**
+         * Configuration for a single outbound webhook endpoint.
+         */
+        export interface WebhookConfiguration {
+          /**
+           * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
+           * events are delivered.
+           */
+          webhook_events?: Array<
+            | 'extract.pending'
+            | 'extract.success'
+            | 'extract.error'
+            | 'extract.partial_success'
+            | 'extract.cancelled'
+            | 'parse.pending'
+            | 'parse.running'
+            | 'parse.success'
+            | 'parse.error'
+            | 'parse.partial_success'
+            | 'parse.cancelled'
+            | 'classify.pending'
+            | 'classify.success'
+            | 'classify.error'
+            | 'classify.partial_success'
+            | 'classify.cancelled'
+            | 'unmapped_event'
+          > | null;
+
+          /**
+           * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
+           */
+          webhook_headers?: { [key: string]: string } | null;
+
+          /**
+           * Response format sent to the webhook: 'string' (default) or 'json'
+           */
+          webhook_output_format?: string | null;
+
+          /**
+           * URL to receive webhook POST notifications
+           */
+          webhook_url?: string | null;
+        }
       }
     }
   }

@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import fs from 'fs/promises';
 import { readEnv } from './util';
 import { getLogger } from './logger';
 
@@ -12,33 +13,50 @@ interface InstructionsCacheEntry {
 
 const instructionsCache = new Map<string, InstructionsCacheEntry>();
 
-// Periodically evict stale entries so the cache doesn't grow unboundedly.
-const _cacheCleanupInterval = setInterval(() => {
+export async function getInstructions({
+  stainlessApiKey,
+  customInstructionsPath,
+}: {
+  stainlessApiKey?: string | undefined;
+  customInstructionsPath?: string | undefined;
+}): Promise<string> {
   const now = Date.now();
+  const cacheKey = customInstructionsPath ?? stainlessApiKey ?? '';
+  const cached = instructionsCache.get(cacheKey);
+
+  if (cached && now - cached.fetchedAt <= INSTRUCTIONS_CACHE_TTL_MS) {
+    return cached.fetchedInstructions;
+  }
+
+  // Evict stale entries so the cache doesn't grow unboundedly.
   for (const [key, entry] of instructionsCache) {
     if (now - entry.fetchedAt > INSTRUCTIONS_CACHE_TTL_MS) {
       instructionsCache.delete(key);
     }
   }
-}, INSTRUCTIONS_CACHE_TTL_MS);
 
-// Don't keep the process alive just for cleanup.
-_cacheCleanupInterval.unref();
+  let fetchedInstructions: string;
 
-export async function getInstructions(stainlessApiKey: string | undefined): Promise<string> {
-  const cacheKey = stainlessApiKey ?? '';
-  const cached = instructionsCache.get(cacheKey);
-
-  if (cached && Date.now() - cached.fetchedAt <= INSTRUCTIONS_CACHE_TTL_MS) {
-    return cached.fetchedInstructions;
+  if (customInstructionsPath) {
+    fetchedInstructions = await fetchLatestInstructionsFromFile(customInstructionsPath);
+  } else {
+    fetchedInstructions = await fetchLatestInstructionsFromApi(stainlessApiKey);
   }
 
-  const fetchedInstructions = await fetchLatestInstructions(stainlessApiKey);
-  instructionsCache.set(cacheKey, { fetchedInstructions, fetchedAt: Date.now() });
+  instructionsCache.set(cacheKey, { fetchedInstructions, fetchedAt: now });
   return fetchedInstructions;
 }
 
-async function fetchLatestInstructions(stainlessApiKey: string | undefined): Promise<string> {
+async function fetchLatestInstructionsFromFile(path: string): Promise<string> {
+  try {
+    return await fs.readFile(path, 'utf-8');
+  } catch (error) {
+    getLogger().error({ error, path }, 'Error fetching instructions from file');
+    throw error;
+  }
+}
+
+async function fetchLatestInstructionsFromApi(stainlessApiKey: string | undefined): Promise<string> {
   // Setting the stainless API key is optional, but may be required
   // to authenticate requests to the Stainless API.
   const response = await fetch(
@@ -55,21 +73,11 @@ async function fetchLatestInstructions(stainlessApiKey: string | undefined): Pro
       'Warning: failed to retrieve MCP server instructions. Proceeding with default instructions...',
     );
 
-    instructions = `
-      This is the llamacloud-prod MCP server. You will use Code Mode to help the user perform
-      actions. You can use search_docs tool to learn about how to take action with this server. Then,
-      you will write TypeScript code using the execute tool take action. It is CRITICAL that you be
-      thoughtful and deliberate when executing code. Always try to entirely solve the problem in code
-      block: it can be as long as you need to get the job done!
-    `;
+    instructions =
+      '\n  This is the llamacloud-prod MCP server.\n\n  Available tools:\n  - search_docs: Search SDK documentation to find the right methods and parameters.\n  - execute: Run TypeScript code against a pre-authenticated SDK client. Define an async run(client) function.\n\n  Workflow:\n  - If unsure about the API, call search_docs first.\n  - Write complete solutions in a single execute call when possible. For large datasets, use API filters to narrow results or paginate within a single execute block.\n  - If execute returns an error, read the error and fix your code rather than retrying the same approach.\n  - Variables do not persist between execute calls. Return or log all data you need.\n  - Individual HTTP requests to the API have a 30-second timeout. If a request times out, try a smaller query or add filters.\n  - Code execution has a total timeout of approximately 5 minutes. If your code times out, simplify it or break it into smaller steps.\n  ';
   }
 
   instructions ??= ((await response.json()) as { instructions: string }).instructions;
-  instructions = `
-    If needed, you can get the current time by executing Date.now().
-
-    ${instructions}
-  `;
 
   return instructions;
 }

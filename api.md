@@ -72,71 +72,31 @@ Methods:
 - <code title="get /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedCursor</code>
 - <code title="get /api/v2/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
 
-# Extraction
-
-Methods:
-
-- <code title="post /api/v1/extraction/run">client.extraction.<a href="./src/resources/extraction/extraction.ts">run</a>({ ...params }) -> ExtractJob</code>
-
-## Jobs
+# Extract
 
 Types:
 
-- <code><a href="./src/resources/extraction/jobs.ts">ExtractJob</a></code>
-- <code><a href="./src/resources/extraction/jobs.ts">WebhookConfiguration</a></code>
-- <code><a href="./src/resources/extraction/jobs.ts">JobListResponse</a></code>
-- <code><a href="./src/resources/extraction/jobs.ts">JobGetResultResponse</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractConfiguration</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractJobMetadata</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractJobUsage</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2Job</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2JobCreate</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2JobQueryResponse</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2SchemaGenerateRequest</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2SchemaValidateRequest</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractV2SchemaValidateResponse</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractedFieldMetadata</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractDeleteResponse</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractGenerateSchemaResponse</a></code>
 
 Methods:
 
-- <code title="post /api/v1/extraction/jobs">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">create</a>({ ...params }) -> ExtractJob</code>
-- <code title="get /api/v1/extraction/jobs">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">list</a>({ ...params }) -> JobListResponse</code>
-- <code title="post /api/v1/extraction/jobs/file">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">file</a>({ ...params }) -> ExtractJob</code>
-- <code title="get /api/v1/extraction/jobs/{job_id}">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">get</a>(jobID) -> ExtractJob</code>
-- <code title="get /api/v1/extraction/jobs/{job_id}/result">client.extraction.jobs.<a href="./src/resources/extraction/jobs.ts">getResult</a>(jobID, { ...params }) -> JobGetResultResponse</code>
-
-## Runs
-
-Types:
-
-- <code><a href="./src/resources/extraction/runs.ts">ExtractConfig</a></code>
-- <code><a href="./src/resources/extraction/runs.ts">ExtractRun</a></code>
-- <code><a href="./src/resources/extraction/runs.ts">RunDeleteResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/extraction/runs">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">list</a>({ ...params }) -> ExtractRunsPaginatedExtractRuns</code>
-- <code title="delete /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">delete</a>(runID, { ...params }) -> unknown</code>
-- <code title="get /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">get</a>(runID, { ...params }) -> ExtractRun</code>
-- <code title="get /api/v1/extraction/runs/by-job/{job_id}">client.extraction.runs.<a href="./src/resources/extraction/runs.ts">getByJob</a>(jobID, { ...params }) -> ExtractRun</code>
-
-## ExtractionAgents
-
-Types:
-
-- <code><a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">ExtractAgent</a></code>
-- <code><a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">ExtractionAgentListResponse</a></code>
-- <code><a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">ExtractionAgentDeleteResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">create</a>({ ...params }) -> ExtractAgent</code>
-- <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">update</a>(extractionAgentID, { ...params }) -> ExtractAgent</code>
-- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">list</a>({ ...params }) -> ExtractionAgentListResponse</code>
-- <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">delete</a>(extractionAgentID) -> unknown</code>
-- <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extractionAgents.<a href="./src/resources/extraction/extraction-agents/extraction-agents.ts">get</a>(extractionAgentID) -> ExtractAgent</code>
-
-### Schema
-
-Types:
-
-- <code><a href="./src/resources/extraction/extraction-agents/schema.ts">SchemaGenerateSchemaResponse</a></code>
-- <code><a href="./src/resources/extraction/extraction-agents/schema.ts">SchemaValidateSchemaResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/extraction/extraction-agents/schema/generate">client.extraction.extractionAgents.schema.<a href="./src/resources/extraction/extraction-agents/schema.ts">generateSchema</a>({ ...params }) -> SchemaGenerateSchemaResponse</code>
-- <code title="post /api/v1/extraction/extraction-agents/schema/validation">client.extraction.extractionAgents.schema.<a href="./src/resources/extraction/extraction-agents/schema.ts">validateSchema</a>({ ...params }) -> SchemaValidateSchemaResponse</code>
+- <code title="post /api/v2/extract">client.extract.<a href="./src/resources/extract.ts">create</a>({ ...params }) -> ExtractV2Job</code>
+- <code title="get /api/v2/extract">client.extract.<a href="./src/resources/extract.ts">list</a>({ ...params }) -> ExtractV2JobsPaginatedCursor</code>
+- <code title="delete /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract.ts">delete</a>(jobID, { ...params }) -> unknown</code>
+- <code title="post /api/v2/extract/schema/generate">client.extract.<a href="./src/resources/extract.ts">generateSchema</a>({ ...params }) -> ExtractGenerateSchemaResponse</code>
+- <code title="get /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract.ts">get</a>(jobID, { ...params }) -> ExtractV2Job</code>
+- <code title="post /api/v2/extract/schema/validation">client.extract.<a href="./src/resources/extract.ts">validateSchema</a>({ ...params }) -> ExtractV2SchemaValidateResponse</code>
 
 # Classifier
 

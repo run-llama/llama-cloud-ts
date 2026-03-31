@@ -1,5 +1,63 @@
 # Changelog
 
+## 2.0.0 (2026-03-31)
+
+Full Changelog: [v1.8.0...v2.0.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.8.0...v2.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* remove extraction v1 resource, extract v2 metadata restructure
+
+### Features
+
+* add run() and waitForCompletion() convenience methods to extract resource ([96d1aa0](https://github.com/run-llama/llama-cloud-ts/commit/96d1aa0aad573daa679f63f8bedc1bdcb36c3e71))
+* **api:** api update ([61dc402](https://github.com/run-llama/llama-cloud-ts/commit/61dc402f47b78a1cf95c7e907095cb0840f89c10))
+* **api:** api update ([024110d](https://github.com/run-llama/llama-cloud-ts/commit/024110d2008519712589d12328f656151c4858b6))
+* **api:** api update ([965aedd](https://github.com/run-llama/llama-cloud-ts/commit/965aeddf978e993151109028308e8196b69e1c8d))
+* **api:** api update ([9768450](https://github.com/run-llama/llama-cloud-ts/commit/9768450b84eceac169fb3cd739e41b6818517d97))
+* **api:** api update ([4da25c2](https://github.com/run-llama/llama-cloud-ts/commit/4da25c23f06e0e071eeb8d169480dfa34736e4c3))
+* **api:** api update ([3a5fb62](https://github.com/run-llama/llama-cloud-ts/commit/3a5fb62bf9c5ecfbb569a9455b79bb50575f57d4))
+* **api:** api update ([4d6023d](https://github.com/run-llama/llama-cloud-ts/commit/4d6023d31e9268af855b8ea64ab0ae690e25cd64))
+* **api:** api update ([fb3da19](https://github.com/run-llama/llama-cloud-ts/commit/fb3da19df447ed633807659e3c21af6ec2e9fc4f))
+* **api:** api update ([278a91b](https://github.com/run-llama/llama-cloud-ts/commit/278a91b32496871530391c89e63548e90ae34b26))
+* **api:** api update ([420402f](https://github.com/run-llama/llama-cloud-ts/commit/420402fdebb23e72ffac25d4e2fa52b10440429d))
+* **api:** api update ([ae3d506](https://github.com/run-llama/llama-cloud-ts/commit/ae3d506c1bb5a7f24022da9e326d9e6a10b95244))
+* **api:** api update ([99e6976](https://github.com/run-llama/llama-cloud-ts/commit/99e697600caac5e6eda908ec67779f3bc4dc74cb))
+* **api:** api update ([1f4937c](https://github.com/run-llama/llama-cloud-ts/commit/1f4937c9ea1b9217b8153d302aae30d8d4f2a055))
+* **api:** api update ([52f993b](https://github.com/run-llama/llama-cloud-ts/commit/52f993bac2030f522e67940b87a5adca5be6109f))
+* **api:** manual updates ([8b4f3f1](https://github.com/run-llama/llama-cloud-ts/commit/8b4f3f1350de54e4597dde23c6c09d1d7fc72724))
+* remove extraction v1 resource, extract v2 metadata restructure ([098acff](https://github.com/run-llama/llama-cloud-ts/commit/098acff189c66f4a9d5ba739146c69d7f31c3111))
+
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([462a010](https://github.com/run-llama/llama-cloud-ts/commit/462a010d3c1198289d28851ad54eb897b3cd9753))
+* **internal:** gitignore generated `oidc` dir ([5458f1b](https://github.com/run-llama/llama-cloud-ts/commit/5458f1b67cb27a2c5a1046a7a935d01a715d3e15))
+* prettier formatting for run() method signature ([2f519eb](https://github.com/run-llama/llama-cloud-ts/commit/2f519eb21b9a3e0a371cfb6444f15ecf543b8f8d))
+
+
+### Chores
+
+* **ci:** escape input path in publish-npm workflow ([f6824e5](https://github.com/run-llama/llama-cloud-ts/commit/f6824e58e99a78170e410bfed5f8bae7524f5540))
+* **ci:** skip lint on metadata-only changes ([e724615](https://github.com/run-llama/llama-cloud-ts/commit/e72461500b0d98c233f6233cb6c264f317d7731d))
+* **ci:** skip uploading artifacts on stainless-internal branches ([66dad00](https://github.com/run-llama/llama-cloud-ts/commit/66dad0082d5ff2c5ab27989d7f38405077d3b237))
+* **internal:** bump @modelcontextprotocol/sdk, @hono/node-server, and minimatch ([c378b29](https://github.com/run-llama/llama-cloud-ts/commit/c378b29b9dd39f28a3e06362a486ef45ce91a10a))
+* **internal:** codegen related update ([f020487](https://github.com/run-llama/llama-cloud-ts/commit/f020487075c0781a780a4ad0cb540ba7f6af419b))
+* **internal:** fix MCP server TS errors that occur with required client options ([ae014b5](https://github.com/run-llama/llama-cloud-ts/commit/ae014b5eebfbae86babc6bc158a8b5ebcf833f5a))
+* **internal:** improve local docs search for MCP servers ([161f73f](https://github.com/run-llama/llama-cloud-ts/commit/161f73fd4c0fed9763d2649abe536cc0f95a36d4))
+* **internal:** improve local docs search for MCP servers ([bb404a1](https://github.com/run-llama/llama-cloud-ts/commit/bb404a177b9bf824d9dcdf452cb67434a8ed2b59))
+* **internal:** make generated MCP servers compatible with Cloudflare worker environments ([ddaee8b](https://github.com/run-llama/llama-cloud-ts/commit/ddaee8b79ffe3f73e63c99e403fd95fdafc8b274))
+* **internal:** support custom-instructions-path flag in MCP servers ([888b6d4](https://github.com/run-llama/llama-cloud-ts/commit/888b6d4c47a393873126f4037cf5533d830bb6bd))
+* **internal:** support local docs search in MCP servers ([64936e2](https://github.com/run-llama/llama-cloud-ts/commit/64936e2761501b67e54a786ec7a58997f4fd5f70))
+* **internal:** support x-stainless-mcp-client-envs header in MCP servers ([d354f6c](https://github.com/run-llama/llama-cloud-ts/commit/d354f6c722fb4c20b324609bb63188319822b33f))
+* **internal:** support x-stainless-mcp-client-permissions headers in MCP servers ([fbf5cc1](https://github.com/run-llama/llama-cloud-ts/commit/fbf5cc1c95a1130ad3fbfe8d0b6174fcfee76561))
+* **internal:** tweak CI branches ([60fb5de](https://github.com/run-llama/llama-cloud-ts/commit/60fb5de4915ca8fa067eb6a67460be536a491e77))
+* **internal:** update dependencies to address dependabot vulnerabilities ([58642b7](https://github.com/run-llama/llama-cloud-ts/commit/58642b73ba6a7bce81e973829e5f616a24c5c553))
+* **internal:** update gitignore ([4b34bb7](https://github.com/run-llama/llama-cloud-ts/commit/4b34bb7c1d9004c71008c92b09ae15b051b33b9a))
+* **mcp-server:** add support for session id, forward client info ([097d2f8](https://github.com/run-llama/llama-cloud-ts/commit/097d2f8849edf3ba390d2ed55a3b6a7db1c6c93c))
+* **mcp-server:** improve instructions ([30d149c](https://github.com/run-llama/llama-cloud-ts/commit/30d149ce56f129b0b9afc00b52430e165ade3370))
+* update placeholder string ([e6c1a34](https://github.com/run-llama/llama-cloud-ts/commit/e6c1a346e6174b0f1351e15b92de7180074052e0))
+
 ## 1.8.0 (2026-03-05)
 
 Full Changelog: [v1.7.0...v1.8.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.7.0...v1.8.0)

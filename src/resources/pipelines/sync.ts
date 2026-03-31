@@ -8,15 +8,17 @@ import { path } from '../../internal/utils/path';
 
 export class Sync extends APIResource {
   /**
-   * Run ingestion for the pipeline by incrementally updating the data-sink with
-   * upstream changes from data-sources & files.
+   * Trigger an incremental sync for a managed pipeline.
+   *
+   * Processes new and updated documents from data sources and files, then updates
+   * the index for retrieval.
    */
   create(pipelineID: string, options?: RequestOptions): APIPromise<PipelinesAPI.Pipeline> {
     return this._client.post(path`/api/v1/pipelines/${pipelineID}/sync`, options);
   }
 
   /**
-   * Cancel Pipeline Sync
+   * Cancel all running sync jobs for a pipeline.
    */
   cancel(pipelineID: string, options?: RequestOptions): APIPromise<PipelinesAPI.Pipeline> {
     return this._client.post(path`/api/v1/pipelines/${pipelineID}/sync/cancel`, options);

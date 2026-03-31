@@ -25,8 +25,6 @@ import {
   type PaginatedCursorPostParams,
   PaginatedCursorPostResponse,
   PaginatedCursorResponse,
-  type PaginatedExtractRunsParams,
-  PaginatedExtractRunsResponse,
   type PaginatedJobsHistoryParams,
   PaginatedJobsHistoryResponse,
   type PaginatedPipelineFilesParams,
@@ -67,6 +65,28 @@ import {
   DataSourceUpdateParams,
   DataSources,
 } from './resources/data-sources';
+import {
+  Extract,
+  ExtractConfiguration,
+  ExtractCreateParams,
+  ExtractDeleteParams,
+  ExtractDeleteResponse,
+  ExtractGenerateSchemaParams,
+  ExtractGenerateSchemaResponse,
+  ExtractGetParams,
+  ExtractJobMetadata,
+  ExtractJobUsage,
+  ExtractListParams,
+  ExtractV2Job,
+  ExtractV2JobCreate,
+  ExtractV2JobQueryResponse,
+  ExtractV2JobsPaginatedCursor,
+  ExtractV2SchemaGenerateRequest,
+  ExtractV2SchemaValidateRequest,
+  ExtractV2SchemaValidateResponse,
+  ExtractValidateSchemaParams,
+  ExtractedFieldMetadata,
+} from './resources/extract';
 import {
   File,
   FileCreate,
@@ -117,7 +137,6 @@ import {
 } from './resources/projects';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
-import { Extraction, ExtractionRunParams } from './resources/extraction/extraction';
 import {
   AdvancedModeTransformConfig,
   AutoTransformConfig,
@@ -409,8 +428,9 @@ export class LlamaCloud {
       : new URL(baseURL + (baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
 
     const defaultQuery = this.defaultQuery();
-    if (!isEmptyObj(defaultQuery)) {
-      query = { ...defaultQuery, ...query };
+    const pathQuery = Object.fromEntries(url.searchParams);
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
@@ -905,7 +925,7 @@ export class LlamaCloud {
 
   files: API.Files = new API.Files(this);
   parsing: API.Parsing = new API.Parsing(this);
-  extraction: API.Extraction = new API.Extraction(this);
+  extract: API.Extract = new API.Extract(this);
   classifier: API.Classifier = new API.Classifier(this);
   classify: API.Classify = new API.Classify(this);
   projects: API.Projects = new API.Projects(this);
@@ -918,7 +938,7 @@ export class LlamaCloud {
 
 LlamaCloud.Files = Files;
 LlamaCloud.Parsing = Parsing;
-LlamaCloud.Extraction = Extraction;
+LlamaCloud.Extract = Extract;
 LlamaCloud.Classifier = Classifier;
 LlamaCloud.Classify = Classify;
 LlamaCloud.Projects = Projects;
@@ -947,12 +967,6 @@ export declare namespace LlamaCloud {
   export {
     type PaginatedBatchItemsParams as PaginatedBatchItemsParams,
     type PaginatedBatchItemsResponse as PaginatedBatchItemsResponse,
-  };
-
-  export import PaginatedExtractRuns = Pagination.PaginatedExtractRuns;
-  export {
-    type PaginatedExtractRunsParams as PaginatedExtractRunsParams,
-    type PaginatedExtractRunsResponse as PaginatedExtractRunsResponse,
   };
 
   export import PaginatedCloudDocuments = Pagination.PaginatedCloudDocuments;
@@ -1022,7 +1036,28 @@ export declare namespace LlamaCloud {
     type ParsingGetParams as ParsingGetParams,
   };
 
-  export { Extraction as Extraction, type ExtractionRunParams as ExtractionRunParams };
+  export {
+    Extract as Extract,
+    type ExtractConfiguration as ExtractConfiguration,
+    type ExtractJobMetadata as ExtractJobMetadata,
+    type ExtractJobUsage as ExtractJobUsage,
+    type ExtractV2Job as ExtractV2Job,
+    type ExtractV2JobCreate as ExtractV2JobCreate,
+    type ExtractV2JobQueryResponse as ExtractV2JobQueryResponse,
+    type ExtractV2SchemaGenerateRequest as ExtractV2SchemaGenerateRequest,
+    type ExtractV2SchemaValidateRequest as ExtractV2SchemaValidateRequest,
+    type ExtractV2SchemaValidateResponse as ExtractV2SchemaValidateResponse,
+    type ExtractedFieldMetadata as ExtractedFieldMetadata,
+    type ExtractDeleteResponse as ExtractDeleteResponse,
+    type ExtractGenerateSchemaResponse as ExtractGenerateSchemaResponse,
+    type ExtractV2JobsPaginatedCursor as ExtractV2JobsPaginatedCursor,
+    type ExtractCreateParams as ExtractCreateParams,
+    type ExtractListParams as ExtractListParams,
+    type ExtractDeleteParams as ExtractDeleteParams,
+    type ExtractGenerateSchemaParams as ExtractGenerateSchemaParams,
+    type ExtractGetParams as ExtractGetParams,
+    type ExtractValidateSchemaParams as ExtractValidateSchemaParams,
+  };
 
   export { Classifier as Classifier };
 

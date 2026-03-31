@@ -3,7 +3,6 @@
 import { APIResource } from '../../../core/resource';
 import * as ParsingAPI from '../../parsing';
 import * as JobsAPI from '../../classifier/jobs';
-import * as ExtractionJobsAPI from '../../extraction/jobs';
 import * as JobItemsAPI from './job-items';
 import {
   JobItemGetProcessingResultsParams,
@@ -23,11 +22,14 @@ export class Batch extends APIResource {
   jobItems: JobItemsAPI.JobItems = new JobItemsAPI.JobItems(this._client);
 
   /**
-   * Create a new batch processing job for a directory.
+   * Create a batch processing job.
    *
-   * Processes all files in the specified directory according to the job
-   * configuration. The job runs asynchronously and you can monitor progress using
-   * the job status endpoint.
+   * Processes files from a directory or a specific list of item IDs. Supports batch
+   * parsing and classification operations.
+   *
+   * Provide either `directory_id` to process all files in a directory, or `item_ids`
+   * for specific items. The job runs asynchronously — poll `GET /batch/{job_id}` for
+   * progress.
    */
   create(params: BatchCreateParams, options?: RequestOptions): APIPromise<BatchCreateResponse> {
     const { organization_id, project_id, 'temporal-namespace': temporalNamespace, ...body } = params;
@@ -43,11 +45,10 @@ export class Batch extends APIResource {
   }
 
   /**
-   * List all batch processing jobs for a project with optional filtering.
+   * List batch processing jobs with optional filtering.
    *
-   * Returns a paginated list of batch jobs with filters for directory, job type, and
-   * status. Useful for viewing job history, monitoring progress, and finding
-   * specific jobs.
+   * Filter by `directory_id`, `job_type`, or `status`. Results are paginated with
+   * configurable `limit` and `offset`.
    */
   list(
     query: BatchListParams | null | undefined = {},
@@ -62,8 +63,8 @@ export class Batch extends APIResource {
   /**
    * Cancel a running batch processing job.
    *
-   * Stops processing and marks all pending items as cancelled. Items currently being
-   * processed may complete depending on their state.
+   * Stops processing and marks pending items as cancelled. Items currently being
+   * processed may still complete.
    */
   cancel(
     jobID: string,
@@ -85,7 +86,8 @@ export class Batch extends APIResource {
   /**
    * Get detailed status of a batch processing job.
    *
-   * Returns current progress, file counts, and estimated completion time.
+   * Returns current progress percentage, file counts (total, processed, failed,
+   * skipped), and timestamps.
    */
   getStatus(
     jobID: string,
@@ -108,7 +110,7 @@ export interface BatchCreateResponse {
   id: string;
 
   /**
-   * Type of processing operation
+   * Type of processing operation (parse or classify)
    */
   job_type: 'parse' | 'extract' | 'classify';
 
@@ -118,7 +120,7 @@ export interface BatchCreateResponse {
   project_id: string;
 
   /**
-   * Current status of the job
+   * Current job status
    */
   status: 'pending' | 'running' | 'dispatched' | 'completed' | 'failed' | 'cancelled';
 
@@ -180,7 +182,7 @@ export interface BatchCreateResponse {
   updated_at?: string | null;
 
   /**
-   * Temporal workflow ID for this batch job
+   * Async job tracking ID
    */
   workflow_id?: string | null;
 }
@@ -195,7 +197,7 @@ export interface BatchListResponse {
   id: string;
 
   /**
-   * Type of processing operation
+   * Type of processing operation (parse or classify)
    */
   job_type: 'parse' | 'extract' | 'classify';
 
@@ -205,7 +207,7 @@ export interface BatchListResponse {
   project_id: string;
 
   /**
-   * Current status of the job
+   * Current job status
    */
   status: 'pending' | 'running' | 'dispatched' | 'completed' | 'failed' | 'cancelled';
 
@@ -267,7 +269,7 @@ export interface BatchListResponse {
   updated_at?: string | null;
 
   /**
-   * Temporal workflow ID for this batch job
+   * Async job tracking ID
    */
   workflow_id?: string | null;
 }
@@ -323,7 +325,7 @@ export namespace BatchGetStatusResponse {
     id: string;
 
     /**
-     * Type of processing operation
+     * Type of processing operation (parse or classify)
      */
     job_type: 'parse' | 'extract' | 'classify';
 
@@ -333,7 +335,7 @@ export namespace BatchGetStatusResponse {
     project_id: string;
 
     /**
-     * Current status of the job
+     * Current job status
      */
     status: 'pending' | 'running' | 'dispatched' | 'completed' | 'failed' | 'cancelled';
 
@@ -395,7 +397,7 @@ export namespace BatchGetStatusResponse {
     updated_at?: string | null;
 
     /**
-     * Temporal workflow ID for this batch job
+     * Async job tracking ID
      */
     workflow_id?: string | null;
   }
@@ -403,8 +405,7 @@ export namespace BatchGetStatusResponse {
 
 export interface BatchCreateParams {
   /**
-   * Body param: Job configuration for batch processing. Can be
-   * BatchParseJobRecordCreate or ClassifyJob.
+   * Body param: Job configuration — either a parse or classify config
    */
   job_config: BatchCreateParams.BatchParseJobRecordCreate | JobsAPI.ClassifyJob;
 
@@ -419,9 +420,8 @@ export interface BatchCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Maximum number of files to process before calling continue-as-new.
-   * If None, continue-as-new is called after every batch. (only used in directory
-   * mode)
+   * Body param: Maximum files to process per execution cycle in directory mode.
+   * Defaults to page_size.
    */
   continue_as_new_threshold?: number | null;
 
@@ -437,8 +437,7 @@ export interface BatchCreateParams {
   item_ids?: Array<string> | null;
 
   /**
-   * Body param: Number of files to fetch per batch from the directory (only used in
-   * directory mode)
+   * Body param: Number of files to process per batch when using directory mode
    */
   page_size?: number;
 
@@ -813,11 +812,57 @@ export namespace BatchCreateParams {
       version?: string | null;
 
       /**
-       * The outbound webhook configurations
+       * Outbound webhook endpoints to notify on job status changes
        */
-      webhook_configurations?: Array<ExtractionJobsAPI.WebhookConfiguration> | null;
+      webhook_configurations?: Array<Parameters.WebhookConfiguration> | null;
 
       webhook_url?: string | null;
+    }
+
+    export namespace Parameters {
+      /**
+       * Configuration for a single outbound webhook endpoint.
+       */
+      export interface WebhookConfiguration {
+        /**
+         * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
+         * events are delivered.
+         */
+        webhook_events?: Array<
+          | 'extract.pending'
+          | 'extract.success'
+          | 'extract.error'
+          | 'extract.partial_success'
+          | 'extract.cancelled'
+          | 'parse.pending'
+          | 'parse.running'
+          | 'parse.success'
+          | 'parse.error'
+          | 'parse.partial_success'
+          | 'parse.cancelled'
+          | 'classify.pending'
+          | 'classify.success'
+          | 'classify.error'
+          | 'classify.partial_success'
+          | 'classify.cancelled'
+          | 'unmapped_event'
+        > | null;
+
+        /**
+         * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
+         */
+        webhook_headers?: { [key: string]: string } | null;
+
+        /**
+         * Response format sent to the webhook: 'string' (default) or 'json'
+         */
+        webhook_output_format?: string | null;
+
+        /**
+         * URL to receive webhook POST notifications
+         */
+        webhook_url?: string | null;
+      }
     }
   }
 }

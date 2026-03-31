@@ -33,7 +33,28 @@ export {
   type DataSourceUpdateParams,
   type DataSourceListParams,
 } from './data-sources';
-export { Extraction, type ExtractionRunParams } from './extraction/extraction';
+export {
+  Extract,
+  type ExtractConfiguration,
+  type ExtractJobMetadata,
+  type ExtractJobUsage,
+  type ExtractV2Job,
+  type ExtractV2JobCreate,
+  type ExtractV2JobQueryResponse,
+  type ExtractV2SchemaGenerateRequest,
+  type ExtractV2SchemaValidateRequest,
+  type ExtractV2SchemaValidateResponse,
+  type ExtractedFieldMetadata,
+  type ExtractDeleteResponse,
+  type ExtractGenerateSchemaResponse,
+  type ExtractCreateParams,
+  type ExtractListParams,
+  type ExtractDeleteParams,
+  type ExtractGenerateSchemaParams,
+  type ExtractGetParams,
+  type ExtractValidateSchemaParams,
+  type ExtractV2JobsPaginatedCursor,
+} from './extract';
 export {
   Files,
   type File,

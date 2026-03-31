@@ -140,7 +140,7 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('upload: only required params', async () => {
     const responsePromise = client.beta.directories.files.upload('directory_id', {
-      upload_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      upload_file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -154,7 +154,7 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('upload: required and optional params', async () => {
     const response = await client.beta.directories.files.upload('directory_id', {
-      upload_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      upload_file: await toFile(Buffer.from('Example data'), 'README.md'),
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       display_name: 'display_name',
