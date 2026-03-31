@@ -44,7 +44,7 @@ async function splitDocument() {
 
   // One-shot: create split job, wait for completion, and get result
   const result = await client.beta.split.split({
-    categories,
+    configuration: { categories },
     document_input: { type: 'file_id', value: fileId },
     verbose: true,
   });
