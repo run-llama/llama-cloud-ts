@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.1.0 (2026-04-01)
+
+Full Changelog: [v2.0.0...v2.1.0](https://github.com/run-llama/llama-cloud-ts/compare/v2.0.0...v2.1.0)
+
+### Features
+
+* **api:** api update ([3be01a3](https://github.com/run-llama/llama-cloud-ts/commit/3be01a376a29cf085d73e3af16c58ccbb852c133))
+* **api:** api update ([6fc5797](https://github.com/run-llama/llama-cloud-ts/commit/6fc579733519a07f389bb99c08c3347a57979383))
+
+
+### Chores
+
+* **internal:** support type annotations when running MCP in local execution mode ([a218a5d](https://github.com/run-llama/llama-cloud-ts/commit/a218a5d99995a3188eefb94c41c5145ab23ef883))
+
 ## 2.0.0 (2026-03-31)
 
 Full Changelog: [v1.8.0...v2.0.0](https://github.com/run-llama/llama-cloud-ts/compare/v1.8.0...v2.0.0)
