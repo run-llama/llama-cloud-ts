@@ -10,9 +10,7 @@ const client = new LlamaCloud({
 describe('resource extract', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.extract.create({
-      document_input_value: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
-    });
+    const responsePromise = client.extract.create({ file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -25,7 +23,7 @@ describe('resource extract', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.extract.create({
-      document_input_value: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+      file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       configuration: {
@@ -78,6 +76,7 @@ describe('resource extract', () => {
           document_input_type: 'document_input_type',
           document_input_value: 'document_input_value',
           expand: ['string'],
+          file_input: 'file_input',
           job_ids: ['string', 'string'],
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           page_size: 0,

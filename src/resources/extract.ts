@@ -25,7 +25,7 @@ export class Extract extends APIResource {
    *
    * ## Document input
    *
-   * Set `document_input_value` to a file ID (`dfl-...`) or a completed parse job ID
+   * Set `file_input` to a file ID (`dfl-...`) or a completed parse job ID
    * (`pjb-...`).
    *
    * The job runs asynchronously. Poll `GET /extract/{job_id}` or register a webhook
@@ -34,8 +34,7 @@ export class Extract extends APIResource {
    * @example
    * ```ts
    * const extractV2Job = await client.extract.create({
-   *   document_input_value:
-   *     'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+   *   file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
    * });
    * ```
    */
@@ -47,10 +46,9 @@ export class Extract extends APIResource {
   /**
    * List extraction jobs with optional filtering and pagination.
    *
-   * Filter by `configuration_id`, `status`, `document_input_value`, or creation date
-   * range. Results are returned newest-first. Use `expand=configuration` to include
-   * the full configuration used, and `expand=extract_metadata` for per-field
-   * metadata.
+   * Filter by `configuration_id`, `status`, `file_input`, or creation date range.
+   * Results are returned newest-first. Use `expand=configuration` to include the
+   * full configuration used, and `expand=extract_metadata` for per-field metadata.
    *
    * @example
    * ```ts
@@ -276,7 +274,7 @@ export interface ExtractV2Job {
   /**
    * File ID or parse job ID that was extracted
    */
-  document_input_value: string;
+  file_input: string;
 
   /**
    * Project this job belongs to
@@ -354,9 +352,9 @@ export namespace ExtractV2Job {
  */
 export interface ExtractV2JobCreate {
   /**
-   * File ID or Parse Job ID to extract from
+   * File ID or parse job ID to extract from
    */
-  document_input_value: string;
+  file_input: string;
 
   /**
    * Extract configuration combining parse and extract settings.
@@ -1737,9 +1735,9 @@ export namespace ExtractGenerateSchemaResponse {
 
 export interface ExtractCreateParams {
   /**
-   * Body param: File ID or Parse Job ID to extract from
+   * Body param: File ID or parse job ID to extract from
    */
-  document_input_value: string;
+  file_input: string;
 
   /**
    * Query param
@@ -1835,7 +1833,7 @@ export interface ExtractListParams extends PaginatedCursorParams {
   document_input_type?: string | null;
 
   /**
-   * Filter by document input value
+   * @deprecated Deprecated: use file_input instead
    */
   document_input_value?: string | null;
 
@@ -1843,6 +1841,11 @@ export interface ExtractListParams extends PaginatedCursorParams {
    * Additional fields to include: configuration, extract_metadata
    */
   expand?: Array<string>;
+
+  /**
+   * Filter by file input value
+   */
+  file_input?: string | null;
 
   /**
    * Filter by specific job IDs
