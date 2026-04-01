@@ -46,7 +46,7 @@ describeE2E('Extract V2 E2E', () => {
 
   test('create and get', async () => {
     const job = await client.extract.create({
-      document_input_value: fileId,
+      file_input: fileId,
       configuration: { data_schema: SIMPLE_SCHEMA, extraction_target: 'per_doc' },
     });
 
@@ -59,7 +59,7 @@ describeE2E('Extract V2 E2E', () => {
 
   test('waitForCompletion', async () => {
     const job = await client.extract.create({
-      document_input_value: fileId,
+      file_input: fileId,
       configuration: { data_schema: SIMPLE_SCHEMA, extraction_target: 'per_doc' },
     });
 
@@ -75,7 +75,7 @@ describeE2E('Extract V2 E2E', () => {
   test('run (end-to-end convenience method)', async () => {
     const result = await client.extract.run(
       {
-        document_input_value: fileId,
+        file_input: fileId,
         configuration: { data_schema: SIMPLE_SCHEMA, extraction_target: 'per_doc' },
       },
       {
