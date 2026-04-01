@@ -418,12 +418,12 @@ export interface SheetCreateParams {
 
 export interface SheetListParams extends PaginatedCursorParams {
   /**
-   * Include jobs created at or after this timestamp (inclusive)
+   * Include items created at or after this timestamp (inclusive)
    */
   created_at_on_or_after?: string | null;
 
   /**
-   * Include jobs created at or before this timestamp (inclusive)
+   * Include items created at or before this timestamp (inclusive)
    */
   created_at_on_or_before?: string | null;
 

@@ -26,7 +26,7 @@ export class Extract extends APIResource {
    *
    * ## Document input
    *
-   * Set `document_input_value` to a file ID (`dfl-...`) or a completed parse job ID
+   * Set `file_input` to a file ID (`dfl-...`) or a completed parse job ID
    * (`pjb-...`).
    *
    * The job runs asynchronously. Poll `GET /extract/{job_id}` or register a webhook
@@ -35,8 +35,7 @@ export class Extract extends APIResource {
    * @example
    * ```ts
    * const extractV2Job = await client.extract.create({
-   *   document_input_value:
-   *     'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+   *   file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
    * });
    * ```
    */
@@ -48,10 +47,9 @@ export class Extract extends APIResource {
   /**
    * List extraction jobs with optional filtering and pagination.
    *
-   * Filter by `configuration_id`, `status`, `document_input_value`, or creation date
-   * range. Results are returned newest-first. Use `expand=configuration` to include
-   * the full configuration used, and `expand=extract_metadata` for per-field
-   * metadata.
+   * Filter by `configuration_id`, `status`, `file_input`, or creation date range.
+   * Results are returned newest-first. Use `expand=configuration` to include the
+   * full configuration used, and `expand=extract_metadata` for per-field metadata.
    *
    * @example
    * ```ts
@@ -384,7 +382,7 @@ export interface ExtractV2Job {
   /**
    * File ID or parse job ID that was extracted
    */
-  document_input_value: string;
+  file_input: string;
 
   /**
    * Project this job belongs to
@@ -462,9 +460,9 @@ export namespace ExtractV2Job {
  */
 export interface ExtractV2JobCreate {
   /**
-   * File ID or Parse Job ID to extract from
+   * File ID or parse job ID to extract from
    */
-  document_input_value: string;
+  file_input: string;
 
   /**
    * Extract configuration combining parse and extract settings.
@@ -472,7 +470,7 @@ export interface ExtractV2JobCreate {
   configuration?: ExtractConfiguration | null;
 
   /**
-   * Saved extract configuration ID (mutually exclusive with configuration)
+   * Saved configuration ID
    */
   configuration_id?: string | null;
 
@@ -607,7 +605,11 @@ export interface ExtractV2SchemaValidateResponse {
  */
 export interface ExtractedFieldMetadata {
   /**
-   * Document-level metadata (citations, confidence) keyed by field name
+   * Per-field metadata keyed by field name from your schema. Scalar fields (e.g.
+   * `vendor`) map to a FieldMetadataEntry with citation and confidence. Array fields
+   * (e.g. `items`) map to a list where each element contains per-sub-field
+   * FieldMetadataEntry objects, indexed by array position. Nested objects contain
+   * sub-field entries recursively.
    */
   document_metadata?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
@@ -883,6 +885,8 @@ export namespace ExtractGenerateSchemaResponse {
       | '2026-03-25'
       | '2026-03-26'
       | '2026-03-27'
+      | '2026-03-30'
+      | '2026-03-31'
       | 'latest'
       | (string & {});
 
@@ -1658,6 +1662,8 @@ export namespace ExtractGenerateSchemaResponse {
             | '2026-03-25'
             | '2026-03-26'
             | '2026-03-27'
+            | '2026-03-30'
+            | '2026-03-31'
             | 'latest'
             | (string & {})
             | null;
@@ -1837,9 +1843,9 @@ export namespace ExtractGenerateSchemaResponse {
 
 export interface ExtractCreateParams {
   /**
-   * Body param: File ID or Parse Job ID to extract from
+   * Body param: File ID or parse job ID to extract from
    */
-  document_input_value: string;
+  file_input: string;
 
   /**
    * Query param
@@ -1857,8 +1863,7 @@ export interface ExtractCreateParams {
   configuration?: ExtractConfiguration | null;
 
   /**
-   * Body param: Saved extract configuration ID (mutually exclusive with
-   * configuration)
+   * Body param: Saved configuration ID
    */
   configuration_id?: string | null;
 
@@ -1921,12 +1926,12 @@ export interface ExtractListParams extends PaginatedCursorParams {
   configuration_id?: string | null;
 
   /**
-   * Include jobs created at or after this timestamp (inclusive)
+   * Include items created at or after this timestamp (inclusive)
    */
   created_at_on_or_after?: string | null;
 
   /**
-   * Include jobs created at or before this timestamp (inclusive)
+   * Include items created at or before this timestamp (inclusive)
    */
   created_at_on_or_before?: string | null;
 
@@ -1936,7 +1941,7 @@ export interface ExtractListParams extends PaginatedCursorParams {
   document_input_type?: string | null;
 
   /**
-   * Filter by document input value
+   * @deprecated Deprecated: use file_input instead
    */
   document_input_value?: string | null;
 
@@ -1944,6 +1949,11 @@ export interface ExtractListParams extends PaginatedCursorParams {
    * Additional fields to include: configuration, extract_metadata
    */
   expand?: Array<string>;
+
+  /**
+   * Filter by file input value
+   */
+  file_input?: string | null;
 
   /**
    * Filter by specific job IDs

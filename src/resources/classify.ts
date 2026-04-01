@@ -10,9 +10,9 @@ export class Classify extends APIResource {
   /**
    * Create a classify job.
    *
-   * Classifies a document against a set of rules. Provide either `file_id` or
-   * `parse_job_id` as the document input, and either inline `configuration` with
-   * rules or a `configuration_id` referencing a saved preset.
+   * Classifies a document against a set of rules. Set `file_input` to a file ID
+   * (`dfl-...`) or parse job ID (`pjb-...`), and provide either inline
+   * `configuration` with rules or a `configuration_id` referencing a saved preset.
    *
    * Each rule has a `type` (the label to assign) and a `description` (natural
    * language criteria). The classifier returns the best matching rule with a
@@ -131,17 +131,22 @@ export interface ClassifyCreateRequest {
   configuration?: ClassifyConfiguration | null;
 
   /**
-   * Product configuration ID for reusable presets
+   * Saved configuration ID
    */
   configuration_id?: string | null;
 
   /**
-   * File ID to classify
+   * @deprecated Deprecated: use file_input instead
    */
   file_id?: string | null;
 
   /**
-   * Parse job ID to classify
+   * File ID or parse job ID to classify
+   */
+  file_input?: string | null;
+
+  /**
+   * @deprecated Deprecated: use file_input instead
    */
   parse_job_id?: string | null;
 
@@ -193,7 +198,7 @@ export interface ClassifyCreateResponse {
   /**
    * ID of the input file or parse job
    */
-  document_input_value: string;
+  file_input: string;
 
   /**
    * Project this job belongs to
@@ -268,7 +273,7 @@ export interface ClassifyListResponse {
   /**
    * ID of the input file or parse job
    */
-  document_input_value: string;
+  file_input: string;
 
   /**
    * Project this job belongs to
@@ -343,7 +348,7 @@ export interface ClassifyGetResponse {
   /**
    * ID of the input file or parse job
    */
-  document_input_value: string;
+  file_input: string;
 
   /**
    * Project this job belongs to
@@ -413,17 +418,22 @@ export interface ClassifyCreateParams {
   configuration?: ClassifyConfiguration | null;
 
   /**
-   * Body param: Product configuration ID for reusable presets
+   * Body param: Saved configuration ID
    */
   configuration_id?: string | null;
 
   /**
-   * Body param: File ID to classify
+   * @deprecated Body param: Deprecated: use file_input instead
    */
   file_id?: string | null;
 
   /**
-   * Body param: Parse job ID to classify
+   * Body param: File ID or parse job ID to classify
+   */
+  file_input?: string | null;
+
+  /**
+   * @deprecated Body param: Deprecated: use file_input instead
    */
   parse_job_id?: string | null;
 
@@ -440,12 +450,12 @@ export interface ClassifyListParams extends PaginatedCursorParams {
   configuration_id?: string | null;
 
   /**
-   * Include jobs created at or after this timestamp (inclusive)
+   * Include items created at or after this timestamp (inclusive)
    */
   created_at_on_or_after?: string | null;
 
   /**
-   * Include jobs created at or before this timestamp (inclusive)
+   * Include items created at or before this timestamp (inclusive)
    */
   created_at_on_or_before?: string | null;
 
