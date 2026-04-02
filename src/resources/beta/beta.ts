@@ -17,6 +17,23 @@ import {
   AgentDataSearchParams,
   AgentDataUpdateParams,
 } from './agent-data';
+import * as ConfigurationsAPI from './configurations';
+import {
+  ClassifyV2Parameters,
+  ConfigurationCreate,
+  ConfigurationCreateParams,
+  ConfigurationDeleteParams,
+  ConfigurationListParams,
+  ConfigurationResponse,
+  ConfigurationResponsesPaginatedCursor,
+  ConfigurationRetrieveParams,
+  ConfigurationUpdateParams,
+  Configurations,
+  ExtractV2Parameters,
+  ParseV2Parameters,
+  SplitV1Parameters,
+  UntypedParameters,
+} from './configurations';
 import * as ParseConfigurationsAPI from './parse-configurations';
 import {
   ParseConfiguration,
@@ -90,6 +107,7 @@ export class Beta extends APIResource {
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
   parseConfigurations: ParseConfigurationsAPI.ParseConfigurations =
     new ParseConfigurationsAPI.ParseConfigurations(this._client);
+  configurations: ConfigurationsAPI.Configurations = new ConfigurationsAPI.Configurations(this._client);
   sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
   directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
   batch: BatchAPI.Batch = new BatchAPI.Batch(this._client);
@@ -97,6 +115,7 @@ export class Beta extends APIResource {
 }
 
 Beta.ParseConfigurations = ParseConfigurations;
+Beta.Configurations = Configurations;
 Beta.Sheets = Sheets;
 Beta.Directories = Directories;
 Beta.Batch = Batch;
@@ -130,6 +149,23 @@ export declare namespace Beta {
     type ParseConfigurationListParams as ParseConfigurationListParams,
     type ParseConfigurationDeleteParams as ParseConfigurationDeleteParams,
     type ParseConfigurationGetParams as ParseConfigurationGetParams,
+  };
+
+  export {
+    Configurations as Configurations,
+    type ClassifyV2Parameters as ClassifyV2Parameters,
+    type ConfigurationCreate as ConfigurationCreate,
+    type ConfigurationResponse as ConfigurationResponse,
+    type ExtractV2Parameters as ExtractV2Parameters,
+    type ParseV2Parameters as ParseV2Parameters,
+    type SplitV1Parameters as SplitV1Parameters,
+    type UntypedParameters as UntypedParameters,
+    type ConfigurationResponsesPaginatedCursor as ConfigurationResponsesPaginatedCursor,
+    type ConfigurationCreateParams as ConfigurationCreateParams,
+    type ConfigurationRetrieveParams as ConfigurationRetrieveParams,
+    type ConfigurationUpdateParams as ConfigurationUpdateParams,
+    type ConfigurationListParams as ConfigurationListParams,
+    type ConfigurationDeleteParams as ConfigurationDeleteParams,
   };
 
   export {
