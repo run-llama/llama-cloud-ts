@@ -539,6 +539,36 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/parse-configurations/{config_id}',
   },
   {
+    clientCallName: 'client.beta.configurations.create',
+    fullyQualifiedName: 'beta.configurations.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/beta/configurations',
+  },
+  {
+    clientCallName: 'client.beta.configurations.retrieve',
+    fullyQualifiedName: 'beta.configurations.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/configurations/{config_id}',
+  },
+  {
+    clientCallName: 'client.beta.configurations.update',
+    fullyQualifiedName: 'beta.configurations.update',
+    httpMethod: 'put',
+    httpPath: '/api/v1/beta/configurations/{config_id}',
+  },
+  {
+    clientCallName: 'client.beta.configurations.list',
+    fullyQualifiedName: 'beta.configurations.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/configurations',
+  },
+  {
+    clientCallName: 'client.beta.configurations.delete',
+    fullyQualifiedName: 'beta.configurations.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/beta/configurations/{config_id}',
+  },
+  {
     clientCallName: 'client.beta.sheets.create',
     fullyQualifiedName: 'beta.sheets.create',
     httpMethod: 'post',

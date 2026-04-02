@@ -87,14 +87,13 @@ Types:
 - <code><a href="./src/resources/extract.ts">ExtractV2SchemaValidateResponse</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractedFieldMetadata</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractDeleteResponse</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractGenerateSchemaResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v2/extract">client.extract.<a href="./src/resources/extract.ts">create</a>({ ...params }) -> ExtractV2Job</code>
 - <code title="get /api/v2/extract">client.extract.<a href="./src/resources/extract.ts">list</a>({ ...params }) -> ExtractV2JobsPaginatedCursor</code>
 - <code title="delete /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract.ts">delete</a>(jobID, { ...params }) -> unknown</code>
-- <code title="post /api/v2/extract/schema/generate">client.extract.<a href="./src/resources/extract.ts">generateSchema</a>({ ...params }) -> ExtractGenerateSchemaResponse</code>
+- <code title="post /api/v2/extract/schema/generate">client.extract.<a href="./src/resources/extract.ts">generateSchema</a>({ ...params }) -> ConfigurationCreate</code>
 - <code title="get /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract.ts">get</a>(jobID, { ...params }) -> ExtractV2Job</code>
 - <code title="post /api/v2/extract/schema/validation">client.extract.<a href="./src/resources/extract.ts">validateSchema</a>({ ...params }) -> ExtractV2SchemaValidateResponse</code>
 
@@ -379,6 +378,26 @@ Methods:
 - <code title="get /api/v1/beta/parse-configurations">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">list</a>({ ...params }) -> ParseConfigurationsPaginatedCursor</code>
 - <code title="delete /api/v1/beta/parse-configurations/{config_id}">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">delete</a>(configID, { ...params }) -> void</code>
 - <code title="get /api/v1/beta/parse-configurations/{config_id}">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">get</a>(configID, { ...params }) -> ParseConfiguration</code>
+
+## Configurations
+
+Types:
+
+- <code><a href="./src/resources/beta/configurations.ts">ClassifyV2Parameters</a></code>
+- <code><a href="./src/resources/beta/configurations.ts">ConfigurationCreate</a></code>
+- <code><a href="./src/resources/beta/configurations.ts">ConfigurationResponse</a></code>
+- <code><a href="./src/resources/beta/configurations.ts">ExtractV2Parameters</a></code>
+- <code><a href="./src/resources/beta/configurations.ts">ParseV2Parameters</a></code>
+- <code><a href="./src/resources/beta/configurations.ts">SplitV1Parameters</a></code>
+- <code><a href="./src/resources/beta/configurations.ts">UntypedParameters</a></code>
+
+Methods:
+
+- <code title="post /api/v1/beta/configurations">client.beta.configurations.<a href="./src/resources/beta/configurations.ts">create</a>({ ...params }) -> ConfigurationResponse</code>
+- <code title="get /api/v1/beta/configurations/{config_id}">client.beta.configurations.<a href="./src/resources/beta/configurations.ts">retrieve</a>(configID, { ...params }) -> ConfigurationResponse</code>
+- <code title="put /api/v1/beta/configurations/{config_id}">client.beta.configurations.<a href="./src/resources/beta/configurations.ts">update</a>(configID, { ...params }) -> ConfigurationResponse</code>
+- <code title="get /api/v1/beta/configurations">client.beta.configurations.<a href="./src/resources/beta/configurations.ts">list</a>({ ...params }) -> ConfigurationResponsesPaginatedCursor</code>
+- <code title="delete /api/v1/beta/configurations/{config_id}">client.beta.configurations.<a href="./src/resources/beta/configurations.ts">delete</a>(configID, { ...params }) -> void</code>
 
 ## Sheets
 

@@ -46,7 +46,6 @@ export {
   type ExtractV2SchemaValidateResponse,
   type ExtractedFieldMetadata,
   type ExtractDeleteResponse,
-  type ExtractGenerateSchemaResponse,
   type ExtractCreateParams,
   type ExtractListParams,
   type ExtractDeleteParams,

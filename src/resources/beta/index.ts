@@ -29,6 +29,22 @@ export {
 } from './batch/index';
 export { Beta } from './beta';
 export {
+  Configurations,
+  type ClassifyV2Parameters,
+  type ConfigurationCreate,
+  type ConfigurationResponse,
+  type ExtractV2Parameters,
+  type ParseV2Parameters,
+  type SplitV1Parameters,
+  type UntypedParameters,
+  type ConfigurationCreateParams,
+  type ConfigurationRetrieveParams,
+  type ConfigurationUpdateParams,
+  type ConfigurationListParams,
+  type ConfigurationDeleteParams,
+  type ConfigurationResponsesPaginatedCursor,
+} from './configurations';
+export {
   Directories,
   type DirectoryCreateResponse,
   type DirectoryUpdateResponse,
