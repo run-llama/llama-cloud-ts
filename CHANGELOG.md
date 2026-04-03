@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.2.0 (2026-04-03)
+
+Full Changelog: [v2.1.0...v2.2.0](https://github.com/run-llama/llama-cloud-ts/compare/v2.1.0...v2.2.0)
+
+### Features
+
+* **api:** Add product configurations under beta namespace ([1897e79](https://github.com/run-llama/llama-cloud-ts/commit/1897e798eafd15760d552375d2b2877b793a6bdf))
+* **api:** iterate on configurations api namespace ([23b69b0](https://github.com/run-llama/llama-cloud-ts/commit/23b69b02c6625c4f773c49b279947ea06a2a7d80))
+
+
+### Chores
+
+* **internal:** fix MCP docker image builds in yarn projects ([b555e0c](https://github.com/run-llama/llama-cloud-ts/commit/b555e0c39c44ea7e4843e15ea1b5b985c61046dc))
+* **internal:** use link instead of file in MCP server package.json files ([994db2a](https://github.com/run-llama/llama-cloud-ts/commit/994db2ab0dec8b9d375dc1b5b3074132c19da7c0))
+* **mcp-server:** log client info ([7b0eb76](https://github.com/run-llama/llama-cloud-ts/commit/7b0eb762b01e72069243bcca9dd1a1b2ad8eaa08))
+
 ## 2.1.0 (2026-04-01)
 
 Full Changelog: [v2.0.0...v2.1.0](https://github.com/run-llama/llama-cloud-ts/compare/v2.0.0...v2.1.0)
