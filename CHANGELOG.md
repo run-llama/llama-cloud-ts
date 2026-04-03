@@ -6,9 +6,7 @@ Full Changelog: [v2.1.0...v2.2.0](https://github.com/run-llama/llama-cloud-ts/co
 
 ### Features
 
-* **api:** Add product configurations under beta namespace ([1897e79](https://github.com/run-llama/llama-cloud-ts/commit/1897e798eafd15760d552375d2b2877b793a6bdf))
-* **api:** iterate on configurations api namespace ([23b69b0](https://github.com/run-llama/llama-cloud-ts/commit/23b69b02c6625c4f773c49b279947ea06a2a7d80))
-
+* **api:** Add product configurations ([1897e79](https://github.com/run-llama/llama-cloud-ts/commit/1897e798eafd15760d552375d2b2877b793a6bdf))
 
 ### Chores
 
