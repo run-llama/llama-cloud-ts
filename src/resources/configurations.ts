@@ -1,13 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../core/resource';
-import * as ParsingAPI from '../parsing';
-import * as SplitAPI from './split';
-import { APIPromise } from '../../core/api-promise';
-import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
-import { buildHeaders } from '../../internal/headers';
-import { RequestOptions } from '../../internal/request-options';
-import { path } from '../../internal/utils/path';
+import { APIResource } from '../core/resource';
+import * as ParsingAPI from './parsing';
+import * as SplitAPI from './beta/split';
+import { APIPromise } from '../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Configurations extends APIResource {
   /**

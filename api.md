@@ -132,6 +132,26 @@ Methods:
 - <code title="get /api/v2/classify">client.classify.<a href="./src/resources/classify.ts">list</a>({ ...params }) -> ClassifyListResponsesPaginatedCursor</code>
 - <code title="get /api/v2/classify/{job_id}">client.classify.<a href="./src/resources/classify.ts">get</a>(jobID, { ...params }) -> ClassifyGetResponse</code>
 
+# Configurations
+
+Types:
+
+- <code><a href="./src/resources/configurations.ts">ClassifyV2Parameters</a></code>
+- <code><a href="./src/resources/configurations.ts">ConfigurationCreate</a></code>
+- <code><a href="./src/resources/configurations.ts">ConfigurationResponse</a></code>
+- <code><a href="./src/resources/configurations.ts">ExtractV2Parameters</a></code>
+- <code><a href="./src/resources/configurations.ts">ParseV2Parameters</a></code>
+- <code><a href="./src/resources/configurations.ts">SplitV1Parameters</a></code>
+- <code><a href="./src/resources/configurations.ts">UntypedParameters</a></code>
+
+Methods:
+
+- <code title="post /api/v1/beta/configurations">client.configurations.<a href="./src/resources/configurations.ts">create</a>({ ...params }) -> ConfigurationResponse</code>
+- <code title="get /api/v1/beta/configurations/{config_id}">client.configurations.<a href="./src/resources/configurations.ts">retrieve</a>(configID, { ...params }) -> ConfigurationResponse</code>
+- <code title="put /api/v1/beta/configurations/{config_id}">client.configurations.<a href="./src/resources/configurations.ts">update</a>(configID, { ...params }) -> ConfigurationResponse</code>
+- <code title="get /api/v1/beta/configurations">client.configurations.<a href="./src/resources/configurations.ts">list</a>({ ...params }) -> ConfigurationResponsesPaginatedCursor</code>
+- <code title="delete /api/v1/beta/configurations/{config_id}">client.configurations.<a href="./src/resources/configurations.ts">delete</a>(configID, { ...params }) -> void</code>
+
 # Projects
 
 Types:
@@ -378,26 +398,6 @@ Methods:
 - <code title="get /api/v1/beta/parse-configurations">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">list</a>({ ...params }) -> ParseConfigurationsPaginatedCursor</code>
 - <code title="delete /api/v1/beta/parse-configurations/{config_id}">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">delete</a>(configID, { ...params }) -> void</code>
 - <code title="get /api/v1/beta/parse-configurations/{config_id}">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">get</a>(configID, { ...params }) -> ParseConfiguration</code>
-
-## Configurations
-
-Types:
-
-- <code><a href="./src/resources/beta/configurations.ts">ClassifyV2Parameters</a></code>
-- <code><a href="./src/resources/beta/configurations.ts">ConfigurationCreate</a></code>
-- <code><a href="./src/resources/beta/configurations.ts">ConfigurationResponse</a></code>
-- <code><a href="./src/resources/beta/configurations.ts">ExtractV2Parameters</a></code>
-- <code><a href="./src/resources/beta/configurations.ts">ParseV2Parameters</a></code>
-- <code><a href="./src/resources/beta/configurations.ts">SplitV1Parameters</a></code>
-- <code><a href="./src/resources/beta/configurations.ts">UntypedParameters</a></code>
-
-Methods:
-
-- <code title="post /api/v1/beta/configurations">client.beta.configurations.<a href="./src/resources/beta/configurations.ts">create</a>({ ...params }) -> ConfigurationResponse</code>
-- <code title="get /api/v1/beta/configurations/{config_id}">client.beta.configurations.<a href="./src/resources/beta/configurations.ts">retrieve</a>(configID, { ...params }) -> ConfigurationResponse</code>
-- <code title="put /api/v1/beta/configurations/{config_id}">client.beta.configurations.<a href="./src/resources/beta/configurations.ts">update</a>(configID, { ...params }) -> ConfigurationResponse</code>
-- <code title="get /api/v1/beta/configurations">client.beta.configurations.<a href="./src/resources/beta/configurations.ts">list</a>({ ...params }) -> ConfigurationResponsesPaginatedCursor</code>
-- <code title="delete /api/v1/beta/configurations/{config_id}">client.beta.configurations.<a href="./src/resources/beta/configurations.ts">delete</a>(configID, { ...params }) -> void</code>
 
 ## Sheets
 
