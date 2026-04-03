@@ -2,7 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import * as ExtractAPI from './extract';
-import * as ConfigurationsAPI from './beta/configurations';
+import * as ConfigurationsAPI from './configurations';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';

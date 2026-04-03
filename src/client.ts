@@ -49,6 +49,22 @@ import {
   ClassifyResult,
 } from './resources/classify';
 import {
+  ClassifyV2Parameters,
+  ConfigurationCreate,
+  ConfigurationCreateParams,
+  ConfigurationDeleteParams,
+  ConfigurationListParams,
+  ConfigurationResponse,
+  ConfigurationResponsesPaginatedCursor,
+  ConfigurationRetrieveParams,
+  ConfigurationUpdateParams,
+  Configurations,
+  ExtractV2Parameters,
+  ParseV2Parameters,
+  SplitV1Parameters,
+  UntypedParameters,
+} from './resources/configurations';
+import {
   DataSink,
   DataSinkCreateParams,
   DataSinkListParams,
@@ -927,6 +943,7 @@ export class LlamaCloud {
   extract: API.Extract = new API.Extract(this);
   classifier: API.Classifier = new API.Classifier(this);
   classify: API.Classify = new API.Classify(this);
+  configurations: API.Configurations = new API.Configurations(this);
   projects: API.Projects = new API.Projects(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
@@ -940,6 +957,7 @@ LlamaCloud.Parsing = Parsing;
 LlamaCloud.Extract = Extract;
 LlamaCloud.Classifier = Classifier;
 LlamaCloud.Classify = Classify;
+LlamaCloud.Configurations = Configurations;
 LlamaCloud.Projects = Projects;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
@@ -1071,6 +1089,23 @@ export declare namespace LlamaCloud {
     type ClassifyCreateParams as ClassifyCreateParams,
     type ClassifyListParams as ClassifyListParams,
     type ClassifyGetParams as ClassifyGetParams,
+  };
+
+  export {
+    Configurations as Configurations,
+    type ClassifyV2Parameters as ClassifyV2Parameters,
+    type ConfigurationCreate as ConfigurationCreate,
+    type ConfigurationResponse as ConfigurationResponse,
+    type ExtractV2Parameters as ExtractV2Parameters,
+    type ParseV2Parameters as ParseV2Parameters,
+    type SplitV1Parameters as SplitV1Parameters,
+    type UntypedParameters as UntypedParameters,
+    type ConfigurationResponsesPaginatedCursor as ConfigurationResponsesPaginatedCursor,
+    type ConfigurationCreateParams as ConfigurationCreateParams,
+    type ConfigurationRetrieveParams as ConfigurationRetrieveParams,
+    type ConfigurationUpdateParams as ConfigurationUpdateParams,
+    type ConfigurationListParams as ConfigurationListParams,
+    type ConfigurationDeleteParams as ConfigurationDeleteParams,
   };
 
   export {
