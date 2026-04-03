@@ -1,6 +1,6 @@
 {
   "name": "@llamaindex/llama-cloud-mcp",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "The official MCP Server for the Llama Cloud API",
   "author": "Llama Cloud <>",
   "types": "dist/index.d.ts",
@@ -30,7 +30,7 @@
     "fix": "eslint --fix ."
   },
   "dependencies": {
-    "@llamaindex/llama-cloud": "file:../../dist/",
+    "@llamaindex/llama-cloud": "link:../../dist/",
     "ajv": "^8.18.0",
     "@cloudflare/cabidela": "^0.2.4",
     "@hono/node-server": "^1.19.10",

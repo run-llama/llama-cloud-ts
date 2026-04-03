@@ -137,6 +137,36 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/classify/{job_id}',
   },
   {
+    clientCallName: 'client.configurations.create',
+    fullyQualifiedName: 'configurations.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/beta/configurations',
+  },
+  {
+    clientCallName: 'client.configurations.retrieve',
+    fullyQualifiedName: 'configurations.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/configurations/{config_id}',
+  },
+  {
+    clientCallName: 'client.configurations.update',
+    fullyQualifiedName: 'configurations.update',
+    httpMethod: 'put',
+    httpPath: '/api/v1/beta/configurations/{config_id}',
+  },
+  {
+    clientCallName: 'client.configurations.list',
+    fullyQualifiedName: 'configurations.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/configurations',
+  },
+  {
+    clientCallName: 'client.configurations.delete',
+    fullyQualifiedName: 'configurations.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/beta/configurations/{config_id}',
+  },
+  {
     clientCallName: 'client.projects.list',
     fullyQualifiedName: 'projects.list',
     httpMethod: 'get',
