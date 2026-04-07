@@ -42,18 +42,6 @@ export {
   type DirectoryListResponsesPaginatedCursor,
 } from './directories/index';
 export {
-  ParseConfigurations,
-  type ParseConfiguration,
-  type ParseConfigurationCreate,
-  type ParseConfigurationQueryResponse,
-  type ParseConfigurationCreateParams,
-  type ParseConfigurationUpdateParams,
-  type ParseConfigurationListParams,
-  type ParseConfigurationDeleteParams,
-  type ParseConfigurationGetParams,
-  type ParseConfigurationsPaginatedCursor,
-} from './parse-configurations';
-export {
   Sheets,
   type SheetsJob,
   type SheetsParsingConfig,

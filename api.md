@@ -383,22 +383,6 @@ Methods:
 - <code title="get /api/v1/beta/agent-data/{item_id}">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">get</a>(itemID, { ...params }) -> AgentData</code>
 - <code title="post /api/v1/beta/agent-data/:search">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">search</a>({ ...params }) -> AgentDataPaginatedCursorPost</code>
 
-## ParseConfigurations
-
-Types:
-
-- <code><a href="./src/resources/beta/parse-configurations.ts">ParseConfiguration</a></code>
-- <code><a href="./src/resources/beta/parse-configurations.ts">ParseConfigurationCreate</a></code>
-- <code><a href="./src/resources/beta/parse-configurations.ts">ParseConfigurationQueryResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/beta/parse-configurations">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">create</a>({ ...params }) -> ParseConfiguration</code>
-- <code title="put /api/v1/beta/parse-configurations/{config_id}">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">update</a>(configID, { ...params }) -> ParseConfiguration</code>
-- <code title="get /api/v1/beta/parse-configurations">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">list</a>({ ...params }) -> ParseConfigurationsPaginatedCursor</code>
-- <code title="delete /api/v1/beta/parse-configurations/{config_id}">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">delete</a>(configID, { ...params }) -> void</code>
-- <code title="get /api/v1/beta/parse-configurations/{config_id}">client.beta.parseConfigurations.<a href="./src/resources/beta/parse-configurations.ts">get</a>(configID, { ...params }) -> ParseConfiguration</code>
-
 ## Sheets
 
 Types:
