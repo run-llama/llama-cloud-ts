@@ -6,7 +6,7 @@ Full Changelog: [v2.2.0...v2.3.0](https://github.com/run-llama/llama-cloud-ts/co
 
 ### Features
 
-* **api:** manual updates ([82100d7](https://github.com/run-llama/llama-cloud-ts/commit/82100d724f84fd739ecf0a03acb163807af7bb12))
+* **api:** remove parse configurations, superseded by generic configurations from 2.2.0 ([82100d7](https://github.com/run-llama/llama-cloud-ts/commit/82100d724f84fd739ecf0a03acb163807af7bb12))
 
 
 ### Chores
