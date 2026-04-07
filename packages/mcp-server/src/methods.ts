@@ -539,36 +539,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/agent-data/:search',
   },
   {
-    clientCallName: 'client.beta.parseConfigurations.create',
-    fullyQualifiedName: 'beta.parseConfigurations.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/beta/parse-configurations',
-  },
-  {
-    clientCallName: 'client.beta.parseConfigurations.update',
-    fullyQualifiedName: 'beta.parseConfigurations.update',
-    httpMethod: 'put',
-    httpPath: '/api/v1/beta/parse-configurations/{config_id}',
-  },
-  {
-    clientCallName: 'client.beta.parseConfigurations.list',
-    fullyQualifiedName: 'beta.parseConfigurations.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/parse-configurations',
-  },
-  {
-    clientCallName: 'client.beta.parseConfigurations.delete',
-    fullyQualifiedName: 'beta.parseConfigurations.delete',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/beta/parse-configurations/{config_id}',
-  },
-  {
-    clientCallName: 'client.beta.parseConfigurations.get',
-    fullyQualifiedName: 'beta.parseConfigurations.get',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/parse-configurations/{config_id}',
-  },
-  {
     clientCallName: 'client.beta.sheets.create',
     fullyQualifiedName: 'beta.sheets.create',
     httpMethod: 'post',

@@ -17,19 +17,6 @@ import {
   AgentDataSearchParams,
   AgentDataUpdateParams,
 } from './agent-data';
-import * as ParseConfigurationsAPI from './parse-configurations';
-import {
-  ParseConfiguration,
-  ParseConfigurationCreate,
-  ParseConfigurationCreateParams,
-  ParseConfigurationDeleteParams,
-  ParseConfigurationGetParams,
-  ParseConfigurationListParams,
-  ParseConfigurationQueryResponse,
-  ParseConfigurationUpdateParams,
-  ParseConfigurations,
-  ParseConfigurationsPaginatedCursor,
-} from './parse-configurations';
 import * as SheetsAPI from './sheets';
 import {
   SheetCreateParams,
@@ -88,15 +75,12 @@ import {
 
 export class Beta extends APIResource {
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
-  parseConfigurations: ParseConfigurationsAPI.ParseConfigurations =
-    new ParseConfigurationsAPI.ParseConfigurations(this._client);
   sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
   directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
   batch: BatchAPI.Batch = new BatchAPI.Batch(this._client);
   split: SplitAPI.Split = new SplitAPI.Split(this._client);
 }
 
-Beta.ParseConfigurations = ParseConfigurations;
 Beta.Sheets = Sheets;
 Beta.Directories = Directories;
 Beta.Batch = Batch;
@@ -117,19 +101,6 @@ export declare namespace Beta {
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
     type AgentDataGetParams as AgentDataGetParams,
     type AgentDataSearchParams as AgentDataSearchParams,
-  };
-
-  export {
-    ParseConfigurations as ParseConfigurations,
-    type ParseConfiguration as ParseConfiguration,
-    type ParseConfigurationCreate as ParseConfigurationCreate,
-    type ParseConfigurationQueryResponse as ParseConfigurationQueryResponse,
-    type ParseConfigurationsPaginatedCursor as ParseConfigurationsPaginatedCursor,
-    type ParseConfigurationCreateParams as ParseConfigurationCreateParams,
-    type ParseConfigurationUpdateParams as ParseConfigurationUpdateParams,
-    type ParseConfigurationListParams as ParseConfigurationListParams,
-    type ParseConfigurationDeleteParams as ParseConfigurationDeleteParams,
-    type ParseConfigurationGetParams as ParseConfigurationGetParams,
   };
 
   export {

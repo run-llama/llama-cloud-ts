@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.3.0 (2026-04-07)
+
+Full Changelog: [v2.2.0...v2.3.0](https://github.com/run-llama/llama-cloud-ts/compare/v2.2.0...v2.3.0)
+
+### Features
+
+* **api:** remove parse configurations, superseded by generic configurations from 2.2.0 ([82100d7](https://github.com/run-llama/llama-cloud-ts/commit/82100d724f84fd739ecf0a03acb163807af7bb12))
+
+
+### Chores
+
+* **internal:** fix MCP server import ordering ([bf9a596](https://github.com/run-llama/llama-cloud-ts/commit/bf9a596877c8ca54a883ba8409f670b67eff9e05))
+
 ## 2.2.0 (2026-04-03)
 
 Full Changelog: [v2.1.0...v2.2.0](https://github.com/run-llama/llama-cloud-ts/compare/v2.1.0...v2.2.0)
