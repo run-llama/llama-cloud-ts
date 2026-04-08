@@ -30,6 +30,7 @@ describe('resource files', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       body_directory_id: 'directory_id',
       display_name: 'display_name',
+      metadata: { foo: 'string' },
       unique_id: 'x',
     });
   });
@@ -110,6 +111,7 @@ describe('resource files', () => {
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       display_name: 'display_name',
+      metadata: { foo: 'string' },
       unique_id: 'unique_id',
     });
   });

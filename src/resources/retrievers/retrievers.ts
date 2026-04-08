@@ -26,8 +26,17 @@ export class Retrievers extends APIResource {
   /**
    * Update an existing Retriever.
    */
-  update(retrieverID: string, body: RetrieverUpdateParams, options?: RequestOptions): APIPromise<Retriever> {
-    return this._client.put(path`/api/v1/retrievers/${retrieverID}`, { body, ...options });
+  update(
+    retrieverID: string,
+    params: RetrieverUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<Retriever> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.put(path`/api/v1/retrievers/${retrieverID}`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -43,8 +52,14 @@ export class Retrievers extends APIResource {
   /**
    * Delete a Retriever by ID.
    */
-  delete(retrieverID: string, options?: RequestOptions): APIPromise<void> {
+  delete(
+    retrieverID: string,
+    params: RetrieverDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { organization_id, project_id } = params ?? {};
     return this._client.delete(path`/api/v1/retrievers/${retrieverID}`, {
+      query: { organization_id, project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -275,12 +290,22 @@ export interface RetrieverCreateParams {
 
 export interface RetrieverUpdateParams {
   /**
-   * The pipelines this retriever uses.
+   * Body param: The pipelines this retriever uses.
    */
   pipelines: Array<RetrieverPipeline> | null;
 
   /**
-   * A name for the retriever.
+   * Query param
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: A name for the retriever.
    */
   name?: string | null;
 }
@@ -288,6 +313,12 @@ export interface RetrieverUpdateParams {
 export interface RetrieverListParams {
   name?: string | null;
 
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface RetrieverDeleteParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -372,6 +403,7 @@ export declare namespace Retrievers {
     type RetrieverCreateParams as RetrieverCreateParams,
     type RetrieverUpdateParams as RetrieverUpdateParams,
     type RetrieverListParams as RetrieverListParams,
+    type RetrieverDeleteParams as RetrieverDeleteParams,
     type RetrieverGetParams as RetrieverGetParams,
     type RetrieverSearchParams as RetrieverSearchParams,
     type RetrieverUpsertParams as RetrieverUpsertParams,

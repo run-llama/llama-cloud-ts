@@ -10,8 +10,7 @@ import { pollUntilComplete, PollingOptions, DEFAULT_TIMEOUT } from '../../core/p
 
 export class Split extends APIResource {
   /**
-   * Create a document split job. Experimental: This endpoint is not yet ready for
-   * production use and is subject to change at any time.
+   * Create a document split job.
    */
   create(params: SplitCreateParams, options?: RequestOptions): APIPromise<SplitCreateResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -23,8 +22,7 @@ export class Split extends APIResource {
   }
 
   /**
-   * List document split jobs. Experimental: This endpoint is not yet ready for
-   * production use and is subject to change at any time.
+   * List document split jobs.
    */
   list(
     query: SplitListParams | null | undefined = {},
@@ -38,9 +36,6 @@ export class Split extends APIResource {
 
   /**
    * Get a document split job.
-   *
-   * Experimental: This endpoint is not yet ready for production use and is subject
-   * to change at any time.
    */
   get(
     splitJobID: string,
@@ -210,7 +205,7 @@ export interface SplitCategory {
 }
 
 /**
- * Document input specification.
+ * Document input specification for beta API.
  */
 export interface SplitDocumentInput {
   /**
@@ -255,7 +250,7 @@ export interface SplitSegmentResponse {
 }
 
 /**
- * A document split job.
+ * Beta response — uses nested document_input object.
  */
 export interface SplitCreateResponse {
   /**
@@ -316,7 +311,7 @@ export interface SplitCreateResponse {
 }
 
 /**
- * A document split job.
+ * Beta response — uses nested document_input object.
  */
 export interface SplitListResponse {
   /**
@@ -377,7 +372,7 @@ export interface SplitListResponse {
 }
 
 /**
- * A document split job.
+ * Beta response — uses nested document_input object.
  */
 export interface SplitGetResponse {
   /**
