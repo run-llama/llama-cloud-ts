@@ -172,6 +172,7 @@ export {
   type RetrieverCreateParams,
   type RetrieverUpdateParams,
   type RetrieverListParams,
+  type RetrieverDeleteParams,
   type RetrieverGetParams,
   type RetrieverSearchParams,
   type RetrieverUpsertParams,

@@ -180,11 +180,6 @@ export interface ExtractConfiguration {
   extraction_target?: 'per_doc' | 'per_page' | 'per_table_row';
 
   /**
-   * ISO 639-1 language code for the document
-   */
-  lang?: string;
-
-  /**
    * Maximum number of pages to process. Omit for no limit.
    */
   max_pages?: number | null;
@@ -196,7 +191,8 @@ export interface ExtractConfiguration {
   parse_config_id?: string | null;
 
   /**
-   * Parse tier to use before extraction (fast, cost_effective, or agentic)
+   * Parse tier to use before extraction. Defaults to the extract tier if not
+   * specified.
    */
   parse_tier?: string | null;
 

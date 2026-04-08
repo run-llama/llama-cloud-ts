@@ -164,6 +164,11 @@ export interface FileUpdateResponse {
   file_id?: string | null;
 
   /**
+   * Merged metadata from all sources. Higher-priority sources override lower.
+   */
+  metadata?: { [key: string]: string | number | boolean | null };
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -217,6 +222,11 @@ export interface FileListResponse {
    * File ID for the storage location.
    */
   file_id?: string | null;
+
+  /**
+   * Merged metadata from all sources. Higher-priority sources override lower.
+   */
+  metadata?: { [key: string]: string | number | boolean | null };
 
   /**
    * Update datetime
@@ -274,6 +284,11 @@ export interface FileAddResponse {
   file_id?: string | null;
 
   /**
+   * Merged metadata from all sources. Higher-priority sources override lower.
+   */
+  metadata?: { [key: string]: string | number | boolean | null };
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -327,6 +342,11 @@ export interface FileGetResponse {
    * File ID for the storage location.
    */
   file_id?: string | null;
+
+  /**
+   * Merged metadata from all sources. Higher-priority sources override lower.
+   */
+  metadata?: { [key: string]: string | number | boolean | null };
 
   /**
    * Update datetime
@@ -384,6 +404,11 @@ export interface FileUploadResponse {
   file_id?: string | null;
 
   /**
+   * Merged metadata from all sources. Higher-priority sources override lower.
+   */
+  metadata?: { [key: string]: string | number | boolean | null };
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -414,6 +439,12 @@ export interface FileUpdateParams {
    * Body param: Updated display name.
    */
   display_name?: string | null;
+
+  /**
+   * Body param: User-defined metadata key-value pairs. Replaces the user metadata
+   * layer.
+   */
+  metadata?: { [key: string]: string | number | boolean | null } | null;
 
   /**
    * Body param: Updated unique identifier.
@@ -475,6 +506,11 @@ export interface FileAddParams {
    * name.
    */
   display_name?: string | null;
+
+  /**
+   * Body param: User-defined metadata key-value pairs to associate with the file.
+   */
+  metadata?: { [key: string]: string | number | boolean | null } | null;
 
   /**
    * Body param: Unique identifier for the file in the directory. If not provided,

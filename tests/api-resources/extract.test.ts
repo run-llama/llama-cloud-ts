@@ -32,7 +32,6 @@ describe('resource extract', () => {
         confidence_scores: true,
         extract_version: 'latest',
         extraction_target: 'per_doc',
-        lang: 'en',
         max_pages: 10,
         parse_config_id: 'cfg-11111111-2222-3333-4444-555555555555',
         parse_tier: 'fast',
