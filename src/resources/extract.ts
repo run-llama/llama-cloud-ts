@@ -132,7 +132,20 @@ export class Extract extends APIResource {
    * ```ts
    * const extractV2SchemaValidateResponse =
    *   await client.extract.validateSchema({
-   *     data_schema: { foo: { foo: 'bar' } },
+   *     data_schema: {
+   *       properties: {
+   *         vendor_name: 'bar',
+   *         invoice_number: 'bar',
+   *         total_amount: 'bar',
+   *         line_items: 'bar',
+   *       },
+   *       required: [
+   *         'vendor_name',
+   *         'invoice_number',
+   *         'total_amount',
+   *       ],
+   *       type: 'object',
+   *     },
    *   });
    * ```
    */

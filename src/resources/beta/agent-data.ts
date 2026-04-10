@@ -9,6 +9,14 @@ import { path } from '../../internal/utils/path';
 export class AgentData extends APIResource {
   /**
    * Update agent data by ID (overwrites).
+   *
+   * @example
+   * ```ts
+   * const agentData = await client.beta.agentData.update(
+   *   'item_id',
+   *   { data: { foo: 'bar' } },
+   * );
+   * ```
    */
   update(itemID: string, params: AgentDataUpdateParams, options?: RequestOptions): APIPromise<AgentData> {
     const { organization_id, project_id, ...body } = params;
@@ -21,6 +29,13 @@ export class AgentData extends APIResource {
 
   /**
    * Delete agent data by ID.
+   *
+   * @example
+   * ```ts
+   * const agentData = await client.beta.agentData.delete(
+   *   'item_id',
+   * );
+   * ```
    */
   delete(
     itemID: string,
@@ -36,6 +51,14 @@ export class AgentData extends APIResource {
 
   /**
    * Create new agent data.
+   *
+   * @example
+   * ```ts
+   * const agentData = await client.beta.agentData.agentData({
+   *   data: { foo: 'bar' },
+   *   deployment_name: 'deployment_name',
+   * });
+   * ```
    */
   agentData(params: AgentDataAgentDataParams, options?: RequestOptions): APIPromise<AgentData> {
     const { organization_id, project_id, ...body } = params;
@@ -48,6 +71,16 @@ export class AgentData extends APIResource {
 
   /**
    * Aggregate agent data with grouping and optional counting/first item retrieval.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const agentDataAggregateResponse of client.beta.agentData.aggregate(
+   *   { deployment_name: 'deployment_name' },
+   * )) {
+   *   // ...
+   * }
+   * ```
    */
   aggregate(
     params: AgentDataAggregateParams,
@@ -63,6 +96,13 @@ export class AgentData extends APIResource {
 
   /**
    * Bulk delete agent data by query (deployment_name, collection, optional filters).
+   *
+   * @example
+   * ```ts
+   * const response = await client.beta.agentData.deleteByQuery({
+   *   deployment_name: 'deployment_name',
+   * });
+   * ```
    */
   deleteByQuery(
     params: AgentDataDeleteByQueryParams,
@@ -78,6 +118,13 @@ export class AgentData extends APIResource {
 
   /**
    * Get agent data by ID.
+   *
+   * @example
+   * ```ts
+   * const agentData = await client.beta.agentData.get(
+   *   'item_id',
+   * );
+   * ```
    */
   get(
     itemID: string,
@@ -89,6 +136,16 @@ export class AgentData extends APIResource {
 
   /**
    * Search agent data with filtering, sorting, and pagination.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const agentData of client.beta.agentData.search({
+   *   deployment_name: 'deployment_name',
+   * })) {
+   *   // ...
+   * }
+   * ```
    */
   search(
     params: AgentDataSearchParams,

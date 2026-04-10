@@ -20,6 +20,11 @@ export class Classify extends APIResource {
    *
    * The job runs asynchronously. Poll `GET /classify/{job_id}` to check status and
    * retrieve results.
+   *
+   * @example
+   * ```ts
+   * const classify = await client.classify.create();
+   * ```
    */
   create(params: ClassifyCreateParams, options?: RequestOptions): APIPromise<ClassifyCreateResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -35,6 +40,14 @@ export class Classify extends APIResource {
    *
    * Filter by `status`, `configuration_id`, specific `job_ids`, or creation date
    * range.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const classifyListResponse of client.classify.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: ClassifyListParams | null | undefined = {},
@@ -51,6 +64,11 @@ export class Classify extends APIResource {
    *
    * Returns the job status, configuration, and classify result when complete. The
    * result includes the matched document type, confidence score, and reasoning.
+   *
+   * @example
+   * ```ts
+   * const classify = await client.classify.get('job_id');
+   * ```
    */
   get(
     jobID: string,

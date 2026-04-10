@@ -508,21 +508,21 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     params: ['data_schema: object;'],
     response: '{ data_schema: object; }',
     markdown:
-      "## validate_schema\n\n`client.extract.validateSchema(data_schema: object): { data_schema: object; }`\n\n**post** `/api/v2/extract/schema/validation`\n\nValidate a JSON schema for extraction.\n\n### Parameters\n\n- `data_schema: object`\n  JSON Schema to validate for use with extract jobs\n\n### Returns\n\n- `{ data_schema: object; }`\n  Response schema for schema validation.\n\n  - `data_schema: object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extractV2SchemaValidateResponse = await client.extract.validateSchema({ data_schema: { foo: { foo: 'bar' } } });\n\nconsole.log(extractV2SchemaValidateResponse);\n```",
+      "## validate_schema\n\n`client.extract.validateSchema(data_schema: object): { data_schema: object; }`\n\n**post** `/api/v2/extract/schema/validation`\n\nValidate a JSON schema for extraction.\n\n### Parameters\n\n- `data_schema: object`\n  JSON Schema to validate for use with extract jobs\n\n### Returns\n\n- `{ data_schema: object; }`\n  Response schema for schema validation.\n\n  - `data_schema: object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extractV2SchemaValidateResponse = await client.extract.validateSchema({ data_schema: {\n  properties: {\n  vendor_name: 'bar',\n  invoice_number: 'bar',\n  total_amount: 'bar',\n  line_items: 'bar',\n},\n  required: ['vendor_name', 'invoice_number', 'total_amount'],\n  type: 'object',\n} });\n\nconsole.log(extractV2SchemaValidateResponse);\n```",
     perLanguage: {
       http: {
         example:
-          'curl https://api.cloud.llamaindex.ai/api/v2/extract/schema/validation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "data_schema": {\n            "foo": {\n              "foo": "bar"\n            }\n          }\n        }\'',
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/schema/validation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "data_schema": {\n            "properties": {\n              "vendor_name": "bar",\n              "invoice_number": "bar",\n              "total_amount": "bar",\n              "line_items": "bar"\n            },\n            "required": [\n              "vendor_name",\n              "invoice_number",\n              "total_amount"\n            ],\n            "type": "object"\n          }\n        }\'',
       },
       python: {
         method: 'extract.validate_schema',
         example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_v2_schema_validate_response = client.extract.validate_schema(\n    data_schema={\n        "foo": {\n            "foo": "bar"\n        }\n    },\n)\nprint(extract_v2_schema_validate_response.data_schema)',
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_v2_schema_validate_response = client.extract.validate_schema(\n    data_schema={\n        "properties": {\n            "vendor_name": "bar",\n            "invoice_number": "bar",\n            "total_amount": "bar",\n            "line_items": "bar",\n        },\n        "required": ["vendor_name", "invoice_number", "total_amount"],\n        "type": "object",\n    },\n)\nprint(extract_v2_schema_validate_response.data_schema)',
       },
       typescript: {
         method: 'client.extract.validateSchema',
         example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst extractV2SchemaValidateResponse = await client.extract.validateSchema({\n  data_schema: { foo: { foo: 'bar' } },\n});\n\nconsole.log(extractV2SchemaValidateResponse.data_schema);",
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst extractV2SchemaValidateResponse = await client.extract.validateSchema({\n  data_schema: {\n    properties: {\n      vendor_name: 'bar',\n      invoice_number: 'bar',\n      total_amount: 'bar',\n      line_items: 'bar',\n    },\n    required: ['vendor_name', 'invoice_number', 'total_amount'],\n    type: 'object',\n  },\n});\n\nconsole.log(extractV2SchemaValidateResponse.data_schema);",
       },
     },
   },

@@ -10,6 +10,13 @@ import { path } from '../../internal/utils/path';
 export class Split extends APIResource {
   /**
    * Create a document split job.
+   *
+   * @example
+   * ```ts
+   * const split = await client.beta.split.create({
+   *   document_input: { type: 'type', value: 'value' },
+   * });
+   * ```
    */
   create(params: SplitCreateParams, options?: RequestOptions): APIPromise<SplitCreateResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -22,6 +29,14 @@ export class Split extends APIResource {
 
   /**
    * List document split jobs.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const splitListResponse of client.beta.split.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: SplitListParams | null | undefined = {},
@@ -35,6 +50,11 @@ export class Split extends APIResource {
 
   /**
    * Get a document split job.
+   *
+   * @example
+   * ```ts
+   * const split = await client.beta.split.get('split_job_id');
+   * ```
    */
   get(
     splitJobID: string,
