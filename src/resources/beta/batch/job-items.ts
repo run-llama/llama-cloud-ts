@@ -14,6 +14,16 @@ export class JobItems extends APIResource {
    *
    * Useful for finding failed items, viewing completed items, or debugging
    * processing issues.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const jobItemListResponse of client.beta.batch.jobItems.list(
+   *   'job_id',
+   * )) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     jobID: string,
@@ -33,6 +43,14 @@ export class JobItems extends APIResource {
    * Returns the complete processing history for an item including what operations
    * were performed, parameters used, and where outputs are stored. Optionally filter
    * by `job_type`.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.beta.batch.jobItems.getProcessingResults(
+   *     'item_id',
+   *   );
+   * ```
    */
   getProcessingResults(
     itemID: string,

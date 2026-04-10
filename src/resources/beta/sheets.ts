@@ -13,6 +13,13 @@ export class Sheets extends APIResource {
   /**
    * Create a spreadsheet parsing job. Experimental: This endpoint is not yet ready
    * for production use and is subject to change at any time.
+   *
+   * @example
+   * ```ts
+   * const sheetsJob = await client.beta.sheets.create({
+   *   file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+   * });
+   * ```
    */
   create(params: SheetCreateParams, options?: RequestOptions): APIPromise<SheetsJob> {
     const { organization_id, project_id, ...body } = params;
@@ -26,6 +33,14 @@ export class Sheets extends APIResource {
   /**
    * List spreadsheet parsing jobs. Experimental: This endpoint is not yet ready for
    * production use and is subject to change at any time.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const sheetsJob of client.beta.sheets.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: SheetListParams | null | undefined = {},
@@ -41,6 +56,13 @@ export class Sheets extends APIResource {
    * Delete a spreadsheet parsing job and its associated data. Experimental: This
    * endpoint is not yet ready for production use and is subject to change at any
    * time.
+   *
+   * @example
+   * ```ts
+   * const response = await client.beta.sheets.deleteJob(
+   *   'spreadsheet_job_id',
+   * );
+   * ```
    */
   deleteJob(
     spreadsheetJobID: string,
@@ -63,6 +85,13 @@ export class Sheets extends APIResource {
    *
    * Experimental: This endpoint is not yet ready for production use and is subject
    * to change at any time.
+   *
+   * @example
+   * ```ts
+   * const sheetsJob = await client.beta.sheets.get(
+   *   'spreadsheet_job_id',
+   * );
+   * ```
    */
   get(
     spreadsheetJobID: string,
@@ -76,6 +105,15 @@ export class Sheets extends APIResource {
    * Generate a presigned URL to download a specific extracted region. Experimental:
    * This endpoint is not yet ready for production use and is subject to change at
    * any time.
+   *
+   * @example
+   * ```ts
+   * const presignedURL =
+   *   await client.beta.sheets.getResultTable('table', {
+   *     spreadsheet_job_id: 'spreadsheet_job_id',
+   *     region_id: 'region_id',
+   *   });
+   * ```
    */
   getResultTable(
     regionType: 'table' | 'extra' | 'cell_metadata',

@@ -31,6 +31,13 @@ export class Directories extends APIResource {
    *
    * If data_source_id is provided, validates that the data source exists and belongs
    * to the same project.
+   *
+   * @example
+   * ```ts
+   * const directory = await client.beta.directories.create({
+   *   name: 'x',
+   * });
+   * ```
    */
   create(params: DirectoryCreateParams, options?: RequestOptions): APIPromise<DirectoryCreateResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -43,6 +50,13 @@ export class Directories extends APIResource {
 
   /**
    * Update directory metadata.
+   *
+   * @example
+   * ```ts
+   * const directory = await client.beta.directories.update(
+   *   'directory_id',
+   * );
+   * ```
    */
   update(
     directoryID: string,
@@ -59,6 +73,14 @@ export class Directories extends APIResource {
 
   /**
    * List Directories
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const directoryListResponse of client.beta.directories.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: DirectoryListParams | null | undefined = {},
@@ -72,6 +94,11 @@ export class Directories extends APIResource {
 
   /**
    * Permanently delete a directory.
+   *
+   * @example
+   * ```ts
+   * await client.beta.directories.delete('directory_id');
+   * ```
    */
   delete(
     directoryID: string,
@@ -88,6 +115,13 @@ export class Directories extends APIResource {
 
   /**
    * Retrieve a directory by its identifier.
+   *
+   * @example
+   * ```ts
+   * const directory = await client.beta.directories.get(
+   *   'directory_id',
+   * );
+   * ```
    */
   get(
     directoryID: string,

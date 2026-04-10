@@ -30,6 +30,13 @@ export class Batch extends APIResource {
    * Provide either `directory_id` to process all files in a directory, or `item_ids`
    * for specific items. The job runs asynchronously — poll `GET /batch/{job_id}` for
    * progress.
+   *
+   * @example
+   * ```ts
+   * const batch = await client.beta.batch.create({
+   *   job_config: {},
+   * });
+   * ```
    */
   create(params: BatchCreateParams, options?: RequestOptions): APIPromise<BatchCreateResponse> {
     const { organization_id, project_id, 'temporal-namespace': temporalNamespace, ...body } = params;
@@ -49,6 +56,14 @@ export class Batch extends APIResource {
    *
    * Filter by `directory_id`, `job_type`, or `status`. Results are paginated with
    * configurable `limit` and `offset`.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const batchListResponse of client.beta.batch.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: BatchListParams | null | undefined = {},
@@ -65,6 +80,11 @@ export class Batch extends APIResource {
    *
    * Stops processing and marks pending items as cancelled. Items currently being
    * processed may still complete.
+   *
+   * @example
+   * ```ts
+   * const response = await client.beta.batch.cancel('job_id');
+   * ```
    */
   cancel(
     jobID: string,
@@ -88,6 +108,13 @@ export class Batch extends APIResource {
    *
    * Returns current progress percentage, file counts (total, processed, failed,
    * skipped), and timestamps.
+   *
+   * @example
+   * ```ts
+   * const response = await client.beta.batch.getStatus(
+   *   'job_id',
+   * );
+   * ```
    */
   getStatus(
     jobID: string,
