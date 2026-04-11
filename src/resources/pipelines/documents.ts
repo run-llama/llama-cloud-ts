@@ -155,9 +155,6 @@ export interface CloudDocumentCreate {
 
 /**
  * Provided for backward compatibility.
- *
- * Note: we keep the field with the typo "seperator" to maintain backward
- * compatibility for serialized objects.
  */
 export interface TextNode {
   class_name?: string;
