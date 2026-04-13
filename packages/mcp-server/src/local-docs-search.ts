@@ -83,7 +83,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.files.create',
         example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst file = await client.files.create({\n  file: fs.createReadStream('path/to/file'),\n  purpose: 'purpose',\n});\n\nconsole.log(file.id);",
+          "import fs from 'fs';\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst file = await client.files.create({\n  file: fs.createReadStream('path/to/file'),\n  purpose: 'purpose',\n});\n\nconsole.log(file.id);",
       },
     },
   },
@@ -2222,7 +2222,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.pipelines.metadata.create',
         example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst metadata = await client.pipelines.metadata.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {\n  upload_file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(metadata);",
+          "import fs from 'fs';\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst metadata = await client.pipelines.metadata.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {\n  upload_file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(metadata);",
       },
     },
   },
@@ -3593,7 +3593,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.beta.directories.files.upload',
         example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.directories.files.upload('directory_id', {\n  upload_file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(response.id);",
+          "import fs from 'fs';\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.directories.files.upload('directory_id', {\n  upload_file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(response.id);",
       },
     },
   },
