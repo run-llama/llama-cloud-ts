@@ -917,7 +917,8 @@ export namespace ParsingGetResponse {
       presigned_url?: string | null;
 
       /**
-       * Size of the image file in bytes
+       * @deprecated Deprecated: always returns None. Will be removed in a future
+       * release.
        */
       size_bytes?: number | null;
     }
@@ -1134,7 +1135,7 @@ export namespace ParsingGetResponse {
    */
   export interface ResultContentMetadata {
     /**
-     * Size of the result file in S3 (bytes)
+     * Size of the result file in bytes
      */
     size_bytes: number;
 
