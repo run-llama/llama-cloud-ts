@@ -135,6 +135,60 @@ export class Classify extends APIResource {
       verbose,
     });
   }
+
+  /**
+   * Create a classify job, wait for it to complete, and return the result.
+   *
+   * This is a convenience method that combines create() and waitForCompletion()
+   * into a single call for the most common end-to-end workflow.
+   *
+   * @param params - Classify job creation parameters
+   * @param options - Polling configuration and request options
+   * @returns The completed classify job with result populated
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails
+   *
+   * @example
+   * ```typescript
+   * import { LlamaCloud } from 'llama-cloud';
+   *
+   * const client = new LlamaCloud({ apiKey: '...' });
+   *
+   * const result = await client.classify.run({
+   *   file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+   *   configuration: {
+   *     rules: [{ type: 'invoice', description: 'contains invoice number' }],
+   *   },
+   * }, { verbose: true });
+   *
+   * console.log(result.result);
+   * ```
+   */
+  async run(
+    params: ClassifyCreateParams,
+    options?: PollingOptions & RequestOptions,
+  ): Promise<ClassifyGetResponse> {
+    const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    const job = await this.create(params, requestOptions);
+
+    const getQuery: ClassifyGetParams = {};
+    if (params.organization_id !== undefined) {
+      getQuery.organization_id = params.organization_id;
+    }
+    if (params.project_id !== undefined) {
+      getQuery.project_id = params.project_id;
+    }
+
+    return await this.waitForCompletion(job.id, getQuery, {
+      pollingInterval,
+      maxInterval,
+      timeout: timeout || DEFAULT_TIMEOUT,
+      backoff,
+      verbose,
+      ...requestOptions,
+    });
+  }
 }
 
 export type ClassifyListResponsesPaginatedCursor = PaginatedCursor<ClassifyListResponse>;
