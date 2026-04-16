@@ -27,12 +27,15 @@ describe('resource extract', () => {
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       configuration: {
-        data_schema: { foo: { foo: 'bar' } },
+        data_schema: {
+          properties: { vendor_name: 'bar', total_amount: 'bar' },
+          required: ['vendor_name', 'total_amount'],
+          type: 'object',
+        },
         cite_sources: true,
         confidence_scores: true,
         extract_version: 'latest',
         extraction_target: 'per_doc',
-        lang: 'en',
         max_pages: 10,
         parse_config_id: 'cfg-11111111-2222-3333-4444-555555555555',
         parse_tier: 'fast',
@@ -158,7 +161,18 @@ describe('resource extract', () => {
 
   // Mock server tests are disabled
   test.skip('validateSchema: only required params', async () => {
-    const responsePromise = client.extract.validateSchema({ data_schema: { foo: { foo: 'bar' } } });
+    const responsePromise = client.extract.validateSchema({
+      data_schema: {
+        properties: {
+          vendor_name: 'bar',
+          invoice_number: 'bar',
+          total_amount: 'bar',
+          line_items: 'bar',
+        },
+        required: ['vendor_name', 'invoice_number', 'total_amount'],
+        type: 'object',
+      },
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -170,6 +184,17 @@ describe('resource extract', () => {
 
   // Mock server tests are disabled
   test.skip('validateSchema: required and optional params', async () => {
-    const response = await client.extract.validateSchema({ data_schema: { foo: { foo: 'bar' } } });
+    const response = await client.extract.validateSchema({
+      data_schema: {
+        properties: {
+          vendor_name: 'bar',
+          invoice_number: 'bar',
+          total_amount: 'bar',
+          line_items: 'bar',
+        },
+        required: ['vendor_name', 'invoice_number', 'total_amount'],
+        type: 'object',
+      },
+    });
   });
 });

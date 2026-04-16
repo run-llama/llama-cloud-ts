@@ -653,10 +653,6 @@ export interface HuggingFaceInferenceAPIEmbeddingConfig {
   type?: 'HUGGINGFACE_API_EMBEDDING';
 }
 
-/**
- * Settings that can be configured for how to use LlamaParse to parse files within
- * a LlamaCloud pipeline.
- */
 export interface LlamaParseParameters {
   adaptive_long_table?: boolean | null;
 
@@ -1789,9 +1785,6 @@ export namespace PipelineRetrieveResponse {
   export interface RetrievalNode {
     /**
      * Provided for backward compatibility.
-     *
-     * Note: we keep the field with the typo "seperator" to maintain backward
-     * compatibility for serialized objects.
      */
     node: DocumentsAPI.TextNode;
 

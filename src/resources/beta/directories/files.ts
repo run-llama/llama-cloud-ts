@@ -18,6 +18,14 @@ export class Files extends APIResource {
    * Note: This endpoint uses directory_file_id (the internal ID). If you're trying
    * to update a file by its unique_id, use the list endpoint with a filter to find
    * the directory_file_id first.
+   *
+   * @example
+   * ```ts
+   * const file = await client.beta.directories.files.update(
+   *   'directory_file_id',
+   *   { path_directory_id: 'directory_id' },
+   * );
+   * ```
    */
   update(
     directoryFileID: string,
@@ -35,6 +43,16 @@ export class Files extends APIResource {
   /**
    * List all files within the specified directory with optional filtering and
    * pagination.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const fileListResponse of client.beta.directories.files.list(
+   *   'directory_id',
+   * )) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     directoryID: string,
@@ -54,6 +72,14 @@ export class Files extends APIResource {
    * Note: This endpoint uses directory_file_id (the internal ID). If you're trying
    * to delete a file by its unique_id, use the list endpoint with a filter to find
    * the directory_file_id first.
+   *
+   * @example
+   * ```ts
+   * await client.beta.directories.files.delete(
+   *   'directory_file_id',
+   *   { directory_id: 'directory_id' },
+   * );
+   * ```
    */
   delete(directoryFileID: string, params: FileDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { directory_id, organization_id, project_id } = params;
@@ -69,6 +95,14 @@ export class Files extends APIResource {
    *
    * The directory must exist and belong to the project passed in. The file_id must
    * be provided and exist in the project.
+   *
+   * @example
+   * ```ts
+   * const response = await client.beta.directories.files.add(
+   *   'directory_id',
+   *   { file_id: 'file_id' },
+   * );
+   * ```
    */
   add(directoryID: string, params: FileAddParams, options?: RequestOptions): APIPromise<FileAddResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -83,6 +117,14 @@ export class Files extends APIResource {
    * Get a file by its directory_file_id within the specified directory. If you're
    * trying to get a file by its unique_id, use the list endpoint with a filter
    * instead.
+   *
+   * @example
+   * ```ts
+   * const file = await client.beta.directories.files.get(
+   *   'directory_file_id',
+   *   { directory_id: 'directory_id' },
+   * );
+   * ```
    */
   get(directoryFileID: string, params: FileGetParams, options?: RequestOptions): APIPromise<FileGetResponse> {
     const { directory_id, ...query } = params;
@@ -98,6 +140,14 @@ export class Files extends APIResource {
    * Uploads a file and creates a directory file entry in a single operation. If
    * unique_id or display_name are not provided, they will be derived from the file
    * metadata.
+   *
+   * @example
+   * ```ts
+   * const response = await client.beta.directories.files.upload(
+   *   'directory_id',
+   *   { upload_file: fs.createReadStream('path/to/file') },
+   * );
+   * ```
    */
   upload(
     directoryID: string,
@@ -164,6 +214,11 @@ export interface FileUpdateResponse {
   file_id?: string | null;
 
   /**
+   * Merged metadata from all sources. Higher-priority sources override lower.
+   */
+  metadata?: { [key: string]: string | number | boolean | null };
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -217,6 +272,11 @@ export interface FileListResponse {
    * File ID for the storage location.
    */
   file_id?: string | null;
+
+  /**
+   * Merged metadata from all sources. Higher-priority sources override lower.
+   */
+  metadata?: { [key: string]: string | number | boolean | null };
 
   /**
    * Update datetime
@@ -274,6 +334,11 @@ export interface FileAddResponse {
   file_id?: string | null;
 
   /**
+   * Merged metadata from all sources. Higher-priority sources override lower.
+   */
+  metadata?: { [key: string]: string | number | boolean | null };
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -327,6 +392,11 @@ export interface FileGetResponse {
    * File ID for the storage location.
    */
   file_id?: string | null;
+
+  /**
+   * Merged metadata from all sources. Higher-priority sources override lower.
+   */
+  metadata?: { [key: string]: string | number | boolean | null };
 
   /**
    * Update datetime
@@ -384,6 +454,11 @@ export interface FileUploadResponse {
   file_id?: string | null;
 
   /**
+   * Merged metadata from all sources. Higher-priority sources override lower.
+   */
+  metadata?: { [key: string]: string | number | boolean | null };
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -414,6 +489,12 @@ export interface FileUpdateParams {
    * Body param: Updated display name.
    */
   display_name?: string | null;
+
+  /**
+   * Body param: User-defined metadata key-value pairs. Replaces the user metadata
+   * layer.
+   */
+  metadata?: { [key: string]: string | number | boolean | null } | null;
 
   /**
    * Body param: Updated unique identifier.
@@ -475,6 +556,11 @@ export interface FileAddParams {
    * name.
    */
   display_name?: string | null;
+
+  /**
+   * Body param: User-defined metadata key-value pairs to associate with the file.
+   */
+  metadata?: { [key: string]: string | number | boolean | null } | null;
 
   /**
    * Body param: Unique identifier for the file in the directory. If not provided,

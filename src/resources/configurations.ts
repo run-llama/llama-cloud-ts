@@ -164,7 +164,68 @@ export interface ConfigurationCreate {
     | ExtractV2Parameters
     | ClassifyV2Parameters
     | ParseV2Parameters
+    | ConfigurationCreate.SpreadsheetV1Parameters
     | UntypedParameters;
+}
+
+export namespace ConfigurationCreate {
+  /**
+   * Typed parameters for a _spreadsheet v1_ product configuration.
+   */
+  export interface SpreadsheetV1Parameters {
+    /**
+     * Product type.
+     */
+    product_type: 'spreadsheet_v1';
+
+    /**
+     * A1 notation of the range to extract a single region from. If None, the entire
+     * sheet is used.
+     */
+    extraction_range?: string | null;
+
+    /**
+     * Return a flattened dataframe when a detected table is recognized as
+     * hierarchical.
+     */
+    flatten_hierarchical_tables?: boolean;
+
+    /**
+     * Whether to generate additional metadata (title, description) for each extracted
+     * region.
+     */
+    generate_additional_metadata?: boolean;
+
+    /**
+     * Whether to include hidden cells when extracting regions from the spreadsheet.
+     */
+    include_hidden_cells?: boolean;
+
+    /**
+     * The names of the sheets to extract regions from. If empty, all sheets will be
+     * processed.
+     */
+    sheet_names?: Array<string> | null;
+
+    /**
+     * Optional specialization mode for domain-specific extraction. Supported values:
+     * 'financial-standard', 'financial-enhanced', 'financial-precise'. Default None
+     * uses the general-purpose pipeline.
+     */
+    specialization?: string | null;
+
+    /**
+     * Influences how likely similar-looking regions are merged into a single table.
+     * Useful for spreadsheets that either have sparse tables (strong merging) or many
+     * distinct tables close together (weak merging).
+     */
+    table_merge_sensitivity?: 'strong' | 'weak';
+
+    /**
+     * Enables experimental processing. Accuracy may be impacted.
+     */
+    use_experimental_processing?: boolean;
+  }
 }
 
 /**
@@ -189,12 +250,13 @@ export interface ConfigurationResponse {
     | ExtractV2Parameters
     | ClassifyV2Parameters
     | ParseV2Parameters
+    | ConfigurationResponse.SpreadsheetV1Parameters
     | UntypedParameters;
 
   /**
    * Product type.
    */
-  product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'unknown';
+  product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown';
 
   /**
    * Version identifier (datetime string).
@@ -210,6 +272,66 @@ export interface ConfigurationResponse {
    * Last update timestamp.
    */
   updated_at?: string | null;
+}
+
+export namespace ConfigurationResponse {
+  /**
+   * Typed parameters for a _spreadsheet v1_ product configuration.
+   */
+  export interface SpreadsheetV1Parameters {
+    /**
+     * Product type.
+     */
+    product_type: 'spreadsheet_v1';
+
+    /**
+     * A1 notation of the range to extract a single region from. If None, the entire
+     * sheet is used.
+     */
+    extraction_range?: string | null;
+
+    /**
+     * Return a flattened dataframe when a detected table is recognized as
+     * hierarchical.
+     */
+    flatten_hierarchical_tables?: boolean;
+
+    /**
+     * Whether to generate additional metadata (title, description) for each extracted
+     * region.
+     */
+    generate_additional_metadata?: boolean;
+
+    /**
+     * Whether to include hidden cells when extracting regions from the spreadsheet.
+     */
+    include_hidden_cells?: boolean;
+
+    /**
+     * The names of the sheets to extract regions from. If empty, all sheets will be
+     * processed.
+     */
+    sheet_names?: Array<string> | null;
+
+    /**
+     * Optional specialization mode for domain-specific extraction. Supported values:
+     * 'financial-standard', 'financial-enhanced', 'financial-precise'. Default None
+     * uses the general-purpose pipeline.
+     */
+    specialization?: string | null;
+
+    /**
+     * Influences how likely similar-looking regions are merged into a single table.
+     * Useful for spreadsheets that either have sparse tables (strong merging) or many
+     * distinct tables close together (weak merging).
+     */
+    table_merge_sensitivity?: 'strong' | 'weak';
+
+    /**
+     * Enables experimental processing. Accuracy may be impacted.
+     */
+    use_experimental_processing?: boolean;
+  }
 }
 
 /**
@@ -251,11 +373,6 @@ export interface ExtractV2Parameters {
   extraction_target?: 'per_doc' | 'per_page' | 'per_table_row';
 
   /**
-   * ISO 639-1 language code for the document
-   */
-  lang?: string;
-
-  /**
    * Maximum number of pages to process. Omit for no limit.
    */
   max_pages?: number | null;
@@ -267,7 +384,8 @@ export interface ExtractV2Parameters {
   parse_config_id?: string | null;
 
   /**
-   * Parse tier to use before extraction (fast, cost_effective, or agentic)
+   * Parse tier to use before extraction. Defaults to the extract tier if not
+   * specified.
    */
   parse_tier?: string | null;
 
@@ -348,6 +466,9 @@ export interface ParseV2Parameters {
     | '2026-03-27'
     | '2026-03-30'
     | '2026-03-31'
+    | '2026-04-02'
+    | '2026-04-06'
+    | '2026-04-09'
     | 'latest'
     | (string & {});
 
@@ -1125,6 +1246,9 @@ export namespace ParseV2Parameters {
           | '2026-03-27'
           | '2026-03-30'
           | '2026-03-31'
+          | '2026-04-02'
+          | '2026-04-06'
+          | '2026-04-09'
           | 'latest'
           | (string & {})
           | null;
@@ -1350,6 +1474,7 @@ export interface ConfigurationCreateParams {
     | ExtractV2Parameters
     | ClassifyV2Parameters
     | ParseV2Parameters
+    | ConfigurationCreateParams.SpreadsheetV1Parameters
     | UntypedParameters;
 
   /**
@@ -1361,6 +1486,66 @@ export interface ConfigurationCreateParams {
    * Query param
    */
   project_id?: string | null;
+}
+
+export namespace ConfigurationCreateParams {
+  /**
+   * Typed parameters for a _spreadsheet v1_ product configuration.
+   */
+  export interface SpreadsheetV1Parameters {
+    /**
+     * Product type.
+     */
+    product_type: 'spreadsheet_v1';
+
+    /**
+     * A1 notation of the range to extract a single region from. If None, the entire
+     * sheet is used.
+     */
+    extraction_range?: string | null;
+
+    /**
+     * Return a flattened dataframe when a detected table is recognized as
+     * hierarchical.
+     */
+    flatten_hierarchical_tables?: boolean;
+
+    /**
+     * Whether to generate additional metadata (title, description) for each extracted
+     * region.
+     */
+    generate_additional_metadata?: boolean;
+
+    /**
+     * Whether to include hidden cells when extracting regions from the spreadsheet.
+     */
+    include_hidden_cells?: boolean;
+
+    /**
+     * The names of the sheets to extract regions from. If empty, all sheets will be
+     * processed.
+     */
+    sheet_names?: Array<string> | null;
+
+    /**
+     * Optional specialization mode for domain-specific extraction. Supported values:
+     * 'financial-standard', 'financial-enhanced', 'financial-precise'. Default None
+     * uses the general-purpose pipeline.
+     */
+    specialization?: string | null;
+
+    /**
+     * Influences how likely similar-looking regions are merged into a single table.
+     * Useful for spreadsheets that either have sparse tables (strong merging) or many
+     * distinct tables close together (weak merging).
+     */
+    table_merge_sensitivity?: 'strong' | 'weak';
+
+    /**
+     * Enables experimental processing. Accuracy may be impacted.
+     */
+    use_experimental_processing?: boolean;
+  }
 }
 
 export interface ConfigurationRetrieveParams {
@@ -1393,8 +1578,69 @@ export interface ConfigurationUpdateParams {
     | ExtractV2Parameters
     | ClassifyV2Parameters
     | ParseV2Parameters
+    | ConfigurationUpdateParams.SpreadsheetV1Parameters
     | UntypedParameters
     | null;
+}
+
+export namespace ConfigurationUpdateParams {
+  /**
+   * Typed parameters for a _spreadsheet v1_ product configuration.
+   */
+  export interface SpreadsheetV1Parameters {
+    /**
+     * Product type.
+     */
+    product_type: 'spreadsheet_v1';
+
+    /**
+     * A1 notation of the range to extract a single region from. If None, the entire
+     * sheet is used.
+     */
+    extraction_range?: string | null;
+
+    /**
+     * Return a flattened dataframe when a detected table is recognized as
+     * hierarchical.
+     */
+    flatten_hierarchical_tables?: boolean;
+
+    /**
+     * Whether to generate additional metadata (title, description) for each extracted
+     * region.
+     */
+    generate_additional_metadata?: boolean;
+
+    /**
+     * Whether to include hidden cells when extracting regions from the spreadsheet.
+     */
+    include_hidden_cells?: boolean;
+
+    /**
+     * The names of the sheets to extract regions from. If empty, all sheets will be
+     * processed.
+     */
+    sheet_names?: Array<string> | null;
+
+    /**
+     * Optional specialization mode for domain-specific extraction. Supported values:
+     * 'financial-standard', 'financial-enhanced', 'financial-precise'. Default None
+     * uses the general-purpose pipeline.
+     */
+    specialization?: string | null;
+
+    /**
+     * Influences how likely similar-looking regions are merged into a single table.
+     * Useful for spreadsheets that either have sparse tables (strong merging) or many
+     * distinct tables close together (weak merging).
+     */
+    table_merge_sensitivity?: 'strong' | 'weak';
+
+    /**
+     * Enables experimental processing. Accuracy may be impacted.
+     */
+    use_experimental_processing?: boolean;
+  }
 }
 
 export interface ConfigurationListParams extends PaginatedCursorParams {
@@ -1413,7 +1659,9 @@ export interface ConfigurationListParams extends PaginatedCursorParams {
   /**
    * Filter by one or more product types. Repeat the parameter for multiple values.
    */
-  product_type?: Array<'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'unknown'> | null;
+  product_type?: Array<
+    'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'
+  > | null;
 
   project_id?: string | null;
 }
