@@ -5,6 +5,7 @@ import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
+import { pollUntilComplete, PollingOptions, DEFAULT_TIMEOUT } from '../core/polling';
 
 export class Classify extends APIResource {
   /**
@@ -76,6 +77,63 @@ export class Classify extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ClassifyGetResponse> {
     return this._client.get(path`/api/v2/classify/${jobID}`, { query, ...options });
+  }
+
+  /**
+   * Wait for a classify job to complete by polling until it reaches a terminal state.
+   *
+   * @param jobID - The ID of the classify job to wait for
+   * @param query - Optional query parameters (organization_id, project_id)
+   * @param options - Polling configuration and request options
+   * @returns The completed classify job
+   * @throws {PollingTimeoutError} If the job doesn't complete within the timeout period
+   * @throws {PollingError} If the job fails
+   *
+   * @example
+   * ```typescript
+   * const job = await client.classify.create({
+   *   file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+   *   configuration_id: 'cfg-...',
+   * });
+   *
+   * const completed = await client.classify.waitForCompletion(job.id, undefined, { verbose: true });
+   * console.log(completed.result);
+   * ```
+   */
+  async waitForCompletion(
+    jobID: string,
+    query?: ClassifyGetParams,
+    options?: PollingOptions & RequestOptions,
+  ): Promise<ClassifyGetResponse> {
+    const { pollingInterval, maxInterval, timeout, backoff, verbose, ...requestOptions } = options || {};
+
+    const getStatus = async (): Promise<ClassifyGetResponse> => {
+      return await this.get(jobID, query, requestOptions);
+    };
+
+    const isComplete = (job: ClassifyGetResponse): boolean => {
+      return job.status === 'COMPLETED';
+    };
+
+    const isError = (job: ClassifyGetResponse): boolean => {
+      return job.status === 'FAILED';
+    };
+
+    const getErrorMessage = (job: ClassifyGetResponse): string => {
+      const errorParts = [`Job ${jobID} failed with status: ${job.status}`];
+      if (job.error_message) {
+        errorParts.push(`Error: ${job.error_message}`);
+      }
+      return errorParts.join(' | ');
+    };
+
+    return await pollUntilComplete(getStatus, isComplete, isError, getErrorMessage, {
+      pollingInterval,
+      maxInterval,
+      timeout: timeout || DEFAULT_TIMEOUT,
+      backoff,
+      verbose,
+    });
   }
 }
 
