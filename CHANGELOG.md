@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.4.0 (2026-04-16)
+
+Full Changelog: [v2.3.0...v2.4.0](https://github.com/run-llama/llama-cloud-ts/compare/v2.3.0...v2.4.0)
+
+### Features
+
+* **api:** api update ([a01c154](https://github.com/run-llama/llama-cloud-ts/commit/a01c154e61851d05aea455724ba8433232128911))
+* **api:** api update ([6120c9d](https://github.com/run-llama/llama-cloud-ts/commit/6120c9d79b1dbbf0ab9871b34969d1b14e3a8829))
+* **api:** api update ([4624695](https://github.com/run-llama/llama-cloud-ts/commit/462469536fc105f4cdcbf823046779598175a419))
+* **classify:** add waitForCompletion and run() helpers ([#57](https://github.com/run-llama/llama-cloud-ts/issues/57)) ([fc99e92](https://github.com/run-llama/llama-cloud-ts/commit/fc99e92727ad1ebcee8bc976d437795f7b3fd292))
+
+
+### Chores
+
+* fix example snippet imports ([975b94c](https://github.com/run-llama/llama-cloud-ts/commit/975b94c7d5ae7176a3aa52e762373ced139acc16))
+* **internal:** codegen related update ([3e62868](https://github.com/run-llama/llama-cloud-ts/commit/3e62868017d2c02d562dad0e4716a755a60854d8))
+* **internal:** codegen related update ([cfe2469](https://github.com/run-llama/llama-cloud-ts/commit/cfe2469a37bd8d3fad9ab6f06425ea610bddb767))
+* **internal:** show error causes in MCP servers when running in local mode ([a22eca6](https://github.com/run-llama/llama-cloud-ts/commit/a22eca639a5953ef77a3c2a7d440b62aac8a6270))
+* **mcp-server:** increase local docs search result count from 5 to 10 ([34104a4](https://github.com/run-llama/llama-cloud-ts/commit/34104a4a751d1980e84f24b13af09cf958851063))
+
+
+### Documentation
+
+* update examples ([ed02729](https://github.com/run-llama/llama-cloud-ts/commit/ed027293be711c9e618a526a971a47d53b717a1d))
+
 ## 2.3.0 (2026-04-07)
 
 Full Changelog: [v2.2.0...v2.3.0](https://github.com/run-llama/llama-cloud-ts/compare/v2.2.0...v2.3.0)
