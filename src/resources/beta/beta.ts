@@ -4,10 +4,10 @@ import { APIResource } from '../../core/resource';
 import * as AgentDataAPI from './agent-data';
 import {
   AgentData,
-  AgentDataAgentDataParams,
   AgentDataAggregateParams,
   AgentDataAggregateResponse,
   AgentDataAggregateResponsesPaginatedCursorPost,
+  AgentDataCreateParams,
   AgentDataDeleteByQueryParams,
   AgentDataDeleteByQueryResponse,
   AgentDataDeleteParams,
@@ -94,9 +94,9 @@ export declare namespace Beta {
     type AgentDataDeleteByQueryResponse as AgentDataDeleteByQueryResponse,
     type AgentDataAggregateResponsesPaginatedCursorPost as AgentDataAggregateResponsesPaginatedCursorPost,
     type AgentDataPaginatedCursorPost as AgentDataPaginatedCursorPost,
+    type AgentDataCreateParams as AgentDataCreateParams,
     type AgentDataUpdateParams as AgentDataUpdateParams,
     type AgentDataDeleteParams as AgentDataDeleteParams,
-    type AgentDataAgentDataParams as AgentDataAgentDataParams,
     type AgentDataAggregateParams as AgentDataAggregateParams,
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
     type AgentDataGetParams as AgentDataGetParams,

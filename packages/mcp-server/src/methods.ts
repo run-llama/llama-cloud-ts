@@ -497,6 +497,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/retrievers/{retriever_id}/retrieve',
   },
   {
+    clientCallName: 'client.beta.agentData.create',
+    fullyQualifiedName: 'beta.agentData.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/beta/agent-data',
+  },
+  {
     clientCallName: 'client.beta.agentData.update',
     fullyQualifiedName: 'beta.agentData.update',
     httpMethod: 'put',
@@ -507,12 +513,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'beta.agentData.delete',
     httpMethod: 'delete',
     httpPath: '/api/v1/beta/agent-data/{item_id}',
-  },
-  {
-    clientCallName: 'client.beta.agentData.agentData',
-    fullyQualifiedName: 'beta.agentData.agentData',
-    httpMethod: 'post',
-    httpPath: '/api/v1/beta/agent-data',
   },
   {
     clientCallName: 'client.beta.agentData.aggregate',

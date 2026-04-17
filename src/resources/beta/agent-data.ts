@@ -8,6 +8,26 @@ import { path } from '../../internal/utils/path';
 
 export class AgentData extends APIResource {
   /**
+   * Create new agent data.
+   *
+   * @example
+   * ```ts
+   * const agentData = await client.beta.agentData.create({
+   *   data: { foo: 'bar' },
+   *   deployment_name: 'deployment_name',
+   * });
+   * ```
+   */
+  create(params: AgentDataCreateParams, options?: RequestOptions): APIPromise<AgentData> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/beta/agent-data', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
+
+  /**
    * Update agent data by ID (overwrites).
    *
    * @example
@@ -45,26 +65,6 @@ export class AgentData extends APIResource {
     const { organization_id, project_id } = params ?? {};
     return this._client.delete(path`/api/v1/beta/agent-data/${itemID}`, {
       query: { organization_id, project_id },
-      ...options,
-    });
-  }
-
-  /**
-   * Create new agent data.
-   *
-   * @example
-   * ```ts
-   * const agentData = await client.beta.agentData.agentData({
-   *   data: { foo: 'bar' },
-   *   deployment_name: 'deployment_name',
-   * });
-   * ```
-   */
-  agentData(params: AgentDataAgentDataParams, options?: RequestOptions): APIPromise<AgentData> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/agent-data', {
-      query: { organization_id, project_id },
-      body,
       ...options,
     });
   }
@@ -204,30 +204,7 @@ export interface AgentDataDeleteByQueryResponse {
   deleted_count: number;
 }
 
-export interface AgentDataUpdateParams {
-  /**
-   * Body param
-   */
-  data: { [key: string]: unknown };
-
-  /**
-   * Query param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
-}
-
-export interface AgentDataDeleteParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface AgentDataAgentDataParams {
+export interface AgentDataCreateParams {
   /**
    * Body param
    */
@@ -252,6 +229,29 @@ export interface AgentDataAgentDataParams {
    * Body param
    */
   collection?: string;
+}
+
+export interface AgentDataUpdateParams {
+  /**
+   * Body param
+   */
+  data: { [key: string]: unknown };
+
+  /**
+   * Query param
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+}
+
+export interface AgentDataDeleteParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
 }
 
 export interface AgentDataAggregateParams extends PaginatedCursorPostParams {
@@ -466,9 +466,9 @@ export declare namespace AgentData {
     type AgentDataDeleteByQueryResponse as AgentDataDeleteByQueryResponse,
     type AgentDataAggregateResponsesPaginatedCursorPost as AgentDataAggregateResponsesPaginatedCursorPost,
     type AgentDataPaginatedCursorPost as AgentDataPaginatedCursorPost,
+    type AgentDataCreateParams as AgentDataCreateParams,
     type AgentDataUpdateParams as AgentDataUpdateParams,
     type AgentDataDeleteParams as AgentDataDeleteParams,
-    type AgentDataAgentDataParams as AgentDataAgentDataParams,
     type AgentDataAggregateParams as AgentDataAggregateParams,
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
     type AgentDataGetParams as AgentDataGetParams,
