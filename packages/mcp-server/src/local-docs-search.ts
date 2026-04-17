@@ -2866,13 +2866,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
-    name: 'agent_data',
+    name: 'create',
     endpoint: '/api/v1/beta/agent-data',
     httpMethod: 'post',
     summary: 'Create Agent Data',
     description: 'Create new agent data.',
-    stainlessPath: '(resource) beta.agent_data > (method) agent_data',
-    qualified: 'client.beta.agentData.agentData',
+    stainlessPath: '(resource) beta.agent_data > (method) create',
+    qualified: 'client.beta.agentData.create',
     params: [
       'data: object;',
       'deployment_name: string;',
@@ -2883,21 +2883,21 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       '{ data: object; deployment_name: string; id?: string; collection?: string; created_at?: string; project_id?: string; updated_at?: string; }',
     markdown:
-      "## agent_data\n\n`client.beta.agentData.agentData(data: object, deployment_name: string, organization_id?: string, project_id?: string, collection?: string): { data: object; deployment_name: string; id?: string; collection?: string; created_at?: string; project_id?: string; updated_at?: string; }`\n\n**post** `/api/v1/beta/agent-data`\n\nCreate new agent data.\n\n### Parameters\n\n- `data: object`\n\n- `deployment_name: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `collection?: string`\n\n### Returns\n\n- `{ data: object; deployment_name: string; id?: string; collection?: string; created_at?: string; project_id?: string; updated_at?: string; }`\n  API Result for a single agent data item\n\n  - `data: object`\n  - `deployment_name: string`\n  - `id?: string`\n  - `collection?: string`\n  - `created_at?: string`\n  - `project_id?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst agentData = await client.beta.agentData.agentData({\n  data: { foo: 'bar' },\n  deployment_name: 'deployment_name',\n});\n\nconsole.log(agentData);\n```",
+      "## create\n\n`client.beta.agentData.create(data: object, deployment_name: string, organization_id?: string, project_id?: string, collection?: string): { data: object; deployment_name: string; id?: string; collection?: string; created_at?: string; project_id?: string; updated_at?: string; }`\n\n**post** `/api/v1/beta/agent-data`\n\nCreate new agent data.\n\n### Parameters\n\n- `data: object`\n\n- `deployment_name: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `collection?: string`\n\n### Returns\n\n- `{ data: object; deployment_name: string; id?: string; collection?: string; created_at?: string; project_id?: string; updated_at?: string; }`\n  API Result for a single agent data item\n\n  - `data: object`\n  - `deployment_name: string`\n  - `id?: string`\n  - `collection?: string`\n  - `created_at?: string`\n  - `project_id?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst agentData = await client.beta.agentData.create({\n  data: { foo: 'bar' },\n  deployment_name: 'deployment_name',\n});\n\nconsole.log(agentData);\n```",
     perLanguage: {
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "data": {\n            "foo": "bar"\n          },\n          "deployment_name": "deployment_name"\n        }\'',
       },
       python: {
-        method: 'beta.agent_data.agent_data',
+        method: 'beta.agent_data.create',
         example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nagent_data = client.beta.agent_data.agent_data(\n    data={\n        "foo": "bar"\n    },\n    deployment_name="deployment_name",\n)\nprint(agent_data.id)',
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nagent_data = client.beta.agent_data.create(\n    data={\n        "foo": "bar"\n    },\n    deployment_name="deployment_name",\n)\nprint(agent_data.id)',
       },
       typescript: {
-        method: 'client.beta.agentData.agentData',
+        method: 'client.beta.agentData.create',
         example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentData = await client.beta.agentData.agentData({\n  data: { foo: 'bar' },\n  deployment_name: 'deployment_name',\n});\n\nconsole.log(agentData.id);",
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentData = await client.beta.agentData.create({\n  data: { foo: 'bar' },\n  deployment_name: 'deployment_name',\n});\n\nconsole.log(agentData.id);",
       },
     },
   },
