@@ -9,6 +9,32 @@ const client = new LlamaCloud({
 
 describe('resource agentData', () => {
   // Mock server tests are disabled
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.beta.agentData.create({
+      data: { foo: 'bar' },
+      deployment_name: 'deployment_name',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.beta.agentData.create({
+      data: { foo: 'bar' },
+      deployment_name: 'deployment_name',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      collection: 'collection',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.beta.agentData.update('item_id', { data: { foo: 'bar' } });
     const rawResponse = await responsePromise.asResponse();
@@ -54,32 +80,6 @@ describe('resource agentData', () => {
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);
-  });
-
-  // Mock server tests are disabled
-  test.skip('agentData: only required params', async () => {
-    const responsePromise = client.beta.agentData.agentData({
-      data: { foo: 'bar' },
-      deployment_name: 'deployment_name',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('agentData: required and optional params', async () => {
-    const response = await client.beta.agentData.agentData({
-      data: { foo: 'bar' },
-      deployment_name: 'deployment_name',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      collection: 'collection',
-    });
   });
 
   // Mock server tests are disabled

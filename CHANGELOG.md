@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.4.1 (2026-04-17)
+
+Full Changelog: [v2.4.0...v2.4.1](https://github.com/run-llama/llama-cloud-ts/compare/v2.4.0...v2.4.1)
+
+### Bug Fixes
+
+* **api:** Also support agent data `.create` for consistency ([05076d5](https://github.com/run-llama/llama-cloud-ts/commit/05076d5636c9bea969abcb58cba44048484f5fb0))
+* **beta:** re-add agentData() alias for backwards compat ([#59](https://github.com/run-llama/llama-cloud-ts/issues/59)) ([6e4fd36](https://github.com/run-llama/llama-cloud-ts/commit/6e4fd363eab85da711e4543dfff5b755c738eccd))
+
 ## 2.4.0 (2026-04-16)
 
 Full Changelog: [v2.3.0...v2.4.0](https://github.com/run-llama/llama-cloud-ts/compare/v2.3.0...v2.4.0)
