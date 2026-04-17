@@ -28,6 +28,15 @@ export class AgentData extends APIResource {
   }
 
   /**
+   * @deprecated Use {@link create} instead. `agentData` is kept as a
+   * backwards-compatible alias for SDK versions that exposed the create
+   * endpoint under this name.
+   */
+  agentData(params: AgentDataCreateParams, options?: RequestOptions): APIPromise<AgentData> {
+    return this.create(params, options);
+  }
+
+  /**
    * Update agent data by ID (overwrites).
    *
    * @example
