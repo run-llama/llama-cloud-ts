@@ -172,57 +172,6 @@ export interface File {
 }
 
 /**
- * Schema for creating a file.
- */
-export interface FileCreate {
-  /**
-   * Name that will be used for created file. If possible, always include the file
-   * extension in the name.
-   */
-  name: string;
-
-  /**
-   * The ID of the data source that the file belongs to
-   */
-  data_source_id?: string | null;
-
-  /**
-   * The ID of the file in the external system
-   */
-  external_file_id?: string | null;
-
-  /**
-   * Size of the file in bytes
-   */
-  file_size?: number | null;
-
-  /**
-   * The last modified time of the file
-   */
-  last_modified_at?: string | null;
-
-  /**
-   * Permission information for the file
-   */
-  permission_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
-
-  /**
-   * Resource information for the file
-   */
-  resource_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
-
-  /**
-   * Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
-   * expiration). If not specified, defaults to permanent storage.
-   */
-  storage_type?: 'ephemeral' | 'permanent' | (string & {});
-}
-
-/**
  * Schema for a presigned URL.
  */
 export interface PresignedURL {
@@ -554,7 +503,6 @@ export namespace FileQueryParams {
 export declare namespace Files {
   export {
     type File as File,
-    type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
     type FileCreateResponse as FileCreateResponse,
     type FileListResponse as FileListResponse,

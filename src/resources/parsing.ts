@@ -1402,6 +1402,7 @@ export interface ParsingCreateParams {
     | '2026-04-02'
     | '2026-04-06'
     | '2026-04-09'
+    | '2026-04-14'
     | 'latest'
     | (string & {});
 
@@ -2210,6 +2211,7 @@ export namespace ParsingCreateParams {
           | '2026-04-02'
           | '2026-04-06'
           | '2026-04-09'
+          | '2026-04-14'
           | 'latest'
           | (string & {})
           | null;
@@ -2402,8 +2404,9 @@ export interface ParsingGetParams {
   /**
    * Fields to include: text, markdown, items, metadata, job_metadata,
    * text_content_metadata, markdown_content_metadata, items_content_metadata,
-   * metadata_content_metadata, xlsx_content_metadata, output_pdf_content_metadata,
-   * images_content_metadata. Metadata fields include presigned URLs.
+   * metadata_content_metadata, raw_words_content_metadata, xlsx_content_metadata,
+   * output_pdf_content_metadata, images_content_metadata. Metadata fields include
+   * presigned URLs.
    */
   expand?: Array<string>;
 

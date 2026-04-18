@@ -469,6 +469,7 @@ export interface ParseV2Parameters {
     | '2026-04-02'
     | '2026-04-06'
     | '2026-04-09'
+    | '2026-04-14'
     | 'latest'
     | (string & {});
 
@@ -1249,6 +1250,7 @@ export namespace ParseV2Parameters {
           | '2026-04-02'
           | '2026-04-06'
           | '2026-04-09'
+          | '2026-04-14'
           | 'latest'
           | (string & {})
           | null;
