@@ -2,18 +2,15 @@
 
 import LlamaCloud from '@llamaindex/llama-cloud';
 
-const client = new LlamaCloud({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new LlamaCloud({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource configurations', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.configurations.create({
-      name: 'x',
-      parameters: { categories: [{ name: 'x' }], product_type: 'split_v1' },
-    });
+    name: 'x',
+    parameters: { categories: [{ name: 'x' }], product_type: 'split_v1' },
+  });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,15 +23,15 @@ describe('resource configurations', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.configurations.create({
-      name: 'x',
-      parameters: {
-        categories: [{ name: 'x', description: 'x' }],
-        product_type: 'split_v1',
-        splitting_strategy: { allow_uncategorized: 'include' },
-      },
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
+    name: 'x',
+    parameters: {
+    categories: [{ name: 'x', description: 'x' }],
+    product_type: 'split_v1',
+    splitting_strategy: { allow_uncategorized: 'include' },
+  },
+    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+  });
   });
 
   // Mock server tests are disabled
@@ -52,16 +49,9 @@ describe('resource configurations', () => {
   // Mock server tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.configurations.retrieve(
-        'config_id',
-        {
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
+    await expect(client.configurations.retrieve('config_id', { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -91,20 +81,17 @@ describe('resource configurations', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.configurations.list(
-        {
-          latest_only: true,
-          name: 'name',
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          page_size: 0,
-          page_token: 'page_token',
-          product_type: ['split_v1', 'extract_v2'],
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
+    await expect(client.configurations.list({
+    latest_only: true,
+    name: 'name',
+    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    page_size: 0,
+    page_token: 'page_token',
+    product_type: ['split_v1', 'extract_v2'],
+    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -122,15 +109,8 @@ describe('resource configurations', () => {
   // Mock server tests are disabled
   test.skip('delete: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.configurations.delete(
-        'config_id',
-        {
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
+    await expect(client.configurations.delete('config_id', { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(LlamaCloud.NotFoundError);
   });
 });

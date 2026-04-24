@@ -19,12 +19,8 @@ export class Split extends APIResource {
    * ```
    */
   create(params: SplitCreateParams, options?: RequestOptions): APIPromise<SplitCreateResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/split/jobs', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    const { organization_id, project_id, ...body } = params
+    return this._client.post('/api/v1/beta/split/jobs', { query: { organization_id, project_id }, body, ...options });
   }
 
   /**
@@ -38,14 +34,8 @@ export class Split extends APIResource {
    * }
    * ```
    */
-  list(
-    query: SplitListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<SplitListResponsesPaginatedCursor, SplitListResponse> {
-    return this._client.getAPIList('/api/v1/beta/split/jobs', PaginatedCursor<SplitListResponse>, {
-      query,
-      ...options,
-    });
+  list(query: SplitListParams | null | undefined = {}, options?: RequestOptions): PagePromise<SplitListResponsesPaginatedCursor, SplitListResponse> {
+    return this._client.getAPIList('/api/v1/beta/split/jobs', PaginatedCursor<SplitListResponse>, { query, ...options });
   }
 
   /**
@@ -56,16 +46,12 @@ export class Split extends APIResource {
    * const split = await client.beta.split.get('split_job_id');
    * ```
    */
-  get(
-    splitJobID: string,
-    query: SplitGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<SplitGetResponse> {
+  get(splitJobID: string, query: SplitGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<SplitGetResponse> {
     return this._client.get(path`/api/v1/beta/split/jobs/${splitJobID}`, { query, ...options });
   }
 }
 
-export type SplitListResponsesPaginatedCursor = PaginatedCursor<SplitListResponse>;
+export type SplitListResponsesPaginatedCursor = PaginatedCursor<SplitListResponse>
 
 /**
  * Category definition for document splitting.
@@ -413,6 +399,6 @@ export declare namespace Split {
     type SplitListResponsesPaginatedCursor as SplitListResponsesPaginatedCursor,
     type SplitCreateParams as SplitCreateParams,
     type SplitListParams as SplitListParams,
-    type SplitGetParams as SplitGetParams,
+    type SplitGetParams as SplitGetParams
   };
 }

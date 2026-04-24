@@ -9,21 +9,14 @@ export class Projects extends APIResource {
   /**
    * List projects or get one by name
    */
-  list(
-    query: ProjectListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ProjectListResponse> {
+  list(query: ProjectListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ProjectListResponse> {
     return this._client.get('/api/v1/projects', { query, ...options });
   }
 
   /**
    * Get a project by ID.
    */
-  get(
-    projectID: string,
-    query: ProjectGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<Project> {
+  get(projectID: string, query: ProjectGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<Project> {
     return this._client.get(path`/api/v1/projects/${projectID}`, { query, ...options });
   }
 }
@@ -62,7 +55,7 @@ export interface Project {
   updated_at?: string | null;
 }
 
-export type ProjectListResponse = Array<Project>;
+export type ProjectListResponse = Array<Project>
 
 export interface ProjectListParams {
   organization_id?: string | null;
@@ -79,6 +72,6 @@ export declare namespace Projects {
     type Project as Project,
     type ProjectListResponse as ProjectListResponse,
     type ProjectListParams as ProjectListParams,
-    type ProjectGetParams as ProjectGetParams,
+    type ProjectGetParams as ProjectGetParams
   };
 }

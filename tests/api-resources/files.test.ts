@@ -2,18 +2,12 @@
 
 import LlamaCloud, { toFile } from '@llamaindex/llama-cloud';
 
-const client = new LlamaCloud({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new LlamaCloud({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.files.create({
-      file: await toFile(Buffer.from('Example data'), 'README.md'),
-      purpose: 'purpose',
-    });
+    const responsePromise = client.files.create({ file: await toFile(Buffer.from('Example data'), 'README.md'), purpose: 'purpose' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,12 +20,12 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.files.create({
-      file: await toFile(Buffer.from('Example data'), 'README.md'),
-      purpose: 'purpose',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      external_file_id: 'external_file_id',
-    });
+    file: await toFile(Buffer.from('Example data'), 'README.md'),
+    purpose: 'purpose',
+    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    external_file_id: 'external_file_id',
+  });
   });
 
   // Mock server tests are disabled
@@ -49,21 +43,18 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.files.list(
-        {
-          external_file_id: 'external_file_id',
-          file_ids: ['182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'],
-          file_name: 'file_name',
-          order_by: 'order_by',
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          page_size: 1,
-          page_token: 'page_token',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
+    await expect(client.files.list({
+    external_file_id: 'external_file_id',
+    file_ids: ['182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'],
+    file_name: 'file_name',
+    order_by: 'order_by',
+    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    page_size: 1,
+    page_token: 'page_token',
+    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -81,16 +72,9 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('delete: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.files.delete(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        {
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
+    await expect(client.files.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -108,17 +92,13 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.files.get(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        {
-          expires_at_seconds: 0,
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
+    await expect(client.files.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+    expires_at_seconds: 0,
+    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled

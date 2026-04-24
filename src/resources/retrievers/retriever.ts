@@ -10,17 +10,9 @@ export class Retriever extends APIResource {
   /**
    * Retrieve data using a Retriever.
    */
-  search(
-    retrieverID: string,
-    params: RetrieverSearchParams,
-    options?: RequestOptions,
-  ): APIPromise<RetrieversAPI.CompositeRetrievalResult> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post(path`/api/v1/retrievers/${retrieverID}/retrieve`, {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+  search(retrieverID: string, params: RetrieverSearchParams, options?: RequestOptions): APIPromise<RetrieversAPI.CompositeRetrievalResult> {
+    const { organization_id, project_id, ...body } = params
+    return this._client.post(path`/api/v1/retrievers/${retrieverID}/retrieve`, { query: { organization_id, project_id }, body, ...options });
   }
 }
 
@@ -58,5 +50,7 @@ export interface RetrieverSearchParams {
 }
 
 export declare namespace Retriever {
-  export { type RetrieverSearchParams as RetrieverSearchParams };
+  export {
+    type RetrieverSearchParams as RetrieverSearchParams
+  };
 }

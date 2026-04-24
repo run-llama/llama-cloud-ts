@@ -15,12 +15,8 @@ export class Jobs extends APIResource {
    * @deprecated Please use `client.classify.create()`
    */
   create(params: JobCreateParams, options?: RequestOptions): APIPromise<ClassifyJob> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/classifier/jobs', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    const { organization_id, project_id, ...body } = params
+    return this._client.post('/api/v1/classifier/jobs', { query: { organization_id, project_id }, body, ...options });
   }
 
   /**
@@ -29,14 +25,8 @@ export class Jobs extends APIResource {
    *
    * @deprecated Please use `client.classify.list()`
    */
-  list(
-    query: JobListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<ClassifyJobsPaginatedCursor, ClassifyJob> {
-    return this._client.getAPIList('/api/v1/classifier/jobs', PaginatedCursor<ClassifyJob>, {
-      query,
-      ...options,
-    });
+  list(query: JobListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ClassifyJobsPaginatedCursor, ClassifyJob> {
+    return this._client.getAPIList('/api/v1/classifier/jobs', PaginatedCursor<ClassifyJob>, { query, ...options });
   }
 
   /**
@@ -45,11 +35,7 @@ export class Jobs extends APIResource {
    *
    * @deprecated Please use `client.classify.get()`
    */
-  get(
-    classifyJobID: string,
-    query: JobGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ClassifyJob> {
+  get(classifyJobID: string, query: JobGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<ClassifyJob> {
     return this._client.get(path`/api/v1/classifier/jobs/${classifyJobID}`, { query, ...options });
   }
 
@@ -59,16 +45,12 @@ export class Jobs extends APIResource {
    *
    * @deprecated Please use `client.classify.get()`
    */
-  getResults(
-    classifyJobID: string,
-    query: JobGetResultsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<JobGetResultsResponse> {
+  getResults(classifyJobID: string, query: JobGetResultsParams | null | undefined = {}, options?: RequestOptions): APIPromise<JobGetResultsResponse> {
     return this._client.get(path`/api/v1/classifier/jobs/${classifyJobID}/results`, { query, ...options });
   }
 }
 
-export type ClassifyJobsPaginatedCursor = PaginatedCursor<ClassifyJob>;
+export type ClassifyJobsPaginatedCursor = PaginatedCursor<ClassifyJob>
 
 /**
  * A rule for classifying documents - v0 simplified version.
@@ -348,6 +330,6 @@ export declare namespace Jobs {
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
     type JobGetParams as JobGetParams,
-    type JobGetResultsParams as JobGetResultsParams,
+    type JobGetResultsParams as JobGetResultsParams
   };
 }

@@ -3,11 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as PipelinesAPI from './pipelines';
 import { APIPromise } from '../../core/api-promise';
-import {
-  PagePromise,
-  PaginatedPipelineFiles,
-  type PaginatedPipelineFilesParams,
-} from '../../core/pagination';
+import { PagePromise, PaginatedPipelineFiles, type PaginatedPipelineFilesParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -16,12 +12,8 @@ export class Files extends APIResource {
   /**
    * Add files to a pipeline.
    */
-  create(
-    pipelineID: string,
-    params: FileCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<FileCreateResponse> {
-    const { body } = params;
+  create(pipelineID: string, params: FileCreateParams, options?: RequestOptions): APIPromise<FileCreateResponse> {
+    const { body } = params
     return this._client.put(path`/api/v1/pipelines/${pipelineID}/files`, { body: body, ...options });
   }
 
@@ -29,7 +21,7 @@ export class Files extends APIResource {
    * Update a file for a pipeline.
    */
   update(fileID: string, params: FileUpdateParams, options?: RequestOptions): APIPromise<PipelineFile> {
-    const { pipeline_id, ...body } = params;
+    const { pipeline_id, ...body } = params
     return this._client.put(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}`, { body, ...options });
   }
 
@@ -38,54 +30,35 @@ export class Files extends APIResource {
    *
    * @deprecated
    */
-  list(
-    pipelineID: string,
-    query: FileListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<PipelineFilesPaginatedPipelineFiles, PipelineFile> {
-    return this._client.getAPIList(
-      path`/api/v1/pipelines/${pipelineID}/files2`,
-      PaginatedPipelineFiles<PipelineFile>,
-      { query, ...options },
-    );
+  list(pipelineID: string, query: FileListParams | null | undefined = {}, options?: RequestOptions): PagePromise<PipelineFilesPaginatedPipelineFiles, PipelineFile> {
+    return this._client.getAPIList(path`/api/v1/pipelines/${pipelineID}/files2`, PaginatedPipelineFiles<PipelineFile>, { query, ...options });
   }
 
   /**
    * Delete a file from a pipeline.
    */
   delete(fileID: string, params: FileDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { pipeline_id } = params;
-    return this._client.delete(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    const { pipeline_id } = params
+    return this._client.delete(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
    * Get status of a file for a pipeline.
    */
-  getStatus(
-    fileID: string,
-    params: FileGetStatusParams,
-    options?: RequestOptions,
-  ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
-    const { pipeline_id } = params;
+  getStatus(fileID: string, params: FileGetStatusParams, options?: RequestOptions): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
+    const { pipeline_id } = params
     return this._client.get(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}/status`, options);
   }
 
   /**
    * Get files for a pipeline.
    */
-  getStatusCounts(
-    pipelineID: string,
-    query: FileGetStatusCountsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<FileGetStatusCountsResponse> {
+  getStatusCounts(pipelineID: string, query: FileGetStatusCountsParams | null | undefined = {}, options?: RequestOptions): APIPromise<FileGetStatusCountsResponse> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}/files/status-counts`, { query, ...options });
   }
 }
 
-export type PipelineFilesPaginatedPipelineFiles = PaginatedPipelineFiles<PipelineFile>;
+export type PipelineFilesPaginatedPipelineFiles = PaginatedPipelineFiles<PipelineFile>
 
 /**
  * A file associated with a pipeline.
@@ -104,9 +77,7 @@ export interface PipelineFile {
   /**
    * Hashes for the configuration of the pipeline.
    */
-  config_hash?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
+  config_hash?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
 
   /**
    * When the pipeline file was created.
@@ -116,9 +87,7 @@ export interface PipelineFile {
   /**
    * Custom metadata for the file.
    */
-  custom_metadata?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
+  custom_metadata?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
 
   /**
    * The ID of the data source that the file belongs to.
@@ -163,9 +132,7 @@ export interface PipelineFile {
   /**
    * Permission information for the file.
    */
-  permission_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
+  permission_info?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
 
   /**
    * The ID of the project that the file belongs to.
@@ -175,9 +142,7 @@ export interface PipelineFile {
   /**
    * Resource information for the file.
    */
-  resource_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
+  resource_info?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
 
   /**
    * Status of the pipeline file.
@@ -195,7 +160,7 @@ export interface PipelineFile {
   updated_at?: string | null;
 }
 
-export type FileCreateResponse = Array<PipelineFile>;
+export type FileCreateResponse = Array<PipelineFile>
 
 export interface FileGetStatusCountsResponse {
   /**
@@ -241,9 +206,7 @@ export namespace FileCreateParams {
     /**
      * Custom metadata for the file
      */
-    custom_metadata?: {
-      [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-    } | null;
+    custom_metadata?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
   }
 }
 
@@ -256,9 +219,7 @@ export interface FileUpdateParams {
   /**
    * Body param: Custom metadata for the file
    */
-  custom_metadata?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
+  custom_metadata?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
 }
 
 export interface FileListParams extends PaginatedPipelineFilesParams {
@@ -301,6 +262,6 @@ export declare namespace Files {
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGetStatusParams as FileGetStatusParams,
-    type FileGetStatusCountsParams as FileGetStatusCountsParams,
+    type FileGetStatusCountsParams as FileGetStatusCountsParams
   };
 }
