@@ -156,7 +156,9 @@ export interface ExtractConfiguration {
   confidence_scores?: boolean;
 
   /**
-   * Extract algorithm version. Use 'latest' or a date string.
+   * Extract algorithm version. Use 'latest' for the default pipeline, a date string
+   * (e.g. '2026-01-08'), or 'continuous' to opt into schema-guided splitting for
+   * documents with repeating entities.
    */
   extract_version?: string;
 
