@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.5.0 (2026-04-24)
+
+Full Changelog: [v2.4.1...v2.5.0](https://github.com/run-llama/llama-cloud-ts/compare/v2.4.1...v2.5.0)
+
+### Features
+
+* **api:** api update ([62a1c6b](https://github.com/run-llama/llama-cloud-ts/commit/62a1c6b50ad4aadfc3e8197339e5012421dc4a39))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([e409b2d](https://github.com/run-llama/llama-cloud-ts/commit/e409b2d3fc97e5ffba6fc373b251b941c5185acb))
+* restructure docs search code ([72f2ac5](https://github.com/run-llama/llama-cloud-ts/commit/72f2ac57747bc0e78fd9d760ca88bdc54e4b4843))
+
 ## 2.4.1 (2026-04-17)
 
 Full Changelog: [v2.4.0...v2.4.1](https://github.com/run-llama/llama-cloud-ts/compare/v2.4.0...v2.4.1)
