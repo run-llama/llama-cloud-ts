@@ -3252,6 +3252,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'page_size?: number;',
       'page_token?: string;',
       'project_id?: string;',
+      "type?: 'user' | 'index';",
     ],
     response:
       '{ id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }',
