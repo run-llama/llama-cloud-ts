@@ -1407,9 +1407,9 @@ export interface ParsingCreateParams {
     | (string & {});
 
   /**
-   * Query param
-   */
-  organization_id?: string | null;
+ * Query param
+ */
+organization_id?: string | null;
 
   /**
    * Query param
