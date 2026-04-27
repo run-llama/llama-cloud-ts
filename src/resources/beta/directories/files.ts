@@ -27,9 +27,17 @@ export class Files extends APIResource {
    * );
    * ```
    */
-  update(directoryFileID: string, params: FileUpdateParams, options?: RequestOptions): APIPromise<FileUpdateResponse> {
-    const { path_directory_id, organization_id, project_id, ...body } = params
-    return this._client.patch(path`/api/v1/beta/directories/${path_directory_id}/files/${directoryFileID}`, { query: { organization_id, project_id }, body, ...options });
+  update(
+    directoryFileID: string,
+    params: FileUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<FileUpdateResponse> {
+    const { path_directory_id, organization_id, project_id, ...body } = params;
+    return this._client.patch(path`/api/v1/beta/directories/${path_directory_id}/files/${directoryFileID}`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -46,8 +54,16 @@ export class Files extends APIResource {
    * }
    * ```
    */
-  list(directoryID: string, query: FileListParams | null | undefined = {}, options?: RequestOptions): PagePromise<FileListResponsesPaginatedCursor, FileListResponse> {
-    return this._client.getAPIList(path`/api/v1/beta/directories/${directoryID}/files`, PaginatedCursor<FileListResponse>, { query, ...options });
+  list(
+    directoryID: string,
+    query: FileListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<FileListResponsesPaginatedCursor, FileListResponse> {
+    return this._client.getAPIList(
+      path`/api/v1/beta/directories/${directoryID}/files`,
+      PaginatedCursor<FileListResponse>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -66,8 +82,12 @@ export class Files extends APIResource {
    * ```
    */
   delete(directoryFileID: string, params: FileDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { directory_id, organization_id, project_id } = params
-    return this._client.delete(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, { query: { organization_id, project_id }, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    const { directory_id, organization_id, project_id } = params;
+    return this._client.delete(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
+      query: { organization_id, project_id },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -85,8 +105,12 @@ export class Files extends APIResource {
    * ```
    */
   add(directoryID: string, params: FileAddParams, options?: RequestOptions): APIPromise<FileAddResponse> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post(path`/api/v1/beta/directories/${directoryID}/files`, { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post(path`/api/v1/beta/directories/${directoryID}/files`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -103,8 +127,11 @@ export class Files extends APIResource {
    * ```
    */
   get(directoryFileID: string, params: FileGetParams, options?: RequestOptions): APIPromise<FileGetResponse> {
-    const { directory_id, ...query } = params
-    return this._client.get(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, { query, ...options });
+    const { directory_id, ...query } = params;
+    return this._client.get(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -122,13 +149,20 @@ export class Files extends APIResource {
    * );
    * ```
    */
-  upload(directoryID: string, params: FileUploadParams, options?: RequestOptions): APIPromise<FileUploadResponse> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post(path`/api/v1/beta/directories/${directoryID}/files/upload`, multipartFormRequestOptions({ query: { organization_id, project_id }, body, ...options }, this._client));
+  upload(
+    directoryID: string,
+    params: FileUploadParams,
+    options?: RequestOptions,
+  ): APIPromise<FileUploadResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post(
+      path`/api/v1/beta/directories/${directoryID}/files/upload`,
+      multipartFormRequestOptions({ query: { organization_id, project_id }, body, ...options }, this._client),
+    );
   }
 }
 
-export type FileListResponsesPaginatedCursor = PaginatedCursor<FileListResponse>
+export type FileListResponsesPaginatedCursor = PaginatedCursor<FileListResponse>;
 
 /**
  * API response schema for a directory file.
@@ -597,6 +631,6 @@ export declare namespace Files {
     type FileDeleteParams as FileDeleteParams,
     type FileAddParams as FileAddParams,
     type FileGetParams as FileGetParams,
-    type FileUploadParams as FileUploadParams
+    type FileUploadParams as FileUploadParams,
   };
 }

@@ -2,7 +2,21 @@
 
 import { APIResource } from '../../../core/resource';
 import * as FilesAPI from './files';
-import { FileAddParams, FileAddResponse, FileDeleteParams, FileGetParams, FileGetResponse, FileListParams, FileListResponse, FileListResponsesPaginatedCursor, FileUpdateParams, FileUpdateResponse, FileUploadParams, FileUploadResponse, Files } from './files';
+import {
+  FileAddParams,
+  FileAddResponse,
+  FileDeleteParams,
+  FileGetParams,
+  FileGetResponse,
+  FileListParams,
+  FileListResponse,
+  FileListResponsesPaginatedCursor,
+  FileUpdateParams,
+  FileUpdateResponse,
+  FileUploadParams,
+  FileUploadResponse,
+  Files,
+} from './files';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../../core/pagination';
 import { buildHeaders } from '../../../internal/headers';
@@ -26,8 +40,12 @@ export class Directories extends APIResource {
    * ```
    */
   create(params: DirectoryCreateParams, options?: RequestOptions): APIPromise<DirectoryCreateResponse> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post('/api/v1/beta/directories', { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/beta/directories', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -40,9 +58,17 @@ export class Directories extends APIResource {
    * );
    * ```
    */
-  update(directoryID: string, params: DirectoryUpdateParams, options?: RequestOptions): APIPromise<DirectoryUpdateResponse> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.patch(path`/api/v1/beta/directories/${directoryID}`, { query: { organization_id, project_id }, body, ...options });
+  update(
+    directoryID: string,
+    params: DirectoryUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<DirectoryUpdateResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.patch(path`/api/v1/beta/directories/${directoryID}`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -56,8 +82,14 @@ export class Directories extends APIResource {
    * }
    * ```
    */
-  list(query: DirectoryListParams | null | undefined = {}, options?: RequestOptions): PagePromise<DirectoryListResponsesPaginatedCursor, DirectoryListResponse> {
-    return this._client.getAPIList('/api/v1/beta/directories', PaginatedCursor<DirectoryListResponse>, { query, ...options });
+  list(
+    query: DirectoryListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<DirectoryListResponsesPaginatedCursor, DirectoryListResponse> {
+    return this._client.getAPIList('/api/v1/beta/directories', PaginatedCursor<DirectoryListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -68,9 +100,17 @@ export class Directories extends APIResource {
    * await client.beta.directories.delete('directory_id');
    * ```
    */
-  delete(directoryID: string, params: DirectoryDeleteParams | null | undefined = {}, options?: RequestOptions): APIPromise<void> {
-    const { organization_id, project_id } = params ?? {}
-    return this._client.delete(path`/api/v1/beta/directories/${directoryID}`, { query: { organization_id, project_id }, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+  delete(
+    directoryID: string,
+    params: DirectoryDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v1/beta/directories/${directoryID}`, {
+      query: { organization_id, project_id },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -83,12 +123,16 @@ export class Directories extends APIResource {
    * );
    * ```
    */
-  get(directoryID: string, query: DirectoryGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<DirectoryGetResponse> {
+  get(
+    directoryID: string,
+    query: DirectoryGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<DirectoryGetResponse> {
     return this._client.get(path`/api/v1/beta/directories/${directoryID}`, { query, ...options });
   }
 }
 
-export type DirectoryListResponsesPaginatedCursor = PaginatedCursor<DirectoryListResponse>
+export type DirectoryListResponsesPaginatedCursor = PaginatedCursor<DirectoryListResponse>;
 
 /**
  * API response schema for a directory.
@@ -358,7 +402,7 @@ export declare namespace Directories {
     type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryListParams as DirectoryListParams,
     type DirectoryDeleteParams as DirectoryDeleteParams,
-    type DirectoryGetParams as DirectoryGetParams
+    type DirectoryGetParams as DirectoryGetParams,
   };
 
   export {
@@ -374,6 +418,6 @@ export declare namespace Directories {
     type FileDeleteParams as FileDeleteParams,
     type FileAddParams as FileAddParams,
     type FileGetParams as FileGetParams,
-    type FileUploadParams as FileUploadParams
+    type FileUploadParams as FileUploadParams,
   };
 }

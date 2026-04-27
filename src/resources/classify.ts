@@ -27,8 +27,12 @@ export class Classify extends APIResource {
    * ```
    */
   create(params: ClassifyCreateParams, options?: RequestOptions): APIPromise<ClassifyCreateResponse> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post('/api/v2/classify', { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v2/classify', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -45,8 +49,14 @@ export class Classify extends APIResource {
    * }
    * ```
    */
-  list(query: ClassifyListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ClassifyListResponsesPaginatedCursor, ClassifyListResponse> {
-    return this._client.getAPIList('/api/v2/classify', PaginatedCursor<ClassifyListResponse>, { query, ...options });
+  list(
+    query: ClassifyListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ClassifyListResponsesPaginatedCursor, ClassifyListResponse> {
+    return this._client.getAPIList('/api/v2/classify', PaginatedCursor<ClassifyListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -60,12 +70,16 @@ export class Classify extends APIResource {
    * const classify = await client.classify.get('job_id');
    * ```
    */
-  get(jobID: string, query: ClassifyGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<ClassifyGetResponse> {
+  get(
+    jobID: string,
+    query: ClassifyGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ClassifyGetResponse> {
     return this._client.get(path`/api/v2/classify/${jobID}`, { query, ...options });
   }
 }
 
-export type ClassifyListResponsesPaginatedCursor = PaginatedCursor<ClassifyListResponse>
+export type ClassifyListResponsesPaginatedCursor = PaginatedCursor<ClassifyListResponse>;
 
 /**
  * Configuration for a classify job.
@@ -495,6 +509,6 @@ export declare namespace Classify {
     type ClassifyListResponsesPaginatedCursor as ClassifyListResponsesPaginatedCursor,
     type ClassifyCreateParams as ClassifyCreateParams,
     type ClassifyListParams as ClassifyListParams,
-    type ClassifyGetParams as ClassifyGetParams
+    type ClassifyGetParams as ClassifyGetParams,
   };
 }

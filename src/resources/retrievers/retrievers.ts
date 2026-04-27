@@ -15,37 +15,64 @@ export class Retrievers extends APIResource {
    * Create a new Retriever.
    */
   create(params: RetrieverCreateParams, options?: RequestOptions): APIPromise<Retriever> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post('/api/v1/retrievers', { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/retrievers', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
    * Update an existing Retriever.
    */
-  update(retrieverID: string, params: RetrieverUpdateParams, options?: RequestOptions): APIPromise<Retriever> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.put(path`/api/v1/retrievers/${retrieverID}`, { query: { organization_id, project_id }, body, ...options });
+  update(
+    retrieverID: string,
+    params: RetrieverUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<Retriever> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.put(path`/api/v1/retrievers/${retrieverID}`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
    * List Retrievers for a project.
    */
-  list(query: RetrieverListParams | null | undefined = {}, options?: RequestOptions): APIPromise<RetrieverListResponse> {
+  list(
+    query: RetrieverListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<RetrieverListResponse> {
     return this._client.get('/api/v1/retrievers', { query, ...options });
   }
 
   /**
    * Delete a Retriever by ID.
    */
-  delete(retrieverID: string, params: RetrieverDeleteParams | null | undefined = {}, options?: RequestOptions): APIPromise<void> {
-    const { organization_id, project_id } = params ?? {}
-    return this._client.delete(path`/api/v1/retrievers/${retrieverID}`, { query: { organization_id, project_id }, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+  delete(
+    retrieverID: string,
+    params: RetrieverDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v1/retrievers/${retrieverID}`, {
+      query: { organization_id, project_id },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
    * Get a Retriever by ID.
    */
-  get(retrieverID: string, query: RetrieverGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<Retriever> {
+  get(
+    retrieverID: string,
+    query: RetrieverGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Retriever> {
     return this._client.get(path`/api/v1/retrievers/${retrieverID}`, { query, ...options });
   }
 
@@ -53,23 +80,31 @@ export class Retrievers extends APIResource {
    * Retrieve data using specified pipelines without creating a persistent retriever.
    */
   search(params: RetrieverSearchParams, options?: RequestOptions): APIPromise<CompositeRetrievalResult> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post('/api/v1/retrievers/retrieve', { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/retrievers/retrieve', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
    * Upsert a new Retriever.
    */
   upsert(params: RetrieverUpsertParams, options?: RequestOptions): APIPromise<Retriever> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.put('/api/v1/retrievers', { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.put('/api/v1/retrievers', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 }
 
 /**
  * Enum for the mode of composite retrieval.
  */
-export type CompositeRetrievalMode = 'routing' | 'full'
+export type CompositeRetrievalMode = 'routing' | 'full';
 
 export interface CompositeRetrievalResult {
   /**
@@ -228,7 +263,7 @@ export interface RetrieverPipeline {
   preset_retrieval_parameters?: PipelinesAPI.PresetRetrievalParams;
 }
 
-export type RetrieverListResponse = Array<Retriever>
+export type RetrieverListResponse = Array<Retriever>;
 
 export interface RetrieverCreateParams {
   /**
@@ -371,6 +406,6 @@ export declare namespace Retrievers {
     type RetrieverDeleteParams as RetrieverDeleteParams,
     type RetrieverGetParams as RetrieverGetParams,
     type RetrieverSearchParams as RetrieverSearchParams,
-    type RetrieverUpsertParams as RetrieverUpsertParams
+    type RetrieverUpsertParams as RetrieverUpsertParams,
   };
 }

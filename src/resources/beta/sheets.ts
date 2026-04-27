@@ -21,8 +21,12 @@ export class Sheets extends APIResource {
    * ```
    */
   create(params: SheetCreateParams, options?: RequestOptions): APIPromise<SheetsJob> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post('/api/v1/beta/sheets/jobs', { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/beta/sheets/jobs', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -37,8 +41,14 @@ export class Sheets extends APIResource {
    * }
    * ```
    */
-  list(query: SheetListParams | null | undefined = {}, options?: RequestOptions): PagePromise<SheetsJobsPaginatedCursor, SheetsJob> {
-    return this._client.getAPIList('/api/v1/beta/sheets/jobs', PaginatedCursor<SheetsJob>, { query, ...options });
+  list(
+    query: SheetListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<SheetsJobsPaginatedCursor, SheetsJob> {
+    return this._client.getAPIList('/api/v1/beta/sheets/jobs', PaginatedCursor<SheetsJob>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -53,9 +63,16 @@ export class Sheets extends APIResource {
    * );
    * ```
    */
-  deleteJob(spreadsheetJobID: string, params: SheetDeleteJobParams | null | undefined = {}, options?: RequestOptions): APIPromise<unknown> {
-    const { organization_id, project_id } = params ?? {}
-    return this._client.delete(path`/api/v1/beta/sheets/jobs/${spreadsheetJobID}`, { query: { organization_id, project_id }, ...options });
+  deleteJob(
+    spreadsheetJobID: string,
+    params: SheetDeleteJobParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v1/beta/sheets/jobs/${spreadsheetJobID}`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
   }
 
   /**
@@ -75,7 +92,11 @@ export class Sheets extends APIResource {
    * );
    * ```
    */
-  get(spreadsheetJobID: string, query: SheetGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<SheetsJob> {
+  get(
+    spreadsheetJobID: string,
+    query: SheetGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<SheetsJob> {
     return this._client.get(path`/api/v1/beta/sheets/jobs/${spreadsheetJobID}`, { query, ...options });
   }
 
@@ -93,13 +114,20 @@ export class Sheets extends APIResource {
    *   });
    * ```
    */
-  getResultTable(regionType: 'table' | 'extra' | 'cell_metadata', params: SheetGetResultTableParams, options?: RequestOptions): APIPromise<FilesAPI.PresignedURL> {
-    const { spreadsheet_job_id, region_id, ...query } = params
-    return this._client.get(path`/api/v1/beta/sheets/jobs/${spreadsheet_job_id}/regions/${region_id}/result/${regionType}`, { query, ...options });
+  getResultTable(
+    regionType: 'table' | 'extra' | 'cell_metadata',
+    params: SheetGetResultTableParams,
+    options?: RequestOptions,
+  ): APIPromise<FilesAPI.PresignedURL> {
+    const { spreadsheet_job_id, region_id, ...query } = params;
+    return this._client.get(
+      path`/api/v1/beta/sheets/jobs/${spreadsheet_job_id}/regions/${region_id}/result/${regionType}`,
+      { query, ...options },
+    );
   }
 }
 
-export type SheetsJobsPaginatedCursor = PaginatedCursor<SheetsJob>
+export type SheetsJobsPaginatedCursor = PaginatedCursor<SheetsJob>;
 
 /**
  * A spreadsheet parsing job
@@ -281,7 +309,7 @@ export interface SheetsParsingConfig {
   use_experimental_processing?: boolean;
 }
 
-export type SheetDeleteJobResponse = unknown
+export type SheetDeleteJobResponse = unknown;
 
 export interface SheetCreateParams {
   /**
@@ -384,6 +412,6 @@ export declare namespace Sheets {
     type SheetListParams as SheetListParams,
     type SheetDeleteJobParams as SheetDeleteJobParams,
     type SheetGetParams as SheetGetParams,
-    type SheetGetResultTableParams as SheetGetResultTableParams
+    type SheetGetResultTableParams as SheetGetResultTableParams,
   };
 }

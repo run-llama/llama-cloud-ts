@@ -87,7 +87,8 @@ export class PagePromise<
     super(
       client,
       request,
-      async (client, props) => new Page(client, props.response, await defaultParseResponse(client, props), props.options)
+      async (client, props) =>
+        new Page(client, props.response, await defaultParseResponse(client, props), props.options),
     );
   }
 
@@ -126,14 +127,22 @@ export interface PaginatedJobsHistoryParams {
   limit?: number;
 }
 
-export class PaginatedJobsHistory<Item> extends AbstractPage<Item> implements PaginatedJobsHistoryResponse<Item> {
+export class PaginatedJobsHistory<Item>
+  extends AbstractPage<Item>
+  implements PaginatedJobsHistoryResponse<Item>
+{
   jobs: Array<Item>;
 
   total_count: number;
 
   offset: number;
 
-  constructor(client: LlamaCloud, response: Response, body: PaginatedJobsHistoryResponse<Item>, options: FinalRequestOptions) {
+  constructor(
+    client: LlamaCloud,
+    response: Response,
+    body: PaginatedJobsHistoryResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
     super(client, response, body, options);
 
     this.jobs = body.jobs || [];
@@ -157,15 +166,15 @@ export class PaginatedJobsHistory<Item> extends AbstractPage<Item> implements Pa
 
     if (currentCount < totalCount) {
       return {
-      ...this.options,
-      query: {
-        ...maybeObj(this.options.query),
-        offset: currentCount,
-      },
-    };
+        ...this.options,
+        query: {
+          ...maybeObj(this.options.query),
+          offset: currentCount,
+        },
+      };
     }
 
-    return null
+    return null;
   }
 }
 
@@ -189,14 +198,22 @@ export interface PaginatedPipelineFilesParams {
   limit?: number;
 }
 
-export class PaginatedPipelineFiles<Item> extends AbstractPage<Item> implements PaginatedPipelineFilesResponse<Item> {
+export class PaginatedPipelineFiles<Item>
+  extends AbstractPage<Item>
+  implements PaginatedPipelineFilesResponse<Item>
+{
   files: Array<Item>;
 
   total_count: number;
 
   offset: number;
 
-  constructor(client: LlamaCloud, response: Response, body: PaginatedPipelineFilesResponse<Item>, options: FinalRequestOptions) {
+  constructor(
+    client: LlamaCloud,
+    response: Response,
+    body: PaginatedPipelineFilesResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
     super(client, response, body, options);
 
     this.files = body.files || [];
@@ -220,15 +237,15 @@ export class PaginatedPipelineFiles<Item> extends AbstractPage<Item> implements 
 
     if (currentCount < totalCount) {
       return {
-      ...this.options,
-      query: {
-        ...maybeObj(this.options.query),
-        offset: currentCount,
-      },
-    };
+        ...this.options,
+        query: {
+          ...maybeObj(this.options.query),
+          offset: currentCount,
+        },
+      };
     }
 
-    return null
+    return null;
   }
 }
 
@@ -250,12 +267,20 @@ export interface PaginatedBatchItemsParams {
   limit?: number;
 }
 
-export class PaginatedBatchItems<Item> extends AbstractPage<Item> implements PaginatedBatchItemsResponse<Item> {
+export class PaginatedBatchItems<Item>
+  extends AbstractPage<Item>
+  implements PaginatedBatchItemsResponse<Item>
+{
   items: Array<Item>;
 
   total_size: number;
 
-  constructor(client: LlamaCloud, response: Response, body: PaginatedBatchItemsResponse<Item>, options: FinalRequestOptions) {
+  constructor(
+    client: LlamaCloud,
+    response: Response,
+    body: PaginatedBatchItemsResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
     super(client, response, body, options);
 
     this.items = body.items || [];
@@ -278,15 +303,15 @@ export class PaginatedBatchItems<Item> extends AbstractPage<Item> implements Pag
 
     if (currentCount < totalCount) {
       return {
-      ...this.options,
-      query: {
-        ...maybeObj(this.options.query),
-        offset: currentCount,
-      },
-    };
+        ...this.options,
+        query: {
+          ...maybeObj(this.options.query),
+          offset: currentCount,
+        },
+      };
     }
 
-    return null
+    return null;
   }
 }
 
@@ -310,14 +335,22 @@ export interface PaginatedCloudDocumentsParams {
   limit?: number;
 }
 
-export class PaginatedCloudDocuments<Item> extends AbstractPage<Item> implements PaginatedCloudDocumentsResponse<Item> {
+export class PaginatedCloudDocuments<Item>
+  extends AbstractPage<Item>
+  implements PaginatedCloudDocumentsResponse<Item>
+{
   documents: Array<Item>;
 
   total_count: number;
 
   offset: number;
 
-  constructor(client: LlamaCloud, response: Response, body: PaginatedCloudDocumentsResponse<Item>, options: FinalRequestOptions) {
+  constructor(
+    client: LlamaCloud,
+    response: Response,
+    body: PaginatedCloudDocumentsResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
     super(client, response, body, options);
 
     this.documents = body.documents || [];
@@ -341,15 +374,15 @@ export class PaginatedCloudDocuments<Item> extends AbstractPage<Item> implements
 
     if (currentCount < totalCount) {
       return {
-      ...this.options,
-      query: {
-        ...maybeObj(this.options.query),
-        skip: currentCount,
-      },
-    };
+        ...this.options,
+        query: {
+          ...maybeObj(this.options.query),
+          skip: currentCount,
+        },
+      };
     }
 
-    return null
+    return null;
   }
 }
 
@@ -373,14 +406,22 @@ export interface PaginatedQuotaConfigurationsParams {
   page_size?: number;
 }
 
-export class PaginatedQuotaConfigurations<Item> extends AbstractPage<Item> implements PaginatedQuotaConfigurationsResponse<Item> {
+export class PaginatedQuotaConfigurations<Item>
+  extends AbstractPage<Item>
+  implements PaginatedQuotaConfigurationsResponse<Item>
+{
   items: Array<Item>;
 
   page: number;
 
   pages: number;
 
-  constructor(client: LlamaCloud, response: Response, body: PaginatedQuotaConfigurationsResponse<Item>, options: FinalRequestOptions) {
+  constructor(
+    client: LlamaCloud,
+    response: Response,
+    body: PaginatedQuotaConfigurationsResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
     super(client, response, body, options);
 
     this.items = body.items || [];
@@ -393,7 +434,7 @@ export class PaginatedQuotaConfigurations<Item> extends AbstractPage<Item> imple
   }
 
   nextPageRequestOptions(): PageRequestOptions | null {
-    const currentPage = this.page
+    const currentPage = this.page;
 
     if (currentPage >= this.pages) {
       return null;
@@ -432,7 +473,12 @@ export class PaginatedCursor<Item> extends AbstractPage<Item> implements Paginat
 
   next_page_token: string;
 
-  constructor(client: LlamaCloud, response: Response, body: PaginatedCursorResponse<Item>, options: FinalRequestOptions) {
+  constructor(
+    client: LlamaCloud,
+    response: Response,
+    body: PaginatedCursorResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
     super(client, response, body, options);
 
     this.items = body.items || [];
@@ -444,7 +490,7 @@ export class PaginatedCursor<Item> extends AbstractPage<Item> implements Paginat
   }
 
   nextPageRequestOptions(): PageRequestOptions | null {
-    const cursor = this.next_page_token
+    const cursor = this.next_page_token;
     if (!cursor) {
       return null;
     }
@@ -477,12 +523,20 @@ export interface PaginatedCursorPostParams {
   page_size?: number;
 }
 
-export class PaginatedCursorPost<Item> extends AbstractPage<Item> implements PaginatedCursorPostResponse<Item> {
+export class PaginatedCursorPost<Item>
+  extends AbstractPage<Item>
+  implements PaginatedCursorPostResponse<Item>
+{
   items: Array<Item>;
 
   next_page_token: string;
 
-  constructor(client: LlamaCloud, response: Response, body: PaginatedCursorPostResponse<Item>, options: FinalRequestOptions) {
+  constructor(
+    client: LlamaCloud,
+    response: Response,
+    body: PaginatedCursorPostResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
     super(client, response, body, options);
 
     this.items = body.items || [];
@@ -494,7 +548,7 @@ export class PaginatedCursorPost<Item> extends AbstractPage<Item> implements Pag
   }
 
   nextPageRequestOptions(): PageRequestOptions | null {
-    const cursor = this.next_page_token
+    const cursor = this.next_page_token;
     if (!cursor) {
       return null;
     }

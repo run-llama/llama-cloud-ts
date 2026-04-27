@@ -17,42 +17,72 @@ export class Configurations extends APIResource {
    * project, it will be updated (upsert semantics).
    */
   create(params: ConfigurationCreateParams, options?: RequestOptions): APIPromise<ConfigurationResponse> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post('/api/v1/beta/configurations', { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/beta/configurations', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
    * Get a single product configuration by ID.
    */
-  retrieve(configID: string, query: ConfigurationRetrieveParams | null | undefined = {}, options?: RequestOptions): APIPromise<ConfigurationResponse> {
+  retrieve(
+    configID: string,
+    query: ConfigurationRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ConfigurationResponse> {
     return this._client.get(path`/api/v1/beta/configurations/${configID}`, { query, ...options });
   }
 
   /**
    * Update an existing product configuration.
    */
-  update(configID: string, params: ConfigurationUpdateParams, options?: RequestOptions): APIPromise<ConfigurationResponse> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.put(path`/api/v1/beta/configurations/${configID}`, { query: { organization_id, project_id }, body, ...options });
+  update(
+    configID: string,
+    params: ConfigurationUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<ConfigurationResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.put(path`/api/v1/beta/configurations/${configID}`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
    * List product configurations for the current project.
    */
-  list(query: ConfigurationListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ConfigurationResponsesPaginatedCursor, ConfigurationResponse> {
-    return this._client.getAPIList('/api/v1/beta/configurations', PaginatedCursor<ConfigurationResponse>, { query, ...options });
+  list(
+    query: ConfigurationListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ConfigurationResponsesPaginatedCursor, ConfigurationResponse> {
+    return this._client.getAPIList('/api/v1/beta/configurations', PaginatedCursor<ConfigurationResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
    * Delete a product configuration.
    */
-  delete(configID: string, params: ConfigurationDeleteParams | null | undefined = {}, options?: RequestOptions): APIPromise<void> {
-    const { organization_id, project_id } = params ?? {}
-    return this._client.delete(path`/api/v1/beta/configurations/${configID}`, { query: { organization_id, project_id }, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+  delete(
+    configID: string,
+    params: ConfigurationDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v1/beta/configurations/${configID}`, {
+      query: { organization_id, project_id },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
-export type ConfigurationResponsesPaginatedCursor = PaginatedCursor<ConfigurationResponse>
+export type ConfigurationResponsesPaginatedCursor = PaginatedCursor<ConfigurationResponse>;
 
 /**
  * Typed parameters for a _classify v2_ product configuration.
@@ -129,7 +159,13 @@ export interface ConfigurationCreate {
   /**
    * Product-specific configuration parameters.
    */
-  parameters: SplitV1Parameters | ExtractV2Parameters | ClassifyV2Parameters | ParseV2Parameters | ConfigurationCreate.SpreadsheetV1Parameters | UntypedParameters;
+  parameters:
+    | SplitV1Parameters
+    | ExtractV2Parameters
+    | ClassifyV2Parameters
+    | ParseV2Parameters
+    | ConfigurationCreate.SpreadsheetV1Parameters
+    | UntypedParameters;
 }
 
 export namespace ConfigurationCreate {
@@ -209,7 +245,13 @@ export interface ConfigurationResponse {
   /**
    * Product-specific configuration parameters.
    */
-  parameters: SplitV1Parameters | ExtractV2Parameters | ClassifyV2Parameters | ParseV2Parameters | ConfigurationResponse.SpreadsheetV1Parameters | UntypedParameters;
+  parameters:
+    | SplitV1Parameters
+    | ExtractV2Parameters
+    | ClassifyV2Parameters
+    | ParseV2Parameters
+    | ConfigurationResponse.SpreadsheetV1Parameters
+    | UntypedParameters;
 
   /**
    * Product type.
@@ -300,7 +342,9 @@ export interface ExtractV2Parameters {
    * JSON Schema defining the fields to extract. Validate with the /schema/validate
    * endpoint first.
    */
-  data_schema: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null };
+  data_schema: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  };
 
   /**
    * Product type.
@@ -388,7 +432,50 @@ export interface ParseV2Parameters {
    * Tier version. Use 'latest' for the current stable version, or specify a specific
    * version (e.g., '1.0', '2.0') for reproducible results
    */
-  version: '2025-12-11' | '2025-12-18' | '2025-12-31' | '2026-01-08' | '2026-01-09' | '2026-01-16' | '2026-01-21' | '2026-01-22' | '2026-01-24' | '2026-01-29' | '2026-01-30' | '2026-02-03' | '2026-02-18' | '2026-02-20' | '2026-02-24' | '2026-02-26' | '2026-03-02' | '2026-03-03' | '2026-03-04' | '2026-03-05' | '2026-03-09' | '2026-03-10' | '2026-03-11' | '2026-03-12' | '2026-03-17' | '2026-03-19' | '2026-03-20' | '2026-03-22' | '2026-03-23' | '2026-03-24' | '2026-03-25' | '2026-03-26' | '2026-03-27' | '2026-03-30' | '2026-03-31' | '2026-04-02' | '2026-04-06' | '2026-04-09' | '2026-04-14' | '2026-04-19' | '2026-04-22' | 'latest' | (string & {});
+  version:
+    | '2025-12-11'
+    | '2025-12-18'
+    | '2025-12-31'
+    | '2026-01-08'
+    | '2026-01-09'
+    | '2026-01-16'
+    | '2026-01-21'
+    | '2026-01-22'
+    | '2026-01-24'
+    | '2026-01-29'
+    | '2026-01-30'
+    | '2026-02-03'
+    | '2026-02-18'
+    | '2026-02-20'
+    | '2026-02-24'
+    | '2026-02-26'
+    | '2026-03-02'
+    | '2026-03-03'
+    | '2026-03-04'
+    | '2026-03-05'
+    | '2026-03-09'
+    | '2026-03-10'
+    | '2026-03-11'
+    | '2026-03-12'
+    | '2026-03-17'
+    | '2026-03-19'
+    | '2026-03-20'
+    | '2026-03-22'
+    | '2026-03-23'
+    | '2026-03-24'
+    | '2026-03-25'
+    | '2026-03-26'
+    | '2026-03-27'
+    | '2026-03-30'
+    | '2026-03-31'
+    | '2026-04-02'
+    | '2026-04-06'
+    | '2026-04-09'
+    | '2026-04-14'
+    | '2026-04-19'
+    | '2026-04-22'
+    | 'latest'
+    | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -1128,7 +1215,51 @@ export namespace ParseV2Parameters {
         /**
          * Tier version when overriding tier. Required when tier is specified
          */
-        version?: '2025-12-11' | '2025-12-18' | '2025-12-31' | '2026-01-08' | '2026-01-09' | '2026-01-16' | '2026-01-21' | '2026-01-22' | '2026-01-24' | '2026-01-29' | '2026-01-30' | '2026-02-03' | '2026-02-18' | '2026-02-20' | '2026-02-24' | '2026-02-26' | '2026-03-02' | '2026-03-03' | '2026-03-04' | '2026-03-05' | '2026-03-09' | '2026-03-10' | '2026-03-11' | '2026-03-12' | '2026-03-17' | '2026-03-19' | '2026-03-20' | '2026-03-22' | '2026-03-23' | '2026-03-24' | '2026-03-25' | '2026-03-26' | '2026-03-27' | '2026-03-30' | '2026-03-31' | '2026-04-02' | '2026-04-06' | '2026-04-09' | '2026-04-14' | '2026-04-19' | '2026-04-22' | 'latest' | (string & {}) | null;
+        version?:
+          | '2025-12-11'
+          | '2025-12-18'
+          | '2025-12-31'
+          | '2026-01-08'
+          | '2026-01-09'
+          | '2026-01-16'
+          | '2026-01-21'
+          | '2026-01-22'
+          | '2026-01-24'
+          | '2026-01-29'
+          | '2026-01-30'
+          | '2026-02-03'
+          | '2026-02-18'
+          | '2026-02-20'
+          | '2026-02-24'
+          | '2026-02-26'
+          | '2026-03-02'
+          | '2026-03-03'
+          | '2026-03-04'
+          | '2026-03-05'
+          | '2026-03-09'
+          | '2026-03-10'
+          | '2026-03-11'
+          | '2026-03-12'
+          | '2026-03-17'
+          | '2026-03-19'
+          | '2026-03-20'
+          | '2026-03-22'
+          | '2026-03-23'
+          | '2026-03-24'
+          | '2026-03-25'
+          | '2026-03-26'
+          | '2026-03-27'
+          | '2026-03-30'
+          | '2026-03-31'
+          | '2026-04-02'
+          | '2026-04-06'
+          | '2026-04-09'
+          | '2026-04-14'
+          | '2026-04-19'
+          | '2026-04-22'
+          | 'latest'
+          | (string & {})
+          | null;
       }
 
       export namespace ParsingConf {
@@ -1334,7 +1465,7 @@ export interface UntypedParameters {
    */
   product_type: 'unknown';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface ConfigurationCreateParams {
@@ -1346,7 +1477,13 @@ export interface ConfigurationCreateParams {
   /**
    * Body param: Product-specific configuration parameters.
    */
-  parameters: SplitV1Parameters | ExtractV2Parameters | ClassifyV2Parameters | ParseV2Parameters | ConfigurationCreateParams.SpreadsheetV1Parameters | UntypedParameters;
+  parameters:
+    | SplitV1Parameters
+    | ExtractV2Parameters
+    | ClassifyV2Parameters
+    | ParseV2Parameters
+    | ConfigurationCreateParams.SpreadsheetV1Parameters
+    | UntypedParameters;
 
   /**
    * Query param
@@ -1444,7 +1581,14 @@ export interface ConfigurationUpdateParams {
   /**
    * Body param: Updated parameters (omit to leave unchanged).
    */
-  parameters?: SplitV1Parameters | ExtractV2Parameters | ClassifyV2Parameters | ParseV2Parameters | ConfigurationUpdateParams.SpreadsheetV1Parameters | UntypedParameters | null;
+  parameters?:
+    | SplitV1Parameters
+    | ExtractV2Parameters
+    | ClassifyV2Parameters
+    | ParseV2Parameters
+    | ConfigurationUpdateParams.SpreadsheetV1Parameters
+    | UntypedParameters
+    | null;
 }
 
 export namespace ConfigurationUpdateParams {
@@ -1523,7 +1667,9 @@ export interface ConfigurationListParams extends PaginatedCursorParams {
   /**
    * Filter by one or more product types. Repeat the parameter for multiple values.
    */
-  product_type?: Array<'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'> | null;
+  product_type?: Array<
+    'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'
+  > | null;
 
   project_id?: string | null;
 }
@@ -1548,6 +1694,6 @@ export declare namespace Configurations {
     type ConfigurationRetrieveParams as ConfigurationRetrieveParams,
     type ConfigurationUpdateParams as ConfigurationUpdateParams,
     type ConfigurationListParams as ConfigurationListParams,
-    type ConfigurationDeleteParams as ConfigurationDeleteParams
+    type ConfigurationDeleteParams as ConfigurationDeleteParams,
   };
 }

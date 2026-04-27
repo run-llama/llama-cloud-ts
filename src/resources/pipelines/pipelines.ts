@@ -6,13 +6,62 @@ import * as DataSinksAPI from '../data-sinks';
 import * as ParsingAPI from '../parsing';
 import * as Shared from '../shared';
 import * as DataSourcesAPI from './data-sources';
-import { DataSourceGetDataSourcesResponse, DataSourceGetStatusParams, DataSourceSyncParams, DataSourceUpdateDataSourcesParams, DataSourceUpdateDataSourcesResponse, DataSourceUpdateParams, DataSources, PipelineDataSource } from './data-sources';
+import {
+  DataSourceGetDataSourcesResponse,
+  DataSourceGetStatusParams,
+  DataSourceSyncParams,
+  DataSourceUpdateDataSourcesParams,
+  DataSourceUpdateDataSourcesResponse,
+  DataSourceUpdateParams,
+  DataSources,
+  PipelineDataSource,
+} from './data-sources';
 import * as DocumentsAPI from './documents';
-import { CloudDocument, CloudDocumentCreate, CloudDocumentsPaginatedCloudDocuments, DocumentCreateParams, DocumentCreateResponse, DocumentDeleteParams, DocumentGetChunksParams, DocumentGetChunksResponse, DocumentGetParams, DocumentGetStatusParams, DocumentListParams, DocumentSyncParams, DocumentSyncResponse, DocumentUpsertParams, DocumentUpsertResponse, Documents, TextNode } from './documents';
+import {
+  CloudDocument,
+  CloudDocumentCreate,
+  CloudDocumentsPaginatedCloudDocuments,
+  DocumentCreateParams,
+  DocumentCreateResponse,
+  DocumentDeleteParams,
+  DocumentGetChunksParams,
+  DocumentGetChunksResponse,
+  DocumentGetParams,
+  DocumentGetStatusParams,
+  DocumentListParams,
+  DocumentSyncParams,
+  DocumentSyncResponse,
+  DocumentUpsertParams,
+  DocumentUpsertResponse,
+  Documents,
+  TextNode,
+} from './documents';
 import * as FilesAPI from './files';
-import { FileCreateParams, FileCreateResponse, FileDeleteParams, FileGetStatusCountsParams, FileGetStatusCountsResponse, FileGetStatusParams, FileListParams, FileUpdateParams, Files, PipelineFile, PipelineFilesPaginatedPipelineFiles } from './files';
+import {
+  FileCreateParams,
+  FileCreateResponse,
+  FileDeleteParams,
+  FileGetStatusCountsParams,
+  FileGetStatusCountsResponse,
+  FileGetStatusParams,
+  FileListParams,
+  FileUpdateParams,
+  Files,
+  PipelineFile,
+  PipelineFilesPaginatedPipelineFiles,
+} from './files';
 import * as ImagesAPI from './images';
-import { ImageGetPageFigureParams, ImageGetPageFigureResponse, ImageGetPageScreenshotParams, ImageGetPageScreenshotResponse, ImageListPageFiguresParams, ImageListPageFiguresResponse, ImageListPageScreenshotsParams, ImageListPageScreenshotsResponse, Images } from './images';
+import {
+  ImageGetPageFigureParams,
+  ImageGetPageFigureResponse,
+  ImageGetPageScreenshotParams,
+  ImageGetPageScreenshotResponse,
+  ImageListPageFiguresParams,
+  ImageListPageFiguresResponse,
+  ImageListPageScreenshotsParams,
+  ImageListPageScreenshotsResponse,
+  Images,
+} from './images';
 import * as MetadataAPI from './metadata';
 import { Metadata, MetadataCreateParams, MetadataCreateResponse } from './metadata';
 import * as SyncAPI from './sync';
@@ -37,8 +86,12 @@ export class Pipelines extends APIResource {
    * `POST /pipelines/{id}/sync` to start ingesting documents.
    */
   create(params: PipelineCreateParams, options?: RequestOptions): APIPromise<Pipeline> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post('/api/v1/pipelines', { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/pipelines', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -48,9 +101,17 @@ export class Pipelines extends APIResource {
    * parameters. Supports dense, sparse, and hybrid search modes with configurable
    * top-k and reranking.
    */
-  retrieve(pipelineID: string, params: PipelineRetrieveParams, options?: RequestOptions): APIPromise<PipelineRetrieveResponse> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post(path`/api/v1/pipelines/${pipelineID}/retrieve`, { query: { organization_id, project_id }, body, ...options });
+  retrieve(
+    pipelineID: string,
+    params: PipelineRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<PipelineRetrieveResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post(path`/api/v1/pipelines/${pipelineID}/retrieve`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -63,7 +124,10 @@ export class Pipelines extends APIResource {
   /**
    * Search for pipelines by name, type, or project.
    */
-  list(query: PipelineListParams | null | undefined = {}, options?: RequestOptions): APIPromise<PipelineListResponse> {
+  list(
+    query: PipelineListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PipelineListResponse> {
     return this._client.get('/api/v1/pipelines', { query, ...options });
   }
 
@@ -74,7 +138,10 @@ export class Pipelines extends APIResource {
    * irreversible.
    */
   delete(pipelineID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/v1/pipelines/${pipelineID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/api/v1/pipelines/${pipelineID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -90,7 +157,11 @@ export class Pipelines extends APIResource {
    * Returns document counts, sync progress, and the last effective timestamp. Only
    * available for managed pipelines.
    */
-  getStatus(pipelineID: string, query: PipelineGetStatusParams | null | undefined = {}, options?: RequestOptions): APIPromise<ManagedIngestionStatusResponse> {
+  getStatus(
+    pipelineID: string,
+    query: PipelineGetStatusParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ManagedIngestionStatusResponse> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}/status`, { query, ...options });
   }
 
@@ -101,8 +172,12 @@ export class Pipelines extends APIResource {
    * otherwise creates a new one.
    */
   upsert(params: PipelineUpsertParams, options?: RequestOptions): APIPromise<Pipeline> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.put('/api/v1/pipelines', { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.put('/api/v1/pipelines', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 }
 
@@ -110,14 +185,22 @@ export interface AdvancedModeTransformConfig {
   /**
    * Configuration for the chunking.
    */
-  chunking_config?: AdvancedModeTransformConfig.NoneChunkingConfig | AdvancedModeTransformConfig.CharacterChunkingConfig | AdvancedModeTransformConfig.TokenChunkingConfig | AdvancedModeTransformConfig.SentenceChunkingConfig | AdvancedModeTransformConfig.SemanticChunkingConfig;
+  chunking_config?:
+    | AdvancedModeTransformConfig.NoneChunkingConfig
+    | AdvancedModeTransformConfig.CharacterChunkingConfig
+    | AdvancedModeTransformConfig.TokenChunkingConfig
+    | AdvancedModeTransformConfig.SentenceChunkingConfig
+    | AdvancedModeTransformConfig.SemanticChunkingConfig;
 
   mode?: 'advanced';
 
   /**
    * Configuration for the segmentation.
    */
-  segmentation_config?: AdvancedModeTransformConfig.NoneSegmentationConfig | AdvancedModeTransformConfig.PageSegmentationConfig | AdvancedModeTransformConfig.ElementSegmentationConfig;
+  segmentation_config?:
+    | AdvancedModeTransformConfig.NoneSegmentationConfig
+    | AdvancedModeTransformConfig.PageSegmentationConfig
+    | AdvancedModeTransformConfig.ElementSegmentationConfig;
 }
 
 export namespace AdvancedModeTransformConfig {
@@ -411,7 +494,15 @@ export interface DataSinkCreate {
   /**
    * Component that implements the data sink
    */
-  component: { [key: string]: unknown } | Shared.CloudPineconeVectorStore | Shared.CloudPostgresVectorStore | Shared.CloudQdrantVectorStore | Shared.CloudAzureAISearchVectorStore | Shared.CloudMongoDBAtlasVectorSearch | Shared.CloudMilvusVectorStore | Shared.CloudAstraDBVectorStore;
+  component:
+    | { [key: string]: unknown }
+    | Shared.CloudPineconeVectorStore
+    | Shared.CloudPostgresVectorStore
+    | Shared.CloudQdrantVectorStore
+    | Shared.CloudAzureAISearchVectorStore
+    | Shared.CloudMongoDBAtlasVectorSearch
+    | Shared.CloudMilvusVectorStore
+    | Shared.CloudAstraDBVectorStore;
 
   /**
    * The name of the data sink.
@@ -824,7 +915,25 @@ export namespace LlamaParseParameters {
      * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
      * events are delivered.
      */
-    webhook_events?: Array<'extract.pending' | 'extract.success' | 'extract.error' | 'extract.partial_success' | 'extract.cancelled' | 'parse.pending' | 'parse.running' | 'parse.success' | 'parse.error' | 'parse.partial_success' | 'parse.cancelled' | 'classify.pending' | 'classify.success' | 'classify.error' | 'classify.partial_success' | 'classify.cancelled' | 'unmapped_event'> | null;
+    webhook_events?: Array<
+      | 'extract.pending'
+      | 'extract.success'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.cancelled'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.cancelled'
+      | 'classify.pending'
+      | 'classify.success'
+      | 'classify.error'
+      | 'classify.partial_success'
+      | 'classify.cancelled'
+      | 'unmapped_event'
+    > | null;
 
     /**
      * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
@@ -849,7 +958,20 @@ export interface LlmParameters {
   /**
    * The name of the model to use for LLM completions.
    */
-  model_name?: 'GPT_4O' | 'GPT_4O_MINI' | 'GPT_4_1' | 'GPT_4_1_NANO' | 'GPT_4_1_MINI' | 'AZURE_OPENAI_GPT_4O' | 'AZURE_OPENAI_GPT_4O_MINI' | 'AZURE_OPENAI_GPT_4_1' | 'AZURE_OPENAI_GPT_4_1_MINI' | 'AZURE_OPENAI_GPT_4_1_NANO' | 'CLAUDE_4_5_SONNET' | 'BEDROCK_CLAUDE_3_5_SONNET_V1' | 'BEDROCK_CLAUDE_3_5_SONNET_V2';
+  model_name?:
+    | 'GPT_4O'
+    | 'GPT_4O_MINI'
+    | 'GPT_4_1'
+    | 'GPT_4_1_NANO'
+    | 'GPT_4_1_MINI'
+    | 'AZURE_OPENAI_GPT_4O'
+    | 'AZURE_OPENAI_GPT_4O_MINI'
+    | 'AZURE_OPENAI_GPT_4_1'
+    | 'AZURE_OPENAI_GPT_4_1_MINI'
+    | 'AZURE_OPENAI_GPT_4_1_NANO'
+    | 'CLAUDE_4_5_SONNET'
+    | 'BEDROCK_CLAUDE_3_5_SONNET_V1'
+    | 'BEDROCK_CLAUDE_3_5_SONNET_V2';
 
   /**
    * The system prompt to use for the completion.
@@ -914,14 +1036,29 @@ export namespace ManagedIngestionStatusResponse {
     /**
      * Name of the job that failed.
      */
-    step: 'MANAGED_INGESTION' | 'DATA_SOURCE' | 'FILE_UPDATER' | 'PARSE' | 'TRANSFORM' | 'INGESTION' | 'METADATA_UPDATE';
+    step:
+      | 'MANAGED_INGESTION'
+      | 'DATA_SOURCE'
+      | 'FILE_UPDATER'
+      | 'PARSE'
+      | 'TRANSFORM'
+      | 'INGESTION'
+      | 'METADATA_UPDATE';
   }
 }
 
 /**
  * Message role.
  */
-export type MessageRole = 'system' | 'developer' | 'user' | 'assistant' | 'function' | 'tool' | 'chatbot' | 'model'
+export type MessageRole =
+  | 'system'
+  | 'developer'
+  | 'user'
+  | 'assistant'
+  | 'function'
+  | 'tool'
+  | 'chatbot'
+  | 'model';
 
 /**
  * Metadata filters for vector stores.
@@ -952,7 +1089,21 @@ export namespace MetadataFilters {
     /**
      * Vector store filter operator.
      */
-    operator?: '==' | '>' | '<' | '!=' | '>=' | '<=' | 'in' | 'nin' | 'any' | 'all' | 'text_match' | 'text_match_insensitive' | 'contains' | 'is_empty';
+    operator?:
+      | '=='
+      | '>'
+      | '<'
+      | '!='
+      | '>='
+      | '<='
+      | 'in'
+      | 'nin'
+      | 'any'
+      | 'all'
+      | 'text_match'
+      | 'text_match_insensitive'
+      | 'contains'
+      | 'is_empty';
   }
 }
 
@@ -1134,7 +1285,15 @@ export interface Pipeline {
    */
   id: string;
 
-  embedding_config: Pipeline.ManagedOpenAIEmbeddingConfig | AzureOpenAIEmbeddingConfig | CohereEmbeddingConfig | GeminiEmbeddingConfig | HuggingFaceInferenceAPIEmbeddingConfig | OpenAIEmbeddingConfig | VertexAIEmbeddingConfig | BedrockEmbeddingConfig;
+  embedding_config:
+    | Pipeline.ManagedOpenAIEmbeddingConfig
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig;
 
   name: string;
 
@@ -1284,7 +1443,14 @@ export namespace Pipeline {
     /**
      * The embedding configuration for the embedding model config.
      */
-    embedding_config: PipelinesAPI.AzureOpenAIEmbeddingConfig | PipelinesAPI.CohereEmbeddingConfig | PipelinesAPI.GeminiEmbeddingConfig | PipelinesAPI.HuggingFaceInferenceAPIEmbeddingConfig | PipelinesAPI.OpenAIEmbeddingConfig | PipelinesAPI.VertexAIEmbeddingConfig | PipelinesAPI.BedrockEmbeddingConfig;
+    embedding_config:
+      | PipelinesAPI.AzureOpenAIEmbeddingConfig
+      | PipelinesAPI.CohereEmbeddingConfig
+      | PipelinesAPI.GeminiEmbeddingConfig
+      | PipelinesAPI.HuggingFaceInferenceAPIEmbeddingConfig
+      | PipelinesAPI.OpenAIEmbeddingConfig
+      | PipelinesAPI.VertexAIEmbeddingConfig
+      | PipelinesAPI.BedrockEmbeddingConfig;
 
     /**
      * The name of the embedding model config.
@@ -1322,7 +1488,15 @@ export interface PipelineCreate {
    */
   data_sink_id?: string | null;
 
-  embedding_config?: AzureOpenAIEmbeddingConfig | CohereEmbeddingConfig | GeminiEmbeddingConfig | HuggingFaceInferenceAPIEmbeddingConfig | OpenAIEmbeddingConfig | VertexAIEmbeddingConfig | BedrockEmbeddingConfig | null;
+  embedding_config?:
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig
+    | null;
 
   /**
    * Embedding model config ID. When provided instead of embedding_config, the
@@ -1390,7 +1564,7 @@ export interface PipelineMetadataConfig {
 /**
  * Enum for representing the type of a pipeline
  */
-export type PipelineType = 'PLAYGROUND' | 'MANAGED'
+export type PipelineType = 'PLAYGROUND' | 'MANAGED';
 
 /**
  * Schema for the search params for an retrieval execution that can be preset for a
@@ -1460,7 +1634,9 @@ export interface PresetRetrievalParams {
    * JSON Schema that will be used to infer search_filters. Omit or leave as null to
    * skip inference.
    */
-  search_filters_inference_schema?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
+  search_filters_inference_schema?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
 
   /**
    * Number of nodes for sparse retrieval.
@@ -1468,7 +1644,7 @@ export interface PresetRetrievalParams {
   sparse_similarity_top_k?: number | null;
 }
 
-export type RetrievalMode = 'chunks' | 'files_via_metadata' | 'files_via_content' | 'auto_routed'
+export type RetrievalMode = 'chunks' | 'files_via_metadata' | 'files_via_content' | 'auto_routed';
 
 /**
  * Configuration for sparse embedding models used in hybrid search.
@@ -1618,7 +1794,7 @@ export namespace PipelineRetrieveResponse {
   }
 }
 
-export type PipelineListResponse = Array<Pipeline>
+export type PipelineListResponse = Array<Pipeline>;
 
 export interface PipelineCreateParams {
   /**
@@ -1650,7 +1826,15 @@ export interface PipelineCreateParams {
   /**
    * Body param
    */
-  embedding_config?: AzureOpenAIEmbeddingConfig | CohereEmbeddingConfig | GeminiEmbeddingConfig | HuggingFaceInferenceAPIEmbeddingConfig | OpenAIEmbeddingConfig | VertexAIEmbeddingConfig | BedrockEmbeddingConfig | null;
+  embedding_config?:
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig
+    | null;
 
   /**
    * Body param: Embedding model config ID. When provided instead of
@@ -1785,7 +1969,9 @@ export interface PipelineRetrieveParams {
    * Body param: JSON Schema that will be used to infer search_filters. Omit or leave
    * as null to skip inference.
    */
-  search_filters_inference_schema?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
+  search_filters_inference_schema?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
 
   /**
    * Body param: Number of nodes for sparse retrieval.
@@ -1805,7 +1991,15 @@ export interface PipelineUpdateParams {
    */
   data_sink_id?: string | null;
 
-  embedding_config?: AzureOpenAIEmbeddingConfig | CohereEmbeddingConfig | GeminiEmbeddingConfig | HuggingFaceInferenceAPIEmbeddingConfig | OpenAIEmbeddingConfig | VertexAIEmbeddingConfig | BedrockEmbeddingConfig | null;
+  embedding_config?:
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig
+    | null;
 
   /**
    * Embedding model config ID. When provided instead of embedding_config, the
@@ -1905,7 +2099,15 @@ export interface PipelineUpsertParams {
   /**
    * Body param
    */
-  embedding_config?: AzureOpenAIEmbeddingConfig | CohereEmbeddingConfig | GeminiEmbeddingConfig | HuggingFaceInferenceAPIEmbeddingConfig | OpenAIEmbeddingConfig | VertexAIEmbeddingConfig | BedrockEmbeddingConfig | null;
+  embedding_config?:
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig
+    | null;
 
   /**
    * Body param: Embedding model config ID. When provided instead of
@@ -2005,12 +2207,10 @@ export declare namespace Pipelines {
     type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineListParams as PipelineListParams,
     type PipelineGetStatusParams as PipelineGetStatusParams,
-    type PipelineUpsertParams as PipelineUpsertParams
+    type PipelineUpsertParams as PipelineUpsertParams,
   };
 
-  export {
-    Sync as Sync
-  };
+  export { Sync as Sync };
 
   export {
     DataSources as DataSources,
@@ -2020,7 +2220,7 @@ export declare namespace Pipelines {
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceGetStatusParams as DataSourceGetStatusParams,
     type DataSourceSyncParams as DataSourceSyncParams,
-    type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams
+    type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
   };
 
   export {
@@ -2032,7 +2232,7 @@ export declare namespace Pipelines {
     type ImageGetPageFigureParams as ImageGetPageFigureParams,
     type ImageGetPageScreenshotParams as ImageGetPageScreenshotParams,
     type ImageListPageFiguresParams as ImageListPageFiguresParams,
-    type ImageListPageScreenshotsParams as ImageListPageScreenshotsParams
+    type ImageListPageScreenshotsParams as ImageListPageScreenshotsParams,
   };
 
   export {
@@ -2046,13 +2246,13 @@ export declare namespace Pipelines {
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGetStatusParams as FileGetStatusParams,
-    type FileGetStatusCountsParams as FileGetStatusCountsParams
+    type FileGetStatusCountsParams as FileGetStatusCountsParams,
   };
 
   export {
     Metadata as Metadata,
     type MetadataCreateResponse as MetadataCreateResponse,
-    type MetadataCreateParams as MetadataCreateParams
+    type MetadataCreateParams as MetadataCreateParams,
   };
 
   export {
@@ -2072,6 +2272,6 @@ export declare namespace Pipelines {
     type DocumentGetChunksParams as DocumentGetChunksParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,
     type DocumentSyncParams as DocumentSyncParams,
-    type DocumentUpsertParams as DocumentUpsertParams
+    type DocumentUpsertParams as DocumentUpsertParams,
   };
 }

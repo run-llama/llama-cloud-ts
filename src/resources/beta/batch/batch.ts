@@ -4,7 +4,14 @@ import { APIResource } from '../../../core/resource';
 import * as ParsingAPI from '../../parsing';
 import * as JobsAPI from '../../classifier/jobs';
 import * as JobItemsAPI from './job-items';
-import { JobItemGetProcessingResultsParams, JobItemGetProcessingResultsResponse, JobItemListParams, JobItemListResponse, JobItemListResponsesPaginatedBatchItems, JobItems } from './job-items';
+import {
+  JobItemGetProcessingResultsParams,
+  JobItemGetProcessingResultsResponse,
+  JobItemListParams,
+  JobItemListResponse,
+  JobItemListResponsesPaginatedBatchItems,
+  JobItems,
+} from './job-items';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, PaginatedBatchItems, type PaginatedBatchItemsParams } from '../../../core/pagination';
 import { buildHeaders } from '../../../internal/headers';
@@ -32,8 +39,16 @@ export class Batch extends APIResource {
    * ```
    */
   create(params: BatchCreateParams, options?: RequestOptions): APIPromise<BatchCreateResponse> {
-    const { organization_id, project_id, 'temporal-namespace': temporalNamespace, ...body } = params
-    return this._client.post('/api/v1/beta/batch-processing', { query: { organization_id, project_id }, body, ...options, headers: buildHeaders([{...(temporalNamespace != null ? { 'temporal-namespace': temporalNamespace } : undefined)}, options?.headers]) });
+    const { organization_id, project_id, 'temporal-namespace': temporalNamespace, ...body } = params;
+    return this._client.post('/api/v1/beta/batch-processing', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(temporalNamespace != null ? { 'temporal-namespace': temporalNamespace } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -50,8 +65,14 @@ export class Batch extends APIResource {
    * }
    * ```
    */
-  list(query: BatchListParams | null | undefined = {}, options?: RequestOptions): PagePromise<BatchListResponsesPaginatedBatchItems, BatchListResponse> {
-    return this._client.getAPIList('/api/v1/beta/batch-processing', PaginatedBatchItems<BatchListResponse>, { query, ...options });
+  list(
+    query: BatchListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<BatchListResponsesPaginatedBatchItems, BatchListResponse> {
+    return this._client.getAPIList('/api/v1/beta/batch-processing', PaginatedBatchItems<BatchListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -65,9 +86,21 @@ export class Batch extends APIResource {
    * const response = await client.beta.batch.cancel('job_id');
    * ```
    */
-  cancel(jobID: string, params: BatchCancelParams, options?: RequestOptions): APIPromise<BatchCancelResponse> {
-    const { organization_id, project_id, 'temporal-namespace': temporalNamespace, ...body } = params
-    return this._client.post(path`/api/v1/beta/batch-processing/${jobID}/cancel`, { query: { organization_id, project_id }, body, ...options, headers: buildHeaders([{...(temporalNamespace != null ? { 'temporal-namespace': temporalNamespace } : undefined)}, options?.headers]) });
+  cancel(
+    jobID: string,
+    params: BatchCancelParams,
+    options?: RequestOptions,
+  ): APIPromise<BatchCancelResponse> {
+    const { organization_id, project_id, 'temporal-namespace': temporalNamespace, ...body } = params;
+    return this._client.post(path`/api/v1/beta/batch-processing/${jobID}/cancel`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(temporalNamespace != null ? { 'temporal-namespace': temporalNamespace } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -83,12 +116,16 @@ export class Batch extends APIResource {
    * );
    * ```
    */
-  getStatus(jobID: string, query: BatchGetStatusParams | null | undefined = {}, options?: RequestOptions): APIPromise<BatchGetStatusResponse> {
+  getStatus(
+    jobID: string,
+    query: BatchGetStatusParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BatchGetStatusResponse> {
     return this._client.get(path`/api/v1/beta/batch-processing/${jobID}`, { query, ...options });
   }
 }
 
-export type BatchListResponsesPaginatedBatchItems = PaginatedBatchItems<BatchListResponse>
+export type BatchListResponsesPaginatedBatchItems = PaginatedBatchItems<BatchListResponse>;
 
 /**
  * Response schema for a batch processing job.
@@ -818,7 +855,25 @@ export namespace BatchCreateParams {
          * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
          * events are delivered.
          */
-        webhook_events?: Array<'extract.pending' | 'extract.success' | 'extract.error' | 'extract.partial_success' | 'extract.cancelled' | 'parse.pending' | 'parse.running' | 'parse.success' | 'parse.error' | 'parse.partial_success' | 'parse.cancelled' | 'classify.pending' | 'classify.success' | 'classify.error' | 'classify.partial_success' | 'classify.cancelled' | 'unmapped_event'> | null;
+        webhook_events?: Array<
+          | 'extract.pending'
+          | 'extract.success'
+          | 'extract.error'
+          | 'extract.partial_success'
+          | 'extract.cancelled'
+          | 'parse.pending'
+          | 'parse.running'
+          | 'parse.success'
+          | 'parse.error'
+          | 'parse.partial_success'
+          | 'parse.cancelled'
+          | 'classify.pending'
+          | 'classify.success'
+          | 'classify.error'
+          | 'classify.partial_success'
+          | 'classify.cancelled'
+          | 'unmapped_event'
+        > | null;
 
         /**
          * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
@@ -900,7 +955,7 @@ export declare namespace Batch {
     type BatchCreateParams as BatchCreateParams,
     type BatchListParams as BatchListParams,
     type BatchCancelParams as BatchCancelParams,
-    type BatchGetStatusParams as BatchGetStatusParams
+    type BatchGetStatusParams as BatchGetStatusParams,
   };
 
   export {
@@ -909,6 +964,6 @@ export declare namespace Batch {
     type JobItemGetProcessingResultsResponse as JobItemGetProcessingResultsResponse,
     type JobItemListResponsesPaginatedBatchItems as JobItemListResponsesPaginatedBatchItems,
     type JobItemListParams as JobItemListParams,
-    type JobItemGetProcessingResultsParams as JobItemGetProcessingResultsParams
+    type JobItemGetProcessingResultsParams as JobItemGetProcessingResultsParams,
   };
 }
