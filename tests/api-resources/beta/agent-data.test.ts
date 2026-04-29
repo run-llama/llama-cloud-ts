@@ -2,15 +2,18 @@
 
 import LlamaCloud from '@llamaindex/llama-cloud';
 
-const client = new LlamaCloud({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new LlamaCloud({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource agentData', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.beta.agentData.create({
-    data: { foo: 'bar' },
-    deployment_name: 'deployment_name',
-  });
+      data: { foo: 'bar' },
+      deployment_name: 'deployment_name',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,12 +26,12 @@ describe('resource agentData', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.beta.agentData.create({
-    data: { foo: 'bar' },
-    deployment_name: 'deployment_name',
-    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    collection: 'collection',
-  });
+      data: { foo: 'bar' },
+      deployment_name: 'deployment_name',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      collection: 'collection',
+    });
   });
 
   // Mock server tests are disabled
@@ -46,10 +49,10 @@ describe('resource agentData', () => {
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.beta.agentData.update('item_id', {
-    data: { foo: 'bar' },
-    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-  });
+      data: { foo: 'bar' },
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
   });
 
   // Mock server tests are disabled
@@ -67,9 +70,16 @@ describe('resource agentData', () => {
   // Mock server tests are disabled
   test.skip('delete: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.beta.agentData.delete('item_id', { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(LlamaCloud.NotFoundError);
+    await expect(
+      client.beta.agentData.delete(
+        'item_id',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -87,28 +97,30 @@ describe('resource agentData', () => {
   // Mock server tests are disabled
   test.skip('aggregate: required and optional params', async () => {
     const response = await client.beta.agentData.aggregate({
-    deployment_name: 'deployment_name',
-    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    collection: 'collection',
-    count: true,
-    filter: { foo: {
-    eq: 0,
-    excludes: [0],
-    gt: 0,
-    gte: 0,
-    includes: [0],
-    lt: 0,
-    lte: 0,
-    ne: 0,
-  } },
-    first: true,
-    group_by: ['string'],
-    offset: 0,
-    order_by: 'order_by',
-    page_size: 0,
-    page_token: 'page_token',
-  });
+      deployment_name: 'deployment_name',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      collection: 'collection',
+      count: true,
+      filter: {
+        foo: {
+          eq: 0,
+          excludes: [0],
+          gt: 0,
+          gte: 0,
+          includes: [0],
+          lt: 0,
+          lte: 0,
+          ne: 0,
+        },
+      },
+      first: true,
+      group_by: ['string'],
+      offset: 0,
+      order_by: 'order_by',
+      page_size: 0,
+      page_token: 'page_token',
+    });
   });
 
   // Mock server tests are disabled
@@ -126,21 +138,23 @@ describe('resource agentData', () => {
   // Mock server tests are disabled
   test.skip('deleteByQuery: required and optional params', async () => {
     const response = await client.beta.agentData.deleteByQuery({
-    deployment_name: 'deployment_name',
-    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    collection: 'collection',
-    filter: { foo: {
-    eq: 0,
-    excludes: [0],
-    gt: 0,
-    gte: 0,
-    includes: [0],
-    lt: 0,
-    lte: 0,
-    ne: 0,
-  } },
-  });
+      deployment_name: 'deployment_name',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      collection: 'collection',
+      filter: {
+        foo: {
+          eq: 0,
+          excludes: [0],
+          gt: 0,
+          gte: 0,
+          includes: [0],
+          lt: 0,
+          lte: 0,
+          ne: 0,
+        },
+      },
+    });
   });
 
   // Mock server tests are disabled
@@ -158,9 +172,16 @@ describe('resource agentData', () => {
   // Mock server tests are disabled
   test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.beta.agentData.get('item_id', { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(LlamaCloud.NotFoundError);
+    await expect(
+      client.beta.agentData.get(
+        'item_id',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -178,25 +199,27 @@ describe('resource agentData', () => {
   // Mock server tests are disabled
   test.skip('search: required and optional params', async () => {
     const response = await client.beta.agentData.search({
-    deployment_name: 'deployment_name',
-    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    collection: 'collection',
-    filter: { foo: {
-    eq: 0,
-    excludes: [0],
-    gt: 0,
-    gte: 0,
-    includes: [0],
-    lt: 0,
-    lte: 0,
-    ne: 0,
-  } },
-    include_total: true,
-    offset: 0,
-    order_by: 'order_by',
-    page_size: 0,
-    page_token: 'page_token',
-  });
+      deployment_name: 'deployment_name',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      collection: 'collection',
+      filter: {
+        foo: {
+          eq: 0,
+          excludes: [0],
+          gt: 0,
+          gte: 0,
+          includes: [0],
+          lt: 0,
+          lte: 0,
+          ne: 0,
+        },
+      },
+      include_total: true,
+      offset: 0,
+      order_by: 'order_by',
+      page_size: 0,
+      page_token: 'page_token',
+    });
   });
 });

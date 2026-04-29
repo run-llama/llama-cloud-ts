@@ -2,7 +2,10 @@
 
 import LlamaCloud from '@llamaindex/llama-cloud';
 
-const client = new LlamaCloud({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new LlamaCloud({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource split', () => {
   // Mock server tests are disabled
@@ -20,15 +23,15 @@ describe('resource split', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.beta.split.create({
-    document_input: { type: 'type', value: 'value' },
-    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    configuration: {
-    categories: [{ name: 'x', description: 'x' }],
-    splitting_strategy: { allow_uncategorized: 'include' },
-  },
-    configuration_id: 'configuration_id',
-  });
+      document_input: { type: 'type', value: 'value' },
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      configuration: {
+        categories: [{ name: 'x', description: 'x' }],
+        splitting_strategy: { allow_uncategorized: 'include' },
+      },
+      configuration_id: 'configuration_id',
+    });
   });
 
   // Mock server tests are disabled
@@ -46,18 +49,21 @@ describe('resource split', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.beta.split.list({
-    created_at_on_or_after: '2019-12-27T18:11:19.117Z',
-    created_at_on_or_before: '2019-12-27T18:11:19.117Z',
-    job_ids: ['string', 'string'],
-    organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    page_size: 0,
-    page_token: 'page_token',
-    project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    status: 'pending',
-  }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(LlamaCloud.NotFoundError);
+    await expect(
+      client.beta.split.list(
+        {
+          created_at_on_or_after: '2019-12-27T18:11:19.117Z',
+          created_at_on_or_before: '2019-12-27T18:11:19.117Z',
+          job_ids: ['string', 'string'],
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          page_size: 0,
+          page_token: 'page_token',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          status: 'pending',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -75,8 +81,15 @@ describe('resource split', () => {
   // Mock server tests are disabled
   test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.beta.split.get('split_job_id', { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(LlamaCloud.NotFoundError);
+    await expect(
+      client.beta.split.get(
+        'split_job_id',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 });

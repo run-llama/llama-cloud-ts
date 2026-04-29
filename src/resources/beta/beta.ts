@@ -2,15 +2,76 @@
 
 import { APIResource } from '../../core/resource';
 import * as AgentDataAPI from './agent-data';
-import { AgentData, AgentDataAggregateParams, AgentDataAggregateResponse, AgentDataAggregateResponsesPaginatedCursorPost, AgentDataCreateParams, AgentDataDeleteByQueryParams, AgentDataDeleteByQueryResponse, AgentDataDeleteParams, AgentDataDeleteResponse, AgentDataGetParams, AgentDataPaginatedCursorPost, AgentDataSearchParams, AgentDataUpdateParams } from './agent-data';
+import {
+  AgentData,
+  AgentDataAggregateParams,
+  AgentDataAggregateResponse,
+  AgentDataAggregateResponsesPaginatedCursorPost,
+  AgentDataCreateParams,
+  AgentDataDeleteByQueryParams,
+  AgentDataDeleteByQueryResponse,
+  AgentDataDeleteParams,
+  AgentDataDeleteResponse,
+  AgentDataGetParams,
+  AgentDataPaginatedCursorPost,
+  AgentDataSearchParams,
+  AgentDataUpdateParams,
+} from './agent-data';
 import * as SheetsAPI from './sheets';
-import { SheetCreateParams, SheetDeleteJobParams, SheetDeleteJobResponse, SheetGetParams, SheetGetResultTableParams, SheetListParams, Sheets, SheetsJob, SheetsJobsPaginatedCursor, SheetsParsingConfig } from './sheets';
+import {
+  SheetCreateParams,
+  SheetDeleteJobParams,
+  SheetDeleteJobResponse,
+  SheetGetParams,
+  SheetGetResultTableParams,
+  SheetListParams,
+  Sheets,
+  SheetsJob,
+  SheetsJobsPaginatedCursor,
+  SheetsParsingConfig,
+} from './sheets';
 import * as SplitAPI from './split';
-import { Split, SplitCategory, SplitCreateParams, SplitCreateResponse, SplitDocumentInput, SplitGetParams, SplitGetResponse, SplitListParams, SplitListResponse, SplitListResponsesPaginatedCursor, SplitResultResponse, SplitSegmentResponse } from './split';
+import {
+  Split,
+  SplitCategory,
+  SplitCreateParams,
+  SplitCreateResponse,
+  SplitDocumentInput,
+  SplitGetParams,
+  SplitGetResponse,
+  SplitListParams,
+  SplitListResponse,
+  SplitListResponsesPaginatedCursor,
+  SplitResultResponse,
+  SplitSegmentResponse,
+} from './split';
 import * as BatchAPI from './batch/batch';
-import { Batch, BatchCancelParams, BatchCancelResponse, BatchCreateParams, BatchCreateResponse, BatchGetStatusParams, BatchGetStatusResponse, BatchListParams, BatchListResponse, BatchListResponsesPaginatedBatchItems } from './batch/batch';
+import {
+  Batch,
+  BatchCancelParams,
+  BatchCancelResponse,
+  BatchCreateParams,
+  BatchCreateResponse,
+  BatchGetStatusParams,
+  BatchGetStatusResponse,
+  BatchListParams,
+  BatchListResponse,
+  BatchListResponsesPaginatedBatchItems,
+} from './batch/batch';
 import * as DirectoriesAPI from './directories/directories';
-import { Directories, DirectoryCreateParams, DirectoryCreateResponse, DirectoryDeleteParams, DirectoryGetParams, DirectoryGetResponse, DirectoryListParams, DirectoryListResponse, DirectoryListResponsesPaginatedCursor, DirectoryUpdateParams, DirectoryUpdateResponse } from './directories/directories';
+import {
+  Directories,
+  DirectoryCreateParams,
+  DirectoryCreateResponse,
+  DirectoryDeleteParams,
+  DirectoryGetParams,
+  DirectoryGetResponse,
+  DirectoryListParams,
+  DirectoryListResponse,
+  DirectoryListResponsesPaginatedCursor,
+  DirectoryUpdateParams,
+  DirectoryUpdateResponse,
+} from './directories/directories';
 
 export class Beta extends APIResource {
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
@@ -39,7 +100,7 @@ export declare namespace Beta {
     type AgentDataAggregateParams as AgentDataAggregateParams,
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
     type AgentDataGetParams as AgentDataGetParams,
-    type AgentDataSearchParams as AgentDataSearchParams
+    type AgentDataSearchParams as AgentDataSearchParams,
   };
 
   export {
@@ -52,7 +113,7 @@ export declare namespace Beta {
     type SheetListParams as SheetListParams,
     type SheetDeleteJobParams as SheetDeleteJobParams,
     type SheetGetParams as SheetGetParams,
-    type SheetGetResultTableParams as SheetGetResultTableParams
+    type SheetGetResultTableParams as SheetGetResultTableParams,
   };
 
   export {
@@ -66,7 +127,7 @@ export declare namespace Beta {
     type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryListParams as DirectoryListParams,
     type DirectoryDeleteParams as DirectoryDeleteParams,
-    type DirectoryGetParams as DirectoryGetParams
+    type DirectoryGetParams as DirectoryGetParams,
   };
 
   export {
@@ -79,7 +140,7 @@ export declare namespace Beta {
     type BatchCreateParams as BatchCreateParams,
     type BatchListParams as BatchListParams,
     type BatchCancelParams as BatchCancelParams,
-    type BatchGetStatusParams as BatchGetStatusParams
+    type BatchGetStatusParams as BatchGetStatusParams,
   };
 
   export {
@@ -94,6 +155,6 @@ export declare namespace Beta {
     type SplitListResponsesPaginatedCursor as SplitListResponsesPaginatedCursor,
     type SplitCreateParams as SplitCreateParams,
     type SplitListParams as SplitListParams,
-    type SplitGetParams as SplitGetParams
+    type SplitGetParams as SplitGetParams,
   };
 }

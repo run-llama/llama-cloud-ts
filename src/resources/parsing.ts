@@ -32,7 +32,7 @@ export class Parsing extends APIResource {
     params: ParsingCreateParams & { upload_file?: Uploadable },
     options?: RequestOptions,
   ): APIPromise<ParsingCreateResponse> {
-    const { organization_id, project_id, upload_file, ...body } = params
+    const { organization_id, project_id, upload_file, ...body } = params;
 
     // If file is provided, use multipart upload endpoint
     if (upload_file) {
@@ -62,8 +62,14 @@ export class Parsing extends APIResource {
    * Filter by `status` or creation date range. Results are paginated — use
    * `page_token` from the response to fetch subsequent pages.
    */
-  list(query: ParsingListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ParsingListResponsesPaginatedCursor, ParsingListResponse> {
-    return this._client.getAPIList('/api/v2/parse', PaginatedCursor<ParsingListResponse>, { query, ...options });
+  list(
+    query: ParsingListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ParsingListResponsesPaginatedCursor, ParsingListResponse> {
+    return this._client.getAPIList('/api/v2/parse', PaginatedCursor<ParsingListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -79,7 +85,11 @@ export class Parsing extends APIResource {
    * Content metadata fields (e.g. `text_content_metadata`) return presigned URLs for
    * downloading large results.
    */
-  get(jobID: string, query: ParsingGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<ParsingGetResponse> {
+  get(
+    jobID: string,
+    query: ParsingGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ParsingGetResponse> {
     return this._client.get(path`/api/v2/parse/${jobID}`, { query, ...options });
   }
 
@@ -234,7 +244,7 @@ export class Parsing extends APIResource {
   }
 }
 
-export type ParsingListResponsesPaginatedCursor = PaginatedCursor<ParsingListResponse>
+export type ParsingListResponsesPaginatedCursor = PaginatedCursor<ParsingListResponse>;
 
 /**
  * Bounding box with coordinates and optional metadata.
@@ -311,7 +321,7 @@ export interface CodeItem {
 /**
  * Enum for representing the different available page error handling modes.
  */
-export type FailPageMode = 'raw_text' | 'blank_page' | 'error_message'
+export type FailPageMode = 'raw_text' | 'blank_page' | 'error_message';
 
 export interface FooterItem {
   /**
@@ -468,7 +478,151 @@ export interface ListItem {
 /**
  * Enum for supported file extensions.
  */
-export type LlamaParseSupportedFileExtensions = '.pdf' | '.abw' | '.awt' | '.cgm' | '.cwk' | '.doc' | '.docm' | '.docx' | '.dot' | '.dotm' | '.dotx' | '.fodg' | '.fodp' | '.fopd' | '.fodt' | '.fb2' | '.hwp' | '.lwp' | '.mcw' | '.mw' | '.mwd' | '.odf' | '.odt' | '.otg' | '.ott' | '.pages' | '.pbd' | '.psw' | '.rtf' | '.sda' | '.sdd' | '.sdp' | '.sdw' | '.sgl' | '.std' | '.stw' | '.sxd' | '.sxg' | '.sxm' | '.sxw' | '.uof' | '.uop' | '.uot' | '.vor' | '.wpd' | '.wps' | '.wpt' | '.wri' | '.wn' | '.xml' | '.zabw' | '.key' | '.odp' | '.odg' | '.otp' | '.pot' | '.potm' | '.potx' | '.ppt' | '.pptm' | '.pptx' | '.sti' | '.sxi' | '.vsd' | '.vsdm' | '.vsdx' | '.vdx' | '.bmp' | '.gif' | '.jpg' | '.jpeg' | '.png' | '.svg' | '.tif' | '.tiff' | '.webp' | '.htm' | '.html' | '.xhtm' | '.csv' | '.dbf' | '.dif' | '.et' | '.eth' | '.fods' | '.numbers' | '.ods' | '.ots' | '.prn' | '.qpw' | '.slk' | '.stc' | '.sxc' | '.sylk' | '.tsv' | '.uos1' | '.uos2' | '.uos' | '.wb1' | '.wb2' | '.wb3' | '.wk1' | '.wk2' | '.wk3' | '.wk4' | '.wks' | '.wq1' | '.wq2' | '.xlr' | '.xls' | '.xlsb' | '.xlsm' | '.xlsx' | '.xlw' | '.azw' | '.azw3' | '.azw4' | '.cb7' | '.cbc' | '.cbr' | '.cbz' | '.chm' | '.djvu' | '.epub' | '.fbz' | '.htmlz' | '.lit' | '.lrf' | '.md' | '.mobi' | '.pdb' | '.pml' | '.prc' | '.rb' | '.snb' | '.tcr' | '.txtz' | '.m4a' | '.mp3' | '.mp4' | '.mpeg' | '.mpga' | '.wav' | '.webm'
+export type LlamaParseSupportedFileExtensions =
+  | '.pdf'
+  | '.abw'
+  | '.awt'
+  | '.cgm'
+  | '.cwk'
+  | '.doc'
+  | '.docm'
+  | '.docx'
+  | '.dot'
+  | '.dotm'
+  | '.dotx'
+  | '.fodg'
+  | '.fodp'
+  | '.fopd'
+  | '.fodt'
+  | '.fb2'
+  | '.hwp'
+  | '.lwp'
+  | '.mcw'
+  | '.mw'
+  | '.mwd'
+  | '.odf'
+  | '.odt'
+  | '.otg'
+  | '.ott'
+  | '.pages'
+  | '.pbd'
+  | '.psw'
+  | '.rtf'
+  | '.sda'
+  | '.sdd'
+  | '.sdp'
+  | '.sdw'
+  | '.sgl'
+  | '.std'
+  | '.stw'
+  | '.sxd'
+  | '.sxg'
+  | '.sxm'
+  | '.sxw'
+  | '.uof'
+  | '.uop'
+  | '.uot'
+  | '.vor'
+  | '.wpd'
+  | '.wps'
+  | '.wpt'
+  | '.wri'
+  | '.wn'
+  | '.xml'
+  | '.zabw'
+  | '.key'
+  | '.odp'
+  | '.odg'
+  | '.otp'
+  | '.pot'
+  | '.potm'
+  | '.potx'
+  | '.ppt'
+  | '.pptm'
+  | '.pptx'
+  | '.sti'
+  | '.sxi'
+  | '.vsd'
+  | '.vsdm'
+  | '.vsdx'
+  | '.vdx'
+  | '.bmp'
+  | '.gif'
+  | '.jpg'
+  | '.jpeg'
+  | '.png'
+  | '.svg'
+  | '.tif'
+  | '.tiff'
+  | '.webp'
+  | '.htm'
+  | '.html'
+  | '.xhtm'
+  | '.csv'
+  | '.dbf'
+  | '.dif'
+  | '.et'
+  | '.eth'
+  | '.fods'
+  | '.numbers'
+  | '.ods'
+  | '.ots'
+  | '.prn'
+  | '.qpw'
+  | '.slk'
+  | '.stc'
+  | '.sxc'
+  | '.sylk'
+  | '.tsv'
+  | '.uos1'
+  | '.uos2'
+  | '.uos'
+  | '.wb1'
+  | '.wb2'
+  | '.wb3'
+  | '.wk1'
+  | '.wk2'
+  | '.wk3'
+  | '.wk4'
+  | '.wks'
+  | '.wq1'
+  | '.wq2'
+  | '.xlr'
+  | '.xls'
+  | '.xlsb'
+  | '.xlsm'
+  | '.xlsx'
+  | '.xlw'
+  | '.azw'
+  | '.azw3'
+  | '.azw4'
+  | '.cb7'
+  | '.cbc'
+  | '.cbr'
+  | '.cbz'
+  | '.chm'
+  | '.djvu'
+  | '.epub'
+  | '.fbz'
+  | '.htmlz'
+  | '.lit'
+  | '.lrf'
+  | '.md'
+  | '.mobi'
+  | '.pdb'
+  | '.pml'
+  | '.prc'
+  | '.rb'
+  | '.snb'
+  | '.tcr'
+  | '.txtz'
+  | '.m4a'
+  | '.mp3'
+  | '.mp4'
+  | '.mpeg'
+  | '.mpga'
+  | '.wav'
+  | '.webm';
 
 /**
  * A parse job (v1).
@@ -498,17 +652,111 @@ export interface ParsingJob {
 /**
  * Enum for representing the languages supported by the parser.
  */
-export type ParsingLanguages = 'af' | 'az' | 'bs' | 'cs' | 'cy' | 'da' | 'de' | 'en' | 'es' | 'et' | 'fr' | 'ga' | 'hr' | 'hu' | 'id' | 'is' | 'it' | 'ku' | 'la' | 'lt' | 'lv' | 'mi' | 'ms' | 'mt' | 'nl' | 'no' | 'oc' | 'pi' | 'pl' | 'pt' | 'ro' | 'rs_latin' | 'sk' | 'sl' | 'sq' | 'sv' | 'sw' | 'tl' | 'tr' | 'uz' | 'vi' | 'ar' | 'fa' | 'ug' | 'ur' | 'bn' | 'as' | 'mni' | 'ru' | 'rs_cyrillic' | 'be' | 'bg' | 'uk' | 'mn' | 'abq' | 'ady' | 'kbd' | 'ava' | 'dar' | 'inh' | 'che' | 'lbe' | 'lez' | 'tab' | 'tjk' | 'hi' | 'mr' | 'ne' | 'bh' | 'mai' | 'ang' | 'bho' | 'mah' | 'sck' | 'new' | 'gom' | 'sa' | 'bgc' | 'th' | 'ch_sim' | 'ch_tra' | 'ja' | 'ko' | 'ta' | 'te' | 'kn'
+export type ParsingLanguages =
+  | 'af'
+  | 'az'
+  | 'bs'
+  | 'cs'
+  | 'cy'
+  | 'da'
+  | 'de'
+  | 'en'
+  | 'es'
+  | 'et'
+  | 'fr'
+  | 'ga'
+  | 'hr'
+  | 'hu'
+  | 'id'
+  | 'is'
+  | 'it'
+  | 'ku'
+  | 'la'
+  | 'lt'
+  | 'lv'
+  | 'mi'
+  | 'ms'
+  | 'mt'
+  | 'nl'
+  | 'no'
+  | 'oc'
+  | 'pi'
+  | 'pl'
+  | 'pt'
+  | 'ro'
+  | 'rs_latin'
+  | 'sk'
+  | 'sl'
+  | 'sq'
+  | 'sv'
+  | 'sw'
+  | 'tl'
+  | 'tr'
+  | 'uz'
+  | 'vi'
+  | 'ar'
+  | 'fa'
+  | 'ug'
+  | 'ur'
+  | 'bn'
+  | 'as'
+  | 'mni'
+  | 'ru'
+  | 'rs_cyrillic'
+  | 'be'
+  | 'bg'
+  | 'uk'
+  | 'mn'
+  | 'abq'
+  | 'ady'
+  | 'kbd'
+  | 'ava'
+  | 'dar'
+  | 'inh'
+  | 'che'
+  | 'lbe'
+  | 'lez'
+  | 'tab'
+  | 'tjk'
+  | 'hi'
+  | 'mr'
+  | 'ne'
+  | 'bh'
+  | 'mai'
+  | 'ang'
+  | 'bho'
+  | 'mah'
+  | 'sck'
+  | 'new'
+  | 'gom'
+  | 'sa'
+  | 'bgc'
+  | 'th'
+  | 'ch_sim'
+  | 'ch_tra'
+  | 'ja'
+  | 'ko'
+  | 'ta'
+  | 'te'
+  | 'kn';
 
 /**
  * Enum for representing the mode of parsing to be used.
  */
-export type ParsingMode = 'parse_page_without_llm' | 'parse_page_with_llm' | 'parse_page_with_lvm' | 'parse_page_with_agent' | 'parse_page_with_layout_agent' | 'parse_document_with_llm' | 'parse_document_with_lvm' | 'parse_document_with_agent'
+export type ParsingMode =
+  | 'parse_page_without_llm'
+  | 'parse_page_with_llm'
+  | 'parse_page_with_lvm'
+  | 'parse_page_with_agent'
+  | 'parse_page_with_layout_agent'
+  | 'parse_document_with_llm'
+  | 'parse_document_with_lvm'
+  | 'parse_document_with_agent';
 
 /**
  * Enum for representing the status of a job
  */
-export type StatusEnum = 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED'
+export type StatusEnum = 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED';
 
 export interface TableItem {
   /**
@@ -894,7 +1142,17 @@ export namespace ParsingGetResponse {
       /**
        * List of structured items on the page
        */
-      items: Array<ParsingAPI.TextItem | ParsingAPI.HeadingItem | ParsingAPI.ListItem | ParsingAPI.CodeItem | ParsingAPI.TableItem | ParsingAPI.ImageItem | ParsingAPI.LinkItem | ParsingAPI.HeaderItem | ParsingAPI.FooterItem>;
+      items: Array<
+        | ParsingAPI.TextItem
+        | ParsingAPI.HeadingItem
+        | ParsingAPI.ListItem
+        | ParsingAPI.CodeItem
+        | ParsingAPI.TableItem
+        | ParsingAPI.ImageItem
+        | ParsingAPI.LinkItem
+        | ParsingAPI.HeaderItem
+        | ParsingAPI.FooterItem
+      >;
 
       /**
        * Height of the page in points
@@ -1105,7 +1363,48 @@ export interface ParsingCreateParams {
    * Body param: Tier version. Use 'latest' for the current stable version, or
    * specify a specific version (e.g., '1.0', '2.0') for reproducible results
    */
-  version: '2025-12-11' | '2025-12-18' | '2025-12-31' | '2026-01-08' | '2026-01-09' | '2026-01-16' | '2026-01-21' | '2026-01-22' | '2026-01-24' | '2026-01-29' | '2026-01-30' | '2026-02-03' | '2026-02-18' | '2026-02-20' | '2026-02-24' | '2026-02-26' | '2026-03-02' | '2026-03-03' | '2026-03-04' | '2026-03-05' | '2026-03-09' | '2026-03-10' | '2026-03-11' | '2026-03-12' | '2026-03-17' | '2026-03-19' | '2026-03-20' | '2026-03-22' | '2026-03-23' | '2026-03-24' | '2026-03-25' | '2026-03-26' | '2026-03-27' | '2026-03-30' | '2026-03-31' | '2026-04-02' | '2026-04-06' | '2026-04-09' | '2026-04-14' | 'latest' | (string & {});
+  version:
+    | '2025-12-11'
+    | '2025-12-18'
+    | '2025-12-31'
+    | '2026-01-08'
+    | '2026-01-09'
+    | '2026-01-16'
+    | '2026-01-21'
+    | '2026-01-22'
+    | '2026-01-24'
+    | '2026-01-29'
+    | '2026-01-30'
+    | '2026-02-03'
+    | '2026-02-18'
+    | '2026-02-20'
+    | '2026-02-24'
+    | '2026-02-26'
+    | '2026-03-02'
+    | '2026-03-03'
+    | '2026-03-04'
+    | '2026-03-05'
+    | '2026-03-09'
+    | '2026-03-10'
+    | '2026-03-11'
+    | '2026-03-12'
+    | '2026-03-17'
+    | '2026-03-19'
+    | '2026-03-20'
+    | '2026-03-22'
+    | '2026-03-23'
+    | '2026-03-24'
+    | '2026-03-25'
+    | '2026-03-26'
+    | '2026-03-27'
+    | '2026-03-30'
+    | '2026-03-31'
+    | '2026-04-02'
+    | '2026-04-06'
+    | '2026-04-09'
+    | '2026-04-14'
+    | 'latest'
+    | (string & {});
 
   /**
    * Query param
@@ -1873,7 +2172,49 @@ export namespace ParsingCreateParams {
         /**
          * Tier version when overriding tier. Required when tier is specified
          */
-        version?: '2025-12-11' | '2025-12-18' | '2025-12-31' | '2026-01-08' | '2026-01-09' | '2026-01-16' | '2026-01-21' | '2026-01-22' | '2026-01-24' | '2026-01-29' | '2026-01-30' | '2026-02-03' | '2026-02-18' | '2026-02-20' | '2026-02-24' | '2026-02-26' | '2026-03-02' | '2026-03-03' | '2026-03-04' | '2026-03-05' | '2026-03-09' | '2026-03-10' | '2026-03-11' | '2026-03-12' | '2026-03-17' | '2026-03-19' | '2026-03-20' | '2026-03-22' | '2026-03-23' | '2026-03-24' | '2026-03-25' | '2026-03-26' | '2026-03-27' | '2026-03-30' | '2026-03-31' | '2026-04-02' | '2026-04-06' | '2026-04-09' | '2026-04-14' | 'latest' | (string & {}) | null;
+        version?:
+          | '2025-12-11'
+          | '2025-12-18'
+          | '2025-12-31'
+          | '2026-01-08'
+          | '2026-01-09'
+          | '2026-01-16'
+          | '2026-01-21'
+          | '2026-01-22'
+          | '2026-01-24'
+          | '2026-01-29'
+          | '2026-01-30'
+          | '2026-02-03'
+          | '2026-02-18'
+          | '2026-02-20'
+          | '2026-02-24'
+          | '2026-02-26'
+          | '2026-03-02'
+          | '2026-03-03'
+          | '2026-03-04'
+          | '2026-03-05'
+          | '2026-03-09'
+          | '2026-03-10'
+          | '2026-03-11'
+          | '2026-03-12'
+          | '2026-03-17'
+          | '2026-03-19'
+          | '2026-03-20'
+          | '2026-03-22'
+          | '2026-03-23'
+          | '2026-03-24'
+          | '2026-03-25'
+          | '2026-03-26'
+          | '2026-03-27'
+          | '2026-03-30'
+          | '2026-03-31'
+          | '2026-04-02'
+          | '2026-04-06'
+          | '2026-04-09'
+          | '2026-04-14'
+          | 'latest'
+          | (string & {})
+          | null;
       }
 
       export namespace ParsingConf {
@@ -2103,6 +2444,6 @@ export declare namespace Parsing {
     type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingListParams as ParsingListParams,
-    type ParsingGetParams as ParsingGetParams
+    type ParsingGetParams as ParsingGetParams,
   };
 }

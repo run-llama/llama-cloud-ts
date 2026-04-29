@@ -39,7 +39,7 @@ export class Extract extends APIResource {
    * ```
    */
   create(params: ExtractCreateParams, options?: RequestOptions): APIPromise<ExtractV2Job> {
-    const { organization_id, project_id, ...body } = params
+    const { organization_id, project_id, ...body } = params;
     return this._client.post('/api/v2/extract', { query: { organization_id, project_id }, body, ...options });
   }
 
@@ -58,7 +58,10 @@ export class Extract extends APIResource {
    * }
    * ```
    */
-  list(query: ExtractListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ExtractV2JobsPaginatedCursor, ExtractV2Job> {
+  list(
+    query: ExtractListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ExtractV2JobsPaginatedCursor, ExtractV2Job> {
     return this._client.getAPIList('/api/v2/extract', PaginatedCursor<ExtractV2Job>, { query, ...options });
   }
 
@@ -70,9 +73,16 @@ export class Extract extends APIResource {
    * const extract = await client.extract.delete('job_id');
    * ```
    */
-  delete(jobID: string, params: ExtractDeleteParams | null | undefined = {}, options?: RequestOptions): APIPromise<unknown> {
-    const { organization_id, project_id } = params ?? {}
-    return this._client.delete(path`/api/v2/extract/${jobID}`, { query: { organization_id, project_id }, ...options });
+  delete(
+    jobID: string,
+    params: ExtractDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v2/extract/${jobID}`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
   }
 
   /**
@@ -84,9 +94,16 @@ export class Extract extends APIResource {
    *   await client.extract.generateSchema();
    * ```
    */
-  generateSchema(params: ExtractGenerateSchemaParams, options?: RequestOptions): APIPromise<ConfigurationsAPI.ConfigurationCreate> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post('/api/v2/extract/schema/generate', { query: { organization_id, project_id }, body, ...options });
+  generateSchema(
+    params: ExtractGenerateSchemaParams,
+    options?: RequestOptions,
+  ): APIPromise<ConfigurationsAPI.ConfigurationCreate> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v2/extract/schema/generate', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -101,7 +118,11 @@ export class Extract extends APIResource {
    * const extractV2Job = await client.extract.get('job_id');
    * ```
    */
-  get(jobID: string, query: ExtractGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<ExtractV2Job> {
+  get(
+    jobID: string,
+    query: ExtractGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExtractV2Job> {
     return this._client.get(path`/api/v2/extract/${jobID}`, { query, ...options });
   }
 
@@ -129,7 +150,10 @@ export class Extract extends APIResource {
    *   });
    * ```
    */
-  validateSchema(body: ExtractValidateSchemaParams, options?: RequestOptions): APIPromise<ExtractV2SchemaValidateResponse> {
+  validateSchema(
+    body: ExtractValidateSchemaParams,
+    options?: RequestOptions,
+  ): APIPromise<ExtractV2SchemaValidateResponse> {
     return this._client.post('/api/v2/extract/schema/validation', { body, ...options });
   }
 
@@ -241,7 +265,7 @@ export class Extract extends APIResource {
   }
 }
 
-export type ExtractV2JobsPaginatedCursor = PaginatedCursor<ExtractV2Job>
+export type ExtractV2JobsPaginatedCursor = PaginatedCursor<ExtractV2Job>;
 
 /**
  * Extract configuration combining parse and extract settings.
@@ -251,7 +275,9 @@ export interface ExtractConfiguration {
    * JSON Schema defining the fields to extract. Validate with the /schema/validate
    * endpoint first.
    */
-  data_schema: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null };
+  data_schema: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  };
 
   /**
    * Include citations in results
@@ -412,7 +438,10 @@ export interface ExtractV2Job {
    * Extracted data conforming to the data_schema. Returns a single object for
    * per_doc, or an array for per_page / per_table_row.
    */
-  extract_result?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | Array<{ [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }> | null;
+  extract_result?:
+    | { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }
+    | Array<{ [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }>
+    | null;
 
   /**
    * Job-level metadata.
@@ -430,7 +459,7 @@ export namespace ExtractV2Job {
      */
     usage?: ExtractAPI.ExtractJobUsage | null;
 
-  [k: string]: unknown
+    [k: string]: unknown;
   }
 }
 
@@ -469,7 +498,25 @@ export namespace ExtractV2JobCreate {
      * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
      * events are delivered.
      */
-    webhook_events?: Array<'extract.pending' | 'extract.success' | 'extract.error' | 'extract.partial_success' | 'extract.cancelled' | 'parse.pending' | 'parse.running' | 'parse.success' | 'parse.error' | 'parse.partial_success' | 'parse.cancelled' | 'classify.pending' | 'classify.success' | 'classify.error' | 'classify.partial_success' | 'classify.cancelled' | 'unmapped_event'> | null;
+    webhook_events?: Array<
+      | 'extract.pending'
+      | 'extract.success'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.cancelled'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.cancelled'
+      | 'classify.pending'
+      | 'classify.success'
+      | 'classify.error'
+      | 'classify.partial_success'
+      | 'classify.cancelled'
+      | 'unmapped_event'
+    > | null;
 
     /**
      * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
@@ -518,7 +565,9 @@ export interface ExtractV2SchemaGenerateRequest {
   /**
    * Optional schema to validate, refine, or extend
    */
-  data_schema?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
+  data_schema?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
 
   /**
    * Optional file ID to analyze for schema generation
@@ -543,7 +592,9 @@ export interface ExtractV2SchemaValidateRequest {
   /**
    * JSON Schema to validate for use with extract jobs
    */
-  data_schema: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null };
+  data_schema: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  };
 }
 
 /**
@@ -553,7 +604,9 @@ export interface ExtractV2SchemaValidateResponse {
   /**
    * Validated JSON Schema, ready for use in extract jobs
    */
-  data_schema: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null };
+  data_schema: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  };
 }
 
 /**
@@ -567,20 +620,26 @@ export interface ExtractedFieldMetadata {
    * FieldMetadataEntry objects, indexed by array position. Nested objects contain
    * sub-field entries recursively.
    */
-  document_metadata?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
+  document_metadata?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
 
   /**
    * Per-page metadata when extraction_target is per_page
    */
-  page_metadata?: Array<{ [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }> | null;
+  page_metadata?: Array<{
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  }> | null;
 
   /**
    * Per-row metadata when extraction_target is per_table_row
    */
-  row_metadata?: Array<{ [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null }> | null;
+  row_metadata?: Array<{
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  }> | null;
 }
 
-export type ExtractDeleteResponse = unknown
+export type ExtractDeleteResponse = unknown;
 
 export interface ExtractCreateParams {
   /**
@@ -623,7 +682,25 @@ export namespace ExtractCreateParams {
      * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
      * events are delivered.
      */
-    webhook_events?: Array<'extract.pending' | 'extract.success' | 'extract.error' | 'extract.partial_success' | 'extract.cancelled' | 'parse.pending' | 'parse.running' | 'parse.success' | 'parse.error' | 'parse.partial_success' | 'parse.cancelled' | 'classify.pending' | 'classify.success' | 'classify.error' | 'classify.partial_success' | 'classify.cancelled' | 'unmapped_event'> | null;
+    webhook_events?: Array<
+      | 'extract.pending'
+      | 'extract.success'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.cancelled'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.cancelled'
+      | 'classify.pending'
+      | 'classify.success'
+      | 'classify.error'
+      | 'classify.partial_success'
+      | 'classify.cancelled'
+      | 'unmapped_event'
+    > | null;
 
     /**
      * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
@@ -713,7 +790,9 @@ export interface ExtractGenerateSchemaParams {
   /**
    * Body param: Optional schema to validate, refine, or extend
    */
-  data_schema?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
+  data_schema?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
 
   /**
    * Body param: Optional file ID to analyze for schema generation
@@ -746,7 +825,9 @@ export interface ExtractValidateSchemaParams {
   /**
    * JSON Schema to validate for use with extract jobs
    */
-  data_schema: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null };
+  data_schema: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  };
 }
 
 export declare namespace Extract {
@@ -768,6 +849,6 @@ export declare namespace Extract {
     type ExtractDeleteParams as ExtractDeleteParams,
     type ExtractGenerateSchemaParams as ExtractGenerateSchemaParams,
     type ExtractGetParams as ExtractGetParams,
-    type ExtractValidateSchemaParams as ExtractValidateSchemaParams
+    type ExtractValidateSchemaParams as ExtractValidateSchemaParams,
   };
 }

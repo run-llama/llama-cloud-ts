@@ -12,8 +12,12 @@ export class DataSinks extends APIResource {
    * Create a new data sink.
    */
   create(params: DataSinkCreateParams, options?: RequestOptions): APIPromise<DataSink> {
-    const { organization_id, project_id, ...body } = params
-    return this._client.post('/api/v1/data-sinks', { query: { organization_id, project_id }, body, ...options });
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/data-sinks', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -26,7 +30,10 @@ export class DataSinks extends APIResource {
   /**
    * List data sinks for a given project.
    */
-  list(query: DataSinkListParams | null | undefined = {}, options?: RequestOptions): APIPromise<DataSinkListResponse> {
+  list(
+    query: DataSinkListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<DataSinkListResponse> {
     return this._client.get('/api/v1/data-sinks', { query, ...options });
   }
 
@@ -34,7 +41,10 @@ export class DataSinks extends APIResource {
    * Delete a data sink by ID.
    */
   delete(dataSinkID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/v1/data-sinks/${dataSinkID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/api/v1/data-sinks/${dataSinkID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -57,7 +67,15 @@ export interface DataSink {
   /**
    * Component that implements the data sink
    */
-  component: { [key: string]: unknown } | Shared.CloudPineconeVectorStore | Shared.CloudPostgresVectorStore | Shared.CloudQdrantVectorStore | Shared.CloudAzureAISearchVectorStore | Shared.CloudMongoDBAtlasVectorSearch | Shared.CloudMilvusVectorStore | Shared.CloudAstraDBVectorStore;
+  component:
+    | { [key: string]: unknown }
+    | Shared.CloudPineconeVectorStore
+    | Shared.CloudPostgresVectorStore
+    | Shared.CloudQdrantVectorStore
+    | Shared.CloudAzureAISearchVectorStore
+    | Shared.CloudMongoDBAtlasVectorSearch
+    | Shared.CloudMilvusVectorStore
+    | Shared.CloudAstraDBVectorStore;
 
   /**
    * The name of the data sink.
@@ -79,13 +97,21 @@ export interface DataSink {
   updated_at?: string | null;
 }
 
-export type DataSinkListResponse = Array<DataSink>
+export type DataSinkListResponse = Array<DataSink>;
 
 export interface DataSinkCreateParams {
   /**
    * Body param: Component that implements the data sink
    */
-  component: { [key: string]: unknown } | Shared.CloudPineconeVectorStore | Shared.CloudPostgresVectorStore | Shared.CloudQdrantVectorStore | Shared.CloudAzureAISearchVectorStore | Shared.CloudMongoDBAtlasVectorSearch | Shared.CloudMilvusVectorStore | Shared.CloudAstraDBVectorStore;
+  component:
+    | { [key: string]: unknown }
+    | Shared.CloudPineconeVectorStore
+    | Shared.CloudPostgresVectorStore
+    | Shared.CloudQdrantVectorStore
+    | Shared.CloudAzureAISearchVectorStore
+    | Shared.CloudMongoDBAtlasVectorSearch
+    | Shared.CloudMilvusVectorStore
+    | Shared.CloudAstraDBVectorStore;
 
   /**
    * Body param: The name of the data sink.
@@ -114,7 +140,16 @@ export interface DataSinkUpdateParams {
   /**
    * Component that implements the data sink
    */
-  component?: { [key: string]: unknown } | Shared.CloudPineconeVectorStore | Shared.CloudPostgresVectorStore | Shared.CloudQdrantVectorStore | Shared.CloudAzureAISearchVectorStore | Shared.CloudMongoDBAtlasVectorSearch | Shared.CloudMilvusVectorStore | Shared.CloudAstraDBVectorStore | null;
+  component?:
+    | { [key: string]: unknown }
+    | Shared.CloudPineconeVectorStore
+    | Shared.CloudPostgresVectorStore
+    | Shared.CloudQdrantVectorStore
+    | Shared.CloudAzureAISearchVectorStore
+    | Shared.CloudMongoDBAtlasVectorSearch
+    | Shared.CloudMilvusVectorStore
+    | Shared.CloudAstraDBVectorStore
+    | null;
 
   /**
    * The name of the data sink.
@@ -134,6 +169,6 @@ export declare namespace DataSinks {
     type DataSinkListResponse as DataSinkListResponse,
     type DataSinkCreateParams as DataSinkCreateParams,
     type DataSinkUpdateParams as DataSinkUpdateParams,
-    type DataSinkListParams as DataSinkListParams
+    type DataSinkListParams as DataSinkListParams,
   };
 }

@@ -2,7 +2,10 @@
 
 import LlamaCloud from '@llamaindex/llama-cloud';
 
-const client = new LlamaCloud({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new LlamaCloud({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource projects', () => {
   // Mock server tests are disabled
@@ -20,9 +23,12 @@ describe('resource projects', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.projects.list({ organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', project_name: 'project_name' }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(LlamaCloud.NotFoundError);
+    await expect(
+      client.projects.list(
+        { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', project_name: 'project_name' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -40,8 +46,12 @@ describe('resource projects', () => {
   // Mock server tests are disabled
   test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.projects.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(LlamaCloud.NotFoundError);
+    await expect(
+      client.projects.get(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 });

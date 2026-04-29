@@ -12,9 +12,16 @@ export class DataSources extends APIResource {
   /**
    * Update the configuration of a data source in a pipeline.
    */
-  update(dataSourceID: string, params: DataSourceUpdateParams, options?: RequestOptions): APIPromise<PipelineDataSource> {
-    const { pipeline_id, ...body } = params
-    return this._client.put(path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}`, { body, ...options });
+  update(
+    dataSourceID: string,
+    params: DataSourceUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<PipelineDataSource> {
+    const { pipeline_id, ...body } = params;
+    return this._client.put(path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}`, {
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -27,25 +34,43 @@ export class DataSources extends APIResource {
   /**
    * Get the status of a data source for a pipeline.
    */
-  getStatus(dataSourceID: string, params: DataSourceGetStatusParams, options?: RequestOptions): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
-    const { pipeline_id } = params
-    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}/status`, options);
+  getStatus(
+    dataSourceID: string,
+    params: DataSourceGetStatusParams,
+    options?: RequestOptions,
+  ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
+    const { pipeline_id } = params;
+    return this._client.get(
+      path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}/status`,
+      options,
+    );
   }
 
   /**
    * Run ingestion for the pipeline data source by incrementally updating the
    * data-sink with upstream changes from data-source.
    */
-  sync(dataSourceID: string, params: DataSourceSyncParams, options?: RequestOptions): APIPromise<PipelinesAPI.Pipeline> {
-    const { pipeline_id, ...body } = params
-    return this._client.post(path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}/sync`, { body, ...options });
+  sync(
+    dataSourceID: string,
+    params: DataSourceSyncParams,
+    options?: RequestOptions,
+  ): APIPromise<PipelinesAPI.Pipeline> {
+    const { pipeline_id, ...body } = params;
+    return this._client.post(path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}/sync`, {
+      body,
+      ...options,
+    });
   }
 
   /**
    * Add data sources to a pipeline.
    */
-  updateDataSources(pipelineID: string, params: DataSourceUpdateDataSourcesParams, options?: RequestOptions): APIPromise<DataSourceUpdateDataSourcesResponse> {
-    const { body } = params
+  updateDataSources(
+    pipelineID: string,
+    params: DataSourceUpdateDataSourcesParams,
+    options?: RequestOptions,
+  ): APIPromise<DataSourceUpdateDataSourcesResponse> {
+    const { body } = params;
     return this._client.put(path`/api/v1/pipelines/${pipelineID}/data-sources`, { body: body, ...options });
   }
 }
@@ -62,7 +87,19 @@ export interface PipelineDataSource {
   /**
    * Component that implements the data source
    */
-  component: { [key: string]: unknown } | Shared.CloudS3DataSource | Shared.CloudAzStorageBlobDataSource | Shared.CloudGoogleDriveDataSource | Shared.CloudOneDriveDataSource | Shared.CloudSharepointDataSource | Shared.CloudSlackDataSource | Shared.CloudNotionPageDataSource | Shared.CloudConfluenceDataSource | Shared.CloudJiraDataSource | Shared.CloudJiraDataSourceV2 | Shared.CloudBoxDataSource;
+  component:
+    | { [key: string]: unknown }
+    | Shared.CloudS3DataSource
+    | Shared.CloudAzStorageBlobDataSource
+    | Shared.CloudGoogleDriveDataSource
+    | Shared.CloudOneDriveDataSource
+    | Shared.CloudSharepointDataSource
+    | Shared.CloudSlackDataSource
+    | Shared.CloudNotionPageDataSource
+    | Shared.CloudConfluenceDataSource
+    | Shared.CloudJiraDataSource
+    | Shared.CloudJiraDataSourceV2
+    | Shared.CloudBoxDataSource;
 
   /**
    * The ID of the data source.
@@ -86,7 +123,18 @@ export interface PipelineDataSource {
 
   project_id: string;
 
-  source_type: 'S3' | 'AZURE_STORAGE_BLOB' | 'GOOGLE_DRIVE' | 'MICROSOFT_ONEDRIVE' | 'MICROSOFT_SHAREPOINT' | 'SLACK' | 'NOTION_PAGE' | 'CONFLUENCE' | 'JIRA' | 'JIRA_V2' | 'BOX';
+  source_type:
+    | 'S3'
+    | 'AZURE_STORAGE_BLOB'
+    | 'GOOGLE_DRIVE'
+    | 'MICROSOFT_ONEDRIVE'
+    | 'MICROSOFT_SHAREPOINT'
+    | 'SLACK'
+    | 'NOTION_PAGE'
+    | 'CONFLUENCE'
+    | 'JIRA'
+    | 'JIRA_V2'
+    | 'BOX';
 
   /**
    * Creation datetime
@@ -96,7 +144,9 @@ export interface PipelineDataSource {
   /**
    * Custom metadata that will be present on all data loaded from the data source
    */
-  custom_metadata?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
+  custom_metadata?: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  } | null;
 
   /**
    * The status of the data source in the pipeline.
@@ -129,9 +179,9 @@ export interface PipelineDataSource {
   version_metadata?: DataSourcesAPI.DataSourceReaderVersionMetadata | null;
 }
 
-export type DataSourceGetDataSourcesResponse = Array<PipelineDataSource>
+export type DataSourceGetDataSourcesResponse = Array<PipelineDataSource>;
 
-export type DataSourceUpdateDataSourcesResponse = Array<PipelineDataSource>
+export type DataSourceUpdateDataSourcesResponse = Array<PipelineDataSource>;
 
 export interface DataSourceUpdateParams {
   /**
@@ -191,6 +241,6 @@ export declare namespace DataSources {
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceGetStatusParams as DataSourceGetStatusParams,
     type DataSourceSyncParams as DataSourceSyncParams,
-    type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams
+    type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
   };
 }
