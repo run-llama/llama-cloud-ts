@@ -81,6 +81,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nfile = client.files.create(\n    file=b"Example data",\n    purpose="purpose",\n)\nprint(file.id)',
       },
+      go: {
+        method: 'client.Files.New',
+        example:
+          'package main\n\nimport (\n\t"bytes"\n\t"context"\n\t"fmt"\n\t"io"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfile, err := client.Files.New(context.TODO(), llamacloudprod.FileNewParams{\n\t\tFile:    io.Reader(bytes.NewBuffer([]byte("Example data"))),\n\t\tPurpose: "purpose",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.ID)\n}\n',
+      },
+      cli: {
+        method: 'files create',
+        example:
+          "llamacloud-prod files create \\\n  --api-key 'My API Key' \\\n  --file 'Example data' \\\n  --purpose purpose",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/beta/files \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -F 'file=@/path/to/file' \\\n    -F purpose=purpose",
@@ -118,6 +128,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files.query',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.files.query()\nprint(response.items)',
+      },
+      go: {
+        method: 'client.Files.Query',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Files.Query(context.TODO(), llamacloudprod.FileQueryParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Items)\n}\n',
+      },
+      cli: {
+        method: 'files query',
+        example: "llamacloud-prod files query \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -159,6 +178,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.files.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Files.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Files.List(context.TODO(), llamacloudprod.FileListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'files list',
+        example: "llamacloud-prod files list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/files \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -186,6 +214,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.files.delete(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Files.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Files.Delete(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.FileDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'files delete',
+        example:
+          "llamacloud-prod files delete \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -220,6 +258,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npresigned_url = client.files.get(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(presigned_url.expires_at)',
+      },
+      go: {
+        method: 'client.Files.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpresignedURL, err := client.Files.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.FileGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", presignedURL.ExpiresAt)\n}\n',
+      },
+      cli: {
+        method: 'files get',
+        example:
+          "llamacloud-prod files get \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -271,6 +319,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nparsing = client.parsing.create(\n    tier="fast",\n    version="2025-12-11",\n)\nprint(parsing.id)',
       },
+      go: {
+        method: 'client.Parsing.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tparsing, err := client.Parsing.New(context.TODO(), llamacloudprod.ParsingNewParams{\n\t\tTier:    llamacloudprod.ParsingNewParamsTierFast,\n\t\tVersion: llamacloudprod.ParsingNewParamsVersion2025_12_11,\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", parsing.ID)\n}\n',
+      },
+      cli: {
+        method: 'parsing create',
+        example:
+          "llamacloud-prod parsing create \\\n  --api-key 'My API Key' \\\n  --tier fast \\\n  --version \"'2025-12-11'\"",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/parse \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "tier": "fast",\n          "version": "2025-12-11"\n        }\'',
@@ -307,6 +365,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'parsing.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nparsing = client.parsing.get(\n    job_id="job_id",\n)\nprint(parsing.job)',
+      },
+      go: {
+        method: 'client.Parsing.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tparsing, err := client.Parsing.Get(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.ParsingGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", parsing.Job)\n}\n',
+      },
+      cli: {
+        method: 'parsing get',
+        example: "llamacloud-prod parsing get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
       http: {
         example:
@@ -348,6 +415,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.parsing.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Parsing.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Parsing.List(context.TODO(), llamacloudprod.ParsingListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'parsing list',
+        example: "llamacloud-prod parsing list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/parse \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -385,6 +461,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_v2_job = client.extract.create(\n    file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n)\nprint(extract_v2_job.id)',
+      },
+      go: {
+        method: 'client.Extract.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractV2Job, err := client.Extract.New(context.TODO(), llamacloudprod.ExtractNewParams{\n\t\tExtractV2JobCreate: llamacloudprod.ExtractV2JobCreateParam{\n\t\t\tFileInput: "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractV2Job.ID)\n}\n',
+      },
+      cli: {
+        method: 'extract create',
+        example:
+          "llamacloud-prod extract create \\\n  --api-key 'My API Key' \\\n  --file-input dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
       },
       http: {
         example:
@@ -431,6 +517,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.extract.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Extract.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Extract.List(context.TODO(), llamacloudprod.ExtractListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'extract list',
+        example: "llamacloud-prod extract list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -462,6 +557,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_v2_job = client.extract.get(\n    job_id="job_id",\n)\nprint(extract_v2_job.id)',
       },
+      go: {
+        method: 'client.Extract.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractV2Job, err := client.Extract.Get(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.ExtractGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractV2Job.ID)\n}\n',
+      },
+      cli: {
+        method: 'extract get',
+        example: "llamacloud-prod extract get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -491,6 +595,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract = client.extract.delete(\n    job_id="job_id",\n)\nprint(extract)',
       },
+      go: {
+        method: 'client.Extract.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textract, err := client.Extract.Delete(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.ExtractDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extract)\n}\n',
+      },
+      cli: {
+        method: 'extract delete',
+        example: "llamacloud-prod extract delete \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -519,6 +632,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract.validate_schema',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_v2_schema_validate_response = client.extract.validate_schema(\n    data_schema={\n        "properties": {\n            "vendor_name": "bar",\n            "invoice_number": "bar",\n            "total_amount": "bar",\n            "line_items": "bar",\n        },\n        "required": ["vendor_name", "invoice_number", "total_amount"],\n        "type": "object",\n    },\n)\nprint(extract_v2_schema_validate_response.data_schema)',
+      },
+      go: {
+        method: 'client.Extract.ValidateSchema',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractV2SchemaValidateResponse, err := client.Extract.ValidateSchema(context.TODO(), llamacloudprod.ExtractValidateSchemaParams{\n\t\tExtractV2SchemaValidateRequest: llamacloudprod.ExtractV2SchemaValidateRequestParam{\n\t\t\tDataSchema: map[string]*llamacloudprod.ExtractV2SchemaValidateRequestDataSchemaUnionParam{\n\t\t\t\t"properties": {\n\t\t\t\t\tOfAnyMap: map[string]any{\n\t\t\t\t\t\t"vendor_name":    "bar",\n\t\t\t\t\t\t"invoice_number": "bar",\n\t\t\t\t\t\t"total_amount":   "bar",\n\t\t\t\t\t\t"line_items":     "bar",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t"required": {\n\t\t\t\t\tOfAnyArray: []any{"vendor_name", "invoice_number", "total_amount"},\n\t\t\t\t},\n\t\t\t\t"type": {\n\t\t\t\t\tOfString: llamacloudprod.String("object"),\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractV2SchemaValidateResponse.DataSchema)\n}\n',
+      },
+      cli: {
+        method: 'extract validate_schema',
+        example:
+          "llamacloud-prod extract validate-schema \\\n  --api-key 'My API Key' \\\n  --data-schema '{properties: {vendor_name: bar, invoice_number: bar, total_amount: bar, line_items: bar}, required: [vendor_name, invoice_number, total_amount], type: object}'",
       },
       http: {
         example:
@@ -556,6 +679,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract.generate_schema',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nconfiguration_create = client.extract.generate_schema()\nprint(configuration_create.name)',
+      },
+      go: {
+        method: 'client.Extract.GenerateSchema',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tconfigurationCreate, err := client.Extract.GenerateSchema(context.TODO(), llamacloudprod.ExtractGenerateSchemaParams{\n\t\tExtractV2SchemaGenerateRequest: llamacloudprod.ExtractV2SchemaGenerateRequestParam{},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", configurationCreate.Name)\n}\n',
+      },
+      cli: {
+        method: 'extract generate_schema',
+        example: "llamacloud-prod extract generate-schema \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -596,6 +728,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclassify_job = client.classifier.jobs.create(\n    file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],\n    rules=[{\n        "description": "contains invoice number, line items, and total amount",\n        "type": "invoice",\n    }],\n)\nprint(classify_job.id)',
       },
+      go: {
+        method: 'client.Classifier.Jobs.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tclassifyJob, err := client.Classifier.Jobs.New(context.TODO(), llamacloudprod.ClassifierJobNewParams{\n\t\tFileIDs: []string{"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"},\n\t\tRules: []llamacloudprod.ClassifierRuleParam{{\n\t\t\tDescription: "contains invoice number, line items, and total amount",\n\t\t\tType:        "invoice",\n\t\t}},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", classifyJob.ID)\n}\n',
+      },
+      cli: {
+        method: 'jobs create',
+        example:
+          "llamacloud-prod classifier:jobs create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --rule \"{description: 'contains invoice number, line items, and total amount', type: invoice}\"",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/classifier/jobs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_ids": [\n            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n          ],\n          "rules": [\n            {\n              "description": "contains invoice number, line items, and total amount",\n              "type": "invoice"\n            }\n          ]\n        }\'',
@@ -632,6 +774,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.classifier.jobs.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Classifier.Jobs.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Classifier.Jobs.List(context.TODO(), llamacloudprod.ClassifierJobListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'jobs list',
+        example: "llamacloud-prod classifier:jobs list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/classifier/jobs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -663,6 +814,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclassify_job = client.classifier.jobs.get(\n    classify_job_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(classify_job.id)',
       },
+      go: {
+        method: 'client.Classifier.Jobs.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tclassifyJob, err := client.Classifier.Jobs.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.ClassifierJobGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", classifyJob.ID)\n}\n',
+      },
+      cli: {
+        method: 'jobs get',
+        example:
+          "llamacloud-prod classifier:jobs get \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/classifier/jobs/$CLASSIFY_JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -693,6 +854,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classifier.jobs.get_results',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.classifier.jobs.get_results(\n    classify_job_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response.items)',
+      },
+      go: {
+        method: 'client.Classifier.Jobs.GetResults',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Classifier.Jobs.GetResults(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.ClassifierJobGetResultsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Items)\n}\n',
+      },
+      cli: {
+        method: 'jobs get_results',
+        example:
+          "llamacloud-prod classifier:jobs get-results \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -733,6 +904,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classify.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclassify = client.classify.create()\nprint(classify.id)',
+      },
+      go: {
+        method: 'client.Classify.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tclassify, err := client.Classify.New(context.TODO(), llamacloudprod.ClassifyNewParams{\n\t\tClassifyCreateRequest: llamacloudprod.ClassifyCreateRequestParam{},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", classify.ID)\n}\n',
+      },
+      cli: {
+        method: 'classify create',
+        example: "llamacloud-prod classify create \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -775,6 +955,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.classify.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Classify.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Classify.List(context.TODO(), llamacloudprod.ClassifyListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'classify list',
+        example: "llamacloud-prod classify list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/classify \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -805,6 +994,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classify.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclassify = client.classify.get(\n    job_id="job_id",\n)\nprint(classify.id)',
+      },
+      go: {
+        method: 'client.Classify.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tclassify, err := client.Classify.Get(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.ClassifyGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", classify.ID)\n}\n',
+      },
+      cli: {
+        method: 'classify get',
+        example: "llamacloud-prod classify get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
       http: {
         example:
@@ -841,6 +1039,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nconfiguration_response = client.configurations.create(\n    name="x",\n    parameters={\n        "categories": [{\n            "name": "x"\n        }],\n        "product_type": "split_v1",\n    },\n)\nprint(configuration_response.id)',
+      },
+      go: {
+        method: 'client.Configurations.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tconfigurationResponse, err := client.Configurations.New(context.TODO(), llamacloudprod.ConfigurationNewParams{\n\t\tConfigurationCreate: llamacloudprod.ConfigurationCreateParam{\n\t\t\tName: "x",\n\t\t\tParameters: llamacloudprod.ConfigurationCreateParametersUnionParam{\n\t\t\t\tOfSplitV1: &llamacloudprod.SplitV1Parameters{\n\t\t\t\t\tCategories: []llamacloudprod.SplitCategoryParam{{\n\t\t\t\t\t\tName: "x",\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", configurationResponse.ID)\n}\n',
+      },
+      cli: {
+        method: 'configurations create',
+        example:
+          "llamacloud-prod configurations create \\\n  --api-key 'My API Key' \\\n  --name x \\\n  --parameters '{categories: [{name: x}], product_type: split_v1}'",
       },
       http: {
         example:
@@ -880,6 +1088,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.configurations.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Configurations.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Configurations.List(context.TODO(), llamacloudprod.ConfigurationListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'configurations list',
+        example: "llamacloud-prod configurations list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/configurations \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -909,6 +1126,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations.retrieve',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nconfiguration_response = client.configurations.retrieve(\n    config_id="config_id",\n)\nprint(configuration_response.id)',
+      },
+      go: {
+        method: 'client.Configurations.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tconfigurationResponse, err := client.Configurations.Get(\n\t\tcontext.TODO(),\n\t\t"config_id",\n\t\tllamacloudprod.ConfigurationGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", configurationResponse.ID)\n}\n',
+      },
+      cli: {
+        method: 'configurations retrieve',
+        example:
+          "llamacloud-prod configurations retrieve \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
       http: {
         example:
@@ -946,6 +1173,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nconfiguration_response = client.configurations.update(\n    config_id="config_id",\n)\nprint(configuration_response.id)',
       },
+      go: {
+        method: 'client.Configurations.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tconfigurationResponse, err := client.Configurations.Update(\n\t\tcontext.TODO(),\n\t\t"config_id",\n\t\tllamacloudprod.ConfigurationUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", configurationResponse.ID)\n}\n',
+      },
+      cli: {
+        method: 'configurations update',
+        example:
+          "llamacloud-prod configurations update \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/beta/configurations/$CONFIG_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
@@ -973,6 +1210,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.configurations.delete(\n    config_id="config_id",\n)',
+      },
+      go: {
+        method: 'client.Configurations.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Configurations.Delete(\n\t\tcontext.TODO(),\n\t\t"config_id",\n\t\tllamacloudprod.ConfigurationDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'configurations delete',
+        example:
+          "llamacloud-prod configurations delete \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
       http: {
         example:
@@ -1004,6 +1251,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nprojects = client.projects.list()\nprint(projects)',
       },
+      go: {
+        method: 'client.Projects.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tprojects, err := client.Projects.List(context.TODO(), llamacloudprod.ProjectListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", projects)\n}\n',
+      },
+      cli: {
+        method: 'projects list',
+        example: "llamacloud-prod projects list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/projects \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -1034,6 +1290,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nproject = client.projects.get(\n    project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(project.id)',
       },
+      go: {
+        method: 'client.Projects.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tproject, err := client.Projects.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.ProjectGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", project.ID)\n}\n',
+      },
+      cli: {
+        method: 'projects get',
+        example:
+          "llamacloud-prod projects get \\\n  --api-key 'My API Key' \\\n  --project-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/projects/$PROJECT_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -1063,6 +1329,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sinks.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_sinks = client.data_sinks.list()\nprint(data_sinks)',
+      },
+      go: {
+        method: 'client.DataSinks.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSinks, err := client.DataSinks.List(context.TODO(), llamacloudprod.DataSinkListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSinks)\n}\n',
+      },
+      cli: {
+        method: 'data_sinks list',
+        example: "llamacloud-prod data-sinks list \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -1100,6 +1375,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_sink = client.data_sinks.create(\n    component={\n        "foo": "bar"\n    },\n    name="name",\n    sink_type="PINECONE",\n)\nprint(data_sink.id)',
       },
+      go: {
+        method: 'client.DataSinks.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSink, err := client.DataSinks.New(context.TODO(), llamacloudprod.DataSinkNewParams{\n\t\tDataSinkCreate: llamacloudprod.DataSinkCreateParam{\n\t\t\tComponent: llamacloudprod.DataSinkCreateComponentUnionParam{\n\t\t\t\tOfAnyMap: map[string]any{\n\t\t\t\t\t"foo": "bar",\n\t\t\t\t},\n\t\t\t},\n\t\t\tName:     "name",\n\t\t\tSinkType: llamacloudprod.DataSinkCreateSinkTypePinecone,\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSink.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sinks create',
+        example:
+          "llamacloud-prod data-sinks create \\\n  --api-key 'My API Key' \\\n  --component '{foo: bar}' \\\n  --name name \\\n  --sink-type PINECONE",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sinks \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "component": {\n            "foo": "bar"\n          },\n          "name": "name",\n          "sink_type": "PINECONE"\n        }\'',
@@ -1129,6 +1414,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sinks.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_sink = client.data_sinks.get(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(data_sink.id)',
+      },
+      go: {
+        method: 'client.DataSinks.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSink, err := client.DataSinks.Get(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSink.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sinks get',
+        example:
+          "llamacloud-prod data-sinks get \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1165,6 +1460,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_sink = client.data_sinks.update(\n    data_sink_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    sink_type="PINECONE",\n)\nprint(data_sink.id)',
       },
+      go: {
+        method: 'client.DataSinks.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSink, err := client.DataSinks.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.DataSinkUpdateParams{\n\t\t\tSinkType: llamacloudprod.DataSinkUpdateParamsSinkTypePinecone,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSink.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sinks update',
+        example:
+          "llamacloud-prod data-sinks update \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --sink-type PINECONE",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sinks/$DATA_SINK_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "sink_type": "PINECONE"\n        }\'',
@@ -1192,6 +1497,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sinks.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.data_sinks.delete(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.DataSinks.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.DataSinks.Delete(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'data_sinks delete',
+        example:
+          "llamacloud-prod data-sinks delete \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1223,6 +1538,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sources.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_sources = client.data_sources.list()\nprint(data_sources)',
+      },
+      go: {
+        method: 'client.DataSources.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSources, err := client.DataSources.List(context.TODO(), llamacloudprod.DataSourceListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSources)\n}\n',
+      },
+      cli: {
+        method: 'data_sources list',
+        example: "llamacloud-prod data-sources list \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -1261,6 +1585,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_source = client.data_sources.create(\n    component={\n        "foo": "bar"\n    },\n    name="name",\n    source_type="S3",\n)\nprint(data_source.id)',
       },
+      go: {
+        method: 'client.DataSources.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSource, err := client.DataSources.New(context.TODO(), llamacloudprod.DataSourceNewParams{\n\t\tComponent: llamacloudprod.DataSourceNewParamsComponentUnion{\n\t\t\tOfAnyMap: map[string]any{\n\t\t\t\t"foo": "bar",\n\t\t\t},\n\t\t},\n\t\tName:       "name",\n\t\tSourceType: llamacloudprod.DataSourceNewParamsSourceTypeS3,\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSource.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources create',
+        example:
+          "llamacloud-prod data-sources create \\\n  --api-key 'My API Key' \\\n  --component '{foo: bar}' \\\n  --name name \\\n  --source-type S3",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sources \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "component": {\n            "foo": "bar"\n          },\n          "name": "name",\n          "source_type": "S3"\n        }\'',
@@ -1290,6 +1624,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sources.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_source = client.data_sources.get(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(data_source.id)',
+      },
+      go: {
+        method: 'client.DataSources.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSource, err := client.DataSources.Get(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSource.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources get',
+        example:
+          "llamacloud-prod data-sources get \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1327,6 +1671,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_source = client.data_sources.update(\n    data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    source_type="S3",\n)\nprint(data_source.id)',
       },
+      go: {
+        method: 'client.DataSources.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSource, err := client.DataSources.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.DataSourceUpdateParams{\n\t\t\tSourceType: llamacloudprod.DataSourceUpdateParamsSourceTypeS3,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSource.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources update',
+        example:
+          "llamacloud-prod data-sources update \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --source-type S3",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sources/$DATA_SOURCE_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "source_type": "S3"\n        }\'',
@@ -1354,6 +1708,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sources.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.data_sources.delete(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.DataSources.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.DataSources.Delete(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'data_sources delete',
+        example:
+          "llamacloud-prod data-sources delete \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1390,6 +1754,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipelines = client.pipelines.list()\nprint(pipelines)',
+      },
+      go: {
+        method: 'client.Pipelines.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelines, err := client.Pipelines.List(context.TODO(), llamacloudprod.PipelineListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelines)\n}\n',
+      },
+      cli: {
+        method: 'pipelines list',
+        example: "llamacloud-prod pipelines list \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -1438,6 +1811,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.create(\n    name="x",\n)\nprint(pipeline.id)',
       },
+      go: {
+        method: 'client.Pipelines.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.New(context.TODO(), llamacloudprod.PipelineNewParams{\n\t\tPipelineCreate: llamacloudprod.PipelineCreateParam{\n\t\t\tName: "x",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines create',
+        example: "llamacloud-prod pipelines create \\\n  --api-key 'My API Key' \\\n  --name x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x"\n        }\'',
@@ -1467,6 +1849,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.get(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline.id)',
+      },
+      go: {
+        method: 'client.Pipelines.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Get(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines get',
+        example:
+          "llamacloud-prod pipelines get \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1512,6 +1904,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.update(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline.id)',
       },
+      go: {
+        method: 'client.Pipelines.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines update',
+        example:
+          "llamacloud-prod pipelines update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
@@ -1540,6 +1942,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.pipelines.delete(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Pipelines.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Pipelines.Delete(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'pipelines delete',
+        example:
+          "llamacloud-prod pipelines delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1571,6 +1983,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.get_status',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nmanaged_ingestion_status_response = client.pipelines.get_status(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(managed_ingestion_status_response.job_id)',
+      },
+      go: {
+        method: 'client.Pipelines.GetStatus',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmanagedIngestionStatusResponse, err := client.Pipelines.GetStatus(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineGetStatusParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", managedIngestionStatusResponse.JobID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines get_status',
+        example:
+          "llamacloud-prod pipelines get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1618,6 +2040,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.upsert',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.upsert(\n    name="x",\n)\nprint(pipeline.id)',
+      },
+      go: {
+        method: 'client.Pipelines.Upsert',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Upsert(context.TODO(), llamacloudprod.PipelineUpsertParams{\n\t\tPipelineCreate: llamacloudprod.PipelineCreateParam{\n\t\t\tName: "x",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines upsert',
+        example: "llamacloud-prod pipelines upsert \\\n  --api-key 'My API Key' \\\n  --name x",
       },
       http: {
         example:
@@ -1669,6 +2100,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.retrieve(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    query="x",\n)\nprint(pipeline.pipeline_id)',
       },
+      go: {
+        method: 'client.Pipelines.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineGetParams{\n\t\t\tQuery: "x",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.PipelineID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines retrieve',
+        example:
+          "llamacloud-prod pipelines retrieve \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --query x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "query": "x"\n        }\'',
@@ -1700,6 +2141,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.sync.create(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline.id)',
       },
+      go: {
+        method: 'client.Pipelines.Sync.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Sync.New(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'sync create',
+        example:
+          "llamacloud-prod pipelines:sync create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/sync \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -1729,6 +2180,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.sync.cancel',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.sync.cancel(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline.id)',
+      },
+      go: {
+        method: 'client.Pipelines.Sync.Cancel',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Sync.Cancel(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'sync cancel',
+        example:
+          "llamacloud-prod pipelines:sync cancel \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1760,6 +2221,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline_data_sources = client.pipelines.data_sources.get_data_sources(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline_data_sources)',
       },
+      go: {
+        method: 'client.Pipelines.DataSources.GetDataSources',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelineDataSources, err := client.Pipelines.DataSources.GetDataSources(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelineDataSources)\n}\n',
+      },
+      cli: {
+        method: 'data_sources get_data_sources',
+        example:
+          "llamacloud-prod pipelines:data-sources get-data-sources \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -1789,6 +2260,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.data_sources.update_data_sources',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline_data_sources = client.pipelines.data_sources.update_data_sources(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    body=[{\n        "data_source_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n    }],\n)\nprint(pipeline_data_sources)',
+      },
+      go: {
+        method: 'client.Pipelines.DataSources.UpdateDataSources',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelineDataSources, err := client.Pipelines.DataSources.UpdateDataSources(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDataSourceUpdateDataSourcesParams{\n\t\t\tBody: []llamacloudprod.PipelineDataSourceUpdateDataSourcesParamsBody{{\n\t\t\t\tDataSourceID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t\t}},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelineDataSources)\n}\n',
+      },
+      cli: {
+        method: 'data_sources update_data_sources',
+        example:
+          "llamacloud-prod pipelines:data-sources update-data-sources \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{data_source_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
       },
       http: {
         example:
@@ -1820,6 +2301,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline_data_source = client.pipelines.data_sources.update(\n    data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline_data_source.id)',
       },
+      go: {
+        method: 'client.Pipelines.DataSources.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelineDataSource, err := client.Pipelines.DataSources.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDataSourceUpdateParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelineDataSource.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources update',
+        example:
+          "llamacloud-prod pipelines:data-sources update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources/$DATA_SOURCE_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
@@ -1849,6 +2340,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.data_sources.get_status',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nmanaged_ingestion_status_response = client.pipelines.data_sources.get_status(\n    data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(managed_ingestion_status_response.job_id)',
+      },
+      go: {
+        method: 'client.Pipelines.DataSources.GetStatus',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmanagedIngestionStatusResponse, err := client.Pipelines.DataSources.GetStatus(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDataSourceGetStatusParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", managedIngestionStatusResponse.JobID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources get_status',
+        example:
+          "llamacloud-prod pipelines:data-sources get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1881,6 +2382,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.data_sources.sync(\n    data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline.id)',
       },
+      go: {
+        method: 'client.Pipelines.DataSources.Sync',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.DataSources.Sync(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDataSourceSyncParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources sync',
+        example:
+          "llamacloud-prod pipelines:data-sources sync \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources/$DATA_SOURCE_ID/sync \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -1910,6 +2421,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.images.list_page_screenshots(\n    id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response)',
       },
+      go: {
+        method: 'client.Pipelines.Images.ListPageScreenshots',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Images.ListPageScreenshots(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineImageListPageScreenshotsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'images list_page_screenshots',
+        example:
+          "llamacloud-prod pipelines:images list-page-screenshots \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/files/$ID/page_screenshots \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -1938,6 +2459,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.images.get_page_screenshot',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.images.get_page_screenshot(\n    page_index=0,\n    id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Pipelines.Images.GetPageScreenshot',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Images.GetPageScreenshot(\n\t\tcontext.TODO(),\n\t\t0,\n\t\tllamacloudprod.PipelineImageGetPageScreenshotParams{\n\t\t\tID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'images get_page_screenshot',
+        example:
+          "llamacloud-prod pipelines:images get-page-screenshot \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --page-index 0",
       },
       http: {
         example:
@@ -1974,6 +2505,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.images.get_page_figure(\n    figure_name="figure_name",\n    id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    page_index=0,\n)\nprint(response)',
       },
+      go: {
+        method: 'client.Pipelines.Images.GetPageFigure',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Images.GetPageFigure(\n\t\tcontext.TODO(),\n\t\t"figure_name",\n\t\tllamacloudprod.PipelineImageGetPageFigureParams{\n\t\t\tID:        "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t\tPageIndex: 0,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'images get_page_figure',
+        example:
+          "llamacloud-prod pipelines:images get-page-figure \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --page-index 0 \\\n  --figure-name figure_name",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/files/$ID/page-figures/$PAGE_INDEX/$FIGURE_NAME \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2003,6 +2544,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.images.list_page_figures',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.images.list_page_figures(\n    id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Pipelines.Images.ListPageFigures',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Images.ListPageFigures(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineImageListPageFiguresParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'images list_page_figures',
+        example:
+          "llamacloud-prod pipelines:images list-page-figures \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2034,6 +2585,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.files.get_status_counts(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response.data_source_id)',
       },
+      go: {
+        method: 'client.Pipelines.Files.GetStatusCounts',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Files.GetStatusCounts(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileGetStatusCountsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.DataSourceID)\n}\n',
+      },
+      cli: {
+        method: 'files get_status_counts',
+        example:
+          "llamacloud-prod pipelines:files get-status-counts \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files/status-counts \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2063,6 +2624,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.files.get_status',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nmanaged_ingestion_status_response = client.pipelines.files.get_status(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(managed_ingestion_status_response.job_id)',
+      },
+      go: {
+        method: 'client.Pipelines.Files.GetStatus',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmanagedIngestionStatusResponse, err := client.Pipelines.Files.GetStatus(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileGetStatusParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", managedIngestionStatusResponse.JobID)\n}\n',
+      },
+      cli: {
+        method: 'files get_status',
+        example:
+          "llamacloud-prod pipelines:files get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2094,6 +2665,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline_files = client.pipelines.files.create(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    body=[{\n        "file_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n    }],\n)\nprint(pipeline_files)',
       },
+      go: {
+        method: 'client.Pipelines.Files.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelineFiles, err := client.Pipelines.Files.New(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileNewParams{\n\t\t\tBody: []llamacloudprod.PipelineFileNewParamsBody{{\n\t\t\t\tFileID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t\t}},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelineFiles)\n}\n',
+      },
+      cli: {
+        method: 'files create',
+        example:
+          "llamacloud-prod pipelines:files create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{file_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'[\n          {\n            "file_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n            "custom_metadata": {\n              "foo": {\n                "foo": "bar"\n              }\n            }\n          }\n        ]\'',
@@ -2124,6 +2705,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline_file = client.pipelines.files.update(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline_file.id)',
       },
+      go: {
+        method: 'client.Pipelines.Files.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelineFile, err := client.Pipelines.Files.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileUpdateParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelineFile.ID)\n}\n',
+      },
+      cli: {
+        method: 'files update',
+        example:
+          "llamacloud-prod pipelines:files update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files/$FILE_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
@@ -2151,6 +2742,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.files.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.pipelines.files.delete(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Pipelines.Files.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Pipelines.Files.Delete(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileDeleteParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'files delete',
+        example:
+          "llamacloud-prod pipelines:files delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2191,6 +2792,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.pipelines.files.list(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\npage = page.files[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Pipelines.Files.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Pipelines.Files.List(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileListParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'files list',
+        example:
+          "llamacloud-prod pipelines:files list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files2 \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2220,6 +2831,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nmetadata = client.pipelines.metadata.create(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    upload_file=b"Example data",\n)\nprint(metadata)',
       },
+      go: {
+        method: 'client.Pipelines.Metadata.New',
+        example:
+          'package main\n\nimport (\n\t"bytes"\n\t"context"\n\t"fmt"\n\t"io"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmetadata, err := client.Pipelines.Metadata.New(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineMetadataNewParams{\n\t\t\tUploadFile: io.Reader(bytes.NewBuffer([]byte("Example data"))),\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", metadata)\n}\n',
+      },
+      cli: {
+        method: 'metadata create',
+        example:
+          "llamacloud-prod pipelines:metadata create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --upload-file 'Example data'",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/metadata \\\n    -X PUT \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -F 'upload_file=@/path/to/upload_file'",
@@ -2247,6 +2868,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.metadata.delete_all',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.pipelines.metadata.delete_all(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Pipelines.Metadata.DeleteAll',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Pipelines.Metadata.DeleteAll(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'metadata delete_all',
+        example:
+          "llamacloud-prod pipelines:metadata delete-all \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2280,6 +2911,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.documents.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncloud_documents = client.pipelines.documents.create(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    body=[{\n        "metadata": {\n            "foo": "bar"\n        },\n        "text": "text",\n    }],\n)\nprint(cloud_documents)',
+      },
+      go: {
+        method: 'client.Pipelines.Documents.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcloudDocuments, err := client.Pipelines.Documents.New(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDocumentNewParams{\n\t\t\tBody: []llamacloudprod.CloudDocumentCreateParam{{\n\t\t\t\tMetadata: map[string]any{\n\t\t\t\t\t"foo": "bar",\n\t\t\t\t},\n\t\t\t\tText: "text",\n\t\t\t}},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", cloudDocuments)\n}\n',
+      },
+      cli: {
+        method: 'documents create',
+        example:
+          "llamacloud-prod pipelines:documents create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{metadata: {foo: bar}, text: text}'",
       },
       http: {
         example:
@@ -2319,6 +2960,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.pipelines.documents.list(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\npage = page.documents[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Pipelines.Documents.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Pipelines.Documents.List(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDocumentListParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'documents list',
+        example:
+          "llamacloud-prod pipelines:documents list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/paginated \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2349,6 +3000,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncloud_document = client.pipelines.documents.get(\n    document_id="document_id",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(cloud_document.id)',
       },
+      go: {
+        method: 'client.Pipelines.Documents.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcloudDocument, err := client.Pipelines.Documents.Get(\n\t\tcontext.TODO(),\n\t\t"document_id",\n\t\tllamacloudprod.PipelineDocumentGetParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", cloudDocument.ID)\n}\n',
+      },
+      cli: {
+        method: 'documents get',
+        example:
+          "llamacloud-prod pipelines:documents get \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/$DOCUMENT_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2377,6 +3038,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.documents.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.pipelines.documents.delete(\n    document_id="document_id",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Pipelines.Documents.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Pipelines.Documents.Delete(\n\t\tcontext.TODO(),\n\t\t"document_id",\n\t\tllamacloudprod.PipelineDocumentDeleteParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'documents delete',
+        example:
+          "llamacloud-prod pipelines:documents delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
       http: {
         example:
@@ -2408,6 +3079,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nmanaged_ingestion_status_response = client.pipelines.documents.get_status(\n    document_id="document_id",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(managed_ingestion_status_response.job_id)',
       },
+      go: {
+        method: 'client.Pipelines.Documents.GetStatus',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmanagedIngestionStatusResponse, err := client.Pipelines.Documents.GetStatus(\n\t\tcontext.TODO(),\n\t\t"document_id",\n\t\tllamacloudprod.PipelineDocumentGetStatusParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", managedIngestionStatusResponse.JobID)\n}\n',
+      },
+      cli: {
+        method: 'documents get_status',
+        example:
+          "llamacloud-prod pipelines:documents get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/$DOCUMENT_ID/status \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2436,6 +3117,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.documents.sync',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.documents.sync(\n    document_id="document_id",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Pipelines.Documents.Sync',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Documents.Sync(\n\t\tcontext.TODO(),\n\t\t"document_id",\n\t\tllamacloudprod.PipelineDocumentSyncParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'documents sync',
+        example:
+          "llamacloud-prod pipelines:documents sync \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
       http: {
         example:
@@ -2466,6 +3157,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.documents.get_chunks',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ntext_nodes = client.pipelines.documents.get_chunks(\n    document_id="document_id",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(text_nodes)',
+      },
+      go: {
+        method: 'client.Pipelines.Documents.GetChunks',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\ttextNodes, err := client.Pipelines.Documents.GetChunks(\n\t\tcontext.TODO(),\n\t\t"document_id",\n\t\tllamacloudprod.PipelineDocumentGetChunksParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", textNodes)\n}\n',
+      },
+      cli: {
+        method: 'documents get_chunks',
+        example:
+          "llamacloud-prod pipelines:documents get-chunks \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
       http: {
         example:
@@ -2499,6 +3200,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.documents.upsert',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncloud_documents = client.pipelines.documents.upsert(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    body=[{\n        "metadata": {\n            "foo": "bar"\n        },\n        "text": "text",\n    }],\n)\nprint(cloud_documents)',
+      },
+      go: {
+        method: 'client.Pipelines.Documents.Upsert',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcloudDocuments, err := client.Pipelines.Documents.Upsert(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDocumentUpsertParams{\n\t\t\tBody: []llamacloudprod.CloudDocumentCreateParam{{\n\t\t\t\tMetadata: map[string]any{\n\t\t\t\t\t"foo": "bar",\n\t\t\t\t},\n\t\t\t\tText: "text",\n\t\t\t}},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", cloudDocuments)\n}\n',
+      },
+      cli: {
+        method: 'documents upsert',
+        example:
+          "llamacloud-prod pipelines:documents upsert \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{metadata: {foo: bar}, text: text}'",
       },
       http: {
         example:
@@ -2535,6 +3246,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretriever = client.retrievers.create(\n    name="x",\n)\nprint(retriever.id)',
       },
+      go: {
+        method: 'client.Retrievers.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretriever, err := client.Retrievers.New(context.TODO(), llamacloudprod.RetrieverNewParams{\n\t\tRetrieverCreate: llamacloudprod.RetrieverCreateParam{\n\t\t\tName: "x",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retriever.ID)\n}\n',
+      },
+      cli: {
+        method: 'retrievers create',
+        example: "llamacloud-prod retrievers create \\\n  --api-key 'My API Key' \\\n  --name x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x"\n        }\'',
@@ -2570,6 +3290,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretriever = client.retrievers.upsert(\n    name="x",\n)\nprint(retriever.id)',
       },
+      go: {
+        method: 'client.Retrievers.Upsert',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretriever, err := client.Retrievers.Upsert(context.TODO(), llamacloudprod.RetrieverUpsertParams{\n\t\tRetrieverCreate: llamacloudprod.RetrieverCreateParam{\n\t\t\tName: "x",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retriever.ID)\n}\n',
+      },
+      cli: {
+        method: 'retrievers upsert',
+        example: "llamacloud-prod retrievers upsert \\\n  --api-key 'My API Key' \\\n  --name x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x"\n        }\'',
@@ -2600,6 +3329,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretrievers = client.retrievers.list()\nprint(retrievers)',
       },
+      go: {
+        method: 'client.Retrievers.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretrievers, err := client.Retrievers.List(context.TODO(), llamacloudprod.RetrieverListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retrievers)\n}\n',
+      },
+      cli: {
+        method: 'retrievers list',
+        example: "llamacloud-prod retrievers list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2629,6 +3367,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'retrievers.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretriever = client.retrievers.get(\n    retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(retriever.id)',
+      },
+      go: {
+        method: 'client.Retrievers.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretriever, err := client.Retrievers.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.RetrieverGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retriever.ID)\n}\n',
+      },
+      cli: {
+        method: 'retrievers get',
+        example:
+          "llamacloud-prod retrievers get \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2666,6 +3414,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretriever = client.retrievers.update(\n    retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipelines=[{\n        "description": "description",\n        "name": "x",\n        "pipeline_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    }],\n)\nprint(retriever.id)',
       },
+      go: {
+        method: 'client.Retrievers.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretriever, err := client.Retrievers.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.RetrieverUpdateParams{\n\t\t\tPipelines: []llamacloudprod.RetrieverPipelineParam{{\n\t\t\t\tDescription: llamacloudprod.String("description"),\n\t\t\t\tName:        llamacloudprod.String("x"),\n\t\t\t\tPipelineID:  "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t\t}},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retriever.ID)\n}\n',
+      },
+      cli: {
+        method: 'retrievers update',
+        example:
+          "llamacloud-prod retrievers update \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --pipeline '{description: description, name: x, pipeline_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/$RETRIEVER_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "pipelines": [\n            {\n              "description": "description",\n              "name": "x",\n              "pipeline_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n            }\n          ]\n        }\'',
@@ -2693,6 +3451,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'retrievers.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.retrievers.delete(\n    retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Retrievers.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Retrievers.Delete(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.RetrieverDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'retrievers delete',
+        example:
+          "llamacloud-prod retrievers delete \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2732,6 +3500,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncomposite_retrieval_result = client.retrievers.search(\n    query="x",\n)\nprint(composite_retrieval_result.image_nodes)',
       },
+      go: {
+        method: 'client.Retrievers.Search',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcompositeRetrievalResult, err := client.Retrievers.Search(context.TODO(), llamacloudprod.RetrieverSearchParams{\n\t\tQuery: "x",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", compositeRetrievalResult.ImageNodes)\n}\n',
+      },
+      cli: {
+        method: 'retrievers search',
+        example: "llamacloud-prod retrievers search \\\n  --api-key 'My API Key' \\\n  --query x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "query": "x"\n        }\'',
@@ -2770,6 +3547,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncomposite_retrieval_result = client.retrievers.retriever.search(\n    retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    query="x",\n)\nprint(composite_retrieval_result.image_nodes)',
       },
+      go: {
+        method: 'client.Retrievers.Retriever.Search',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcompositeRetrievalResult, err := client.Retrievers.Retriever.Search(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.RetrieverRetrieverSearchParams{\n\t\t\tQuery: "x",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", compositeRetrievalResult.ImageNodes)\n}\n',
+      },
+      cli: {
+        method: 'retriever search',
+        example:
+          "llamacloud-prod retrievers:retriever search \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --query x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/$RETRIEVER_ID/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "query": "x"\n        }\'',
@@ -2799,6 +3586,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.agent_data.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nagent_data = client.beta.agent_data.get(\n    item_id="item_id",\n)\nprint(agent_data.id)',
+      },
+      go: {
+        method: 'client.Beta.AgentData.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tagentData, err := client.Beta.AgentData.Get(\n\t\tcontext.TODO(),\n\t\t"item_id",\n\t\tllamacloudprod.BetaAgentDataGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", agentData.ID)\n}\n',
+      },
+      cli: {
+        method: 'agent_data get',
+        example: "llamacloud-prod beta:agent-data get \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
       http: {
         example:
@@ -2830,6 +3626,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nagent_data = client.beta.agent_data.update(\n    item_id="item_id",\n    data={\n        "foo": "bar"\n    },\n)\nprint(agent_data.id)',
       },
+      go: {
+        method: 'client.Beta.AgentData.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tagentData, err := client.Beta.AgentData.Update(\n\t\tcontext.TODO(),\n\t\t"item_id",\n\t\tllamacloudprod.BetaAgentDataUpdateParams{\n\t\t\tData: map[string]any{\n\t\t\t\t"foo": "bar",\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", agentData.ID)\n}\n',
+      },
+      cli: {
+        method: 'agent_data update',
+        example:
+          "llamacloud-prod beta:agent-data update \\\n  --api-key 'My API Key' \\\n  --item-id item_id \\\n  --data '{foo: bar}'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data/$ITEM_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "data": {\n            "foo": "bar"\n          }\n        }\'',
@@ -2858,6 +3664,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.agent_data.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nagent_data = client.beta.agent_data.delete(\n    item_id="item_id",\n)\nprint(agent_data)',
+      },
+      go: {
+        method: 'client.Beta.AgentData.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tagentData, err := client.Beta.AgentData.Delete(\n\t\tcontext.TODO(),\n\t\t"item_id",\n\t\tllamacloudprod.BetaAgentDataDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", agentData)\n}\n',
+      },
+      cli: {
+        method: 'agent_data delete',
+        example:
+          "llamacloud-prod beta:agent-data delete \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
       http: {
         example:
@@ -2894,6 +3710,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.agent_data.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nagent_data = client.beta.agent_data.create(\n    data={\n        "foo": "bar"\n    },\n    deployment_name="deployment_name",\n)\nprint(agent_data.id)',
+      },
+      go: {
+        method: 'client.Beta.AgentData.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tagentData, err := client.Beta.AgentData.New(context.TODO(), llamacloudprod.BetaAgentDataNewParams{\n\t\tData: map[string]any{\n\t\t\t"foo": "bar",\n\t\t},\n\t\tDeploymentName: "deployment_name",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", agentData.ID)\n}\n',
+      },
+      cli: {
+        method: 'agent_data create',
+        example:
+          "llamacloud-prod beta:agent-data create \\\n  --api-key 'My API Key' \\\n  --data '{foo: bar}' \\\n  --deployment-name deployment_name",
       },
       http: {
         example:
@@ -2935,6 +3761,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.agent_data.search',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.agent_data.search(\n    deployment_name="deployment_name",\n)\npage = page.items[0]\nprint(page.id)',
+      },
+      go: {
+        method: 'client.Beta.AgentData.Search',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.AgentData.Search(context.TODO(), llamacloudprod.BetaAgentDataSearchParams{\n\t\tDeploymentName: "deployment_name",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'agent_data search',
+        example:
+          "llamacloud-prod beta:agent-data search \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
       },
       http: {
         example:
@@ -2978,6 +3814,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.agent_data.aggregate(\n    deployment_name="deployment_name",\n)\npage = page.items[0]\nprint(page.group_key)',
       },
+      go: {
+        method: 'client.Beta.AgentData.Aggregate',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.AgentData.Aggregate(context.TODO(), llamacloudprod.BetaAgentDataAggregateParams{\n\t\tDeploymentName: "deployment_name",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'agent_data aggregate',
+        example:
+          "llamacloud-prod beta:agent-data aggregate \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data/:aggregate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "deployment_name": "deployment_name"\n        }\'',
@@ -3012,6 +3858,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.agent_data.delete_by_query',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.agent_data.delete_by_query(\n    deployment_name="deployment_name",\n)\nprint(response.deleted_count)',
+      },
+      go: {
+        method: 'client.Beta.AgentData.DeleteByQuery',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.AgentData.DeleteByQuery(context.TODO(), llamacloudprod.BetaAgentDataDeleteByQueryParams{\n\t\tDeploymentName: "deployment_name",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.DeletedCount)\n}\n',
+      },
+      cli: {
+        method: 'agent_data delete_by_query',
+        example:
+          "llamacloud-prod beta:agent-data delete-by-query \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
       },
       http: {
         example:
@@ -3048,6 +3904,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.sheets.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsheets_job = client.beta.sheets.create(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(sheets_job.id)',
+      },
+      go: {
+        method: 'client.Beta.Sheets.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsheetsJob, err := client.Beta.Sheets.New(context.TODO(), llamacloudprod.BetaSheetNewParams{\n\t\tFileID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", sheetsJob.ID)\n}\n',
+      },
+      cli: {
+        method: 'sheets create',
+        example:
+          "llamacloud-prod beta:sheets create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -3090,6 +3956,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.sheets.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Beta.Sheets.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Sheets.List(context.TODO(), llamacloudprod.BetaSheetListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'sheets list',
+        example: "llamacloud-prod beta:sheets list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/sheets/jobs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3125,6 +4000,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.sheets.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsheets_job = client.beta.sheets.get(\n    spreadsheet_job_id="spreadsheet_job_id",\n)\nprint(sheets_job.id)',
+      },
+      go: {
+        method: 'client.Beta.Sheets.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsheetsJob, err := client.Beta.Sheets.Get(\n\t\tcontext.TODO(),\n\t\t"spreadsheet_job_id",\n\t\tllamacloudprod.BetaSheetGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", sheetsJob.ID)\n}\n',
+      },
+      cli: {
+        method: 'sheets get',
+        example:
+          "llamacloud-prod beta:sheets get \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
       },
       http: {
         example:
@@ -3163,6 +4048,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npresigned_url = client.beta.sheets.get_result_table(\n    region_type="table",\n    spreadsheet_job_id="spreadsheet_job_id",\n    region_id="region_id",\n)\nprint(presigned_url.expires_at)',
       },
+      go: {
+        method: 'client.Beta.Sheets.GetResultTable',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpresignedURL, err := client.Beta.Sheets.GetResultTable(\n\t\tcontext.TODO(),\n\t\tllamacloudprod.BetaSheetGetResultTableParamsRegionTypeTable,\n\t\tllamacloudprod.BetaSheetGetResultTableParams{\n\t\t\tSpreadsheetJobID: "spreadsheet_job_id",\n\t\t\tRegionID:         "region_id",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", presignedURL.ExpiresAt)\n}\n',
+      },
+      cli: {
+        method: 'sheets get_result_table',
+        example:
+          "llamacloud-prod beta:sheets get-result-table \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id \\\n  --region-id region_id \\\n  --region-type table",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/sheets/jobs/$SPREADSHEET_JOB_ID/regions/$REGION_ID/result/$REGION_TYPE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3192,6 +4087,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.sheets.delete_job',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.sheets.delete_job(\n    spreadsheet_job_id="spreadsheet_job_id",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Beta.Sheets.DeleteJob',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Sheets.DeleteJob(\n\t\tcontext.TODO(),\n\t\t"spreadsheet_job_id",\n\t\tllamacloudprod.BetaSheetDeleteJobParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'sheets delete_job',
+        example:
+          "llamacloud-prod beta:sheets delete-job \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
       },
       http: {
         example:
@@ -3229,6 +4134,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndirectory = client.beta.directories.create(\n    name="x",\n)\nprint(directory.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdirectory, err := client.Beta.Directories.New(context.TODO(), llamacloudprod.BetaDirectoryNewParams{\n\t\tName: "x",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", directory.ID)\n}\n',
+      },
+      cli: {
+        method: 'directories create',
+        example: "llamacloud-prod beta:directories create \\\n  --api-key 'My API Key' \\\n  --name x",
       },
       http: {
         example:
@@ -3269,6 +4183,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.directories.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Beta.Directories.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Directories.List(context.TODO(), llamacloudprod.BetaDirectoryListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'directories list',
+        example: "llamacloud-prod beta:directories list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3298,6 +4221,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndirectory = client.beta.directories.get(\n    directory_id="directory_id",\n)\nprint(directory.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdirectory, err := client.Beta.Directories.Get(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", directory.ID)\n}\n',
+      },
+      cli: {
+        method: 'directories get',
+        example:
+          "llamacloud-prod beta:directories get \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
       http: {
         example:
@@ -3335,6 +4268,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndirectory = client.beta.directories.update(\n    directory_id="directory_id",\n)\nprint(directory.id)',
       },
+      go: {
+        method: 'client.Beta.Directories.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdirectory, err := client.Beta.Directories.Update(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", directory.ID)\n}\n',
+      },
+      cli: {
+        method: 'directories update',
+        example:
+          "llamacloud-prod beta:directories update \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
@@ -3362,6 +4305,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.beta.directories.delete(\n    directory_id="directory_id",\n)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Beta.Directories.Delete(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'directories delete',
+        example:
+          "llamacloud-prod beta:directories delete \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
       http: {
         example:
@@ -3401,6 +4354,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.files.add',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.directories.files.add(\n    directory_id="directory_id",\n    file_id="file_id",\n)\nprint(response.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Files.Add',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Directories.Files.Add(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryFileAddParams{\n\t\t\tFileID: "file_id",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      cli: {
+        method: 'files add',
+        example:
+          "llamacloud-prod beta:directories:files add \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --file-id file_id",
       },
       http: {
         example:
@@ -3443,6 +4406,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.directories.files.list(\n    directory_id="directory_id",\n)\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Beta.Directories.Files.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Directories.Files.List(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryFileListParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'files list',
+        example:
+          "llamacloud-prod beta:directories:files list \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3478,6 +4451,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.files.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nfile = client.beta.directories.files.get(\n    directory_file_id="directory_file_id",\n    directory_id="directory_id",\n)\nprint(file.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Files.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfile, err := client.Beta.Directories.Files.Get(\n\t\tcontext.TODO(),\n\t\t"directory_file_id",\n\t\tllamacloudprod.BetaDirectoryFileGetParams{\n\t\t\tDirectoryID: "directory_id",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.ID)\n}\n',
+      },
+      cli: {
+        method: 'files get',
+        example:
+          "llamacloud-prod beta:directories:files get \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
       },
       http: {
         example:
@@ -3519,6 +4502,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nfile = client.beta.directories.files.update(\n    directory_file_id="directory_file_id",\n    path_directory_id="directory_id",\n)\nprint(file.id)',
       },
+      go: {
+        method: 'client.Beta.Directories.Files.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfile, err := client.Beta.Directories.Files.Update(\n\t\tcontext.TODO(),\n\t\t"directory_file_id",\n\t\tllamacloudprod.BetaDirectoryFileUpdateParams{\n\t\t\tPathDirectoryID: "directory_id",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.ID)\n}\n',
+      },
+      cli: {
+        method: 'files update',
+        example:
+          "llamacloud-prod beta:directories:files update \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files/$DIRECTORY_FILE_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
@@ -3552,6 +4545,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.files.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.beta.directories.files.delete(\n    directory_file_id="directory_file_id",\n    directory_id="directory_id",\n)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Files.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Beta.Directories.Files.Delete(\n\t\tcontext.TODO(),\n\t\t"directory_file_id",\n\t\tllamacloudprod.BetaDirectoryFileDeleteParams{\n\t\t\tDirectoryID: "directory_id",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'files delete',
+        example:
+          "llamacloud-prod beta:directories:files delete \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
       },
       http: {
         example:
@@ -3591,6 +4594,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.files.upload',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.directories.files.upload(\n    directory_id="directory_id",\n    upload_file=b"Example data",\n)\nprint(response.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Files.Upload',
+        example:
+          'package main\n\nimport (\n\t"bytes"\n\t"context"\n\t"fmt"\n\t"io"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Directories.Files.Upload(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryFileUploadParams{\n\t\t\tUploadFile: io.Reader(bytes.NewBuffer([]byte("Example data"))),\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      cli: {
+        method: 'files upload',
+        example:
+          "llamacloud-prod beta:directories:files upload \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --upload-file 'Example data'",
       },
       http: {
         example:
@@ -3632,6 +4645,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nbatch = client.beta.batch.create(\n    job_config={},\n)\nprint(batch.id)',
       },
+      go: {
+        method: 'client.Beta.Batch.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tbatch, err := client.Beta.Batch.New(context.TODO(), llamacloudprod.BetaBatchNewParams{\n\t\tJobConfig: llamacloudprod.BetaBatchNewParamsJobConfigUnion{\n\t\t\tOfBatchParseJobRecordCreate: &llamacloudprod.BetaBatchNewParamsJobConfigBatchParseJobRecordCreate{},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", batch.ID)\n}\n',
+      },
+      cli: {
+        method: 'batch create',
+        example: "llamacloud-prod beta:batch create \\\n  --api-key 'My API Key' \\\n  --job-config '{}'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "job_config": {}\n        }\'',
@@ -3671,6 +4693,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.batch.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Beta.Batch.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Batch.List(context.TODO(), llamacloudprod.BetaBatchListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'batch list',
+        example: "llamacloud-prod beta:batch list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3701,6 +4732,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.batch.get_status',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.batch.get_status(\n    job_id="job_id",\n)\nprint(response.job)',
+      },
+      go: {
+        method: 'client.Beta.Batch.GetStatus',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Batch.GetStatus(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.BetaBatchGetStatusParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Job)\n}\n',
+      },
+      cli: {
+        method: 'batch get_status',
+        example: "llamacloud-prod beta:batch get-status \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
       http: {
         example:
@@ -3738,6 +4778,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.batch.cancel',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.batch.cancel(\n    job_id="job_id",\n)\nprint(response.job_id)',
+      },
+      go: {
+        method: 'client.Beta.Batch.Cancel',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Batch.Cancel(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.BetaBatchCancelParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.JobID)\n}\n',
+      },
+      cli: {
+        method: 'batch cancel',
+        example: "llamacloud-prod beta:batch cancel \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
       http: {
         example:
@@ -3777,6 +4826,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.batch.job_items.list(\n    job_id="job_id",\n)\npage = page.items[0]\nprint(page.item_id)',
       },
+      go: {
+        method: 'client.Beta.Batch.JobItems.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Batch.JobItems.List(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.BetaBatchJobItemListParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'job_items list',
+        example:
+          "llamacloud-prod beta:batch:job-items list \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/$JOB_ID/items \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3813,6 +4872,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.batch.job_items.get_processing_results(\n    item_id="item_id",\n)\nprint(response.item_id)',
       },
+      go: {
+        method: 'client.Beta.Batch.JobItems.GetProcessingResults',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Batch.JobItems.GetProcessingResults(\n\t\tcontext.TODO(),\n\t\t"item_id",\n\t\tllamacloudprod.BetaBatchJobItemGetProcessingResultsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ItemID)\n}\n',
+      },
+      cli: {
+        method: 'job_items get_processing_results',
+        example:
+          "llamacloud-prod beta:batch:job-items get-processing-results \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/items/$ITEM_ID/processing-results \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3848,6 +4917,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.split.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsplit = client.beta.split.create(\n    document_input={\n        "type": "type",\n        "value": "value",\n    },\n)\nprint(split.id)',
+      },
+      go: {
+        method: 'client.Beta.Split.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsplit, err := client.Beta.Split.New(context.TODO(), llamacloudprod.BetaSplitNewParams{\n\t\tDocumentInput: llamacloudprod.SplitDocumentInputParam{\n\t\t\tType:  "type",\n\t\t\tValue: "value",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", split.ID)\n}\n',
+      },
+      cli: {
+        method: 'split create',
+        example:
+          "llamacloud-prod beta:split create \\\n  --api-key 'My API Key' \\\n  --document-input '{type: type, value: value}'",
       },
       http: {
         example:
@@ -3888,6 +4967,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.split.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Beta.Split.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Split.List(context.TODO(), llamacloudprod.BetaSplitListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'split list',
+        example: "llamacloud-prod beta:split list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/split/jobs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3918,6 +5006,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsplit = client.beta.split.get(\n    split_job_id="split_job_id",\n)\nprint(split.id)',
       },
+      go: {
+        method: 'client.Beta.Split.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsplit, err := client.Beta.Split.Get(\n\t\tcontext.TODO(),\n\t\t"split_job_id",\n\t\tllamacloudprod.BetaSplitGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", split.ID)\n}\n',
+      },
+      cli: {
+        method: 'split get',
+        example:
+          "llamacloud-prod beta:split get \\\n  --api-key 'My API Key' \\\n  --split-job-id split_job_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/split/jobs/$SPLIT_JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3927,6 +5025,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
 ];
 
 const EMBEDDED_READMES: { language: string; content: string }[] = [
+  {
+    language: 'cli',
+    content:
+      "# Llama Cloud CLI\n\nThe official CLI for the [Llama Cloud REST API](https://developers.llamaindex.ai/).\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## Installation\n\n### Installing with Go\n\nTo test or install the CLI locally, you need [Go](https://go.dev/doc/install) version 1.22 or later installed.\n\n~~~sh\ngo install 'github.com/stainless-sdks/llamacloud-prod-cli/cmd/llamacloud-prod@latest'\n~~~\n\nOnce you have run `go install`, the binary is placed in your Go bin directory:\n\n- **Default location**: `$HOME/go/bin` (or `$GOPATH/bin` if GOPATH is set)\n- **Check your path**: Run `go env GOPATH` to see the base directory\n\nIf commands aren't found after installation, add the Go bin directory to your PATH:\n\n~~~sh\n# Add to your shell profile (.zshrc, .bashrc, etc.)\nexport PATH=\"$PATH:$(go env GOPATH)/bin\"\n~~~\n\n### Running Locally\n\nAfter cloning the git repository for this project, you can use the\n`scripts/run` script to run the tool locally:\n\n~~~sh\n./scripts/run args...\n~~~\n\n## Usage\n\nThe CLI follows a resource-based command structure:\n\n~~~sh\nllamacloud-prod [resource] <command> [flags...]\n~~~\n\n~~~sh\nllamacloud-prod parsing create \\\n  --api-key 'My API Key' \\\n  --tier agentic \\\n  --version latest \\\n  --file-id abc1234\n~~~\n\nFor details about specific commands, use the `--help` flag.\n\n### Environment variables\n\n| Environment variable  | Required |\n| --------------------- | -------- |\n| `LLAMA_CLOUD_API_KEY` | yes      |\n\n### Global flags\n\n- `--api-key` (can also be set with `LLAMA_CLOUD_API_KEY` env var)\n- `--help` - Show command line usage\n- `--debug` - Enable debug logging (includes HTTP request/response details)\n- `--version`, `-v` - Show the CLI version\n- `--base-url` - Use a custom API backend URL\n- `--format` - Change the output format (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--format-error` - Change the output format for errors (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--transform` - Transform the data output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n- `--transform-error` - Transform the error output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n\n### Passing files as arguments\n\nTo pass files to your API, you can use the `@myfile.ext` syntax:\n\n~~~bash\nllamacloud-prod <command> --arg @abe.jpg\n~~~\n\nFiles can also be passed inside JSON or YAML blobs:\n\n~~~bash\nllamacloud-prod <command> --arg '{image: \"@abe.jpg\"}'\n# Equivalent:\nllamacloud-prod <command> <<YAML\narg:\n  image: \"@abe.jpg\"\nYAML\n~~~\n\nIf you need to pass a string literal that begins with an `@` sign, you can\nescape the `@` sign to avoid accidentally passing a file.\n\n~~~bash\nllamacloud-prod <command> --username '\\@abe'\n~~~\n\n#### Explicit encoding\n\nFor JSON endpoints, the CLI tool does filetype sniffing to determine whether the\nfile contents should be sent as a string literal (for plain text files) or as a\nbase64-encoded string literal (for binary files). If you need to explicitly send\nthe file as either plain text or base64-encoded data, you can use\n`@file://myfile.txt` (for string encoding) or `@data://myfile.dat` (for\nbase64-encoding). Note that absolute paths will begin with `@file://` or\n`@data://`, followed by a third `/` (for example, `@file:///tmp/file.txt`).\n\n~~~bash\nllamacloud-prod <command> --arg @data://file.txt\n~~~\n\n## Linking different Go SDK versions\n\nYou can link the CLI against a different version of the Llama Cloud Go SDK\nfor development purposes using the `./scripts/link` script.\n\nTo link to a specific version from a repository (version can be a branch,\ngit tag, or commit hash):\n\n~~~bash\n./scripts/link github.com/org/repo@version\n~~~\n\nTo link to a local copy of the SDK:\n\n~~~bash\n./scripts/link ../path/to/llamacloudprod-go\n~~~\n\nIf you run the link script without any arguments, it will default to `../llamacloudprod-go`.\n",
+  },
+  {
+    language: 'go',
+    content:
+      '# Llama Cloud Go API Library\n\n<a href="https://pkg.go.dev/github.com/stainless-sdks/llamacloud-prod-go"><img src="https://pkg.go.dev/badge/github.com/stainless-sdks/llamacloud-prod-go.svg" alt="Go Reference"></a>\n\nThe Llama Cloud Go library provides convenient access to the [Llama Cloud REST API](https://developers.llamaindex.ai/)\nfrom applications written in Go.\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## MCP Server\n\nUse the Llama Cloud MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40llamaindex%2Fllama-cloud-mcp&config=eyJuYW1lIjoiQGxsYW1haW5kZXgvbGxhbWEtY2xvdWQtbWNwIiwidHJhbnNwb3J0IjoiaHR0cCIsInVybCI6Imh0dHBzOi8vbGxhbWFjbG91ZC1wcm9kLnN0bG1jcC5jb20iLCJoZWFkZXJzIjp7IngtbGxhbWEtY2xvdWQtYXBpLWtleSI6Ik15IEFQSSBLZXkifX0)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40llamaindex%2Fllama-cloud-mcp%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fllamacloud-prod.stlmcp.com%22%2C%22headers%22%3A%7B%22x-llama-cloud-api-key%22%3A%22My%20API%20Key%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Installation\n\n\n\n```go\nimport (\n\t"github.com/stainless-sdks/llamacloud-prod-go" // imported as SDK_PackageName\n)\n```\n\n\n\nOr to pin the version:\n\n\n\n```sh\ngo get -u \'github.com/stainless-sdks/llamacloud-prod-go@v0.0.1\'\n```\n\n\n\n## Requirements\n\nThis library requires Go 1.22+.\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n```go\npackage main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"), // defaults to os.LookupEnv("LLAMA_CLOUD_API_KEY")\n\t)\n\tparsing, err := client.Parsing.New(context.TODO(), llamacloudprod.ParsingNewParams{\n\t\tTier:    llamacloudprod.ParsingNewParamsTierAgentic,\n\t\tVersion: llamacloudprod.ParsingNewParamsVersionLatest,\n\t\tFileID:  llamacloudprod.String("abc1234"),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", parsing.ID)\n}\n\n```\n\n### Request fields\n\nAll request parameters are wrapped in a generic `Field` type,\nwhich we use to distinguish zero values from null or omitted fields.\n\nThis prevents accidentally sending a zero value if you forget a required parameter,\nand enables explicitly sending `null`, `false`, `\'\'`, or `0` on optional parameters.\nAny field not specified is not sent.\n\nTo construct fields with values, use the helpers `String()`, `Int()`, `Float()`, or most commonly, the generic `F[T]()`.\nTo send a null, use `Null[T]()`, and to send a nonconforming value, use `Raw[T](any)`. For example:\n\n```go\nparams := FooParams{\n\tName: SDK_PackageName.F("hello"),\n\n\t// Explicitly send `"description": null`\n\tDescription: SDK_PackageName.Null[string](),\n\n\tPoint: SDK_PackageName.F(SDK_PackageName.Point{\n\t\tX: SDK_PackageName.Int(0),\n\t\tY: SDK_PackageName.Int(1),\n\n\t\t// In cases where the API specifies a given type,\n\t\t// but you want to send something else, use `Raw`:\n\t\tZ: SDK_PackageName.Raw[int64](0.01), // sends a float\n\t}),\n}\n```\n\n### Response objects\n\nAll fields in response structs are value types (not pointers or wrappers).\n\nIf a given field is `null`, not present, or invalid, the corresponding field\nwill simply be its zero value.\n\nAll response structs also include a special `JSON` field, containing more detailed\ninformation about each property, which you can use like so:\n\n```go\nif res.Name == "" {\n\t// true if `"name"` is either not present or explicitly null\n\tres.JSON.Name.IsNull()\n\n\t// true if the `"name"` key was not present in the response JSON at all\n\tres.JSON.Name.IsMissing()\n\n\t// When the API returns data that cannot be coerced to the expected type:\n\tif res.JSON.Name.IsInvalid() {\n\t\traw := res.JSON.Name.Raw()\n\n\t\tlegacyName := struct{\n\t\t\tFirst string `json:"first"`\n\t\t\tLast  string `json:"last"`\n\t\t}{}\n\t\tjson.Unmarshal([]byte(raw), &legacyName)\n\t\tname = legacyName.First + " " + legacyName.Last\n\t}\n}\n```\n\nThese `.JSON` structs also include an `Extras` map containing\nany properties in the json response that were not specified\nin the struct. This can be useful for API features not yet\npresent in the SDK.\n\n```go\nbody := res.JSON.ExtraFields["my_unexpected_field"].Raw()\n```\n\n### RequestOptions\n\nThis library uses the functional options pattern. Functions defined in the\n`SDK_PackageOptionName` package return a `RequestOption`, which is a closure that mutates a\n`RequestConfig`. These options can be supplied to the client or at individual\nrequests. For example:\n\n```go\nclient := SDK_PackageName.SDK_ClientInitializerName(\n\t// Adds a header to every request made by the client\n\tSDK_PackageOptionName.WithHeader("X-Some-Header", "custom_header_info"),\n)\n\nclient.Pipelines.List(context.TODO(), ...,\n\t// Override the header\n\tSDK_PackageOptionName.WithHeader("X-Some-Header", "some_other_custom_header_info"),\n\t// Add an undocumented field to the request body, using sjson syntax\n\tSDK_PackageOptionName.WithJSONSet("some.json.path", map[string]string{"my": "object"}),\n)\n```\n\nSee the [full list of request options](https://pkg.go.dev/github.com/stainless-sdks/llamacloud-prod-go/SDK_PackageOptionName).\n\n### Pagination\n\nThis library provides some conveniences for working with paginated list endpoints.\n\nYou can use `.ListAutoPaging()` methods to iterate through items across all pages:\n\n```go\niter := client.Extract.ListAutoPaging(context.TODO(), llamacloudprod.ExtractListParams{\n\tPageSize: llamacloudprod.Int(20),\n})\n// Automatically fetches more pages as needed.\nfor iter.Next() {\n\textractV2Job := iter.Current()\n\tfmt.Printf("%+v\\n", extractV2Job)\n}\nif err := iter.Err(); err != nil {\n\tpanic(err.Error())\n}\n```\n\nOr you can use simple `.List()` methods to fetch a single page and receive a standard response object\nwith additional helper methods like `.GetNextPage()`, e.g.:\n\n```go\npage, err := client.Extract.List(context.TODO(), llamacloudprod.ExtractListParams{\n\tPageSize: llamacloudprod.Int(20),\n})\nfor page != nil {\n\tfor _, extract := range page.Items {\n\t\tfmt.Printf("%+v\\n", extract)\n\t}\n\tpage, err = page.GetNextPage()\n}\nif err != nil {\n\tpanic(err.Error())\n}\n```\n\n### Errors\n\nWhen the API returns a non-success status code, we return an error with type\n`*SDK_PackageName.Error`. This contains the `StatusCode`, `*http.Request`, and\n`*http.Response` values of the request, as well as the JSON of the error body\n(much like other response objects in the SDK).\n\nTo handle errors, we recommend that you use the `errors.As` pattern:\n\n```go\n_, err := client.Pipelines.List(context.TODO(), llamacloudprod.PipelineListParams{\n\tProjectID: llamacloudprod.String("my-project-id"),\n})\nif err != nil {\n\tvar apierr *llamacloudprod.Error\n\tif errors.As(err, &apierr) {\n\t\tprintln(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request\n\t\tprintln(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response\n\t}\n\tpanic(err.Error()) // GET "/api/v1/pipelines": 400 Bad Request { ... }\n}\n```\n\nWhen other errors occur, they are returned unwrapped; for example,\nif HTTP transport fails, you might receive `*url.Error` wrapping `*net.OpError`.\n\n### Timeouts\n\nRequests do not time out by default; use context to configure a timeout for a request lifecycle.\n\nNote that if a request is [retried](#retries), the context timeout does not start over.\nTo set a per-retry timeout, use `SDK_PackageOptionName.WithRequestTimeout()`.\n\n```go\n// This sets the timeout for the request, including all the retries.\nctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)\ndefer cancel()\nclient.Pipelines.List(\n\tctx,\n\tllamacloudprod.PipelineListParams{\n\t\tProjectID: llamacloudprod.String("my-project-id"),\n\t},\n\t// This sets the per-retry timeout\n\toption.WithRequestTimeout(20*time.Second),\n)\n```\n\n### File uploads\n\nRequest parameters that correspond to file uploads in multipart requests are typed as\n`param.Field[io.Reader]`. The contents of the `io.Reader` will by default be sent as a multipart form\npart with the file name of "anonymous_file" and content-type of "application/octet-stream".\n\nThe file name and content-type can be customized by implementing `Name() string` or `ContentType()\nstring` on the run-time type of `io.Reader`. Note that `os.File` implements `Name() string`, so a\nfile returned by `os.Open` will be sent with the file name on disk.\n\nWe also provide a helper `SDK_PackageName.FileParam(reader io.Reader, filename string, contentType string)`\nwhich can be used to wrap any `io.Reader` with the appropriate file name and content type.\n\n```go\n// A file from the file system\nfile, err := os.Open("/path/to/file")\nllamacloudprod.FileNewParams{\n\tFile:    file,\n\tPurpose: "purpose",\n}\n\n// A file from a string\nllamacloudprod.FileNewParams{\n\tFile:    strings.NewReader("my file contents"),\n\tPurpose: "purpose",\n}\n\n// With a custom filename and contentType\nllamacloudprod.FileNewParams{\n\tFile:    llamacloudprod.NewFile(strings.NewReader(`{"hello": "foo"}`), "file.go", "application/json"),\n\tPurpose: "purpose",\n}\n```\n\n### Retries\n\nCertain errors will be automatically retried 2 times by default, with a short exponential backoff.\nWe retry by default all connection errors, 408 Request Timeout, 409 Conflict, 429 Rate Limit,\nand >=500 Internal errors.\n\nYou can use the `WithMaxRetries` option to configure or disable this:\n\n```go\n// Configure the default for all requests:\nclient := llamacloudprod.NewClient(\n\toption.WithMaxRetries(0), // default is 2\n)\n\n// Override per-request:\nclient.Pipelines.List(\n\tcontext.TODO(),\n\tllamacloudprod.PipelineListParams{\n\t\tProjectID: llamacloudprod.String("my-project-id"),\n\t},\n\toption.WithMaxRetries(5),\n)\n```\n\n\n### Accessing raw response data (e.g. response headers)\n\nYou can access the raw HTTP response data by using the `option.WithResponseInto()` request option. This is useful when\nyou need to examine response headers, status codes, or other details.\n\n```go\n// Create a variable to store the HTTP response\nvar response *http.Response\npipelines, err := client.Pipelines.List(\n\tcontext.TODO(),\n\tllamacloudprod.PipelineListParams{\n\t\tProjectID: llamacloudprod.String("my-project-id"),\n\t},\n\toption.WithResponseInto(&response),\n)\nif err != nil {\n\t// handle error\n}\nfmt.Printf("%+v\\n", pipelines)\n\nfmt.Printf("Status Code: %d\\n", response.StatusCode)\nfmt.Printf("Headers: %+#v\\n", response.Header)\n```\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API. If you need to access undocumented\nendpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can use `client.Get`, `client.Post`, and other HTTP verbs.\n`RequestOptions` on the client, such as retries, will be respected when making these requests.\n\n```go\nvar (\n    // params can be an io.Reader, a []byte, an encoding/json serializable object,\n    // or a "…Params" struct defined in this library.\n    params map[string]interface{}\n\n    // result can be an []byte, *http.Response, a encoding/json deserializable object,\n    // or a model defined in this library.\n    result *http.Response\n)\nerr := client.Post(context.Background(), "/unspecified", params, &result)\nif err != nil {\n    …\n}\n```\n\n#### Undocumented request params\n\nTo make requests using undocumented parameters, you may use either the `SDK_PackageOptionName.WithQuerySet()`\nor the `SDK_PackageOptionName.WithJSONSet()` methods.\n\n```go\nparams := FooNewParams{\n    ID:   SDK_PackageName.F("id_xxxx"),\n    Data: SDK_PackageName.F(FooNewParamsData{\n        FirstName: SDK_PackageName.F("John"),\n    }),\n}\nclient.Foo.New(context.Background(), params, SDK_PackageOptionName.WithJSONSet("data.last_name", "Doe"))\n```\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you may either access the raw JSON of the response as a string\nwith `result.JSON.RawJSON()`, or get the raw JSON of a particular field on the result with\n`result.JSON.Foo.Raw()`.\n\nAny fields that are not present on the response struct will be saved and can be accessed by `result.JSON.ExtraFields()` which returns the extra fields as a `map[string]Field`.\n\n### Middleware\n\nWe provide `SDK_PackageOptionName.WithMiddleware` which applies the given\nmiddleware to requests.\n\n```go\nfunc Logger(req *http.Request, next SDK_PackageOptionName.MiddlewareNext) (res *http.Response, err error) {\n\t// Before the request\n\tstart := time.Now()\n\tLogReq(req)\n\n\t// Forward the request to the next handler\n\tres, err = next(req)\n\n\t// Handle stuff after the request\n\tend := time.Now()\n\tLogRes(res, err, start - end)\n\n    return res, err\n}\n\nclient := SDK_PackageName.SDK_ClientInitializerName(\n\tSDK_PackageOptionName.WithMiddleware(Logger),\n)\n```\n\nWhen multiple middlewares are provided as variadic arguments, the middlewares\nare applied left to right. If `SDK_PackageOptionName.WithMiddleware` is given\nmultiple times, for example first in the client then the method, the\nmiddleware in the client will run first and the middleware given in the method\nwill run next.\n\nYou may also replace the default `http.Client` with\n`SDK_PackageOptionName.WithHTTPClient(client)`. Only one http client is\naccepted (this overwrites any previous client) and receives requests after any\nmiddleware has been applied.\n\n## Semantic versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n2. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/llamacloud-prod-go/issues) with questions, bugs, or suggestions.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n',
+  },
   {
     language: 'python',
     content:
