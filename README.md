@@ -1,4 +1,4 @@
-# Llama Cloud TypeScript SDK
+# Llama Parse TypeScript SDK
 
 [![NPM version](<https://img.shields.io/npm/v/@llamaindex/llama-cloud.svg?label=npm%20(stable)>)](https://npmjs.org/package/@llamaindex/llama-cloud) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@llamaindex/llama-cloud)
 
