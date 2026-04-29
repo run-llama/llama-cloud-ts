@@ -372,6 +372,8 @@ export type LlamaParseSupportedFileExtensions =
   | '.vdx'
   | '.bmp'
   | '.gif'
+  | '.heic'
+  | '.heif'
   | '.jpg'
   | '.jpeg'
   | '.png'
