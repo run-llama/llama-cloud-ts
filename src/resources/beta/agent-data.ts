@@ -19,12 +19,8 @@ export class AgentData extends APIResource {
    * ```
    */
   create(params: AgentDataCreateParams, options?: RequestOptions): APIPromise<AgentData> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/agent-data', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    const { organization_id, project_id, ...body } = params
+    return this._client.post('/api/v1/beta/agent-data', { query: { organization_id, project_id }, body, ...options });
   }
 
   /**
@@ -48,12 +44,8 @@ export class AgentData extends APIResource {
    * ```
    */
   update(itemID: string, params: AgentDataUpdateParams, options?: RequestOptions): APIPromise<AgentData> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.put(path`/api/v1/beta/agent-data/${itemID}`, {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    const { organization_id, project_id, ...body } = params
+    return this._client.put(path`/api/v1/beta/agent-data/${itemID}`, { query: { organization_id, project_id }, body, ...options });
   }
 
   /**
@@ -66,16 +58,9 @@ export class AgentData extends APIResource {
    * );
    * ```
    */
-  delete(
-    itemID: string,
-    params: AgentDataDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AgentDataDeleteResponse> {
-    const { organization_id, project_id } = params ?? {};
-    return this._client.delete(path`/api/v1/beta/agent-data/${itemID}`, {
-      query: { organization_id, project_id },
-      ...options,
-    });
+  delete(itemID: string, params: AgentDataDeleteParams | null | undefined = {}, options?: RequestOptions): APIPromise<AgentDataDeleteResponse> {
+    const { organization_id, project_id } = params ?? {}
+    return this._client.delete(path`/api/v1/beta/agent-data/${itemID}`, { query: { organization_id, project_id }, ...options });
   }
 
   /**
@@ -91,16 +76,9 @@ export class AgentData extends APIResource {
    * }
    * ```
    */
-  aggregate(
-    params: AgentDataAggregateParams,
-    options?: RequestOptions,
-  ): PagePromise<AgentDataAggregateResponsesPaginatedCursorPost, AgentDataAggregateResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.getAPIList(
-      '/api/v1/beta/agent-data/:aggregate',
-      PaginatedCursorPost<AgentDataAggregateResponse>,
-      { query: { organization_id, project_id }, body, method: 'post', ...options },
-    );
+  aggregate(params: AgentDataAggregateParams, options?: RequestOptions): PagePromise<AgentDataAggregateResponsesPaginatedCursorPost, AgentDataAggregateResponse> {
+    const { organization_id, project_id, ...body } = params
+    return this._client.getAPIList('/api/v1/beta/agent-data/:aggregate', PaginatedCursorPost<AgentDataAggregateResponse>, { query: { organization_id, project_id }, body, method: 'post', ...options });
   }
 
   /**
@@ -113,16 +91,9 @@ export class AgentData extends APIResource {
    * });
    * ```
    */
-  deleteByQuery(
-    params: AgentDataDeleteByQueryParams,
-    options?: RequestOptions,
-  ): APIPromise<AgentDataDeleteByQueryResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/agent-data/:delete', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+  deleteByQuery(params: AgentDataDeleteByQueryParams, options?: RequestOptions): APIPromise<AgentDataDeleteByQueryResponse> {
+    const { organization_id, project_id, ...body } = params
+    return this._client.post('/api/v1/beta/agent-data/:delete', { query: { organization_id, project_id }, body, ...options });
   }
 
   /**
@@ -135,11 +106,7 @@ export class AgentData extends APIResource {
    * );
    * ```
    */
-  get(
-    itemID: string,
-    query: AgentDataGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AgentData> {
+  get(itemID: string, query: AgentDataGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<AgentData> {
     return this._client.get(path`/api/v1/beta/agent-data/${itemID}`, { query, ...options });
   }
 
@@ -156,23 +123,15 @@ export class AgentData extends APIResource {
    * }
    * ```
    */
-  search(
-    params: AgentDataSearchParams,
-    options?: RequestOptions,
-  ): PagePromise<AgentDataPaginatedCursorPost, AgentData> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.getAPIList('/api/v1/beta/agent-data/:search', PaginatedCursorPost<AgentData>, {
-      query: { organization_id, project_id },
-      body,
-      method: 'post',
-      ...options,
-    });
+  search(params: AgentDataSearchParams, options?: RequestOptions): PagePromise<AgentDataPaginatedCursorPost, AgentData> {
+    const { organization_id, project_id, ...body } = params
+    return this._client.getAPIList('/api/v1/beta/agent-data/:search', PaginatedCursorPost<AgentData>, { query: { organization_id, project_id }, body, method: 'post', ...options });
   }
 }
 
-export type AgentDataAggregateResponsesPaginatedCursorPost = PaginatedCursorPost<AgentDataAggregateResponse>;
+export type AgentDataAggregateResponsesPaginatedCursorPost = PaginatedCursorPost<AgentDataAggregateResponse>
 
-export type AgentDataPaginatedCursorPost = PaginatedCursorPost<AgentData>;
+export type AgentDataPaginatedCursorPost = PaginatedCursorPost<AgentData>
 
 /**
  * API Result for a single agent data item
@@ -193,7 +152,7 @@ export interface AgentData {
   updated_at?: string | null;
 }
 
-export type AgentDataDeleteResponse = { [key: string]: string };
+export type AgentDataDeleteResponse = { [key: string]: string }
 
 /**
  * API Result for a single group in the aggregate response
@@ -481,6 +440,6 @@ export declare namespace AgentData {
     type AgentDataAggregateParams as AgentDataAggregateParams,
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
     type AgentDataGetParams as AgentDataGetParams,
-    type AgentDataSearchParams as AgentDataSearchParams,
+    type AgentDataSearchParams as AgentDataSearchParams
   };
 }

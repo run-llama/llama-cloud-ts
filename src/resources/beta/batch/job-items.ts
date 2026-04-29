@@ -25,16 +25,8 @@ export class JobItems extends APIResource {
    * }
    * ```
    */
-  list(
-    jobID: string,
-    query: JobItemListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<JobItemListResponsesPaginatedBatchItems, JobItemListResponse> {
-    return this._client.getAPIList(
-      path`/api/v1/beta/batch-processing/${jobID}/items`,
-      PaginatedBatchItems<JobItemListResponse>,
-      { query, ...options },
-    );
+  list(jobID: string, query: JobItemListParams | null | undefined = {}, options?: RequestOptions): PagePromise<JobItemListResponsesPaginatedBatchItems, JobItemListResponse> {
+    return this._client.getAPIList(path`/api/v1/beta/batch-processing/${jobID}/items`, PaginatedBatchItems<JobItemListResponse>, { query, ...options });
   }
 
   /**
@@ -52,19 +44,12 @@ export class JobItems extends APIResource {
    *   );
    * ```
    */
-  getProcessingResults(
-    itemID: string,
-    query: JobItemGetProcessingResultsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<JobItemGetProcessingResultsResponse> {
-    return this._client.get(path`/api/v1/beta/batch-processing/items/${itemID}/processing-results`, {
-      query,
-      ...options,
-    });
+  getProcessingResults(itemID: string, query: JobItemGetProcessingResultsParams | null | undefined = {}, options?: RequestOptions): APIPromise<JobItemGetProcessingResultsResponse> {
+    return this._client.get(path`/api/v1/beta/batch-processing/items/${itemID}/processing-results`, { query, ...options });
   }
 }
 
-export type JobItemListResponsesPaginatedBatchItems = PaginatedBatchItems<JobItemListResponse>;
+export type JobItemListResponsesPaginatedBatchItems = PaginatedBatchItems<JobItemListResponse>
 
 /**
  * Detailed information about an item in a batch job.
@@ -568,25 +553,7 @@ export namespace JobItemGetProcessingResultsResponse {
            * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
            * events are delivered.
            */
-          webhook_events?: Array<
-            | 'extract.pending'
-            | 'extract.success'
-            | 'extract.error'
-            | 'extract.partial_success'
-            | 'extract.cancelled'
-            | 'parse.pending'
-            | 'parse.running'
-            | 'parse.success'
-            | 'parse.error'
-            | 'parse.partial_success'
-            | 'parse.cancelled'
-            | 'classify.pending'
-            | 'classify.success'
-            | 'classify.error'
-            | 'classify.partial_success'
-            | 'classify.cancelled'
-            | 'unmapped_event'
-          > | null;
+          webhook_events?: Array<'extract.pending' | 'extract.success' | 'extract.error' | 'extract.partial_success' | 'extract.cancelled' | 'parse.pending' | 'parse.running' | 'parse.success' | 'parse.error' | 'parse.partial_success' | 'parse.cancelled' | 'classify.pending' | 'classify.success' | 'classify.error' | 'classify.partial_success' | 'classify.cancelled' | 'unmapped_event'> | null;
 
           /**
            * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
@@ -636,6 +603,6 @@ export declare namespace JobItems {
     type JobItemGetProcessingResultsResponse as JobItemGetProcessingResultsResponse,
     type JobItemListResponsesPaginatedBatchItems as JobItemListResponsesPaginatedBatchItems,
     type JobItemListParams as JobItemListParams,
-    type JobItemGetProcessingResultsParams as JobItemGetProcessingResultsParams,
+    type JobItemGetProcessingResultsParams as JobItemGetProcessingResultsParams
   };
 }

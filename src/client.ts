@@ -104,7 +104,6 @@ import {
 } from './resources/extract';
 import {
   File,
-  FileCreate,
   FileCreateParams,
   FileCreateResponse,
   FileDeleteParams,
@@ -1014,7 +1013,6 @@ export declare namespace LlamaCloud {
   export {
     Files as Files,
     type File as File,
-    type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
     type FileCreateResponse as FileCreateResponse,
     type FileListResponse as FileListResponse,

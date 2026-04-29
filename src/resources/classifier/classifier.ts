@@ -4,18 +4,7 @@ import { APIResource } from '../../core/resource';
 import { RequestOptions } from '../../internal/request-options';
 import { PollingOptions } from '../../core/polling';
 import * as JobsAPI from './jobs';
-import {
-  ClassifierRule,
-  ClassifyJob,
-  ClassifyJobsPaginatedCursor,
-  ClassifyParsingConfiguration,
-  JobCreateParams,
-  JobGetParams,
-  JobGetResultsParams,
-  JobGetResultsResponse,
-  JobListParams,
-  Jobs,
-} from './jobs';
+import { ClassifierRule, ClassifyJob, ClassifyJobsPaginatedCursor, ClassifyParsingConfiguration, JobCreateParams, JobGetParams, JobGetResultsParams, JobGetResultsResponse, JobListParams, Jobs } from './jobs';
 
 export class Classifier extends APIResource {
   jobs: JobsAPI.Jobs = new JobsAPI.Jobs(this._client);
@@ -87,6 +76,6 @@ export declare namespace Classifier {
     type JobCreateParams as JobCreateParams,
     type JobListParams as JobListParams,
     type JobGetParams as JobGetParams,
-    type JobGetResultsParams as JobGetResultsParams,
+    type JobGetResultsParams as JobGetResultsParams
   };
 }

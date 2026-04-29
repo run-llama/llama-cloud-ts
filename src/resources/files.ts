@@ -20,11 +20,8 @@ export class Files extends APIResource {
    * extract, or classify operations.
    */
   create(params: FileCreateParams, options?: RequestOptions): APIPromise<FileCreateResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post(
-      '/api/v1/beta/files',
-      multipartFormRequestOptions({ query: { organization_id, project_id }, body, ...options }, this._client),
-    );
+    const { organization_id, project_id, ...body } = params
+    return this._client.post('/api/v1/beta/files', multipartFormRequestOptions({ query: { organization_id, project_id }, body, ...options }, this._client));
   }
 
   /**
@@ -33,40 +30,22 @@ export class Files extends APIResource {
    * Filter by `file_name`, `file_ids`, or `external_file_id`. Supports cursor-based
    * pagination and custom ordering.
    */
-  list(
-    query: FileListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<FileListResponsesPaginatedCursor, FileListResponse> {
-    return this._client.getAPIList('/api/v1/beta/files', PaginatedCursor<FileListResponse>, {
-      query,
-      ...options,
-    });
+  list(query: FileListParams | null | undefined = {}, options?: RequestOptions): PagePromise<FileListResponsesPaginatedCursor, FileListResponse> {
+    return this._client.getAPIList('/api/v1/beta/files', PaginatedCursor<FileListResponse>, { query, ...options });
   }
 
   /**
    * Delete a file from the project.
    */
-  delete(
-    fileID: string,
-    params: FileDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { organization_id, project_id } = params ?? {};
-    return this._client.delete(path`/api/v1/beta/files/${fileID}`, {
-      query: { organization_id, project_id },
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  delete(fileID: string, params: FileDeleteParams | null | undefined = {}, options?: RequestOptions): APIPromise<void> {
+    const { organization_id, project_id } = params ?? {}
+    return this._client.delete(path`/api/v1/beta/files/${fileID}`, { query: { organization_id, project_id }, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
    * Get a presigned URL to download the file content.
    */
-  get(
-    fileID: string,
-    query: FileGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<PresignedURL> {
+  get(fileID: string, query: FileGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<PresignedURL> {
     return this._client.get(path`/api/v1/beta/files/${fileID}/content`, { query, ...options });
   }
 
@@ -83,16 +62,12 @@ export class Files extends APIResource {
    * @deprecated Use the GET /files endpoint instead
    */
   query(params: FileQueryParams, options?: RequestOptions): APIPromise<FileQueryResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/files/query', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    const { organization_id, project_id, ...body } = params
+    return this._client.post('/api/v1/beta/files/query', { query: { organization_id, project_id }, body, ...options });
   }
 }
 
-export type FileListResponsesPaginatedCursor = PaginatedCursor<FileListResponse>;
+export type FileListResponsesPaginatedCursor = PaginatedCursor<FileListResponse>
 
 /**
  * Schema for a file.
@@ -148,9 +123,7 @@ export interface File {
   /**
    * Permission information for the file
    */
-  permission_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
+  permission_info?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
 
   /**
    * The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
@@ -161,65 +134,12 @@ export interface File {
   /**
    * Resource information for the file
    */
-  resource_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
+  resource_info?: { [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null } | null;
 
   /**
    * Update datetime
    */
   updated_at?: string | null;
-}
-
-/**
- * Schema for creating a file.
- */
-export interface FileCreate {
-  /**
-   * Name that will be used for created file. If possible, always include the file
-   * extension in the name.
-   */
-  name: string;
-
-  /**
-   * The ID of the data source that the file belongs to
-   */
-  data_source_id?: string | null;
-
-  /**
-   * The ID of the file in the external system
-   */
-  external_file_id?: string | null;
-
-  /**
-   * Size of the file in bytes
-   */
-  file_size?: number | null;
-
-  /**
-   * The last modified time of the file
-   */
-  last_modified_at?: string | null;
-
-  /**
-   * Permission information for the file
-   */
-  permission_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
-
-  /**
-   * Resource information for the file
-   */
-  resource_info?: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  } | null;
-
-  /**
-   * Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
-   * expiration). If not specified, defaults to permanent storage.
-   */
-  storage_type?: 'ephemeral' | 'permanent' | (string & {});
 }
 
 /**
@@ -554,7 +474,6 @@ export namespace FileQueryParams {
 export declare namespace Files {
   export {
     type File as File,
-    type FileCreate as FileCreate,
     type PresignedURL as PresignedURL,
     type FileCreateResponse as FileCreateResponse,
     type FileListResponse as FileListResponse,
@@ -564,6 +483,6 @@ export declare namespace Files {
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGetParams as FileGetParams,
-    type FileQueryParams as FileQueryParams,
+    type FileQueryParams as FileQueryParams
   };
 }

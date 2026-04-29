@@ -2,17 +2,12 @@
 
 import LlamaCloud from '@llamaindex/llama-cloud';
 
-const client = new LlamaCloud({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new LlamaCloud({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.pipelines.files.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      body: [{ file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }],
-    });
+    const responsePromise = client.pipelines.files.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { body: [{ file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,21 +19,15 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.pipelines.files.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      body: [
-        {
-          file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          custom_metadata: { foo: { foo: 'bar' } },
-        },
-      ],
-    });
+    const response = await client.pipelines.files.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { body: [{
+    file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    custom_metadata: { foo: { foo: 'bar' } },
+  }] });
   });
 
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.pipelines.files.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
+    const responsePromise = client.pipelines.files.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -51,9 +40,9 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.pipelines.files.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      custom_metadata: { foo: { foo: 'bar' } },
-    });
+    pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    custom_metadata: { foo: { foo: 'bar' } },
+  });
   });
 
   // Mock server tests are disabled
@@ -71,28 +60,22 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.pipelines.files.list(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        {
-          data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          file_name_contains: 'file_name_contains',
-          limit: 0,
-          offset: 0,
-          only_manually_uploaded: true,
-          order_by: 'order_by',
-          statuses: ['NOT_STARTED', 'IN_PROGRESS'],
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
+    await expect(client.pipelines.files.list('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+    data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    file_name_contains: 'file_name_contains',
+    limit: 0,
+    offset: 0,
+    only_manually_uploaded: true,
+    order_by: 'order_by',
+    statuses: ['NOT_STARTED', 'IN_PROGRESS'],
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
-    const responsePromise = client.pipelines.files.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
+    const responsePromise = client.pipelines.files.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -104,16 +87,12 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
-    const response = await client.pipelines.files.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
+    const response = await client.pipelines.files.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
   });
 
   // Mock server tests are disabled
   test.skip('getStatus: only required params', async () => {
-    const responsePromise = client.pipelines.files.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
+    const responsePromise = client.pipelines.files.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -125,9 +104,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('getStatus: required and optional params', async () => {
-    const response = await client.pipelines.files.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
+    const response = await client.pipelines.files.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
   });
 
   // Mock server tests are disabled
@@ -145,12 +122,8 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('getStatusCounts: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.pipelines.files.getStatusCounts(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        { data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', only_manually_uploaded: true },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
+    await expect(client.pipelines.files.getStatusCounts('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', only_manually_uploaded: true }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(LlamaCloud.NotFoundError);
   });
 });

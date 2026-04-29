@@ -3,11 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as PipelinesAPI from './pipelines';
 import { APIPromise } from '../../core/api-promise';
-import {
-  PagePromise,
-  PaginatedCloudDocuments,
-  type PaginatedCloudDocumentsParams,
-} from '../../core/pagination';
+import { PagePromise, PaginatedCloudDocuments, type PaginatedCloudDocumentsParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -16,28 +12,16 @@ export class Documents extends APIResource {
   /**
    * Batch create documents for a pipeline.
    */
-  create(
-    pipelineID: string,
-    params: DocumentCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<DocumentCreateResponse> {
-    const { body } = params;
+  create(pipelineID: string, params: DocumentCreateParams, options?: RequestOptions): APIPromise<DocumentCreateResponse> {
+    const { body } = params
     return this._client.post(path`/api/v1/pipelines/${pipelineID}/documents`, { body: body, ...options });
   }
 
   /**
    * Return a list of documents for a pipeline.
    */
-  list(
-    pipelineID: string,
-    query: DocumentListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<CloudDocumentsPaginatedCloudDocuments, CloudDocument> {
-    return this._client.getAPIList(
-      path`/api/v1/pipelines/${pipelineID}/documents/paginated`,
-      PaginatedCloudDocuments<CloudDocument>,
-      { query, ...options },
-    );
+  list(pipelineID: string, query: DocumentListParams | null | undefined = {}, options?: RequestOptions): PagePromise<CloudDocumentsPaginatedCloudDocuments, CloudDocument> {
+    return this._client.getAPIList(path`/api/v1/pipelines/${pipelineID}/documents/paginated`, PaginatedCloudDocuments<CloudDocument>, { query, ...options });
   }
 
   /**
@@ -47,42 +31,31 @@ export class Documents extends APIResource {
    * 2. Delete the document from MongoDB after vectors are successfully deleted
    */
   delete(documentID: string, params: DocumentDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { pipeline_id } = params;
-    return this._client.delete(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    const { pipeline_id } = params
+    return this._client.delete(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
    * Return a single document for a pipeline.
    */
   get(documentID: string, params: DocumentGetParams, options?: RequestOptions): APIPromise<CloudDocument> {
-    const { pipeline_id } = params;
+    const { pipeline_id } = params
     return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}`, options);
   }
 
   /**
    * Return a list of chunks for a pipeline document.
    */
-  getChunks(
-    documentID: string,
-    params: DocumentGetChunksParams,
-    options?: RequestOptions,
-  ): APIPromise<DocumentGetChunksResponse> {
-    const { pipeline_id } = params;
+  getChunks(documentID: string, params: DocumentGetChunksParams, options?: RequestOptions): APIPromise<DocumentGetChunksResponse> {
+    const { pipeline_id } = params
     return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/chunks`, options);
   }
 
   /**
    * Return a single document for a pipeline.
    */
-  getStatus(
-    documentID: string,
-    params: DocumentGetStatusParams,
-    options?: RequestOptions,
-  ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
-    const { pipeline_id } = params;
+  getStatus(documentID: string, params: DocumentGetStatusParams, options?: RequestOptions): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
+    const { pipeline_id } = params
     return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/status`, options);
   }
 
@@ -90,24 +63,20 @@ export class Documents extends APIResource {
    * Sync a specific document for a pipeline.
    */
   sync(documentID: string, params: DocumentSyncParams, options?: RequestOptions): APIPromise<unknown> {
-    const { pipeline_id } = params;
+    const { pipeline_id } = params
     return this._client.post(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/sync`, options);
   }
 
   /**
    * Batch create or update a document for a pipeline.
    */
-  upsert(
-    pipelineID: string,
-    params: DocumentUpsertParams,
-    options?: RequestOptions,
-  ): APIPromise<DocumentUpsertResponse> {
-    const { body } = params;
+  upsert(pipelineID: string, params: DocumentUpsertParams, options?: RequestOptions): APIPromise<DocumentUpsertResponse> {
+    const { body } = params
     return this._client.put(path`/api/v1/pipelines/${pipelineID}/documents`, { body: body, ...options });
   }
 }
 
-export type CloudDocumentsPaginatedCloudDocuments = PaginatedCloudDocuments<CloudDocument>;
+export type CloudDocumentsPaginatedCloudDocuments = PaginatedCloudDocuments<CloudDocument>
 
 /**
  * Cloud document stored in S3.
@@ -252,13 +221,13 @@ export namespace TextNode {
   }
 }
 
-export type DocumentCreateResponse = Array<CloudDocument>;
+export type DocumentCreateResponse = Array<CloudDocument>
 
-export type DocumentGetChunksResponse = Array<TextNode>;
+export type DocumentGetChunksResponse = Array<TextNode>
 
-export type DocumentSyncResponse = unknown;
+export type DocumentSyncResponse = unknown
 
-export type DocumentUpsertResponse = Array<CloudDocument>;
+export type DocumentUpsertResponse = Array<CloudDocument>
 
 export interface DocumentCreateParams {
   body: Array<CloudDocumentCreate>;
@@ -315,6 +284,6 @@ export declare namespace Documents {
     type DocumentGetChunksParams as DocumentGetChunksParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,
     type DocumentSyncParams as DocumentSyncParams,
-    type DocumentUpsertParams as DocumentUpsertParams,
+    type DocumentUpsertParams as DocumentUpsertParams
   };
 }
