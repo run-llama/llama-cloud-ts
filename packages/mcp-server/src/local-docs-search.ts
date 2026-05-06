@@ -474,7 +474,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.cloud.llamaindex.ai/api/v2/extract \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_input": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"\n        }\'',
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_input": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "configuration": {\n            "data_schema": {\n              "properties": {\n                "vendor_name": "bar",\n                "total_amount": "bar"\n              },\n              "required": [\n                "vendor_name",\n                "total_amount"\n              ],\n              "type": "object"\n            },\n            "target_pages": "1,3,5-7"\n          },\n          "configuration_id": "cfg-11111111-2222-3333-4444-555555555555"\n        }\'',
       },
     },
   },
@@ -691,7 +691,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.cloud.llamaindex.ai/api/v2/extract/schema/generate \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/schema/generate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "name": "invoice_extraction",\n          "prompt": "Extract vendor name, invoice number, date, line items with descriptions and amounts, and total amount from invoices."\n        }\'',
       },
     },
   },
@@ -916,7 +916,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.cloud.llamaindex.ai/api/v2/classify \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.cloud.llamaindex.ai/api/v2/classify \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "configuration_id": "cfg-11111111-2222-3333-4444-555555555555",\n          "file_id": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "file_input": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "parse_job_id": "pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "transaction_id": "tx-unique-idempotency-key"\n        }\'',
       },
     },
   },
@@ -4656,7 +4656,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "job_config": {}\n        }\'',
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "job_config": {},\n          "directory_id": "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "item_ids": [\n            "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n            "dfl-11111111-2222-3333-4444-555555555555"\n          ]\n        }\'',
       },
     },
   },
