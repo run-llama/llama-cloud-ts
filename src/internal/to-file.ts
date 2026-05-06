@@ -1,6 +1,7 @@
 import { BlobPart, getName, makeFile, isAsyncIterable } from './uploads';
 import type { FilePropertyBag } from './builtin-types';
 import { checkFileSupport } from './uploads';
+import { getFileExtension, isUntrustworthyExtension, isSupportedExtension } from './file-extensions';
 
 type BlobLikePart = string | ArrayBuffer | ArrayBufferView | BlobLike | DataView;
 
@@ -116,7 +117,25 @@ export async function toFile(
     }
   }
 
-  return makeFile(parts, name, options);
+  const file = makeFile(parts, name, options);
+
+  if (name) {
+    const ext = getFileExtension(name);
+    if (ext && isUntrustworthyExtension(ext)) {
+      console.warn(
+        `[llama-cloud] File "${name}" has extension "${ext}" which doesn't indicate the actual file type ` +
+          `(e.g., from a temp file). For best results, use a filename with the correct extension ` +
+          `(e.g., ".pdf", ".docx"). You can use sanitizeFileName() to automatically fix this.`,
+      );
+    } else if (ext && !isSupportedExtension(ext)) {
+      console.warn(
+        `[llama-cloud] File "${name}" has extension "${ext}" which is not in the list of supported extensions. ` +
+          `The file may be rejected. See LlamaParseSupportedFileExtensions for supported types.`,
+      );
+    }
+  }
+
+  return file;
 }
 
 async function getBytes(value: BlobLikePart | AsyncIterable<BlobLikePart>): Promise<Array<BlobPart>> {
