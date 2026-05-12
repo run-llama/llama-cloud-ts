@@ -432,7 +432,7 @@ export interface ParseV2Parameters {
    * version for reproducible results. See GET /api/v2/parse/versions for the
    * per-tier list.
    */
-  version: 'latest' | '2026-05-04' | '2026-04-09' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-05-11' | '2026-04-09' | '2025-12-11' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -1190,7 +1190,7 @@ export namespace ParseV2Parameters {
         /**
          * Tier version when overriding tier. Required when tier is specified
          */
-        version?: 'latest' | '2026-05-04' | '2026-04-09' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-05-11' | '2026-04-09' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {

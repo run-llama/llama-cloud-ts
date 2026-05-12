@@ -52,6 +52,7 @@ describe('resource files', () => {
     await expect(
       client.files.list(
         {
+          expand: ['string', 'string'],
           external_file_id: 'external_file_id',
           file_ids: ['182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'],
           file_name: 'file_name',
