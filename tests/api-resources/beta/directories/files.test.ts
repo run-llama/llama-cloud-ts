@@ -56,6 +56,7 @@ describe('resource files', () => {
         {
           display_name: 'display_name',
           display_name_contains: 'display_name_contains',
+          expand: ['string', 'string'],
           file_id: 'file_id',
           include_deleted: true,
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -63,6 +64,8 @@ describe('resource files', () => {
           page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           unique_id: 'unique_id',
+          updated_at_on_or_after: '2019-12-27T18:11:19.117Z',
+          updated_at_on_or_before: '2019-12-27T18:11:19.117Z',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -134,6 +137,7 @@ describe('resource files', () => {
   test.skip('get: required and optional params', async () => {
     const response = await client.beta.directories.files.get('directory_file_id', {
       directory_id: 'directory_id',
+      expand: ['string', 'string'],
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
@@ -161,6 +165,7 @@ describe('resource files', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       display_name: 'display_name',
       external_file_id: 'external_file_id',
+      metadata: '{"source": "web", "priority": 1}',
       unique_id: 'unique_id',
     });
   });

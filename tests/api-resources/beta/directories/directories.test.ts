@@ -26,7 +26,6 @@ describe('resource directories', () => {
       name: 'x',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      data_source_id: 'data_source_id',
       description: 'description',
     });
   });
@@ -61,7 +60,6 @@ describe('resource directories', () => {
     await expect(
       client.beta.directories.list(
         {
-          data_source_id: 'data_source_id',
           include_deleted: true,
           name: 'name',
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
