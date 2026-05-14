@@ -17,9 +17,7 @@
     "entry_point": "index.js",
     "mcp_config": {
       "command": "node",
-      "args": [
-        "${__dirname}/index.js"
-      ],
+      "args": ["${__dirname}/index.js"],
       "env": {
         "LLAMA_CLOUD_API_KEY": "${user_config.LLAMA_CLOUD_API_KEY}"
       }
@@ -40,7 +38,5 @@
       "node": ">=18.0.0"
     }
   },
-  "keywords": [
-    "api"
-  ]
+  "keywords": ["api"]
 }
