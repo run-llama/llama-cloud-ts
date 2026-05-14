@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.5.0 (2026-04-29)
+
+Full Changelog: [v2.4.1...v2.5.0](https://github.com/run-llama/llama-parse-ts/compare/v2.4.1...v2.5.0)
+
+### Features
+
+* **api:** api update ([fff3903](https://github.com/run-llama/llama-parse-ts/commit/fff390360da61decec1ab92210429974b4f33b9d))
+
+
+### Chores
+
+* **formatter:** run prettier and eslint separately ([7393e67](https://github.com/run-llama/llama-parse-ts/commit/7393e67613979984ee108560ea971d532ed88ad2))
+* **internal:** codegen related update ([4509431](https://github.com/run-llama/llama-parse-ts/commit/45094310b3069da9e68268dcc36ccce200ce55d0))
+* sync repo ([985eb21](https://github.com/run-llama/llama-parse-ts/commit/985eb21719b8226fb2e24f8322bcf95663f88dac))
+
 ## 2.4.1 (2026-04-17)
 
 Full Changelog: [v2.4.0...v2.4.1](https://github.com/run-llama/llama-cloud-ts/compare/v2.4.0...v2.4.1)

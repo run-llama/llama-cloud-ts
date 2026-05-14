@@ -373,6 +373,8 @@ export interface DirectoryListParams extends PaginatedCursorParams {
   organization_id?: string | null;
 
   project_id?: string | null;
+
+  type?: 'user' | 'index' | null;
 }
 
 export interface DirectoryDeleteParams {

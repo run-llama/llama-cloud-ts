@@ -28,7 +28,6 @@ Types:
 Types:
 
 - <code><a href="./src/resources/files.ts">File</a></code>
-- <code><a href="./src/resources/files.ts">FileCreate</a></code>
 - <code><a href="./src/resources/files.ts">PresignedURL</a></code>
 - <code><a href="./src/resources/files.ts">FileCreateResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileListResponse</a></code>

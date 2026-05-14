@@ -73,7 +73,6 @@ export {
 export {
   Files,
   type File,
-  type FileCreate,
   type PresignedURL,
   type FileCreateResponse,
   type FileListResponse,

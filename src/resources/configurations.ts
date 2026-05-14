@@ -362,7 +362,9 @@ export interface ExtractV2Parameters {
   confidence_scores?: boolean;
 
   /**
-   * Extract algorithm version. Use 'latest' or a date string.
+   * Extract algorithm version. Use 'latest' for the default pipeline, a date string
+   * (e.g. '2026-01-08'), or 'continuous' to opt into schema-guided splitting for
+   * documents with repeating entities.
    */
   extract_version?: string;
 
@@ -469,6 +471,7 @@ export interface ParseV2Parameters {
     | '2026-04-02'
     | '2026-04-06'
     | '2026-04-09'
+    | '2026-04-14'
     | 'latest'
     | (string & {});
 
@@ -1249,6 +1252,7 @@ export namespace ParseV2Parameters {
           | '2026-04-02'
           | '2026-04-06'
           | '2026-04-09'
+          | '2026-04-14'
           | 'latest'
           | (string & {})
           | null;
