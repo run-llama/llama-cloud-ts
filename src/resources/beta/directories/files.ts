@@ -217,7 +217,7 @@ export interface FileUpdateResponse {
   /**
    * Merged metadata from all sources. Higher-priority sources override lower.
    */
-  metadata?: { [key: string]: string | number | boolean | null };
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null };
 
   /**
    * Update datetime
@@ -277,7 +277,7 @@ export interface FileListResponse {
   /**
    * Merged metadata from all sources. Higher-priority sources override lower.
    */
-  metadata?: { [key: string]: string | number | boolean | null };
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null };
 
   /**
    * Update datetime
@@ -337,7 +337,7 @@ export interface FileAddResponse {
   /**
    * Merged metadata from all sources. Higher-priority sources override lower.
    */
-  metadata?: { [key: string]: string | number | boolean | null };
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null };
 
   /**
    * Update datetime
@@ -397,7 +397,7 @@ export interface FileGetResponse {
   /**
    * Merged metadata from all sources. Higher-priority sources override lower.
    */
-  metadata?: { [key: string]: string | number | boolean | null };
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null };
 
   /**
    * Update datetime
@@ -457,7 +457,7 @@ export interface FileUploadResponse {
   /**
    * Merged metadata from all sources. Higher-priority sources override lower.
    */
-  metadata?: { [key: string]: string | number | boolean | null };
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null };
 
   /**
    * Update datetime
@@ -495,7 +495,7 @@ export interface FileUpdateParams {
    * Body param: User-defined metadata key-value pairs. Replaces the user metadata
    * layer.
    */
-  metadata?: { [key: string]: string | number | boolean | null } | null;
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null } | null;
 
   /**
    * Body param: Updated unique identifier.
@@ -576,7 +576,7 @@ export interface FileAddParams {
   /**
    * Body param: User-defined metadata key-value pairs to associate with the file.
    */
-  metadata?: { [key: string]: string | number | boolean | null } | null;
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null } | null;
 
   /**
    * Body param: Unique identifier for the file in the directory. If not provided,
