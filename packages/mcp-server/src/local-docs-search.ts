@@ -3566,6 +3566,167 @@ const EMBEDDED_METHODS: MethodEntry[] = [
   },
   {
     name: 'get',
+    endpoint: '/api/v1/indexes/{index_id}',
+    httpMethod: 'get',
+    summary: 'Get Index',
+    description: 'Get an index by ID.',
+    stainlessPath: '(resource) beta.indexes > (method) get',
+    qualified: 'client.beta.indexes.get',
+    params: ['index_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      '{ id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }',
+    markdown:
+      "## get\n\n`client.beta.indexes.get(index_id: string, organization_id?: string, project_id?: string): { id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }`\n\n**get** `/api/v1/indexes/{index_id}`\n\nGet an index by ID.\n\n### Parameters\n\n- `index_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }`\n  A searchable index over a directory of documents.\n\n  - `id: string`\n  - `export_config_id: string`\n  - `name: string`\n  - `project_id: string`\n  - `source_directory_id: string`\n  - `sync_config_id: string`\n  - `created_at?: string`\n  - `description?: string`\n  - `last_exported_at?: string`\n  - `last_synced_at?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst index = await client.beta.indexes.get('index_id');\n\nconsole.log(index);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.indexes.get',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst index = await client.beta.indexes.get('index_id');\n\nconsole.log(index.id);",
+      },
+      python: {
+        method: 'beta.indexes.get',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nindex = client.beta.indexes.get(\n    index_id="index_id",\n)\nprint(index.id)',
+      },
+      go: {
+        method: 'client.Beta.Indexes.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tindex, err := client.Beta.Indexes.Get(\n\t\tcontext.TODO(),\n\t\t"index_id",\n\t\tllamacloudprod.BetaIndexGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", index.ID)\n}\n',
+      },
+      cli: {
+        method: 'indexes get',
+        example: "llamacloud-prod beta:indexes get \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/indexes/$INDEX_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/api/v1/indexes/{index_id}',
+    httpMethod: 'delete',
+    summary: 'Delete Index',
+    description: 'Delete an index.',
+    stainlessPath: '(resource) beta.indexes > (method) delete',
+    qualified: 'client.beta.indexes.delete',
+    params: ['index_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    markdown:
+      "## delete\n\n`client.beta.indexes.delete(index_id: string, organization_id?: string, project_id?: string): void`\n\n**delete** `/api/v1/indexes/{index_id}`\n\nDelete an index.\n\n### Parameters\n\n- `index_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nawait client.beta.indexes.delete('index_id')\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.indexes.delete',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.beta.indexes.delete('index_id');",
+      },
+      python: {
+        method: 'beta.indexes.delete',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.beta.indexes.delete(\n    index_id="index_id",\n)',
+      },
+      go: {
+        method: 'client.Beta.Indexes.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Beta.Indexes.Delete(\n\t\tcontext.TODO(),\n\t\t"index_id",\n\t\tllamacloudprod.BetaIndexDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'indexes delete',
+        example: "llamacloud-prod beta:indexes delete \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/indexes/$INDEX_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/api/v1/indexes',
+    httpMethod: 'post',
+    summary: 'Create Index',
+    description: 'Create a searchable index over a source directory.',
+    stainlessPath: '(resource) beta.indexes > (method) create',
+    qualified: 'client.beta.indexes.create',
+    params: [
+      'source_directory_id: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'description?: string;',
+      "products?: { product_config_id: string; product_type: 'parse' | 'extract'; }[];",
+    ],
+    response:
+      '{ id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }',
+    markdown:
+      "## create\n\n`client.beta.indexes.create(source_directory_id: string, organization_id?: string, project_id?: string, description?: string, products?: { product_config_id: string; product_type: 'parse' | 'extract'; }[]): { id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }`\n\n**post** `/api/v1/indexes`\n\nCreate a searchable index over a source directory.\n\n### Parameters\n\n- `source_directory_id: string`\n  ID of the source directory containing your documents.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `description?: string`\n  Optional description of the index.\n\n- `products?: { product_config_id: string; product_type: 'parse' | 'extract'; }[]`\n  Product configurations for syncing. Omit to use a default parse configuration. Include an explicit entry per product type (e.g. parse, extract) to override the default.\n\n### Returns\n\n- `{ id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }`\n  A searchable index over a directory of documents.\n\n  - `id: string`\n  - `export_config_id: string`\n  - `name: string`\n  - `project_id: string`\n  - `source_directory_id: string`\n  - `sync_config_id: string`\n  - `created_at?: string`\n  - `description?: string`\n  - `last_exported_at?: string`\n  - `last_synced_at?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst index = await client.beta.indexes.create({ source_directory_id: 'dir-abc123' });\n\nconsole.log(index);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.indexes.create',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst index = await client.beta.indexes.create({ source_directory_id: 'dir-abc123' });\n\nconsole.log(index.id);",
+      },
+      python: {
+        method: 'beta.indexes.create',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nindex = client.beta.indexes.create(\n    source_directory_id="dir-abc123",\n)\nprint(index.id)',
+      },
+      go: {
+        method: 'client.Beta.Indexes.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tindex, err := client.Beta.Indexes.New(context.TODO(), llamacloudprod.BetaIndexNewParams{\n\t\tSourceDirectoryID: "dir-abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", index.ID)\n}\n',
+      },
+      cli: {
+        method: 'indexes create',
+        example:
+          "llamacloud-prod beta:indexes create \\\n  --api-key 'My API Key' \\\n  --source-directory-id dir-abc123",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/indexes \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "source_directory_id": "dir-abc123",\n          "products": [\n            {\n              "product_config_id": "cfg-abc123",\n              "product_type": "parse"\n            }\n          ]\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'sync',
+    endpoint: '/api/v1/indexes/{index_id}/sync',
+    httpMethod: 'post',
+    summary: 'Sync Index',
+    description:
+      'Trigger a sync and export for an existing index, re-parsing changed files and exporting updated chunks.',
+    stainlessPath: '(resource) beta.indexes > (method) sync',
+    qualified: 'client.beta.indexes.sync',
+    params: ['index_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response: 'object',
+    markdown:
+      "## sync\n\n`client.beta.indexes.sync(index_id: string, organization_id?: string, project_id?: string): object`\n\n**post** `/api/v1/indexes/{index_id}/sync`\n\nTrigger a sync and export for an existing index, re-parsing changed files and exporting updated chunks.\n\n### Parameters\n\n- `index_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.indexes.sync('index_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.indexes.sync',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.indexes.sync('index_id');\n\nconsole.log(response);",
+      },
+      python: {
+        method: 'beta.indexes.sync',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.indexes.sync(\n    index_id="index_id",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Beta.Indexes.Sync',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Indexes.Sync(\n\t\tcontext.TODO(),\n\t\t"index_id",\n\t\tllamacloudprod.BetaIndexSyncParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'indexes sync',
+        example: "llamacloud-prod beta:indexes sync \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/indexes/$INDEX_ID/sync \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'get',
     endpoint: '/api/v1/beta/agent-data/{item_id}',
     httpMethod: 'get',
     summary: 'Get Agent Data',

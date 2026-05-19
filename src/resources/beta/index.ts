@@ -42,6 +42,16 @@ export {
   type DirectoryListResponsesPaginatedCursor,
 } from './directories/index';
 export {
+  Indexes,
+  type IndexCreateResponse,
+  type IndexGetResponse,
+  type IndexSyncResponse,
+  type IndexCreateParams,
+  type IndexDeleteParams,
+  type IndexGetParams,
+  type IndexSyncParams,
+} from './indexes';
+export {
   Sheets,
   type SheetsJob,
   type SheetsParsingConfig,

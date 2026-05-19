@@ -497,6 +497,30 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/retrievers/{retriever_id}/retrieve',
   },
   {
+    clientCallName: 'client.beta.indexes.create',
+    fullyQualifiedName: 'beta.indexes.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/indexes',
+  },
+  {
+    clientCallName: 'client.beta.indexes.delete',
+    fullyQualifiedName: 'beta.indexes.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/indexes/{index_id}',
+  },
+  {
+    clientCallName: 'client.beta.indexes.get',
+    fullyQualifiedName: 'beta.indexes.get',
+    httpMethod: 'get',
+    httpPath: '/api/v1/indexes/{index_id}',
+  },
+  {
+    clientCallName: 'client.beta.indexes.sync',
+    fullyQualifiedName: 'beta.indexes.sync',
+    httpMethod: 'post',
+    httpPath: '/api/v1/indexes/{index_id}/sync',
+  },
+  {
     clientCallName: 'client.beta.agentData.create',
     fullyQualifiedName: 'beta.agentData.create',
     httpMethod: 'post',

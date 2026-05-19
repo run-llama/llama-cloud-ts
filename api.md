@@ -363,6 +363,21 @@ Methods:
 
 # Beta
 
+## Indexes
+
+Types:
+
+- <code><a href="./src/resources/beta/indexes.ts">IndexCreateResponse</a></code>
+- <code><a href="./src/resources/beta/indexes.ts">IndexGetResponse</a></code>
+- <code><a href="./src/resources/beta/indexes.ts">IndexSyncResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/indexes">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">create</a>({ ...params }) -> IndexCreateResponse</code>
+- <code title="delete /api/v1/indexes/{index_id}">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">delete</a>(indexID, { ...params }) -> void</code>
+- <code title="get /api/v1/indexes/{index_id}">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">get</a>(indexID, { ...params }) -> IndexGetResponse</code>
+- <code title="post /api/v1/indexes/{index_id}/sync">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">sync</a>(indexID, { ...params }) -> unknown</code>
+
 ## AgentData
 
 Types:

@@ -17,6 +17,17 @@ import {
   AgentDataSearchParams,
   AgentDataUpdateParams,
 } from './agent-data';
+import * as IndexesAPI from './indexes';
+import {
+  IndexCreateParams,
+  IndexCreateResponse,
+  IndexDeleteParams,
+  IndexGetParams,
+  IndexGetResponse,
+  IndexSyncParams,
+  IndexSyncResponse,
+  Indexes,
+} from './indexes';
 import * as SheetsAPI from './sheets';
 import {
   SheetCreateParams,
@@ -74,6 +85,7 @@ import {
 } from './directories/directories';
 
 export class Beta extends APIResource {
+  indexes: IndexesAPI.Indexes = new IndexesAPI.Indexes(this._client);
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
   sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
   directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
@@ -81,12 +93,24 @@ export class Beta extends APIResource {
   split: SplitAPI.Split = new SplitAPI.Split(this._client);
 }
 
+Beta.Indexes = Indexes;
 Beta.Sheets = Sheets;
 Beta.Directories = Directories;
 Beta.Batch = Batch;
 Beta.Split = Split;
 
 export declare namespace Beta {
+  export {
+    Indexes as Indexes,
+    type IndexCreateResponse as IndexCreateResponse,
+    type IndexGetResponse as IndexGetResponse,
+    type IndexSyncResponse as IndexSyncResponse,
+    type IndexCreateParams as IndexCreateParams,
+    type IndexDeleteParams as IndexDeleteParams,
+    type IndexGetParams as IndexGetParams,
+    type IndexSyncParams as IndexSyncParams,
+  };
+
   export {
     type AgentData as AgentData,
     type AgentDataDeleteResponse as AgentDataDeleteResponse,
