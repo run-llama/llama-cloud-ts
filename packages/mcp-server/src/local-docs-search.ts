@@ -3726,6 +3726,490 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'retrieve',
+    endpoint: '/api/v1/retrieval/retrieve',
+    httpMethod: 'post',
+    summary: 'Retrieve',
+    description:
+      'Retrieve relevant chunks via hybrid search (vector + full-text), with filtering on built-in or user-defined metadata.',
+    stainlessPath: '(resource) beta.retrieval > (method) retrieve',
+    qualified: 'client.beta.retrieval.retrieve',
+    params: [
+      'index_id: string;',
+      'query: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'custom_filters?: object;',
+      'full_text_pipeline_weight?: number;',
+      'num_candidates?: number;',
+      'rerank?: { enabled?: boolean; top_n?: number; };',
+      'score_threshold?: number;',
+      "static_filters?: { parsed_directory_file_id?: { operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin'; value: string | string[]; }; };",
+      'top_k?: number;',
+      'vector_pipeline_weight?: number;',
+    ],
+    response:
+      '{ results: { content: string; metadata?: object; rerank_score?: number; score?: number; static_fields?: { attachments?: object[]; chunk_end_char?: number; chunk_index?: number; chunk_start_char?: number; chunk_token_count?: number; page_range_end?: number; page_range_start?: number; parsed_directory_file_id?: string; }; }[]; }',
+    markdown:
+      "## retrieve\n\n`client.beta.retrieval.retrieve(index_id: string, query: string, organization_id?: string, project_id?: string, custom_filters?: object, full_text_pipeline_weight?: number, num_candidates?: number, rerank?: { enabled?: boolean; top_n?: number; }, score_threshold?: number, static_filters?: { parsed_directory_file_id?: { operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin'; value: string | string[]; }; }, top_k?: number, vector_pipeline_weight?: number): { results: object[]; }`\n\n**post** `/api/v1/retrieval/retrieve`\n\nRetrieve relevant chunks via hybrid search (vector + full-text), with filtering on built-in or user-defined metadata.\n\n### Parameters\n\n- `index_id: string`\n  ID of the index to retrieve against.\n\n- `query: string`\n  Natural-language query to retrieve relevant chunks.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `custom_filters?: object`\n  Filters on user-defined metadata fields.\n\n- `full_text_pipeline_weight?: number`\n  Weight of the full-text search pipeline (0-1).\n\n- `num_candidates?: number`\n  Number of candidates for approximate nearest neighbor search.\n\n- `rerank?: { enabled?: boolean; top_n?: number; }`\n  Reranking configuration applied after hybrid search. Enabled by default.\n  - `enabled?: boolean`\n    Set to false to disable reranking.\n  - `top_n?: number`\n    Number of results to return after reranking.\n\n- `score_threshold?: number`\n  Minimum score threshold for returned results.\n\n- `static_filters?: { parsed_directory_file_id?: { operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin'; value: string | string[]; }; }`\n  Filters on built-in document fields (page range, chunk index, etc.).\n  - `parsed_directory_file_id?: { operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin'; value: string | string[]; }`\n\n- `top_k?: number`\n  Maximum number of results to return.\n\n- `vector_pipeline_weight?: number`\n  Weight of the vector search pipeline (0-1).\n\n### Returns\n\n- `{ results: { content: string; metadata?: object; rerank_score?: number; score?: number; static_fields?: { attachments?: object[]; chunk_end_char?: number; chunk_index?: number; chunk_start_char?: number; chunk_token_count?: number; page_range_end?: number; page_range_start?: number; parsed_directory_file_id?: string; }; }[]; }`\n  Response containing retrieval results.\n\n  - `results: { content: string; metadata?: object; rerank_score?: number; score?: number; static_fields?: { attachments?: { attachment_name: string; source_id: string; type: string; }[]; chunk_end_char?: number; chunk_index?: number; chunk_start_char?: number; chunk_token_count?: number; page_range_end?: number; page_range_start?: number; parsed_directory_file_id?: string; }; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst retrieval = await client.beta.retrieval.retrieve({ index_id: 'idx-abc123', query: 'What are the key findings?' });\n\nconsole.log(retrieval);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.retrieval.retrieve',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst retrieval = await client.beta.retrieval.retrieve({\n  index_id: 'idx-abc123',\n  query: 'What are the key findings?',\n});\n\nconsole.log(retrieval.results);",
+      },
+      python: {
+        method: 'beta.retrieval.retrieve',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretrieval = client.beta.retrieval.retrieve(\n    index_id="idx-abc123",\n    query="What are the key findings?",\n)\nprint(retrieval.results)',
+      },
+      go: {
+        method: 'client.Beta.Retrieval.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretrieval, err := client.Beta.Retrieval.Get(context.TODO(), llamacloudprod.BetaRetrievalGetParams{\n\t\tIndexID: "idx-abc123",\n\t\tQuery:   "What are the key findings?",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retrieval.Results)\n}\n',
+      },
+      cli: {
+        method: 'retrieval retrieve',
+        example:
+          "llamacloud-prod beta:retrieval retrieve \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123 \\\n  --query 'What are the key findings?'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "index_id": "idx-abc123",\n          "query": "What are the key findings?",\n          "top_k": 10\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'search',
+    endpoint: '/api/v1/retrieval/files/search',
+    httpMethod: 'post',
+    summary: 'Search Files',
+    description: 'Search for files by name.',
+    stainlessPath: '(resource) beta.retrieval > (method) search',
+    qualified: 'client.beta.retrieval.search',
+    params: [
+      'index_id: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'file_name?: string;',
+      'file_name_contains?: string;',
+      'limit?: number;',
+    ],
+    response: '{ files: { file_id: string; file_name: string; }[]; }',
+    markdown:
+      "## search\n\n`client.beta.retrieval.search(index_id: string, organization_id?: string, project_id?: string, file_name?: string, file_name_contains?: string, limit?: number): { files: object[]; }`\n\n**post** `/api/v1/retrieval/files/search`\n\nSearch for files by name.\n\n### Parameters\n\n- `index_id: string`\n  ID of the index to search within.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `file_name?: string`\n  Exact file name to match.\n\n- `file_name_contains?: string`\n  Substring match on file name (case-insensitive).\n\n- `limit?: number`\n  Maximum number of files to return.\n\n### Returns\n\n- `{ files: { file_id: string; file_name: string; }[]; }`\n  File search results.\n\n  - `files: { file_id: string; file_name: string; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.retrieval.search({ index_id: 'idx-abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.retrieval.search',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.retrieval.search({ index_id: 'idx-abc123' });\n\nconsole.log(response.files);",
+      },
+      python: {
+        method: 'beta.retrieval.search',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.retrieval.search(\n    index_id="idx-abc123",\n)\nprint(response.files)',
+      },
+      go: {
+        method: 'client.Beta.Retrieval.Search',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Retrieval.Search(context.TODO(), llamacloudprod.BetaRetrievalSearchParams{\n\t\tIndexID: "idx-abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Files)\n}\n',
+      },
+      cli: {
+        method: 'retrieval search',
+        example:
+          "llamacloud-prod beta:retrieval search \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/files/search \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "index_id": "idx-abc123"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'grep',
+    endpoint: '/api/v1/retrieval/files/grep',
+    httpMethod: 'post',
+    summary: 'Grep File',
+    description: "Grep within a file's parsed content using a regex pattern.",
+    stainlessPath: '(resource) beta.retrieval > (method) grep',
+    qualified: 'client.beta.retrieval.grep',
+    params: [
+      'file_id: string;',
+      'index_id: string;',
+      'pattern: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'context_chars?: number;',
+      'limit?: number;',
+    ],
+    response: '{ matches: { content: string; end_char: number; start_char: number; }[]; }',
+    markdown:
+      "## grep\n\n`client.beta.retrieval.grep(file_id: string, index_id: string, pattern: string, organization_id?: string, project_id?: string, context_chars?: number, limit?: number): { matches: object[]; }`\n\n**post** `/api/v1/retrieval/files/grep`\n\nGrep within a file's parsed content using a regex pattern.\n\n### Parameters\n\n- `file_id: string`\n  ID of the file to grep.\n\n- `index_id: string`\n  ID of the index the file belongs to.\n\n- `pattern: string`\n  Regex pattern to search for.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `context_chars?: number`\n  Number of characters of context to include before and after the matched pattern in the content field of the response\n\n- `limit?: number`\n  Maximum number of matches to return.\n\n### Returns\n\n- `{ matches: { content: string; end_char: number; start_char: number; }[]; }`\n  Grep results for a file.\n\n  - `matches: { content: string; end_char: number; start_char: number; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.retrieval.grep({\n  file_id: 'file_id',\n  index_id: 'idx-abc123',\n  pattern: 'revenue|profit',\n});\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.retrieval.grep',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.retrieval.grep({\n  file_id: 'file_id',\n  index_id: 'idx-abc123',\n  pattern: 'revenue|profit',\n});\n\nconsole.log(response.matches);",
+      },
+      python: {
+        method: 'beta.retrieval.grep',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.retrieval.grep(\n    file_id="file_id",\n    index_id="idx-abc123",\n    pattern="revenue|profit",\n)\nprint(response.matches)',
+      },
+      go: {
+        method: 'client.Beta.Retrieval.Grep',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Retrieval.Grep(context.TODO(), llamacloudprod.BetaRetrievalGrepParams{\n\t\tFileID:  "file_id",\n\t\tIndexID: "idx-abc123",\n\t\tPattern: "revenue|profit",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Matches)\n}\n',
+      },
+      cli: {
+        method: 'retrieval grep',
+        example:
+          "llamacloud-prod beta:retrieval grep \\\n  --api-key 'My API Key' \\\n  --file-id file_id \\\n  --index-id idx-abc123 \\\n  --pattern 'revenue|profit'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/files/grep \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "file_id",\n          "index_id": "idx-abc123",\n          "pattern": "revenue|profit"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'read',
+    endpoint: '/api/v1/retrieval/files/read',
+    httpMethod: 'post',
+    summary: 'Read File',
+    description: 'Read the parsed text content of a specific file.',
+    stainlessPath: '(resource) beta.retrieval > (method) read',
+    qualified: 'client.beta.retrieval.read',
+    params: [
+      'file_id: string;',
+      'index_id: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'max_length?: number;',
+      'offset?: number;',
+    ],
+    response: '{ content: string; }',
+    markdown:
+      "## read\n\n`client.beta.retrieval.read(file_id: string, index_id: string, organization_id?: string, project_id?: string, max_length?: number, offset?: number): { content: string; }`\n\n**post** `/api/v1/retrieval/files/read`\n\nRead the parsed text content of a specific file.\n\n### Parameters\n\n- `file_id: string`\n  ID of the file to read.\n\n- `index_id: string`\n  ID of the index the file belongs to.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `max_length?: number`\n  Maximum number of characters to read from the offset.\n\n- `offset?: number`\n  Starting character offset.\n\n### Returns\n\n- `{ content: string; }`\n  File read result.\n\n  - `content: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.retrieval.read({ file_id: 'file_id', index_id: 'idx-abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.retrieval.read',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.retrieval.read({ file_id: 'file_id', index_id: 'idx-abc123' });\n\nconsole.log(response.content);",
+      },
+      python: {
+        method: 'beta.retrieval.read',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.retrieval.read(\n    file_id="file_id",\n    index_id="idx-abc123",\n)\nprint(response.content)',
+      },
+      go: {
+        method: 'client.Beta.Retrieval.Read',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Retrieval.Read(context.TODO(), llamacloudprod.BetaRetrievalReadParams{\n\t\tFileID:  "file_id",\n\t\tIndexID: "idx-abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Content)\n}\n',
+      },
+      cli: {
+        method: 'retrieval read',
+        example:
+          "llamacloud-prod beta:retrieval read \\\n  --api-key 'My API Key' \\\n  --file-id file_id \\\n  --index-id idx-abc123",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/files/read \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "file_id",\n          "index_id": "idx-abc123"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/api/v1/chat',
+    httpMethod: 'get',
+    summary: 'List Sessions',
+    description: 'List all chat sessions for the current project.',
+    stainlessPath: '(resource) beta.chat > (method) list',
+    qualified: 'client.beta.chat.list',
+    params: [
+      'organization_id?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      '{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }',
+    markdown:
+      "## list\n\n`client.beta.chat.list(organization_id?: string, page_size?: number, page_token?: string, project_id?: string): { last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: object; }`\n\n**get** `/api/v1/chat`\n\nList all chat sessions for the current project.\n\n### Parameters\n\n- `organization_id?: string`\n\n- `page_size?: number`\n\n- `page_token?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }`\n  Summary of a chat session, including its title and last run metadata.\n\n  - `last_updated_at: string`\n  - `session_id: string`\n  - `generated_title?: string`\n  - `index_ids?: string[]`\n  - `job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const chatListResponse of client.beta.chat.list()) {\n  console.log(chatListResponse);\n}\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.list',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const chatListResponse of client.beta.chat.list()) {\n  console.log(chatListResponse.session_id);\n}",
+      },
+      python: {
+        method: 'beta.chat.list',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.chat.list()\npage = page.items[0]\nprint(page.session_id)',
+      },
+      go: {
+        method: 'client.Beta.Chat.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Chat.List(context.TODO(), llamacloudprod.BetaChatListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'chat list',
+        example: "llamacloud-prod beta:chat list \\\n  --api-key 'My API Key'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/api/v1/chat',
+    httpMethod: 'post',
+    summary: 'Create Session',
+    description: 'Create a chat session, optionally bound to indexes (locked after the first message).',
+    stainlessPath: '(resource) beta.chat > (method) create',
+    qualified: 'client.beta.chat.create',
+    params: ['organization_id?: string;', 'project_id?: string;', 'index_ids?: string[];'],
+    response:
+      '{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }',
+    markdown:
+      "## create\n\n`client.beta.chat.create(organization_id?: string, project_id?: string, index_ids?: string[]): { last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: object; }`\n\n**post** `/api/v1/chat`\n\nCreate a chat session, optionally bound to indexes (locked after the first message).\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `index_ids?: string[]`\n  Indexes this session will retrieve from. Once set and the first message has been sent, the source set is locked for the session's lifetime. Leave null to create an unbound session.\n\n### Returns\n\n- `{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }`\n  Summary of a chat session, including its title and last run metadata.\n\n  - `last_updated_at: string`\n  - `session_id: string`\n  - `generated_title?: string`\n  - `index_ids?: string[]`\n  - `job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst chat = await client.beta.chat.create();\n\nconsole.log(chat);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.create',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst chat = await client.beta.chat.create();\n\nconsole.log(chat.session_id);",
+      },
+      python: {
+        method: 'beta.chat.create',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nchat = client.beta.chat.create()\nprint(chat.session_id)',
+      },
+      go: {
+        method: 'client.Beta.Chat.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tchat, err := client.Beta.Chat.New(context.TODO(), llamacloudprod.BetaChatNewParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", chat.SessionID)\n}\n',
+      },
+      cli: {
+        method: 'chat create',
+        example: "llamacloud-prod beta:chat create \\\n  --api-key 'My API Key'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/api/v1/chat/{session_id}',
+    httpMethod: 'get',
+    summary: 'Get Full Session',
+    description: 'Retrieve a full session by ID, including its event history.',
+    stainlessPath: '(resource) beta.chat > (method) retrieve',
+    qualified: 'client.beta.chat.retrieve',
+    params: ['session_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ events: { content: string; type?: 'thinking_delta'; } | { content: string; type?: 'text_delta'; } | { content: string; type?: 'thinking'; } | { content: string; type?: 'text'; } | { arguments: object; call_id: string; name: string; type?: 'tool_call'; } | { call_id: string; name: string; result: object; image_attachment?: { attachment_name: string; source_id: string; }; type?: 'tool_result'; } | { error: string; is_error: boolean; usage: { duration_ms?: number; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; type?: 'stop'; } | { content: string; type?: 'user_input'; }[]; last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }",
+    markdown:
+      "## retrieve\n\n`client.beta.chat.retrieve(session_id: string, organization_id?: string, project_id?: string): { events: object | object | object | object | object | object | object | object[]; last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: object; }`\n\n**get** `/api/v1/chat/{session_id}`\n\nRetrieve a full session by ID, including its event history.\n\n### Parameters\n\n- `session_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ events: { content: string; type?: 'thinking_delta'; } | { content: string; type?: 'text_delta'; } | { content: string; type?: 'thinking'; } | { content: string; type?: 'text'; } | { arguments: object; call_id: string; name: string; type?: 'tool_call'; } | { call_id: string; name: string; result: object; image_attachment?: { attachment_name: string; source_id: string; }; type?: 'tool_result'; } | { error: string; is_error: boolean; usage: { duration_ms?: number; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; type?: 'stop'; } | { content: string; type?: 'user_input'; }[]; last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }`\n  Full chat session including its complete event history.\n\n  - `events: { content: string; type?: 'thinking_delta'; } | { content: string; type?: 'text_delta'; } | { content: string; type?: 'thinking'; } | { content: string; type?: 'text'; } | { arguments: object; call_id: string; name: string; type?: 'tool_call'; } | { call_id: string; name: string; result: object; image_attachment?: { attachment_name: string; source_id: string; }; type?: 'tool_result'; } | { error: string; is_error: boolean; usage: { duration_ms?: number; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; type?: 'stop'; } | { content: string; type?: 'user_input'; }[]`\n  - `last_updated_at: string`\n  - `session_id: string`\n  - `generated_title?: string`\n  - `index_ids?: string[]`\n  - `job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst chat = await client.beta.chat.retrieve('session_id');\n\nconsole.log(chat);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.retrieve',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst chat = await client.beta.chat.retrieve('session_id');\n\nconsole.log(chat.session_id);",
+      },
+      python: {
+        method: 'beta.chat.retrieve',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nchat = client.beta.chat.retrieve(\n    session_id="session_id",\n)\nprint(chat.session_id)',
+      },
+      go: {
+        method: 'client.Beta.Chat.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tchat, err := client.Beta.Chat.Get(\n\t\tcontext.TODO(),\n\t\t"session_id",\n\t\tllamacloudprod.BetaChatGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", chat.SessionID)\n}\n',
+      },
+      cli: {
+        method: 'chat retrieve',
+        example:
+          "llamacloud-prod beta:chat retrieve \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/api/v1/chat/{session_id}',
+    httpMethod: 'delete',
+    summary: 'Delete Session',
+    description: 'Delete a session.',
+    stainlessPath: '(resource) beta.chat > (method) delete',
+    qualified: 'client.beta.chat.delete',
+    params: ['session_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    markdown:
+      "## delete\n\n`client.beta.chat.delete(session_id: string, organization_id?: string, project_id?: string): void`\n\n**delete** `/api/v1/chat/{session_id}`\n\nDelete a session.\n\n### Parameters\n\n- `session_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nawait client.beta.chat.delete('session_id')\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.delete',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.beta.chat.delete('session_id');",
+      },
+      python: {
+        method: 'beta.chat.delete',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.beta.chat.delete(\n    session_id="session_id",\n)',
+      },
+      go: {
+        method: 'client.Beta.Chat.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Beta.Chat.Delete(\n\t\tcontext.TODO(),\n\t\t"session_id",\n\t\tllamacloudprod.BetaChatDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'chat delete',
+        example:
+          "llamacloud-prod beta:chat delete \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'get_summary',
+    endpoint: '/api/v1/chat/{session_id}/summary',
+    httpMethod: 'get',
+    summary: 'Get Session Summary',
+    description: 'Retrieve a session summary by ID.',
+    stainlessPath: '(resource) beta.chat > (method) get_summary',
+    qualified: 'client.beta.chat.getSummary',
+    params: ['session_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      '{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }',
+    markdown:
+      "## get_summary\n\n`client.beta.chat.getSummary(session_id: string, organization_id?: string, project_id?: string): { last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: object; }`\n\n**get** `/api/v1/chat/{session_id}/summary`\n\nRetrieve a session summary by ID.\n\n### Parameters\n\n- `session_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }`\n  Summary of a chat session, including its title and last run metadata.\n\n  - `last_updated_at: string`\n  - `session_id: string`\n  - `generated_title?: string`\n  - `index_ids?: string[]`\n  - `job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.chat.getSummary('session_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.getSummary',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.chat.getSummary('session_id');\n\nconsole.log(response.session_id);",
+      },
+      python: {
+        method: 'beta.chat.get_summary',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.chat.get_summary(\n    session_id="session_id",\n)\nprint(response.session_id)',
+      },
+      go: {
+        method: 'client.Beta.Chat.GetSummary',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Chat.GetSummary(\n\t\tcontext.TODO(),\n\t\t"session_id",\n\t\tllamacloudprod.BetaChatGetSummaryParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.SessionID)\n}\n',
+      },
+      cli: {
+        method: 'chat get_summary',
+        example:
+          "llamacloud-prod beta:chat get-summary \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID/summary \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'set_title',
+    endpoint: '/api/v1/chat/{session_id}/title',
+    httpMethod: 'post',
+    summary: 'Generate Session Title',
+    description: 'Generate a title for a session from its first user message.',
+    stainlessPath: '(resource) beta.chat > (method) set_title',
+    qualified: 'client.beta.chat.setTitle',
+    params: [
+      'session_id: string;',
+      'first_message: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      '{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }',
+    markdown:
+      "## set_title\n\n`client.beta.chat.setTitle(session_id: string, first_message: string, organization_id?: string, project_id?: string): { last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: object; }`\n\n**post** `/api/v1/chat/{session_id}/title`\n\nGenerate a title for a session from its first user message.\n\n### Parameters\n\n- `session_id: string`\n\n- `first_message: string`\n  First user message of the session, used to infer a short title.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }`\n  Summary of a chat session, including its title and last run metadata.\n\n  - `last_updated_at: string`\n  - `session_id: string`\n  - `generated_title?: string`\n  - `index_ids?: string[]`\n  - `job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.chat.setTitle('session_id', { first_message: 'What were the main findings in Q3?' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.setTitle',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.chat.setTitle('session_id', {\n  first_message: 'What were the main findings in Q3?',\n});\n\nconsole.log(response.session_id);",
+      },
+      python: {
+        method: 'beta.chat.set_title',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.chat.set_title(\n    session_id="session_id",\n    first_message="What were the main findings in Q3?",\n)\nprint(response.session_id)',
+      },
+      go: {
+        method: 'client.Beta.Chat.SetTitle',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Chat.SetTitle(\n\t\tcontext.TODO(),\n\t\t"session_id",\n\t\tllamacloudprod.BetaChatSetTitleParams{\n\t\t\tFirstMessage: "What were the main findings in Q3?",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.SessionID)\n}\n',
+      },
+      cli: {
+        method: 'chat set_title',
+        example:
+          "llamacloud-prod beta:chat set-title \\\n  --api-key 'My API Key' \\\n  --session-id session_id \\\n  --first-message 'What were the main findings in Q3?'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID/title \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "first_message": "What were the main findings in Q3?"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'stream',
+    endpoint: '/api/v1/chat/{session_id}/messages/stream',
+    httpMethod: 'post',
+    summary: 'Stream Messages',
+    description: 'Stream agent events for a chat turn as Server-Sent Events.',
+    stainlessPath: '(resource) beta.chat > (method) stream',
+    qualified: 'client.beta.chat.stream',
+    params: [
+      'session_id: string;',
+      'index_ids: string[];',
+      'prompt: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+    ],
+    response: 'object',
+    markdown:
+      "## stream\n\n`client.beta.chat.stream(session_id: string, index_ids: string[], prompt: string, organization_id?: string, project_id?: string): object`\n\n**post** `/api/v1/chat/{session_id}/messages/stream`\n\nStream agent events for a chat turn as Server-Sent Events.\n\n### Parameters\n\n- `session_id: string`\n\n- `index_ids: string[]`\n  Indexes to retrieve data from.\n\n- `prompt: string`\n  User message for this chat turn.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.chat.stream('session_id', { index_ids: ['idx-abc123', 'idx-def456'], prompt: 'What were the main findings in Q3?' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.stream',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.chat.stream('session_id', {\n  index_ids: ['idx-abc123', 'idx-def456'],\n  prompt: 'What were the main findings in Q3?',\n});\n\nconsole.log(response);",
+      },
+      python: {
+        method: 'beta.chat.stream',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.chat.stream(\n    session_id="session_id",\n    index_ids=["idx-abc123", "idx-def456"],\n    prompt="What were the main findings in Q3?",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Beta.Chat.Stream',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Chat.Stream(\n\t\tcontext.TODO(),\n\t\t"session_id",\n\t\tllamacloudprod.BetaChatStreamParams{\n\t\t\tIndexIDs: []string{"idx-abc123", "idx-def456"},\n\t\t\tPrompt:   "What were the main findings in Q3?",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'chat stream',
+        example:
+          "llamacloud-prod beta:chat stream \\\n  --api-key 'My API Key' \\\n  --session-id session_id \\\n  --index-id idx-abc123 \\\n  --index-id idx-def456 \\\n  --prompt 'What were the main findings in Q3?'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID/messages/stream \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "index_ids": [\n            "idx-abc123",\n            "idx-def456"\n          ],\n          "prompt": "What were the main findings in Q3?"\n        }\'',
+      },
+    },
+  },
+  {
     name: 'get',
     endpoint: '/api/v1/beta/agent-data/{item_id}',
     httpMethod: 'get',
