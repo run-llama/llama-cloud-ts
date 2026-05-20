@@ -863,7 +863,7 @@ export namespace ParseV2Parameters {
      */
     export interface Timeouts {
       /**
-       * Base timeout for the job in seconds (max 1800 = 30 minutes). This is the minimum
+       * Base timeout for the job in seconds (max 7200 = 2 hours). This is the minimum
        * time allowed regardless of document size
        */
       base_in_seconds?: number | null;
