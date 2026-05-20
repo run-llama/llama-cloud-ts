@@ -8,10 +8,10 @@
   "type": "commonjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/run-llama/llama-cloud-ts.git",
+    "url": "git+https://github.com/run-llama/llama-parse-ts.git",
     "directory": "packages/mcp-server"
   },
-  "homepage": "https://github.com/run-llama/llama-cloud-ts/tree/main/packages/mcp-server#readme",
+  "homepage": "https://github.com/run-llama/llama-parse-ts/tree/main/packages/mcp-server#readme",
   "license": "MIT",
   "packageManager": "yarn@1.22.22",
   "private": false,
