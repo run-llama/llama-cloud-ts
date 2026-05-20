@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.6.0 (2026-05-20)
+
+Full Changelog: [v2.5.0...v2.6.0](https://github.com/run-llama/llama-parse-ts/compare/v2.5.0...v2.6.0)
+
+### Features
+
+* **api:** api update ([afd7060](https://github.com/run-llama/llama-parse-ts/commit/afd70605618b7f99e05344d1983f39f63194506a))
+* support setting headers via env ([39f1244](https://github.com/run-llama/llama-parse-ts/commit/39f12444f48b1522a1f04b931b000bfbad78355a))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([9f487c9](https://github.com/run-llama/llama-parse-ts/commit/9f487c94ec7133dc2913029a9bd47592e8e713a4))
+* **internal:** codegen related update ([e3d89cd](https://github.com/run-llama/llama-parse-ts/commit/e3d89cdb945e19f0b891f78cb4eafd0d5422b27b))
+* update SDK settings ([0a87797](https://github.com/run-llama/llama-parse-ts/commit/0a8779779080f3aa6bbb55f6776c26f3bdd83098))
+* update SDK settings ([c0155b1](https://github.com/run-llama/llama-parse-ts/commit/c0155b1b19541155765de5b0ccfd76f59ed4cc3d))
+
 ## 2.5.0 (2026-04-29)
 
 Full Changelog: [v2.4.1...v2.5.0](https://github.com/run-llama/llama-parse-ts/compare/v2.4.1...v2.5.0)
