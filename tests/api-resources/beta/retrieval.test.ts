@@ -66,7 +66,8 @@ describe('resource retrieval', () => {
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       context_chars: 0,
-      limit: 0,
+      page_size: 0,
+      page_token: 'page_token',
     });
   });
 
@@ -91,30 +92,6 @@ describe('resource retrieval', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       max_length: 0,
       offset: 0,
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('search: only required params', async () => {
-    const responsePromise = client.beta.retrieval.search({ index_id: 'idx-abc123' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('search: required and optional params', async () => {
-    const response = await client.beta.retrieval.search({
-      index_id: 'idx-abc123',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      file_name: 'file_name',
-      file_name_contains: 'file_name_contains',
-      limit: 0,
     });
   });
 });

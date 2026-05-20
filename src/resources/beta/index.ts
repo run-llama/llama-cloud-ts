@@ -73,11 +73,9 @@ export {
   type RetrievalRetrieveResponse,
   type RetrievalGrepResponse,
   type RetrievalReadResponse,
-  type RetrievalSearchResponse,
   type RetrievalRetrieveParams,
   type RetrievalGrepParams,
   type RetrievalReadParams,
-  type RetrievalSearchParams,
 } from './retrieval';
 export {
   Sheets,

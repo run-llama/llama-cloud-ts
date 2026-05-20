@@ -539,12 +539,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/retrieval/files/read',
   },
   {
-    clientCallName: 'client.beta.retrieval.search',
-    fullyQualifiedName: 'beta.retrieval.search',
-    httpMethod: 'post',
-    httpPath: '/api/v1/retrieval/files/search',
-  },
-  {
     clientCallName: 'client.beta.chat.create',
     fullyQualifiedName: 'beta.chat.create',
     httpMethod: 'post',

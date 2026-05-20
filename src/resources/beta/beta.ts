@@ -55,8 +55,6 @@ import {
   RetrievalReadResponse,
   RetrievalRetrieveParams,
   RetrievalRetrieveResponse,
-  RetrievalSearchParams,
-  RetrievalSearchResponse,
 } from './retrieval';
 import * as SheetsAPI from './sheets';
 import {
@@ -150,11 +148,9 @@ export declare namespace Beta {
     type RetrievalRetrieveResponse as RetrievalRetrieveResponse,
     type RetrievalGrepResponse as RetrievalGrepResponse,
     type RetrievalReadResponse as RetrievalReadResponse,
-    type RetrievalSearchResponse as RetrievalSearchResponse,
     type RetrievalRetrieveParams as RetrievalRetrieveParams,
     type RetrievalGrepParams as RetrievalGrepParams,
     type RetrievalReadParams as RetrievalReadParams,
-    type RetrievalSearchParams as RetrievalSearchParams,
   };
 
   export {
