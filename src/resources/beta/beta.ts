@@ -49,8 +49,12 @@ import {
 import * as RetrievalAPI from './retrieval';
 import {
   Retrieval,
+  RetrievalFindParams,
+  RetrievalFindResponse,
+  RetrievalFindResponsesPaginatedCursorPost,
   RetrievalGrepParams,
   RetrievalGrepResponse,
+  RetrievalGrepResponsesPaginatedCursorPost,
   RetrievalReadParams,
   RetrievalReadResponse,
   RetrievalRetrieveParams,
@@ -146,9 +150,13 @@ export declare namespace Beta {
   export {
     Retrieval as Retrieval,
     type RetrievalRetrieveResponse as RetrievalRetrieveResponse,
+    type RetrievalFindResponse as RetrievalFindResponse,
     type RetrievalGrepResponse as RetrievalGrepResponse,
     type RetrievalReadResponse as RetrievalReadResponse,
+    type RetrievalFindResponsesPaginatedCursorPost as RetrievalFindResponsesPaginatedCursorPost,
+    type RetrievalGrepResponsesPaginatedCursorPost as RetrievalGrepResponsesPaginatedCursorPost,
     type RetrievalRetrieveParams as RetrievalRetrieveParams,
+    type RetrievalFindParams as RetrievalFindParams,
     type RetrievalGrepParams as RetrievalGrepParams,
     type RetrievalReadParams as RetrievalReadParams,
   };

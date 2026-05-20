@@ -383,13 +383,15 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/beta/retrieval.ts">RetrievalRetrieveResponse</a></code>
+- <code><a href="./src/resources/beta/retrieval.ts">RetrievalFindResponse</a></code>
 - <code><a href="./src/resources/beta/retrieval.ts">RetrievalGrepResponse</a></code>
 - <code><a href="./src/resources/beta/retrieval.ts">RetrievalReadResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v1/retrieval/retrieve">client.beta.retrieval.<a href="./src/resources/beta/retrieval.ts">retrieve</a>({ ...params }) -> RetrievalRetrieveResponse</code>
-- <code title="post /api/v1/retrieval/files/grep">client.beta.retrieval.<a href="./src/resources/beta/retrieval.ts">grep</a>({ ...params }) -> RetrievalGrepResponse</code>
+- <code title="post /api/v1/retrieval/files/find">client.beta.retrieval.<a href="./src/resources/beta/retrieval.ts">find</a>({ ...params }) -> RetrievalFindResponsesPaginatedCursorPost</code>
+- <code title="post /api/v1/retrieval/files/grep">client.beta.retrieval.<a href="./src/resources/beta/retrieval.ts">grep</a>({ ...params }) -> RetrievalGrepResponsesPaginatedCursorPost</code>
 - <code title="post /api/v1/retrieval/files/read">client.beta.retrieval.<a href="./src/resources/beta/retrieval.ts">read</a>({ ...params }) -> RetrievalReadResponse</code>
 
 ## Chat

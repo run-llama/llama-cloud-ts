@@ -527,6 +527,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/retrieval/retrieve',
   },
   {
+    clientCallName: 'client.beta.retrieval.find',
+    fullyQualifiedName: 'beta.retrieval.find',
+    httpMethod: 'post',
+    httpPath: '/api/v1/retrieval/files/find',
+  },
+  {
     clientCallName: 'client.beta.retrieval.grep',
     fullyQualifiedName: 'beta.retrieval.grep',
     httpMethod: 'post',

@@ -42,6 +42,31 @@ describe('resource retrieval', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('find: only required params', async () => {
+    const responsePromise = client.beta.retrieval.find({ index_id: 'idx-abc123' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('find: required and optional params', async () => {
+    const response = await client.beta.retrieval.find({
+      index_id: 'idx-abc123',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      file_name: 'file_name',
+      file_name_contains: 'file_name_contains',
+      page_size: 0,
+      page_token: 'page_token',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('grep: only required params', async () => {
     const responsePromise = client.beta.retrieval.grep({
       file_id: 'file_id',
