@@ -196,7 +196,6 @@ const fuse = new Fuse(
     'client.beta.retrieval.grep',
     'client.beta.retrieval.read',
     'client.beta.retrieval.retrieve',
-    'client.beta.retrieval.search',
     'client.beta.chat.create',
     'client.beta.chat.delete',
     'client.beta.chat.getSummary',

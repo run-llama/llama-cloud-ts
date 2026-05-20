@@ -66,25 +66,6 @@ export class Retrieval extends APIResource {
       ...options,
     });
   }
-
-  /**
-   * Search for files by name.
-   *
-   * @example
-   * ```ts
-   * const response = await client.beta.retrieval.search({
-   *   index_id: 'idx-abc123',
-   * });
-   * ```
-   */
-  search(params: RetrievalSearchParams, options?: RequestOptions): APIPromise<RetrievalSearchResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/retrieval/files/search', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
 }
 
 /**
@@ -200,20 +181,33 @@ export namespace RetrievalRetrieveResponse {
 }
 
 /**
- * Grep results for a file.
+ * Paginated grep results for a file.
  */
 export interface RetrievalGrepResponse {
   /**
-   * Regex matches found in the file.
+   * The list of items.
    */
-  matches: Array<RetrievalGrepResponse.Match>;
+  items: Array<RetrievalGrepResponse.Item>;
+
+  /**
+   * A token, which can be sent as page_token to retrieve the next page. If this
+   * field is omitted, there are no subsequent pages.
+   */
+  next_page_token?: string | null;
+
+  /**
+   * The total number of items available. This is only populated when specifically
+   * requested. The value may be an estimate and can be used for display purposes
+   * only.
+   */
+  total_size?: number | null;
 }
 
 export namespace RetrievalGrepResponse {
   /**
    * A single grep match within a file.
    */
-  export interface Match {
+  export interface Item {
     /**
      * Matched text content.
      */
@@ -239,33 +233,6 @@ export interface RetrievalReadResponse {
    * Parsed text content of the file.
    */
   content: string;
-}
-
-/**
- * File search results.
- */
-export interface RetrievalSearchResponse {
-  /**
-   * Matching files with names.
-   */
-  files: Array<RetrievalSearchResponse.File>;
-}
-
-export namespace RetrievalSearchResponse {
-  /**
-   * A file returned by search.
-   */
-  export interface File {
-    /**
-     * ID of the file.
-     */
-    file_id: string;
-
-    /**
-     * Display name of the file.
-     */
-    file_name: string;
-  }
 }
 
 export interface RetrievalRetrieveParams {
@@ -413,9 +380,17 @@ export interface RetrievalGrepParams {
   context_chars?: number | null;
 
   /**
-   * Body param: Maximum number of matches to return.
+   * Body param: The maximum number of items to return. The service may return fewer
+   * than this value. If unspecified, a default page size will be used. The maximum
+   * value is typically 1000; values above this will be coerced to the maximum.
    */
-  limit?: number | null;
+  page_size?: number | null;
+
+  /**
+   * Body param: A page token, received from a previous list call. Provide this to
+   * retrieve the subsequent page.
+   */
+  page_token?: string | null;
 }
 
 export interface RetrievalReadParams {
@@ -450,47 +425,13 @@ export interface RetrievalReadParams {
   offset?: number;
 }
 
-export interface RetrievalSearchParams {
-  /**
-   * Body param: ID of the index to search within.
-   */
-  index_id: string;
-
-  /**
-   * Query param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Exact file name to match.
-   */
-  file_name?: string | null;
-
-  /**
-   * Body param: Substring match on file name (case-insensitive).
-   */
-  file_name_contains?: string | null;
-
-  /**
-   * Body param: Maximum number of files to return.
-   */
-  limit?: number | null;
-}
-
 export declare namespace Retrieval {
   export {
     type RetrievalRetrieveResponse as RetrievalRetrieveResponse,
     type RetrievalGrepResponse as RetrievalGrepResponse,
     type RetrievalReadResponse as RetrievalReadResponse,
-    type RetrievalSearchResponse as RetrievalSearchResponse,
     type RetrievalRetrieveParams as RetrievalRetrieveParams,
     type RetrievalGrepParams as RetrievalGrepParams,
     type RetrievalReadParams as RetrievalReadParams,
-    type RetrievalSearchParams as RetrievalSearchParams,
   };
 }
