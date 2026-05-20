@@ -71,11 +71,15 @@ export {
 export {
   Retrieval,
   type RetrievalRetrieveResponse,
+  type RetrievalFindResponse,
   type RetrievalGrepResponse,
   type RetrievalReadResponse,
   type RetrievalRetrieveParams,
+  type RetrievalFindParams,
   type RetrievalGrepParams,
   type RetrievalReadParams,
+  type RetrievalFindResponsesPaginatedCursorPost,
+  type RetrievalGrepResponsesPaginatedCursorPost,
 } from './retrieval';
 export {
   Sheets,

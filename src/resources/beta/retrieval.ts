@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, PaginatedCursorPost, type PaginatedCursorPostParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 
 export class Retrieval extends APIResource {
@@ -27,24 +28,57 @@ export class Retrieval extends APIResource {
   }
 
   /**
+   * Search for files by name.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const retrievalFindResponse of client.beta.retrieval.find(
+   *   { index_id: 'idx-abc123' },
+   * )) {
+   *   // ...
+   * }
+   * ```
+   */
+  find(
+    params: RetrievalFindParams,
+    options?: RequestOptions,
+  ): PagePromise<RetrievalFindResponsesPaginatedCursorPost, RetrievalFindResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.getAPIList(
+      '/api/v1/retrieval/files/find',
+      PaginatedCursorPost<RetrievalFindResponse>,
+      { query: { organization_id, project_id }, body, method: 'post', ...options },
+    );
+  }
+
+  /**
    * Grep within a file's parsed content using a regex pattern.
    *
    * @example
    * ```ts
-   * const response = await client.beta.retrieval.grep({
-   *   file_id: 'file_id',
-   *   index_id: 'idx-abc123',
-   *   pattern: 'revenue|profit',
-   * });
+   * // Automatically fetches more pages as needed.
+   * for await (const retrievalGrepResponse of client.beta.retrieval.grep(
+   *   {
+   *     file_id: 'file_id',
+   *     index_id: 'idx-abc123',
+   *     pattern: 'revenue|profit',
+   *   },
+   * )) {
+   *   // ...
+   * }
    * ```
    */
-  grep(params: RetrievalGrepParams, options?: RequestOptions): APIPromise<RetrievalGrepResponse> {
+  grep(
+    params: RetrievalGrepParams,
+    options?: RequestOptions,
+  ): PagePromise<RetrievalGrepResponsesPaginatedCursorPost, RetrievalGrepResponse> {
     const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/retrieval/files/grep', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+    return this._client.getAPIList(
+      '/api/v1/retrieval/files/grep',
+      PaginatedCursorPost<RetrievalGrepResponse>,
+      { query: { organization_id, project_id }, body, method: 'post', ...options },
+    );
   }
 
   /**
@@ -67,6 +101,10 @@ export class Retrieval extends APIResource {
     });
   }
 }
+
+export type RetrievalFindResponsesPaginatedCursorPost = PaginatedCursorPost<RetrievalFindResponse>;
+
+export type RetrievalGrepResponsesPaginatedCursorPost = PaginatedCursorPost<RetrievalGrepResponse>;
 
 /**
  * Response containing retrieval results.
@@ -181,48 +219,38 @@ export namespace RetrievalRetrieveResponse {
 }
 
 /**
- * Paginated grep results for a file.
+ * A file returned by find.
+ */
+export interface RetrievalFindResponse {
+  /**
+   * ID of the file.
+   */
+  file_id: string;
+
+  /**
+   * Display name of the file.
+   */
+  file_name: string;
+}
+
+/**
+ * A single grep match within a file.
  */
 export interface RetrievalGrepResponse {
   /**
-   * The list of items.
+   * Matched text content.
    */
-  items: Array<RetrievalGrepResponse.Item>;
+  content: string;
 
   /**
-   * A token, which can be sent as page_token to retrieve the next page. If this
-   * field is omitted, there are no subsequent pages.
+   * End character offset of the match.
    */
-  next_page_token?: string | null;
+  end_char: number;
 
   /**
-   * The total number of items available. This is only populated when specifically
-   * requested. The value may be an estimate and can be used for display purposes
-   * only.
+   * Start character offset of the match.
    */
-  total_size?: number | null;
-}
-
-export namespace RetrievalGrepResponse {
-  /**
-   * A single grep match within a file.
-   */
-  export interface Item {
-    /**
-     * Matched text content.
-     */
-    content: string;
-
-    /**
-     * End character offset of the match.
-     */
-    end_char: number;
-
-    /**
-     * Start character offset of the match.
-     */
-    start_char: number;
-  }
+  start_char: number;
 }
 
 /**
@@ -347,7 +375,34 @@ export namespace RetrievalRetrieveParams {
   }
 }
 
-export interface RetrievalGrepParams {
+export interface RetrievalFindParams extends PaginatedCursorPostParams {
+  /**
+   * Body param: ID of the index to search within.
+   */
+  index_id: string;
+
+  /**
+   * Query param
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: Exact file name to match.
+   */
+  file_name?: string | null;
+
+  /**
+   * Body param: Substring match on file name (case-insensitive).
+   */
+  file_name_contains?: string | null;
+}
+
+export interface RetrievalGrepParams extends PaginatedCursorPostParams {
   /**
    * Body param: ID of the file to grep.
    */
@@ -378,19 +433,6 @@ export interface RetrievalGrepParams {
    * matched pattern in the content field of the response
    */
   context_chars?: number | null;
-
-  /**
-   * Body param: The maximum number of items to return. The service may return fewer
-   * than this value. If unspecified, a default page size will be used. The maximum
-   * value is typically 1000; values above this will be coerced to the maximum.
-   */
-  page_size?: number | null;
-
-  /**
-   * Body param: A page token, received from a previous list call. Provide this to
-   * retrieve the subsequent page.
-   */
-  page_token?: string | null;
 }
 
 export interface RetrievalReadParams {
@@ -428,9 +470,13 @@ export interface RetrievalReadParams {
 export declare namespace Retrieval {
   export {
     type RetrievalRetrieveResponse as RetrievalRetrieveResponse,
+    type RetrievalFindResponse as RetrievalFindResponse,
     type RetrievalGrepResponse as RetrievalGrepResponse,
     type RetrievalReadResponse as RetrievalReadResponse,
+    type RetrievalFindResponsesPaginatedCursorPost as RetrievalFindResponsesPaginatedCursorPost,
+    type RetrievalGrepResponsesPaginatedCursorPost as RetrievalGrepResponsesPaginatedCursorPost,
     type RetrievalRetrieveParams as RetrievalRetrieveParams,
+    type RetrievalFindParams as RetrievalFindParams,
     type RetrievalGrepParams as RetrievalGrepParams,
     type RetrievalReadParams as RetrievalReadParams,
   };

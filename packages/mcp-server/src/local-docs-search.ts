@@ -3780,6 +3780,53 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'find',
+    endpoint: '/api/v1/retrieval/files/find',
+    httpMethod: 'post',
+    summary: 'Find Files',
+    description: 'Search for files by name.',
+    stainlessPath: '(resource) beta.retrieval > (method) find',
+    qualified: 'client.beta.retrieval.find',
+    params: [
+      'index_id: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'file_name?: string;',
+      'file_name_contains?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+    ],
+    response: '{ file_id: string; file_name: string; }',
+    markdown:
+      "## find\n\n`client.beta.retrieval.find(index_id: string, organization_id?: string, project_id?: string, file_name?: string, file_name_contains?: string, page_size?: number, page_token?: string): { file_id: string; file_name: string; }`\n\n**post** `/api/v1/retrieval/files/find`\n\nSearch for files by name.\n\n### Parameters\n\n- `index_id: string`\n  ID of the index to search within.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `file_name?: string`\n  Exact file name to match.\n\n- `file_name_contains?: string`\n  Substring match on file name (case-insensitive).\n\n- `page_size?: number`\n  The maximum number of items to return. The service may return fewer than this value. If unspecified, a default page size will be used. The maximum value is typically 1000; values above this will be coerced to the maximum.\n\n- `page_token?: string`\n  A page token, received from a previous list call. Provide this to retrieve the subsequent page.\n\n### Returns\n\n- `{ file_id: string; file_name: string; }`\n  A file returned by find.\n\n  - `file_id: string`\n  - `file_name: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const retrievalFindResponse of client.beta.retrieval.find({ index_id: 'idx-abc123' })) {\n  console.log(retrievalFindResponse);\n}\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.retrieval.find',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const retrievalFindResponse of client.beta.retrieval.find({ index_id: 'idx-abc123' })) {\n  console.log(retrievalFindResponse.file_id);\n}",
+      },
+      python: {
+        method: 'beta.retrieval.find',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.retrieval.find(\n    index_id="idx-abc123",\n)\npage = page.items[0]\nprint(page.file_id)',
+      },
+      go: {
+        method: 'client.Beta.Retrieval.Find',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Retrieval.Find(context.TODO(), llamacloudprod.BetaRetrievalFindParams{\n\t\tIndexID: "idx-abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'retrieval find',
+        example:
+          "llamacloud-prod beta:retrieval find \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/files/find \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "index_id": "idx-abc123"\n        }\'',
+      },
+    },
+  },
+  {
     name: 'grep',
     endpoint: '/api/v1/retrieval/files/grep',
     httpMethod: 'post',
@@ -3797,25 +3844,24 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'page_size?: number;',
       'page_token?: string;',
     ],
-    response:
-      '{ items: { content: string; end_char: number; start_char: number; }[]; next_page_token?: string; total_size?: number; }',
+    response: '{ content: string; end_char: number; start_char: number; }',
     markdown:
-      "## grep\n\n`client.beta.retrieval.grep(file_id: string, index_id: string, pattern: string, organization_id?: string, project_id?: string, context_chars?: number, page_size?: number, page_token?: string): { items: object[]; next_page_token?: string; total_size?: number; }`\n\n**post** `/api/v1/retrieval/files/grep`\n\nGrep within a file's parsed content using a regex pattern.\n\n### Parameters\n\n- `file_id: string`\n  ID of the file to grep.\n\n- `index_id: string`\n  ID of the index the file belongs to.\n\n- `pattern: string`\n  Regex pattern to search for.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `context_chars?: number`\n  Number of characters of context to include before and after the matched pattern in the content field of the response\n\n- `page_size?: number`\n  The maximum number of items to return. The service may return fewer than this value. If unspecified, a default page size will be used. The maximum value is typically 1000; values above this will be coerced to the maximum.\n\n- `page_token?: string`\n  A page token, received from a previous list call. Provide this to retrieve the subsequent page.\n\n### Returns\n\n- `{ items: { content: string; end_char: number; start_char: number; }[]; next_page_token?: string; total_size?: number; }`\n  Paginated grep results for a file.\n\n  - `items: { content: string; end_char: number; start_char: number; }[]`\n  - `next_page_token?: string`\n  - `total_size?: number`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.retrieval.grep({\n  file_id: 'file_id',\n  index_id: 'idx-abc123',\n  pattern: 'revenue|profit',\n});\n\nconsole.log(response);\n```",
+      "## grep\n\n`client.beta.retrieval.grep(file_id: string, index_id: string, pattern: string, organization_id?: string, project_id?: string, context_chars?: number, page_size?: number, page_token?: string): { content: string; end_char: number; start_char: number; }`\n\n**post** `/api/v1/retrieval/files/grep`\n\nGrep within a file's parsed content using a regex pattern.\n\n### Parameters\n\n- `file_id: string`\n  ID of the file to grep.\n\n- `index_id: string`\n  ID of the index the file belongs to.\n\n- `pattern: string`\n  Regex pattern to search for.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `context_chars?: number`\n  Number of characters of context to include before and after the matched pattern in the content field of the response\n\n- `page_size?: number`\n  The maximum number of items to return. The service may return fewer than this value. If unspecified, a default page size will be used. The maximum value is typically 1000; values above this will be coerced to the maximum.\n\n- `page_token?: string`\n  A page token, received from a previous list call. Provide this to retrieve the subsequent page.\n\n### Returns\n\n- `{ content: string; end_char: number; start_char: number; }`\n  A single grep match within a file.\n\n  - `content: string`\n  - `end_char: number`\n  - `start_char: number`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const retrievalGrepResponse of client.beta.retrieval.grep({\n  file_id: 'file_id',\n  index_id: 'idx-abc123',\n  pattern: 'revenue|profit',\n})) {\n  console.log(retrievalGrepResponse);\n}\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.retrieval.grep',
         example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.retrieval.grep({\n  file_id: 'file_id',\n  index_id: 'idx-abc123',\n  pattern: 'revenue|profit',\n});\n\nconsole.log(response.items);",
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const retrievalGrepResponse of client.beta.retrieval.grep({\n  file_id: 'file_id',\n  index_id: 'idx-abc123',\n  pattern: 'revenue|profit',\n})) {\n  console.log(retrievalGrepResponse.content);\n}",
       },
       python: {
         method: 'beta.retrieval.grep',
         example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.retrieval.grep(\n    file_id="file_id",\n    index_id="idx-abc123",\n    pattern="revenue|profit",\n)\nprint(response.items)',
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.retrieval.grep(\n    file_id="file_id",\n    index_id="idx-abc123",\n    pattern="revenue|profit",\n)\npage = page.items[0]\nprint(page.content)',
       },
       go: {
         method: 'client.Beta.Retrieval.Grep',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Retrieval.Grep(context.TODO(), llamacloudprod.BetaRetrievalGrepParams{\n\t\tFileID:  "file_id",\n\t\tIndexID: "idx-abc123",\n\t\tPattern: "revenue|profit",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Items)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Retrieval.Grep(context.TODO(), llamacloudprod.BetaRetrievalGrepParams{\n\t\tFileID:  "file_id",\n\t\tIndexID: "idx-abc123",\n\t\tPattern: "revenue|profit",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
       },
       cli: {
         method: 'retrieval grep',

@@ -193,6 +193,7 @@ const fuse = new Fuse(
     'client.beta.indexes.delete',
     'client.beta.indexes.get',
     'client.beta.indexes.sync',
+    'client.beta.retrieval.find',
     'client.beta.retrieval.grep',
     'client.beta.retrieval.read',
     'client.beta.retrieval.retrieve',
