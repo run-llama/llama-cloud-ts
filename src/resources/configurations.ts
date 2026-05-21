@@ -362,9 +362,8 @@ export interface ExtractV2Parameters {
   confidence_scores?: boolean;
 
   /**
-   * Extract algorithm version. Use 'latest' for the default pipeline, a date string
-   * (e.g. '2026-01-08'), or 'continuous' to opt into schema-guided splitting for
-   * documents with repeating entities.
+   * Extract algorithm version. Use 'latest' for the default pipeline or a date
+   * string (e.g. '2026-01-08') to pin to a specific release.
    */
   extract_version?: string;
 
