@@ -29,6 +29,23 @@ export {
 } from './batch/index';
 export { Beta } from './beta';
 export {
+  Chat,
+  type ChatCreateResponse,
+  type ChatRetrieveResponse,
+  type ChatListResponse,
+  type ChatGetSummaryResponse,
+  type ChatSetTitleResponse,
+  type ChatStreamResponse,
+  type ChatCreateParams,
+  type ChatRetrieveParams,
+  type ChatListParams,
+  type ChatDeleteParams,
+  type ChatGetSummaryParams,
+  type ChatSetTitleParams,
+  type ChatStreamParams,
+  type ChatListResponsesPaginatedCursor,
+} from './chat';
+export {
   Directories,
   type DirectoryCreateResponse,
   type DirectoryUpdateResponse,
@@ -41,6 +58,29 @@ export {
   type DirectoryGetParams,
   type DirectoryListResponsesPaginatedCursor,
 } from './directories/index';
+export {
+  Indexes,
+  type IndexCreateResponse,
+  type IndexGetResponse,
+  type IndexSyncResponse,
+  type IndexCreateParams,
+  type IndexDeleteParams,
+  type IndexGetParams,
+  type IndexSyncParams,
+} from './indexes';
+export {
+  Retrieval,
+  type RetrievalRetrieveResponse,
+  type RetrievalFindResponse,
+  type RetrievalGrepResponse,
+  type RetrievalReadResponse,
+  type RetrievalRetrieveParams,
+  type RetrievalFindParams,
+  type RetrievalGrepParams,
+  type RetrievalReadParams,
+  type RetrievalFindResponsesPaginatedCursorPost,
+  type RetrievalGrepResponsesPaginatedCursorPost,
+} from './retrieval';
 export {
   Sheets,
   type SheetsJob,

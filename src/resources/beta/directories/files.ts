@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import * as FilesAPI from '../../files';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../../core/pagination';
 import { type Uploadable } from '../../../core/uploads';
@@ -199,14 +200,14 @@ export interface FileUpdateResponse {
   created_at?: string | null;
 
   /**
-   * Optional data source credential associated with the file.
-   */
-  data_source_id?: string | null;
-
-  /**
    * Soft delete marker when the file is removed upstream or by user action.
    */
   deleted_at?: string | null;
+
+  /**
+   * Schema for a presigned URL.
+   */
+  download_url?: FilesAPI.PresignedURL | null;
 
   /**
    * File ID for the storage location.
@@ -216,7 +217,7 @@ export interface FileUpdateResponse {
   /**
    * Merged metadata from all sources. Higher-priority sources override lower.
    */
-  metadata?: { [key: string]: string | number | boolean | null };
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null };
 
   /**
    * Update datetime
@@ -259,14 +260,14 @@ export interface FileListResponse {
   created_at?: string | null;
 
   /**
-   * Optional data source credential associated with the file.
-   */
-  data_source_id?: string | null;
-
-  /**
    * Soft delete marker when the file is removed upstream or by user action.
    */
   deleted_at?: string | null;
+
+  /**
+   * Schema for a presigned URL.
+   */
+  download_url?: FilesAPI.PresignedURL | null;
 
   /**
    * File ID for the storage location.
@@ -276,7 +277,7 @@ export interface FileListResponse {
   /**
    * Merged metadata from all sources. Higher-priority sources override lower.
    */
-  metadata?: { [key: string]: string | number | boolean | null };
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null };
 
   /**
    * Update datetime
@@ -319,14 +320,14 @@ export interface FileAddResponse {
   created_at?: string | null;
 
   /**
-   * Optional data source credential associated with the file.
-   */
-  data_source_id?: string | null;
-
-  /**
    * Soft delete marker when the file is removed upstream or by user action.
    */
   deleted_at?: string | null;
+
+  /**
+   * Schema for a presigned URL.
+   */
+  download_url?: FilesAPI.PresignedURL | null;
 
   /**
    * File ID for the storage location.
@@ -336,7 +337,7 @@ export interface FileAddResponse {
   /**
    * Merged metadata from all sources. Higher-priority sources override lower.
    */
-  metadata?: { [key: string]: string | number | boolean | null };
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null };
 
   /**
    * Update datetime
@@ -379,14 +380,14 @@ export interface FileGetResponse {
   created_at?: string | null;
 
   /**
-   * Optional data source credential associated with the file.
-   */
-  data_source_id?: string | null;
-
-  /**
    * Soft delete marker when the file is removed upstream or by user action.
    */
   deleted_at?: string | null;
+
+  /**
+   * Schema for a presigned URL.
+   */
+  download_url?: FilesAPI.PresignedURL | null;
 
   /**
    * File ID for the storage location.
@@ -396,7 +397,7 @@ export interface FileGetResponse {
   /**
    * Merged metadata from all sources. Higher-priority sources override lower.
    */
-  metadata?: { [key: string]: string | number | boolean | null };
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null };
 
   /**
    * Update datetime
@@ -439,14 +440,14 @@ export interface FileUploadResponse {
   created_at?: string | null;
 
   /**
-   * Optional data source credential associated with the file.
-   */
-  data_source_id?: string | null;
-
-  /**
    * Soft delete marker when the file is removed upstream or by user action.
    */
   deleted_at?: string | null;
+
+  /**
+   * Schema for a presigned URL.
+   */
+  download_url?: FilesAPI.PresignedURL | null;
 
   /**
    * File ID for the storage location.
@@ -456,7 +457,7 @@ export interface FileUploadResponse {
   /**
    * Merged metadata from all sources. Higher-priority sources override lower.
    */
-  metadata?: { [key: string]: string | number | boolean | null };
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null };
 
   /**
    * Update datetime
@@ -494,7 +495,7 @@ export interface FileUpdateParams {
    * Body param: User-defined metadata key-value pairs. Replaces the user metadata
    * layer.
    */
-  metadata?: { [key: string]: string | number | boolean | null } | null;
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null } | null;
 
   /**
    * Body param: Updated unique identifier.
@@ -507,6 +508,11 @@ export interface FileListParams extends PaginatedCursorParams {
 
   display_name_contains?: string | null;
 
+  /**
+   * Fields to expand on each directory file.
+   */
+  expand?: Array<string> | null;
+
   file_id?: string | null;
 
   include_deleted?: boolean;
@@ -516,6 +522,16 @@ export interface FileListParams extends PaginatedCursorParams {
   project_id?: string | null;
 
   unique_id?: string | null;
+
+  /**
+   * Include items updated at or after this timestamp (inclusive)
+   */
+  updated_at_on_or_after?: string | null;
+
+  /**
+   * Include items updated at or before this timestamp (inclusive)
+   */
+  updated_at_on_or_before?: string | null;
 }
 
 export interface FileDeleteParams {
@@ -560,7 +576,7 @@ export interface FileAddParams {
   /**
    * Body param: User-defined metadata key-value pairs to associate with the file.
    */
-  metadata?: { [key: string]: string | number | boolean | null } | null;
+  metadata?: { [key: string]: string | number | boolean | Array<string> | null } | null;
 
   /**
    * Body param: Unique identifier for the file in the directory. If not provided,
@@ -574,6 +590,11 @@ export interface FileGetParams {
    * Path param
    */
   directory_id: string;
+
+  /**
+   * Query param: Fields to expand.
+   */
+  expand?: Array<string> | null;
 
   /**
    * Query param
@@ -611,6 +632,11 @@ export interface FileUploadParams {
    * Body param
    */
   external_file_id?: string | null;
+
+  /**
+   * Body param: User metadata as a JSON object string.
+   */
+  metadata?: string | null;
 
   /**
    * Body param

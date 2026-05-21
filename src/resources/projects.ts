@@ -44,8 +44,6 @@ export interface Project {
    */
   organization_id: string;
 
-  ad_hoc_eval_dataset_id?: string | null;
-
   /**
    * Creation datetime
    */

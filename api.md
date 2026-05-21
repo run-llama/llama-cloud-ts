@@ -363,6 +363,58 @@ Methods:
 
 # Beta
 
+## Indexes
+
+Types:
+
+- <code><a href="./src/resources/beta/indexes.ts">IndexCreateResponse</a></code>
+- <code><a href="./src/resources/beta/indexes.ts">IndexGetResponse</a></code>
+- <code><a href="./src/resources/beta/indexes.ts">IndexSyncResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/indexes">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">create</a>({ ...params }) -> IndexCreateResponse</code>
+- <code title="delete /api/v1/indexes/{index_id}">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">delete</a>(indexID, { ...params }) -> void</code>
+- <code title="get /api/v1/indexes/{index_id}">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">get</a>(indexID, { ...params }) -> IndexGetResponse</code>
+- <code title="post /api/v1/indexes/{index_id}/sync">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">sync</a>(indexID, { ...params }) -> unknown</code>
+
+## Retrieval
+
+Types:
+
+- <code><a href="./src/resources/beta/retrieval.ts">RetrievalRetrieveResponse</a></code>
+- <code><a href="./src/resources/beta/retrieval.ts">RetrievalFindResponse</a></code>
+- <code><a href="./src/resources/beta/retrieval.ts">RetrievalGrepResponse</a></code>
+- <code><a href="./src/resources/beta/retrieval.ts">RetrievalReadResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/retrieval/retrieve">client.beta.retrieval.<a href="./src/resources/beta/retrieval.ts">retrieve</a>({ ...params }) -> RetrievalRetrieveResponse</code>
+- <code title="post /api/v1/retrieval/files/find">client.beta.retrieval.<a href="./src/resources/beta/retrieval.ts">find</a>({ ...params }) -> RetrievalFindResponsesPaginatedCursorPost</code>
+- <code title="post /api/v1/retrieval/files/grep">client.beta.retrieval.<a href="./src/resources/beta/retrieval.ts">grep</a>({ ...params }) -> RetrievalGrepResponsesPaginatedCursorPost</code>
+- <code title="post /api/v1/retrieval/files/read">client.beta.retrieval.<a href="./src/resources/beta/retrieval.ts">read</a>({ ...params }) -> RetrievalReadResponse</code>
+
+## Chat
+
+Types:
+
+- <code><a href="./src/resources/beta/chat.ts">ChatCreateResponse</a></code>
+- <code><a href="./src/resources/beta/chat.ts">ChatRetrieveResponse</a></code>
+- <code><a href="./src/resources/beta/chat.ts">ChatListResponse</a></code>
+- <code><a href="./src/resources/beta/chat.ts">ChatGetSummaryResponse</a></code>
+- <code><a href="./src/resources/beta/chat.ts">ChatSetTitleResponse</a></code>
+- <code><a href="./src/resources/beta/chat.ts">ChatStreamResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/chat">client.beta.chat.<a href="./src/resources/beta/chat.ts">create</a>({ ...params }) -> ChatCreateResponse</code>
+- <code title="get /api/v1/chat/{session_id}">client.beta.chat.<a href="./src/resources/beta/chat.ts">retrieve</a>(sessionID, { ...params }) -> ChatRetrieveResponse</code>
+- <code title="get /api/v1/chat">client.beta.chat.<a href="./src/resources/beta/chat.ts">list</a>({ ...params }) -> ChatListResponsesPaginatedCursor</code>
+- <code title="delete /api/v1/chat/{session_id}">client.beta.chat.<a href="./src/resources/beta/chat.ts">delete</a>(sessionID, { ...params }) -> void</code>
+- <code title="get /api/v1/chat/{session_id}/summary">client.beta.chat.<a href="./src/resources/beta/chat.ts">getSummary</a>(sessionID, { ...params }) -> ChatGetSummaryResponse</code>
+- <code title="post /api/v1/chat/{session_id}/title">client.beta.chat.<a href="./src/resources/beta/chat.ts">setTitle</a>(sessionID, { ...params }) -> ChatSetTitleResponse</code>
+- <code title="post /api/v1/chat/{session_id}/messages/stream">client.beta.chat.<a href="./src/resources/beta/chat.ts">stream</a>(sessionID, { ...params }) -> unknown</code>
+
 ## AgentData
 
 Types:

@@ -67,9 +67,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'external_file_id?: string;',
     ],
     response:
-      '{ id: string; name: string; project_id: string; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }',
+      '{ id: string; name: string; project_id: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }',
     markdown:
-      "## create\n\n`client.files.create(file: string, purpose: string, organization_id?: string, project_id?: string, external_file_id?: string): { id: string; name: string; project_id: string; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }`\n\n**post** `/api/v1/beta/files`\n\nUpload a file using multipart/form-data.\n\nSet `purpose` to indicate how the file will be used:\n`user_data`, `parse`, `extract`, `classify`, `split`,\n`sheet`, or `agent_app`.\n\nReturns the created file metadata including its ID for use\nin subsequent parse, extract, or classify operations.\n\n### Parameters\n\n- `file: string`\n  The file to upload\n\n- `purpose: string`\n  The intended purpose of the file. Valid values: 'user_data', 'parse', 'extract', 'split', 'classify', 'sheet', 'agent_app'. This determines the storage and retention policy for the file.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `external_file_id?: string`\n  The ID of the file in the external system\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }`\n  An uploaded file.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `expires_at?: string`\n  - `external_file_id?: string`\n  - `file_type?: string`\n  - `last_modified_at?: string`\n  - `purpose?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst file = await client.files.create({ file: fs.createReadStream('path/to/file'), purpose: 'purpose' });\n\nconsole.log(file);\n```",
+      "## create\n\n`client.files.create(file: string, purpose: string, organization_id?: string, project_id?: string, external_file_id?: string): { id: string; name: string; project_id: string; download_url?: presigned_url; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }`\n\n**post** `/api/v1/beta/files`\n\nUpload a file using multipart/form-data.\n\nSet `purpose` to indicate how the file will be used:\n`user_data`, `parse`, `extract`, `classify`, `split`,\n`sheet`, or `agent_app`.\n\nReturns the created file metadata including its ID for use\nin subsequent parse, extract, or classify operations.\n\n### Parameters\n\n- `file: string`\n  The file to upload\n\n- `purpose: string`\n  The intended purpose of the file. Valid values: 'user_data', 'parse', 'extract', 'split', 'classify', 'sheet', 'agent_app'. This determines the storage and retention policy for the file.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `external_file_id?: string`\n  The ID of the file in the external system\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }`\n  An uploaded file.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `download_url?: { expires_at: string; url: string; form_fields?: object; }`\n  - `expires_at?: string`\n  - `external_file_id?: string`\n  - `file_type?: string`\n  - `last_modified_at?: string`\n  - `purpose?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst file = await client.files.create({ file: fs.createReadStream('path/to/file'), purpose: 'purpose' });\n\nconsole.log(file);\n```",
     perLanguage: {
       typescript: {
         method: 'client.files.create',
@@ -80,6 +80,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nfile = client.files.create(\n    file=b"Example data",\n    purpose="purpose",\n)\nprint(file.id)',
+      },
+      go: {
+        method: 'client.Files.New',
+        example:
+          'package main\n\nimport (\n\t"bytes"\n\t"context"\n\t"fmt"\n\t"io"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfile, err := client.Files.New(context.TODO(), llamacloudprod.FileNewParams{\n\t\tFile:    io.Reader(bytes.NewBuffer([]byte("Example data"))),\n\t\tPurpose: "purpose",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.ID)\n}\n',
+      },
+      cli: {
+        method: 'files create',
+        example:
+          "llamacloud-prod files create \\\n  --api-key 'My API Key' \\\n  --file 'Example data' \\\n  --purpose purpose",
       },
       http: {
         example:
@@ -105,9 +115,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'page_token?: string;',
     ],
     response:
-      '{ items: { id: string; name: string; project_id: string; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }[]; next_page_token?: string; total_size?: number; }',
+      '{ items: { id: string; name: string; project_id: string; download_url?: object; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }[]; next_page_token?: string; total_size?: number; }',
     markdown:
-      "## query\n\n`client.files.query(organization_id?: string, project_id?: string, filter?: { data_source_id?: string; external_file_id?: string; file_ids?: string[]; file_name?: string; only_manually_uploaded?: boolean; project_id?: string; }, order_by?: string, page_size?: number, page_token?: string): { items: object[]; next_page_token?: string; total_size?: number; }`\n\n**post** `/api/v1/beta/files/query`\n\nQuery files with flexible filtering and pagination.\n\n**Deprecated**: Use GET /files instead for listing files with query parameters.\n\nArgs:\n    request: The query request with filters and pagination\n    project: Validated project from dependency\n\nReturns:\n    Paginated response with files\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `filter?: { data_source_id?: string; external_file_id?: string; file_ids?: string[]; file_name?: string; only_manually_uploaded?: boolean; project_id?: string; }`\n  Filter parameters for file queries.\n  - `data_source_id?: string`\n    Filter by data source ID\n  - `external_file_id?: string`\n    Filter by external file ID\n  - `file_ids?: string[]`\n    Filter by specific file IDs\n  - `file_name?: string`\n    Filter by file name\n  - `only_manually_uploaded?: boolean`\n    Filter only manually uploaded files (data_source_id is null)\n  - `project_id?: string`\n    Filter by project ID\n\n- `order_by?: string`\n  A comma-separated list of fields to order by, sorted in ascending order. Use 'field_name desc' to specify descending order.\n\n- `page_size?: number`\n  The maximum number of items to return. The service may return fewer than this value. If unspecified, a default page size will be used. The maximum value is typically 1000; values above this will be coerced to the maximum.\n\n- `page_token?: string`\n  A page token, received from a previous list call. Provide this to retrieve the subsequent page.\n\n### Returns\n\n- `{ items: { id: string; name: string; project_id: string; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }[]; next_page_token?: string; total_size?: number; }`\n  Paginated list of files.\n\n  - `items: { id: string; name: string; project_id: string; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }[]`\n  - `next_page_token?: string`\n  - `total_size?: number`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.files.query();\n\nconsole.log(response);\n```",
+      "## query\n\n`client.files.query(organization_id?: string, project_id?: string, filter?: { data_source_id?: string; external_file_id?: string; file_ids?: string[]; file_name?: string; only_manually_uploaded?: boolean; project_id?: string; }, order_by?: string, page_size?: number, page_token?: string): { items: object[]; next_page_token?: string; total_size?: number; }`\n\n**post** `/api/v1/beta/files/query`\n\nQuery files with flexible filtering and pagination.\n\n**Deprecated**: Use GET /files instead for listing files with query parameters.\n\nArgs:\n    request: The query request with filters and pagination\n    project: Validated project from dependency\n\nReturns:\n    Paginated response with files\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `filter?: { data_source_id?: string; external_file_id?: string; file_ids?: string[]; file_name?: string; only_manually_uploaded?: boolean; project_id?: string; }`\n  Filter parameters for file queries.\n  - `data_source_id?: string`\n    Filter by data source ID\n  - `external_file_id?: string`\n    Filter by external file ID\n  - `file_ids?: string[]`\n    Filter by specific file IDs\n  - `file_name?: string`\n    Filter by file name\n  - `only_manually_uploaded?: boolean`\n    Filter only manually uploaded files (data_source_id is null)\n  - `project_id?: string`\n    Filter by project ID\n\n- `order_by?: string`\n  A comma-separated list of fields to order by, sorted in ascending order. Use 'field_name desc' to specify descending order.\n\n- `page_size?: number`\n  The maximum number of items to return. The service may return fewer than this value. If unspecified, a default page size will be used. The maximum value is typically 1000; values above this will be coerced to the maximum.\n\n- `page_token?: string`\n  A page token, received from a previous list call. Provide this to retrieve the subsequent page.\n\n### Returns\n\n- `{ items: { id: string; name: string; project_id: string; download_url?: object; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }[]; next_page_token?: string; total_size?: number; }`\n  Paginated list of files.\n\n  - `items: { id: string; name: string; project_id: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }[]`\n  - `next_page_token?: string`\n  - `total_size?: number`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.files.query();\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.files.query',
@@ -118,6 +128,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files.query',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.files.query()\nprint(response.items)',
+      },
+      go: {
+        method: 'client.Files.Query',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Files.Query(context.TODO(), llamacloudprod.FileQueryParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Items)\n}\n',
+      },
+      cli: {
+        method: 'files query',
+        example: "llamacloud-prod files query \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -135,6 +154,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     stainlessPath: '(resource) files > (method) list',
     qualified: 'client.files.list',
     params: [
+      'expand?: string[];',
       'external_file_id?: string;',
       'file_ids?: string[];',
       'file_name?: string;',
@@ -145,9 +165,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'project_id?: string;',
     ],
     response:
-      '{ id: string; name: string; project_id: string; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }',
+      '{ id: string; name: string; project_id: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }',
     markdown:
-      "## list\n\n`client.files.list(external_file_id?: string, file_ids?: string[], file_name?: string, order_by?: string, organization_id?: string, page_size?: number, page_token?: string, project_id?: string): { id: string; name: string; project_id: string; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }`\n\n**get** `/api/v1/beta/files`\n\nList files with optional filtering and pagination.\n\nFilter by `file_name`, `file_ids`, or `external_file_id`.\nSupports cursor-based pagination and custom ordering.\n\n### Parameters\n\n- `external_file_id?: string`\n  Filter by external file ID.\n\n- `file_ids?: string[]`\n  Filter by specific file IDs.\n\n- `file_name?: string`\n  Filter by file name (exact match).\n\n- `order_by?: string`\n  A comma-separated list of fields to order by, sorted in ascending order. Use 'field_name desc' to specify descending order.\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  The maximum number of items to return. Defaults to 50, maximum is 1000.\n\n- `page_token?: string`\n  A page token received from a previous list call. Provide this to retrieve the subsequent page.\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }`\n  An uploaded file.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `expires_at?: string`\n  - `external_file_id?: string`\n  - `file_type?: string`\n  - `last_modified_at?: string`\n  - `purpose?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const fileListResponse of client.files.list()) {\n  console.log(fileListResponse);\n}\n```",
+      "## list\n\n`client.files.list(expand?: string[], external_file_id?: string, file_ids?: string[], file_name?: string, order_by?: string, organization_id?: string, page_size?: number, page_token?: string, project_id?: string): { id: string; name: string; project_id: string; download_url?: presigned_url; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }`\n\n**get** `/api/v1/beta/files`\n\nList files with optional filtering and pagination.\n\nFilter by `file_name`, `file_ids`, or `external_file_id`.\nSupports cursor-based pagination and custom ordering.\n\n### Parameters\n\n- `expand?: string[]`\n  Fields to expand on each file.\n\n- `external_file_id?: string`\n  Filter by external file ID.\n\n- `file_ids?: string[]`\n  Filter by specific file IDs.\n\n- `file_name?: string`\n  Filter by file name (exact match).\n\n- `order_by?: string`\n  A comma-separated list of fields to order by, sorted in ascending order. Use 'field_name desc' to specify descending order.\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  The maximum number of items to return. Defaults to 50, maximum is 1000.\n\n- `page_token?: string`\n  A page token received from a previous list call. Provide this to retrieve the subsequent page.\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }`\n  An uploaded file.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `download_url?: { expires_at: string; url: string; form_fields?: object; }`\n  - `expires_at?: string`\n  - `external_file_id?: string`\n  - `file_type?: string`\n  - `last_modified_at?: string`\n  - `purpose?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const fileListResponse of client.files.list()) {\n  console.log(fileListResponse);\n}\n```",
     perLanguage: {
       typescript: {
         method: 'client.files.list',
@@ -158,6 +178,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.files.list()\npage = page.items[0]\nprint(page.id)',
+      },
+      go: {
+        method: 'client.Files.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Files.List(context.TODO(), llamacloudprod.FileListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'files list',
+        example: "llamacloud-prod files list \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -186,6 +215,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.files.delete(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Files.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Files.Delete(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.FileDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'files delete',
+        example:
+          "llamacloud-prod files delete \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -221,6 +260,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npresigned_url = client.files.get(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(presigned_url.expires_at)',
       },
+      go: {
+        method: 'client.Files.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpresignedURL, err := client.Files.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.FileGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", presignedURL.ExpiresAt)\n}\n',
+      },
+      cli: {
+        method: 'files get',
+        example:
+          "llamacloud-prod files get \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/files/$FILE_ID/content \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -238,7 +287,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.parsing.create',
     params: [
       "tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';",
-      'version: string | string;',
+      "version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string;",
       'organization_id?: string;',
       'project_id?: string;',
       'agentic_options?: { custom_prompt?: string; };',
@@ -249,31 +298,41 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'file_id?: string;',
       'http_proxy?: string;',
       'input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; };',
-      "output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: { compact_markdown_tables?: boolean; markdown_table_multiline_separator?: string; merge_continued_tables?: boolean; output_tables_as_markdown?: boolean; }; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; };",
+      "output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: { compact_markdown_tables?: boolean; markdown_table_multiline_separator?: string; merge_continued_tables?: boolean; output_tables_as_markdown?: boolean; }; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; };",
       'page_ranges?: { max_pages?: number; target_pages?: string; };',
       'processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; };',
-      "processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: { adaptive_long_table?: boolean; aggressive_table_extraction?: boolean; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; custom_prompt?: string; extract_layout?: boolean; high_res_ocr?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; }; language?: string; outlined_table_extraction?: boolean; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version?: string | string; }; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: string[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; };",
+      "processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: { adaptive_long_table?: boolean; aggressive_table_extraction?: boolean; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; custom_prompt?: string; extract_layout?: boolean; high_res_ocr?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; }; language?: string; outlined_table_extraction?: boolean; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version?: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; }; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: string[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; };",
       'source_url?: string;',
       'webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[];',
     ],
     response:
       "{ id: string; project_id: string; status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED'; created_at?: string; error_message?: string; name?: string; tier?: string; updated_at?: string; }",
     markdown:
-      "## create\n\n`client.parsing.create(tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus', version: string | string, organization_id?: string, project_id?: string, agentic_options?: { custom_prompt?: string; }, client_name?: string, crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }, disable_cache?: boolean, fast_options?: object, file_id?: string, http_proxy?: string, input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }, output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }, page_ranges?: { max_pages?: number; target_pages?: string; }, processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }, processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }, source_url?: string, webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]): { id: string; project_id: string; status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED'; created_at?: string; error_message?: string; name?: string; tier?: string; updated_at?: string; }`\n\n**post** `/api/v2/parse`\n\nParse a file by file ID or URL.\n\nProvide either `file_id` (a previously uploaded file) or\n`source_url` (a publicly accessible URL). Configure parsing\nwith options like `tier`, `target_pages`, and `lang`.\n\n## Tiers\n\n- `fast` — rule-based, cheapest, no AI\n- `cost_effective` — balanced speed and quality\n- `agentic` — full AI-powered parsing\n- `agentic_plus` — premium AI with specialized features\n\nThe job runs asynchronously. Poll `GET /parse/{job_id}` with\n`expand=text` or `expand=markdown` to retrieve results.\n\n### Parameters\n\n- `tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'`\n  Parsing tier: 'fast' (rule-based, cheapest), 'cost_effective' (balanced), 'agentic' (AI-powered with custom prompts), or 'agentic_plus' (premium AI with highest accuracy)\n\n- `version: string | string`\n  Tier version. Use 'latest' for the current stable version, or specify a specific version (e.g., '1.0', '2.0') for reproducible results\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `agentic_options?: { custom_prompt?: string; }`\n  Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).\n\nThese options customize how the AI processes and interprets document content.\nOnly applicable when using non-fast tiers.\n  - `custom_prompt?: string`\n    Custom instructions for the AI parser. Use to guide extraction behavior, specify output formatting, or provide domain-specific context. Example: 'Extract financial tables with currency symbols. Format dates as YYYY-MM-DD.'\n\n- `client_name?: string`\n  Identifier for the client/application making the request. Used for analytics and debugging. Example: 'my-app-v2'\n\n- `crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }`\n  Crop boundaries to process only a portion of each page. Values are ratios 0-1 from page edges\n  - `bottom?: number`\n    Bottom boundary as ratio (0-1). 0=top edge, 1=bottom edge. Content below this line is excluded\n  - `left?: number`\n    Left boundary as ratio (0-1). 0=left edge, 1=right edge. Content left of this line is excluded\n  - `right?: number`\n    Right boundary as ratio (0-1). 0=left edge, 1=right edge. Content right of this line is excluded\n  - `top?: number`\n    Top boundary as ratio (0-1). 0=top edge, 1=bottom edge. Content above this line is excluded\n\n- `disable_cache?: boolean`\n  Bypass result caching and force re-parsing. Use when document content may have changed or you need fresh results\n\n- `fast_options?: object`\n  Options for fast tier parsing (rule-based, no AI).\n\nFast tier uses deterministic algorithms for text extraction without AI enhancement.\nIt's the fastest and most cost-effective option, best suited for simple documents\nwith standard layouts. Currently has no configurable options but reserved for\nfuture expansion.\n\n- `file_id?: string`\n  ID of an existing file in the project to parse. Mutually exclusive with source_url\n\n- `http_proxy?: string`\n  HTTP/HTTPS proxy for fetching source_url. Ignored if using file_id\n\n- `input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }`\n  Format-specific options (HTML, PDF, spreadsheet, presentation). Applied based on detected input file type\n  - `html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }`\n    HTML/web page parsing options (applies to .html, .htm files)\n  - `pdf?: object`\n    PDF-specific parsing options (applies to .pdf files)\n  - `presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }`\n    Presentation parsing options (applies to .pptx, .ppt, .odp, .key files)\n  - `spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }`\n    Spreadsheet parsing options (applies to .xlsx, .xls, .csv, .ods files)\n\n- `output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: { compact_markdown_tables?: boolean; markdown_table_multiline_separator?: string; merge_continued_tables?: boolean; output_tables_as_markdown?: boolean; }; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }`\n  Output formatting options for markdown, text, and extracted images\n  - `extract_printed_page_number?: boolean`\n    Extract the printed page number as it appears in the document (e.g., 'Page 5 of 10', 'v', 'A-3'). Useful for referencing original page numbers\n  - `images_to_save?: 'screenshot' | 'embedded' | 'layout'[]`\n    Image categories to extract and save. Options: 'screenshot' (full page renders useful for visual QA), 'embedded' (images found within the document), 'layout' (cropped regions from layout detection like figures and diagrams). Empty list saves no images\n  - `markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: { compact_markdown_tables?: boolean; markdown_table_multiline_separator?: string; merge_continued_tables?: boolean; output_tables_as_markdown?: boolean; }; }`\n    Markdown formatting options including table styles and link annotations\n  - `spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }`\n    Spatial text output options for preserving document layout structure\n  - `tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }`\n    Options for exporting tables as XLSX spreadsheets\n\n- `page_ranges?: { max_pages?: number; target_pages?: string; }`\n  Page selection: limit total pages or specify exact pages to process\n  - `max_pages?: number`\n    Maximum number of pages to process. Pages are processed in order starting from page 1. If both max_pages and target_pages are set, target_pages takes precedence\n  - `target_pages?: string`\n    Comma-separated list of specific pages to process using 1-based indexing. Supports individual pages and ranges. Examples: '1,3,5' (pages 1, 3, 5), '1-5' (pages 1 through 5 inclusive), '1,3,5-8,10' (pages 1, 3, 5-8, and 10). Pages are sorted and deduplicated automatically. Duplicate pages cause an error\n\n- `processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }`\n  Job execution controls including timeouts and failure thresholds\n  - `job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }`\n    Quality thresholds that determine when a job should fail vs complete with partial results\n  - `timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }`\n    Timeout settings for job execution. Increase for large or complex documents\n\n- `processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: { adaptive_long_table?: boolean; aggressive_table_extraction?: boolean; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; custom_prompt?: string; extract_layout?: boolean; high_res_ocr?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; }; language?: string; outlined_table_extraction?: boolean; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version?: string | string; }; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: string[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }`\n  Document processing options including OCR, table extraction, and chart parsing\n  - `aggressive_table_extraction?: boolean`\n    Use aggressive heuristics to detect table boundaries, even without visible borders. Useful for documents with borderless or complex tables\n  - `auto_mode_configuration?: { parsing_conf: { adaptive_long_table?: boolean; aggressive_table_extraction?: boolean; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; custom_prompt?: string; extract_layout?: boolean; high_res_ocr?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; }; language?: string; outlined_table_extraction?: boolean; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version?: string | string; }; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]`\n    Conditional processing rules that apply different parsing options based on page content, document structure, or filename patterns. Each entry defines trigger conditions and the parsing configuration to apply when triggered\n  - `cost_optimizer?: { enable?: boolean; }`\n    Cost optimizer configuration for reducing parsing costs on simpler pages.\n\nWhen enabled, the parser analyzes each page and routes simpler pages to faster,\ncheaper processing while preserving quality for complex pages. Only works with\n'agentic' or 'agentic_plus' tiers.\n  - `disable_heuristics?: boolean`\n    Disable automatic heuristics including outlined table extraction and adaptive long table handling. Use when heuristics produce incorrect results\n  - `ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }`\n    Options for ignoring specific text types (diagonal, hidden, text in images)\n  - `ocr_parameters?: { languages?: string[]; }`\n    OCR configuration including language detection settings\n  - `specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'`\n    Enable AI-powered chart analysis. Modes: 'efficient' (fast, lower cost), 'agentic' (balanced), 'agentic_plus' (highest accuracy). Automatically enables extract_layout and precise_bounding_box when set\n\n- `source_url?: string`\n  Public URL of the document to parse. Mutually exclusive with file_id\n\n- `webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]`\n  Webhook endpoints for job status notifications. Multiple webhooks can be configured for different events or services\n\n### Returns\n\n- `{ id: string; project_id: string; status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED'; created_at?: string; error_message?: string; name?: string; tier?: string; updated_at?: string; }`\n  A parse job.\n\n  - `id: string`\n  - `project_id: string`\n  - `status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED'`\n  - `created_at?: string`\n  - `error_message?: string`\n  - `name?: string`\n  - `tier?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst parsing = await client.parsing.create({ tier: 'fast', version: '2025-12-11' });\n\nconsole.log(parsing);\n```",
+      "## create\n\n`client.parsing.create(tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus', version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string, organization_id?: string, project_id?: string, agentic_options?: { custom_prompt?: string; }, client_name?: string, crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }, disable_cache?: boolean, fast_options?: object, file_id?: string, http_proxy?: string, input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }, output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }, page_ranges?: { max_pages?: number; target_pages?: string; }, processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }, processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }, source_url?: string, webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]): { id: string; project_id: string; status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED'; created_at?: string; error_message?: string; name?: string; tier?: string; updated_at?: string; }`\n\n**post** `/api/v2/parse`\n\nParse a file by file ID or URL.\n\nProvide either `file_id` (a previously uploaded file) or\n`source_url` (a publicly accessible URL). Configure parsing\nwith options like `tier`, `target_pages`, and `lang`.\n\n## Tiers\n\n- `fast` — rule-based, cheapest, no AI\n- `cost_effective` — balanced speed and quality\n- `agentic` — full AI-powered parsing\n- `agentic_plus` — premium AI with specialized features\n\nThe job runs asynchronously. Poll `GET /parse/{job_id}` with\n`expand=text` or `expand=markdown` to retrieve results.\n\n### Parameters\n\n- `tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'`\n  Parsing tier: 'fast' (rule-based, cheapest), 'cost_effective' (balanced), 'agentic' (AI-powered with custom prompts), or 'agentic_plus' (premium AI with highest accuracy)\n\n- `version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string`\n  Tier version. Use 'latest' for the current stable version, or pin a dated version for reproducible results. See GET /api/v2/parse/versions for the per-tier list.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `agentic_options?: { custom_prompt?: string; }`\n  Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).\n\nThese options customize how the AI processes and interprets document content.\nOnly applicable when using non-fast tiers.\n  - `custom_prompt?: string`\n    Custom instructions for the AI parser. Use to guide extraction behavior, specify output formatting, or provide domain-specific context. Example: 'Extract financial tables with currency symbols. Format dates as YYYY-MM-DD.'\n\n- `client_name?: string`\n  Identifier for the client/application making the request. Used for analytics and debugging. Example: 'my-app-v2'\n\n- `crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }`\n  Crop boundaries to process only a portion of each page. Values are ratios 0-1 from page edges\n  - `bottom?: number`\n    Bottom boundary as ratio (0-1). 0=top edge, 1=bottom edge. Content below this line is excluded\n  - `left?: number`\n    Left boundary as ratio (0-1). 0=left edge, 1=right edge. Content left of this line is excluded\n  - `right?: number`\n    Right boundary as ratio (0-1). 0=left edge, 1=right edge. Content right of this line is excluded\n  - `top?: number`\n    Top boundary as ratio (0-1). 0=top edge, 1=bottom edge. Content above this line is excluded\n\n- `disable_cache?: boolean`\n  Bypass result caching and force re-parsing. Use when document content may have changed or you need fresh results\n\n- `fast_options?: object`\n  Options for fast tier parsing (rule-based, no AI).\n\nFast tier uses deterministic algorithms for text extraction without AI enhancement.\nIt's the fastest and most cost-effective option, best suited for simple documents\nwith standard layouts. Currently has no configurable options but reserved for\nfuture expansion.\n\n- `file_id?: string`\n  ID of an existing file in the project to parse. Mutually exclusive with source_url\n\n- `http_proxy?: string`\n  HTTP/HTTPS proxy for fetching source_url. Ignored if using file_id\n\n- `input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }`\n  Format-specific options (HTML, PDF, spreadsheet, presentation). Applied based on detected input file type\n  - `html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }`\n    HTML/web page parsing options (applies to .html, .htm files)\n  - `pdf?: object`\n    PDF-specific parsing options (applies to .pdf files)\n  - `presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }`\n    Presentation parsing options (applies to .pptx, .ppt, .odp, .key files)\n  - `spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }`\n    Spreadsheet parsing options (applies to .xlsx, .xls, .csv, .ods files)\n\n- `output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: { compact_markdown_tables?: boolean; markdown_table_multiline_separator?: string; merge_continued_tables?: boolean; output_tables_as_markdown?: boolean; }; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }`\n  Output formatting options for markdown, text, and extracted images\n  - `additional_outputs?: string[]`\n    Optional additional output artifacts to save alongside the primary parse output. Each value opts in to generating and persisting one extra file; the empty list (default) saves none. The three accepted values are: 'stripped_md' — per-page markdown stripped of formatting (links, bold/italic, images, HTML), saved as JSON for full-text-search indexing; fetch via `expand=stripped_markdown_content_metadata`. 'concatenated_stripped_txt' — all stripped pages concatenated into a single plain-text file with `\\n\\n---\\n\\n` between pages, useful for feeding the document into search or embedding pipelines as one blob; fetch via `expand=concatenated_stripped_markdown_content_metadata`. 'word_bbox' — raw word-level bounding boxes (one JSON object per word, with page number and x/y/w/h coordinates) saved as JSONL, useful for highlighting or grounding extracted answers back to the source document; fetch via `expand=raw_words_content_metadata`.\n  - `extract_printed_page_number?: boolean`\n    Extract the printed page number as it appears in the document (e.g., 'Page 5 of 10', 'v', 'A-3'). Useful for referencing original page numbers\n  - `images_to_save?: 'screenshot' | 'embedded' | 'layout'[]`\n    Image categories to extract and save. Options: 'screenshot' (full page renders useful for visual QA), 'embedded' (images found within the document), 'layout' (cropped regions from layout detection like figures and diagrams). Empty list saves no images\n  - `markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: { compact_markdown_tables?: boolean; markdown_table_multiline_separator?: string; merge_continued_tables?: boolean; output_tables_as_markdown?: boolean; }; }`\n    Markdown formatting options including table styles and link annotations\n  - `spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }`\n    Spatial text output options for preserving document layout structure\n  - `tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }`\n    Options for exporting tables as XLSX spreadsheets\n\n- `page_ranges?: { max_pages?: number; target_pages?: string; }`\n  Page selection: limit total pages or specify exact pages to process\n  - `max_pages?: number`\n    Maximum number of pages to process. Pages are processed in order starting from page 1. If both max_pages and target_pages are set, target_pages takes precedence\n  - `target_pages?: string`\n    Comma-separated list of specific pages to process using 1-based indexing. Supports individual pages and ranges. Examples: '1,3,5' (pages 1, 3, 5), '1-5' (pages 1 through 5 inclusive), '1,3,5-8,10' (pages 1, 3, 5-8, and 10). Pages are sorted and deduplicated automatically. Duplicate pages cause an error\n\n- `processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }`\n  Job execution controls including timeouts and failure thresholds\n  - `job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }`\n    Quality thresholds that determine when a job should fail vs complete with partial results\n  - `timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }`\n    Timeout settings for job execution. Increase for large or complex documents\n\n- `processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: { adaptive_long_table?: boolean; aggressive_table_extraction?: boolean; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; custom_prompt?: string; extract_layout?: boolean; high_res_ocr?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; }; language?: string; outlined_table_extraction?: boolean; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version?: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; }; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: string[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }`\n  Document processing options including OCR, table extraction, and chart parsing\n  - `aggressive_table_extraction?: boolean`\n    Use aggressive heuristics to detect table boundaries, even without visible borders. Useful for documents with borderless or complex tables\n  - `auto_mode_configuration?: { parsing_conf: { adaptive_long_table?: boolean; aggressive_table_extraction?: boolean; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; custom_prompt?: string; extract_layout?: boolean; high_res_ocr?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; }; language?: string; outlined_table_extraction?: boolean; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version?: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; }; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]`\n    Conditional processing rules that apply different parsing options based on page content, document structure, or filename patterns. Each entry defines trigger conditions and the parsing configuration to apply when triggered\n  - `cost_optimizer?: { enable?: boolean; }`\n    Cost optimizer configuration for reducing parsing costs on simpler pages.\n\nWhen enabled, the parser analyzes each page and routes simpler pages to faster,\ncheaper processing while preserving quality for complex pages. Only works with\n'agentic' or 'agentic_plus' tiers.\n  - `disable_heuristics?: boolean`\n    Disable automatic heuristics including outlined table extraction and adaptive long table handling. Use when heuristics produce incorrect results\n  - `ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }`\n    Options for ignoring specific text types (diagonal, hidden, text in images)\n  - `ocr_parameters?: { languages?: string[]; }`\n    OCR configuration including language detection settings\n  - `specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'`\n    Enable AI-powered chart analysis. Modes: 'efficient' (fast, lower cost), 'agentic' (balanced), 'agentic_plus' (highest accuracy). Automatically enables extract_layout and precise_bounding_box when set\n\n- `source_url?: string`\n  Public URL of the document to parse. Mutually exclusive with file_id\n\n- `webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]`\n  Webhook endpoints for job status notifications. Multiple webhooks can be configured for different events or services\n\n### Returns\n\n- `{ id: string; project_id: string; status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED'; created_at?: string; error_message?: string; name?: string; tier?: string; updated_at?: string; }`\n  A parse job.\n\n  - `id: string`\n  - `project_id: string`\n  - `status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED'`\n  - `created_at?: string`\n  - `error_message?: string`\n  - `name?: string`\n  - `tier?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst parsing = await client.parsing.create({ tier: 'fast', version: 'latest' });\n\nconsole.log(parsing);\n```",
     perLanguage: {
       typescript: {
         method: 'client.parsing.create',
         example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst parsing = await client.parsing.create({ tier: 'fast', version: '2025-12-11' });\n\nconsole.log(parsing.id);",
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst parsing = await client.parsing.create({ tier: 'fast', version: 'latest' });\n\nconsole.log(parsing.id);",
       },
       python: {
         method: 'parsing.create',
         example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nparsing = client.parsing.create(\n    tier="fast",\n    version="2025-12-11",\n)\nprint(parsing.id)',
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nparsing = client.parsing.create(\n    tier="fast",\n    version="latest",\n)\nprint(parsing.id)',
+      },
+      go: {
+        method: 'client.Parsing.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tparsing, err := client.Parsing.New(context.TODO(), llamacloudprod.ParsingNewParams{\n\t\tTier:    llamacloudprod.ParsingNewParamsTierFast,\n\t\tVersion: llamacloudprod.ParsingNewParamsVersionLatest,\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", parsing.ID)\n}\n',
+      },
+      cli: {
+        method: 'parsing create',
+        example:
+          "llamacloud-prod parsing create \\\n  --api-key 'My API Key' \\\n  --tier fast \\\n  --version latest",
       },
       http: {
         example:
-          'curl https://api.cloud.llamaindex.ai/api/v2/parse \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "tier": "fast",\n          "version": "2025-12-11"\n        }\'',
+          'curl https://api.cloud.llamaindex.ai/api/v2/parse \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "tier": "fast",\n          "version": "latest"\n        }\'',
       },
     },
   },
@@ -307,6 +366,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'parsing.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nparsing = client.parsing.get(\n    job_id="job_id",\n)\nprint(parsing.job)',
+      },
+      go: {
+        method: 'client.Parsing.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tparsing, err := client.Parsing.Get(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.ParsingGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", parsing.Job)\n}\n',
+      },
+      cli: {
+        method: 'parsing get',
+        example: "llamacloud-prod parsing get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
       http: {
         example:
@@ -348,6 +416,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.parsing.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Parsing.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Parsing.List(context.TODO(), llamacloudprod.ParsingListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'parsing list',
+        example: "llamacloud-prod parsing list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/parse \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -386,9 +463,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_v2_job = client.extract.create(\n    file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n)\nprint(extract_v2_job.id)',
       },
+      go: {
+        method: 'client.Extract.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractV2Job, err := client.Extract.New(context.TODO(), llamacloudprod.ExtractNewParams{\n\t\tExtractV2JobCreate: llamacloudprod.ExtractV2JobCreateParam{\n\t\t\tFileInput: "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractV2Job.ID)\n}\n',
+      },
+      cli: {
+        method: 'extract create',
+        example:
+          "llamacloud-prod extract create \\\n  --api-key 'My API Key' \\\n  --file-input dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+      },
       http: {
         example:
-          'curl https://api.cloud.llamaindex.ai/api/v2/extract \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_input": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"\n        }\'',
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_input": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "configuration": {\n            "data_schema": {\n              "properties": {\n                "vendor_name": "bar",\n                "total_amount": "bar"\n              },\n              "required": [\n                "vendor_name",\n                "total_amount"\n              ],\n              "type": "object"\n            },\n            "target_pages": "1,3,5-7"\n          },\n          "configuration_id": "cfg-11111111-2222-3333-4444-555555555555"\n        }\'',
       },
     },
   },
@@ -431,6 +518,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.extract.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Extract.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Extract.List(context.TODO(), llamacloudprod.ExtractListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'extract list',
+        example: "llamacloud-prod extract list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -462,6 +558,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_v2_job = client.extract.get(\n    job_id="job_id",\n)\nprint(extract_v2_job.id)',
       },
+      go: {
+        method: 'client.Extract.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractV2Job, err := client.Extract.Get(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.ExtractGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractV2Job.ID)\n}\n',
+      },
+      cli: {
+        method: 'extract get',
+        example: "llamacloud-prod extract get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -490,6 +595,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract = client.extract.delete(\n    job_id="job_id",\n)\nprint(extract)',
+      },
+      go: {
+        method: 'client.Extract.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textract, err := client.Extract.Delete(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.ExtractDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extract)\n}\n',
+      },
+      cli: {
+        method: 'extract delete',
+        example: "llamacloud-prod extract delete \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
       http: {
         example:
@@ -520,6 +634,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_v2_schema_validate_response = client.extract.validate_schema(\n    data_schema={\n        "properties": {\n            "vendor_name": "bar",\n            "invoice_number": "bar",\n            "total_amount": "bar",\n            "line_items": "bar",\n        },\n        "required": ["vendor_name", "invoice_number", "total_amount"],\n        "type": "object",\n    },\n)\nprint(extract_v2_schema_validate_response.data_schema)',
       },
+      go: {
+        method: 'client.Extract.ValidateSchema',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractV2SchemaValidateResponse, err := client.Extract.ValidateSchema(context.TODO(), llamacloudprod.ExtractValidateSchemaParams{\n\t\tExtractV2SchemaValidateRequest: llamacloudprod.ExtractV2SchemaValidateRequestParam{\n\t\t\tDataSchema: map[string]*llamacloudprod.ExtractV2SchemaValidateRequestDataSchemaUnionParam{\n\t\t\t\t"properties": {\n\t\t\t\t\tOfAnyMap: map[string]any{\n\t\t\t\t\t\t"vendor_name":    "bar",\n\t\t\t\t\t\t"invoice_number": "bar",\n\t\t\t\t\t\t"total_amount":   "bar",\n\t\t\t\t\t\t"line_items":     "bar",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t"required": {\n\t\t\t\t\tOfAnyArray: []any{"vendor_name", "invoice_number", "total_amount"},\n\t\t\t\t},\n\t\t\t\t"type": {\n\t\t\t\t\tOfString: llamacloudprod.String("object"),\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractV2SchemaValidateResponse.DataSchema)\n}\n',
+      },
+      cli: {
+        method: 'extract validate_schema',
+        example:
+          "llamacloud-prod extract validate-schema \\\n  --api-key 'My API Key' \\\n  --data-schema '{properties: {vendor_name: bar, invoice_number: bar, total_amount: bar, line_items: bar}, required: [vendor_name, invoice_number, total_amount], type: object}'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract/schema/validation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "data_schema": {\n            "properties": {\n              "vendor_name": "bar",\n              "invoice_number": "bar",\n              "total_amount": "bar",\n              "line_items": "bar"\n            },\n            "required": [\n              "vendor_name",\n              "invoice_number",\n              "total_amount"\n            ],\n            "type": "object"\n          }\n        }\'',
@@ -545,7 +669,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       "{ name: string; parameters: object | object | object | object | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | object; }",
     markdown:
-      "## generate_schema\n\n`client.extract.generateSchema(organization_id?: string, project_id?: string, data_schema?: object, file_id?: string, name?: string, prompt?: string): { name: string; parameters: split_v1_parameters | extract_v2_parameters | classify_v2_parameters | parse_v2_parameters | object | untyped_parameters; }`\n\n**post** `/api/v2/extract/schema/generate`\n\nGenerate a JSON schema and return a product configuration request.\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `data_schema?: object`\n  Optional schema to validate, refine, or extend\n\n- `file_id?: string`\n  Optional file ID to analyze for schema generation\n\n- `name?: string`\n  Name for the generated configuration (auto-generated if omitted)\n\n- `prompt?: string`\n  Natural language description of the data structure to extract\n\n### Returns\n\n- `{ name: string; parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }; }`\n  Request body for creating a product configuration.\n\n  - `name: string`\n  - `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst configurationCreate = await client.extract.generateSchema();\n\nconsole.log(configurationCreate);\n```",
+      "## generate_schema\n\n`client.extract.generateSchema(organization_id?: string, project_id?: string, data_schema?: object, file_id?: string, name?: string, prompt?: string): { name: string; parameters: split_v1_parameters | extract_v2_parameters | classify_v2_parameters | parse_v2_parameters | object | untyped_parameters; }`\n\n**post** `/api/v2/extract/schema/generate`\n\nGenerate a JSON schema and return a product configuration request.\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `data_schema?: object`\n  Optional schema to validate, refine, or extend\n\n- `file_id?: string`\n  Optional file ID to analyze for schema generation\n\n- `name?: string`\n  Name for the generated configuration (auto-generated if omitted)\n\n- `prompt?: string`\n  Natural language description of the data structure to extract\n\n### Returns\n\n- `{ name: string; parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }; }`\n  Request body for creating a product configuration.\n\n  - `name: string`\n  - `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst configurationCreate = await client.extract.generateSchema();\n\nconsole.log(configurationCreate);\n```",
     perLanguage: {
       typescript: {
         method: 'client.extract.generateSchema',
@@ -557,9 +681,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nconfiguration_create = client.extract.generate_schema()\nprint(configuration_create.name)',
       },
+      go: {
+        method: 'client.Extract.GenerateSchema',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tconfigurationCreate, err := client.Extract.GenerateSchema(context.TODO(), llamacloudprod.ExtractGenerateSchemaParams{\n\t\tExtractV2SchemaGenerateRequest: llamacloudprod.ExtractV2SchemaGenerateRequestParam{},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", configurationCreate.Name)\n}\n',
+      },
+      cli: {
+        method: 'extract generate_schema',
+        example: "llamacloud-prod extract generate-schema \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
-          "curl https://api.cloud.llamaindex.ai/api/v2/extract/schema/generate \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/schema/generate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "name": "invoice_extraction",\n          "prompt": "Extract vendor name, invoice number, date, line items with descriptions and amounts, and total amount from invoices."\n        }\'',
       },
     },
   },
@@ -595,6 +728,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classifier.jobs.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclassify_job = client.classifier.jobs.create(\n    file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],\n    rules=[{\n        "description": "contains invoice number, line items, and total amount",\n        "type": "invoice",\n    }],\n)\nprint(classify_job.id)',
+      },
+      go: {
+        method: 'client.Classifier.Jobs.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tclassifyJob, err := client.Classifier.Jobs.New(context.TODO(), llamacloudprod.ClassifierJobNewParams{\n\t\tFileIDs: []string{"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"},\n\t\tRules: []llamacloudprod.ClassifierRuleParam{{\n\t\t\tDescription: "contains invoice number, line items, and total amount",\n\t\t\tType:        "invoice",\n\t\t}},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", classifyJob.ID)\n}\n',
+      },
+      cli: {
+        method: 'jobs create',
+        example:
+          "llamacloud-prod classifier:jobs create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --rule \"{description: 'contains invoice number, line items, and total amount', type: invoice}\"",
       },
       http: {
         example:
@@ -632,6 +775,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.classifier.jobs.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Classifier.Jobs.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Classifier.Jobs.List(context.TODO(), llamacloudprod.ClassifierJobListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'jobs list',
+        example: "llamacloud-prod classifier:jobs list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/classifier/jobs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -663,6 +815,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclassify_job = client.classifier.jobs.get(\n    classify_job_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(classify_job.id)',
       },
+      go: {
+        method: 'client.Classifier.Jobs.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tclassifyJob, err := client.Classifier.Jobs.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.ClassifierJobGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", classifyJob.ID)\n}\n',
+      },
+      cli: {
+        method: 'jobs get',
+        example:
+          "llamacloud-prod classifier:jobs get \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/classifier/jobs/$CLASSIFY_JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -693,6 +855,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classifier.jobs.get_results',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.classifier.jobs.get_results(\n    classify_job_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response.items)',
+      },
+      go: {
+        method: 'client.Classifier.Jobs.GetResults',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Classifier.Jobs.GetResults(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.ClassifierJobGetResultsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Items)\n}\n',
+      },
+      cli: {
+        method: 'jobs get_results',
+        example:
+          "llamacloud-prod classifier:jobs get-results \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -734,9 +906,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclassify = client.classify.create()\nprint(classify.id)',
       },
+      go: {
+        method: 'client.Classify.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tclassify, err := client.Classify.New(context.TODO(), llamacloudprod.ClassifyNewParams{\n\t\tClassifyCreateRequest: llamacloudprod.ClassifyCreateRequestParam{},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", classify.ID)\n}\n',
+      },
+      cli: {
+        method: 'classify create',
+        example: "llamacloud-prod classify create \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
-          "curl https://api.cloud.llamaindex.ai/api/v2/classify \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.cloud.llamaindex.ai/api/v2/classify \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "configuration_id": "cfg-11111111-2222-3333-4444-555555555555",\n          "file_id": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "file_input": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "parse_job_id": "pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "transaction_id": "tx-unique-idempotency-key"\n        }\'',
       },
     },
   },
@@ -775,6 +956,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.classify.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Classify.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Classify.List(context.TODO(), llamacloudprod.ClassifyListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'classify list',
+        example: "llamacloud-prod classify list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/classify \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -806,6 +996,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclassify = client.classify.get(\n    job_id="job_id",\n)\nprint(classify.id)',
       },
+      go: {
+        method: 'client.Classify.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tclassify, err := client.Classify.Get(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.ClassifyGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", classify.ID)\n}\n',
+      },
+      cli: {
+        method: 'classify get',
+        example: "llamacloud-prod classify get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/classify/$JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -823,14 +1022,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.configurations.create',
     params: [
       'name: string;',
-      "parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; };",
+      "parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; };",
       'organization_id?: string;',
       'project_id?: string;',
     ],
     response:
       "{ id: string; name: string; parameters: object | object | object | object | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | object; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }",
     markdown:
-      "## create\n\n`client.configurations.create(name: string, parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }, organization_id?: string, project_id?: string): { id: string; name: string; parameters: split_v1_parameters | extract_v2_parameters | classify_v2_parameters | parse_v2_parameters | object | untyped_parameters; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n\n**post** `/api/v1/beta/configurations`\n\nCreate or update a product configuration.\n\nIf a configuration with the same name already exists for this product\ntype and project, it will be updated (upsert semantics).\n\n### Parameters\n\n- `name: string`\n  Human-readable name for this configuration.\n\n- `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  Product-specific configuration parameters.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n  Response schema for a single product configuration.\n\n  - `id: string`\n  - `name: string`\n  - `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  - `product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'`\n  - `version: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst configurationResponse = await client.configurations.create({\n  name: 'x',\n  parameters: { categories: [{ name: 'x' }], product_type: 'split_v1' },\n});\n\nconsole.log(configurationResponse);\n```",
+      "## create\n\n`client.configurations.create(name: string, parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }, organization_id?: string, project_id?: string): { id: string; name: string; parameters: split_v1_parameters | extract_v2_parameters | classify_v2_parameters | parse_v2_parameters | object | untyped_parameters; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n\n**post** `/api/v1/beta/configurations`\n\nCreate or update a product configuration.\n\nIf a configuration with the same name already exists for this product\ntype and project, it will be updated (upsert semantics).\n\n### Parameters\n\n- `name: string`\n  Human-readable name for this configuration.\n\n- `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  Product-specific configuration parameters.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n  Response schema for a single product configuration.\n\n  - `id: string`\n  - `name: string`\n  - `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  - `product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'`\n  - `version: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst configurationResponse = await client.configurations.create({\n  name: 'x',\n  parameters: { categories: [{ name: 'x' }], product_type: 'split_v1' },\n});\n\nconsole.log(configurationResponse);\n```",
     perLanguage: {
       typescript: {
         method: 'client.configurations.create',
@@ -841,6 +1040,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nconfiguration_response = client.configurations.create(\n    name="x",\n    parameters={\n        "categories": [{\n            "name": "x"\n        }],\n        "product_type": "split_v1",\n    },\n)\nprint(configuration_response.id)',
+      },
+      go: {
+        method: 'client.Configurations.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tconfigurationResponse, err := client.Configurations.New(context.TODO(), llamacloudprod.ConfigurationNewParams{\n\t\tConfigurationCreate: llamacloudprod.ConfigurationCreateParam{\n\t\t\tName: "x",\n\t\t\tParameters: llamacloudprod.ConfigurationCreateParametersUnionParam{\n\t\t\t\tOfSplitV1: &llamacloudprod.SplitV1Parameters{\n\t\t\t\t\tCategories: []llamacloudprod.SplitCategoryParam{{\n\t\t\t\t\t\tName: "x",\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", configurationResponse.ID)\n}\n',
+      },
+      cli: {
+        method: 'configurations create',
+        example:
+          "llamacloud-prod configurations create \\\n  --api-key 'My API Key' \\\n  --name x \\\n  --parameters '{categories: [{name: x}], product_type: split_v1}'",
       },
       http: {
         example:
@@ -868,7 +1077,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       "{ id: string; name: string; parameters: object | object | object | object | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | object; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }",
     markdown:
-      "## list\n\n`client.configurations.list(latest_only?: boolean, name?: string, organization_id?: string, page_size?: number, page_token?: string, product_type?: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'[], project_id?: string): { id: string; name: string; parameters: split_v1_parameters | extract_v2_parameters | classify_v2_parameters | parse_v2_parameters | object | untyped_parameters; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n\n**get** `/api/v1/beta/configurations`\n\nList product configurations for the current project.\n\n### Parameters\n\n- `latest_only?: boolean`\n  Return only the latest version per configuration name.\n\n- `name?: string`\n  Filter by configuration name.\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  Number of items per page.\n\n- `page_token?: string`\n  Pagination token.\n\n- `product_type?: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'[]`\n  Filter by one or more product types. Repeat the parameter for multiple values.\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n  Response schema for a single product configuration.\n\n  - `id: string`\n  - `name: string`\n  - `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  - `product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'`\n  - `version: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const configurationResponse of client.configurations.list()) {\n  console.log(configurationResponse);\n}\n```",
+      "## list\n\n`client.configurations.list(latest_only?: boolean, name?: string, organization_id?: string, page_size?: number, page_token?: string, product_type?: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'[], project_id?: string): { id: string; name: string; parameters: split_v1_parameters | extract_v2_parameters | classify_v2_parameters | parse_v2_parameters | object | untyped_parameters; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n\n**get** `/api/v1/beta/configurations`\n\nList product configurations for the current project.\n\n### Parameters\n\n- `latest_only?: boolean`\n  Return only the latest version per configuration name.\n\n- `name?: string`\n  Filter by configuration name.\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  Number of items per page.\n\n- `page_token?: string`\n  Pagination token.\n\n- `product_type?: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'[]`\n  Filter by one or more product types. Repeat the parameter for multiple values.\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n  Response schema for a single product configuration.\n\n  - `id: string`\n  - `name: string`\n  - `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  - `product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'`\n  - `version: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const configurationResponse of client.configurations.list()) {\n  console.log(configurationResponse);\n}\n```",
     perLanguage: {
       typescript: {
         method: 'client.configurations.list',
@@ -879,6 +1088,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.configurations.list()\npage = page.items[0]\nprint(page.id)',
+      },
+      go: {
+        method: 'client.Configurations.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Configurations.List(context.TODO(), llamacloudprod.ConfigurationListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'configurations list',
+        example: "llamacloud-prod configurations list \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -898,7 +1116,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       "{ id: string; name: string; parameters: object | object | object | object | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | object; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }",
     markdown:
-      "## retrieve\n\n`client.configurations.retrieve(config_id: string, organization_id?: string, project_id?: string): { id: string; name: string; parameters: split_v1_parameters | extract_v2_parameters | classify_v2_parameters | parse_v2_parameters | object | untyped_parameters; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n\n**get** `/api/v1/beta/configurations/{config_id}`\n\nGet a single product configuration by ID.\n\n### Parameters\n\n- `config_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n  Response schema for a single product configuration.\n\n  - `id: string`\n  - `name: string`\n  - `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  - `product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'`\n  - `version: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst configurationResponse = await client.configurations.retrieve('config_id');\n\nconsole.log(configurationResponse);\n```",
+      "## retrieve\n\n`client.configurations.retrieve(config_id: string, organization_id?: string, project_id?: string): { id: string; name: string; parameters: split_v1_parameters | extract_v2_parameters | classify_v2_parameters | parse_v2_parameters | object | untyped_parameters; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n\n**get** `/api/v1/beta/configurations/{config_id}`\n\nGet a single product configuration by ID.\n\n### Parameters\n\n- `config_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n  Response schema for a single product configuration.\n\n  - `id: string`\n  - `name: string`\n  - `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  - `product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'`\n  - `version: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst configurationResponse = await client.configurations.retrieve('config_id');\n\nconsole.log(configurationResponse);\n```",
     perLanguage: {
       typescript: {
         method: 'client.configurations.retrieve',
@@ -909,6 +1127,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations.retrieve',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nconfiguration_response = client.configurations.retrieve(\n    config_id="config_id",\n)\nprint(configuration_response.id)',
+      },
+      go: {
+        method: 'client.Configurations.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tconfigurationResponse, err := client.Configurations.Get(\n\t\tcontext.TODO(),\n\t\t"config_id",\n\t\tllamacloudprod.ConfigurationGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", configurationResponse.ID)\n}\n',
+      },
+      cli: {
+        method: 'configurations retrieve',
+        example:
+          "llamacloud-prod configurations retrieve \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
       http: {
         example:
@@ -929,12 +1157,12 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'organization_id?: string;',
       'project_id?: string;',
       'name?: string;',
-      "parameters?: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; };",
+      "parameters?: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; };",
     ],
     response:
       "{ id: string; name: string; parameters: object | object | object | object | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | object; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }",
     markdown:
-      "## update\n\n`client.configurations.update(config_id: string, organization_id?: string, project_id?: string, name?: string, parameters?: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }): { id: string; name: string; parameters: split_v1_parameters | extract_v2_parameters | classify_v2_parameters | parse_v2_parameters | object | untyped_parameters; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n\n**put** `/api/v1/beta/configurations/{config_id}`\n\nUpdate an existing product configuration.\n\n### Parameters\n\n- `config_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `name?: string`\n  Updated name (omit to leave unchanged).\n\n- `parameters?: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  Updated parameters (omit to leave unchanged).\n\n### Returns\n\n- `{ id: string; name: string; parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n  Response schema for a single product configuration.\n\n  - `id: string`\n  - `name: string`\n  - `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: string | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  - `product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'`\n  - `version: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst configurationResponse = await client.configurations.update('config_id');\n\nconsole.log(configurationResponse);\n```",
+      "## update\n\n`client.configurations.update(config_id: string, organization_id?: string, project_id?: string, name?: string, parameters?: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }): { id: string; name: string; parameters: split_v1_parameters | extract_v2_parameters | classify_v2_parameters | parse_v2_parameters | object | untyped_parameters; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n\n**put** `/api/v1/beta/configurations/{config_id}`\n\nUpdate an existing product configuration.\n\n### Parameters\n\n- `config_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `name?: string`\n  Updated name (omit to leave unchanged).\n\n- `parameters?: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  Updated parameters (omit to leave unchanged).\n\n### Returns\n\n- `{ id: string; name: string; parameters: { categories: split_category[]; product_type: 'split_v1'; splitting_strategy?: object; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: object[]; mode?: 'FAST'; parsing_configuration?: object; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: object; client_name?: string; crop_box?: object; disable_cache?: boolean; fast_options?: object; input_options?: object; output_options?: object; page_ranges?: object; processing_control?: object; processing_options?: object; webhook_configurations?: object[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }; product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'; version: string; created_at?: string; updated_at?: string; }`\n  Response schema for a single product configuration.\n\n  - `id: string`\n  - `name: string`\n  - `parameters: { categories: { name: string; description?: string; }[]; product_type: 'split_v1'; splitting_strategy?: { allow_uncategorized?: 'include' | 'forbid' | 'omit'; }; } | { data_schema: object; product_type: 'extract_v2'; cite_sources?: boolean; confidence_scores?: boolean; extract_version?: string; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; system_prompt?: string; target_pages?: string; tier?: 'cost_effective' | 'agentic'; } | { product_type: 'classify_v2'; rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; } | { product_type: 'parse_v2'; tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus'; version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | string; agentic_options?: { custom_prompt?: string; }; client_name?: string; crop_box?: { bottom?: number; left?: number; right?: number; top?: number; }; disable_cache?: boolean; fast_options?: object; input_options?: { html?: { make_all_elements_visible?: boolean; remove_fixed_elements?: boolean; remove_navigation_elements?: boolean; }; pdf?: object; presentation?: { out_of_bounds_content?: boolean; skip_embedded_data?: boolean; }; spreadsheet?: { detect_sub_tables_in_sheets?: boolean; force_formula_computation_in_sheets?: boolean; include_hidden_sheets?: boolean; }; }; output_options?: { additional_outputs?: string[]; extract_printed_page_number?: boolean; images_to_save?: 'screenshot' | 'embedded' | 'layout'[]; markdown?: { annotate_links?: boolean; inline_images?: boolean; tables?: object; }; spatial_text?: { do_not_unroll_columns?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; }; tables_as_spreadsheet?: { enable?: boolean; guess_sheet_name?: boolean; }; }; page_ranges?: { max_pages?: number; target_pages?: string; }; processing_control?: { job_failure_conditions?: { allowed_page_failure_ratio?: number; fail_on_buggy_font?: boolean; fail_on_image_extraction_error?: boolean; fail_on_image_ocr_error?: boolean; fail_on_markdown_reconstruction_error?: boolean; }; timeouts?: { base_in_seconds?: number; extra_time_per_page_in_seconds?: number; }; }; processing_options?: { aggressive_table_extraction?: boolean; auto_mode_configuration?: { parsing_conf: object; filename_match_glob?: string; filename_match_glob_list?: string[]; filename_regexp?: string; filename_regexp_mode?: string; full_page_image_in_page?: boolean; full_page_image_in_page_threshold?: number | string; image_in_page?: boolean; layout_element_in_page?: string; layout_element_in_page_confidence_threshold?: number | string; page_contains_at_least_n_charts?: number | string; page_contains_at_least_n_images?: number | string; page_contains_at_least_n_layout_elements?: number | string; page_contains_at_least_n_lines?: number | string; page_contains_at_least_n_links?: number | string; page_contains_at_least_n_numbers?: number | string; page_contains_at_least_n_percent_numbers?: number | string; page_contains_at_least_n_tables?: number | string; page_contains_at_least_n_words?: number | string; page_contains_at_most_n_charts?: number | string; page_contains_at_most_n_images?: number | string; page_contains_at_most_n_layout_elements?: number | string; page_contains_at_most_n_lines?: number | string; page_contains_at_most_n_links?: number | string; page_contains_at_most_n_numbers?: number | string; page_contains_at_most_n_percent_numbers?: number | string; page_contains_at_most_n_tables?: number | string; page_contains_at_most_n_words?: number | string; page_longer_than_n_chars?: number | string; page_md_error?: boolean; page_shorter_than_n_chars?: number | string; regexp_in_page?: string; regexp_in_page_mode?: string; table_in_page?: boolean; text_in_page?: string; trigger_mode?: string; }[]; cost_optimizer?: { enable?: boolean; }; disable_heuristics?: boolean; ignore?: { ignore_diagonal_text?: boolean; ignore_hidden_text?: boolean; ignore_text_in_image?: boolean; }; ocr_parameters?: { languages?: parsing_languages[]; }; specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient'; }; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_url?: string; }[]; } | { product_type: 'spreadsheet_v1'; extraction_range?: string; flatten_hierarchical_tables?: boolean; generate_additional_metadata?: boolean; include_hidden_cells?: boolean; sheet_names?: string[]; specialization?: string; table_merge_sensitivity?: 'strong' | 'weak'; use_experimental_processing?: boolean; } | { product_type: 'unknown'; }`\n  - `product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'`\n  - `version: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst configurationResponse = await client.configurations.update('config_id');\n\nconsole.log(configurationResponse);\n```",
     perLanguage: {
       typescript: {
         method: 'client.configurations.update',
@@ -945,6 +1173,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations.update',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nconfiguration_response = client.configurations.update(\n    config_id="config_id",\n)\nprint(configuration_response.id)',
+      },
+      go: {
+        method: 'client.Configurations.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tconfigurationResponse, err := client.Configurations.Update(\n\t\tcontext.TODO(),\n\t\t"config_id",\n\t\tllamacloudprod.ConfigurationUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", configurationResponse.ID)\n}\n',
+      },
+      cli: {
+        method: 'configurations update',
+        example:
+          "llamacloud-prod configurations update \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
       http: {
         example:
@@ -974,6 +1212,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.configurations.delete(\n    config_id="config_id",\n)',
       },
+      go: {
+        method: 'client.Configurations.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Configurations.Delete(\n\t\tcontext.TODO(),\n\t\t"config_id",\n\t\tllamacloudprod.ConfigurationDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'configurations delete',
+        example:
+          "llamacloud-prod configurations delete \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/configurations/$CONFIG_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -990,9 +1238,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.projects.list',
     params: ['organization_id?: string;', 'project_name?: string;'],
     response:
-      '{ id: string; name: string; organization_id: string; ad_hoc_eval_dataset_id?: string; created_at?: string; is_default?: boolean; updated_at?: string; }[]',
+      '{ id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }[]',
     markdown:
-      "## list\n\n`client.projects.list(organization_id?: string, project_name?: string): object[]`\n\n**get** `/api/v1/projects`\n\nList projects or get one by name\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_name?: string`\n\n### Returns\n\n- `{ id: string; name: string; organization_id: string; ad_hoc_eval_dataset_id?: string; created_at?: string; is_default?: boolean; updated_at?: string; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst projects = await client.projects.list();\n\nconsole.log(projects);\n```",
+      "## list\n\n`client.projects.list(organization_id?: string, project_name?: string): object[]`\n\n**get** `/api/v1/projects`\n\nList projects or get one by name\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_name?: string`\n\n### Returns\n\n- `{ id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst projects = await client.projects.list();\n\nconsole.log(projects);\n```",
     perLanguage: {
       typescript: {
         method: 'client.projects.list',
@@ -1003,6 +1251,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'projects.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nprojects = client.projects.list()\nprint(projects)',
+      },
+      go: {
+        method: 'client.Projects.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tprojects, err := client.Projects.List(context.TODO(), llamacloudprod.ProjectListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", projects)\n}\n',
+      },
+      cli: {
+        method: 'projects list',
+        example: "llamacloud-prod projects list \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -1020,9 +1277,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.projects.get',
     params: ['project_id: string;', 'organization_id?: string;'],
     response:
-      '{ id: string; name: string; organization_id: string; ad_hoc_eval_dataset_id?: string; created_at?: string; is_default?: boolean; updated_at?: string; }',
+      '{ id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }',
     markdown:
-      "## get\n\n`client.projects.get(project_id: string, organization_id?: string): { id: string; name: string; organization_id: string; ad_hoc_eval_dataset_id?: string; created_at?: string; is_default?: boolean; updated_at?: string; }`\n\n**get** `/api/v1/projects/{project_id}`\n\nGet a project by ID.\n\n### Parameters\n\n- `project_id: string`\n\n- `organization_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; organization_id: string; ad_hoc_eval_dataset_id?: string; created_at?: string; is_default?: boolean; updated_at?: string; }`\n  Schema for a project.\n\n  - `id: string`\n  - `name: string`\n  - `organization_id: string`\n  - `ad_hoc_eval_dataset_id?: string`\n  - `created_at?: string`\n  - `is_default?: boolean`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst project = await client.projects.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(project);\n```",
+      "## get\n\n`client.projects.get(project_id: string, organization_id?: string): { id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }`\n\n**get** `/api/v1/projects/{project_id}`\n\nGet a project by ID.\n\n### Parameters\n\n- `project_id: string`\n\n- `organization_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }`\n  Schema for a project.\n\n  - `id: string`\n  - `name: string`\n  - `organization_id: string`\n  - `created_at?: string`\n  - `is_default?: boolean`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst project = await client.projects.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(project);\n```",
     perLanguage: {
       typescript: {
         method: 'client.projects.get',
@@ -1033,6 +1290,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'projects.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nproject = client.projects.get(\n    project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(project.id)',
+      },
+      go: {
+        method: 'client.Projects.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tproject, err := client.Projects.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.ProjectGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", project.ID)\n}\n',
+      },
+      cli: {
+        method: 'projects get',
+        example:
+          "llamacloud-prod projects get \\\n  --api-key 'My API Key' \\\n  --project-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1063,6 +1330,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sinks.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_sinks = client.data_sinks.list()\nprint(data_sinks)',
+      },
+      go: {
+        method: 'client.DataSinks.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSinks, err := client.DataSinks.List(context.TODO(), llamacloudprod.DataSinkListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSinks)\n}\n',
+      },
+      cli: {
+        method: 'data_sinks list',
+        example: "llamacloud-prod data-sinks list \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -1100,6 +1376,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_sink = client.data_sinks.create(\n    component={\n        "foo": "bar"\n    },\n    name="name",\n    sink_type="PINECONE",\n)\nprint(data_sink.id)',
       },
+      go: {
+        method: 'client.DataSinks.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSink, err := client.DataSinks.New(context.TODO(), llamacloudprod.DataSinkNewParams{\n\t\tDataSinkCreate: llamacloudprod.DataSinkCreateParam{\n\t\t\tComponent: llamacloudprod.DataSinkCreateComponentUnionParam{\n\t\t\t\tOfAnyMap: map[string]any{\n\t\t\t\t\t"foo": "bar",\n\t\t\t\t},\n\t\t\t},\n\t\t\tName:     "name",\n\t\t\tSinkType: llamacloudprod.DataSinkCreateSinkTypePinecone,\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSink.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sinks create',
+        example:
+          "llamacloud-prod data-sinks create \\\n  --api-key 'My API Key' \\\n  --component '{foo: bar}' \\\n  --name name \\\n  --sink-type PINECONE",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sinks \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "component": {\n            "foo": "bar"\n          },\n          "name": "name",\n          "sink_type": "PINECONE"\n        }\'',
@@ -1129,6 +1415,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sinks.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_sink = client.data_sinks.get(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(data_sink.id)',
+      },
+      go: {
+        method: 'client.DataSinks.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSink, err := client.DataSinks.Get(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSink.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sinks get',
+        example:
+          "llamacloud-prod data-sinks get \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1165,6 +1461,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_sink = client.data_sinks.update(\n    data_sink_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    sink_type="PINECONE",\n)\nprint(data_sink.id)',
       },
+      go: {
+        method: 'client.DataSinks.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSink, err := client.DataSinks.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.DataSinkUpdateParams{\n\t\t\tSinkType: llamacloudprod.DataSinkUpdateParamsSinkTypePinecone,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSink.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sinks update',
+        example:
+          "llamacloud-prod data-sinks update \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --sink-type PINECONE",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sinks/$DATA_SINK_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "sink_type": "PINECONE"\n        }\'',
@@ -1192,6 +1498,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sinks.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.data_sinks.delete(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.DataSinks.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.DataSinks.Delete(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'data_sinks delete',
+        example:
+          "llamacloud-prod data-sinks delete \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1223,6 +1539,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sources.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_sources = client.data_sources.list()\nprint(data_sources)',
+      },
+      go: {
+        method: 'client.DataSources.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSources, err := client.DataSources.List(context.TODO(), llamacloudprod.DataSourceListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSources)\n}\n',
+      },
+      cli: {
+        method: 'data_sources list',
+        example: "llamacloud-prod data-sources list \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -1261,6 +1586,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_source = client.data_sources.create(\n    component={\n        "foo": "bar"\n    },\n    name="name",\n    source_type="S3",\n)\nprint(data_source.id)',
       },
+      go: {
+        method: 'client.DataSources.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSource, err := client.DataSources.New(context.TODO(), llamacloudprod.DataSourceNewParams{\n\t\tComponent: llamacloudprod.DataSourceNewParamsComponentUnion{\n\t\t\tOfAnyMap: map[string]any{\n\t\t\t\t"foo": "bar",\n\t\t\t},\n\t\t},\n\t\tName:       "name",\n\t\tSourceType: llamacloudprod.DataSourceNewParamsSourceTypeS3,\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSource.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources create',
+        example:
+          "llamacloud-prod data-sources create \\\n  --api-key 'My API Key' \\\n  --component '{foo: bar}' \\\n  --name name \\\n  --source-type S3",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sources \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "component": {\n            "foo": "bar"\n          },\n          "name": "name",\n          "source_type": "S3"\n        }\'',
@@ -1290,6 +1625,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sources.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_source = client.data_sources.get(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(data_source.id)',
+      },
+      go: {
+        method: 'client.DataSources.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSource, err := client.DataSources.Get(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSource.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources get',
+        example:
+          "llamacloud-prod data-sources get \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1327,6 +1672,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndata_source = client.data_sources.update(\n    data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    source_type="S3",\n)\nprint(data_source.id)',
       },
+      go: {
+        method: 'client.DataSources.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdataSource, err := client.DataSources.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.DataSourceUpdateParams{\n\t\t\tSourceType: llamacloudprod.DataSourceUpdateParamsSourceTypeS3,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", dataSource.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources update',
+        example:
+          "llamacloud-prod data-sources update \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --source-type S3",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sources/$DATA_SOURCE_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "source_type": "S3"\n        }\'',
@@ -1354,6 +1709,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sources.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.data_sources.delete(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.DataSources.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.DataSources.Delete(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'data_sources delete',
+        example:
+          "llamacloud-prod data-sources delete \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1390,6 +1755,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipelines = client.pipelines.list()\nprint(pipelines)',
+      },
+      go: {
+        method: 'client.Pipelines.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelines, err := client.Pipelines.List(context.TODO(), llamacloudprod.PipelineListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelines)\n}\n',
+      },
+      cli: {
+        method: 'pipelines list',
+        example: "llamacloud-prod pipelines list \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -1438,6 +1812,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.create(\n    name="x",\n)\nprint(pipeline.id)',
       },
+      go: {
+        method: 'client.Pipelines.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.New(context.TODO(), llamacloudprod.PipelineNewParams{\n\t\tPipelineCreate: llamacloudprod.PipelineCreateParam{\n\t\t\tName: "x",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines create',
+        example: "llamacloud-prod pipelines create \\\n  --api-key 'My API Key' \\\n  --name x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x"\n        }\'',
@@ -1467,6 +1850,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.get(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline.id)',
+      },
+      go: {
+        method: 'client.Pipelines.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Get(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines get',
+        example:
+          "llamacloud-prod pipelines get \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1512,6 +1905,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.update(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline.id)',
       },
+      go: {
+        method: 'client.Pipelines.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines update',
+        example:
+          "llamacloud-prod pipelines update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
@@ -1540,6 +1943,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.pipelines.delete(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Pipelines.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Pipelines.Delete(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'pipelines delete',
+        example:
+          "llamacloud-prod pipelines delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1571,6 +1984,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.get_status',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nmanaged_ingestion_status_response = client.pipelines.get_status(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(managed_ingestion_status_response.job_id)',
+      },
+      go: {
+        method: 'client.Pipelines.GetStatus',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmanagedIngestionStatusResponse, err := client.Pipelines.GetStatus(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineGetStatusParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", managedIngestionStatusResponse.JobID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines get_status',
+        example:
+          "llamacloud-prod pipelines get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1618,6 +2041,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.upsert',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.upsert(\n    name="x",\n)\nprint(pipeline.id)',
+      },
+      go: {
+        method: 'client.Pipelines.Upsert',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Upsert(context.TODO(), llamacloudprod.PipelineUpsertParams{\n\t\tPipelineCreate: llamacloudprod.PipelineCreateParam{\n\t\t\tName: "x",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines upsert',
+        example: "llamacloud-prod pipelines upsert \\\n  --api-key 'My API Key' \\\n  --name x",
       },
       http: {
         example:
@@ -1669,6 +2101,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.retrieve(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    query="x",\n)\nprint(pipeline.pipeline_id)',
       },
+      go: {
+        method: 'client.Pipelines.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineGetParams{\n\t\t\tQuery: "x",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.PipelineID)\n}\n',
+      },
+      cli: {
+        method: 'pipelines retrieve',
+        example:
+          "llamacloud-prod pipelines retrieve \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --query x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "query": "x"\n        }\'',
@@ -1700,6 +2142,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.sync.create(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline.id)',
       },
+      go: {
+        method: 'client.Pipelines.Sync.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Sync.New(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'sync create',
+        example:
+          "llamacloud-prod pipelines:sync create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/sync \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -1729,6 +2181,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.sync.cancel',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.sync.cancel(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline.id)',
+      },
+      go: {
+        method: 'client.Pipelines.Sync.Cancel',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.Sync.Cancel(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'sync cancel',
+        example:
+          "llamacloud-prod pipelines:sync cancel \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1760,6 +2222,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline_data_sources = client.pipelines.data_sources.get_data_sources(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline_data_sources)',
       },
+      go: {
+        method: 'client.Pipelines.DataSources.GetDataSources',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelineDataSources, err := client.Pipelines.DataSources.GetDataSources(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelineDataSources)\n}\n',
+      },
+      cli: {
+        method: 'data_sources get_data_sources',
+        example:
+          "llamacloud-prod pipelines:data-sources get-data-sources \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -1789,6 +2261,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.data_sources.update_data_sources',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline_data_sources = client.pipelines.data_sources.update_data_sources(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    body=[{\n        "data_source_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n    }],\n)\nprint(pipeline_data_sources)',
+      },
+      go: {
+        method: 'client.Pipelines.DataSources.UpdateDataSources',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelineDataSources, err := client.Pipelines.DataSources.UpdateDataSources(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDataSourceUpdateDataSourcesParams{\n\t\t\tBody: []llamacloudprod.PipelineDataSourceUpdateDataSourcesParamsBody{{\n\t\t\t\tDataSourceID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t\t}},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelineDataSources)\n}\n',
+      },
+      cli: {
+        method: 'data_sources update_data_sources',
+        example:
+          "llamacloud-prod pipelines:data-sources update-data-sources \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{data_source_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
       },
       http: {
         example:
@@ -1820,6 +2302,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline_data_source = client.pipelines.data_sources.update(\n    data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline_data_source.id)',
       },
+      go: {
+        method: 'client.Pipelines.DataSources.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelineDataSource, err := client.Pipelines.DataSources.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDataSourceUpdateParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelineDataSource.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources update',
+        example:
+          "llamacloud-prod pipelines:data-sources update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources/$DATA_SOURCE_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
@@ -1849,6 +2341,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.data_sources.get_status',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nmanaged_ingestion_status_response = client.pipelines.data_sources.get_status(\n    data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(managed_ingestion_status_response.job_id)',
+      },
+      go: {
+        method: 'client.Pipelines.DataSources.GetStatus',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmanagedIngestionStatusResponse, err := client.Pipelines.DataSources.GetStatus(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDataSourceGetStatusParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", managedIngestionStatusResponse.JobID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources get_status',
+        example:
+          "llamacloud-prod pipelines:data-sources get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -1881,6 +2383,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline = client.pipelines.data_sources.sync(\n    data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline.id)',
       },
+      go: {
+        method: 'client.Pipelines.DataSources.Sync',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipeline, err := client.Pipelines.DataSources.Sync(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDataSourceSyncParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipeline.ID)\n}\n',
+      },
+      cli: {
+        method: 'data_sources sync',
+        example:
+          "llamacloud-prod pipelines:data-sources sync \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources/$DATA_SOURCE_ID/sync \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -1910,6 +2422,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.images.list_page_screenshots(\n    id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response)',
       },
+      go: {
+        method: 'client.Pipelines.Images.ListPageScreenshots',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Images.ListPageScreenshots(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineImageListPageScreenshotsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'images list_page_screenshots',
+        example:
+          "llamacloud-prod pipelines:images list-page-screenshots \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/files/$ID/page_screenshots \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -1938,6 +2460,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.images.get_page_screenshot',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.images.get_page_screenshot(\n    page_index=0,\n    id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Pipelines.Images.GetPageScreenshot',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Images.GetPageScreenshot(\n\t\tcontext.TODO(),\n\t\t0,\n\t\tllamacloudprod.PipelineImageGetPageScreenshotParams{\n\t\t\tID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'images get_page_screenshot',
+        example:
+          "llamacloud-prod pipelines:images get-page-screenshot \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --page-index 0",
       },
       http: {
         example:
@@ -1974,6 +2506,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.images.get_page_figure(\n    figure_name="figure_name",\n    id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    page_index=0,\n)\nprint(response)',
       },
+      go: {
+        method: 'client.Pipelines.Images.GetPageFigure',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Images.GetPageFigure(\n\t\tcontext.TODO(),\n\t\t"figure_name",\n\t\tllamacloudprod.PipelineImageGetPageFigureParams{\n\t\t\tID:        "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t\tPageIndex: 0,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'images get_page_figure',
+        example:
+          "llamacloud-prod pipelines:images get-page-figure \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --page-index 0 \\\n  --figure-name figure_name",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/files/$ID/page-figures/$PAGE_INDEX/$FIGURE_NAME \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2003,6 +2545,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.images.list_page_figures',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.images.list_page_figures(\n    id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Pipelines.Images.ListPageFigures',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Images.ListPageFigures(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineImageListPageFiguresParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'images list_page_figures',
+        example:
+          "llamacloud-prod pipelines:images list-page-figures \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2034,6 +2586,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.files.get_status_counts(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response.data_source_id)',
       },
+      go: {
+        method: 'client.Pipelines.Files.GetStatusCounts',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Files.GetStatusCounts(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileGetStatusCountsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.DataSourceID)\n}\n',
+      },
+      cli: {
+        method: 'files get_status_counts',
+        example:
+          "llamacloud-prod pipelines:files get-status-counts \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files/status-counts \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2063,6 +2625,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.files.get_status',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nmanaged_ingestion_status_response = client.pipelines.files.get_status(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(managed_ingestion_status_response.job_id)',
+      },
+      go: {
+        method: 'client.Pipelines.Files.GetStatus',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmanagedIngestionStatusResponse, err := client.Pipelines.Files.GetStatus(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileGetStatusParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", managedIngestionStatusResponse.JobID)\n}\n',
+      },
+      cli: {
+        method: 'files get_status',
+        example:
+          "llamacloud-prod pipelines:files get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2094,6 +2666,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline_files = client.pipelines.files.create(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    body=[{\n        "file_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n    }],\n)\nprint(pipeline_files)',
       },
+      go: {
+        method: 'client.Pipelines.Files.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelineFiles, err := client.Pipelines.Files.New(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileNewParams{\n\t\t\tBody: []llamacloudprod.PipelineFileNewParamsBody{{\n\t\t\t\tFileID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t\t}},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelineFiles)\n}\n',
+      },
+      cli: {
+        method: 'files create',
+        example:
+          "llamacloud-prod pipelines:files create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{file_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'[\n          {\n            "file_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n            "custom_metadata": {\n              "foo": {\n                "foo": "bar"\n              }\n            }\n          }\n        ]\'',
@@ -2124,6 +2706,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npipeline_file = client.pipelines.files.update(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(pipeline_file.id)',
       },
+      go: {
+        method: 'client.Pipelines.Files.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpipelineFile, err := client.Pipelines.Files.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileUpdateParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", pipelineFile.ID)\n}\n',
+      },
+      cli: {
+        method: 'files update',
+        example:
+          "llamacloud-prod pipelines:files update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files/$FILE_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
@@ -2151,6 +2743,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.files.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.pipelines.files.delete(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Pipelines.Files.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Pipelines.Files.Delete(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileDeleteParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'files delete',
+        example:
+          "llamacloud-prod pipelines:files delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2191,6 +2793,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.pipelines.files.list(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\npage = page.files[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Pipelines.Files.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Pipelines.Files.List(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineFileListParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'files list',
+        example:
+          "llamacloud-prod pipelines:files list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files2 \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2220,6 +2832,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nmetadata = client.pipelines.metadata.create(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    upload_file=b"Example data",\n)\nprint(metadata)',
       },
+      go: {
+        method: 'client.Pipelines.Metadata.New',
+        example:
+          'package main\n\nimport (\n\t"bytes"\n\t"context"\n\t"fmt"\n\t"io"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmetadata, err := client.Pipelines.Metadata.New(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineMetadataNewParams{\n\t\t\tUploadFile: io.Reader(bytes.NewBuffer([]byte("Example data"))),\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", metadata)\n}\n',
+      },
+      cli: {
+        method: 'metadata create',
+        example:
+          "llamacloud-prod pipelines:metadata create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --upload-file 'Example data'",
+      },
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/metadata \\\n    -X PUT \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -F 'upload_file=@/path/to/upload_file'",
@@ -2247,6 +2869,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.metadata.delete_all',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.pipelines.metadata.delete_all(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Pipelines.Metadata.DeleteAll',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Pipelines.Metadata.DeleteAll(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'metadata delete_all',
+        example:
+          "llamacloud-prod pipelines:metadata delete-all \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2280,6 +2912,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.documents.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncloud_documents = client.pipelines.documents.create(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    body=[{\n        "metadata": {\n            "foo": "bar"\n        },\n        "text": "text",\n    }],\n)\nprint(cloud_documents)',
+      },
+      go: {
+        method: 'client.Pipelines.Documents.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcloudDocuments, err := client.Pipelines.Documents.New(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDocumentNewParams{\n\t\t\tBody: []llamacloudprod.CloudDocumentCreateParam{{\n\t\t\t\tMetadata: map[string]any{\n\t\t\t\t\t"foo": "bar",\n\t\t\t\t},\n\t\t\t\tText: "text",\n\t\t\t}},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", cloudDocuments)\n}\n',
+      },
+      cli: {
+        method: 'documents create',
+        example:
+          "llamacloud-prod pipelines:documents create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{metadata: {foo: bar}, text: text}'",
       },
       http: {
         example:
@@ -2319,6 +2961,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.pipelines.documents.list(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\npage = page.documents[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Pipelines.Documents.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Pipelines.Documents.List(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDocumentListParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'documents list',
+        example:
+          "llamacloud-prod pipelines:documents list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/paginated \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2349,6 +3001,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncloud_document = client.pipelines.documents.get(\n    document_id="document_id",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(cloud_document.id)',
       },
+      go: {
+        method: 'client.Pipelines.Documents.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcloudDocument, err := client.Pipelines.Documents.Get(\n\t\tcontext.TODO(),\n\t\t"document_id",\n\t\tllamacloudprod.PipelineDocumentGetParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", cloudDocument.ID)\n}\n',
+      },
+      cli: {
+        method: 'documents get',
+        example:
+          "llamacloud-prod pipelines:documents get \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/$DOCUMENT_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2377,6 +3039,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.documents.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.pipelines.documents.delete(\n    document_id="document_id",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Pipelines.Documents.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Pipelines.Documents.Delete(\n\t\tcontext.TODO(),\n\t\t"document_id",\n\t\tllamacloudprod.PipelineDocumentDeleteParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'documents delete',
+        example:
+          "llamacloud-prod pipelines:documents delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
       http: {
         example:
@@ -2408,6 +3080,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nmanaged_ingestion_status_response = client.pipelines.documents.get_status(\n    document_id="document_id",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(managed_ingestion_status_response.job_id)',
       },
+      go: {
+        method: 'client.Pipelines.Documents.GetStatus',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmanagedIngestionStatusResponse, err := client.Pipelines.Documents.GetStatus(\n\t\tcontext.TODO(),\n\t\t"document_id",\n\t\tllamacloudprod.PipelineDocumentGetStatusParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", managedIngestionStatusResponse.JobID)\n}\n',
+      },
+      cli: {
+        method: 'documents get_status',
+        example:
+          "llamacloud-prod pipelines:documents get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/$DOCUMENT_ID/status \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2436,6 +3118,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.documents.sync',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.documents.sync(\n    document_id="document_id",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Pipelines.Documents.Sync',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Documents.Sync(\n\t\tcontext.TODO(),\n\t\t"document_id",\n\t\tllamacloudprod.PipelineDocumentSyncParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'documents sync',
+        example:
+          "llamacloud-prod pipelines:documents sync \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
       http: {
         example:
@@ -2466,6 +3158,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.documents.get_chunks',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ntext_nodes = client.pipelines.documents.get_chunks(\n    document_id="document_id",\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(text_nodes)',
+      },
+      go: {
+        method: 'client.Pipelines.Documents.GetChunks',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\ttextNodes, err := client.Pipelines.Documents.GetChunks(\n\t\tcontext.TODO(),\n\t\t"document_id",\n\t\tllamacloudprod.PipelineDocumentGetChunksParams{\n\t\t\tPipelineID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", textNodes)\n}\n',
+      },
+      cli: {
+        method: 'documents get_chunks',
+        example:
+          "llamacloud-prod pipelines:documents get-chunks \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
       http: {
         example:
@@ -2499,6 +3201,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines.documents.upsert',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncloud_documents = client.pipelines.documents.upsert(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    body=[{\n        "metadata": {\n            "foo": "bar"\n        },\n        "text": "text",\n    }],\n)\nprint(cloud_documents)',
+      },
+      go: {
+        method: 'client.Pipelines.Documents.Upsert',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcloudDocuments, err := client.Pipelines.Documents.Upsert(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.PipelineDocumentUpsertParams{\n\t\t\tBody: []llamacloudprod.CloudDocumentCreateParam{{\n\t\t\t\tMetadata: map[string]any{\n\t\t\t\t\t"foo": "bar",\n\t\t\t\t},\n\t\t\t\tText: "text",\n\t\t\t}},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", cloudDocuments)\n}\n',
+      },
+      cli: {
+        method: 'documents upsert',
+        example:
+          "llamacloud-prod pipelines:documents upsert \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{metadata: {foo: bar}, text: text}'",
       },
       http: {
         example:
@@ -2535,6 +3247,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretriever = client.retrievers.create(\n    name="x",\n)\nprint(retriever.id)',
       },
+      go: {
+        method: 'client.Retrievers.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretriever, err := client.Retrievers.New(context.TODO(), llamacloudprod.RetrieverNewParams{\n\t\tRetrieverCreate: llamacloudprod.RetrieverCreateParam{\n\t\t\tName: "x",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retriever.ID)\n}\n',
+      },
+      cli: {
+        method: 'retrievers create',
+        example: "llamacloud-prod retrievers create \\\n  --api-key 'My API Key' \\\n  --name x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x"\n        }\'',
@@ -2570,6 +3291,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretriever = client.retrievers.upsert(\n    name="x",\n)\nprint(retriever.id)',
       },
+      go: {
+        method: 'client.Retrievers.Upsert',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretriever, err := client.Retrievers.Upsert(context.TODO(), llamacloudprod.RetrieverUpsertParams{\n\t\tRetrieverCreate: llamacloudprod.RetrieverCreateParam{\n\t\t\tName: "x",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retriever.ID)\n}\n',
+      },
+      cli: {
+        method: 'retrievers upsert',
+        example: "llamacloud-prod retrievers upsert \\\n  --api-key 'My API Key' \\\n  --name x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x"\n        }\'',
@@ -2600,6 +3330,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretrievers = client.retrievers.list()\nprint(retrievers)',
       },
+      go: {
+        method: 'client.Retrievers.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretrievers, err := client.Retrievers.List(context.TODO(), llamacloudprod.RetrieverListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retrievers)\n}\n',
+      },
+      cli: {
+        method: 'retrievers list',
+        example: "llamacloud-prod retrievers list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -2629,6 +3368,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'retrievers.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretriever = client.retrievers.get(\n    retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(retriever.id)',
+      },
+      go: {
+        method: 'client.Retrievers.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretriever, err := client.Retrievers.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.RetrieverGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retriever.ID)\n}\n',
+      },
+      cli: {
+        method: 'retrievers get',
+        example:
+          "llamacloud-prod retrievers get \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2666,6 +3415,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretriever = client.retrievers.update(\n    retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    pipelines=[{\n        "description": "description",\n        "name": "x",\n        "pipeline_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    }],\n)\nprint(retriever.id)',
       },
+      go: {
+        method: 'client.Retrievers.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretriever, err := client.Retrievers.Update(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.RetrieverUpdateParams{\n\t\t\tPipelines: []llamacloudprod.RetrieverPipelineParam{{\n\t\t\t\tDescription: llamacloudprod.String("description"),\n\t\t\t\tName:        llamacloudprod.String("x"),\n\t\t\t\tPipelineID:  "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\t\t}},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retriever.ID)\n}\n',
+      },
+      cli: {
+        method: 'retrievers update',
+        example:
+          "llamacloud-prod retrievers update \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --pipeline '{description: description, name: x, pipeline_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/$RETRIEVER_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "pipelines": [\n            {\n              "description": "description",\n              "name": "x",\n              "pipeline_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n            }\n          ]\n        }\'',
@@ -2693,6 +3452,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'retrievers.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.retrievers.delete(\n    retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)',
+      },
+      go: {
+        method: 'client.Retrievers.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Retrievers.Delete(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.RetrieverDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'retrievers delete',
+        example:
+          "llamacloud-prod retrievers delete \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -2732,6 +3501,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncomposite_retrieval_result = client.retrievers.search(\n    query="x",\n)\nprint(composite_retrieval_result.image_nodes)',
       },
+      go: {
+        method: 'client.Retrievers.Search',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcompositeRetrievalResult, err := client.Retrievers.Search(context.TODO(), llamacloudprod.RetrieverSearchParams{\n\t\tQuery: "x",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", compositeRetrievalResult.ImageNodes)\n}\n',
+      },
+      cli: {
+        method: 'retrievers search',
+        example: "llamacloud-prod retrievers search \\\n  --api-key 'My API Key' \\\n  --query x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "query": "x"\n        }\'',
@@ -2770,9 +3548,666 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncomposite_retrieval_result = client.retrievers.retriever.search(\n    retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    query="x",\n)\nprint(composite_retrieval_result.image_nodes)',
       },
+      go: {
+        method: 'client.Retrievers.Retriever.Search',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcompositeRetrievalResult, err := client.Retrievers.Retriever.Search(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.RetrieverRetrieverSearchParams{\n\t\t\tQuery: "x",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", compositeRetrievalResult.ImageNodes)\n}\n',
+      },
+      cli: {
+        method: 'retriever search',
+        example:
+          "llamacloud-prod retrievers:retriever search \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --query x",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/$RETRIEVER_ID/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "query": "x"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'get',
+    endpoint: '/api/v1/indexes/{index_id}',
+    httpMethod: 'get',
+    summary: 'Get Index',
+    description: 'Get an index by ID.',
+    stainlessPath: '(resource) beta.indexes > (method) get',
+    qualified: 'client.beta.indexes.get',
+    params: ['index_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      '{ id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }',
+    markdown:
+      "## get\n\n`client.beta.indexes.get(index_id: string, organization_id?: string, project_id?: string): { id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }`\n\n**get** `/api/v1/indexes/{index_id}`\n\nGet an index by ID.\n\n### Parameters\n\n- `index_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }`\n  A searchable index over a directory of documents.\n\n  - `id: string`\n  - `export_config_id: string`\n  - `name: string`\n  - `project_id: string`\n  - `source_directory_id: string`\n  - `sync_config_id: string`\n  - `created_at?: string`\n  - `description?: string`\n  - `last_exported_at?: string`\n  - `last_synced_at?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst index = await client.beta.indexes.get('index_id');\n\nconsole.log(index);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.indexes.get',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst index = await client.beta.indexes.get('index_id');\n\nconsole.log(index.id);",
+      },
+      python: {
+        method: 'beta.indexes.get',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nindex = client.beta.indexes.get(\n    index_id="index_id",\n)\nprint(index.id)',
+      },
+      go: {
+        method: 'client.Beta.Indexes.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tindex, err := client.Beta.Indexes.Get(\n\t\tcontext.TODO(),\n\t\t"index_id",\n\t\tllamacloudprod.BetaIndexGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", index.ID)\n}\n',
+      },
+      cli: {
+        method: 'indexes get',
+        example: "llamacloud-prod beta:indexes get \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/indexes/$INDEX_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/api/v1/indexes/{index_id}',
+    httpMethod: 'delete',
+    summary: 'Delete Index',
+    description: 'Delete an index.',
+    stainlessPath: '(resource) beta.indexes > (method) delete',
+    qualified: 'client.beta.indexes.delete',
+    params: ['index_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    markdown:
+      "## delete\n\n`client.beta.indexes.delete(index_id: string, organization_id?: string, project_id?: string): void`\n\n**delete** `/api/v1/indexes/{index_id}`\n\nDelete an index.\n\n### Parameters\n\n- `index_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nawait client.beta.indexes.delete('index_id')\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.indexes.delete',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.beta.indexes.delete('index_id');",
+      },
+      python: {
+        method: 'beta.indexes.delete',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.beta.indexes.delete(\n    index_id="index_id",\n)',
+      },
+      go: {
+        method: 'client.Beta.Indexes.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Beta.Indexes.Delete(\n\t\tcontext.TODO(),\n\t\t"index_id",\n\t\tllamacloudprod.BetaIndexDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'indexes delete',
+        example: "llamacloud-prod beta:indexes delete \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/indexes/$INDEX_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/api/v1/indexes',
+    httpMethod: 'post',
+    summary: 'Create Index',
+    description: 'Create a searchable index over a source directory.',
+    stainlessPath: '(resource) beta.indexes > (method) create',
+    qualified: 'client.beta.indexes.create',
+    params: [
+      'source_directory_id: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'description?: string;',
+      "products?: { product_config_id: string; product_type: 'parse' | 'extract'; }[];",
+    ],
+    response:
+      '{ id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }',
+    markdown:
+      "## create\n\n`client.beta.indexes.create(source_directory_id: string, organization_id?: string, project_id?: string, description?: string, products?: { product_config_id: string; product_type: 'parse' | 'extract'; }[]): { id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }`\n\n**post** `/api/v1/indexes`\n\nCreate a searchable index over a source directory.\n\n### Parameters\n\n- `source_directory_id: string`\n  ID of the source directory containing your documents.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `description?: string`\n  Optional description of the index.\n\n- `products?: { product_config_id: string; product_type: 'parse' | 'extract'; }[]`\n  Product configurations for syncing. Omit to use a default parse configuration. Include an explicit entry per product type (e.g. parse, extract) to override the default.\n\n### Returns\n\n- `{ id: string; export_config_id: string; name: string; project_id: string; source_directory_id: string; sync_config_id: string; created_at?: string; description?: string; last_exported_at?: string; last_synced_at?: string; metadata?: object; updated_at?: string; }`\n  A searchable index over a directory of documents.\n\n  - `id: string`\n  - `export_config_id: string`\n  - `name: string`\n  - `project_id: string`\n  - `source_directory_id: string`\n  - `sync_config_id: string`\n  - `created_at?: string`\n  - `description?: string`\n  - `last_exported_at?: string`\n  - `last_synced_at?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst index = await client.beta.indexes.create({ source_directory_id: 'dir-abc123' });\n\nconsole.log(index);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.indexes.create',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst index = await client.beta.indexes.create({ source_directory_id: 'dir-abc123' });\n\nconsole.log(index.id);",
+      },
+      python: {
+        method: 'beta.indexes.create',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nindex = client.beta.indexes.create(\n    source_directory_id="dir-abc123",\n)\nprint(index.id)',
+      },
+      go: {
+        method: 'client.Beta.Indexes.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tindex, err := client.Beta.Indexes.New(context.TODO(), llamacloudprod.BetaIndexNewParams{\n\t\tSourceDirectoryID: "dir-abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", index.ID)\n}\n',
+      },
+      cli: {
+        method: 'indexes create',
+        example:
+          "llamacloud-prod beta:indexes create \\\n  --api-key 'My API Key' \\\n  --source-directory-id dir-abc123",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/indexes \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "source_directory_id": "dir-abc123",\n          "products": [\n            {\n              "product_config_id": "cfg-abc123",\n              "product_type": "parse"\n            }\n          ]\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'sync',
+    endpoint: '/api/v1/indexes/{index_id}/sync',
+    httpMethod: 'post',
+    summary: 'Sync Index',
+    description:
+      'Trigger a sync and export for an existing index, re-parsing changed files and exporting updated chunks.',
+    stainlessPath: '(resource) beta.indexes > (method) sync',
+    qualified: 'client.beta.indexes.sync',
+    params: ['index_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response: 'object',
+    markdown:
+      "## sync\n\n`client.beta.indexes.sync(index_id: string, organization_id?: string, project_id?: string): object`\n\n**post** `/api/v1/indexes/{index_id}/sync`\n\nTrigger a sync and export for an existing index, re-parsing changed files and exporting updated chunks.\n\n### Parameters\n\n- `index_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.indexes.sync('index_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.indexes.sync',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.indexes.sync('index_id');\n\nconsole.log(response);",
+      },
+      python: {
+        method: 'beta.indexes.sync',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.indexes.sync(\n    index_id="index_id",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Beta.Indexes.Sync',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Indexes.Sync(\n\t\tcontext.TODO(),\n\t\t"index_id",\n\t\tllamacloudprod.BetaIndexSyncParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'indexes sync',
+        example: "llamacloud-prod beta:indexes sync \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/indexes/$INDEX_ID/sync \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/api/v1/retrieval/retrieve',
+    httpMethod: 'post',
+    summary: 'Retrieve',
+    description:
+      'Retrieve relevant chunks via hybrid search (vector + full-text), with filtering on built-in or user-defined metadata.',
+    stainlessPath: '(resource) beta.retrieval > (method) retrieve',
+    qualified: 'client.beta.retrieval.retrieve',
+    params: [
+      'index_id: string;',
+      'query: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'custom_filters?: object;',
+      'full_text_pipeline_weight?: number;',
+      'num_candidates?: number;',
+      'rerank?: { enabled?: boolean; top_n?: number; };',
+      'score_threshold?: number;',
+      "static_filters?: { parsed_directory_file_id?: { operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin'; value: string | string[]; }; };",
+      'top_k?: number;',
+      'vector_pipeline_weight?: number;',
+    ],
+    response:
+      '{ results: { content: string; metadata?: object; rerank_score?: number; score?: number; static_fields?: { attachments?: object[]; chunk_end_char?: number; chunk_index?: number; chunk_start_char?: number; chunk_token_count?: number; page_range_end?: number; page_range_start?: number; parsed_directory_file_id?: string; }; }[]; }',
+    markdown:
+      "## retrieve\n\n`client.beta.retrieval.retrieve(index_id: string, query: string, organization_id?: string, project_id?: string, custom_filters?: object, full_text_pipeline_weight?: number, num_candidates?: number, rerank?: { enabled?: boolean; top_n?: number; }, score_threshold?: number, static_filters?: { parsed_directory_file_id?: { operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin'; value: string | string[]; }; }, top_k?: number, vector_pipeline_weight?: number): { results: object[]; }`\n\n**post** `/api/v1/retrieval/retrieve`\n\nRetrieve relevant chunks via hybrid search (vector + full-text), with filtering on built-in or user-defined metadata.\n\n### Parameters\n\n- `index_id: string`\n  ID of the index to retrieve against.\n\n- `query: string`\n  Natural-language query to retrieve relevant chunks.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `custom_filters?: object`\n  Filters on user-defined metadata fields.\n\n- `full_text_pipeline_weight?: number`\n  Weight of the full-text search pipeline (0-1).\n\n- `num_candidates?: number`\n  Number of candidates for approximate nearest neighbor search.\n\n- `rerank?: { enabled?: boolean; top_n?: number; }`\n  Reranking configuration applied after hybrid search. Enabled by default.\n  - `enabled?: boolean`\n    Set to false to disable reranking.\n  - `top_n?: number`\n    Number of results to return after reranking.\n\n- `score_threshold?: number`\n  Minimum score threshold for returned results.\n\n- `static_filters?: { parsed_directory_file_id?: { operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin'; value: string | string[]; }; }`\n  Filters on built-in document fields (page range, chunk index, etc.).\n  - `parsed_directory_file_id?: { operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin'; value: string | string[]; }`\n\n- `top_k?: number`\n  Maximum number of results to return.\n\n- `vector_pipeline_weight?: number`\n  Weight of the vector search pipeline (0-1).\n\n### Returns\n\n- `{ results: { content: string; metadata?: object; rerank_score?: number; score?: number; static_fields?: { attachments?: object[]; chunk_end_char?: number; chunk_index?: number; chunk_start_char?: number; chunk_token_count?: number; page_range_end?: number; page_range_start?: number; parsed_directory_file_id?: string; }; }[]; }`\n  Response containing retrieval results.\n\n  - `results: { content: string; metadata?: object; rerank_score?: number; score?: number; static_fields?: { attachments?: { attachment_name: string; source_id: string; type: string; }[]; chunk_end_char?: number; chunk_index?: number; chunk_start_char?: number; chunk_token_count?: number; page_range_end?: number; page_range_start?: number; parsed_directory_file_id?: string; }; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst retrieval = await client.beta.retrieval.retrieve({ index_id: 'idx-abc123', query: 'What are the key findings?' });\n\nconsole.log(retrieval);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.retrieval.retrieve',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst retrieval = await client.beta.retrieval.retrieve({\n  index_id: 'idx-abc123',\n  query: 'What are the key findings?',\n});\n\nconsole.log(retrieval.results);",
+      },
+      python: {
+        method: 'beta.retrieval.retrieve',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nretrieval = client.beta.retrieval.retrieve(\n    index_id="idx-abc123",\n    query="What are the key findings?",\n)\nprint(retrieval.results)',
+      },
+      go: {
+        method: 'client.Beta.Retrieval.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tretrieval, err := client.Beta.Retrieval.Get(context.TODO(), llamacloudprod.BetaRetrievalGetParams{\n\t\tIndexID: "idx-abc123",\n\t\tQuery:   "What are the key findings?",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", retrieval.Results)\n}\n',
+      },
+      cli: {
+        method: 'retrieval retrieve',
+        example:
+          "llamacloud-prod beta:retrieval retrieve \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123 \\\n  --query 'What are the key findings?'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "index_id": "idx-abc123",\n          "query": "What are the key findings?",\n          "top_k": 10\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'find',
+    endpoint: '/api/v1/retrieval/files/find',
+    httpMethod: 'post',
+    summary: 'Find Files',
+    description: 'Search for files by name.',
+    stainlessPath: '(resource) beta.retrieval > (method) find',
+    qualified: 'client.beta.retrieval.find',
+    params: [
+      'index_id: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'file_name?: string;',
+      'file_name_contains?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+    ],
+    response: '{ file_id: string; file_name: string; }',
+    markdown:
+      "## find\n\n`client.beta.retrieval.find(index_id: string, organization_id?: string, project_id?: string, file_name?: string, file_name_contains?: string, page_size?: number, page_token?: string): { file_id: string; file_name: string; }`\n\n**post** `/api/v1/retrieval/files/find`\n\nSearch for files by name.\n\n### Parameters\n\n- `index_id: string`\n  ID of the index to search within.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `file_name?: string`\n  Exact file name to match.\n\n- `file_name_contains?: string`\n  Substring match on file name (case-insensitive).\n\n- `page_size?: number`\n  The maximum number of items to return. The service may return fewer than this value. If unspecified, a default page size will be used. The maximum value is typically 1000; values above this will be coerced to the maximum.\n\n- `page_token?: string`\n  A page token, received from a previous list call. Provide this to retrieve the subsequent page.\n\n### Returns\n\n- `{ file_id: string; file_name: string; }`\n  A file returned by find.\n\n  - `file_id: string`\n  - `file_name: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const retrievalFindResponse of client.beta.retrieval.find({ index_id: 'idx-abc123' })) {\n  console.log(retrievalFindResponse);\n}\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.retrieval.find',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const retrievalFindResponse of client.beta.retrieval.find({ index_id: 'idx-abc123' })) {\n  console.log(retrievalFindResponse.file_id);\n}",
+      },
+      python: {
+        method: 'beta.retrieval.find',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.retrieval.find(\n    index_id="idx-abc123",\n)\npage = page.items[0]\nprint(page.file_id)',
+      },
+      go: {
+        method: 'client.Beta.Retrieval.Find',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Retrieval.Find(context.TODO(), llamacloudprod.BetaRetrievalFindParams{\n\t\tIndexID: "idx-abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'retrieval find',
+        example:
+          "llamacloud-prod beta:retrieval find \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/files/find \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "index_id": "idx-abc123"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'grep',
+    endpoint: '/api/v1/retrieval/files/grep',
+    httpMethod: 'post',
+    summary: 'Grep File',
+    description: "Grep within a file's parsed content using a regex pattern.",
+    stainlessPath: '(resource) beta.retrieval > (method) grep',
+    qualified: 'client.beta.retrieval.grep',
+    params: [
+      'file_id: string;',
+      'index_id: string;',
+      'pattern: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'context_chars?: number;',
+      'page_size?: number;',
+      'page_token?: string;',
+    ],
+    response: '{ content: string; end_char: number; start_char: number; }',
+    markdown:
+      "## grep\n\n`client.beta.retrieval.grep(file_id: string, index_id: string, pattern: string, organization_id?: string, project_id?: string, context_chars?: number, page_size?: number, page_token?: string): { content: string; end_char: number; start_char: number; }`\n\n**post** `/api/v1/retrieval/files/grep`\n\nGrep within a file's parsed content using a regex pattern.\n\n### Parameters\n\n- `file_id: string`\n  ID of the file to grep.\n\n- `index_id: string`\n  ID of the index the file belongs to.\n\n- `pattern: string`\n  Regex pattern to search for.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `context_chars?: number`\n  Number of characters of context to include before and after the matched pattern in the content field of the response\n\n- `page_size?: number`\n  The maximum number of items to return. The service may return fewer than this value. If unspecified, a default page size will be used. The maximum value is typically 1000; values above this will be coerced to the maximum.\n\n- `page_token?: string`\n  A page token, received from a previous list call. Provide this to retrieve the subsequent page.\n\n### Returns\n\n- `{ content: string; end_char: number; start_char: number; }`\n  A single grep match within a file.\n\n  - `content: string`\n  - `end_char: number`\n  - `start_char: number`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const retrievalGrepResponse of client.beta.retrieval.grep({\n  file_id: 'file_id',\n  index_id: 'idx-abc123',\n  pattern: 'revenue|profit',\n})) {\n  console.log(retrievalGrepResponse);\n}\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.retrieval.grep',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const retrievalGrepResponse of client.beta.retrieval.grep({\n  file_id: 'file_id',\n  index_id: 'idx-abc123',\n  pattern: 'revenue|profit',\n})) {\n  console.log(retrievalGrepResponse.content);\n}",
+      },
+      python: {
+        method: 'beta.retrieval.grep',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.retrieval.grep(\n    file_id="file_id",\n    index_id="idx-abc123",\n    pattern="revenue|profit",\n)\npage = page.items[0]\nprint(page.content)',
+      },
+      go: {
+        method: 'client.Beta.Retrieval.Grep',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Retrieval.Grep(context.TODO(), llamacloudprod.BetaRetrievalGrepParams{\n\t\tFileID:  "file_id",\n\t\tIndexID: "idx-abc123",\n\t\tPattern: "revenue|profit",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'retrieval grep',
+        example:
+          "llamacloud-prod beta:retrieval grep \\\n  --api-key 'My API Key' \\\n  --file-id file_id \\\n  --index-id idx-abc123 \\\n  --pattern 'revenue|profit'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/files/grep \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "file_id",\n          "index_id": "idx-abc123",\n          "pattern": "revenue|profit"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'read',
+    endpoint: '/api/v1/retrieval/files/read',
+    httpMethod: 'post',
+    summary: 'Read File',
+    description: 'Read the parsed text content of a specific file.',
+    stainlessPath: '(resource) beta.retrieval > (method) read',
+    qualified: 'client.beta.retrieval.read',
+    params: [
+      'file_id: string;',
+      'index_id: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'max_length?: number;',
+      'offset?: number;',
+    ],
+    response: '{ content: string; }',
+    markdown:
+      "## read\n\n`client.beta.retrieval.read(file_id: string, index_id: string, organization_id?: string, project_id?: string, max_length?: number, offset?: number): { content: string; }`\n\n**post** `/api/v1/retrieval/files/read`\n\nRead the parsed text content of a specific file.\n\n### Parameters\n\n- `file_id: string`\n  ID of the file to read.\n\n- `index_id: string`\n  ID of the index the file belongs to.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `max_length?: number`\n  Maximum number of characters to read from the offset.\n\n- `offset?: number`\n  Starting character offset.\n\n### Returns\n\n- `{ content: string; }`\n  File read result.\n\n  - `content: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.retrieval.read({ file_id: 'file_id', index_id: 'idx-abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.retrieval.read',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.retrieval.read({ file_id: 'file_id', index_id: 'idx-abc123' });\n\nconsole.log(response.content);",
+      },
+      python: {
+        method: 'beta.retrieval.read',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.retrieval.read(\n    file_id="file_id",\n    index_id="idx-abc123",\n)\nprint(response.content)',
+      },
+      go: {
+        method: 'client.Beta.Retrieval.Read',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Retrieval.Read(context.TODO(), llamacloudprod.BetaRetrievalReadParams{\n\t\tFileID:  "file_id",\n\t\tIndexID: "idx-abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Content)\n}\n',
+      },
+      cli: {
+        method: 'retrieval read',
+        example:
+          "llamacloud-prod beta:retrieval read \\\n  --api-key 'My API Key' \\\n  --file-id file_id \\\n  --index-id idx-abc123",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/files/read \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "file_id",\n          "index_id": "idx-abc123"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/api/v1/chat',
+    httpMethod: 'get',
+    summary: 'List Sessions',
+    description: 'List all chat sessions for the current project.',
+    stainlessPath: '(resource) beta.chat > (method) list',
+    qualified: 'client.beta.chat.list',
+    params: [
+      'organization_id?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      '{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }',
+    markdown:
+      "## list\n\n`client.beta.chat.list(organization_id?: string, page_size?: number, page_token?: string, project_id?: string): { last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: object; }`\n\n**get** `/api/v1/chat`\n\nList all chat sessions for the current project.\n\n### Parameters\n\n- `organization_id?: string`\n\n- `page_size?: number`\n\n- `page_token?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }`\n  Summary of a chat session, including its title and last run metadata.\n\n  - `last_updated_at: string`\n  - `session_id: string`\n  - `generated_title?: string`\n  - `index_ids?: string[]`\n  - `job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const chatListResponse of client.beta.chat.list()) {\n  console.log(chatListResponse);\n}\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.list',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const chatListResponse of client.beta.chat.list()) {\n  console.log(chatListResponse.session_id);\n}",
+      },
+      python: {
+        method: 'beta.chat.list',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.chat.list()\npage = page.items[0]\nprint(page.session_id)',
+      },
+      go: {
+        method: 'client.Beta.Chat.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Chat.List(context.TODO(), llamacloudprod.BetaChatListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'chat list',
+        example: "llamacloud-prod beta:chat list \\\n  --api-key 'My API Key'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/api/v1/chat',
+    httpMethod: 'post',
+    summary: 'Create Session',
+    description: 'Create a chat session, optionally bound to indexes (locked after the first message).',
+    stainlessPath: '(resource) beta.chat > (method) create',
+    qualified: 'client.beta.chat.create',
+    params: ['organization_id?: string;', 'project_id?: string;', 'index_ids?: string[];'],
+    response:
+      '{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }',
+    markdown:
+      "## create\n\n`client.beta.chat.create(organization_id?: string, project_id?: string, index_ids?: string[]): { last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: object; }`\n\n**post** `/api/v1/chat`\n\nCreate a chat session, optionally bound to indexes (locked after the first message).\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `index_ids?: string[]`\n  Indexes this session will retrieve from. Once set and the first message has been sent, the source set is locked for the session's lifetime. Leave null to create an unbound session.\n\n### Returns\n\n- `{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }`\n  Summary of a chat session, including its title and last run metadata.\n\n  - `last_updated_at: string`\n  - `session_id: string`\n  - `generated_title?: string`\n  - `index_ids?: string[]`\n  - `job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst chat = await client.beta.chat.create();\n\nconsole.log(chat);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.create',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst chat = await client.beta.chat.create();\n\nconsole.log(chat.session_id);",
+      },
+      python: {
+        method: 'beta.chat.create',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nchat = client.beta.chat.create()\nprint(chat.session_id)',
+      },
+      go: {
+        method: 'client.Beta.Chat.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tchat, err := client.Beta.Chat.New(context.TODO(), llamacloudprod.BetaChatNewParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", chat.SessionID)\n}\n',
+      },
+      cli: {
+        method: 'chat create',
+        example: "llamacloud-prod beta:chat create \\\n  --api-key 'My API Key'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/api/v1/chat/{session_id}',
+    httpMethod: 'get',
+    summary: 'Get Full Session',
+    description: 'Retrieve a full session by ID, including its event history.',
+    stainlessPath: '(resource) beta.chat > (method) retrieve',
+    qualified: 'client.beta.chat.retrieve',
+    params: ['session_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ events: { content: string; type?: 'thinking_delta'; } | { content: string; type?: 'text_delta'; } | { content: string; type?: 'thinking'; } | { content: string; type?: 'text'; } | { arguments: object; call_id: string; name: string; type?: 'tool_call'; } | { call_id: string; name: string; result: object; image_attachment?: { attachment_name: string; source_id: string; }; type?: 'tool_result'; } | { error: string; is_error: boolean; usage: { duration_ms?: number; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; type?: 'stop'; } | { content: string; type?: 'user_input'; }[]; last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }",
+    markdown:
+      "## retrieve\n\n`client.beta.chat.retrieve(session_id: string, organization_id?: string, project_id?: string): { events: object | object | object | object | object | object | object | object[]; last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: object; }`\n\n**get** `/api/v1/chat/{session_id}`\n\nRetrieve a full session by ID, including its event history.\n\n### Parameters\n\n- `session_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ events: { content: string; type?: 'thinking_delta'; } | { content: string; type?: 'text_delta'; } | { content: string; type?: 'thinking'; } | { content: string; type?: 'text'; } | { arguments: object; call_id: string; name: string; type?: 'tool_call'; } | { call_id: string; name: string; result: object; image_attachment?: { attachment_name: string; source_id: string; }; type?: 'tool_result'; } | { error: string; is_error: boolean; usage: { duration_ms?: number; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; type?: 'stop'; } | { content: string; type?: 'user_input'; }[]; last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }`\n  Full chat session including its complete event history.\n\n  - `events: { content: string; type?: 'thinking_delta'; } | { content: string; type?: 'text_delta'; } | { content: string; type?: 'thinking'; } | { content: string; type?: 'text'; } | { arguments: object; call_id: string; name: string; type?: 'tool_call'; } | { call_id: string; name: string; result: object; image_attachment?: { attachment_name: string; source_id: string; }; type?: 'tool_result'; } | { error: string; is_error: boolean; usage: { duration_ms?: number; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; type?: 'stop'; } | { content: string; type?: 'user_input'; }[]`\n  - `last_updated_at: string`\n  - `session_id: string`\n  - `generated_title?: string`\n  - `index_ids?: string[]`\n  - `job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst chat = await client.beta.chat.retrieve('session_id');\n\nconsole.log(chat);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.retrieve',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst chat = await client.beta.chat.retrieve('session_id');\n\nconsole.log(chat.session_id);",
+      },
+      python: {
+        method: 'beta.chat.retrieve',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nchat = client.beta.chat.retrieve(\n    session_id="session_id",\n)\nprint(chat.session_id)',
+      },
+      go: {
+        method: 'client.Beta.Chat.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tchat, err := client.Beta.Chat.Get(\n\t\tcontext.TODO(),\n\t\t"session_id",\n\t\tllamacloudprod.BetaChatGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", chat.SessionID)\n}\n',
+      },
+      cli: {
+        method: 'chat retrieve',
+        example:
+          "llamacloud-prod beta:chat retrieve \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/api/v1/chat/{session_id}',
+    httpMethod: 'delete',
+    summary: 'Delete Session',
+    description: 'Delete a session.',
+    stainlessPath: '(resource) beta.chat > (method) delete',
+    qualified: 'client.beta.chat.delete',
+    params: ['session_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    markdown:
+      "## delete\n\n`client.beta.chat.delete(session_id: string, organization_id?: string, project_id?: string): void`\n\n**delete** `/api/v1/chat/{session_id}`\n\nDelete a session.\n\n### Parameters\n\n- `session_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nawait client.beta.chat.delete('session_id')\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.delete',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.beta.chat.delete('session_id');",
+      },
+      python: {
+        method: 'beta.chat.delete',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.beta.chat.delete(\n    session_id="session_id",\n)',
+      },
+      go: {
+        method: 'client.Beta.Chat.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Beta.Chat.Delete(\n\t\tcontext.TODO(),\n\t\t"session_id",\n\t\tllamacloudprod.BetaChatDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'chat delete',
+        example:
+          "llamacloud-prod beta:chat delete \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'get_summary',
+    endpoint: '/api/v1/chat/{session_id}/summary',
+    httpMethod: 'get',
+    summary: 'Get Session Summary',
+    description: 'Retrieve a session summary by ID.',
+    stainlessPath: '(resource) beta.chat > (method) get_summary',
+    qualified: 'client.beta.chat.getSummary',
+    params: ['session_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      '{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }',
+    markdown:
+      "## get_summary\n\n`client.beta.chat.getSummary(session_id: string, organization_id?: string, project_id?: string): { last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: object; }`\n\n**get** `/api/v1/chat/{session_id}/summary`\n\nRetrieve a session summary by ID.\n\n### Parameters\n\n- `session_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }`\n  Summary of a chat session, including its title and last run metadata.\n\n  - `last_updated_at: string`\n  - `session_id: string`\n  - `generated_title?: string`\n  - `index_ids?: string[]`\n  - `job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.chat.getSummary('session_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.getSummary',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.chat.getSummary('session_id');\n\nconsole.log(response.session_id);",
+      },
+      python: {
+        method: 'beta.chat.get_summary',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.chat.get_summary(\n    session_id="session_id",\n)\nprint(response.session_id)',
+      },
+      go: {
+        method: 'client.Beta.Chat.GetSummary',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Chat.GetSummary(\n\t\tcontext.TODO(),\n\t\t"session_id",\n\t\tllamacloudprod.BetaChatGetSummaryParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.SessionID)\n}\n',
+      },
+      cli: {
+        method: 'chat get_summary',
+        example:
+          "llamacloud-prod beta:chat get-summary \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID/summary \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'set_title',
+    endpoint: '/api/v1/chat/{session_id}/title',
+    httpMethod: 'post',
+    summary: 'Generate Session Title',
+    description: 'Generate a title for a session from its first user message.',
+    stainlessPath: '(resource) beta.chat > (method) set_title',
+    qualified: 'client.beta.chat.setTitle',
+    params: [
+      'session_id: string;',
+      'first_message: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      '{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }',
+    markdown:
+      "## set_title\n\n`client.beta.chat.setTitle(session_id: string, first_message: string, organization_id?: string, project_id?: string): { last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: object; }`\n\n**post** `/api/v1/chat/{session_id}/title`\n\nGenerate a title for a session from its first user message.\n\n### Parameters\n\n- `session_id: string`\n\n- `first_message: string`\n  First user message of the session, used to infer a short title.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ last_updated_at: string; session_id: string; generated_title?: string; index_ids?: string[]; job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }; }`\n  Summary of a chat session, including its title and last run metadata.\n\n  - `last_updated_at: string`\n  - `session_id: string`\n  - `generated_title?: string`\n  - `index_ids?: string[]`\n  - `job_metadata?: { duration_ms?: number; error?: string; export_config_ids?: string[]; is_error?: boolean; total_input_tokens?: number; total_output_tokens?: number; turns?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.chat.setTitle('session_id', { first_message: 'What were the main findings in Q3?' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.setTitle',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.chat.setTitle('session_id', {\n  first_message: 'What were the main findings in Q3?',\n});\n\nconsole.log(response.session_id);",
+      },
+      python: {
+        method: 'beta.chat.set_title',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.chat.set_title(\n    session_id="session_id",\n    first_message="What were the main findings in Q3?",\n)\nprint(response.session_id)',
+      },
+      go: {
+        method: 'client.Beta.Chat.SetTitle',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Chat.SetTitle(\n\t\tcontext.TODO(),\n\t\t"session_id",\n\t\tllamacloudprod.BetaChatSetTitleParams{\n\t\t\tFirstMessage: "What were the main findings in Q3?",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.SessionID)\n}\n',
+      },
+      cli: {
+        method: 'chat set_title',
+        example:
+          "llamacloud-prod beta:chat set-title \\\n  --api-key 'My API Key' \\\n  --session-id session_id \\\n  --first-message 'What were the main findings in Q3?'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID/title \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "first_message": "What were the main findings in Q3?"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'stream',
+    endpoint: '/api/v1/chat/{session_id}/messages/stream',
+    httpMethod: 'post',
+    summary: 'Stream Messages',
+    description: 'Stream agent events for a chat turn as Server-Sent Events.',
+    stainlessPath: '(resource) beta.chat > (method) stream',
+    qualified: 'client.beta.chat.stream',
+    params: [
+      'session_id: string;',
+      'index_ids: string[];',
+      'prompt: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+    ],
+    response: 'object',
+    markdown:
+      "## stream\n\n`client.beta.chat.stream(session_id: string, index_ids: string[], prompt: string, organization_id?: string, project_id?: string): object`\n\n**post** `/api/v1/chat/{session_id}/messages/stream`\n\nStream agent events for a chat turn as Server-Sent Events.\n\n### Parameters\n\n- `session_id: string`\n\n- `index_ids: string[]`\n  Indexes to retrieve data from.\n\n- `prompt: string`\n  User message for this chat turn.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.chat.stream('session_id', { index_ids: ['idx-abc123', 'idx-def456'], prompt: 'What were the main findings in Q3?' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.beta.chat.stream',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.chat.stream('session_id', {\n  index_ids: ['idx-abc123', 'idx-def456'],\n  prompt: 'What were the main findings in Q3?',\n});\n\nconsole.log(response);",
+      },
+      python: {
+        method: 'beta.chat.stream',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.chat.stream(\n    session_id="session_id",\n    index_ids=["idx-abc123", "idx-def456"],\n    prompt="What were the main findings in Q3?",\n)\nprint(response)',
+      },
+      go: {
+        method: 'client.Beta.Chat.Stream',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Chat.Stream(\n\t\tcontext.TODO(),\n\t\t"session_id",\n\t\tllamacloudprod.BetaChatStreamParams{\n\t\t\tIndexIDs: []string{"idx-abc123", "idx-def456"},\n\t\t\tPrompt:   "What were the main findings in Q3?",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'chat stream',
+        example:
+          "llamacloud-prod beta:chat stream \\\n  --api-key 'My API Key' \\\n  --session-id session_id \\\n  --index-id idx-abc123 \\\n  --index-id idx-def456 \\\n  --prompt 'What were the main findings in Q3?'",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID/messages/stream \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "index_ids": [\n            "idx-abc123",\n            "idx-def456"\n          ],\n          "prompt": "What were the main findings in Q3?"\n        }\'',
       },
     },
   },
@@ -2799,6 +4234,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.agent_data.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nagent_data = client.beta.agent_data.get(\n    item_id="item_id",\n)\nprint(agent_data.id)',
+      },
+      go: {
+        method: 'client.Beta.AgentData.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tagentData, err := client.Beta.AgentData.Get(\n\t\tcontext.TODO(),\n\t\t"item_id",\n\t\tllamacloudprod.BetaAgentDataGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", agentData.ID)\n}\n',
+      },
+      cli: {
+        method: 'agent_data get',
+        example: "llamacloud-prod beta:agent-data get \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
       http: {
         example:
@@ -2830,6 +4274,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nagent_data = client.beta.agent_data.update(\n    item_id="item_id",\n    data={\n        "foo": "bar"\n    },\n)\nprint(agent_data.id)',
       },
+      go: {
+        method: 'client.Beta.AgentData.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tagentData, err := client.Beta.AgentData.Update(\n\t\tcontext.TODO(),\n\t\t"item_id",\n\t\tllamacloudprod.BetaAgentDataUpdateParams{\n\t\t\tData: map[string]any{\n\t\t\t\t"foo": "bar",\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", agentData.ID)\n}\n',
+      },
+      cli: {
+        method: 'agent_data update',
+        example:
+          "llamacloud-prod beta:agent-data update \\\n  --api-key 'My API Key' \\\n  --item-id item_id \\\n  --data '{foo: bar}'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data/$ITEM_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "data": {\n            "foo": "bar"\n          }\n        }\'',
@@ -2858,6 +4312,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.agent_data.delete',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nagent_data = client.beta.agent_data.delete(\n    item_id="item_id",\n)\nprint(agent_data)',
+      },
+      go: {
+        method: 'client.Beta.AgentData.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tagentData, err := client.Beta.AgentData.Delete(\n\t\tcontext.TODO(),\n\t\t"item_id",\n\t\tllamacloudprod.BetaAgentDataDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", agentData)\n}\n',
+      },
+      cli: {
+        method: 'agent_data delete',
+        example:
+          "llamacloud-prod beta:agent-data delete \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
       http: {
         example:
@@ -2894,6 +4358,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.agent_data.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nagent_data = client.beta.agent_data.create(\n    data={\n        "foo": "bar"\n    },\n    deployment_name="deployment_name",\n)\nprint(agent_data.id)',
+      },
+      go: {
+        method: 'client.Beta.AgentData.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tagentData, err := client.Beta.AgentData.New(context.TODO(), llamacloudprod.BetaAgentDataNewParams{\n\t\tData: map[string]any{\n\t\t\t"foo": "bar",\n\t\t},\n\t\tDeploymentName: "deployment_name",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", agentData.ID)\n}\n',
+      },
+      cli: {
+        method: 'agent_data create',
+        example:
+          "llamacloud-prod beta:agent-data create \\\n  --api-key 'My API Key' \\\n  --data '{foo: bar}' \\\n  --deployment-name deployment_name",
       },
       http: {
         example:
@@ -2935,6 +4409,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.agent_data.search',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.agent_data.search(\n    deployment_name="deployment_name",\n)\npage = page.items[0]\nprint(page.id)',
+      },
+      go: {
+        method: 'client.Beta.AgentData.Search',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.AgentData.Search(context.TODO(), llamacloudprod.BetaAgentDataSearchParams{\n\t\tDeploymentName: "deployment_name",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'agent_data search',
+        example:
+          "llamacloud-prod beta:agent-data search \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
       },
       http: {
         example:
@@ -2978,6 +4462,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.agent_data.aggregate(\n    deployment_name="deployment_name",\n)\npage = page.items[0]\nprint(page.group_key)',
       },
+      go: {
+        method: 'client.Beta.AgentData.Aggregate',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.AgentData.Aggregate(context.TODO(), llamacloudprod.BetaAgentDataAggregateParams{\n\t\tDeploymentName: "deployment_name",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'agent_data aggregate',
+        example:
+          "llamacloud-prod beta:agent-data aggregate \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data/:aggregate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "deployment_name": "deployment_name"\n        }\'',
@@ -3012,6 +4506,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.agent_data.delete_by_query',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.agent_data.delete_by_query(\n    deployment_name="deployment_name",\n)\nprint(response.deleted_count)',
+      },
+      go: {
+        method: 'client.Beta.AgentData.DeleteByQuery',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.AgentData.DeleteByQuery(context.TODO(), llamacloudprod.BetaAgentDataDeleteByQueryParams{\n\t\tDeploymentName: "deployment_name",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.DeletedCount)\n}\n',
+      },
+      cli: {
+        method: 'agent_data delete_by_query',
+        example:
+          "llamacloud-prod beta:agent-data delete-by-query \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
       },
       http: {
         example:
@@ -3048,6 +4552,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.sheets.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsheets_job = client.beta.sheets.create(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(sheets_job.id)',
+      },
+      go: {
+        method: 'client.Beta.Sheets.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsheetsJob, err := client.Beta.Sheets.New(context.TODO(), llamacloudprod.BetaSheetNewParams{\n\t\tFileID: "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", sheetsJob.ID)\n}\n',
+      },
+      cli: {
+        method: 'sheets create',
+        example:
+          "llamacloud-prod beta:sheets create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:
@@ -3090,6 +4604,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.sheets.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Beta.Sheets.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Sheets.List(context.TODO(), llamacloudprod.BetaSheetListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'sheets list',
+        example: "llamacloud-prod beta:sheets list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/sheets/jobs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3125,6 +4648,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.sheets.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsheets_job = client.beta.sheets.get(\n    spreadsheet_job_id="spreadsheet_job_id",\n)\nprint(sheets_job.id)',
+      },
+      go: {
+        method: 'client.Beta.Sheets.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsheetsJob, err := client.Beta.Sheets.Get(\n\t\tcontext.TODO(),\n\t\t"spreadsheet_job_id",\n\t\tllamacloudprod.BetaSheetGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", sheetsJob.ID)\n}\n',
+      },
+      cli: {
+        method: 'sheets get',
+        example:
+          "llamacloud-prod beta:sheets get \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
       },
       http: {
         example:
@@ -3163,6 +4696,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npresigned_url = client.beta.sheets.get_result_table(\n    region_type="table",\n    spreadsheet_job_id="spreadsheet_job_id",\n    region_id="region_id",\n)\nprint(presigned_url.expires_at)',
       },
+      go: {
+        method: 'client.Beta.Sheets.GetResultTable',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpresignedURL, err := client.Beta.Sheets.GetResultTable(\n\t\tcontext.TODO(),\n\t\tllamacloudprod.BetaSheetGetResultTableParamsRegionTypeTable,\n\t\tllamacloudprod.BetaSheetGetResultTableParams{\n\t\t\tSpreadsheetJobID: "spreadsheet_job_id",\n\t\t\tRegionID:         "region_id",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", presignedURL.ExpiresAt)\n}\n',
+      },
+      cli: {
+        method: 'sheets get_result_table',
+        example:
+          "llamacloud-prod beta:sheets get-result-table \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id \\\n  --region-id region_id \\\n  --region-type table",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/sheets/jobs/$SPREADSHEET_JOB_ID/regions/$REGION_ID/result/$REGION_TYPE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3193,6 +4736,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.sheets.delete_job(\n    spreadsheet_job_id="spreadsheet_job_id",\n)\nprint(response)',
       },
+      go: {
+        method: 'client.Beta.Sheets.DeleteJob',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Sheets.DeleteJob(\n\t\tcontext.TODO(),\n\t\t"spreadsheet_job_id",\n\t\tllamacloudprod.BetaSheetDeleteJobParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response)\n}\n',
+      },
+      cli: {
+        method: 'sheets delete_job',
+        example:
+          "llamacloud-prod beta:sheets delete-job \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/sheets/jobs/$SPREADSHEET_JOB_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3204,21 +4757,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/v1/beta/directories',
     httpMethod: 'post',
     summary: 'Create Directory',
-    description:
-      'Create a new directory within the specified project.\n\nIf data_source_id is provided, validates that the data source exists\nand belongs to the same project.',
+    description: 'Create a new directory within the specified project.',
     stainlessPath: '(resource) beta.directories > (method) create',
     qualified: 'client.beta.directories.create',
-    params: [
-      'name: string;',
-      'organization_id?: string;',
-      'project_id?: string;',
-      'data_source_id?: string;',
-      'description?: string;',
-    ],
+    params: ['name: string;', 'organization_id?: string;', 'project_id?: string;', 'description?: string;'],
     response:
-      '{ id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }',
+      '{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }',
     markdown:
-      "## create\n\n`client.beta.directories.create(name: string, organization_id?: string, project_id?: string, data_source_id?: string, description?: string): { id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n\n**post** `/api/v1/beta/directories`\n\nCreate a new directory within the specified project.\n\nIf data_source_id is provided, validates that the data source exists\nand belongs to the same project.\n\n### Parameters\n\n- `name: string`\n  Human-readable name for the directory.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `data_source_id?: string`\n  Optional data source id the directory syncs from.\n\n- `description?: string`\n  Optional description shown to users.\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n  API response schema for a directory.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `data_source_id?: string`\n  - `deleted_at?: string`\n  - `description?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst directory = await client.beta.directories.create({ name: 'x' });\n\nconsole.log(directory);\n```",
+      "## create\n\n`client.beta.directories.create(name: string, organization_id?: string, project_id?: string, description?: string): { id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n\n**post** `/api/v1/beta/directories`\n\nCreate a new directory within the specified project.\n\n### Parameters\n\n- `name: string`\n  Human-readable name for the directory.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `description?: string`\n  Optional description shown to users.\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n  API response schema for a directory.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `description?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst directory = await client.beta.directories.create({ name: 'x' });\n\nconsole.log(directory);\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.directories.create',
@@ -3229,6 +4775,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndirectory = client.beta.directories.create(\n    name="x",\n)\nprint(directory.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdirectory, err := client.Beta.Directories.New(context.TODO(), llamacloudprod.BetaDirectoryNewParams{\n\t\tName: "x",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", directory.ID)\n}\n',
+      },
+      cli: {
+        method: 'directories create',
+        example: "llamacloud-prod beta:directories create \\\n  --api-key 'My API Key' \\\n  --name x",
       },
       http: {
         example:
@@ -3245,7 +4800,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     stainlessPath: '(resource) beta.directories > (method) list',
     qualified: 'client.beta.directories.list',
     params: [
-      'data_source_id?: string;',
       'include_deleted?: boolean;',
       'name?: string;',
       'organization_id?: string;',
@@ -3255,9 +4809,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       "type?: 'user' | 'index';",
     ],
     response:
-      '{ id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }',
+      '{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }',
     markdown:
-      "## list\n\n`client.beta.directories.list(data_source_id?: string, include_deleted?: boolean, name?: string, organization_id?: string, page_size?: number, page_token?: string, project_id?: string, type?: 'user' | 'index'): { id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n\n**get** `/api/v1/beta/directories`\n\nList Directories\n\n### Parameters\n\n- `data_source_id?: string`\n\n- `include_deleted?: boolean`\n\n- `name?: string`\n\n- `organization_id?: string`\n\n- `page_size?: number`\n\n- `page_token?: string`\n\n- `project_id?: string`\n\n- `type?: 'user' | 'index'`\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n  API response schema for a directory.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `data_source_id?: string`\n  - `deleted_at?: string`\n  - `description?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const directoryListResponse of client.beta.directories.list()) {\n  console.log(directoryListResponse);\n}\n```",
+      "## list\n\n`client.beta.directories.list(include_deleted?: boolean, name?: string, organization_id?: string, page_size?: number, page_token?: string, project_id?: string, type?: 'user' | 'index'): { id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n\n**get** `/api/v1/beta/directories`\n\nList Directories\n\n### Parameters\n\n- `include_deleted?: boolean`\n\n- `name?: string`\n\n- `organization_id?: string`\n\n- `page_size?: number`\n\n- `page_token?: string`\n\n- `project_id?: string`\n\n- `type?: 'user' | 'index'`\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n  API response schema for a directory.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `description?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const directoryListResponse of client.beta.directories.list()) {\n  console.log(directoryListResponse);\n}\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.directories.list',
@@ -3268,6 +4822,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.directories.list()\npage = page.items[0]\nprint(page.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Directories.List(context.TODO(), llamacloudprod.BetaDirectoryListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'directories list',
+        example: "llamacloud-prod beta:directories list \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -3285,9 +4848,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.beta.directories.get',
     params: ['directory_id: string;', 'organization_id?: string;', 'project_id?: string;'],
     response:
-      '{ id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }',
+      '{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }',
     markdown:
-      "## get\n\n`client.beta.directories.get(directory_id: string, organization_id?: string, project_id?: string): { id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n\n**get** `/api/v1/beta/directories/{directory_id}`\n\nRetrieve a directory by its identifier.\n\n### Parameters\n\n- `directory_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n  API response schema for a directory.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `data_source_id?: string`\n  - `deleted_at?: string`\n  - `description?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst directory = await client.beta.directories.get('directory_id');\n\nconsole.log(directory);\n```",
+      "## get\n\n`client.beta.directories.get(directory_id: string, organization_id?: string, project_id?: string): { id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n\n**get** `/api/v1/beta/directories/{directory_id}`\n\nRetrieve a directory by its identifier.\n\n### Parameters\n\n- `directory_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n  API response schema for a directory.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `description?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst directory = await client.beta.directories.get('directory_id');\n\nconsole.log(directory);\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.directories.get',
@@ -3298,6 +4861,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndirectory = client.beta.directories.get(\n    directory_id="directory_id",\n)\nprint(directory.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdirectory, err := client.Beta.Directories.Get(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", directory.ID)\n}\n',
+      },
+      cli: {
+        method: 'directories get',
+        example:
+          "llamacloud-prod beta:directories get \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
       http: {
         example:
@@ -3321,9 +4894,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'name?: string;',
     ],
     response:
-      '{ id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }',
+      '{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }',
     markdown:
-      "## update\n\n`client.beta.directories.update(directory_id: string, organization_id?: string, project_id?: string, description?: string, name?: string): { id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n\n**patch** `/api/v1/beta/directories/{directory_id}`\n\nUpdate directory metadata.\n\n### Parameters\n\n- `directory_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `description?: string`\n  Updated description for the directory.\n\n- `name?: string`\n  Updated name for the directory.\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n  API response schema for a directory.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `data_source_id?: string`\n  - `deleted_at?: string`\n  - `description?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst directory = await client.beta.directories.update('directory_id');\n\nconsole.log(directory);\n```",
+      "## update\n\n`client.beta.directories.update(directory_id: string, organization_id?: string, project_id?: string, description?: string, name?: string): { id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n\n**patch** `/api/v1/beta/directories/{directory_id}`\n\nUpdate directory metadata.\n\n### Parameters\n\n- `directory_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `description?: string`\n  Updated description for the directory.\n\n- `name?: string`\n  Updated name for the directory.\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; updated_at?: string; }`\n  API response schema for a directory.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `description?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst directory = await client.beta.directories.update('directory_id');\n\nconsole.log(directory);\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.directories.update',
@@ -3334,6 +4907,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.update',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ndirectory = client.beta.directories.update(\n    directory_id="directory_id",\n)\nprint(directory.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdirectory, err := client.Beta.Directories.Update(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", directory.ID)\n}\n',
+      },
+      cli: {
+        method: 'directories update',
+        example:
+          "llamacloud-prod beta:directories update \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
       http: {
         example:
@@ -3363,6 +4946,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.beta.directories.delete(\n    directory_id="directory_id",\n)',
       },
+      go: {
+        method: 'client.Beta.Directories.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Beta.Directories.Delete(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'directories delete',
+        example:
+          "llamacloud-prod beta:directories delete \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3388,9 +4981,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'unique_id?: string;',
     ],
     response:
-      '{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }',
+      '{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; file_id?: string; metadata?: object; updated_at?: string; }',
     markdown:
-      "## add\n\n`client.beta.directories.files.add(directory_id: string, file_id: string, organization_id?: string, project_id?: string, display_name?: string, metadata?: object, unique_id?: string): { id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }`\n\n**post** `/api/v1/beta/directories/{directory_id}/files`\n\nCreate a new file within the specified directory.\n\nThe directory must exist and belong to the project passed in.\nThe file_id must be provided and exist in the project.\n\n### Parameters\n\n- `directory_id: string`\n\n- `file_id: string`\n  File ID for the storage location (required).\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `display_name?: string`\n  Display name for the file. If not provided, will use the file's name.\n\n- `metadata?: object`\n  User-defined metadata key-value pairs to associate with the file.\n\n- `unique_id?: string`\n  Unique identifier for the file in the directory. If not provided, will use the file's external_file_id or name.\n\n### Returns\n\n- `{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }`\n  API response schema for a directory file.\n\n  - `id: string`\n  - `directory_id: string`\n  - `display_name: string`\n  - `project_id: string`\n  - `unique_id: string`\n  - `created_at?: string`\n  - `data_source_id?: string`\n  - `deleted_at?: string`\n  - `file_id?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.directories.files.add('directory_id', { file_id: 'file_id' });\n\nconsole.log(response);\n```",
+      "## add\n\n`client.beta.directories.files.add(directory_id: string, file_id: string, organization_id?: string, project_id?: string, display_name?: string, metadata?: object, unique_id?: string): { id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: presigned_url; file_id?: string; metadata?: object; updated_at?: string; }`\n\n**post** `/api/v1/beta/directories/{directory_id}/files`\n\nCreate a new file within the specified directory.\n\nThe directory must exist and belong to the project passed in.\nThe file_id must be provided and exist in the project.\n\n### Parameters\n\n- `directory_id: string`\n\n- `file_id: string`\n  File ID for the storage location (required).\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `display_name?: string`\n  Display name for the file. If not provided, will use the file's name.\n\n- `metadata?: object`\n  User-defined metadata key-value pairs to associate with the file.\n\n- `unique_id?: string`\n  Unique identifier for the file in the directory. If not provided, will use the file's external_file_id or name.\n\n### Returns\n\n- `{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; file_id?: string; metadata?: object; updated_at?: string; }`\n  API response schema for a directory file.\n\n  - `id: string`\n  - `directory_id: string`\n  - `display_name: string`\n  - `project_id: string`\n  - `unique_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `download_url?: { expires_at: string; url: string; form_fields?: object; }`\n  - `file_id?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.directories.files.add('directory_id', { file_id: 'file_id' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.directories.files.add',
@@ -3401,6 +4994,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.files.add',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.directories.files.add(\n    directory_id="directory_id",\n    file_id="file_id",\n)\nprint(response.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Files.Add',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Directories.Files.Add(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryFileAddParams{\n\t\t\tFileID: "file_id",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      cli: {
+        method: 'files add',
+        example:
+          "llamacloud-prod beta:directories:files add \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --file-id file_id",
       },
       http: {
         example:
@@ -3420,6 +5023,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'directory_id: string;',
       'display_name?: string;',
       'display_name_contains?: string;',
+      'expand?: string[];',
       'file_id?: string;',
       'include_deleted?: boolean;',
       'organization_id?: string;',
@@ -3427,11 +5031,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'page_token?: string;',
       'project_id?: string;',
       'unique_id?: string;',
+      'updated_at_on_or_after?: string;',
+      'updated_at_on_or_before?: string;',
     ],
     response:
-      '{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }',
+      '{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; file_id?: string; metadata?: object; updated_at?: string; }',
     markdown:
-      "## list\n\n`client.beta.directories.files.list(directory_id: string, display_name?: string, display_name_contains?: string, file_id?: string, include_deleted?: boolean, organization_id?: string, page_size?: number, page_token?: string, project_id?: string, unique_id?: string): { id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }`\n\n**get** `/api/v1/beta/directories/{directory_id}/files`\n\nList all files within the specified directory with optional filtering and pagination.\n\n### Parameters\n\n- `directory_id: string`\n\n- `display_name?: string`\n\n- `display_name_contains?: string`\n\n- `file_id?: string`\n\n- `include_deleted?: boolean`\n\n- `organization_id?: string`\n\n- `page_size?: number`\n\n- `page_token?: string`\n\n- `project_id?: string`\n\n- `unique_id?: string`\n\n### Returns\n\n- `{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }`\n  API response schema for a directory file.\n\n  - `id: string`\n  - `directory_id: string`\n  - `display_name: string`\n  - `project_id: string`\n  - `unique_id: string`\n  - `created_at?: string`\n  - `data_source_id?: string`\n  - `deleted_at?: string`\n  - `file_id?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const fileListResponse of client.beta.directories.files.list('directory_id')) {\n  console.log(fileListResponse);\n}\n```",
+      "## list\n\n`client.beta.directories.files.list(directory_id: string, display_name?: string, display_name_contains?: string, expand?: string[], file_id?: string, include_deleted?: boolean, organization_id?: string, page_size?: number, page_token?: string, project_id?: string, unique_id?: string, updated_at_on_or_after?: string, updated_at_on_or_before?: string): { id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: presigned_url; file_id?: string; metadata?: object; updated_at?: string; }`\n\n**get** `/api/v1/beta/directories/{directory_id}/files`\n\nList all files within the specified directory with optional filtering and pagination.\n\n### Parameters\n\n- `directory_id: string`\n\n- `display_name?: string`\n\n- `display_name_contains?: string`\n\n- `expand?: string[]`\n  Fields to expand on each directory file.\n\n- `file_id?: string`\n\n- `include_deleted?: boolean`\n\n- `organization_id?: string`\n\n- `page_size?: number`\n\n- `page_token?: string`\n\n- `project_id?: string`\n\n- `unique_id?: string`\n\n- `updated_at_on_or_after?: string`\n  Include items updated at or after this timestamp (inclusive)\n\n- `updated_at_on_or_before?: string`\n  Include items updated at or before this timestamp (inclusive)\n\n### Returns\n\n- `{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; file_id?: string; metadata?: object; updated_at?: string; }`\n  API response schema for a directory file.\n\n  - `id: string`\n  - `directory_id: string`\n  - `display_name: string`\n  - `project_id: string`\n  - `unique_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `download_url?: { expires_at: string; url: string; form_fields?: object; }`\n  - `file_id?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const fileListResponse of client.beta.directories.files.list('directory_id')) {\n  console.log(fileListResponse);\n}\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.directories.files.list',
@@ -3442,6 +5048,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.files.list',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.directories.files.list(\n    directory_id="directory_id",\n)\npage = page.items[0]\nprint(page.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Files.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Directories.Files.List(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryFileListParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'files list',
+        example:
+          "llamacloud-prod beta:directories:files list \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
       http: {
         example:
@@ -3461,13 +5077,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     params: [
       'directory_id: string;',
       'directory_file_id: string;',
+      'expand?: string[];',
       'organization_id?: string;',
       'project_id?: string;',
     ],
     response:
-      '{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }',
+      '{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; file_id?: string; metadata?: object; updated_at?: string; }',
     markdown:
-      "## get\n\n`client.beta.directories.files.get(directory_id: string, directory_file_id: string, organization_id?: string, project_id?: string): { id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }`\n\n**get** `/api/v1/beta/directories/{directory_id}/files/{directory_file_id}`\n\nGet a file by its directory_file_id within the specified directory. If you're trying to get a file by its unique_id, use the list endpoint with a filter instead.\n\n### Parameters\n\n- `directory_id: string`\n\n- `directory_file_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }`\n  API response schema for a directory file.\n\n  - `id: string`\n  - `directory_id: string`\n  - `display_name: string`\n  - `project_id: string`\n  - `unique_id: string`\n  - `created_at?: string`\n  - `data_source_id?: string`\n  - `deleted_at?: string`\n  - `file_id?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst file = await client.beta.directories.files.get('directory_file_id', { directory_id: 'directory_id' });\n\nconsole.log(file);\n```",
+      "## get\n\n`client.beta.directories.files.get(directory_id: string, directory_file_id: string, expand?: string[], organization_id?: string, project_id?: string): { id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: presigned_url; file_id?: string; metadata?: object; updated_at?: string; }`\n\n**get** `/api/v1/beta/directories/{directory_id}/files/{directory_file_id}`\n\nGet a file by its directory_file_id within the specified directory. If you're trying to get a file by its unique_id, use the list endpoint with a filter instead.\n\n### Parameters\n\n- `directory_id: string`\n\n- `directory_file_id: string`\n\n- `expand?: string[]`\n  Fields to expand.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; file_id?: string; metadata?: object; updated_at?: string; }`\n  API response schema for a directory file.\n\n  - `id: string`\n  - `directory_id: string`\n  - `display_name: string`\n  - `project_id: string`\n  - `unique_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `download_url?: { expires_at: string; url: string; form_fields?: object; }`\n  - `file_id?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst file = await client.beta.directories.files.get('directory_file_id', { directory_id: 'directory_id' });\n\nconsole.log(file);\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.directories.files.get',
@@ -3478,6 +5095,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.files.get',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nfile = client.beta.directories.files.get(\n    directory_file_id="directory_file_id",\n    directory_id="directory_id",\n)\nprint(file.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Files.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfile, err := client.Beta.Directories.Files.Get(\n\t\tcontext.TODO(),\n\t\t"directory_file_id",\n\t\tllamacloudprod.BetaDirectoryFileGetParams{\n\t\t\tDirectoryID: "directory_id",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.ID)\n}\n',
+      },
+      cli: {
+        method: 'files get',
+        example:
+          "llamacloud-prod beta:directories:files get \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
       },
       http: {
         example:
@@ -3505,9 +5132,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'unique_id?: string;',
     ],
     response:
-      '{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }',
+      '{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; file_id?: string; metadata?: object; updated_at?: string; }',
     markdown:
-      "## update\n\n`client.beta.directories.files.update(directory_id: string, directory_file_id: string, organization_id?: string, project_id?: string, directory_id?: string, display_name?: string, metadata?: object, unique_id?: string): { id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }`\n\n**patch** `/api/v1/beta/directories/{directory_id}/files/{directory_file_id}`\n\nUpdate file metadata within the specified directory.\n\nSupports moving files to a different directory by setting directory_id.\n\nNote: This endpoint uses directory_file_id (the internal ID). If you're trying to update a file by its unique_id, use the list endpoint with a filter to find the directory_file_id first.\n\n### Parameters\n\n- `directory_id: string`\n\n- `directory_file_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `directory_id?: string`\n  Move file to a different directory.\n\n- `display_name?: string`\n  Updated display name.\n\n- `metadata?: object`\n  User-defined metadata key-value pairs. Replaces the user metadata layer.\n\n- `unique_id?: string`\n  Updated unique identifier.\n\n### Returns\n\n- `{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }`\n  API response schema for a directory file.\n\n  - `id: string`\n  - `directory_id: string`\n  - `display_name: string`\n  - `project_id: string`\n  - `unique_id: string`\n  - `created_at?: string`\n  - `data_source_id?: string`\n  - `deleted_at?: string`\n  - `file_id?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst file = await client.beta.directories.files.update('directory_file_id', { path_directory_id: 'directory_id' });\n\nconsole.log(file);\n```",
+      "## update\n\n`client.beta.directories.files.update(directory_id: string, directory_file_id: string, organization_id?: string, project_id?: string, directory_id?: string, display_name?: string, metadata?: object, unique_id?: string): { id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: presigned_url; file_id?: string; metadata?: object; updated_at?: string; }`\n\n**patch** `/api/v1/beta/directories/{directory_id}/files/{directory_file_id}`\n\nUpdate file metadata within the specified directory.\n\nSupports moving files to a different directory by setting directory_id.\n\nNote: This endpoint uses directory_file_id (the internal ID). If you're trying to update a file by its unique_id, use the list endpoint with a filter to find the directory_file_id first.\n\n### Parameters\n\n- `directory_id: string`\n\n- `directory_file_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `directory_id?: string`\n  Move file to a different directory.\n\n- `display_name?: string`\n  Updated display name.\n\n- `metadata?: object`\n  User-defined metadata key-value pairs. Replaces the user metadata layer.\n\n- `unique_id?: string`\n  Updated unique identifier.\n\n### Returns\n\n- `{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; file_id?: string; metadata?: object; updated_at?: string; }`\n  API response schema for a directory file.\n\n  - `id: string`\n  - `directory_id: string`\n  - `display_name: string`\n  - `project_id: string`\n  - `unique_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `download_url?: { expires_at: string; url: string; form_fields?: object; }`\n  - `file_id?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst file = await client.beta.directories.files.update('directory_file_id', { path_directory_id: 'directory_id' });\n\nconsole.log(file);\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.directories.files.update',
@@ -3518,6 +5145,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.directories.files.update',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nfile = client.beta.directories.files.update(\n    directory_file_id="directory_file_id",\n    path_directory_id="directory_id",\n)\nprint(file.id)',
+      },
+      go: {
+        method: 'client.Beta.Directories.Files.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfile, err := client.Beta.Directories.Files.Update(\n\t\tcontext.TODO(),\n\t\t"directory_file_id",\n\t\tllamacloudprod.BetaDirectoryFileUpdateParams{\n\t\t\tPathDirectoryID: "directory_id",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.ID)\n}\n',
+      },
+      cli: {
+        method: 'files update',
+        example:
+          "llamacloud-prod beta:directories:files update \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
       },
       http: {
         example:
@@ -3553,6 +5190,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.beta.directories.files.delete(\n    directory_file_id="directory_file_id",\n    directory_id="directory_id",\n)',
       },
+      go: {
+        method: 'client.Beta.Directories.Files.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Beta.Directories.Files.Delete(\n\t\tcontext.TODO(),\n\t\t"directory_file_id",\n\t\tllamacloudprod.BetaDirectoryFileDeleteParams{\n\t\t\tDirectoryID: "directory_id",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'files delete',
+        example:
+          "llamacloud-prod beta:directories:files delete \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files/$DIRECTORY_FILE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3575,12 +5222,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'project_id?: string;',
       'display_name?: string;',
       'external_file_id?: string;',
+      'metadata?: string;',
       'unique_id?: string;',
     ],
     response:
-      '{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }',
+      '{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; file_id?: string; metadata?: object; updated_at?: string; }',
     markdown:
-      "## upload\n\n`client.beta.directories.files.upload(directory_id: string, upload_file: string, organization_id?: string, project_id?: string, display_name?: string, external_file_id?: string, unique_id?: string): { id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }`\n\n**post** `/api/v1/beta/directories/{directory_id}/files/upload`\n\nUpload a file directly to a directory.\n\nUploads a file and creates a directory file entry in a single operation.\nIf unique_id or display_name are not provided, they will be derived from the file metadata.\n\n### Parameters\n\n- `directory_id: string`\n\n- `upload_file: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `display_name?: string`\n\n- `external_file_id?: string`\n\n- `unique_id?: string`\n\n### Returns\n\n- `{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; data_source_id?: string; deleted_at?: string; file_id?: string; metadata?: object; updated_at?: string; }`\n  API response schema for a directory file.\n\n  - `id: string`\n  - `directory_id: string`\n  - `display_name: string`\n  - `project_id: string`\n  - `unique_id: string`\n  - `created_at?: string`\n  - `data_source_id?: string`\n  - `deleted_at?: string`\n  - `file_id?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.directories.files.upload('directory_id', { upload_file: fs.createReadStream('path/to/file') });\n\nconsole.log(response);\n```",
+      "## upload\n\n`client.beta.directories.files.upload(directory_id: string, upload_file: string, organization_id?: string, project_id?: string, display_name?: string, external_file_id?: string, metadata?: string, unique_id?: string): { id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: presigned_url; file_id?: string; metadata?: object; updated_at?: string; }`\n\n**post** `/api/v1/beta/directories/{directory_id}/files/upload`\n\nUpload a file directly to a directory.\n\nUploads a file and creates a directory file entry in a single operation.\nIf unique_id or display_name are not provided, they will be derived from the file metadata.\n\n### Parameters\n\n- `directory_id: string`\n\n- `upload_file: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `display_name?: string`\n\n- `external_file_id?: string`\n\n- `metadata?: string`\n  User metadata as a JSON object string.\n\n- `unique_id?: string`\n\n### Returns\n\n- `{ id: string; directory_id: string; display_name: string; project_id: string; unique_id: string; created_at?: string; deleted_at?: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; file_id?: string; metadata?: object; updated_at?: string; }`\n  API response schema for a directory file.\n\n  - `id: string`\n  - `directory_id: string`\n  - `display_name: string`\n  - `project_id: string`\n  - `unique_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `download_url?: { expires_at: string; url: string; form_fields?: object; }`\n  - `file_id?: string`\n  - `metadata?: object`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.directories.files.upload('directory_id', { upload_file: fs.createReadStream('path/to/file') });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.directories.files.upload',
@@ -3592,9 +5240,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.directories.files.upload(\n    directory_id="directory_id",\n    upload_file=b"Example data",\n)\nprint(response.id)',
       },
+      go: {
+        method: 'client.Beta.Directories.Files.Upload',
+        example:
+          'package main\n\nimport (\n\t"bytes"\n\t"context"\n\t"fmt"\n\t"io"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Directories.Files.Upload(\n\t\tcontext.TODO(),\n\t\t"directory_id",\n\t\tllamacloudprod.BetaDirectoryFileUploadParams{\n\t\t\tUploadFile: io.Reader(bytes.NewBuffer([]byte("Example data"))),\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      cli: {
+        method: 'files upload',
+        example:
+          "llamacloud-prod beta:directories:files upload \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --upload-file 'Example data'",
+      },
       http: {
         example:
-          "curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files/upload \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -F 'upload_file=@/path/to/upload_file'",
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files/upload \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -F \'upload_file=@/path/to/upload_file\' \\\n    -F metadata=\'{"source": "web", "priority": 1}\'',
       },
     },
   },
@@ -3632,9 +5290,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nbatch = client.beta.batch.create(\n    job_config={},\n)\nprint(batch.id)',
       },
+      go: {
+        method: 'client.Beta.Batch.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tbatch, err := client.Beta.Batch.New(context.TODO(), llamacloudprod.BetaBatchNewParams{\n\t\tJobConfig: llamacloudprod.BetaBatchNewParamsJobConfigUnion{\n\t\t\tOfBatchParseJobRecordCreate: &llamacloudprod.BetaBatchNewParamsJobConfigBatchParseJobRecordCreate{},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", batch.ID)\n}\n',
+      },
+      cli: {
+        method: 'batch create',
+        example: "llamacloud-prod beta:batch create \\\n  --api-key 'My API Key' \\\n  --job-config '{}'",
+      },
       http: {
         example:
-          'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "job_config": {}\n        }\'',
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "job_config": {},\n          "directory_id": "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "item_ids": [\n            "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n            "dfl-11111111-2222-3333-4444-555555555555"\n          ]\n        }\'',
       },
     },
   },
@@ -3671,6 +5338,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.batch.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Beta.Batch.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Batch.List(context.TODO(), llamacloudprod.BetaBatchListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'batch list',
+        example: "llamacloud-prod beta:batch list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3701,6 +5377,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.batch.get_status',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.batch.get_status(\n    job_id="job_id",\n)\nprint(response.job)',
+      },
+      go: {
+        method: 'client.Beta.Batch.GetStatus',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Batch.GetStatus(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.BetaBatchGetStatusParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Job)\n}\n',
+      },
+      cli: {
+        method: 'batch get_status',
+        example: "llamacloud-prod beta:batch get-status \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
       http: {
         example:
@@ -3738,6 +5423,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.batch.cancel',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.batch.cancel(\n    job_id="job_id",\n)\nprint(response.job_id)',
+      },
+      go: {
+        method: 'client.Beta.Batch.Cancel',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Batch.Cancel(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.BetaBatchCancelParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.JobID)\n}\n',
+      },
+      cli: {
+        method: 'batch cancel',
+        example: "llamacloud-prod beta:batch cancel \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
       http: {
         example:
@@ -3777,6 +5471,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.batch.job_items.list(\n    job_id="job_id",\n)\npage = page.items[0]\nprint(page.item_id)',
       },
+      go: {
+        method: 'client.Beta.Batch.JobItems.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Batch.JobItems.List(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloudprod.BetaBatchJobItemListParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'job_items list',
+        example:
+          "llamacloud-prod beta:batch:job-items list \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/$JOB_ID/items \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3813,6 +5517,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.batch.job_items.get_processing_results(\n    item_id="item_id",\n)\nprint(response.item_id)',
       },
+      go: {
+        method: 'client.Beta.Batch.JobItems.GetProcessingResults',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Batch.JobItems.GetProcessingResults(\n\t\tcontext.TODO(),\n\t\t"item_id",\n\t\tllamacloudprod.BetaBatchJobItemGetProcessingResultsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ItemID)\n}\n',
+      },
+      cli: {
+        method: 'job_items get_processing_results',
+        example:
+          "llamacloud-prod beta:batch:job-items get-processing-results \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/items/$ITEM_ID/processing-results \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3848,6 +5562,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta.split.create',
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsplit = client.beta.split.create(\n    document_input={\n        "type": "type",\n        "value": "value",\n    },\n)\nprint(split.id)',
+      },
+      go: {
+        method: 'client.Beta.Split.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsplit, err := client.Beta.Split.New(context.TODO(), llamacloudprod.BetaSplitNewParams{\n\t\tDocumentInput: llamacloudprod.SplitDocumentInputParam{\n\t\t\tType:  "type",\n\t\t\tValue: "value",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", split.ID)\n}\n',
+      },
+      cli: {
+        method: 'split create',
+        example:
+          "llamacloud-prod beta:split create \\\n  --api-key 'My API Key' \\\n  --document-input '{type: type, value: value}'",
       },
       http: {
         example:
@@ -3888,6 +5612,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.split.list()\npage = page.items[0]\nprint(page.id)',
       },
+      go: {
+        method: 'client.Beta.Split.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Split.List(context.TODO(), llamacloudprod.BetaSplitListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      cli: {
+        method: 'split list',
+        example: "llamacloud-prod beta:split list \\\n  --api-key 'My API Key'",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/split/jobs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3918,6 +5651,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsplit = client.beta.split.get(\n    split_job_id="split_job_id",\n)\nprint(split.id)',
       },
+      go: {
+        method: 'client.Beta.Split.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsplit, err := client.Beta.Split.Get(\n\t\tcontext.TODO(),\n\t\t"split_job_id",\n\t\tllamacloudprod.BetaSplitGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", split.ID)\n}\n',
+      },
+      cli: {
+        method: 'split get',
+        example:
+          "llamacloud-prod beta:split get \\\n  --api-key 'My API Key' \\\n  --split-job-id split_job_id",
+      },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/split/jobs/$SPLIT_JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
@@ -3928,9 +5671,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
 
 const EMBEDDED_READMES: { language: string; content: string }[] = [
   {
+    language: 'cli',
+    content:
+      "# Llama Cloud CLI\n\nThe official CLI for the [Llama Cloud REST API](https://developers.llamaindex.ai/).\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## Installation\n\n### Installing with Go\n\nTo test or install the CLI locally, you need [Go](https://go.dev/doc/install) version 1.22 or later installed.\n\n~~~sh\ngo install 'github.com/stainless-sdks/llamacloud-prod-cli/cmd/llamacloud-prod@latest'\n~~~\n\nOnce you have run `go install`, the binary is placed in your Go bin directory:\n\n- **Default location**: `$HOME/go/bin` (or `$GOPATH/bin` if GOPATH is set)\n- **Check your path**: Run `go env GOPATH` to see the base directory\n\nIf commands aren't found after installation, add the Go bin directory to your PATH:\n\n~~~sh\n# Add to your shell profile (.zshrc, .bashrc, etc.)\nexport PATH=\"$PATH:$(go env GOPATH)/bin\"\n~~~\n\n### Running Locally\n\nAfter cloning the git repository for this project, you can use the\n`scripts/run` script to run the tool locally:\n\n~~~sh\n./scripts/run args...\n~~~\n\n## Usage\n\nThe CLI follows a resource-based command structure:\n\n~~~sh\nllamacloud-prod [resource] <command> [flags...]\n~~~\n\n~~~sh\nllamacloud-prod parsing create \\\n  --api-key 'My API Key' \\\n  --tier agentic \\\n  --version latest \\\n  --file-id abc1234\n~~~\n\nFor details about specific commands, use the `--help` flag.\n\n### Environment variables\n\n| Environment variable  | Required |\n| --------------------- | -------- |\n| `LLAMA_CLOUD_API_KEY` | yes      |\n\n### Global flags\n\n- `--api-key` (can also be set with `LLAMA_CLOUD_API_KEY` env var)\n- `--help` - Show command line usage\n- `--debug` - Enable debug logging (includes HTTP request/response details)\n- `--version`, `-v` - Show the CLI version\n- `--base-url` - Use a custom API backend URL\n- `--format` - Change the output format (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--format-error` - Change the output format for errors (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--transform` - Transform the data output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n- `--transform-error` - Transform the error output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n\n### Passing files as arguments\n\nTo pass files to your API, you can use the `@myfile.ext` syntax:\n\n~~~bash\nllamacloud-prod <command> --arg @abe.jpg\n~~~\n\nFiles can also be passed inside JSON or YAML blobs:\n\n~~~bash\nllamacloud-prod <command> --arg '{image: \"@abe.jpg\"}'\n# Equivalent:\nllamacloud-prod <command> <<YAML\narg:\n  image: \"@abe.jpg\"\nYAML\n~~~\n\nIf you need to pass a string literal that begins with an `@` sign, you can\nescape the `@` sign to avoid accidentally passing a file.\n\n~~~bash\nllamacloud-prod <command> --username '\\@abe'\n~~~\n\n#### Explicit encoding\n\nFor JSON endpoints, the CLI tool does filetype sniffing to determine whether the\nfile contents should be sent as a string literal (for plain text files) or as a\nbase64-encoded string literal (for binary files). If you need to explicitly send\nthe file as either plain text or base64-encoded data, you can use\n`@file://myfile.txt` (for string encoding) or `@data://myfile.dat` (for\nbase64-encoding). Note that absolute paths will begin with `@file://` or\n`@data://`, followed by a third `/` (for example, `@file:///tmp/file.txt`).\n\n~~~bash\nllamacloud-prod <command> --arg @data://file.txt\n~~~\n\n## Linking different Go SDK versions\n\nYou can link the CLI against a different version of the Llama Cloud Go SDK\nfor development purposes using the `./scripts/link` script.\n\nTo link to a specific version from a repository (version can be a branch,\ngit tag, or commit hash):\n\n~~~bash\n./scripts/link github.com/org/repo@version\n~~~\n\nTo link to a local copy of the SDK:\n\n~~~bash\n./scripts/link ../path/to/llamacloudprod-go\n~~~\n\nIf you run the link script without any arguments, it will default to `../llamacloudprod-go`.\n",
+  },
+  {
+    language: 'go',
+    content:
+      '# Llama Cloud Go API Library\n\n<a href="https://pkg.go.dev/github.com/stainless-sdks/llamacloud-prod-go"><img src="https://pkg.go.dev/badge/github.com/stainless-sdks/llamacloud-prod-go.svg" alt="Go Reference"></a>\n\nThe Llama Cloud Go library provides convenient access to the [Llama Cloud REST API](https://developers.llamaindex.ai/)\nfrom applications written in Go.\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## MCP Server\n\nUse the Llama Cloud MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40llamaindex%2Fllama-cloud-mcp&config=eyJuYW1lIjoiQGxsYW1haW5kZXgvbGxhbWEtY2xvdWQtbWNwIiwidHJhbnNwb3J0IjoiaHR0cCIsInVybCI6Imh0dHBzOi8vbGxhbWFjbG91ZC1wcm9kLnN0bG1jcC5jb20iLCJoZWFkZXJzIjp7IngtbGxhbWEtY2xvdWQtYXBpLWtleSI6Ik15IEFQSSBLZXkifX0)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40llamaindex%2Fllama-cloud-mcp%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fllamacloud-prod.stlmcp.com%22%2C%22headers%22%3A%7B%22x-llama-cloud-api-key%22%3A%22My%20API%20Key%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Installation\n\n\n\n```go\nimport (\n\t"github.com/stainless-sdks/llamacloud-prod-go" // imported as SDK_PackageName\n)\n```\n\n\n\nOr to pin the version:\n\n\n\n```sh\ngo get -u \'github.com/stainless-sdks/llamacloud-prod-go@v0.0.1\'\n```\n\n\n\n## Requirements\n\nThis library requires Go 1.22+.\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n```go\npackage main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/stainless-sdks/llamacloud-prod-go"\n\t"github.com/stainless-sdks/llamacloud-prod-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"), // defaults to os.LookupEnv("LLAMA_CLOUD_API_KEY")\n\t)\n\tparsing, err := client.Parsing.New(context.TODO(), llamacloudprod.ParsingNewParams{\n\t\tTier:    llamacloudprod.ParsingNewParamsTierAgentic,\n\t\tVersion: llamacloudprod.ParsingNewParamsVersionLatest,\n\t\tFileID:  llamacloudprod.String("abc1234"),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", parsing.ID)\n}\n\n```\n\n### Request fields\n\nAll request parameters are wrapped in a generic `Field` type,\nwhich we use to distinguish zero values from null or omitted fields.\n\nThis prevents accidentally sending a zero value if you forget a required parameter,\nand enables explicitly sending `null`, `false`, `\'\'`, or `0` on optional parameters.\nAny field not specified is not sent.\n\nTo construct fields with values, use the helpers `String()`, `Int()`, `Float()`, or most commonly, the generic `F[T]()`.\nTo send a null, use `Null[T]()`, and to send a nonconforming value, use `Raw[T](any)`. For example:\n\n```go\nparams := FooParams{\n\tName: SDK_PackageName.F("hello"),\n\n\t// Explicitly send `"description": null`\n\tDescription: SDK_PackageName.Null[string](),\n\n\tPoint: SDK_PackageName.F(SDK_PackageName.Point{\n\t\tX: SDK_PackageName.Int(0),\n\t\tY: SDK_PackageName.Int(1),\n\n\t\t// In cases where the API specifies a given type,\n\t\t// but you want to send something else, use `Raw`:\n\t\tZ: SDK_PackageName.Raw[int64](0.01), // sends a float\n\t}),\n}\n```\n\n### Response objects\n\nAll fields in response structs are value types (not pointers or wrappers).\n\nIf a given field is `null`, not present, or invalid, the corresponding field\nwill simply be its zero value.\n\nAll response structs also include a special `JSON` field, containing more detailed\ninformation about each property, which you can use like so:\n\n```go\nif res.Name == "" {\n\t// true if `"name"` is either not present or explicitly null\n\tres.JSON.Name.IsNull()\n\n\t// true if the `"name"` key was not present in the response JSON at all\n\tres.JSON.Name.IsMissing()\n\n\t// When the API returns data that cannot be coerced to the expected type:\n\tif res.JSON.Name.IsInvalid() {\n\t\traw := res.JSON.Name.Raw()\n\n\t\tlegacyName := struct{\n\t\t\tFirst string `json:"first"`\n\t\t\tLast  string `json:"last"`\n\t\t}{}\n\t\tjson.Unmarshal([]byte(raw), &legacyName)\n\t\tname = legacyName.First + " " + legacyName.Last\n\t}\n}\n```\n\nThese `.JSON` structs also include an `Extras` map containing\nany properties in the json response that were not specified\nin the struct. This can be useful for API features not yet\npresent in the SDK.\n\n```go\nbody := res.JSON.ExtraFields["my_unexpected_field"].Raw()\n```\n\n### RequestOptions\n\nThis library uses the functional options pattern. Functions defined in the\n`SDK_PackageOptionName` package return a `RequestOption`, which is a closure that mutates a\n`RequestConfig`. These options can be supplied to the client or at individual\nrequests. For example:\n\n```go\nclient := SDK_PackageName.SDK_ClientInitializerName(\n\t// Adds a header to every request made by the client\n\tSDK_PackageOptionName.WithHeader("X-Some-Header", "custom_header_info"),\n)\n\nclient.Pipelines.List(context.TODO(), ...,\n\t// Override the header\n\tSDK_PackageOptionName.WithHeader("X-Some-Header", "some_other_custom_header_info"),\n\t// Add an undocumented field to the request body, using sjson syntax\n\tSDK_PackageOptionName.WithJSONSet("some.json.path", map[string]string{"my": "object"}),\n)\n```\n\nSee the [full list of request options](https://pkg.go.dev/github.com/stainless-sdks/llamacloud-prod-go/SDK_PackageOptionName).\n\n### Pagination\n\nThis library provides some conveniences for working with paginated list endpoints.\n\nYou can use `.ListAutoPaging()` methods to iterate through items across all pages:\n\n```go\niter := client.Extract.ListAutoPaging(context.TODO(), llamacloudprod.ExtractListParams{\n\tPageSize: llamacloudprod.Int(20),\n})\n// Automatically fetches more pages as needed.\nfor iter.Next() {\n\textractV2Job := iter.Current()\n\tfmt.Printf("%+v\\n", extractV2Job)\n}\nif err := iter.Err(); err != nil {\n\tpanic(err.Error())\n}\n```\n\nOr you can use simple `.List()` methods to fetch a single page and receive a standard response object\nwith additional helper methods like `.GetNextPage()`, e.g.:\n\n```go\npage, err := client.Extract.List(context.TODO(), llamacloudprod.ExtractListParams{\n\tPageSize: llamacloudprod.Int(20),\n})\nfor page != nil {\n\tfor _, extract := range page.Items {\n\t\tfmt.Printf("%+v\\n", extract)\n\t}\n\tpage, err = page.GetNextPage()\n}\nif err != nil {\n\tpanic(err.Error())\n}\n```\n\n### Errors\n\nWhen the API returns a non-success status code, we return an error with type\n`*SDK_PackageName.Error`. This contains the `StatusCode`, `*http.Request`, and\n`*http.Response` values of the request, as well as the JSON of the error body\n(much like other response objects in the SDK).\n\nTo handle errors, we recommend that you use the `errors.As` pattern:\n\n```go\n_, err := client.Pipelines.List(context.TODO(), llamacloudprod.PipelineListParams{\n\tProjectID: llamacloudprod.String("my-project-id"),\n})\nif err != nil {\n\tvar apierr *llamacloudprod.Error\n\tif errors.As(err, &apierr) {\n\t\tprintln(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request\n\t\tprintln(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response\n\t}\n\tpanic(err.Error()) // GET "/api/v1/pipelines": 400 Bad Request { ... }\n}\n```\n\nWhen other errors occur, they are returned unwrapped; for example,\nif HTTP transport fails, you might receive `*url.Error` wrapping `*net.OpError`.\n\n### Timeouts\n\nRequests do not time out by default; use context to configure a timeout for a request lifecycle.\n\nNote that if a request is [retried](#retries), the context timeout does not start over.\nTo set a per-retry timeout, use `SDK_PackageOptionName.WithRequestTimeout()`.\n\n```go\n// This sets the timeout for the request, including all the retries.\nctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)\ndefer cancel()\nclient.Pipelines.List(\n\tctx,\n\tllamacloudprod.PipelineListParams{\n\t\tProjectID: llamacloudprod.String("my-project-id"),\n\t},\n\t// This sets the per-retry timeout\n\toption.WithRequestTimeout(20*time.Second),\n)\n```\n\n### File uploads\n\nRequest parameters that correspond to file uploads in multipart requests are typed as\n`param.Field[io.Reader]`. The contents of the `io.Reader` will by default be sent as a multipart form\npart with the file name of "anonymous_file" and content-type of "application/octet-stream".\n\nThe file name and content-type can be customized by implementing `Name() string` or `ContentType()\nstring` on the run-time type of `io.Reader`. Note that `os.File` implements `Name() string`, so a\nfile returned by `os.Open` will be sent with the file name on disk.\n\nWe also provide a helper `SDK_PackageName.FileParam(reader io.Reader, filename string, contentType string)`\nwhich can be used to wrap any `io.Reader` with the appropriate file name and content type.\n\n```go\n// A file from the file system\nfile, err := os.Open("/path/to/file")\nllamacloudprod.FileNewParams{\n\tFile:    file,\n\tPurpose: "purpose",\n}\n\n// A file from a string\nllamacloudprod.FileNewParams{\n\tFile:    strings.NewReader("my file contents"),\n\tPurpose: "purpose",\n}\n\n// With a custom filename and contentType\nllamacloudprod.FileNewParams{\n\tFile:    llamacloudprod.NewFile(strings.NewReader(`{"hello": "foo"}`), "file.go", "application/json"),\n\tPurpose: "purpose",\n}\n```\n\n### Retries\n\nCertain errors will be automatically retried 2 times by default, with a short exponential backoff.\nWe retry by default all connection errors, 408 Request Timeout, 409 Conflict, 429 Rate Limit,\nand >=500 Internal errors.\n\nYou can use the `WithMaxRetries` option to configure or disable this:\n\n```go\n// Configure the default for all requests:\nclient := llamacloudprod.NewClient(\n\toption.WithMaxRetries(0), // default is 2\n)\n\n// Override per-request:\nclient.Pipelines.List(\n\tcontext.TODO(),\n\tllamacloudprod.PipelineListParams{\n\t\tProjectID: llamacloudprod.String("my-project-id"),\n\t},\n\toption.WithMaxRetries(5),\n)\n```\n\n\n### Accessing raw response data (e.g. response headers)\n\nYou can access the raw HTTP response data by using the `option.WithResponseInto()` request option. This is useful when\nyou need to examine response headers, status codes, or other details.\n\n```go\n// Create a variable to store the HTTP response\nvar response *http.Response\npipelines, err := client.Pipelines.List(\n\tcontext.TODO(),\n\tllamacloudprod.PipelineListParams{\n\t\tProjectID: llamacloudprod.String("my-project-id"),\n\t},\n\toption.WithResponseInto(&response),\n)\nif err != nil {\n\t// handle error\n}\nfmt.Printf("%+v\\n", pipelines)\n\nfmt.Printf("Status Code: %d\\n", response.StatusCode)\nfmt.Printf("Headers: %+#v\\n", response.Header)\n```\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API. If you need to access undocumented\nendpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can use `client.Get`, `client.Post`, and other HTTP verbs.\n`RequestOptions` on the client, such as retries, will be respected when making these requests.\n\n```go\nvar (\n    // params can be an io.Reader, a []byte, an encoding/json serializable object,\n    // or a "…Params" struct defined in this library.\n    params map[string]interface{}\n\n    // result can be an []byte, *http.Response, a encoding/json deserializable object,\n    // or a model defined in this library.\n    result *http.Response\n)\nerr := client.Post(context.Background(), "/unspecified", params, &result)\nif err != nil {\n    …\n}\n```\n\n#### Undocumented request params\n\nTo make requests using undocumented parameters, you may use either the `SDK_PackageOptionName.WithQuerySet()`\nor the `SDK_PackageOptionName.WithJSONSet()` methods.\n\n```go\nparams := FooNewParams{\n    ID:   SDK_PackageName.F("id_xxxx"),\n    Data: SDK_PackageName.F(FooNewParamsData{\n        FirstName: SDK_PackageName.F("John"),\n    }),\n}\nclient.Foo.New(context.Background(), params, SDK_PackageOptionName.WithJSONSet("data.last_name", "Doe"))\n```\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you may either access the raw JSON of the response as a string\nwith `result.JSON.RawJSON()`, or get the raw JSON of a particular field on the result with\n`result.JSON.Foo.Raw()`.\n\nAny fields that are not present on the response struct will be saved and can be accessed by `result.JSON.ExtraFields()` which returns the extra fields as a `map[string]Field`.\n\n### Middleware\n\nWe provide `SDK_PackageOptionName.WithMiddleware` which applies the given\nmiddleware to requests.\n\n```go\nfunc Logger(req *http.Request, next SDK_PackageOptionName.MiddlewareNext) (res *http.Response, err error) {\n\t// Before the request\n\tstart := time.Now()\n\tLogReq(req)\n\n\t// Forward the request to the next handler\n\tres, err = next(req)\n\n\t// Handle stuff after the request\n\tend := time.Now()\n\tLogRes(res, err, start - end)\n\n    return res, err\n}\n\nclient := SDK_PackageName.SDK_ClientInitializerName(\n\tSDK_PackageOptionName.WithMiddleware(Logger),\n)\n```\n\nWhen multiple middlewares are provided as variadic arguments, the middlewares\nare applied left to right. If `SDK_PackageOptionName.WithMiddleware` is given\nmultiple times, for example first in the client then the method, the\nmiddleware in the client will run first and the middleware given in the method\nwill run next.\n\nYou may also replace the default `http.Client` with\n`SDK_PackageOptionName.WithHTTPClient(client)`. Only one http client is\naccepted (this overwrites any previous client) and receives requests after any\nmiddleware has been applied.\n\n## Semantic versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n2. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/llamacloud-prod-go/issues) with questions, bugs, or suggestions.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n',
+  },
+  {
     language: 'python',
     content:
-      '# Llama Cloud Python API library\n\n<!-- prettier-ignore -->\n[![PyPI version](https://img.shields.io/pypi/v/llama_cloud.svg?label=pypi%20(stable))](https://pypi.org/project/llama_cloud/)\n\nThe Llama Cloud Python library provides convenient access to the Llama Cloud REST API from any Python 3.9+\napplication. The library includes type definitions for all request params and response fields,\nand offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).\n\n\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## MCP Server\n\nUse the Llama Cloud MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40llamaindex%2Fllama-cloud-mcp&config=eyJuYW1lIjoiQGxsYW1haW5kZXgvbGxhbWEtY2xvdWQtbWNwIiwidHJhbnNwb3J0IjoiaHR0cCIsInVybCI6Imh0dHBzOi8vbGxhbWFjbG91ZC1wcm9kLnN0bG1jcC5jb20iLCJoZWFkZXJzIjp7IngtbGxhbWEtY2xvdWQtYXBpLWtleSI6Ik15IEFQSSBLZXkifX0)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40llamaindex%2Fllama-cloud-mcp%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fllamacloud-prod.stlmcp.com%22%2C%22headers%22%3A%7B%22x-llama-cloud-api-key%22%3A%22My%20API%20Key%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Documentation\n\nThe REST API documentation can be found on [developers.llamaindex.ai](https://developers.llamaindex.ai/). The full API of this library can be found in [api.md](api.md).\n\n## Installation\n\n```sh\n# install from PyPI\npip install llama_cloud\n```\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n```python\nimport os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\n\nparsing = client.parsing.create(\n    tier="agentic",\n    version="latest",\n    file_id="abc1234",\n)\nprint(parsing.id)\n```\n\nWhile you can provide an `api_key` keyword argument,\nwe recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)\nto add `LLAMA_CLOUD_API_KEY="My API Key"` to your `.env` file\nso that your API Key is not stored in source control.\n\n## Async usage\n\nSimply import `AsyncLlamaCloud` instead of `LlamaCloud` and use `await` with each API call:\n\n```python\nimport os\nimport asyncio\nfrom llama_cloud import AsyncLlamaCloud\n\nclient = AsyncLlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\n\nasync def main() -> None:\n  parsing = await client.parsing.create(\n      tier="agentic",\n      version="latest",\n      file_id="abc1234",\n  )\n  print(parsing.id)\n\nasyncio.run(main())\n```\n\nFunctionality between the synchronous and asynchronous clients is otherwise identical.\n\n### With aiohttp\n\nBy default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.\n\nYou can enable this by installing `aiohttp`:\n\n```sh\n# install from PyPI\npip install llama_cloud[aiohttp]\n```\n\nThen you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:\n\n```python\nimport os\nimport asyncio\nfrom llama_cloud import DefaultAioHttpClient\nfrom llama_cloud import AsyncLlamaCloud\n\nasync def main() -> None:\n  async with AsyncLlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n    http_client=DefaultAioHttpClient(),\n) as client:\n    parsing = await client.parsing.create(\n        tier="agentic",\n        version="latest",\n        file_id="abc1234",\n    )\n    print(parsing.id)\n\nasyncio.run(main())\n```\n\n\n\n## Using types\n\nNested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:\n\n- Serializing back into JSON, `model.to_json()`\n- Converting to a dictionary, `model.to_dict()`\n\nTyped requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.\n\n## Pagination\n\nList methods in the Llama Cloud API are paginated.\n\nThis library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:\n\n```python\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\nall_extracts = []\n# Automatically fetches more pages as needed.\nfor extract in client.extract.list(\n    page_size=20,\n):\n    # Do something with extract here\n    all_extracts.append(extract)\nprint(all_extracts)\n```\n\nOr, asynchronously:\n\n```python\nimport asyncio\nfrom llama_cloud import AsyncLlamaCloud\n\nclient = AsyncLlamaCloud()\n\nasync def main() -> None:\n    all_extracts = []\n    # Iterate through items across all pages, issuing requests as needed.\n    async for extract in client.extract.list(\n    page_size=20,\n):\n        all_extracts.append(extract)\n    print(all_extracts)\n\nasyncio.run(main())\n```\n\nAlternatively, you can use the `.has_next_page()`, `.next_page_info()`, or  `.get_next_page()` methods for more granular control working with pages:\n\n```python\nfirst_page = await client.extract.list(\n    page_size=20,\n)\nif first_page.has_next_page():\n    print(f"will fetch next page using these details: {first_page.next_page_info()}")\n    next_page = await first_page.get_next_page()\n    print(f"number of items we just fetched: {len(next_page.items)}")\n\n# Remove `await` for non-async usage.\n```\n\nOr just work directly with the returned data:\n\n```python\nfirst_page = await client.extract.list(\n    page_size=20,\n)\n\nprint(f"next page cursor: {first_page.next_page_token}") # => "next page cursor: ..."\nfor extract in first_page.items:\n    print(extract.id)\n\n# Remove `await` for non-async usage.\n```\n\n## Nested params\n\nNested parameters are dictionaries, typed using `TypedDict`, for example:\n\n```python\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\nparsing = client.parsing.create(\n    tier="fast",\n    version="2025-12-11",\n    agentic_options={},\n)\nprint(parsing.agentic_options)\n```\n\n## File uploads\n\nRequest parameters that correspond to file uploads can be passed as `bytes`, or a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.\n\n```python\nfrom pathlib import Path\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\nclient.files.create(\n    file=Path("/path/to/file"),\n    purpose="purpose",\n)\n```\n\nThe async client uses the exact same interface. If you pass a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance, the file contents will be read asynchronously automatically.\n\n## Handling errors\n\nWhen the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `llama_cloud.APIConnectionError` is raised.\n\nWhen the API returns a non-success status code (that is, 4xx or 5xx\nresponse), a subclass of `llama_cloud.APIStatusError` is raised, containing `status_code` and `response` properties.\n\nAll errors inherit from `llama_cloud.APIError`.\n\n```python\nimport llama_cloud\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\ntry:\n    client.pipelines.list(\n        project_id="my-project-id",\n    )\nexcept llama_cloud.APIConnectionError as e:\n    print("The server could not be reached")\n    print(e.__cause__) # an underlying Exception, likely raised within httpx.\nexcept llama_cloud.RateLimitError as e:\n    print("A 429 status code was received; we should back off a bit.")\nexcept llama_cloud.APIStatusError as e:\n    print("Another non-200-range status code was received")\n    print(e.status_code)\n    print(e.response)\n```\n\nError codes are as follows:\n\n| Status Code | Error Type                 |\n| ----------- | -------------------------- |\n| 400         | `BadRequestError`          |\n| 401         | `AuthenticationError`      |\n| 403         | `PermissionDeniedError`    |\n| 404         | `NotFoundError`            |\n| 422         | `UnprocessableEntityError` |\n| 429         | `RateLimitError`           |\n| >=500       | `InternalServerError`      |\n| N/A         | `APIConnectionError`       |\n\n### Retries\n\nCertain errors are automatically retried 2 times by default, with a short exponential backoff.\nConnection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,\n429 Rate Limit, and >=500 Internal errors are all retried by default.\n\nYou can use the `max_retries` option to configure or disable retry settings:\n\n```python\nfrom llama_cloud import LlamaCloud\n\n# Configure the default for all requests:\nclient = LlamaCloud(\n    # default is 2\n    max_retries=0,\n)\n\n# Or, configure per-request:\nclient.with_options(max_retries = 5).pipelines.list(\n    project_id="my-project-id",\n)\n```\n\n### Timeouts\n\nBy default requests time out after 1 minute. You can configure this with a `timeout` option,\nwhich accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:\n\n```python\nfrom llama_cloud import LlamaCloud\n\n# Configure the default for all requests:\nclient = LlamaCloud(\n    # 20 seconds (default is 1 minute)\n    timeout=20.0,\n)\n\n# More granular control:\nclient = LlamaCloud(\n    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),\n)\n\n# Override per-request:\nclient.with_options(timeout = 5.0).pipelines.list(\n    project_id="my-project-id",\n)\n```\n\nOn timeout, an `APITimeoutError` is thrown.\n\nNote that requests that time out are [retried twice by default](#retries).\n\n\n\n## Advanced\n\n### Logging\n\nWe use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.\n\nYou can enable logging by setting the environment variable `LLAMA_CLOUD_LOG` to `info`.\n\n```shell\n$ export LLAMA_CLOUD_LOG=info\n```\n\nOr to `debug` for more verbose logging.\n\n### How to tell whether `None` means `null` or missing\n\nIn an API response, a field may be explicitly `null`, or missing entirely; in either case, its value is `None` in this library. You can differentiate the two cases with `.model_fields_set`:\n\n```py\nif response.my_field is None:\n  if \'my_field\' not in response.model_fields_set:\n    print(\'Got json like {}, without a "my_field" key present at all.\')\n  else:\n    print(\'Got json like {"my_field": null}.\')\n```\n\n### Accessing raw response data (e.g. headers)\n\nThe "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,\n\n```py\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\nresponse = client.pipelines.with_raw_response.list(\n    project_id="my-project-id",\n)\nprint(response.headers.get(\'X-My-Header\'))\n\npipeline = response.parse()  # get the object that `pipelines.list()` would have returned\nprint(pipeline)\n```\n\nThese methods return an [`APIResponse`](https://github.com/run-llama/llama-parse-py/tree/main/src/llama_cloud/_response.py) object.\n\nThe async client returns an [`AsyncAPIResponse`](https://github.com/run-llama/llama-parse-py/tree/main/src/llama_cloud/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.\n\n#### `.with_streaming_response`\n\nThe above interface eagerly reads the full response body when you make the request, which may not always be what you want.\n\nTo stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.\n\n```python\nwith client.pipelines.with_streaming_response.list(\n    project_id="my-project-id",\n) as response :\n    print(response.headers.get(\'X-My-Header\'))\n\n    for line in response.iter_lines():\n      print(line)\n```\n\nThe context manager is required so that the response will reliably be closed.\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API.\n\nIf you need to access undocumented endpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can make requests using `client.get`, `client.post`, and other\nhttp verbs. Options on the client will be respected (such as retries) when making this request.\n\n```py\nimport httpx\n\nresponse = client.post(\n    "/foo",\n    cast_to=httpx.Response,\n    body={"my_param": True},\n)\n\nprint(response.headers.get("x-foo"))\n```\n\n#### Undocumented request params\n\nIf you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` request\noptions.\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you can access the extra fields like `response.unknown_prop`. You\ncan also get all the extra fields on the Pydantic model as a dict with\n[`response.model_extra`](https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_extra).\n\n### Configuring the HTTP client\n\nYou can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:\n\n- Support for [proxies](https://www.python-httpx.org/advanced/proxies/)\n- Custom [transports](https://www.python-httpx.org/advanced/transports/)\n- Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality\n\n```python\nimport httpx\nfrom llama_cloud import LlamaCloud, DefaultHttpxClient\n\nclient = LlamaCloud(\n    # Or use the `LLAMA_CLOUD_BASE_URL` env var\n    base_url="http://my.test.server.example.com:8083",\n    http_client=DefaultHttpxClient(proxy="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0")),\n)\n```\n\nYou can also customize the client on a per-request basis by using `with_options()`:\n\n```python\nclient.with_options(http_client=DefaultHttpxClient(...))\n```\n\n### Managing HTTP resources\n\nBy default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.\n\n```py\nfrom llama_cloud import LlamaCloud\n\nwith LlamaCloud() as client:\n  # make requests here\n  ...\n\n# HTTP client is now closed\n```\n\n## Versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes that only affect static types, without breaking runtime behavior.\n2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n3. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/run-llama/llama-parse-py/issues) with questions, bugs, or suggestions.\n\n### Determining the installed version\n\nIf you\'ve upgraded to the latest version but aren\'t seeing any new features you were expecting then your python environment is likely still using an older version.\n\nYou can determine the version that is being used at runtime with:\n\n```py\nimport llama_cloud\nprint(llama_cloud.__version__)\n```\n\n## Requirements\n\nPython 3.9 or higher.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n',
+      '# Llama Cloud Python API library\n\n<!-- prettier-ignore -->\n[![PyPI version](https://img.shields.io/pypi/v/llama_cloud.svg?label=pypi%20(stable))](https://pypi.org/project/llama_cloud/)\n\nThe Llama Cloud Python library provides convenient access to the Llama Cloud REST API from any Python 3.9+\napplication. The library includes type definitions for all request params and response fields,\nand offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).\n\n\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## MCP Server\n\nUse the Llama Cloud MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40llamaindex%2Fllama-cloud-mcp&config=eyJuYW1lIjoiQGxsYW1haW5kZXgvbGxhbWEtY2xvdWQtbWNwIiwidHJhbnNwb3J0IjoiaHR0cCIsInVybCI6Imh0dHBzOi8vbGxhbWFjbG91ZC1wcm9kLnN0bG1jcC5jb20iLCJoZWFkZXJzIjp7IngtbGxhbWEtY2xvdWQtYXBpLWtleSI6Ik15IEFQSSBLZXkifX0)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40llamaindex%2Fllama-cloud-mcp%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fllamacloud-prod.stlmcp.com%22%2C%22headers%22%3A%7B%22x-llama-cloud-api-key%22%3A%22My%20API%20Key%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Documentation\n\nThe REST API documentation can be found on [developers.llamaindex.ai](https://developers.llamaindex.ai/). The full API of this library can be found in [api.md](api.md).\n\n## Installation\n\n```sh\n# install from PyPI\npip install llama_cloud\n```\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n```python\nimport os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\n\nparsing = client.parsing.create(\n    tier="agentic",\n    version="latest",\n    file_id="abc1234",\n)\nprint(parsing.id)\n```\n\nWhile you can provide an `api_key` keyword argument,\nwe recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)\nto add `LLAMA_CLOUD_API_KEY="My API Key"` to your `.env` file\nso that your API Key is not stored in source control.\n\n## Async usage\n\nSimply import `AsyncLlamaCloud` instead of `LlamaCloud` and use `await` with each API call:\n\n```python\nimport os\nimport asyncio\nfrom llama_cloud import AsyncLlamaCloud\n\nclient = AsyncLlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\n\nasync def main() -> None:\n  parsing = await client.parsing.create(\n      tier="agentic",\n      version="latest",\n      file_id="abc1234",\n  )\n  print(parsing.id)\n\nasyncio.run(main())\n```\n\nFunctionality between the synchronous and asynchronous clients is otherwise identical.\n\n### With aiohttp\n\nBy default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.\n\nYou can enable this by installing `aiohttp`:\n\n```sh\n# install from PyPI\npip install llama_cloud[aiohttp]\n```\n\nThen you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:\n\n```python\nimport os\nimport asyncio\nfrom llama_cloud import DefaultAioHttpClient\nfrom llama_cloud import AsyncLlamaCloud\n\nasync def main() -> None:\n  async with AsyncLlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n    http_client=DefaultAioHttpClient(),\n) as client:\n    parsing = await client.parsing.create(\n        tier="agentic",\n        version="latest",\n        file_id="abc1234",\n    )\n    print(parsing.id)\n\nasyncio.run(main())\n```\n\n\n\n## Using types\n\nNested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:\n\n- Serializing back into JSON, `model.to_json()`\n- Converting to a dictionary, `model.to_dict()`\n\nTyped requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.\n\n## Pagination\n\nList methods in the Llama Cloud API are paginated.\n\nThis library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:\n\n```python\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\nall_extracts = []\n# Automatically fetches more pages as needed.\nfor extract in client.extract.list(\n    page_size=20,\n):\n    # Do something with extract here\n    all_extracts.append(extract)\nprint(all_extracts)\n```\n\nOr, asynchronously:\n\n```python\nimport asyncio\nfrom llama_cloud import AsyncLlamaCloud\n\nclient = AsyncLlamaCloud()\n\nasync def main() -> None:\n    all_extracts = []\n    # Iterate through items across all pages, issuing requests as needed.\n    async for extract in client.extract.list(\n    page_size=20,\n):\n        all_extracts.append(extract)\n    print(all_extracts)\n\nasyncio.run(main())\n```\n\nAlternatively, you can use the `.has_next_page()`, `.next_page_info()`, or  `.get_next_page()` methods for more granular control working with pages:\n\n```python\nfirst_page = await client.extract.list(\n    page_size=20,\n)\nif first_page.has_next_page():\n    print(f"will fetch next page using these details: {first_page.next_page_info()}")\n    next_page = await first_page.get_next_page()\n    print(f"number of items we just fetched: {len(next_page.items)}")\n\n# Remove `await` for non-async usage.\n```\n\nOr just work directly with the returned data:\n\n```python\nfirst_page = await client.extract.list(\n    page_size=20,\n)\n\nprint(f"next page cursor: {first_page.next_page_token}") # => "next page cursor: ..."\nfor extract in first_page.items:\n    print(extract.id)\n\n# Remove `await` for non-async usage.\n```\n\n## Nested params\n\nNested parameters are dictionaries, typed using `TypedDict`, for example:\n\n```python\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\nparsing = client.parsing.create(\n    tier="fast",\n    version="latest",\n    agentic_options={},\n)\nprint(parsing.agentic_options)\n```\n\n## File uploads\n\nRequest parameters that correspond to file uploads can be passed as `bytes`, or a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.\n\n```python\nfrom pathlib import Path\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\nclient.files.create(\n    file=Path("/path/to/file"),\n    purpose="purpose",\n)\n```\n\nThe async client uses the exact same interface. If you pass a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance, the file contents will be read asynchronously automatically.\n\n## Handling errors\n\nWhen the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `llama_cloud.APIConnectionError` is raised.\n\nWhen the API returns a non-success status code (that is, 4xx or 5xx\nresponse), a subclass of `llama_cloud.APIStatusError` is raised, containing `status_code` and `response` properties.\n\nAll errors inherit from `llama_cloud.APIError`.\n\n```python\nimport llama_cloud\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\ntry:\n    client.pipelines.list(\n        project_id="my-project-id",\n    )\nexcept llama_cloud.APIConnectionError as e:\n    print("The server could not be reached")\n    print(e.__cause__) # an underlying Exception, likely raised within httpx.\nexcept llama_cloud.RateLimitError as e:\n    print("A 429 status code was received; we should back off a bit.")\nexcept llama_cloud.APIStatusError as e:\n    print("Another non-200-range status code was received")\n    print(e.status_code)\n    print(e.response)\n```\n\nError codes are as follows:\n\n| Status Code | Error Type                 |\n| ----------- | -------------------------- |\n| 400         | `BadRequestError`          |\n| 401         | `AuthenticationError`      |\n| 403         | `PermissionDeniedError`    |\n| 404         | `NotFoundError`            |\n| 422         | `UnprocessableEntityError` |\n| 429         | `RateLimitError`           |\n| >=500       | `InternalServerError`      |\n| N/A         | `APIConnectionError`       |\n\n### Retries\n\nCertain errors are automatically retried 2 times by default, with a short exponential backoff.\nConnection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,\n429 Rate Limit, and >=500 Internal errors are all retried by default.\n\nYou can use the `max_retries` option to configure or disable retry settings:\n\n```python\nfrom llama_cloud import LlamaCloud\n\n# Configure the default for all requests:\nclient = LlamaCloud(\n    # default is 2\n    max_retries=0,\n)\n\n# Or, configure per-request:\nclient.with_options(max_retries = 5).pipelines.list(\n    project_id="my-project-id",\n)\n```\n\n### Timeouts\n\nBy default requests time out after 1 minute. You can configure this with a `timeout` option,\nwhich accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:\n\n```python\nfrom llama_cloud import LlamaCloud\n\n# Configure the default for all requests:\nclient = LlamaCloud(\n    # 20 seconds (default is 1 minute)\n    timeout=20.0,\n)\n\n# More granular control:\nclient = LlamaCloud(\n    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),\n)\n\n# Override per-request:\nclient.with_options(timeout = 5.0).pipelines.list(\n    project_id="my-project-id",\n)\n```\n\nOn timeout, an `APITimeoutError` is thrown.\n\nNote that requests that time out are [retried twice by default](#retries).\n\n\n\n## Advanced\n\n### Logging\n\nWe use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.\n\nYou can enable logging by setting the environment variable `LLAMA_CLOUD_LOG` to `info`.\n\n```shell\n$ export LLAMA_CLOUD_LOG=info\n```\n\nOr to `debug` for more verbose logging.\n\n### How to tell whether `None` means `null` or missing\n\nIn an API response, a field may be explicitly `null`, or missing entirely; in either case, its value is `None` in this library. You can differentiate the two cases with `.model_fields_set`:\n\n```py\nif response.my_field is None:\n  if \'my_field\' not in response.model_fields_set:\n    print(\'Got json like {}, without a "my_field" key present at all.\')\n  else:\n    print(\'Got json like {"my_field": null}.\')\n```\n\n### Accessing raw response data (e.g. headers)\n\nThe "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,\n\n```py\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\nresponse = client.pipelines.with_raw_response.list(\n    project_id="my-project-id",\n)\nprint(response.headers.get(\'X-My-Header\'))\n\npipeline = response.parse()  # get the object that `pipelines.list()` would have returned\nprint(pipeline)\n```\n\nThese methods return an [`APIResponse`](https://github.com/run-llama/llama-parse-py/tree/main/src/llama_cloud/_response.py) object.\n\nThe async client returns an [`AsyncAPIResponse`](https://github.com/run-llama/llama-parse-py/tree/main/src/llama_cloud/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.\n\n#### `.with_streaming_response`\n\nThe above interface eagerly reads the full response body when you make the request, which may not always be what you want.\n\nTo stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.\n\n```python\nwith client.pipelines.with_streaming_response.list(\n    project_id="my-project-id",\n) as response :\n    print(response.headers.get(\'X-My-Header\'))\n\n    for line in response.iter_lines():\n      print(line)\n```\n\nThe context manager is required so that the response will reliably be closed.\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API.\n\nIf you need to access undocumented endpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can make requests using `client.get`, `client.post`, and other\nhttp verbs. Options on the client will be respected (such as retries) when making this request.\n\n```py\nimport httpx\n\nresponse = client.post(\n    "/foo",\n    cast_to=httpx.Response,\n    body={"my_param": True},\n)\n\nprint(response.headers.get("x-foo"))\n```\n\n#### Undocumented request params\n\nIf you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` request\noptions.\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you can access the extra fields like `response.unknown_prop`. You\ncan also get all the extra fields on the Pydantic model as a dict with\n[`response.model_extra`](https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_extra).\n\n### Configuring the HTTP client\n\nYou can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:\n\n- Support for [proxies](https://www.python-httpx.org/advanced/proxies/)\n- Custom [transports](https://www.python-httpx.org/advanced/transports/)\n- Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality\n\n```python\nimport httpx\nfrom llama_cloud import LlamaCloud, DefaultHttpxClient\n\nclient = LlamaCloud(\n    # Or use the `LLAMA_CLOUD_BASE_URL` env var\n    base_url="http://my.test.server.example.com:8083",\n    http_client=DefaultHttpxClient(proxy="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0")),\n)\n```\n\nYou can also customize the client on a per-request basis by using `with_options()`:\n\n```python\nclient.with_options(http_client=DefaultHttpxClient(...))\n```\n\n### Managing HTTP resources\n\nBy default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.\n\n```py\nfrom llama_cloud import LlamaCloud\n\nwith LlamaCloud() as client:\n  # make requests here\n  ...\n\n# HTTP client is now closed\n```\n\n## Versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes that only affect static types, without breaking runtime behavior.\n2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n3. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/run-llama/llama-parse-py/issues) with questions, bugs, or suggestions.\n\n### Determining the installed version\n\nIf you\'ve upgraded to the latest version but aren\'t seeing any new features you were expecting then your python environment is likely still using an older version.\n\nYou can determine the version that is being used at runtime with:\n\n```py\nimport llama_cloud\nprint(llama_cloud.__version__)\n```\n\n## Requirements\n\nPython 3.9 or higher.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n',
   },
   {
     language: 'typescript',

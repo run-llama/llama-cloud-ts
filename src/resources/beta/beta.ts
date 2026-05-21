@@ -17,6 +17,49 @@ import {
   AgentDataSearchParams,
   AgentDataUpdateParams,
 } from './agent-data';
+import * as ChatAPI from './chat';
+import {
+  Chat,
+  ChatCreateParams,
+  ChatCreateResponse,
+  ChatDeleteParams,
+  ChatGetSummaryParams,
+  ChatGetSummaryResponse,
+  ChatListParams,
+  ChatListResponse,
+  ChatListResponsesPaginatedCursor,
+  ChatRetrieveParams,
+  ChatRetrieveResponse,
+  ChatSetTitleParams,
+  ChatSetTitleResponse,
+  ChatStreamParams,
+  ChatStreamResponse,
+} from './chat';
+import * as IndexesAPI from './indexes';
+import {
+  IndexCreateParams,
+  IndexCreateResponse,
+  IndexDeleteParams,
+  IndexGetParams,
+  IndexGetResponse,
+  IndexSyncParams,
+  IndexSyncResponse,
+  Indexes,
+} from './indexes';
+import * as RetrievalAPI from './retrieval';
+import {
+  Retrieval,
+  RetrievalFindParams,
+  RetrievalFindResponse,
+  RetrievalFindResponsesPaginatedCursorPost,
+  RetrievalGrepParams,
+  RetrievalGrepResponse,
+  RetrievalGrepResponsesPaginatedCursorPost,
+  RetrievalReadParams,
+  RetrievalReadResponse,
+  RetrievalRetrieveParams,
+  RetrievalRetrieveResponse,
+} from './retrieval';
 import * as SheetsAPI from './sheets';
 import {
   SheetCreateParams,
@@ -74,6 +117,9 @@ import {
 } from './directories/directories';
 
 export class Beta extends APIResource {
+  indexes: IndexesAPI.Indexes = new IndexesAPI.Indexes(this._client);
+  retrieval: RetrievalAPI.Retrieval = new RetrievalAPI.Retrieval(this._client);
+  chat: ChatAPI.Chat = new ChatAPI.Chat(this._client);
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
   sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
   directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
@@ -81,12 +127,58 @@ export class Beta extends APIResource {
   split: SplitAPI.Split = new SplitAPI.Split(this._client);
 }
 
+Beta.Indexes = Indexes;
+Beta.Retrieval = Retrieval;
+Beta.Chat = Chat;
 Beta.Sheets = Sheets;
 Beta.Directories = Directories;
 Beta.Batch = Batch;
 Beta.Split = Split;
 
 export declare namespace Beta {
+  export {
+    Indexes as Indexes,
+    type IndexCreateResponse as IndexCreateResponse,
+    type IndexGetResponse as IndexGetResponse,
+    type IndexSyncResponse as IndexSyncResponse,
+    type IndexCreateParams as IndexCreateParams,
+    type IndexDeleteParams as IndexDeleteParams,
+    type IndexGetParams as IndexGetParams,
+    type IndexSyncParams as IndexSyncParams,
+  };
+
+  export {
+    Retrieval as Retrieval,
+    type RetrievalRetrieveResponse as RetrievalRetrieveResponse,
+    type RetrievalFindResponse as RetrievalFindResponse,
+    type RetrievalGrepResponse as RetrievalGrepResponse,
+    type RetrievalReadResponse as RetrievalReadResponse,
+    type RetrievalFindResponsesPaginatedCursorPost as RetrievalFindResponsesPaginatedCursorPost,
+    type RetrievalGrepResponsesPaginatedCursorPost as RetrievalGrepResponsesPaginatedCursorPost,
+    type RetrievalRetrieveParams as RetrievalRetrieveParams,
+    type RetrievalFindParams as RetrievalFindParams,
+    type RetrievalGrepParams as RetrievalGrepParams,
+    type RetrievalReadParams as RetrievalReadParams,
+  };
+
+  export {
+    Chat as Chat,
+    type ChatCreateResponse as ChatCreateResponse,
+    type ChatRetrieveResponse as ChatRetrieveResponse,
+    type ChatListResponse as ChatListResponse,
+    type ChatGetSummaryResponse as ChatGetSummaryResponse,
+    type ChatSetTitleResponse as ChatSetTitleResponse,
+    type ChatStreamResponse as ChatStreamResponse,
+    type ChatListResponsesPaginatedCursor as ChatListResponsesPaginatedCursor,
+    type ChatCreateParams as ChatCreateParams,
+    type ChatRetrieveParams as ChatRetrieveParams,
+    type ChatListParams as ChatListParams,
+    type ChatDeleteParams as ChatDeleteParams,
+    type ChatGetSummaryParams as ChatGetSummaryParams,
+    type ChatSetTitleParams as ChatSetTitleParams,
+    type ChatStreamParams as ChatStreamParams,
+  };
+
   export {
     type AgentData as AgentData,
     type AgentDataDeleteResponse as AgentDataDeleteResponse,

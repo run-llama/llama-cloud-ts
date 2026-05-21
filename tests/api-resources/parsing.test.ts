@@ -10,7 +10,7 @@ const client = new LlamaCloud({
 describe('resource parsing', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.parsing.create({ tier: 'fast', version: '2025-12-11' });
+    const responsePromise = client.parsing.create({ tier: 'fast', version: 'latest' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,7 +24,7 @@ describe('resource parsing', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.parsing.create({
       tier: 'fast',
-      version: '2025-12-11',
+      version: 'latest',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       agentic_options: { custom_prompt: 'custom_prompt' },
@@ -54,6 +54,7 @@ describe('resource parsing', () => {
         },
       },
       output_options: {
+        additional_outputs: ['stripped_md', 'concatenated_stripped_txt', 'word_bbox'],
         extract_printed_page_number: true,
         images_to_save: ['screenshot'],
         markdown: {

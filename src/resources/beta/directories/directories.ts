@@ -29,9 +29,6 @@ export class Directories extends APIResource {
   /**
    * Create a new directory within the specified project.
    *
-   * If data_source_id is provided, validates that the data source exists and belongs
-   * to the same project.
-   *
    * @example
    * ```ts
    * const directory = await client.beta.directories.create({
@@ -159,11 +156,6 @@ export interface DirectoryCreateResponse {
   created_at?: string | null;
 
   /**
-   * Optional data source id the directory syncs from. Null if just manual uploads.
-   */
-  data_source_id?: string | null;
-
-  /**
    * Optional timestamp of when the directory was deleted. Null if not deleted.
    */
   deleted_at?: string | null;
@@ -202,11 +194,6 @@ export interface DirectoryUpdateResponse {
    * Creation datetime
    */
   created_at?: string | null;
-
-  /**
-   * Optional data source id the directory syncs from. Null if just manual uploads.
-   */
-  data_source_id?: string | null;
 
   /**
    * Optional timestamp of when the directory was deleted. Null if not deleted.
@@ -249,11 +236,6 @@ export interface DirectoryListResponse {
   created_at?: string | null;
 
   /**
-   * Optional data source id the directory syncs from. Null if just manual uploads.
-   */
-  data_source_id?: string | null;
-
-  /**
    * Optional timestamp of when the directory was deleted. Null if not deleted.
    */
   deleted_at?: string | null;
@@ -294,11 +276,6 @@ export interface DirectoryGetResponse {
   created_at?: string | null;
 
   /**
-   * Optional data source id the directory syncs from. Null if just manual uploads.
-   */
-  data_source_id?: string | null;
-
-  /**
    * Optional timestamp of when the directory was deleted. Null if not deleted.
    */
   deleted_at?: string | null;
@@ -331,11 +308,6 @@ export interface DirectoryCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Optional data source id the directory syncs from.
-   */
-  data_source_id?: string | null;
-
-  /**
    * Body param: Optional description shown to users.
    */
   description?: string | null;
@@ -364,8 +336,6 @@ export interface DirectoryUpdateParams {
 }
 
 export interface DirectoryListParams extends PaginatedCursorParams {
-  data_source_id?: string | null;
-
   include_deleted?: boolean;
 
   name?: string | null;

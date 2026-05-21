@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as FilesAPI from './files';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
 import { type Uploadable } from '../core/uploads';
@@ -211,6 +212,11 @@ export interface FileCreateResponse {
   project_id: string;
 
   /**
+   * Schema for a presigned URL.
+   */
+  download_url?: PresignedURL | null;
+
+  /**
    * When the file expires and may be automatically removed. Null means no
    * expiration.
    */
@@ -256,6 +262,11 @@ export interface FileListResponse {
    * Project this file belongs to
    */
   project_id: string;
+
+  /**
+   * Schema for a presigned URL.
+   */
+  download_url?: PresignedURL | null;
 
   /**
    * When the file expires and may be automatically removed. Null means no
@@ -329,6 +340,11 @@ export namespace FileQueryResponse {
     project_id: string;
 
     /**
+     * Schema for a presigned URL.
+     */
+    download_url?: FilesAPI.PresignedURL | null;
+
+    /**
      * When the file expires and may be automatically removed. Null means no
      * expiration.
      */
@@ -387,6 +403,11 @@ export interface FileCreateParams {
 }
 
 export interface FileListParams extends PaginatedCursorParams {
+  /**
+   * Fields to expand on each file.
+   */
+  expand?: Array<string> | null;
+
   /**
    * Filter by external file ID.
    */
