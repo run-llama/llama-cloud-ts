@@ -1,5 +1,42 @@
 # Changelog
 
+## 2.7.0 (2026-05-21)
+
+Full Changelog: [v2.6.0...v2.7.0](https://github.com/run-llama/llama-parse-ts/compare/v2.6.0...v2.7.0)
+
+### Features
+
+* **api:** Adding in Resources For Retrieval and Chat ([6191a57](https://github.com/run-llama/llama-parse-ts/commit/6191a57e85d1958a2fadbfff71c227f3ecc09da5))
+* **api:** api update ([d9f59d6](https://github.com/run-llama/llama-parse-ts/commit/d9f59d6b624a8df9c7c155d1c05700730298da1b))
+* **api:** api update ([c3293f7](https://github.com/run-llama/llama-parse-ts/commit/c3293f7398f24a08669a5700df768d9d98c357a2))
+* **api:** api update ([4ff1de4](https://github.com/run-llama/llama-parse-ts/commit/4ff1de4f2d13731cfcc241cf59e2ac48218214b6))
+* **api:** api update ([ad064c2](https://github.com/run-llama/llama-parse-ts/commit/ad064c2f02906940dc545822a75852ef2365c9e0))
+* **api:** api update ([171ab38](https://github.com/run-llama/llama-parse-ts/commit/171ab38cc12f43ce3ba6f79d6601481495796a48))
+* **api:** api update ([6ced29f](https://github.com/run-llama/llama-parse-ts/commit/6ced29fa0de433e07074ac37a4b88cac06e6d8a3))
+* **api:** api update ([bb024eb](https://github.com/run-llama/llama-parse-ts/commit/bb024ebecb9f446fbc0a887fab91257d8ed8143f))
+* **api:** api update ([61ef427](https://github.com/run-llama/llama-parse-ts/commit/61ef4277f3efe1a69238f8c08afb0fc27bf73bac))
+* **api:** swap grep and file search to grep/find + pagination ([f8d974c](https://github.com/run-llama/llama-parse-ts/commit/f8d974caa9c9f8fe564a90ed035ada1861b1776a))
+* **api:** Updating indexes endpoints within the sub resources. ([1d0f434](https://github.com/run-llama/llama-parse-ts/commit/1d0f43464b99cc9422b032d311dd8a04cc482aaa))
+
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([85cf2fb](https://github.com/run-llama/llama-parse-ts/commit/85cf2fb5cc31bbd21e83bcc18e878ac415f8fc7c))
+
+
+### Chores
+
+* avoid formatting file that gets changed during releases ([260676d](https://github.com/run-llama/llama-parse-ts/commit/260676d188ade2b3fd9b1391529979164714d8c2))
+* configure new SDK language ([5d06aa0](https://github.com/run-llama/llama-parse-ts/commit/5d06aa0bfe13d651a6ba9c6041accad4a1e925be))
+* **internal:** version bump ([0323f7a](https://github.com/run-llama/llama-parse-ts/commit/0323f7ae3373812e4c60979812b0bd980a688823))
+* redact api-key headers in debug logs ([88a8b08](https://github.com/run-llama/llama-parse-ts/commit/88a8b081ee8067a7054a42fced96d44d4b8f6772))
+* **tests:** remove redundant File import ([b5d0991](https://github.com/run-llama/llama-parse-ts/commit/b5d09918d0195e66524bcbb969956f2086831c99))
+
+
+### Documentation
+
+* update http mcp docs ([136ce21](https://github.com/run-llama/llama-parse-ts/commit/136ce212ebd0625e72dab5e53b37b70261873565))
+
 ## 2.6.0 (2026-05-20)
 
 Full Changelog: [v2.5.0...v2.6.0](https://github.com/run-llama/llama-parse-ts/compare/v2.5.0...v2.6.0)
