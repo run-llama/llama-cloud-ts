@@ -235,16 +235,40 @@ export interface IndexCreateParams {
   description?: string | null;
 
   /**
+   * Body param: Optional display name for the index. If omitted, the index is named
+   * after the source directory.
+   */
+  name?: string | null;
+
+  /**
    * Body param: Product configurations for syncing. Omit to use a default parse
    * configuration. Include an explicit entry per product type (e.g. parse, extract)
    * to override the default.
    */
   products?: Array<IndexCreateParams.Product> | null;
+
+  /**
+   * Body param: Attachment kinds to store alongside parsed output. Each entry must
+   * be one of: screenshots, items. For example, ['screenshots'] renders and stores
+   * per-page screenshots; ['items'] stores structured items with bounding boxes.
+   * Omit or pass an empty list to skip attachments.
+   */
+  store_attachments?: Array<string> | null;
+
+  /**
+   * Body param: How often to re-run the sync. One of: manual, daily,
+   * on_source_change. Defaults to manual.
+   */
+  sync_frequency?: string;
 }
 
 export namespace IndexCreateParams {
   /**
-   * A product configuration to include in a sync.
+   * A product configuration to include in an index's sync.
+   *
+   * Structurally mirrors `directory_sync.SyncProductEntryRequest` but is a distinct
+   * class so the Index API surface stays SDK-gen-isolated from directory-sync
+   * internals. Translation between the two happens in `index/api_utils.py`.
    */
   export interface Product {
     /**
@@ -253,9 +277,9 @@ export namespace IndexCreateParams {
     product_config_id: string;
 
     /**
-     * Product type: parse or extract.
+     * Product type. One of: parse, extract.
      */
-    product_type: 'parse' | 'extract';
+    product_type: string;
   }
 }
 

@@ -41,10 +41,8 @@ export class Documents extends APIResource {
   }
 
   /**
-   * Delete a document from a pipeline. Initiates an async job that will:
-   *
-   * 1. Delete vectors from the vector store
-   * 2. Delete the document from MongoDB after vectors are successfully deleted
+   * Delete a document from a pipeline; runs async (vectors first, then MongoDB
+   * record).
    */
   delete(documentID: string, params: DocumentDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { pipeline_id } = params;

@@ -575,12 +575,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/chat/{session_id}/summary',
   },
   {
-    clientCallName: 'client.beta.chat.setTitle',
-    fullyQualifiedName: 'beta.chat.setTitle',
-    httpMethod: 'post',
-    httpPath: '/api/v1/chat/{session_id}/title',
-  },
-  {
     clientCallName: 'client.beta.chat.stream',
     fullyQualifiedName: 'beta.chat.stream',
     httpMethod: 'post',

@@ -9,8 +9,7 @@ import { path } from '../../internal/utils/path';
 
 export class Jobs extends APIResource {
   /**
-   * Create a classify job. Experimental: This endpoint is not yet ready for
-   * production use and is subject to change at any time.
+   * Create a classify job. Experimental: not production-ready and subject to change.
    *
    * @deprecated Please use `client.classify.create()`
    */
@@ -24,8 +23,7 @@ export class Jobs extends APIResource {
   }
 
   /**
-   * List classify jobs. Experimental: This endpoint is not yet ready for production
-   * use and is subject to change at any time.
+   * List classify jobs. Experimental: not production-ready and subject to change.
    *
    * @deprecated Please use `client.classify.list()`
    */
@@ -40,8 +38,7 @@ export class Jobs extends APIResource {
   }
 
   /**
-   * Get a classify job. Experimental: This endpoint is not yet ready for production
-   * use and is subject to change at any time.
+   * Get a classify job. Experimental: not production-ready and subject to change.
    *
    * @deprecated Please use `client.classify.get()`
    */
@@ -54,8 +51,8 @@ export class Jobs extends APIResource {
   }
 
   /**
-   * Get the results of a classify job. Experimental: This endpoint is not yet ready
-   * for production use and is subject to change at any time.
+   * Get the results of a classify job. Experimental: not production-ready and
+   * subject to change.
    *
    * @deprecated Please use `client.classify.get()`
    */

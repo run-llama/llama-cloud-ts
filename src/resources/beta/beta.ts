@@ -30,8 +30,6 @@ import {
   ChatListResponsesPaginatedCursor,
   ChatRetrieveParams,
   ChatRetrieveResponse,
-  ChatSetTitleParams,
-  ChatSetTitleResponse,
   ChatStreamParams,
   ChatStreamResponse,
 } from './chat';
@@ -167,7 +165,6 @@ export declare namespace Beta {
     type ChatRetrieveResponse as ChatRetrieveResponse,
     type ChatListResponse as ChatListResponse,
     type ChatGetSummaryResponse as ChatGetSummaryResponse,
-    type ChatSetTitleResponse as ChatSetTitleResponse,
     type ChatStreamResponse as ChatStreamResponse,
     type ChatListResponsesPaginatedCursor as ChatListResponsesPaginatedCursor,
     type ChatCreateParams as ChatCreateParams,
@@ -175,7 +172,6 @@ export declare namespace Beta {
     type ChatListParams as ChatListParams,
     type ChatDeleteParams as ChatDeleteParams,
     type ChatGetSummaryParams as ChatGetSummaryParams,
-    type ChatSetTitleParams as ChatSetTitleParams,
     type ChatStreamParams as ChatStreamParams,
   };
 

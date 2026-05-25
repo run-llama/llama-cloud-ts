@@ -252,16 +252,6 @@ export interface ExtractJobMetadata {
  */
 export interface ExtractJobUsage {
   /**
-   * Number of document tokens
-   */
-  num_document_tokens?: number | null;
-
-  /**
-   * Number of output tokens
-   */
-  num_output_tokens?: number | null;
-
-  /**
    * Number of pages extracted
    */
   num_pages_extracted?: number | null;

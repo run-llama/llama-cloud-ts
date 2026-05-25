@@ -99,30 +99,6 @@ export class Chat extends APIResource {
   }
 
   /**
-   * Generate a title for a session from its first user message.
-   *
-   * @example
-   * ```ts
-   * const response = await client.beta.chat.setTitle(
-   *   'session_id',
-   *   { first_message: 'What were the main findings in Q3?' },
-   * );
-   * ```
-   */
-  setTitle(
-    sessionID: string,
-    params: ChatSetTitleParams,
-    options?: RequestOptions,
-  ): APIPromise<ChatSetTitleResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post(path`/api/v1/chat/${sessionID}/title`, {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
-
-  /**
    * Stream agent events for a chat turn as Server-Sent Events.
    *
    * @example
@@ -462,59 +438,6 @@ export namespace ChatGetSummaryResponse {
   }
 }
 
-/**
- * Summary of a chat session, including its title and last run metadata.
- */
-export interface ChatSetTitleResponse {
-  /**
-   * ISO-format timestamp showing when the session was last updated.
-   */
-  last_updated_at: string;
-
-  /**
-   * Unique session identifier.
-   */
-  session_id: string;
-
-  /**
-   * Auto-generated title derived from the first user message.
-   */
-  generated_title?: string | null;
-
-  /**
-   * Indexes this session is bound to. Null on unbound sessions.
-   */
-  index_ids?: Array<string> | null;
-
-  /**
-   * Token usage and status from the most recent run. Null if the session has not
-   * been run yet.
-   */
-  job_metadata?: ChatSetTitleResponse.JobMetadata | null;
-}
-
-export namespace ChatSetTitleResponse {
-  /**
-   * Token usage and status from the most recent run. Null if the session has not
-   * been run yet.
-   */
-  export interface JobMetadata {
-    duration_ms?: number;
-
-    error?: string | null;
-
-    export_config_ids?: Array<string> | null;
-
-    is_error?: boolean;
-
-    total_input_tokens?: number | null;
-
-    total_output_tokens?: number | null;
-
-    turns?: number;
-  }
-}
-
 export type ChatStreamResponse = unknown;
 
 export interface ChatCreateParams {
@@ -560,23 +483,6 @@ export interface ChatGetSummaryParams {
   project_id?: string | null;
 }
 
-export interface ChatSetTitleParams {
-  /**
-   * Body param: First user message of the session, used to infer a short title.
-   */
-  first_message: string;
-
-  /**
-   * Query param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
-}
-
 export interface ChatStreamParams {
   /**
    * Body param: Indexes to retrieve data from.
@@ -605,7 +511,6 @@ export declare namespace Chat {
     type ChatRetrieveResponse as ChatRetrieveResponse,
     type ChatListResponse as ChatListResponse,
     type ChatGetSummaryResponse as ChatGetSummaryResponse,
-    type ChatSetTitleResponse as ChatSetTitleResponse,
     type ChatStreamResponse as ChatStreamResponse,
     type ChatListResponsesPaginatedCursor as ChatListResponsesPaginatedCursor,
     type ChatCreateParams as ChatCreateParams,
@@ -613,7 +518,6 @@ export declare namespace Chat {
     type ChatListParams as ChatListParams,
     type ChatDeleteParams as ChatDeleteParams,
     type ChatGetSummaryParams as ChatGetSummaryParams,
-    type ChatSetTitleParams as ChatSetTitleParams,
     type ChatStreamParams as ChatStreamParams,
   };
 }

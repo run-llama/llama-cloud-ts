@@ -202,7 +202,6 @@ const fuse = new Fuse(
     'client.beta.chat.getSummary',
     'client.beta.chat.list',
     'client.beta.chat.retrieve',
-    'client.beta.chat.setTitle',
     'client.beta.chat.stream',
     'client.beta.agentData.aggregate',
     'client.beta.agentData.create',

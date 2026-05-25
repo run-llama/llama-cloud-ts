@@ -402,7 +402,6 @@ Types:
 - <code><a href="./src/resources/beta/chat.ts">ChatRetrieveResponse</a></code>
 - <code><a href="./src/resources/beta/chat.ts">ChatListResponse</a></code>
 - <code><a href="./src/resources/beta/chat.ts">ChatGetSummaryResponse</a></code>
-- <code><a href="./src/resources/beta/chat.ts">ChatSetTitleResponse</a></code>
 - <code><a href="./src/resources/beta/chat.ts">ChatStreamResponse</a></code>
 
 Methods:
@@ -412,7 +411,6 @@ Methods:
 - <code title="get /api/v1/chat">client.beta.chat.<a href="./src/resources/beta/chat.ts">list</a>({ ...params }) -> ChatListResponsesPaginatedCursor</code>
 - <code title="delete /api/v1/chat/{session_id}">client.beta.chat.<a href="./src/resources/beta/chat.ts">delete</a>(sessionID, { ...params }) -> void</code>
 - <code title="get /api/v1/chat/{session_id}/summary">client.beta.chat.<a href="./src/resources/beta/chat.ts">getSummary</a>(sessionID, { ...params }) -> ChatGetSummaryResponse</code>
-- <code title="post /api/v1/chat/{session_id}/title">client.beta.chat.<a href="./src/resources/beta/chat.ts">setTitle</a>(sessionID, { ...params }) -> ChatSetTitleResponse</code>
 - <code title="post /api/v1/chat/{session_id}/messages/stream">client.beta.chat.<a href="./src/resources/beta/chat.ts">stream</a>(sessionID, { ...params }) -> unknown</code>
 
 ## AgentData

@@ -27,6 +27,9 @@ describe('resource directories', () => {
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       description: 'description',
+      expires_at: '2026-05-10T00:00:00Z',
+      system_metadata: { foo: 'bar' },
+      type: 'user',
     });
   });
 
