@@ -27,7 +27,10 @@ describe('resource indexes', () => {
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       description: 'description',
+      name: 'name',
       products: [{ product_config_id: 'cfg-abc123', product_type: 'parse' }],
+      store_attachments: ['screenshots'],
+      sync_frequency: 'manual',
     });
   });
 

@@ -72,14 +72,7 @@ export class Files extends APIResource {
   }
 
   /**
-   * Query files with flexible filtering and pagination.
-   *
-   * **Deprecated**: Use GET /files instead for listing files with query parameters.
-   *
-   * Args: request: The query request with filters and pagination project: Validated
-   * project from dependency
-   *
-   * Returns: Paginated response with files
+   * Query files with filtering and pagination. Deprecated: use `GET /files`.
    *
    * @deprecated Use the GET /files endpoint instead
    */

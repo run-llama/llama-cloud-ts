@@ -47,8 +47,8 @@ export class DataSources extends APIResource {
   }
 
   /**
-   * Run ingestion for the pipeline data source by incrementally updating the
-   * data-sink with upstream changes from data-source.
+   * Run incremental ingestion: pull upstream changes from the data source into the
+   * data sink.
    */
   sync(
     dataSourceID: string,

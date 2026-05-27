@@ -166,6 +166,21 @@ export interface DirectoryCreateResponse {
   description?: string | null;
 
   /**
+   * When this directory expires and is eligible for cleanup.
+   */
+  expires_at?: string | null;
+
+  /**
+   * Reserved system-managed metadata.
+   */
+  system_metadata?: { [key: string]: unknown } | null;
+
+  /**
+   * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
+   */
+  type?: 'user' | 'index' | 'ephemeral' | 'system_ephemeral' | null;
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -204,6 +219,21 @@ export interface DirectoryUpdateResponse {
    * Optional description shown to users.
    */
   description?: string | null;
+
+  /**
+   * When this directory expires and is eligible for cleanup.
+   */
+  expires_at?: string | null;
+
+  /**
+   * Reserved system-managed metadata.
+   */
+  system_metadata?: { [key: string]: unknown } | null;
+
+  /**
+   * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
+   */
+  type?: 'user' | 'index' | 'ephemeral' | 'system_ephemeral' | null;
 
   /**
    * Update datetime
@@ -246,6 +276,21 @@ export interface DirectoryListResponse {
   description?: string | null;
 
   /**
+   * When this directory expires and is eligible for cleanup.
+   */
+  expires_at?: string | null;
+
+  /**
+   * Reserved system-managed metadata.
+   */
+  system_metadata?: { [key: string]: unknown } | null;
+
+  /**
+   * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
+   */
+  type?: 'user' | 'index' | 'ephemeral' | 'system_ephemeral' | null;
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -286,6 +331,21 @@ export interface DirectoryGetResponse {
   description?: string | null;
 
   /**
+   * When this directory expires and is eligible for cleanup.
+   */
+  expires_at?: string | null;
+
+  /**
+   * Reserved system-managed metadata.
+   */
+  system_metadata?: { [key: string]: unknown } | null;
+
+  /**
+   * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
+   */
+  type?: 'user' | 'index' | 'ephemeral' | 'system_ephemeral' | null;
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -311,6 +371,22 @@ export interface DirectoryCreateParams {
    * Body param: Optional description shown to users.
    */
   description?: string | null;
+
+  /**
+   * Body param: When this directory expires. Required for ephemeral directories.
+   */
+  expires_at?: string | null;
+
+  /**
+   * Body param: Reserved system-managed metadata.
+   */
+  system_metadata?: { [key: string]: unknown } | null;
+
+  /**
+   * Body param: Directory type. Use 'ephemeral' for batch processing with automatic
+   * cleanup.
+   */
+  type?: 'user' | 'ephemeral';
 }
 
 export interface DirectoryUpdateParams {
@@ -344,7 +420,7 @@ export interface DirectoryListParams extends PaginatedCursorParams {
 
   project_id?: string | null;
 
-  type?: 'user' | 'index' | null;
+  type?: 'user' | 'index' | 'ephemeral' | null;
 }
 
 export interface DirectoryDeleteParams {
