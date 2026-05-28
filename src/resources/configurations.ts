@@ -11,10 +11,8 @@ import { path } from '../internal/utils/path';
 
 export class Configurations extends APIResource {
   /**
-   * Create or update a product configuration.
-   *
-   * If a configuration with the same name already exists for this product type and
-   * project, it will be updated (upsert semantics).
+   * Upsert a product configuration; updates if one with the same name + product
+   * type + project exists, otherwise creates.
    */
   create(params: ConfigurationCreateParams, options?: RequestOptions): APIPromise<ConfigurationResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -432,7 +430,7 @@ export interface ParseV2Parameters {
    * version for reproducible results. See GET /api/v2/parse/versions for the
    * per-tier list.
    */
-  version: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-05-21' | '2026-04-09' | '2025-12-11' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -1190,7 +1188,7 @@ export namespace ParseV2Parameters {
         /**
          * Tier version when overriding tier. Required when tier is specified
          */
-        version?: 'latest' | '2026-05-13' | '2026-05-11' | '2026-04-09' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-05-21' | '2026-04-09' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {

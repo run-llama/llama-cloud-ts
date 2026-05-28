@@ -30,8 +30,6 @@ import {
   ChatListResponsesPaginatedCursor,
   ChatRetrieveParams,
   ChatRetrieveResponse,
-  ChatSetTitleParams,
-  ChatSetTitleResponse,
   ChatStreamParams,
   ChatStreamResponse,
 } from './chat';
@@ -42,6 +40,9 @@ import {
   IndexDeleteParams,
   IndexGetParams,
   IndexGetResponse,
+  IndexListParams,
+  IndexListResponse,
+  IndexListResponsesPaginatedCursor,
   IndexSyncParams,
   IndexSyncResponse,
   Indexes,
@@ -139,9 +140,12 @@ export declare namespace Beta {
   export {
     Indexes as Indexes,
     type IndexCreateResponse as IndexCreateResponse,
+    type IndexListResponse as IndexListResponse,
     type IndexGetResponse as IndexGetResponse,
     type IndexSyncResponse as IndexSyncResponse,
+    type IndexListResponsesPaginatedCursor as IndexListResponsesPaginatedCursor,
     type IndexCreateParams as IndexCreateParams,
+    type IndexListParams as IndexListParams,
     type IndexDeleteParams as IndexDeleteParams,
     type IndexGetParams as IndexGetParams,
     type IndexSyncParams as IndexSyncParams,
@@ -167,7 +171,6 @@ export declare namespace Beta {
     type ChatRetrieveResponse as ChatRetrieveResponse,
     type ChatListResponse as ChatListResponse,
     type ChatGetSummaryResponse as ChatGetSummaryResponse,
-    type ChatSetTitleResponse as ChatSetTitleResponse,
     type ChatStreamResponse as ChatStreamResponse,
     type ChatListResponsesPaginatedCursor as ChatListResponsesPaginatedCursor,
     type ChatCreateParams as ChatCreateParams,
@@ -175,7 +178,6 @@ export declare namespace Beta {
     type ChatListParams as ChatListParams,
     type ChatDeleteParams as ChatDeleteParams,
     type ChatGetSummaryParams as ChatGetSummaryParams,
-    type ChatSetTitleParams as ChatSetTitleParams,
     type ChatStreamParams as ChatStreamParams,
   };
 

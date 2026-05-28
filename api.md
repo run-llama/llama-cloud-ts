@@ -114,6 +114,20 @@ Methods:
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">get</a>(classifyJobID, { ...params }) -> ClassifyJob</code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}/results">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">getResults</a>(classifyJobID, { ...params }) -> JobGetResultsResponse</code>
 
+# Batches
+
+Types:
+
+- <code><a href="./src/resources/batches.ts">BatchCreateResponse</a></code>
+- <code><a href="./src/resources/batches.ts">BatchListResponse</a></code>
+- <code><a href="./src/resources/batches.ts">BatchGetResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v2/batches">client.batches.<a href="./src/resources/batches.ts">create</a>({ ...params }) -> BatchCreateResponse</code>
+- <code title="get /api/v2/batches">client.batches.<a href="./src/resources/batches.ts">list</a>({ ...params }) -> BatchListResponsesPaginatedCursor</code>
+- <code title="get /api/v2/batches/{batch_id}">client.batches.<a href="./src/resources/batches.ts">get</a>(batchID, { ...params }) -> BatchGetResponse</code>
+
 # Classify
 
 Types:
@@ -368,12 +382,14 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/beta/indexes.ts">IndexCreateResponse</a></code>
+- <code><a href="./src/resources/beta/indexes.ts">IndexListResponse</a></code>
 - <code><a href="./src/resources/beta/indexes.ts">IndexGetResponse</a></code>
 - <code><a href="./src/resources/beta/indexes.ts">IndexSyncResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v1/indexes">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">create</a>({ ...params }) -> IndexCreateResponse</code>
+- <code title="get /api/v1/indexes">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">list</a>({ ...params }) -> IndexListResponsesPaginatedCursor</code>
 - <code title="delete /api/v1/indexes/{index_id}">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">delete</a>(indexID, { ...params }) -> void</code>
 - <code title="get /api/v1/indexes/{index_id}">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">get</a>(indexID, { ...params }) -> IndexGetResponse</code>
 - <code title="post /api/v1/indexes/{index_id}/sync">client.beta.indexes.<a href="./src/resources/beta/indexes.ts">sync</a>(indexID, { ...params }) -> unknown</code>
@@ -402,7 +418,6 @@ Types:
 - <code><a href="./src/resources/beta/chat.ts">ChatRetrieveResponse</a></code>
 - <code><a href="./src/resources/beta/chat.ts">ChatListResponse</a></code>
 - <code><a href="./src/resources/beta/chat.ts">ChatGetSummaryResponse</a></code>
-- <code><a href="./src/resources/beta/chat.ts">ChatSetTitleResponse</a></code>
 - <code><a href="./src/resources/beta/chat.ts">ChatStreamResponse</a></code>
 
 Methods:
@@ -412,7 +427,6 @@ Methods:
 - <code title="get /api/v1/chat">client.beta.chat.<a href="./src/resources/beta/chat.ts">list</a>({ ...params }) -> ChatListResponsesPaginatedCursor</code>
 - <code title="delete /api/v1/chat/{session_id}">client.beta.chat.<a href="./src/resources/beta/chat.ts">delete</a>(sessionID, { ...params }) -> void</code>
 - <code title="get /api/v1/chat/{session_id}/summary">client.beta.chat.<a href="./src/resources/beta/chat.ts">getSummary</a>(sessionID, { ...params }) -> ChatGetSummaryResponse</code>
-- <code title="post /api/v1/chat/{session_id}/title">client.beta.chat.<a href="./src/resources/beta/chat.ts">setTitle</a>(sessionID, { ...params }) -> ChatSetTitleResponse</code>
 - <code title="post /api/v1/chat/{session_id}/messages/stream">client.beta.chat.<a href="./src/resources/beta/chat.ts">stream</a>(sessionID, { ...params }) -> unknown</code>
 
 ## AgentData

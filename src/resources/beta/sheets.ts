@@ -11,8 +11,8 @@ import { pollUntilComplete, PollingOptions, DEFAULT_TIMEOUT } from '../../core/p
 
 export class Sheets extends APIResource {
   /**
-   * Create a spreadsheet parsing job. Experimental: This endpoint is not yet ready
-   * for production use and is subject to change at any time.
+   * Create a spreadsheet parsing job. Experimental: not production-ready and subject
+   * to change.
    *
    * @example
    * ```ts
@@ -31,8 +31,8 @@ export class Sheets extends APIResource {
   }
 
   /**
-   * List spreadsheet parsing jobs. Experimental: This endpoint is not yet ready for
-   * production use and is subject to change at any time.
+   * List spreadsheet parsing jobs. Experimental: not production-ready and subject to
+   * change.
    *
    * @example
    * ```ts
@@ -53,9 +53,8 @@ export class Sheets extends APIResource {
   }
 
   /**
-   * Delete a spreadsheet parsing job and its associated data. Experimental: This
-   * endpoint is not yet ready for production use and is subject to change at any
-   * time.
+   * Delete a spreadsheet parsing job and its associated data. Experimental: not
+   * production-ready and subject to change.
    *
    * @example
    * ```ts
@@ -77,14 +76,9 @@ export class Sheets extends APIResource {
   }
 
   /**
-   * Get a spreadsheet parsing job.
-   *
-   * When include_results=True (default), the response will include extracted regions
-   * and results if the job is complete, eliminating the need for a separate /results
-   * call.
-   *
-   * Experimental: This endpoint is not yet ready for production use and is subject
-   * to change at any time.
+   * Get a spreadsheet parsing job. When `include_results=True` (default), embeds
+   * extracted regions and results if complete, skipping the separate `/results`
+   * call. Experimental: not production-ready and subject to change.
    *
    * @example
    * ```ts
@@ -103,8 +97,7 @@ export class Sheets extends APIResource {
 
   /**
    * Generate a presigned URL to download a specific extracted region. Experimental:
-   * This endpoint is not yet ready for production use and is subject to change at
-   * any time.
+   * not production-ready and subject to change.
    *
    * @example
    * ```ts

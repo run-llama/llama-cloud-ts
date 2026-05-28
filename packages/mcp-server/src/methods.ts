@@ -119,6 +119,24 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/classifier/jobs/{classify_job_id}/results',
   },
   {
+    clientCallName: 'client.batches.create',
+    fullyQualifiedName: 'batches.create',
+    httpMethod: 'post',
+    httpPath: '/api/v2/batches',
+  },
+  {
+    clientCallName: 'client.batches.list',
+    fullyQualifiedName: 'batches.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/batches',
+  },
+  {
+    clientCallName: 'client.batches.get',
+    fullyQualifiedName: 'batches.get',
+    httpMethod: 'get',
+    httpPath: '/api/v2/batches/{batch_id}',
+  },
+  {
     clientCallName: 'client.classify.create',
     fullyQualifiedName: 'classify.create',
     httpMethod: 'post',
@@ -503,6 +521,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/indexes',
   },
   {
+    clientCallName: 'client.beta.indexes.list',
+    fullyQualifiedName: 'beta.indexes.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/indexes',
+  },
+  {
     clientCallName: 'client.beta.indexes.delete',
     fullyQualifiedName: 'beta.indexes.delete',
     httpMethod: 'delete',
@@ -573,12 +597,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'beta.chat.getSummary',
     httpMethod: 'get',
     httpPath: '/api/v1/chat/{session_id}/summary',
-  },
-  {
-    clientCallName: 'client.beta.chat.setTitle',
-    fullyQualifiedName: 'beta.chat.setTitle',
-    httpMethod: 'post',
-    httpPath: '/api/v1/chat/{session_id}/title',
   },
   {
     clientCallName: 'client.beta.chat.stream',

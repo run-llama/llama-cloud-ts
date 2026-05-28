@@ -27,8 +27,41 @@ describe('resource indexes', () => {
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       description: 'description',
+      name: 'name',
       products: [{ product_config_id: 'cfg-abc123', product_type: 'parse' }],
+      store_attachments: ['screenshots'],
+      sync_frequency: 'manual',
+      vector_target: 'DEFAULT',
     });
+  });
+
+  // Mock server tests are disabled
+  test.skip('list', async () => {
+    const responsePromise = client.beta.indexes.list();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.beta.indexes.list(
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          page_size: 0,
+          page_token: 'page_token',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          source_directory_id: 'source_directory_id',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled

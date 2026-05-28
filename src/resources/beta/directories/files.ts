@@ -12,19 +12,15 @@ import { path } from '../../../internal/utils/path';
 
 export class Files extends APIResource {
   /**
-   * Update file metadata within the specified directory.
-   *
-   * Supports moving files to a different directory by setting directory_id.
-   *
-   * Note: This endpoint uses directory_file_id (the internal ID). If you're trying
-   * to update a file by its unique_id, use the list endpoint with a filter to find
-   * the directory_file_id first.
+   * Update directory-file metadata by `directory_file_id`; set `directory_id` to
+   * move the file to a different directory. To resolve from `unique_id`, list with a
+   * filter first.
    *
    * @example
    * ```ts
    * const file = await client.beta.directories.files.update(
    *   'directory_file_id',
-   *   { path_directory_id: 'directory_id' },
+   *   { directory_id: 'directory_id' },
    * );
    * ```
    */
@@ -33,8 +29,8 @@ export class Files extends APIResource {
     params: FileUpdateParams,
     options?: RequestOptions,
   ): APIPromise<FileUpdateResponse> {
-    const { path_directory_id, organization_id, project_id, ...body } = params;
-    return this._client.patch(path`/api/v1/beta/directories/${path_directory_id}/files/${directoryFileID}`, {
+    const { directory_id, organization_id, project_id, ...body } = params;
+    return this._client.patch(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
       query: { organization_id, project_id },
       body,
       ...options,
@@ -68,11 +64,8 @@ export class Files extends APIResource {
   }
 
   /**
-   * Delete a file from the specified directory.
-   *
-   * Note: This endpoint uses directory_file_id (the internal ID). If you're trying
-   * to delete a file by its unique_id, use the list endpoint with a filter to find
-   * the directory_file_id first.
+   * Delete a directory file by `directory_file_id`; to resolve from `unique_id`,
+   * list with a filter first.
    *
    * @example
    * ```ts
@@ -92,10 +85,8 @@ export class Files extends APIResource {
   }
 
   /**
-   * Create a new file within the specified directory.
-   *
-   * The directory must exist and belong to the project passed in. The file_id must
-   * be provided and exist in the project.
+   * Create a new file within the specified directory; the directory must exist in
+   * the project and `file_id` must reference an existing file.
    *
    * @example
    * ```ts
@@ -115,9 +106,8 @@ export class Files extends APIResource {
   }
 
   /**
-   * Get a file by its directory_file_id within the specified directory. If you're
-   * trying to get a file by its unique_id, use the list endpoint with a filter
-   * instead.
+   * Get a directory file by `directory_file_id`; to look up by `unique_id`, use the
+   * list endpoint with a filter.
    *
    * @example
    * ```ts
@@ -136,11 +126,8 @@ export class Files extends APIResource {
   }
 
   /**
-   * Upload a file directly to a directory.
-   *
-   * Uploads a file and creates a directory file entry in a single operation. If
-   * unique_id or display_name are not provided, they will be derived from the file
-   * metadata.
+   * Upload a file and create its directory entry in one call; `unique_id` /
+   * `display_name` default to values derived from file metadata.
    *
    * @example
    * ```ts
@@ -469,7 +456,7 @@ export interface FileUpdateParams {
   /**
    * Path param
    */
-  path_directory_id: string;
+  directory_id: string;
 
   /**
    * Query param
@@ -482,11 +469,6 @@ export interface FileUpdateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Move file to a different directory.
-   */
-  body_directory_id?: string | null;
-
-  /**
    * Body param: Updated display name.
    */
   display_name?: string | null;
@@ -496,6 +478,11 @@ export interface FileUpdateParams {
    * layer.
    */
   metadata?: { [key: string]: string | number | boolean | Array<string> | null } | null;
+
+  /**
+   * Body param: Move file to a different directory.
+   */
+  target_directory_id?: string | null;
 
   /**
    * Body param: Updated unique identifier.

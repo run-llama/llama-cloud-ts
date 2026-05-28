@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.8.0 (2026-05-28)
+
+Full Changelog: [v2.7.0...v2.8.0](https://github.com/run-llama/llama-parse-ts/compare/v2.7.0...v2.8.0)
+
+### Features
+
+* **api:** api update ([a4ac164](https://github.com/run-llama/llama-parse-ts/commit/a4ac16433ea44b039a3236722a3ea882512dc151))
+* **api:** api update ([bd67a45](https://github.com/run-llama/llama-parse-ts/commit/bd67a4501b4826e5f8ebf69c865df4febfe6954e))
+* **api:** batches support ([426038d](https://github.com/run-llama/llama-parse-ts/commit/426038d5471f8fca6e603873beab2ed3c36dc093))
+
+
+### Bug Fixes
+
+* **mcp:** use `pure-lockfile` when building mcp server ([df07213](https://github.com/run-llama/llama-parse-ts/commit/df072137963f39413a3ce1c15d1dc5494c32cc1b))
+
 ## 2.7.0 (2026-05-21)
 
 Full Changelog: [v2.6.0...v2.7.0](https://github.com/run-llama/llama-parse-ts/compare/v2.6.0...v2.7.0)

@@ -145,29 +145,6 @@ describe('resource chat', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('setTitle: only required params', async () => {
-    const responsePromise = client.beta.chat.setTitle('session_id', {
-      first_message: 'What were the main findings in Q3?',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('setTitle: required and optional params', async () => {
-    const response = await client.beta.chat.setTitle('session_id', {
-      first_message: 'What were the main findings in Q3?',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
-  });
-
-  // Mock server tests are disabled
   test.skip('stream: only required params', async () => {
     const responsePromise = client.beta.chat.stream('session_id', {
       index_ids: ['idx-abc123', 'idx-def456'],

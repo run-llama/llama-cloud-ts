@@ -34,14 +34,12 @@ export {
   type ChatRetrieveResponse,
   type ChatListResponse,
   type ChatGetSummaryResponse,
-  type ChatSetTitleResponse,
   type ChatStreamResponse,
   type ChatCreateParams,
   type ChatRetrieveParams,
   type ChatListParams,
   type ChatDeleteParams,
   type ChatGetSummaryParams,
-  type ChatSetTitleParams,
   type ChatStreamParams,
   type ChatListResponsesPaginatedCursor,
 } from './chat';
@@ -61,12 +59,15 @@ export {
 export {
   Indexes,
   type IndexCreateResponse,
+  type IndexListResponse,
   type IndexGetResponse,
   type IndexSyncResponse,
   type IndexCreateParams,
+  type IndexListParams,
   type IndexDeleteParams,
   type IndexGetParams,
   type IndexSyncParams,
+  type IndexListResponsesPaginatedCursor,
 } from './indexes';
 export {
   Retrieval,
