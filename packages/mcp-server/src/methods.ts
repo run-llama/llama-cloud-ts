@@ -119,6 +119,24 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/classifier/jobs/{classify_job_id}/results',
   },
   {
+    clientCallName: 'client.batches.create',
+    fullyQualifiedName: 'batches.create',
+    httpMethod: 'post',
+    httpPath: '/api/v2/batches',
+  },
+  {
+    clientCallName: 'client.batches.list',
+    fullyQualifiedName: 'batches.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/batches',
+  },
+  {
+    clientCallName: 'client.batches.get',
+    fullyQualifiedName: 'batches.get',
+    httpMethod: 'get',
+    httpPath: '/api/v2/batches/{batch_id}',
+  },
+  {
     clientCallName: 'client.classify.create',
     fullyQualifiedName: 'classify.create',
     httpMethod: 'post',
@@ -500,6 +518,12 @@ export const sdkMethods: SdkMethod[] = [
     clientCallName: 'client.beta.indexes.create',
     fullyQualifiedName: 'beta.indexes.create',
     httpMethod: 'post',
+    httpPath: '/api/v1/indexes',
+  },
+  {
+    clientCallName: 'client.beta.indexes.list',
+    fullyQualifiedName: 'beta.indexes.list',
+    httpMethod: 'get',
     httpPath: '/api/v1/indexes',
   },
   {

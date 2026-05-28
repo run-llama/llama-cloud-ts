@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -20,6 +21,27 @@ export class Indexes extends APIResource {
   create(params: IndexCreateParams, options?: RequestOptions): APIPromise<IndexCreateResponse> {
     const { organization_id, project_id, ...body } = params;
     return this._client.post('/api/v1/indexes', { query: { organization_id, project_id }, body, ...options });
+  }
+
+  /**
+   * List indexes for the current project.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const indexListResponse of client.beta.indexes.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(
+    query: IndexListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<IndexListResponsesPaginatedCursor, IndexListResponse> {
+    return this._client.getAPIList('/api/v1/indexes', PaginatedCursor<IndexListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -81,10 +103,77 @@ export class Indexes extends APIResource {
   }
 }
 
+export type IndexListResponsesPaginatedCursor = PaginatedCursor<IndexListResponse>;
+
 /**
  * A searchable index over a directory of documents.
  */
 export interface IndexCreateResponse {
+  /**
+   * Unique identifier
+   */
+  id: string;
+
+  /**
+   * ID of the export configuration.
+   */
+  export_config_id: string;
+
+  /**
+   * Index name.
+   */
+  name: string;
+
+  /**
+   * Project this index belongs to.
+   */
+  project_id: string;
+
+  /**
+   * ID of the source directory.
+   */
+  source_directory_id: string;
+
+  /**
+   * ID of the sync configuration.
+   */
+  sync_config_id: string;
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Index description.
+   */
+  description?: string | null;
+
+  /**
+   * Last export time.
+   */
+  last_exported_at?: string | null;
+
+  /**
+   * Last sync time.
+   */
+  last_synced_at?: string | null;
+
+  /**
+   * Build state and diagnostic info.
+   */
+  metadata?: { [key: string]: unknown };
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
+/**
+ * A searchable index over a directory of documents.
+ */
+export interface IndexListResponse {
   /**
    * Unique identifier
    */
@@ -290,6 +379,14 @@ export namespace IndexCreateParams {
   }
 }
 
+export interface IndexListParams extends PaginatedCursorParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+
+  source_directory_id?: string | null;
+}
+
 export interface IndexDeleteParams {
   organization_id?: string | null;
 
@@ -311,9 +408,12 @@ export interface IndexSyncParams {
 export declare namespace Indexes {
   export {
     type IndexCreateResponse as IndexCreateResponse,
+    type IndexListResponse as IndexListResponse,
     type IndexGetResponse as IndexGetResponse,
     type IndexSyncResponse as IndexSyncResponse,
+    type IndexListResponsesPaginatedCursor as IndexListResponsesPaginatedCursor,
     type IndexCreateParams as IndexCreateParams,
+    type IndexListParams as IndexListParams,
     type IndexDeleteParams as IndexDeleteParams,
     type IndexGetParams as IndexGetParams,
     type IndexSyncParams as IndexSyncParams,
