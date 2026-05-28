@@ -15,8 +15,7 @@ export class Batches extends APIResource {
    * const batch = await client.batches.create({
    *   config: {
    *     job: {
-   *       configuration_id:
-   *         'cfg-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+   *       configuration_id: 'cfg-PARSE_AGENTIC',
    *       type: 'parse_v2',
    *     },
    *   },
@@ -76,16 +75,16 @@ export type BatchListResponsesPaginatedCursor = PaginatedCursor<BatchListRespons
  * Example: { "id": "bat-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "project_id":
  * "prj-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "source_directory_id":
  * "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "config": { "job": { "type":
- * "parse_v2", "configuration_id": "cfg-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee" } },
- * "status": "COMPLETED", "results": [ { "source_directory_file_id":
+ * "parse_v2", "configuration_id": "cfg-PARSE_AGENTIC" } }, "status": "COMPLETED",
+ * "results": [ { "source_directory_file_id":
  * "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "job_reference": { "type":
  * "parse_v2", "id": "pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee" }, "error_message":
  * null } ] }
  *
  * Batch-level `FAILED` means the orchestration failed and cannot provide a
  * reliable per-file result set. `results` is only populated when explicitly
- * requested with `expand=results` and may be `null` while a batch is still running
- * or before result mappings are available.
+ * requested with `expand=results` and may be `null` while a batch is still
+ * running.
  */
 export interface BatchCreateResponse {
   /**
@@ -120,7 +119,7 @@ export interface BatchCreateResponse {
 
   /**
    * Expanded per-file result mappings. Null unless requested with expand=results, or
-   * until result mappings are available.
+   * while the batch is still running.
    */
   results?: Array<BatchCreateResponse.Result> | null;
 
@@ -147,7 +146,7 @@ export namespace BatchCreateResponse {
      */
     export interface Job {
       /**
-       * Saved product configuration ID matching the job type.
+       * Product configuration ID or built-in preset ID matching the job type.
        */
       configuration_id: string;
 
@@ -219,16 +218,16 @@ export namespace BatchCreateResponse {
  * Example: { "id": "bat-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "project_id":
  * "prj-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "source_directory_id":
  * "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "config": { "job": { "type":
- * "parse_v2", "configuration_id": "cfg-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee" } },
- * "status": "COMPLETED", "results": [ { "source_directory_file_id":
+ * "parse_v2", "configuration_id": "cfg-PARSE_AGENTIC" } }, "status": "COMPLETED",
+ * "results": [ { "source_directory_file_id":
  * "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "job_reference": { "type":
  * "parse_v2", "id": "pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee" }, "error_message":
  * null } ] }
  *
  * Batch-level `FAILED` means the orchestration failed and cannot provide a
  * reliable per-file result set. `results` is only populated when explicitly
- * requested with `expand=results` and may be `null` while a batch is still running
- * or before result mappings are available.
+ * requested with `expand=results` and may be `null` while a batch is still
+ * running.
  */
 export interface BatchListResponse {
   /**
@@ -263,7 +262,7 @@ export interface BatchListResponse {
 
   /**
    * Expanded per-file result mappings. Null unless requested with expand=results, or
-   * until result mappings are available.
+   * while the batch is still running.
    */
   results?: Array<BatchListResponse.Result> | null;
 
@@ -290,7 +289,7 @@ export namespace BatchListResponse {
      */
     export interface Job {
       /**
-       * Saved product configuration ID matching the job type.
+       * Product configuration ID or built-in preset ID matching the job type.
        */
       configuration_id: string;
 
@@ -362,16 +361,16 @@ export namespace BatchListResponse {
  * Example: { "id": "bat-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "project_id":
  * "prj-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "source_directory_id":
  * "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "config": { "job": { "type":
- * "parse_v2", "configuration_id": "cfg-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee" } },
- * "status": "COMPLETED", "results": [ { "source_directory_file_id":
+ * "parse_v2", "configuration_id": "cfg-PARSE_AGENTIC" } }, "status": "COMPLETED",
+ * "results": [ { "source_directory_file_id":
  * "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "job_reference": { "type":
  * "parse_v2", "id": "pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee" }, "error_message":
  * null } ] }
  *
  * Batch-level `FAILED` means the orchestration failed and cannot provide a
  * reliable per-file result set. `results` is only populated when explicitly
- * requested with `expand=results` and may be `null` while a batch is still running
- * or before result mappings are available.
+ * requested with `expand=results` and may be `null` while a batch is still
+ * running.
  */
 export interface BatchGetResponse {
   /**
@@ -406,7 +405,7 @@ export interface BatchGetResponse {
 
   /**
    * Expanded per-file result mappings. Null unless requested with expand=results, or
-   * until result mappings are available.
+   * while the batch is still running.
    */
   results?: Array<BatchGetResponse.Result> | null;
 
@@ -433,7 +432,7 @@ export namespace BatchGetResponse {
      */
     export interface Job {
       /**
-       * Saved product configuration ID matching the job type.
+       * Product configuration ID or built-in preset ID matching the job type.
        */
       configuration_id: string;
 
@@ -538,7 +537,7 @@ export namespace BatchCreateParams {
      */
     export interface Job {
       /**
-       * Saved product configuration ID matching the job type.
+       * Product configuration ID or built-in preset ID matching the job type.
        */
       configuration_id: string;
 
