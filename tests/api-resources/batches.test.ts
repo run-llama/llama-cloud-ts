@@ -11,7 +11,7 @@ describe('resource batches', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.batches.create({
-      config: { job: { configuration_id: 'cfg-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee', type: 'parse_v2' } },
+      config: { job: { configuration_id: 'cfg-PARSE_AGENTIC', type: 'parse_v2' } },
       source_directory_id: 'dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -26,7 +26,7 @@ describe('resource batches', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.batches.create({
-      config: { job: { configuration_id: 'cfg-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee', type: 'parse_v2' } },
+      config: { job: { configuration_id: 'cfg-PARSE_AGENTIC', type: 'parse_v2' } },
       source_directory_id: 'dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
