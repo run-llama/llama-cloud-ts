@@ -260,6 +260,13 @@ export interface IndexCreateParams {
    * on_source_change. Defaults to manual.
    */
   sync_frequency?: string;
+
+  /**
+   * Body param: Vector export destination for the index. 'DEFAULT' exports to the
+   * managed vector DB destination resolved from configuration. 'DISABLED' skips
+   * vector export — the export destination falls back to 'Download'.
+   */
+  vector_target?: 'DEFAULT' | 'DISABLED';
 }
 
 export namespace IndexCreateParams {

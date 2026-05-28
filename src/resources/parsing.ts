@@ -286,6 +286,11 @@ export interface BBox {
   label?: string | null;
 
   /**
+   * Optional visual text rotation angle in degrees. Omitted when unrotated.
+   */
+  r?: number | null;
+
+  /**
    * Start index in the text
    */
   start_index?: number | null;
