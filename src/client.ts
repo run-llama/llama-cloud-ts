@@ -36,6 +36,16 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  BatchCreateParams,
+  BatchCreateResponse,
+  BatchGetParams,
+  BatchGetResponse,
+  BatchListParams,
+  BatchListResponse,
+  BatchListResponsesPaginatedCursor,
+  Batches,
+} from './resources/batches';
+import {
   Classify,
   ClassifyConfiguration,
   ClassifyCreateParams,
@@ -947,6 +957,7 @@ export class LlamaCloud {
   parsing: API.Parsing = new API.Parsing(this);
   extract: API.Extract = new API.Extract(this);
   classifier: API.Classifier = new API.Classifier(this);
+  batches: API.Batches = new API.Batches(this);
   classify: API.Classify = new API.Classify(this);
   configurations: API.Configurations = new API.Configurations(this);
   projects: API.Projects = new API.Projects(this);
@@ -961,6 +972,7 @@ LlamaCloud.Files = Files;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Extract = Extract;
 LlamaCloud.Classifier = Classifier;
+LlamaCloud.Batches = Batches;
 LlamaCloud.Classify = Classify;
 LlamaCloud.Configurations = Configurations;
 LlamaCloud.Projects = Projects;
@@ -1080,6 +1092,17 @@ export declare namespace LlamaCloud {
   };
 
   export { Classifier as Classifier };
+
+  export {
+    Batches as Batches,
+    type BatchCreateResponse as BatchCreateResponse,
+    type BatchListResponse as BatchListResponse,
+    type BatchGetResponse as BatchGetResponse,
+    type BatchListResponsesPaginatedCursor as BatchListResponsesPaginatedCursor,
+    type BatchCreateParams as BatchCreateParams,
+    type BatchListParams as BatchListParams,
+    type BatchGetParams as BatchGetParams,
+  };
 
   export {
     Classify as Classify,

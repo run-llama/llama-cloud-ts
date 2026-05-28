@@ -59,12 +59,15 @@ export {
 export {
   Indexes,
   type IndexCreateResponse,
+  type IndexListResponse,
   type IndexGetResponse,
   type IndexSyncResponse,
   type IndexCreateParams,
+  type IndexListParams,
   type IndexDeleteParams,
   type IndexGetParams,
   type IndexSyncParams,
+  type IndexListResponsesPaginatedCursor,
 } from './indexes';
 export {
   Retrieval,
