@@ -31,6 +31,7 @@ describe('resource indexes', () => {
       products: [{ product_config_id: 'cfg-abc123', product_type: 'parse' }],
       store_attachments: ['screenshots'],
       sync_frequency: 'manual',
+      vector_target: 'DEFAULT',
     });
   });
 
