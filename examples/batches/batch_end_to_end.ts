@@ -23,8 +23,7 @@ async function runBatch() {
   // 1. Ephemeral directories are automatically eligible for cleanup.
   const expiresAt = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString();
   const directory = await client.beta.directories.create({
-    // Directory names are unique per project, so add a suffix to stay re-runnable.
-    name: `batch-example-${Date.now()}`,
+    name: 'batch-example',
     type: 'ephemeral',
     expires_at: expiresAt,
   });
