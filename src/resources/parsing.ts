@@ -1192,11 +1192,19 @@ export interface ParsingCreateParams {
   tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';
 
   /**
-   * Body param: Tier version. Use 'latest' for the current stable version, or pin a
-   * dated version for reproducible results. See GET /api/v2/parse/versions for the
-   * per-tier list.
+   * Body param: Version for the selected tier. Use `latest`, or pin one of that
+   * tier's dated versions.
+   *
+   * Current `latest` by tier:
+   *
+   * - `fast`: `2025-12-11`
+   * - `cost_effective`: `2026-05-28`
+   * - `agentic`: `2026-05-26`
+   * - `agentic_plus`: `2026-05-26`
+   *
+   * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-05-21' | '2026-04-09' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-05-28' | '2026-05-26' | '2025-12-11' | (string & {});
 
   /**
    * Query param
@@ -1980,9 +1988,19 @@ export namespace ParsingCreateParams {
         tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus' | null;
 
         /**
-         * Tier version when overriding tier. Required when tier is specified
+         * Version for the override tier. Required when `tier` is set. Use `latest`, or pin
+         * one of that tier's dated versions.
+         *
+         * Current `latest` by tier:
+         *
+         * - `fast`: `2025-12-11`
+         * - `cost_effective`: `2026-05-28`
+         * - `agentic`: `2026-05-26`
+         * - `agentic_plus`: `2026-05-26`
+         *
+         * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-05-21' | '2026-04-09' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-05-28' | '2026-05-26' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
