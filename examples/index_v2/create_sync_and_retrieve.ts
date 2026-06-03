@@ -1,3 +1,6 @@
+/* eslint-disable */
+// @ts-nocheck
+
 import pLimit from 'p-limit';
 import * as fs from 'fs';
 import * as path from 'path';
