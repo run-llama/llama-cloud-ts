@@ -385,6 +385,12 @@ export namespace JobCreateParams {
     webhook_headers?: { [key: string]: unknown } | null;
 
     /**
+     * Format of the webhook payload body. 'string' (default) sends the payload as a
+     * JSON-encoded string; 'json' sends it as a JSON object.
+     */
+    webhook_output_format?: 'string' | 'json' | null;
+
+    /**
      * HTTPS URL to receive webhook POST requests. Must be publicly accessible
      */
     webhook_url?: string | null;
