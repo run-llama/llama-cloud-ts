@@ -1375,12 +1375,12 @@ export interface ParsingCreateParams {
    *
    * - `fast`: `2025-12-11`
    * - `cost_effective`: `2026-05-28`
-   * - `agentic`: `2026-05-21`
-   * - `agentic_plus`: `2026-05-21`
+   * - `agentic`: `2026-06-01`
+   * - `agentic_plus`: `2026-06-01`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-05-28' | '2026-05-21' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-01' | '2026-05-28' | '2025-12-11' | (string & {});
 
   /**
    * Query param
@@ -2171,12 +2171,12 @@ export namespace ParsingCreateParams {
          *
          * - `fast`: `2025-12-11`
          * - `cost_effective`: `2026-05-28`
-         * - `agentic`: `2026-05-21`
-         * - `agentic_plus`: `2026-05-21`
+         * - `agentic`: `2026-06-01`
+         * - `agentic_plus`: `2026-06-01`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-05-28' | '2026-05-21' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-01' | '2026-05-28' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -2318,8 +2318,9 @@ export namespace ParsingCreateParams {
   export interface WebhookConfiguration {
     /**
      * Events that trigger this webhook. Options: 'parse.success' (job completed),
-     * 'parse.failure' (job failed), 'parse.partial' (some pages failed). If not
-     * specified, webhook fires for all events
+     * 'parse.error' (job failed), 'parse.partial_success' (some pages failed),
+     * 'parse.pending', 'parse.running', 'parse.cancelled'. If not specified, webhook
+     * fires for all events
      */
     webhook_events?: Array<string> | null;
 

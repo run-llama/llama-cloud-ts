@@ -546,7 +546,7 @@ export interface CloudSharepointDataSource {
   /**
    * Whether to get permissions for the sharepoint site.
    */
-  get_permissions?: boolean | null;
+  get_permissions?: boolean;
 
   /**
    * List of regex patterns for file paths to include. Full paths (including
