@@ -172,6 +172,63 @@ export interface ClassifyCreateRequest {
    * Idempotency key scoped to the project
    */
   transaction_id?: string | null;
+
+  /**
+   * Outbound webhook endpoints to notify on job status changes
+   */
+  webhook_configurations?: Array<ClassifyCreateRequest.WebhookConfiguration> | null;
+}
+
+export namespace ClassifyCreateRequest {
+  /**
+   * Configuration for a single outbound webhook endpoint.
+   */
+  export interface WebhookConfiguration {
+    /**
+     * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
+     * events are delivered.
+     */
+    webhook_events?: Array<
+      | 'extract.pending'
+      | 'extract.success'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.cancelled'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.cancelled'
+      | 'classify.pending'
+      | 'classify.running'
+      | 'classify.success'
+      | 'classify.error'
+      | 'classify.partial_success'
+      | 'classify.cancelled'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'sheets.error'
+      | 'sheets.partial_success'
+      | 'sheets.cancelled'
+      | 'unmapped_event'
+    > | null;
+
+    /**
+     * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
+     */
+    webhook_headers?: { [key: string]: string } | null;
+
+    /**
+     * Response format sent to the webhook: 'string' (default) or 'json'
+     */
+    webhook_output_format?: string | null;
+
+    /**
+     * URL to receive webhook POST notifications
+     */
+    webhook_url?: string | null;
+  }
 }
 
 /**
@@ -459,6 +516,63 @@ export interface ClassifyCreateParams {
    * Body param: Idempotency key scoped to the project
    */
   transaction_id?: string | null;
+
+  /**
+   * Body param: Outbound webhook endpoints to notify on job status changes
+   */
+  webhook_configurations?: Array<ClassifyCreateParams.WebhookConfiguration> | null;
+}
+
+export namespace ClassifyCreateParams {
+  /**
+   * Configuration for a single outbound webhook endpoint.
+   */
+  export interface WebhookConfiguration {
+    /**
+     * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
+     * events are delivered.
+     */
+    webhook_events?: Array<
+      | 'extract.pending'
+      | 'extract.success'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.cancelled'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.cancelled'
+      | 'classify.pending'
+      | 'classify.running'
+      | 'classify.success'
+      | 'classify.error'
+      | 'classify.partial_success'
+      | 'classify.cancelled'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'sheets.error'
+      | 'sheets.partial_success'
+      | 'sheets.cancelled'
+      | 'unmapped_event'
+    > | null;
+
+    /**
+     * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
+     */
+    webhook_headers?: { [key: string]: string } | null;
+
+    /**
+     * Response format sent to the webhook: 'string' (default) or 'json'
+     */
+    webhook_output_format?: string | null;
+
+    /**
+     * URL to receive webhook POST notifications
+     */
+    webhook_url?: string | null;
+  }
 }
 
 export interface ClassifyListParams extends PaginatedCursorParams {

@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import * as FilesAPI from '../files';
-import * as ParsingAPI from '../parsing';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -10,8 +9,13 @@ import { path } from '../../internal/utils/path';
 
 export class Sheets extends APIResource {
   /**
-   * Create a spreadsheet parsing job. Experimental: not production-ready and subject
-   * to change.
+   * Create a spreadsheet parsing job.
+   *
+   * Provide **exactly one** of `configuration` (an inline parsing configuration) or
+   * `configuration_id` (a saved configuration preset). Optionally include
+   * `webhook_configurations` to receive `sheets.*` status notifications.
+   *
+   * Experimental: not production-ready and subject to change.
    *
    * @example
    * ```ts
@@ -123,7 +127,7 @@ export class Sheets extends APIResource {
 export type SheetsJobsPaginatedCursor = PaginatedCursor<SheetsJob>;
 
 /**
- * A spreadsheet parsing job
+ * A spreadsheet parsing job.
  */
 export interface SheetsJob {
   /**
@@ -132,9 +136,10 @@ export interface SheetsJob {
   id: string;
 
   /**
-   * Configuration for the parsing job
+   * Configuration applied to the parsing job (inline or resolved from a saved
+   * preset).
    */
-  config: SheetsParsingConfig;
+  configuration: SheetsParsingConfig;
 
   /**
    * When the job was created
@@ -154,7 +159,7 @@ export interface SheetsJob {
   /**
    * The status of the parsing job
    */
-  status: ParsingAPI.StatusEnum;
+  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED';
 
   /**
    * When the job was last updated
@@ -167,6 +172,16 @@ export interface SheetsJob {
   user_id: string;
 
   /**
+   * @deprecated Configuration for spreadsheet parsing and region extraction
+   */
+  config?: SheetsParsingConfig | null;
+
+  /**
+   * The saved product configuration ID used at create time, if any.
+   */
+  configuration_id?: string | null;
+
+  /**
    * Any errors encountered
    */
   errors?: Array<string>;
@@ -175,6 +190,17 @@ export interface SheetsJob {
    * @deprecated Schema for a file.
    */
   file?: FilesAPI.File | null;
+
+  /**
+   * Per-status entry timestamps. Returned only when requested via
+   * `?expand=metadata_state_transitions`.
+   */
+  metadata_state_transitions?: { [key: string]: unknown } | null;
+
+  /**
+   * Job-time parameters such as webhook configurations.
+   */
+  parameters?: SheetsJob.Parameters;
 
   /**
    * All extracted regions (populated when job is complete)
@@ -193,6 +219,68 @@ export interface SheetsJob {
 }
 
 export namespace SheetsJob {
+  /**
+   * Job-time parameters such as webhook configurations.
+   */
+  export interface Parameters {
+    /**
+     * Webhook configurations for job status notifications.
+     */
+    webhook_configurations?: Array<Parameters.WebhookConfiguration> | null;
+  }
+
+  export namespace Parameters {
+    /**
+     * Configuration for a single outbound webhook endpoint.
+     */
+    export interface WebhookConfiguration {
+      /**
+       * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
+       * events are delivered.
+       */
+      webhook_events?: Array<
+        | 'extract.pending'
+        | 'extract.success'
+        | 'extract.error'
+        | 'extract.partial_success'
+        | 'extract.cancelled'
+        | 'parse.pending'
+        | 'parse.running'
+        | 'parse.success'
+        | 'parse.error'
+        | 'parse.partial_success'
+        | 'parse.cancelled'
+        | 'classify.pending'
+        | 'classify.running'
+        | 'classify.success'
+        | 'classify.error'
+        | 'classify.partial_success'
+        | 'classify.cancelled'
+        | 'sheets.pending'
+        | 'sheets.success'
+        | 'sheets.error'
+        | 'sheets.partial_success'
+        | 'sheets.cancelled'
+        | 'unmapped_event'
+      > | null;
+
+      /**
+       * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
+       */
+      webhook_headers?: { [key: string]: string } | null;
+
+      /**
+       * Response format sent to the webhook: 'string' (default) or 'json'
+       */
+      webhook_output_format?: string | null;
+
+      /**
+       * URL to receive webhook POST notifications
+       */
+      webhook_url?: string | null;
+    }
+  }
+
   /**
    * A summary of a single extracted region from a spreadsheet
    */
@@ -321,12 +409,84 @@ export interface SheetCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Configuration for the parsing job
+   * Body param: Configuration for spreadsheet parsing and region extraction
    */
-  config?: SheetsParsingConfig;
+  config?: SheetsParsingConfig | null;
+
+  /**
+   * Body param: Configuration for spreadsheet parsing and region extraction
+   */
+  configuration?: SheetsParsingConfig | null;
+
+  /**
+   * Body param: Saved configuration ID
+   */
+  configuration_id?: string | null;
+
+  /**
+   * Body param: Outbound webhook endpoints to notify on job status changes
+   */
+  webhook_configurations?: Array<SheetCreateParams.WebhookConfiguration> | null;
+}
+
+export namespace SheetCreateParams {
+  /**
+   * Configuration for a single outbound webhook endpoint.
+   */
+  export interface WebhookConfiguration {
+    /**
+     * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
+     * events are delivered.
+     */
+    webhook_events?: Array<
+      | 'extract.pending'
+      | 'extract.success'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.cancelled'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.cancelled'
+      | 'classify.pending'
+      | 'classify.running'
+      | 'classify.success'
+      | 'classify.error'
+      | 'classify.partial_success'
+      | 'classify.cancelled'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'sheets.error'
+      | 'sheets.partial_success'
+      | 'sheets.cancelled'
+      | 'unmapped_event'
+    > | null;
+
+    /**
+     * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
+     */
+    webhook_headers?: { [key: string]: string } | null;
+
+    /**
+     * Response format sent to the webhook: 'string' (default) or 'json'
+     */
+    webhook_output_format?: string | null;
+
+    /**
+     * URL to receive webhook POST notifications
+     */
+    webhook_url?: string | null;
+  }
 }
 
 export interface SheetListParams extends PaginatedCursorParams {
+  /**
+   * Filter by saved configuration ID
+   */
+  configuration_id?: string | null;
+
   /**
    * Include items created at or after this timestamp (inclusive)
    */
@@ -351,7 +511,7 @@ export interface SheetListParams extends PaginatedCursorParams {
   /**
    * Filter by job status
    */
-  status?: ParsingAPI.StatusEnum | null;
+  status?: 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED' | null;
 }
 
 export interface SheetDeleteJobParams {
@@ -361,6 +521,12 @@ export interface SheetDeleteJobParams {
 }
 
 export interface SheetGetParams {
+  /**
+   * Optional fields to populate on the response. Valid values:
+   * metadata_state_transitions.
+   */
+  expand?: Array<string>;
+
   include_results?: boolean;
 
   organization_id?: string | null;

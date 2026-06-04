@@ -360,12 +360,6 @@ export interface ExtractV2Parameters {
   confidence_scores?: boolean;
 
   /**
-   * Use 'latest' for the default pipeline or a date string (YYYY-MM-DD format) to
-   * pin to a specific release.
-   */
-  extract_version?: string;
-
-  /**
    * Granularity of extraction: per_doc returns one object per document, per_page
    * returns one object per page, per_table_row returns one object per table row
    */
@@ -403,6 +397,12 @@ export interface ExtractV2Parameters {
    * Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)
    */
   tier?: 'cost_effective' | 'agentic';
+
+  /**
+   * Use 'latest' for the latest release for the selected tier or a date string
+   * (YYYY-MM-DD format) to pin to the nearest release at or before that date.
+   */
+  version?: string;
 }
 
 /**
@@ -433,12 +433,12 @@ export interface ParseV2Parameters {
    *
    * - `fast`: `2025-12-11`
    * - `cost_effective`: `2026-05-28`
-   * - `agentic`: `2026-05-21`
-   * - `agentic_plus`: `2026-05-21`
+   * - `agentic`: `2026-06-01`
+   * - `agentic_plus`: `2026-06-01`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-05-28' | '2026-05-21' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-01' | '2026-05-28' | '2025-12-11' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -1201,12 +1201,12 @@ export namespace ParseV2Parameters {
          *
          * - `fast`: `2025-12-11`
          * - `cost_effective`: `2026-05-28`
-         * - `agentic`: `2026-05-21`
-         * - `agentic_plus`: `2026-05-21`
+         * - `agentic`: `2026-06-01`
+         * - `agentic_plus`: `2026-06-01`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-05-28' | '2026-05-21' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-01' | '2026-05-28' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -1348,8 +1348,9 @@ export namespace ParseV2Parameters {
   export interface WebhookConfiguration {
     /**
      * Events that trigger this webhook. Options: 'parse.success' (job completed),
-     * 'parse.failure' (job failed), 'parse.partial' (some pages failed). If not
-     * specified, webhook fires for all events
+     * 'parse.error' (job failed), 'parse.partial_success' (some pages failed),
+     * 'parse.pending', 'parse.running', 'parse.cancelled'. If not specified, webhook
+     * fires for all events
      */
     webhook_events?: Array<string> | null;
 

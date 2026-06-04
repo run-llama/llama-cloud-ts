@@ -36,6 +36,25 @@ describe('resource sheets', () => {
         table_merge_sensitivity: 'strong',
         use_experimental_processing: true,
       },
+      configuration: {
+        extraction_range: 'extraction_range',
+        flatten_hierarchical_tables: true,
+        generate_additional_metadata: true,
+        include_hidden_cells: true,
+        sheet_names: ['string'],
+        specialization: 'specialization',
+        table_merge_sensitivity: 'strong',
+        use_experimental_processing: true,
+      },
+      configuration_id: 'cfg-11111111-2222-3333-4444-555555555555',
+      webhook_configurations: [
+        {
+          webhook_events: ['parse.success', 'parse.error'],
+          webhook_headers: { Authorization: 'Bearer sk-...' },
+          webhook_output_format: 'json',
+          webhook_url: 'https://example.com/webhooks/llamacloud',
+        },
+      ],
     });
   });
 
@@ -57,6 +76,7 @@ describe('resource sheets', () => {
     await expect(
       client.beta.sheets.list(
         {
+          configuration_id: 'configuration_id',
           created_at_on_or_after: '2019-12-27T18:11:19.117Z',
           created_at_on_or_before: '2019-12-27T18:11:19.117Z',
           include_results: true,
@@ -118,6 +138,7 @@ describe('resource sheets', () => {
       client.beta.sheets.get(
         'spreadsheet_job_id',
         {
+          expand: ['string'],
           include_results: true,
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
