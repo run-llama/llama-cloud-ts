@@ -7,7 +7,7 @@ on:
     inputs:
       path:
         description: The path to run the release in, e.g. '.' or 'packages/mcp-server'
-        required: true
+        required: false
 
   release:
     types: [published]
