@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.9.0 (2026-06-09)
+
+Full Changelog: [v2.8.0...v2.9.0](https://github.com/run-llama/llama-parse-ts/compare/v2.8.0...v2.9.0)
+
+### Features
+
+* **api:** api update ([4c0f78c](https://github.com/run-llama/llama-parse-ts/commit/4c0f78cba52bdbc60814533fe7b766b990d3fd7b))
+* **api:** api update ([1f3c3ae](https://github.com/run-llama/llama-parse-ts/commit/1f3c3ae42790fa93d7a8f7dcbca7b1c53dc1930d))
+* **api:** api update ([cc58ff8](https://github.com/run-llama/llama-parse-ts/commit/cc58ff845900fb4db9826643e7b736e8b16c9645))
+* **api:** api update ([1552a14](https://github.com/run-llama/llama-parse-ts/commit/1552a14000d4e565ba9b32a0ae8052c27aa41652))
+* **api:** api update ([d6c7874](https://github.com/run-llama/llama-parse-ts/commit/d6c7874b0253597570a9c5ade4d078590b88ef58))
+* **api:** api update ([4e4091d](https://github.com/run-llama/llama-parse-ts/commit/4e4091d4d49c2bc22b80a71052b9e8fa50503805))
+
+
+### Bug Fixes
+
+* allow empty path from ui to fallback to default packages and avoid parsing problems ([7f63ef1](https://github.com/run-llama/llama-parse-ts/commit/7f63ef12c5eaccdc8c4fa9e29c842b124f212f0d))
+* eslintignore ([b528694](https://github.com/run-llama/llama-parse-ts/commit/b5286941c62afd480ee2a9433753a2b689fcaf87))
+* remove registry_url from the setup node action and rely on the one defined in the publishing script ([e81b46f](https://github.com/run-llama/llama-parse-ts/commit/e81b46f9c915f31df811e160daa4e57c22b9eaff))
+
+
+### Chores
+
+* update SDK settings ([398577f](https://github.com/run-llama/llama-parse-ts/commit/398577f70c45d8d42f5ebe605bd24fac277566dc))
+* update SDK settings ([de82273](https://github.com/run-llama/llama-parse-ts/commit/de822734ada5d1cabfa0354059bd8a73e4b28854))
+
+
+### Documentation
+
+* index v2 examples ([a00bd7c](https://github.com/run-llama/llama-parse-ts/commit/a00bd7c381d478e091bdd5fc84c0e02a9f1572e8))
+
 ## 2.8.0 (2026-05-28)
 
 Full Changelog: [v2.7.0...v2.8.0](https://github.com/run-llama/llama-parse-ts/compare/v2.7.0...v2.8.0)
