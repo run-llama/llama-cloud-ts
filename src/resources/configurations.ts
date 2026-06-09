@@ -360,8 +360,8 @@ export interface ExtractV2Parameters {
   confidence_scores?: boolean;
 
   /**
-   * Extract algorithm version. Use 'latest' for the default pipeline or a date
-   * string (e.g. '2026-01-08') to pin to a specific release.
+   * Use 'latest' for the default pipeline or a date string (YYYY-MM-DD format) to
+   * pin to a specific release.
    */
   extract_version?: string;
 
@@ -426,11 +426,19 @@ export interface ParseV2Parameters {
   tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';
 
   /**
-   * Tier version. Use 'latest' for the current stable version, or pin a dated
-   * version for reproducible results. See GET /api/v2/parse/versions for the
-   * per-tier list.
+   * Version for the selected tier. Use `latest`, or pin one of that tier's dated
+   * versions.
+   *
+   * Current `latest` by tier:
+   *
+   * - `fast`: `2025-12-11`
+   * - `cost_effective`: `2026-05-28`
+   * - `agentic`: `2026-05-26`
+   * - `agentic_plus`: `2026-05-26`
+   *
+   * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-05-21' | '2026-04-09' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-05-28' | '2026-05-26' | '2025-12-11' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -1186,9 +1194,19 @@ export namespace ParseV2Parameters {
         tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus' | null;
 
         /**
-         * Tier version when overriding tier. Required when tier is specified
+         * Version for the override tier. Required when `tier` is set. Use `latest`, or pin
+         * one of that tier's dated versions.
+         *
+         * Current `latest` by tier:
+         *
+         * - `fast`: `2025-12-11`
+         * - `cost_effective`: `2026-05-28`
+         * - `agentic`: `2026-05-26`
+         * - `agentic_plus`: `2026-05-26`
+         *
+         * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-05-21' | '2026-04-09' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-05-28' | '2026-05-26' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
