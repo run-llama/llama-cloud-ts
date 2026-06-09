@@ -1198,13 +1198,13 @@ export interface ParsingCreateParams {
    * Current `latest` by tier:
    *
    * - `fast`: `2025-12-11`
-   * - `cost_effective`: `2026-05-28`
-   * - `agentic`: `2026-06-01`
-   * - `agentic_plus`: `2026-06-01`
+   * - `cost_effective`: `2026-06-05`
+   * - `agentic`: `2026-06-04`
+   * - `agentic_plus`: `2026-06-04`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-06-01' | '2026-05-28' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-05' | '2026-06-04' | '2025-12-11' | (string & {});
 
   /**
    * Query param
@@ -1466,6 +1466,19 @@ export namespace ParsingCreateParams {
      * 10', 'v', 'A-3'). Useful for referencing original page numbers
      */
     extract_printed_page_number?: boolean | null;
+
+    /**
+     * Bounding-box granularity levels to compute for the parse. 'word' computes one
+     * bounding box per detected word; 'line' computes one per text line; 'cell'
+     * computes one per table cell. Multiple levels can be requested. Empty list
+     * (default) disables granular bboxes — only item-level layout boxes are returned
+     * on the result. When set, the computed boxes are not inlined on the result items;
+     * they are written to a separate `grounded_items` sidecar (JSONL, one row per
+     * page) and exposed as `result_content_metadata.grounded_items` (a presigned
+     * download URL) on the parse result. Each row matches the `GroundedJsonItem`
+     * shape.
+     */
+    granular_bboxes?: Array<'cell' | 'line' | 'word'>;
 
     /**
      * Image categories to extract and save. Options: 'screenshot' (full page renders
@@ -1994,13 +2007,13 @@ export namespace ParsingCreateParams {
          * Current `latest` by tier:
          *
          * - `fast`: `2025-12-11`
-         * - `cost_effective`: `2026-05-28`
-         * - `agentic`: `2026-06-01`
-         * - `agentic_plus`: `2026-06-01`
+         * - `cost_effective`: `2026-06-05`
+         * - `agentic`: `2026-06-04`
+         * - `agentic_plus`: `2026-06-04`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-06-01' | '2026-05-28' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-05' | '2026-06-04' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {

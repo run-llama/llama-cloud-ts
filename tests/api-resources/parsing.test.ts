@@ -56,6 +56,7 @@ describe('resource parsing', () => {
       output_options: {
         additional_outputs: ['stripped_md', 'concatenated_stripped_txt', 'word_bbox'],
         extract_printed_page_number: true,
+        granular_bboxes: ['word', 'line', 'cell'],
         images_to_save: ['screenshot'],
         markdown: {
           annotate_links: true,
