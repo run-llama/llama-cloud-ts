@@ -129,7 +129,7 @@ export namespace RetrievalRetrieveResponse {
     /**
      * User-defined metadata associated with the chunk.
      */
-    metadata?: { [key: string]: string | number | boolean | Array<string> | null } | null;
+    metadata?: { [key: string]: string | number | number | boolean | null | Array<string> } | null;
 
     /**
      * Relevance score from the reranker, if reranking was applied.

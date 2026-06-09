@@ -290,12 +290,6 @@ export interface ExtractConfiguration {
   confidence_scores?: boolean;
 
   /**
-   * Extract algorithm version. Use 'latest' for the default pipeline or a date
-   * string (e.g. '2026-01-08') to pin to a specific release.
-   */
-  extract_version?: string;
-
-  /**
    * Granularity of extraction: per_doc returns one object per document, per_page
    * returns one object per page, per_table_row returns one object per table row
    */
@@ -333,6 +327,12 @@ export interface ExtractConfiguration {
    * Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)
    */
   tier?: 'cost_effective' | 'agentic';
+
+  /**
+   * Use 'latest' for the latest release for the selected tier or a date string
+   * (YYYY-MM-DD format) to pin to the nearest release at or before that date.
+   */
+  version?: string;
 }
 
 /**
@@ -502,10 +502,16 @@ export namespace ExtractV2JobCreate {
       | 'parse.partial_success'
       | 'parse.cancelled'
       | 'classify.pending'
+      | 'classify.running'
       | 'classify.success'
       | 'classify.error'
       | 'classify.partial_success'
       | 'classify.cancelled'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'sheets.error'
+      | 'sheets.partial_success'
+      | 'sheets.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -686,10 +692,16 @@ export namespace ExtractCreateParams {
       | 'parse.partial_success'
       | 'parse.cancelled'
       | 'classify.pending'
+      | 'classify.running'
       | 'classify.success'
       | 'classify.error'
       | 'classify.partial_success'
       | 'classify.cancelled'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'sheets.error'
+      | 'sheets.partial_success'
+      | 'sheets.cancelled'
       | 'unmapped_event'
     > | null;
 

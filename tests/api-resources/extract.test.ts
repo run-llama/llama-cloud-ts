@@ -34,7 +34,6 @@ describe('resource extract', () => {
         },
         cite_sources: true,
         confidence_scores: true,
-        extract_version: 'latest',
         extraction_target: 'per_doc',
         max_pages: 10,
         parse_config_id: 'cfg-11111111-2222-3333-4444-555555555555',
@@ -42,6 +41,7 @@ describe('resource extract', () => {
         system_prompt: 'Extract all monetary values in USD. If a currency is not specified, assume USD.',
         target_pages: '1,3,5-7',
         tier: 'cost_effective',
+        version: 'latest',
       },
       configuration_id: 'cfg-11111111-2222-3333-4444-555555555555',
       webhook_configurations: [

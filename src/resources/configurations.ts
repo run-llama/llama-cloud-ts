@@ -360,12 +360,6 @@ export interface ExtractV2Parameters {
   confidence_scores?: boolean;
 
   /**
-   * Extract algorithm version. Use 'latest' for the default pipeline or a date
-   * string (e.g. '2026-01-08') to pin to a specific release.
-   */
-  extract_version?: string;
-
-  /**
    * Granularity of extraction: per_doc returns one object per document, per_page
    * returns one object per page, per_table_row returns one object per table row
    */
@@ -403,6 +397,12 @@ export interface ExtractV2Parameters {
    * Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)
    */
   tier?: 'cost_effective' | 'agentic';
+
+  /**
+   * Use 'latest' for the latest release for the selected tier or a date string
+   * (YYYY-MM-DD format) to pin to the nearest release at or before that date.
+   */
+  version?: string;
 }
 
 /**
@@ -426,11 +426,19 @@ export interface ParseV2Parameters {
   tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';
 
   /**
-   * Tier version. Use 'latest' for the current stable version, or pin a dated
-   * version for reproducible results. See GET /api/v2/parse/versions for the
-   * per-tier list.
+   * Version for the selected tier. Use `latest`, or pin one of that tier's dated
+   * versions.
+   *
+   * Current `latest` by tier:
+   *
+   * - `fast`: `2025-12-11`
+   * - `cost_effective`: `2026-06-05`
+   * - `agentic`: `2026-06-04`
+   * - `agentic_plus`: `2026-06-04`
+   *
+   * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-05-21' | '2026-04-09' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-05' | '2026-06-04' | '2025-12-11' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -664,6 +672,19 @@ export namespace ParseV2Parameters {
      * 10', 'v', 'A-3'). Useful for referencing original page numbers
      */
     extract_printed_page_number?: boolean | null;
+
+    /**
+     * Bounding-box granularity levels to compute for the parse. 'word' computes one
+     * bounding box per detected word; 'line' computes one per text line; 'cell'
+     * computes one per table cell. Multiple levels can be requested. Empty list
+     * (default) disables granular bboxes — only item-level layout boxes are returned
+     * on the result. When set, the computed boxes are not inlined on the result items;
+     * they are written to a separate `grounded_items` sidecar (JSONL, one row per
+     * page) and exposed as `result_content_metadata.grounded_items` (a presigned
+     * download URL) on the parse result. Each row matches the `GroundedJsonItem`
+     * shape.
+     */
+    granular_bboxes?: Array<'cell' | 'line' | 'word'>;
 
     /**
      * Image categories to extract and save. Options: 'screenshot' (full page renders
@@ -1186,9 +1207,19 @@ export namespace ParseV2Parameters {
         tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus' | null;
 
         /**
-         * Tier version when overriding tier. Required when tier is specified
+         * Version for the override tier. Required when `tier` is set. Use `latest`, or pin
+         * one of that tier's dated versions.
+         *
+         * Current `latest` by tier:
+         *
+         * - `fast`: `2025-12-11`
+         * - `cost_effective`: `2026-06-05`
+         * - `agentic`: `2026-06-04`
+         * - `agentic_plus`: `2026-06-04`
+         *
+         * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-05-21' | '2026-04-09' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-05' | '2026-06-04' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -1330,8 +1361,9 @@ export namespace ParseV2Parameters {
   export interface WebhookConfiguration {
     /**
      * Events that trigger this webhook. Options: 'parse.success' (job completed),
-     * 'parse.failure' (job failed), 'parse.partial' (some pages failed). If not
-     * specified, webhook fires for all events
+     * 'parse.error' (job failed), 'parse.partial_success' (some pages failed),
+     * 'parse.pending', 'parse.running', 'parse.cancelled'. If not specified, webhook
+     * fires for all events
      */
     webhook_events?: Array<string> | null;
 
@@ -1340,6 +1372,12 @@ export namespace ParseV2Parameters {
      * tokens or custom routing. Example: {'Authorization': 'Bearer xyz'}
      */
     webhook_headers?: { [key: string]: unknown } | null;
+
+    /**
+     * Format of the webhook payload body. 'string' (default) sends the payload as a
+     * JSON-encoded string; 'json' sends it as a JSON object.
+     */
+    webhook_output_format?: 'string' | 'json' | null;
 
     /**
      * HTTPS URL to receive webhook POST requests. Must be publicly accessible

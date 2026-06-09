@@ -56,6 +56,7 @@ describe('resource parsing', () => {
       output_options: {
         additional_outputs: ['stripped_md', 'concatenated_stripped_txt', 'word_bbox'],
         extract_printed_page_number: true,
+        granular_bboxes: ['word', 'line', 'cell'],
         images_to_save: ['screenshot'],
         markdown: {
           annotate_links: true,
@@ -164,8 +165,9 @@ describe('resource parsing', () => {
       source_url: 'https:',
       webhook_configurations: [
         {
-          webhook_events: ['string'],
+          webhook_events: ['parse.success', 'parse.error'],
           webhook_headers: { foo: 'bar' },
+          webhook_output_format: 'json',
           webhook_url: 'https:',
         },
       ],
