@@ -9,11 +9,10 @@ const client = new LlamaCloud({
 
 describe('resource images', () => {
   // Mock server tests are disabled
-  test.skip('getPageFigure: only required params', async () => {
-    const responsePromise = client.pipelines.images.getPageFigure('figure_name', {
-      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      page_index: 0,
-    });
+  test.skip('listPageScreenshots', async () => {
+    const responsePromise = client.pipelines.images.listPageScreenshots(
+      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,13 +23,18 @@ describe('resource images', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getPageFigure: required and optional params', async () => {
-    const response = await client.pipelines.images.getPageFigure('figure_name', {
-      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      page_index: 0,
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
+  test.skip('listPageScreenshots: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.pipelines.images.listPageScreenshots(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -57,6 +61,31 @@ describe('resource images', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('getPageFigure: only required params', async () => {
+    const responsePromise = client.pipelines.images.getPageFigure('figure_name', {
+      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      page_index: 0,
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('getPageFigure: required and optional params', async () => {
+    const response = await client.pipelines.images.getPageFigure('figure_name', {
+      id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      page_index: 0,
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('listPageFigures', async () => {
     const responsePromise = client.pipelines.images.listPageFigures('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -73,35 +102,6 @@ describe('resource images', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.pipelines.images.listPageFigures(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        {
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
-  });
-
-  // Mock server tests are disabled
-  test.skip('listPageScreenshots', async () => {
-    const responsePromise = client.pipelines.images.listPageScreenshots(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    );
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('listPageScreenshots: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.pipelines.images.listPageScreenshots(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',

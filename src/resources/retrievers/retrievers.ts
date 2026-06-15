@@ -24,15 +24,11 @@ export class Retrievers extends APIResource {
   }
 
   /**
-   * Update an existing Retriever.
+   * Upsert a new Retriever.
    */
-  update(
-    retrieverID: string,
-    params: RetrieverUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<Retriever> {
+  upsert(params: RetrieverUpsertParams, options?: RequestOptions): APIPromise<Retriever> {
     const { organization_id, project_id, ...body } = params;
-    return this._client.put(path`/api/v1/retrievers/${retrieverID}`, {
+    return this._client.put('/api/v1/retrievers', {
       query: { organization_id, project_id },
       body,
       ...options,
@@ -47,6 +43,33 @@ export class Retrievers extends APIResource {
     options?: RequestOptions,
   ): APIPromise<RetrieverListResponse> {
     return this._client.get('/api/v1/retrievers', { query, ...options });
+  }
+
+  /**
+   * Get a Retriever by ID.
+   */
+  get(
+    retrieverID: string,
+    query: RetrieverGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Retriever> {
+    return this._client.get(path`/api/v1/retrievers/${retrieverID}`, { query, ...options });
+  }
+
+  /**
+   * Update an existing Retriever.
+   */
+  update(
+    retrieverID: string,
+    params: RetrieverUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<Retriever> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.put(path`/api/v1/retrievers/${retrieverID}`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -66,34 +89,11 @@ export class Retrievers extends APIResource {
   }
 
   /**
-   * Get a Retriever by ID.
-   */
-  get(
-    retrieverID: string,
-    query: RetrieverGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<Retriever> {
-    return this._client.get(path`/api/v1/retrievers/${retrieverID}`, { query, ...options });
-  }
-
-  /**
    * Retrieve data using specified pipelines without creating a persistent retriever.
    */
   search(params: RetrieverSearchParams, options?: RequestOptions): APIPromise<CompositeRetrievalResult> {
     const { organization_id, project_id, ...body } = params;
     return this._client.post('/api/v1/retrievers/retrieve', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
-
-  /**
-   * Upsert a new Retriever.
-   */
-  upsert(params: RetrieverUpsertParams, options?: RequestOptions): APIPromise<Retriever> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.put('/api/v1/retrievers', {
       query: { organization_id, project_id },
       body,
       ...options,
@@ -288,6 +288,43 @@ export interface RetrieverCreateParams {
   pipelines?: Array<RetrieverPipeline>;
 }
 
+export interface RetrieverUpsertParams {
+  /**
+   * Body param: A name for the retriever tool. Will default to the pipeline name if
+   * not provided.
+   */
+  name: string;
+
+  /**
+   * Query param
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: The pipelines this retriever uses.
+   */
+  pipelines?: Array<RetrieverPipeline>;
+}
+
+export interface RetrieverListParams {
+  name?: string | null;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface RetrieverGetParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface RetrieverUpdateParams {
   /**
    * Body param: The pipelines this retriever uses.
@@ -310,21 +347,7 @@ export interface RetrieverUpdateParams {
   name?: string | null;
 }
 
-export interface RetrieverListParams {
-  name?: string | null;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export interface RetrieverDeleteParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface RetrieverGetParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -368,29 +391,6 @@ export interface RetrieverSearchParams {
   rerank_top_n?: number | null;
 }
 
-export interface RetrieverUpsertParams {
-  /**
-   * Body param: A name for the retriever tool. Will default to the pipeline name if
-   * not provided.
-   */
-  name: string;
-
-  /**
-   * Query param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: The pipelines this retriever uses.
-   */
-  pipelines?: Array<RetrieverPipeline>;
-}
-
 export declare namespace Retrievers {
   export {
     type CompositeRetrievalMode as CompositeRetrievalMode,
@@ -401,11 +401,11 @@ export declare namespace Retrievers {
     type RetrieverPipeline as RetrieverPipeline,
     type RetrieverListResponse as RetrieverListResponse,
     type RetrieverCreateParams as RetrieverCreateParams,
-    type RetrieverUpdateParams as RetrieverUpdateParams,
-    type RetrieverListParams as RetrieverListParams,
-    type RetrieverDeleteParams as RetrieverDeleteParams,
-    type RetrieverGetParams as RetrieverGetParams,
-    type RetrieverSearchParams as RetrieverSearchParams,
     type RetrieverUpsertParams as RetrieverUpsertParams,
+    type RetrieverListParams as RetrieverListParams,
+    type RetrieverGetParams as RetrieverGetParams,
+    type RetrieverUpdateParams as RetrieverUpdateParams,
+    type RetrieverDeleteParams as RetrieverDeleteParams,
+    type RetrieverSearchParams as RetrieverSearchParams,
   };
 }

@@ -9,10 +9,8 @@ const client = new LlamaCloud({
 
 describe('resource files', () => {
   // Mock server tests are disabled
-  test.skip('update: only required params', async () => {
-    const responsePromise = client.beta.directories.files.update('directory_file_id', {
-      directory_id: 'directory_id',
-    });
+  test.skip('add: only required params', async () => {
+    const responsePromise = client.beta.directories.files.add('directory_id', { file_id: 'file_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,15 +21,14 @@ describe('resource files', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('update: required and optional params', async () => {
-    const response = await client.beta.directories.files.update('directory_file_id', {
-      directory_id: 'directory_id',
+  test.skip('add: required and optional params', async () => {
+    const response = await client.beta.directories.files.add('directory_id', {
+      file_id: 'file_id',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       display_name: 'display_name',
       metadata: { foo: 'string' },
-      target_directory_id: 'target_directory_id',
-      unique_id: 'x',
+      unique_id: 'unique_id',
     });
   });
 
@@ -73,53 +70,6 @@ describe('resource files', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('delete: only required params', async () => {
-    const responsePromise = client.beta.directories.files.delete('directory_file_id', {
-      directory_id: 'directory_id',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('delete: required and optional params', async () => {
-    const response = await client.beta.directories.files.delete('directory_file_id', {
-      directory_id: 'directory_id',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('add: only required params', async () => {
-    const responsePromise = client.beta.directories.files.add('directory_id', { file_id: 'file_id' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('add: required and optional params', async () => {
-    const response = await client.beta.directories.files.add('directory_id', {
-      file_id: 'file_id',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      display_name: 'display_name',
-      metadata: { foo: 'string' },
-      unique_id: 'unique_id',
-    });
-  });
-
-  // Mock server tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.beta.directories.files.get('directory_file_id', {
       directory_id: 'directory_id',
@@ -138,6 +88,56 @@ describe('resource files', () => {
     const response = await client.beta.directories.files.get('directory_file_id', {
       directory_id: 'directory_id',
       expand: ['string', 'string'],
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('update: only required params', async () => {
+    const responsePromise = client.beta.directories.files.update('directory_file_id', {
+      directory_id: 'directory_id',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('update: required and optional params', async () => {
+    const response = await client.beta.directories.files.update('directory_file_id', {
+      directory_id: 'directory_id',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      display_name: 'display_name',
+      metadata: { foo: 'string' },
+      target_directory_id: 'target_directory_id',
+      unique_id: 'x',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('delete: only required params', async () => {
+    const responsePromise = client.beta.directories.files.delete('directory_file_id', {
+      directory_id: 'directory_id',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('delete: required and optional params', async () => {
+    const response = await client.beta.directories.files.delete('directory_file_id', {
+      directory_id: 'directory_id',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });

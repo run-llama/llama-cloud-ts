@@ -31,22 +31,6 @@ export class Parsing extends APIResource {
   }
 
   /**
-   * List parse jobs for the current project.
-   *
-   * Filter by `status` or creation date range. Results are paginated — use
-   * `page_token` from the response to fetch subsequent pages.
-   */
-  list(
-    query: ParsingListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<ParsingListResponsesPaginatedCursor, ParsingListResponse> {
-    return this._client.getAPIList('/api/v2/parse', PaginatedCursor<ParsingListResponse>, {
-      query,
-      ...options,
-    });
-  }
-
-  /**
    * Retrieve a parse job with optional expanded content.
    *
    * By default returns job metadata only. Use `expand` to include parsed content:
@@ -65,6 +49,22 @@ export class Parsing extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ParsingGetResponse> {
     return this._client.get(path`/api/v2/parse/${jobID}`, { query, ...options });
+  }
+
+  /**
+   * List parse jobs for the current project.
+   *
+   * Filter by `status` or creation date range. Results are paginated — use
+   * `page_token` from the response to fetch subsequent pages.
+   */
+  list(
+    query: ParsingListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ParsingListResponsesPaginatedCursor, ParsingListResponse> {
+    return this._client.getAPIList('/api/v2/parse', PaginatedCursor<ParsingListResponse>, {
+      query,
+      ...options,
+    });
   }
 }
 
@@ -2180,6 +2180,26 @@ export namespace ParsingCreateParams {
   }
 }
 
+export interface ParsingGetParams {
+  /**
+   * Fields to include: text, markdown, items, metadata, job_metadata,
+   * text_content_metadata, markdown_content_metadata, items_content_metadata,
+   * metadata_content_metadata, raw_words_content_metadata, xlsx_content_metadata,
+   * output_pdf_content_metadata, images_content_metadata. Metadata fields include
+   * presigned URLs.
+   */
+  expand?: Array<string>;
+
+  /**
+   * Filter to specific image filenames (optional). Example: image_0.png,image_1.jpg
+   */
+  image_filenames?: string | null;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface ParsingListParams extends PaginatedCursorParams {
   /**
    * Include items created at or after this timestamp (inclusive)
@@ -2206,26 +2226,6 @@ export interface ParsingListParams extends PaginatedCursorParams {
   status?: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | null;
 }
 
-export interface ParsingGetParams {
-  /**
-   * Fields to include: text, markdown, items, metadata, job_metadata,
-   * text_content_metadata, markdown_content_metadata, items_content_metadata,
-   * metadata_content_metadata, raw_words_content_metadata, xlsx_content_metadata,
-   * output_pdf_content_metadata, images_content_metadata. Metadata fields include
-   * presigned URLs.
-   */
-  expand?: Array<string>;
-
-  /**
-   * Filter to specific image filenames (optional). Example: image_0.png,image_1.jpg
-   */
-  image_filenames?: string | null;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export declare namespace Parsing {
   export {
     type BBox as BBox,
@@ -2249,7 +2249,7 @@ export declare namespace Parsing {
     type ParsingGetResponse as ParsingGetResponse,
     type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
     type ParsingCreateParams as ParsingCreateParams,
-    type ParsingListParams as ParsingListParams,
     type ParsingGetParams as ParsingGetParams,
+    type ParsingListParams as ParsingListParams,
   };
 }

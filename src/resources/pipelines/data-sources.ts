@@ -10,6 +10,25 @@ import { path } from '../../internal/utils/path';
 
 export class DataSources extends APIResource {
   /**
+   * Get data sources for a pipeline.
+   */
+  getDataSources(pipelineID: string, options?: RequestOptions): APIPromise<DataSourceGetDataSourcesResponse> {
+    return this._client.get(path`/api/v1/pipelines/${pipelineID}/data-sources`, options);
+  }
+
+  /**
+   * Add data sources to a pipeline.
+   */
+  updateDataSources(
+    pipelineID: string,
+    params: DataSourceUpdateDataSourcesParams,
+    options?: RequestOptions,
+  ): APIPromise<DataSourceUpdateDataSourcesResponse> {
+    const { body } = params;
+    return this._client.put(path`/api/v1/pipelines/${pipelineID}/data-sources`, { body: body, ...options });
+  }
+
+  /**
    * Update the configuration of a data source in a pipeline.
    */
   update(
@@ -22,13 +41,6 @@ export class DataSources extends APIResource {
       body,
       ...options,
     });
-  }
-
-  /**
-   * Get data sources for a pipeline.
-   */
-  getDataSources(pipelineID: string, options?: RequestOptions): APIPromise<DataSourceGetDataSourcesResponse> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}/data-sources`, options);
   }
 
   /**
@@ -60,18 +72,6 @@ export class DataSources extends APIResource {
       body,
       ...options,
     });
-  }
-
-  /**
-   * Add data sources to a pipeline.
-   */
-  updateDataSources(
-    pipelineID: string,
-    params: DataSourceUpdateDataSourcesParams,
-    options?: RequestOptions,
-  ): APIPromise<DataSourceUpdateDataSourcesResponse> {
-    const { body } = params;
-    return this._client.put(path`/api/v1/pipelines/${pipelineID}/data-sources`, { body: body, ...options });
   }
 }
 
@@ -183,6 +183,28 @@ export type DataSourceGetDataSourcesResponse = Array<PipelineDataSource>;
 
 export type DataSourceUpdateDataSourcesResponse = Array<PipelineDataSource>;
 
+export interface DataSourceUpdateDataSourcesParams {
+  body: Array<DataSourceUpdateDataSourcesParams.Body>;
+}
+
+export namespace DataSourceUpdateDataSourcesParams {
+  /**
+   * Schema for creating an association between a data source and a pipeline.
+   */
+  export interface Body {
+    /**
+     * The ID of the data source.
+     */
+    data_source_id: string;
+
+    /**
+     * The interval at which the data source should be synced. Valid values are: 21600,
+     * 43200, 86400
+     */
+    sync_interval?: number | null;
+  }
+}
+
 export interface DataSourceUpdateParams {
   /**
    * Path param
@@ -211,36 +233,14 @@ export interface DataSourceSyncParams {
   pipeline_file_ids?: Array<string> | null;
 }
 
-export interface DataSourceUpdateDataSourcesParams {
-  body: Array<DataSourceUpdateDataSourcesParams.Body>;
-}
-
-export namespace DataSourceUpdateDataSourcesParams {
-  /**
-   * Schema for creating an association between a data source and a pipeline.
-   */
-  export interface Body {
-    /**
-     * The ID of the data source.
-     */
-    data_source_id: string;
-
-    /**
-     * The interval at which the data source should be synced. Valid values are: 21600,
-     * 43200, 86400
-     */
-    sync_interval?: number | null;
-  }
-}
-
 export declare namespace DataSources {
   export {
     type PipelineDataSource as PipelineDataSource,
     type DataSourceGetDataSourcesResponse as DataSourceGetDataSourcesResponse,
     type DataSourceUpdateDataSourcesResponse as DataSourceUpdateDataSourcesResponse,
+    type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceGetStatusParams as DataSourceGetStatusParams,
     type DataSourceSyncParams as DataSourceSyncParams,
-    type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
   };
 }

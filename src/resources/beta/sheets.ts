@@ -57,29 +57,6 @@ export class Sheets extends APIResource {
   }
 
   /**
-   * Delete a spreadsheet parsing job and its associated data. Experimental: not
-   * production-ready and subject to change.
-   *
-   * @example
-   * ```ts
-   * const response = await client.beta.sheets.deleteJob(
-   *   'spreadsheet_job_id',
-   * );
-   * ```
-   */
-  deleteJob(
-    spreadsheetJobID: string,
-    params: SheetDeleteJobParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { organization_id, project_id } = params ?? {};
-    return this._client.delete(path`/api/v1/beta/sheets/jobs/${spreadsheetJobID}`, {
-      query: { organization_id, project_id },
-      ...options,
-    });
-  }
-
-  /**
    * Get a spreadsheet parsing job. When `include_results=True` (default), embeds
    * extracted regions and results if complete, skipping the separate `/results`
    * call. Experimental: not production-ready and subject to change.
@@ -122,6 +99,29 @@ export class Sheets extends APIResource {
       path`/api/v1/beta/sheets/jobs/${spreadsheet_job_id}/regions/${region_id}/result/${regionType}`,
       { query, ...options },
     );
+  }
+
+  /**
+   * Delete a spreadsheet parsing job and its associated data. Experimental: not
+   * production-ready and subject to change.
+   *
+   * @example
+   * ```ts
+   * const response = await client.beta.sheets.deleteJob(
+   *   'spreadsheet_job_id',
+   * );
+   * ```
+   */
+  deleteJob(
+    spreadsheetJobID: string,
+    params: SheetDeleteJobParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v1/beta/sheets/jobs/${spreadsheetJobID}`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
   }
 }
 
@@ -515,12 +515,6 @@ export interface SheetListParams extends PaginatedCursorParams {
   status?: 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED' | null;
 }
 
-export interface SheetDeleteJobParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export interface SheetGetParams {
   /**
    * Optional fields to populate on the response. Valid values:
@@ -562,6 +556,12 @@ export interface SheetGetResultTableParams {
   project_id?: string | null;
 }
 
+export interface SheetDeleteJobParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export declare namespace Sheets {
   export {
     type SheetsJob as SheetsJob,
@@ -570,8 +570,8 @@ export declare namespace Sheets {
     type SheetsJobsPaginatedCursor as SheetsJobsPaginatedCursor,
     type SheetCreateParams as SheetCreateParams,
     type SheetListParams as SheetListParams,
-    type SheetDeleteJobParams as SheetDeleteJobParams,
     type SheetGetParams as SheetGetParams,
     type SheetGetResultTableParams as SheetGetResultTableParams,
+    type SheetDeleteJobParams as SheetDeleteJobParams,
   };
 }

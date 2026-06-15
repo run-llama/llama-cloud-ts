@@ -12,25 +12,20 @@ import { path } from '../../../internal/utils/path';
 
 export class Files extends APIResource {
   /**
-   * Update directory-file metadata by `directory_file_id`; set `directory_id` to
-   * move the file to a different directory. To resolve from `unique_id`, list with a
-   * filter first.
+   * Create a new file within the specified directory; the directory must exist in
+   * the project and `file_id` must reference an existing file.
    *
    * @example
    * ```ts
-   * const file = await client.beta.directories.files.update(
-   *   'directory_file_id',
-   *   { directory_id: 'directory_id' },
+   * const response = await client.beta.directories.files.add(
+   *   'directory_id',
+   *   { file_id: 'file_id' },
    * );
    * ```
    */
-  update(
-    directoryFileID: string,
-    params: FileUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<FileUpdateResponse> {
-    const { directory_id, organization_id, project_id, ...body } = params;
-    return this._client.patch(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
+  add(directoryID: string, params: FileAddParams, options?: RequestOptions): APIPromise<FileAddResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post(path`/api/v1/beta/directories/${directoryID}/files`, {
       query: { organization_id, project_id },
       body,
       ...options,
@@ -64,6 +59,52 @@ export class Files extends APIResource {
   }
 
   /**
+   * Get a directory file by `directory_file_id`; to look up by `unique_id`, use the
+   * list endpoint with a filter.
+   *
+   * @example
+   * ```ts
+   * const file = await client.beta.directories.files.get(
+   *   'directory_file_id',
+   *   { directory_id: 'directory_id' },
+   * );
+   * ```
+   */
+  get(directoryFileID: string, params: FileGetParams, options?: RequestOptions): APIPromise<FileGetResponse> {
+    const { directory_id, ...query } = params;
+    return this._client.get(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
+      query,
+      ...options,
+    });
+  }
+
+  /**
+   * Update directory-file metadata by `directory_file_id`; set `directory_id` to
+   * move the file to a different directory. To resolve from `unique_id`, list with a
+   * filter first.
+   *
+   * @example
+   * ```ts
+   * const file = await client.beta.directories.files.update(
+   *   'directory_file_id',
+   *   { directory_id: 'directory_id' },
+   * );
+   * ```
+   */
+  update(
+    directoryFileID: string,
+    params: FileUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<FileUpdateResponse> {
+    const { directory_id, organization_id, project_id, ...body } = params;
+    return this._client.patch(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
+
+  /**
    * Delete a directory file by `directory_file_id`; to resolve from `unique_id`,
    * list with a filter first.
    *
@@ -81,47 +122,6 @@ export class Files extends APIResource {
       query: { organization_id, project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
-  }
-
-  /**
-   * Create a new file within the specified directory; the directory must exist in
-   * the project and `file_id` must reference an existing file.
-   *
-   * @example
-   * ```ts
-   * const response = await client.beta.directories.files.add(
-   *   'directory_id',
-   *   { file_id: 'file_id' },
-   * );
-   * ```
-   */
-  add(directoryID: string, params: FileAddParams, options?: RequestOptions): APIPromise<FileAddResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post(path`/api/v1/beta/directories/${directoryID}/files`, {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
-
-  /**
-   * Get a directory file by `directory_file_id`; to look up by `unique_id`, use the
-   * list endpoint with a filter.
-   *
-   * @example
-   * ```ts
-   * const file = await client.beta.directories.files.get(
-   *   'directory_file_id',
-   *   { directory_id: 'directory_id' },
-   * );
-   * ```
-   */
-  get(directoryFileID: string, params: FileGetParams, options?: RequestOptions): APIPromise<FileGetResponse> {
-    const { directory_id, ...query } = params;
-    return this._client.get(path`/api/v1/beta/directories/${directory_id}/files/${directoryFileID}`, {
-      query,
-      ...options,
     });
   }
 
@@ -452,6 +452,93 @@ export interface FileUploadResponse {
   updated_at?: string | null;
 }
 
+export interface FileAddParams {
+  /**
+   * Body param: File ID for the storage location (required).
+   */
+  file_id: string;
+
+  /**
+   * Query param
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: Display name for the file. If not provided, will use the file's
+   * name.
+   */
+  display_name?: string | null;
+
+  /**
+   * Body param: User-defined metadata key-value pairs to associate with the file.
+   */
+  metadata?: { [key: string]: string | number | number | boolean | null | Array<string> } | null;
+
+  /**
+   * Body param: Unique identifier for the file in the directory. If not provided,
+   * will use the file's external_file_id or name.
+   */
+  unique_id?: string | null;
+}
+
+export interface FileListParams extends PaginatedCursorParams {
+  display_name?: string | null;
+
+  display_name_contains?: string | null;
+
+  /**
+   * Fields to expand on each directory file.
+   */
+  expand?: Array<string> | null;
+
+  file_id?: string | null;
+
+  include_deleted?: boolean;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+
+  unique_id?: string | null;
+
+  /**
+   * Include items updated at or after this timestamp (inclusive)
+   */
+  updated_at_on_or_after?: string | null;
+
+  /**
+   * Include items updated at or before this timestamp (inclusive)
+   */
+  updated_at_on_or_before?: string | null;
+}
+
+export interface FileGetParams {
+  /**
+   * Path param
+   */
+  directory_id: string;
+
+  /**
+   * Query param: Fields to expand.
+   */
+  expand?: Array<string> | null;
+
+  /**
+   * Query param
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+}
+
 export interface FileUpdateParams {
   /**
    * Path param
@@ -490,98 +577,11 @@ export interface FileUpdateParams {
   unique_id?: string | null;
 }
 
-export interface FileListParams extends PaginatedCursorParams {
-  display_name?: string | null;
-
-  display_name_contains?: string | null;
-
-  /**
-   * Fields to expand on each directory file.
-   */
-  expand?: Array<string> | null;
-
-  file_id?: string | null;
-
-  include_deleted?: boolean;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-
-  unique_id?: string | null;
-
-  /**
-   * Include items updated at or after this timestamp (inclusive)
-   */
-  updated_at_on_or_after?: string | null;
-
-  /**
-   * Include items updated at or before this timestamp (inclusive)
-   */
-  updated_at_on_or_before?: string | null;
-}
-
 export interface FileDeleteParams {
   /**
    * Path param
    */
   directory_id: string;
-
-  /**
-   * Query param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
-}
-
-export interface FileAddParams {
-  /**
-   * Body param: File ID for the storage location (required).
-   */
-  file_id: string;
-
-  /**
-   * Query param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Display name for the file. If not provided, will use the file's
-   * name.
-   */
-  display_name?: string | null;
-
-  /**
-   * Body param: User-defined metadata key-value pairs to associate with the file.
-   */
-  metadata?: { [key: string]: string | number | number | boolean | null | Array<string> } | null;
-
-  /**
-   * Body param: Unique identifier for the file in the directory. If not provided,
-   * will use the file's external_file_id or name.
-   */
-  unique_id?: string | null;
-}
-
-export interface FileGetParams {
-  /**
-   * Path param
-   */
-  directory_id: string;
-
-  /**
-   * Query param: Fields to expand.
-   */
-  expand?: Array<string> | null;
 
   /**
    * Query param
@@ -639,11 +639,11 @@ export declare namespace Files {
     type FileGetResponse as FileGetResponse,
     type FileUploadResponse as FileUploadResponse,
     type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
-    type FileUpdateParams as FileUpdateParams,
-    type FileListParams as FileListParams,
-    type FileDeleteParams as FileDeleteParams,
     type FileAddParams as FileAddParams,
+    type FileListParams as FileListParams,
     type FileGetParams as FileGetParams,
+    type FileUpdateParams as FileUpdateParams,
+    type FileDeleteParams as FileDeleteParams,
     type FileUploadParams as FileUploadParams,
   };
 }
