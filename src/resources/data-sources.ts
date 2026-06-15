@@ -9,6 +9,17 @@ import { path } from '../internal/utils/path';
 
 export class DataSources extends APIResource {
   /**
+   * List data sources for a given project. If project_id is not provided, uses the
+   * default project.
+   */
+  list(
+    query: DataSourceListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<DataSourceListResponse> {
+    return this._client.get('/api/v1/data-sources', { query, ...options });
+  }
+
+  /**
    * Create a new data source.
    */
   create(params: DataSourceCreateParams, options?: RequestOptions): APIPromise<DataSource> {
@@ -18,6 +29,13 @@ export class DataSources extends APIResource {
       body,
       ...options,
     });
+  }
+
+  /**
+   * Get a data source by ID.
+   */
+  get(dataSourceID: string, options?: RequestOptions): APIPromise<DataSource> {
+    return this._client.get(path`/api/v1/data-sources/${dataSourceID}`, options);
   }
 
   /**
@@ -32,17 +50,6 @@ export class DataSources extends APIResource {
   }
 
   /**
-   * List data sources for a given project. If project_id is not provided, uses the
-   * default project.
-   */
-  list(
-    query: DataSourceListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<DataSourceListResponse> {
-    return this._client.get('/api/v1/data-sources', { query, ...options });
-  }
-
-  /**
    * Delete a data source by ID.
    */
   delete(dataSourceID: string, options?: RequestOptions): APIPromise<void> {
@@ -50,13 +57,6 @@ export class DataSources extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
-  }
-
-  /**
-   * Get a data source by ID.
-   */
-  get(dataSourceID: string, options?: RequestOptions): APIPromise<DataSource> {
-    return this._client.get(path`/api/v1/data-sources/${dataSourceID}`, options);
   }
 }
 
@@ -137,6 +137,12 @@ export interface DataSourceReaderVersionMetadata {
 }
 
 export type DataSourceListResponse = Array<DataSource>;
+
+export interface DataSourceListParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
 
 export interface DataSourceCreateParams {
   /**
@@ -241,19 +247,13 @@ export interface DataSourceUpdateParams {
   name?: string | null;
 }
 
-export interface DataSourceListParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export declare namespace DataSources {
   export {
     type DataSource as DataSource,
     type DataSourceReaderVersionMetadata as DataSourceReaderVersionMetadata,
     type DataSourceListResponse as DataSourceListResponse,
+    type DataSourceListParams as DataSourceListParams,
     type DataSourceCreateParams as DataSourceCreateParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
-    type DataSourceListParams as DataSourceListParams,
   };
 }

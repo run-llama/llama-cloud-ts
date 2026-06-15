@@ -46,6 +46,45 @@ export class Directories extends APIResource {
   }
 
   /**
+   * List Directories
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const directoryListResponse of client.beta.directories.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(
+    query: DirectoryListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<DirectoryListResponsesPaginatedCursor, DirectoryListResponse> {
+    return this._client.getAPIList('/api/v1/beta/directories', PaginatedCursor<DirectoryListResponse>, {
+      query,
+      ...options,
+    });
+  }
+
+  /**
+   * Retrieve a directory by its identifier.
+   *
+   * @example
+   * ```ts
+   * const directory = await client.beta.directories.get(
+   *   'directory_id',
+   * );
+   * ```
+   */
+  get(
+    directoryID: string,
+    query: DirectoryGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<DirectoryGetResponse> {
+    return this._client.get(path`/api/v1/beta/directories/${directoryID}`, { query, ...options });
+  }
+
+  /**
    * Update directory metadata.
    *
    * @example
@@ -69,27 +108,6 @@ export class Directories extends APIResource {
   }
 
   /**
-   * List Directories
-   *
-   * @example
-   * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const directoryListResponse of client.beta.directories.list()) {
-   *   // ...
-   * }
-   * ```
-   */
-  list(
-    query: DirectoryListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<DirectoryListResponsesPaginatedCursor, DirectoryListResponse> {
-    return this._client.getAPIList('/api/v1/beta/directories', PaginatedCursor<DirectoryListResponse>, {
-      query,
-      ...options,
-    });
-  }
-
-  /**
    * Permanently delete a directory.
    *
    * @example
@@ -108,24 +126,6 @@ export class Directories extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
-  }
-
-  /**
-   * Retrieve a directory by its identifier.
-   *
-   * @example
-   * ```ts
-   * const directory = await client.beta.directories.get(
-   *   'directory_id',
-   * );
-   * ```
-   */
-  get(
-    directoryID: string,
-    query: DirectoryGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<DirectoryGetResponse> {
-    return this._client.get(path`/api/v1/beta/directories/${directoryID}`, { query, ...options });
   }
 }
 
@@ -389,6 +389,24 @@ export interface DirectoryCreateParams {
   type?: 'user' | 'ephemeral';
 }
 
+export interface DirectoryListParams extends PaginatedCursorParams {
+  include_deleted?: boolean;
+
+  name?: string | null;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+
+  type?: 'user' | 'index' | 'ephemeral' | null;
+}
+
+export interface DirectoryGetParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface DirectoryUpdateParams {
   /**
    * Query param
@@ -411,25 +429,7 @@ export interface DirectoryUpdateParams {
   name?: string | null;
 }
 
-export interface DirectoryListParams extends PaginatedCursorParams {
-  include_deleted?: boolean;
-
-  name?: string | null;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-
-  type?: 'user' | 'index' | 'ephemeral' | null;
-}
-
 export interface DirectoryDeleteParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface DirectoryGetParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -445,10 +445,10 @@ export declare namespace Directories {
     type DirectoryGetResponse as DirectoryGetResponse,
     type DirectoryListResponsesPaginatedCursor as DirectoryListResponsesPaginatedCursor,
     type DirectoryCreateParams as DirectoryCreateParams,
-    type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryListParams as DirectoryListParams,
-    type DirectoryDeleteParams as DirectoryDeleteParams,
     type DirectoryGetParams as DirectoryGetParams,
+    type DirectoryUpdateParams as DirectoryUpdateParams,
+    type DirectoryDeleteParams as DirectoryDeleteParams,
   };
 
   export {
@@ -459,11 +459,11 @@ export declare namespace Directories {
     type FileGetResponse as FileGetResponse,
     type FileUploadResponse as FileUploadResponse,
     type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
-    type FileUpdateParams as FileUpdateParams,
-    type FileListParams as FileListParams,
-    type FileDeleteParams as FileDeleteParams,
     type FileAddParams as FileAddParams,
+    type FileListParams as FileListParams,
     type FileGetParams as FileGetParams,
+    type FileUpdateParams as FileUpdateParams,
+    type FileDeleteParams as FileDeleteParams,
     type FileUploadParams as FileUploadParams,
   };
 }

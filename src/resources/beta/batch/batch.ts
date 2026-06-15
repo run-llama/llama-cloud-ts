@@ -76,6 +76,27 @@ export class Batch extends APIResource {
   }
 
   /**
+   * Get detailed status of a batch processing job.
+   *
+   * Returns current progress percentage, file counts (total, processed, failed,
+   * skipped), and timestamps.
+   *
+   * @example
+   * ```ts
+   * const response = await client.beta.batch.getStatus(
+   *   'job_id',
+   * );
+   * ```
+   */
+  getStatus(
+    jobID: string,
+    query: BatchGetStatusParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BatchGetStatusResponse> {
+    return this._client.get(path`/api/v1/beta/batch-processing/${jobID}`, { query, ...options });
+  }
+
+  /**
    * Cancel a running batch processing job.
    *
    * Stops processing and marks pending items as cancelled. Items currently being
@@ -101,27 +122,6 @@ export class Batch extends APIResource {
         options?.headers,
       ]),
     });
-  }
-
-  /**
-   * Get detailed status of a batch processing job.
-   *
-   * Returns current progress percentage, file counts (total, processed, failed,
-   * skipped), and timestamps.
-   *
-   * @example
-   * ```ts
-   * const response = await client.beta.batch.getStatus(
-   *   'job_id',
-   * );
-   * ```
-   */
-  getStatus(
-    jobID: string,
-    query: BatchGetStatusParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<BatchGetStatusResponse> {
-    return this._client.get(path`/api/v1/beta/batch-processing/${jobID}`, { query, ...options });
   }
 }
 
@@ -921,6 +921,12 @@ export interface BatchListParams extends PaginatedBatchItemsParams {
   status?: 'pending' | 'running' | 'dispatched' | 'completed' | 'failed' | 'cancelled' | null;
 }
 
+export interface BatchGetStatusParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface BatchCancelParams {
   /**
    * Query param
@@ -943,12 +949,6 @@ export interface BatchCancelParams {
   'temporal-namespace'?: string;
 }
 
-export interface BatchGetStatusParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 Batch.JobItems = JobItems;
 
 export declare namespace Batch {
@@ -960,8 +960,8 @@ export declare namespace Batch {
     type BatchListResponsesPaginatedBatchItems as BatchListResponsesPaginatedBatchItems,
     type BatchCreateParams as BatchCreateParams,
     type BatchListParams as BatchListParams,
-    type BatchCancelParams as BatchCancelParams,
     type BatchGetStatusParams as BatchGetStatusParams,
+    type BatchCancelParams as BatchCancelParams,
   };
 
   export {

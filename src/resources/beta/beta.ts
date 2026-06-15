@@ -144,11 +144,11 @@ export declare namespace Beta {
     type IndexGetResponse as IndexGetResponse,
     type IndexSyncResponse as IndexSyncResponse,
     type IndexListResponsesPaginatedCursor as IndexListResponsesPaginatedCursor,
-    type IndexCreateParams as IndexCreateParams,
-    type IndexListParams as IndexListParams,
-    type IndexDeleteParams as IndexDeleteParams,
     type IndexGetParams as IndexGetParams,
+    type IndexDeleteParams as IndexDeleteParams,
+    type IndexCreateParams as IndexCreateParams,
     type IndexSyncParams as IndexSyncParams,
+    type IndexListParams as IndexListParams,
   };
 
   export {
@@ -173,9 +173,9 @@ export declare namespace Beta {
     type ChatGetSummaryResponse as ChatGetSummaryResponse,
     type ChatStreamResponse as ChatStreamResponse,
     type ChatListResponsesPaginatedCursor as ChatListResponsesPaginatedCursor,
+    type ChatListParams as ChatListParams,
     type ChatCreateParams as ChatCreateParams,
     type ChatRetrieveParams as ChatRetrieveParams,
-    type ChatListParams as ChatListParams,
     type ChatDeleteParams as ChatDeleteParams,
     type ChatGetSummaryParams as ChatGetSummaryParams,
     type ChatStreamParams as ChatStreamParams,
@@ -186,15 +186,15 @@ export declare namespace Beta {
     type AgentDataDeleteResponse as AgentDataDeleteResponse,
     type AgentDataAggregateResponse as AgentDataAggregateResponse,
     type AgentDataDeleteByQueryResponse as AgentDataDeleteByQueryResponse,
-    type AgentDataAggregateResponsesPaginatedCursorPost as AgentDataAggregateResponsesPaginatedCursorPost,
     type AgentDataPaginatedCursorPost as AgentDataPaginatedCursorPost,
-    type AgentDataCreateParams as AgentDataCreateParams,
+    type AgentDataAggregateResponsesPaginatedCursorPost as AgentDataAggregateResponsesPaginatedCursorPost,
+    type AgentDataGetParams as AgentDataGetParams,
     type AgentDataUpdateParams as AgentDataUpdateParams,
     type AgentDataDeleteParams as AgentDataDeleteParams,
+    type AgentDataCreateParams as AgentDataCreateParams,
+    type AgentDataSearchParams as AgentDataSearchParams,
     type AgentDataAggregateParams as AgentDataAggregateParams,
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
-    type AgentDataGetParams as AgentDataGetParams,
-    type AgentDataSearchParams as AgentDataSearchParams,
   };
 
   export {
@@ -205,9 +205,9 @@ export declare namespace Beta {
     type SheetsJobsPaginatedCursor as SheetsJobsPaginatedCursor,
     type SheetCreateParams as SheetCreateParams,
     type SheetListParams as SheetListParams,
-    type SheetDeleteJobParams as SheetDeleteJobParams,
     type SheetGetParams as SheetGetParams,
     type SheetGetResultTableParams as SheetGetResultTableParams,
+    type SheetDeleteJobParams as SheetDeleteJobParams,
   };
 
   export {
@@ -218,10 +218,10 @@ export declare namespace Beta {
     type DirectoryGetResponse as DirectoryGetResponse,
     type DirectoryListResponsesPaginatedCursor as DirectoryListResponsesPaginatedCursor,
     type DirectoryCreateParams as DirectoryCreateParams,
-    type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryListParams as DirectoryListParams,
-    type DirectoryDeleteParams as DirectoryDeleteParams,
     type DirectoryGetParams as DirectoryGetParams,
+    type DirectoryUpdateParams as DirectoryUpdateParams,
+    type DirectoryDeleteParams as DirectoryDeleteParams,
   };
 
   export {
@@ -233,8 +233,8 @@ export declare namespace Beta {
     type BatchListResponsesPaginatedBatchItems as BatchListResponsesPaginatedBatchItems,
     type BatchCreateParams as BatchCreateParams,
     type BatchListParams as BatchListParams,
-    type BatchCancelParams as BatchCancelParams,
     type BatchGetStatusParams as BatchGetStatusParams,
+    type BatchCancelParams as BatchCancelParams,
   };
 
   export {

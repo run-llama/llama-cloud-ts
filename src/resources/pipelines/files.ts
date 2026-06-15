@@ -14,6 +14,29 @@ import { path } from '../../internal/utils/path';
 
 export class Files extends APIResource {
   /**
+   * Get files for a pipeline.
+   */
+  getStatusCounts(
+    pipelineID: string,
+    query: FileGetStatusCountsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<FileGetStatusCountsResponse> {
+    return this._client.get(path`/api/v1/pipelines/${pipelineID}/files/status-counts`, { query, ...options });
+  }
+
+  /**
+   * Get status of a file for a pipeline.
+   */
+  getStatus(
+    fileID: string,
+    params: FileGetStatusParams,
+    options?: RequestOptions,
+  ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
+    const { pipeline_id } = params;
+    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}/status`, options);
+  }
+
+  /**
    * Add files to a pipeline.
    */
   create(
@@ -34,6 +57,17 @@ export class Files extends APIResource {
   }
 
   /**
+   * Delete a file from a pipeline.
+   */
+  delete(fileID: string, params: FileDeleteParams, options?: RequestOptions): APIPromise<void> {
+    const { pipeline_id } = params;
+    return this._client.delete(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
    * List files for a pipeline with optional filtering, sorting, and pagination.
    *
    * @deprecated
@@ -48,40 +82,6 @@ export class Files extends APIResource {
       PaginatedPipelineFiles<PipelineFile>,
       { query, ...options },
     );
-  }
-
-  /**
-   * Delete a file from a pipeline.
-   */
-  delete(fileID: string, params: FileDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { pipeline_id } = params;
-    return this._client.delete(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
-  }
-
-  /**
-   * Get status of a file for a pipeline.
-   */
-  getStatus(
-    fileID: string,
-    params: FileGetStatusParams,
-    options?: RequestOptions,
-  ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
-    const { pipeline_id } = params;
-    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}/status`, options);
-  }
-
-  /**
-   * Get files for a pipeline.
-   */
-  getStatusCounts(
-    pipelineID: string,
-    query: FileGetStatusCountsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<FileGetStatusCountsResponse> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}/files/status-counts`, { query, ...options });
   }
 }
 
@@ -224,6 +224,16 @@ export interface FileGetStatusCountsResponse {
   pipeline_id?: string | null;
 }
 
+export interface FileGetStatusCountsParams {
+  data_source_id?: string | null;
+
+  only_manually_uploaded?: boolean;
+}
+
+export interface FileGetStatusParams {
+  pipeline_id: string;
+}
+
 export interface FileCreateParams {
   body: Array<FileCreateParams.Body>;
 }
@@ -261,6 +271,10 @@ export interface FileUpdateParams {
   } | null;
 }
 
+export interface FileDeleteParams {
+  pipeline_id: string;
+}
+
 export interface FileListParams extends PaginatedPipelineFilesParams {
   data_source_id?: string | null;
 
@@ -276,31 +290,17 @@ export interface FileListParams extends PaginatedPipelineFilesParams {
   statuses?: Array<'NOT_STARTED' | 'IN_PROGRESS' | 'SUCCESS' | 'ERROR' | 'CANCELLED'> | null;
 }
 
-export interface FileDeleteParams {
-  pipeline_id: string;
-}
-
-export interface FileGetStatusParams {
-  pipeline_id: string;
-}
-
-export interface FileGetStatusCountsParams {
-  data_source_id?: string | null;
-
-  only_manually_uploaded?: boolean;
-}
-
 export declare namespace Files {
   export {
     type PipelineFile as PipelineFile,
     type FileCreateResponse as FileCreateResponse,
     type FileGetStatusCountsResponse as FileGetStatusCountsResponse,
     type PipelineFilesPaginatedPipelineFiles as PipelineFilesPaginatedPipelineFiles,
+    type FileGetStatusCountsParams as FileGetStatusCountsParams,
+    type FileGetStatusParams as FileGetStatusParams,
     type FileCreateParams as FileCreateParams,
     type FileUpdateParams as FileUpdateParams,
-    type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
-    type FileGetStatusParams as FileGetStatusParams,
-    type FileGetStatusCountsParams as FileGetStatusCountsParams,
+    type FileListParams as FileListParams,
   };
 }

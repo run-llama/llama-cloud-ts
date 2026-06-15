@@ -9,8 +9,8 @@ const client = new LlamaCloud({
 
 describe('resource indexes', () => {
   // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.beta.indexes.create({ source_directory_id: 'dir-abc123' });
+  test.skip('get', async () => {
+    const responsePromise = client.beta.indexes.get('index_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,43 +21,14 @@ describe('resource indexes', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.beta.indexes.create({
-      source_directory_id: 'dir-abc123',
-      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      description: 'description',
-      name: 'name',
-      products: [{ product_config_id: 'cfg-abc123', product_type: 'parse' }],
-      store_attachments: ['screenshots'],
-      sync_frequency: 'manual',
-      vector_target: 'DEFAULT',
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.beta.indexes.list();
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.beta.indexes.list(
+      client.beta.indexes.get(
+        'index_id',
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          page_size: 0,
-          page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          source_directory_id: 'source_directory_id',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -92,8 +63,8 @@ describe('resource indexes', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('get', async () => {
-    const responsePromise = client.beta.indexes.get('index_id');
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.beta.indexes.create({ source_directory_id: 'dir-abc123' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -104,18 +75,18 @@ describe('resource indexes', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('get: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.beta.indexes.get(
-        'index_id',
-        {
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  test.skip('create: required and optional params', async () => {
+    const response = await client.beta.indexes.create({
+      source_directory_id: 'dir-abc123',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      description: 'description',
+      name: 'name',
+      products: [{ product_config_id: 'cfg-abc123', product_type: 'parse' }],
+      store_attachments: ['screenshots'],
+      sync_frequency: 'manual',
+      vector_target: 'DEFAULT',
+    });
   });
 
   // Mock server tests are disabled
@@ -139,6 +110,35 @@ describe('resource indexes', () => {
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('list', async () => {
+    const responsePromise = client.beta.indexes.list();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.beta.indexes.list(
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          page_size: 0,
+          page_token: 'page_token',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          source_directory_id: 'source_directory_id',
         },
         { path: '/_stainless_unknown_path' },
       ),
