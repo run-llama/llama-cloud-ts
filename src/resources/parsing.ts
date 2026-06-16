@@ -78,7 +78,6 @@ export class Parsing extends APIResource {
   }
 
   /**
-<<<<<<< HEAD
    * List parse jobs for the current project.
    *
    * Filter by `status` or creation date range. Results are paginated — use
@@ -91,7 +90,10 @@ export class Parsing extends APIResource {
     return this._client.getAPIList('/api/v2/parse', PaginatedCursor<ParsingListResponse>, {
       query,
       ...options,
-=======
+    });
+  }
+
+  /**
    * Wait for a parse job to complete by polling until it reaches a terminal state.
    *
    * This method polls the job status at regular intervals until the job completes
@@ -238,7 +240,6 @@ export class Parsing extends APIResource {
       backoff,
       verbose,
       ...requestOptions,
->>>>>>> 53514b3 (Apply custom code)
     });
   }
 }

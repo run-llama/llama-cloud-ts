@@ -23,8 +23,6 @@ export class AgentData extends APIResource {
     options?: RequestOptions,
   ): APIPromise<AgentData> {
     return this._client.get(path`/api/v1/beta/agent-data/${itemID}`, { query, ...options });
-<<<<<<< HEAD
-=======
   }
 
   /**
@@ -34,7 +32,6 @@ export class AgentData extends APIResource {
    */
   agentData(params: AgentDataCreateParams, options?: RequestOptions): APIPromise<AgentData> {
     return this.create(params, options);
->>>>>>> 53514b3 (Apply custom code)
   }
 
   /**

@@ -137,7 +137,6 @@ export class Extract extends APIResource {
   }
 
   /**
-<<<<<<< HEAD
    * Generate a JSON schema and return a product configuration request.
    *
    * @example
@@ -155,7 +154,10 @@ export class Extract extends APIResource {
       query: { organization_id, project_id },
       body,
       ...options,
-=======
+    });
+  }
+
+  /**
    * Wait for an extraction job to complete by polling until it reaches a terminal state.
    *
    * @param jobID - The ID of the extraction job to wait for
@@ -259,7 +261,6 @@ export class Extract extends APIResource {
       backoff,
       verbose,
       ...requestOptions,
->>>>>>> 53514b3 (Apply custom code)
     });
   }
 }
