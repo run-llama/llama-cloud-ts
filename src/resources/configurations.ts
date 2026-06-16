@@ -24,6 +24,19 @@ export class Configurations extends APIResource {
   }
 
   /**
+   * List product configurations for the current project.
+   */
+  list(
+    query: ConfigurationListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ConfigurationResponsesPaginatedCursor, ConfigurationResponse> {
+    return this._client.getAPIList('/api/v1/beta/configurations', PaginatedCursor<ConfigurationResponse>, {
+      query,
+      ...options,
+    });
+  }
+
+  /**
    * Get a single product configuration by ID.
    */
   retrieve(
@@ -46,19 +59,6 @@ export class Configurations extends APIResource {
     return this._client.put(path`/api/v1/beta/configurations/${configID}`, {
       query: { organization_id, project_id },
       body,
-      ...options,
-    });
-  }
-
-  /**
-   * List product configurations for the current project.
-   */
-  list(
-    query: ConfigurationListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<ConfigurationResponsesPaginatedCursor, ConfigurationResponse> {
-    return this._client.getAPIList('/api/v1/beta/configurations', PaginatedCursor<ConfigurationResponse>, {
-      query,
       ...options,
     });
   }
@@ -1523,6 +1523,29 @@ export namespace ConfigurationCreateParams {
   }
 }
 
+export interface ConfigurationListParams extends PaginatedCursorParams {
+  /**
+   * Return only the latest version per configuration name.
+   */
+  latest_only?: boolean;
+
+  /**
+   * Filter by configuration name.
+   */
+  name?: string | null;
+
+  organization_id?: string | null;
+
+  /**
+   * Filter by one or more product types. Repeat the parameter for multiple values.
+   */
+  product_type?: Array<
+    'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'
+  > | null;
+
+  project_id?: string | null;
+}
+
 export interface ConfigurationRetrieveParams {
   organization_id?: string | null;
 
@@ -1618,29 +1641,6 @@ export namespace ConfigurationUpdateParams {
   }
 }
 
-export interface ConfigurationListParams extends PaginatedCursorParams {
-  /**
-   * Return only the latest version per configuration name.
-   */
-  latest_only?: boolean;
-
-  /**
-   * Filter by configuration name.
-   */
-  name?: string | null;
-
-  organization_id?: string | null;
-
-  /**
-   * Filter by one or more product types. Repeat the parameter for multiple values.
-   */
-  product_type?: Array<
-    'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'
-  > | null;
-
-  project_id?: string | null;
-}
-
 export interface ConfigurationDeleteParams {
   organization_id?: string | null;
 
@@ -1658,9 +1658,9 @@ export declare namespace Configurations {
     type UntypedParameters as UntypedParameters,
     type ConfigurationResponsesPaginatedCursor as ConfigurationResponsesPaginatedCursor,
     type ConfigurationCreateParams as ConfigurationCreateParams,
+    type ConfigurationListParams as ConfigurationListParams,
     type ConfigurationRetrieveParams as ConfigurationRetrieveParams,
     type ConfigurationUpdateParams as ConfigurationUpdateParams,
-    type ConfigurationListParams as ConfigurationListParams,
     type ConfigurationDeleteParams as ConfigurationDeleteParams,
   };
 }

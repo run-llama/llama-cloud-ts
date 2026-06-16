@@ -209,18 +209,6 @@ describe('resource batch', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('cancel', async () => {
-    const responsePromise = client.beta.batch.cancel('job_id', {});
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
   test.skip('getStatus', async () => {
     const responsePromise = client.beta.batch.getStatus('job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -245,5 +233,17 @@ describe('resource batch', () => {
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancel', async () => {
+    const responsePromise = client.beta.batch.cancel('job_id', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });

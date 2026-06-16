@@ -7,10 +7,10 @@ export {
   type DirectoryListResponse,
   type DirectoryGetResponse,
   type DirectoryCreateParams,
-  type DirectoryUpdateParams,
   type DirectoryListParams,
-  type DirectoryDeleteParams,
   type DirectoryGetParams,
+  type DirectoryUpdateParams,
+  type DirectoryDeleteParams,
   type DirectoryListResponsesPaginatedCursor,
 } from './directories';
 export {
@@ -20,11 +20,11 @@ export {
   type FileAddResponse,
   type FileGetResponse,
   type FileUploadResponse,
-  type FileUpdateParams,
-  type FileListParams,
-  type FileDeleteParams,
   type FileAddParams,
+  type FileListParams,
   type FileGetParams,
+  type FileUpdateParams,
+  type FileDeleteParams,
   type FileUploadParams,
   type FileListResponsesPaginatedCursor,
 } from './files';

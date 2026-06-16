@@ -8,23 +8,23 @@ import { path } from '../../internal/utils/path';
 
 export class AgentData extends APIResource {
   /**
-   * Create new agent data.
+   * Get agent data by ID.
    *
    * @example
    * ```ts
-   * const agentData = await client.beta.agentData.create({
-   *   data: { foo: 'bar' },
-   *   deployment_name: 'deployment_name',
-   * });
+   * const agentData = await client.beta.agentData.get(
+   *   'item_id',
+   * );
    * ```
    */
-  create(params: AgentDataCreateParams, options?: RequestOptions): APIPromise<AgentData> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/agent-data', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+  get(
+    itemID: string,
+    query: AgentDataGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentData> {
+    return this._client.get(path`/api/v1/beta/agent-data/${itemID}`, { query, ...options });
+<<<<<<< HEAD
+=======
   }
 
   /**
@@ -34,6 +34,7 @@ export class AgentData extends APIResource {
    */
   agentData(params: AgentDataCreateParams, options?: RequestOptions): APIPromise<AgentData> {
     return this.create(params, options);
+>>>>>>> 53514b3 (Apply custom code)
   }
 
   /**
@@ -74,6 +75,52 @@ export class AgentData extends APIResource {
     const { organization_id, project_id } = params ?? {};
     return this._client.delete(path`/api/v1/beta/agent-data/${itemID}`, {
       query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
+   * Create new agent data.
+   *
+   * @example
+   * ```ts
+   * const agentData = await client.beta.agentData.create({
+   *   data: { foo: 'bar' },
+   *   deployment_name: 'deployment_name',
+   * });
+   * ```
+   */
+  create(params: AgentDataCreateParams, options?: RequestOptions): APIPromise<AgentData> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/beta/agent-data', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
+
+  /**
+   * Search agent data with filtering, sorting, and pagination.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const agentData of client.beta.agentData.search({
+   *   deployment_name: 'deployment_name',
+   * })) {
+   *   // ...
+   * }
+   * ```
+   */
+  search(
+    params: AgentDataSearchParams,
+    options?: RequestOptions,
+  ): PagePromise<AgentDataPaginatedCursorPost, AgentData> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.getAPIList('/api/v1/beta/agent-data/:search', PaginatedCursorPost<AgentData>, {
+      query: { organization_id, project_id },
+      body,
+      method: 'post',
       ...options,
     });
   }
@@ -124,55 +171,11 @@ export class AgentData extends APIResource {
       ...options,
     });
   }
-
-  /**
-   * Get agent data by ID.
-   *
-   * @example
-   * ```ts
-   * const agentData = await client.beta.agentData.get(
-   *   'item_id',
-   * );
-   * ```
-   */
-  get(
-    itemID: string,
-    query: AgentDataGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AgentData> {
-    return this._client.get(path`/api/v1/beta/agent-data/${itemID}`, { query, ...options });
-  }
-
-  /**
-   * Search agent data with filtering, sorting, and pagination.
-   *
-   * @example
-   * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const agentData of client.beta.agentData.search({
-   *   deployment_name: 'deployment_name',
-   * })) {
-   *   // ...
-   * }
-   * ```
-   */
-  search(
-    params: AgentDataSearchParams,
-    options?: RequestOptions,
-  ): PagePromise<AgentDataPaginatedCursorPost, AgentData> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.getAPIList('/api/v1/beta/agent-data/:search', PaginatedCursorPost<AgentData>, {
-      query: { organization_id, project_id },
-      body,
-      method: 'post',
-      ...options,
-    });
-  }
 }
 
-export type AgentDataAggregateResponsesPaginatedCursorPost = PaginatedCursorPost<AgentDataAggregateResponse>;
-
 export type AgentDataPaginatedCursorPost = PaginatedCursorPost<AgentData>;
+
+export type AgentDataAggregateResponsesPaginatedCursorPost = PaginatedCursorPost<AgentDataAggregateResponse>;
 
 /**
  * API Result for a single agent data item
@@ -213,6 +216,35 @@ export interface AgentDataDeleteByQueryResponse {
   deleted_count: number;
 }
 
+export interface AgentDataGetParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface AgentDataUpdateParams {
+  /**
+   * Body param
+   */
+  data: { [key: string]: unknown };
+
+  /**
+   * Query param
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+}
+
+export interface AgentDataDeleteParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface AgentDataCreateParams {
   /**
    * Body param
@@ -240,11 +272,11 @@ export interface AgentDataCreateParams {
   collection?: string;
 }
 
-export interface AgentDataUpdateParams {
+export interface AgentDataSearchParams extends PaginatedCursorPostParams {
   /**
-   * Body param
+   * Body param: The agent deployment's name to search within
    */
-  data: { [key: string]: unknown };
+  deployment_name: string;
 
   /**
    * Query param
@@ -255,12 +287,57 @@ export interface AgentDataUpdateParams {
    * Query param
    */
   project_id?: string | null;
+
+  /**
+   * Body param: The logical agent data collection to search within
+   */
+  collection?: string;
+
+  /**
+   * Body param: A filter object or expression that filters resources listed in the
+   * response.
+   */
+  filter?: { [key: string]: AgentDataSearchParams.Filter } | null;
+
+  /**
+   * Body param: Whether to include the total number of items in the response
+   */
+  include_total?: boolean;
+
+  /**
+   * Body param: The offset to start from. If not provided, the first page is
+   * returned
+   */
+  offset?: number | null;
+
+  /**
+   * Body param: A comma-separated list of fields to order by, sorted in ascending
+   * order. Use 'field_name desc' to specify descending order.
+   */
+  order_by?: string | null;
 }
 
-export interface AgentDataDeleteParams {
-  organization_id?: string | null;
+export namespace AgentDataSearchParams {
+  /**
+   * API request model for a filter comparison operation.
+   */
+  export interface Filter {
+    eq?: number | string | (string & {}) | null;
 
-  project_id?: string | null;
+    excludes?: Array<number | string | (string & {}) | null>;
+
+    gt?: number | string | (string & {}) | null;
+
+    gte?: number | string | (string & {}) | null;
+
+    includes?: Array<number | string | (string & {}) | null>;
+
+    lt?: number | string | (string & {}) | null;
+
+    lte?: number | string | (string & {}) | null;
+
+    ne?: number | string | (string & {}) | null;
+  }
 }
 
 export interface AgentDataAggregateParams extends PaginatedCursorPostParams {
@@ -393,94 +470,20 @@ export namespace AgentDataDeleteByQueryParams {
   }
 }
 
-export interface AgentDataGetParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface AgentDataSearchParams extends PaginatedCursorPostParams {
-  /**
-   * Body param: The agent deployment's name to search within
-   */
-  deployment_name: string;
-
-  /**
-   * Query param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: The logical agent data collection to search within
-   */
-  collection?: string;
-
-  /**
-   * Body param: A filter object or expression that filters resources listed in the
-   * response.
-   */
-  filter?: { [key: string]: AgentDataSearchParams.Filter } | null;
-
-  /**
-   * Body param: Whether to include the total number of items in the response
-   */
-  include_total?: boolean;
-
-  /**
-   * Body param: The offset to start from. If not provided, the first page is
-   * returned
-   */
-  offset?: number | null;
-
-  /**
-   * Body param: A comma-separated list of fields to order by, sorted in ascending
-   * order. Use 'field_name desc' to specify descending order.
-   */
-  order_by?: string | null;
-}
-
-export namespace AgentDataSearchParams {
-  /**
-   * API request model for a filter comparison operation.
-   */
-  export interface Filter {
-    eq?: number | string | (string & {}) | null;
-
-    excludes?: Array<number | string | (string & {}) | null>;
-
-    gt?: number | string | (string & {}) | null;
-
-    gte?: number | string | (string & {}) | null;
-
-    includes?: Array<number | string | (string & {}) | null>;
-
-    lt?: number | string | (string & {}) | null;
-
-    lte?: number | string | (string & {}) | null;
-
-    ne?: number | string | (string & {}) | null;
-  }
-}
-
 export declare namespace AgentData {
   export {
     type AgentData as AgentData,
     type AgentDataDeleteResponse as AgentDataDeleteResponse,
     type AgentDataAggregateResponse as AgentDataAggregateResponse,
     type AgentDataDeleteByQueryResponse as AgentDataDeleteByQueryResponse,
-    type AgentDataAggregateResponsesPaginatedCursorPost as AgentDataAggregateResponsesPaginatedCursorPost,
     type AgentDataPaginatedCursorPost as AgentDataPaginatedCursorPost,
-    type AgentDataCreateParams as AgentDataCreateParams,
+    type AgentDataAggregateResponsesPaginatedCursorPost as AgentDataAggregateResponsesPaginatedCursorPost,
+    type AgentDataGetParams as AgentDataGetParams,
     type AgentDataUpdateParams as AgentDataUpdateParams,
     type AgentDataDeleteParams as AgentDataDeleteParams,
+    type AgentDataCreateParams as AgentDataCreateParams,
+    type AgentDataSearchParams as AgentDataSearchParams,
     type AgentDataAggregateParams as AgentDataAggregateParams,
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
-    type AgentDataGetParams as AgentDataGetParams,
-    type AgentDataSearchParams as AgentDataSearchParams,
   };
 }

@@ -9,39 +9,19 @@ import { path } from '../../internal/utils/path';
 
 export class Indexes extends APIResource {
   /**
-   * Create a searchable index over a source directory.
+   * Get an index by ID.
    *
    * @example
    * ```ts
-   * const index = await client.beta.indexes.create({
-   *   source_directory_id: 'dir-abc123',
-   * });
+   * const index = await client.beta.indexes.get('index_id');
    * ```
    */
-  create(params: IndexCreateParams, options?: RequestOptions): APIPromise<IndexCreateResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/indexes', { query: { organization_id, project_id }, body, ...options });
-  }
-
-  /**
-   * List indexes for the current project.
-   *
-   * @example
-   * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const indexListResponse of client.beta.indexes.list()) {
-   *   // ...
-   * }
-   * ```
-   */
-  list(
-    query: IndexListParams | null | undefined = {},
+  get(
+    indexID: string,
+    query: IndexGetParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<IndexListResponsesPaginatedCursor, IndexListResponse> {
-    return this._client.getAPIList('/api/v1/indexes', PaginatedCursor<IndexListResponse>, {
-      query,
-      ...options,
-    });
+  ): APIPromise<IndexGetResponse> {
+    return this._client.get(path`/api/v1/indexes/${indexID}`, { query, ...options });
   }
 
   /**
@@ -66,19 +46,18 @@ export class Indexes extends APIResource {
   }
 
   /**
-   * Get an index by ID.
+   * Create a searchable index over a source directory.
    *
    * @example
    * ```ts
-   * const index = await client.beta.indexes.get('index_id');
+   * const index = await client.beta.indexes.create({
+   *   source_directory_id: 'dir-abc123',
+   * });
    * ```
    */
-  get(
-    indexID: string,
-    query: IndexGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<IndexGetResponse> {
-    return this._client.get(path`/api/v1/indexes/${indexID}`, { query, ...options });
+  create(params: IndexCreateParams, options?: RequestOptions): APIPromise<IndexCreateResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/indexes', { query: { organization_id, project_id }, body, ...options });
   }
 
   /**
@@ -98,6 +77,27 @@ export class Indexes extends APIResource {
     const { organization_id, project_id } = params ?? {};
     return this._client.post(path`/api/v1/indexes/${indexID}/sync`, {
       query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
+   * List indexes for the current project.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const indexListResponse of client.beta.indexes.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(
+    query: IndexListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<IndexListResponsesPaginatedCursor, IndexListResponse> {
+    return this._client.getAPIList('/api/v1/indexes', PaginatedCursor<IndexListResponse>, {
+      query,
       ...options,
     });
   }
@@ -302,6 +302,18 @@ export interface IndexGetResponse {
 
 export type IndexSyncResponse = unknown;
 
+export interface IndexGetParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface IndexDeleteParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface IndexCreateParams {
   /**
    * Body param: ID of the source directory containing your documents.
@@ -379,30 +391,18 @@ export namespace IndexCreateParams {
   }
 }
 
+export interface IndexSyncParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface IndexListParams extends PaginatedCursorParams {
   organization_id?: string | null;
 
   project_id?: string | null;
 
   source_directory_id?: string | null;
-}
-
-export interface IndexDeleteParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface IndexGetParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface IndexSyncParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
 }
 
 export declare namespace Indexes {
@@ -412,10 +412,10 @@ export declare namespace Indexes {
     type IndexGetResponse as IndexGetResponse,
     type IndexSyncResponse as IndexSyncResponse,
     type IndexListResponsesPaginatedCursor as IndexListResponsesPaginatedCursor,
-    type IndexCreateParams as IndexCreateParams,
-    type IndexListParams as IndexListParams,
-    type IndexDeleteParams as IndexDeleteParams,
     type IndexGetParams as IndexGetParams,
+    type IndexDeleteParams as IndexDeleteParams,
+    type IndexCreateParams as IndexCreateParams,
     type IndexSyncParams as IndexSyncParams,
+    type IndexListParams as IndexListParams,
   };
 }
