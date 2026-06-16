@@ -6,13 +6,13 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class Query extends APIResource {
+export class Retriever extends APIResource {
   /**
    * Retrieve data using a Retriever.
    */
   search(
     retrieverID: string,
-    params: QuerySearchParams,
+    params: RetrieverSearchParams,
     options?: RequestOptions,
   ): APIPromise<RetrieversAPI.CompositeRetrievalResult> {
     const { organization_id, project_id, ...body } = params;
@@ -24,7 +24,7 @@ export class Query extends APIResource {
   }
 }
 
-export interface QuerySearchParams {
+export interface RetrieverSearchParams {
   /**
    * Body param: The query to retrieve against.
    */
@@ -57,6 +57,6 @@ export interface QuerySearchParams {
   rerank_top_n?: number | null;
 }
 
-export declare namespace Query {
-  export { type QuerySearchParams as QuerySearchParams };
+export declare namespace Retriever {
+  export { type RetrieverSearchParams as RetrieverSearchParams };
 }

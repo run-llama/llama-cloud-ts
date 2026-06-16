@@ -2,15 +2,14 @@
 
 import { APIResource } from '../../core/resource';
 import * as PipelinesAPI from '../pipelines/pipelines';
-import * as QueryAPI from './query';
-import { Query, QuerySearchParams } from './query';
+import * as RetrieverAPI from './retriever';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Retrievers extends APIResource {
-  query: QueryAPI.Query = new QueryAPI.Query(this._client);
+  retriever: RetrieverAPI.Retriever = new RetrieverAPI.Retriever(this._client);
 
   /**
    * Create a new Retriever.
@@ -392,8 +391,6 @@ export interface RetrieverSearchParams {
   rerank_top_n?: number | null;
 }
 
-Retrievers.Query = Query;
-
 export declare namespace Retrievers {
   export {
     type CompositeRetrievalMode as CompositeRetrievalMode,
@@ -411,6 +408,4 @@ export declare namespace Retrievers {
     type RetrieverDeleteParams as RetrieverDeleteParams,
     type RetrieverSearchParams as RetrieverSearchParams,
   };
-
-  export { Query as Query, type QuerySearchParams as QuerySearchParams };
 }

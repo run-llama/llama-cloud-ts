@@ -81,6 +81,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod files create \\\n  --api-key 'My API Key' \\\n  --file 'Example data' \\\n  --purpose purpose",
       },
+      java: {
+        method: 'files().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.files.FileCreateResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileCreateParams params = FileCreateParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .purpose("purpose")\n            .build();\n        FileCreateResponse file = client.files().create(params);\n    }\n}',
+      },
       python: {
         method: 'files.create',
         example:
@@ -94,11 +99,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/beta/files \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -F 'file=@/path/to/file' \\\n    -F purpose=purpose",
-      },
-      java: {
-        method: 'files().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.files.FileCreateResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileCreateParams params = FileCreateParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .purpose("purpose")\n            .build();\n        FileCreateResponse file = client.files().create(params);\n    }\n}',
       },
     },
   },
@@ -132,6 +132,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files query',
         example: "llamacloud-prod files query \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'files().query',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.files.FileQueryParams;\nimport com.llamacloud_prod.api.models.files.FileQueryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileQueryResponse response = client.files().query();\n    }\n}',
+      },
       python: {
         method: 'files.query',
         example:
@@ -145,11 +150,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/beta/files/query \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'files().query',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.files.FileQueryParams;\nimport com.llamacloud_prod.api.models.files.FileQueryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileQueryResponse response = client.files().query();\n    }\n}',
       },
     },
   },
@@ -187,6 +187,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files list',
         example: "llamacloud-prod files list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'files().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.files.FileListPage;\nimport com.llamacloud_prod.api.models.files.FileListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileListPage page = client.files().list();\n    }\n}',
+      },
       python: {
         method: 'files.list',
         example:
@@ -200,11 +205,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/files \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'files().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.files.FileListPage;\nimport com.llamacloud_prod.api.models.files.FileListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileListPage page = client.files().list();\n    }\n}',
       },
     },
   },
@@ -230,6 +230,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod files delete \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'files().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.files.FileDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.files().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'files.delete',
         example:
@@ -243,11 +248,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/files/$FILE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'files().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.files.FileDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.files().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -279,6 +279,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod files get \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'files().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.files.FileGetParams;\nimport com.llamacloud_prod.api.models.files.PresignedUrl;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PresignedUrl presignedUrl = client.files().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'files.get',
         example:
@@ -292,11 +297,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/files/$FILE_ID/content \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'files().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.files.FileGetParams;\nimport com.llamacloud_prod.api.models.files.PresignedUrl;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PresignedUrl presignedUrl = client.files().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -344,6 +344,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod parsing create \\\n  --api-key 'My API Key' \\\n  --tier fast \\\n  --version latest",
       },
+      java: {
+        method: 'parsing().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingCreateParams params = ParsingCreateParams.builder()\n            .tier(ParsingCreateParams.Tier.FAST)\n            .version(ParsingCreateParams.Version.LATEST)\n            .build();\n        ParsingCreateResponse parsing = client.parsing().create(params);\n    }\n}',
+      },
       python: {
         method: 'parsing.create',
         example:
@@ -357,11 +362,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/parse \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "tier": "fast",\n          "version": "latest"\n        }\'',
-      },
-      java: {
-        method: 'parsing().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingCreateParams params = ParsingCreateParams.builder()\n            .tier(ParsingCreateParams.Tier.FAST)\n            .version(ParsingCreateParams.Version.LATEST)\n            .build();\n        ParsingCreateResponse parsing = client.parsing().create(params);\n    }\n}',
       },
     },
   },
@@ -395,6 +395,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'parsing get',
         example: "llamacloud-prod parsing get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
+      java: {
+        method: 'parsing().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.parsing.ParsingGetParams;\nimport com.llamacloud_prod.api.models.parsing.ParsingGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingGetResponse parsing = client.parsing().get("job_id");\n    }\n}',
+      },
       python: {
         method: 'parsing.get',
         example:
@@ -408,11 +413,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/parse/$JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'parsing().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.parsing.ParsingGetParams;\nimport com.llamacloud_prod.api.models.parsing.ParsingGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingGetResponse parsing = client.parsing().get("job_id");\n    }\n}',
       },
     },
   },
@@ -449,6 +449,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'parsing list',
         example: "llamacloud-prod parsing list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'parsing().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.parsing.ParsingListPage;\nimport com.llamacloud_prod.api.models.parsing.ParsingListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingListPage page = client.parsing().list();\n    }\n}',
+      },
       python: {
         method: 'parsing.list',
         example:
@@ -462,11 +467,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/parse \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'parsing().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.parsing.ParsingListPage;\nimport com.llamacloud_prod.api.models.parsing.ParsingListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingListPage page = client.parsing().list();\n    }\n}',
       },
     },
   },
@@ -502,6 +502,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod extract create \\\n  --api-key 'My API Key' \\\n  --file-input dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
       },
+      java: {
+        method: 'extract().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.extract.ExtractV2Job;\nimport com.llamacloud_prod.api.models.extract.ExtractV2JobCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2JobCreate params = ExtractV2JobCreate.builder()\n            .fileInput("dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")\n            .build();\n        ExtractV2Job extractV2Job = client.extract().create(params);\n    }\n}',
+      },
       python: {
         method: 'extract.create',
         example:
@@ -515,11 +520,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_input": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "configuration": {\n            "data_schema": {\n              "properties": {\n                "vendor_name": "bar",\n                "total_amount": "bar"\n              },\n              "required": [\n                "vendor_name",\n                "total_amount"\n              ],\n              "type": "object"\n            },\n            "target_pages": "1,3,5-7"\n          },\n          "configuration_id": "cfg-11111111-2222-3333-4444-555555555555"\n        }\'',
-      },
-      java: {
-        method: 'extract().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.extract.ExtractV2Job;\nimport com.llamacloud_prod.api.models.extract.ExtractV2JobCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2JobCreate params = ExtractV2JobCreate.builder()\n            .fileInput("dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")\n            .build();\n        ExtractV2Job extractV2Job = client.extract().create(params);\n    }\n}',
       },
     },
   },
@@ -561,6 +561,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract list',
         example: "llamacloud-prod extract list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'extract().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.extract.ExtractListPage;\nimport com.llamacloud_prod.api.models.extract.ExtractListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractListPage page = client.extract().list();\n    }\n}',
+      },
       python: {
         method: 'extract.list',
         example:
@@ -574,11 +579,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'extract().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.extract.ExtractListPage;\nimport com.llamacloud_prod.api.models.extract.ExtractListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractListPage page = client.extract().list();\n    }\n}',
       },
     },
   },
@@ -606,6 +606,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract get',
         example: "llamacloud-prod extract get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
+      java: {
+        method: 'extract().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.extract.ExtractGetParams;\nimport com.llamacloud_prod.api.models.extract.ExtractV2Job;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2Job extractV2Job = client.extract().get("job_id");\n    }\n}',
+      },
       python: {
         method: 'extract.get',
         example:
@@ -619,11 +624,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'extract().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.extract.ExtractGetParams;\nimport com.llamacloud_prod.api.models.extract.ExtractV2Job;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2Job extractV2Job = client.extract().get("job_id");\n    }\n}',
       },
     },
   },
@@ -649,6 +649,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract delete',
         example: "llamacloud-prod extract delete \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
+      java: {
+        method: 'extract().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.extract.ExtractDeleteParams;\nimport com.llamacloud_prod.api.models.extract.ExtractDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractDeleteResponse extract = client.extract().delete("job_id");\n    }\n}',
+      },
       python: {
         method: 'extract.delete',
         example:
@@ -662,11 +667,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'extract().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.extract.ExtractDeleteParams;\nimport com.llamacloud_prod.api.models.extract.ExtractDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractDeleteResponse extract = client.extract().delete("job_id");\n    }\n}',
       },
     },
   },
@@ -693,6 +693,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod extract validate-schema \\\n  --api-key 'My API Key' \\\n  --data-schema '{properties: {vendor_name: bar, invoice_number: bar, total_amount: bar, line_items: bar}, required: [vendor_name, invoice_number, total_amount], type: object}'",
       },
+      java: {
+        method: 'extract().validateSchema',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.extract.ExtractV2SchemaValidateRequest;\nimport com.llamacloud_prod.api.models.extract.ExtractV2SchemaValidateResponse;\nimport java.util.List;\nimport java.util.Map;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2SchemaValidateRequest params = ExtractV2SchemaValidateRequest.builder()\n            .dataSchema(ExtractV2SchemaValidateRequest.DataSchema.builder()\n                .putAdditionalProperty("properties", JsonValue.from(Map.of(\n                  "vendor_name",\n                  "bar",\n                  "invoice_number",\n                  "bar",\n                  "total_amount",\n                  "bar",\n                  "line_items",\n                  "bar"\n                )))\n                .putAdditionalProperty("required", JsonValue.from(List.of(\n                  "vendor_name",\n                  "invoice_number",\n                  "total_amount"\n                )))\n                .putAdditionalProperty("type", JsonValue.from("object"))\n                .build())\n            .build();\n        ExtractV2SchemaValidateResponse extractV2SchemaValidateResponse = client.extract().validateSchema(params);\n    }\n}',
+      },
       python: {
         method: 'extract.validate_schema',
         example:
@@ -706,11 +711,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract/schema/validation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "data_schema": {\n            "properties": {\n              "vendor_name": "bar",\n              "invoice_number": "bar",\n              "total_amount": "bar",\n              "line_items": "bar"\n            },\n            "required": [\n              "vendor_name",\n              "invoice_number",\n              "total_amount"\n            ],\n            "type": "object"\n          }\n        }\'',
-      },
-      java: {
-        method: 'extract().validateSchema',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.extract.ExtractV2SchemaValidateRequest;\nimport com.llamacloud_prod.api.models.extract.ExtractV2SchemaValidateResponse;\nimport java.util.List;\nimport java.util.Map;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2SchemaValidateRequest params = ExtractV2SchemaValidateRequest.builder()\n            .dataSchema(ExtractV2SchemaValidateRequest.DataSchema.builder()\n                .putAdditionalProperty("properties", JsonValue.from(Map.of(\n                  "vendor_name",\n                  "bar",\n                  "invoice_number",\n                  "bar",\n                  "total_amount",\n                  "bar",\n                  "line_items",\n                  "bar"\n                )))\n                .putAdditionalProperty("required", JsonValue.from(List.of(\n                  "vendor_name",\n                  "invoice_number",\n                  "total_amount"\n                )))\n                .putAdditionalProperty("type", JsonValue.from("object"))\n                .build())\n            .build();\n        ExtractV2SchemaValidateResponse extractV2SchemaValidateResponse = client.extract().validateSchema(params);\n    }\n}',
       },
     },
   },
@@ -744,6 +744,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract generate_schema',
         example: "llamacloud-prod extract generate-schema \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'extract().generateSchema',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationCreate;\nimport com.llamacloud_prod.api.models.extract.ExtractV2SchemaGenerateRequest;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2SchemaGenerateRequest params = ExtractV2SchemaGenerateRequest.builder().build();\n        ConfigurationCreate configurationCreate = client.extract().generateSchema(params);\n    }\n}',
+      },
       python: {
         method: 'extract.generate_schema',
         example:
@@ -757,11 +762,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/extract/schema/generate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "name": "invoice_extraction",\n          "prompt": "Extract vendor name, invoice number, date, line items with descriptions and amounts, and total amount from invoices."\n        }\'',
-      },
-      java: {
-        method: 'extract().generateSchema',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationCreate;\nimport com.llamacloud_prod.api.models.extract.ExtractV2SchemaGenerateRequest;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2SchemaGenerateRequest params = ExtractV2SchemaGenerateRequest.builder().build();\n        ConfigurationCreate configurationCreate = client.extract().generateSchema(params);\n    }\n}',
       },
     },
   },
@@ -797,6 +797,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod classifier:jobs create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --rule \"{description: 'contains invoice number, line items, and total amount', type: invoice}\"",
       },
+      java: {
+        method: 'classifier().jobs().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classifier.jobs.ClassifierRule;\nimport com.llamacloud_prod.api.models.classifier.jobs.ClassifyJob;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobCreateParams params = JobCreateParams.builder()\n            .addFileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addRule(ClassifierRule.builder()\n                .description("contains invoice number, line items, and total amount")\n                .type("invoice")\n                .build())\n            .build();\n        ClassifyJob classifyJob = client.classifier().jobs().create(params);\n    }\n}',
+      },
       python: {
         method: 'classifier.jobs.create',
         example:
@@ -810,11 +815,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/classifier/jobs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_ids": [\n            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n          ],\n          "rules": [\n            {\n              "description": "contains invoice number, line items, and total amount",\n              "type": "invoice"\n            }\n          ]\n        }\'',
-      },
-      java: {
-        method: 'classifier().jobs().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classifier.jobs.ClassifierRule;\nimport com.llamacloud_prod.api.models.classifier.jobs.ClassifyJob;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobCreateParams params = JobCreateParams.builder()\n            .addFileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addRule(ClassifierRule.builder()\n                .description("contains invoice number, line items, and total amount")\n                .type("invoice")\n                .build())\n            .build();\n        ClassifyJob classifyJob = client.classifier().jobs().create(params);\n    }\n}',
       },
     },
   },
@@ -846,6 +846,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'jobs list',
         example: "llamacloud-prod classifier:jobs list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'classifier().jobs().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobListPage;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobListPage page = client.classifier().jobs().list();\n    }\n}',
+      },
       python: {
         method: 'classifier.jobs.list',
         example:
@@ -859,11 +864,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/classifier/jobs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'classifier().jobs().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobListPage;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobListPage page = client.classifier().jobs().list();\n    }\n}',
       },
     },
   },
@@ -891,6 +891,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod classifier:jobs get \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'classifier().jobs().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classifier.jobs.ClassifyJob;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyJob classifyJob = client.classifier().jobs().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'classifier.jobs.get',
         example:
@@ -904,11 +909,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/classifier/jobs/$CLASSIFY_JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'classifier().jobs().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classifier.jobs.ClassifyJob;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyJob classifyJob = client.classifier().jobs().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -937,6 +937,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod classifier:jobs get-results \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'classifier().jobs().getResults',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobGetResultsParams;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobGetResultsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobGetResultsResponse response = client.classifier().jobs().getResults("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'classifier.jobs.get_results',
         example:
@@ -950,11 +955,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/classifier/jobs/$CLASSIFY_JOB_ID/results \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'classifier().jobs().getResults',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobGetResultsParams;\nimport com.llamacloud_prod.api.models.classifier.jobs.JobGetResultsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobGetResultsResponse response = client.classifier().jobs().getResults("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -987,6 +987,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod batches create \\\n  --api-key 'My API Key' \\\n  --config '{job: {configuration_id: cfg-PARSE_AGENTIC, type: parse_v2}}' \\\n  --source-directory-id dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
       },
+      java: {
+        method: 'batches().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.batches.BatchCreateParams;\nimport com.llamacloud_prod.api.models.batches.BatchCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCreateParams params = BatchCreateParams.builder()\n            .config(BatchCreateParams.Config.builder()\n                .job(BatchCreateParams.Config.Job.builder()\n                    .configurationId("cfg-PARSE_AGENTIC")\n                    .type(BatchCreateParams.Config.Job.Type.PARSE_V2)\n                    .build())\n                .build())\n            .sourceDirectoryId("dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")\n            .build();\n        BatchCreateResponse batch = client.batches().create(params);\n    }\n}',
+      },
       python: {
         method: 'batches.create',
         example:
@@ -1000,11 +1005,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/batches \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "config": {\n            "job": {\n              "configuration_id": "cfg-PARSE_AGENTIC",\n              "type": "parse_v2"\n            }\n          },\n          "source_directory_id": "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"\n        }\'',
-      },
-      java: {
-        method: 'batches().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.batches.BatchCreateParams;\nimport com.llamacloud_prod.api.models.batches.BatchCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCreateParams params = BatchCreateParams.builder()\n            .config(BatchCreateParams.Config.builder()\n                .job(BatchCreateParams.Config.Job.builder()\n                    .configurationId("cfg-PARSE_AGENTIC")\n                    .type(BatchCreateParams.Config.Job.Type.PARSE_V2)\n                    .build())\n                .build())\n            .sourceDirectoryId("dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")\n            .build();\n        BatchCreateResponse batch = client.batches().create(params);\n    }\n}',
       },
     },
   },
@@ -1040,6 +1040,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'batches list',
         example: "llamacloud-prod batches list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'batches().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.batches.BatchListPage;\nimport com.llamacloud_prod.api.models.batches.BatchListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchListPage page = client.batches().list();\n    }\n}',
+      },
       python: {
         method: 'batches.list',
         example:
@@ -1053,11 +1058,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/batches \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'batches().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.batches.BatchListPage;\nimport com.llamacloud_prod.api.models.batches.BatchListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchListPage page = client.batches().list();\n    }\n}',
       },
     },
   },
@@ -1084,6 +1084,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'batches get',
         example: "llamacloud-prod batches get \\\n  --api-key 'My API Key' \\\n  --batch-id batch_id",
       },
+      java: {
+        method: 'batches().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.batches.BatchGetParams;\nimport com.llamacloud_prod.api.models.batches.BatchGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchGetResponse batch = client.batches().get("batch_id");\n    }\n}',
+      },
       python: {
         method: 'batches.get',
         example:
@@ -1097,11 +1102,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/batches/$BATCH_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'batches().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.batches.BatchGetParams;\nimport com.llamacloud_prod.api.models.batches.BatchGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchGetResponse batch = client.batches().get("batch_id");\n    }\n}',
       },
     },
   },
@@ -1139,6 +1139,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classify create',
         example: "llamacloud-prod classify create \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'classify().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classify.ClassifyCreateRequest;\nimport com.llamacloud_prod.api.models.classify.ClassifyCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyCreateRequest params = ClassifyCreateRequest.builder().build();\n        ClassifyCreateResponse classify = client.classify().create(params);\n    }\n}',
+      },
       python: {
         method: 'classify.create',
         example:
@@ -1152,11 +1157,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/classify \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "configuration_id": "cfg-11111111-2222-3333-4444-555555555555",\n          "file_id": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "file_input": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "parse_job_id": "pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "transaction_id": "tx-unique-idempotency-key"\n        }\'',
-      },
-      java: {
-        method: 'classify().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classify.ClassifyCreateRequest;\nimport com.llamacloud_prod.api.models.classify.ClassifyCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyCreateRequest params = ClassifyCreateRequest.builder().build();\n        ClassifyCreateResponse classify = client.classify().create(params);\n    }\n}',
       },
     },
   },
@@ -1194,6 +1194,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classify list',
         example: "llamacloud-prod classify list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'classify().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classify.ClassifyListPage;\nimport com.llamacloud_prod.api.models.classify.ClassifyListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyListPage page = client.classify().list();\n    }\n}',
+      },
       python: {
         method: 'classify.list',
         example:
@@ -1207,11 +1212,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/classify \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'classify().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classify.ClassifyListPage;\nimport com.llamacloud_prod.api.models.classify.ClassifyListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyListPage page = client.classify().list();\n    }\n}',
       },
     },
   },
@@ -1239,6 +1239,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classify get',
         example: "llamacloud-prod classify get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
+      java: {
+        method: 'classify().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classify.ClassifyGetParams;\nimport com.llamacloud_prod.api.models.classify.ClassifyGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyGetResponse classify = client.classify().get("job_id");\n    }\n}',
+      },
       python: {
         method: 'classify.get',
         example:
@@ -1252,11 +1257,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v2/classify/$JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'classify().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.classify.ClassifyGetParams;\nimport com.llamacloud_prod.api.models.classify.ClassifyGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyGetResponse classify = client.classify().get("job_id");\n    }\n}',
       },
     },
   },
@@ -1290,6 +1290,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod configurations create \\\n  --api-key 'My API Key' \\\n  --name x \\\n  --parameters '{categories: [{name: x}], product_type: split_v1}'",
       },
+      java: {
+        method: 'configurations().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.split.SplitCategory;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationCreate;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationResponse;\nimport java.util.List;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationCreate params = ConfigurationCreate.builder()\n            .name("x")\n            .splitV1Parameters(List.of(SplitCategory.builder()\n                .name("x")\n                .build()))\n            .build();\n        ConfigurationResponse configurationResponse = client.configurations().create(params);\n    }\n}',
+      },
       python: {
         method: 'configurations.create',
         example:
@@ -1303,11 +1308,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/configurations \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x",\n          "parameters": {\n            "categories": [\n              {\n                "name": "x"\n              }\n            ],\n            "product_type": "split_v1"\n          }\n        }\'',
-      },
-      java: {
-        method: 'configurations().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.split.SplitCategory;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationCreate;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationResponse;\nimport java.util.List;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationCreate params = ConfigurationCreate.builder()\n            .name("x")\n            .splitV1Parameters(List.of(SplitCategory.builder()\n                .name("x")\n                .build()))\n            .build();\n        ConfigurationResponse configurationResponse = client.configurations().create(params);\n    }\n}',
       },
     },
   },
@@ -1342,6 +1342,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations list',
         example: "llamacloud-prod configurations list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'configurations().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationListPage;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationListPage page = client.configurations().list();\n    }\n}',
+      },
       python: {
         method: 'configurations.list',
         example:
@@ -1355,11 +1360,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/configurations \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'configurations().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationListPage;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationListPage page = client.configurations().list();\n    }\n}',
       },
     },
   },
@@ -1387,6 +1387,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod configurations retrieve \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
+      java: {
+        method: 'configurations().retrieve',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationResponse;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationResponse configurationResponse = client.configurations().retrieve("config_id");\n    }\n}',
+      },
       python: {
         method: 'configurations.retrieve',
         example:
@@ -1400,11 +1405,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/configurations/$CONFIG_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'configurations().retrieve',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationResponse;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationResponse configurationResponse = client.configurations().retrieve("config_id");\n    }\n}',
       },
     },
   },
@@ -1438,6 +1438,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod configurations update \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
+      java: {
+        method: 'configurations().update',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationResponse;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationResponse configurationResponse = client.configurations().update("config_id");\n    }\n}',
+      },
       python: {
         method: 'configurations.update',
         example:
@@ -1451,11 +1456,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/beta/configurations/$CONFIG_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'configurations().update',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationResponse;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationResponse configurationResponse = client.configurations().update("config_id");\n    }\n}',
       },
     },
   },
@@ -1481,6 +1481,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod configurations delete \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
+      java: {
+        method: 'configurations().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.configurations().delete("config_id");\n    }\n}',
+      },
       python: {
         method: 'configurations.delete',
         example:
@@ -1494,11 +1499,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/configurations/$CONFIG_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'configurations().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.configurations.ConfigurationDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.configurations().delete("config_id");\n    }\n}',
       },
     },
   },
@@ -1525,6 +1525,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'projects list',
         example: "llamacloud-prod projects list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'projects().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.projects.Project;\nimport com.llamacloud_prod.api.models.projects.ProjectListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<Project> projects = client.projects().list();\n    }\n}',
+      },
       python: {
         method: 'projects.list',
         example:
@@ -1538,11 +1543,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/projects \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'projects().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.projects.Project;\nimport com.llamacloud_prod.api.models.projects.ProjectListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<Project> projects = client.projects().list();\n    }\n}',
       },
     },
   },
@@ -1570,6 +1570,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod projects get \\\n  --api-key 'My API Key' \\\n  --project-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'projects().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.projects.Project;\nimport com.llamacloud_prod.api.models.projects.ProjectGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Project project = client.projects().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'projects.get',
         example:
@@ -1583,11 +1588,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/projects/$PROJECT_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'projects().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.projects.Project;\nimport com.llamacloud_prod.api.models.projects.ProjectGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Project project = client.projects().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -1614,6 +1614,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sinks list',
         example: "llamacloud-prod data-sinks list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'dataSinks().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasinks.DataSink;\nimport com.llamacloud_prod.api.models.datasinks.DataSinkListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<DataSink> dataSinks = client.dataSinks().list();\n    }\n}',
+      },
       python: {
         method: 'data_sinks.list',
         example:
@@ -1627,11 +1632,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sinks \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'dataSinks().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasinks.DataSink;\nimport com.llamacloud_prod.api.models.datasinks.DataSinkListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<DataSink> dataSinks = client.dataSinks().list();\n    }\n}',
       },
     },
   },
@@ -1665,6 +1665,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod data-sinks create \\\n  --api-key 'My API Key' \\\n  --component '{foo: bar}' \\\n  --name name \\\n  --sink-type PINECONE",
       },
+      java: {
+        method: 'dataSinks().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.datasinks.DataSink;\nimport com.llamacloud_prod.api.models.pipelines.DataSinkCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSinkCreate params = DataSinkCreate.builder()\n            .component(DataSinkCreate.Component.UnionMember0.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .name("name")\n            .sinkType(DataSinkCreate.SinkType.PINECONE)\n            .build();\n        DataSink dataSink = client.dataSinks().create(params);\n    }\n}',
+      },
       python: {
         method: 'data_sinks.create',
         example:
@@ -1678,11 +1683,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sinks \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "component": {\n            "foo": "bar"\n          },\n          "name": "name",\n          "sink_type": "PINECONE"\n        }\'',
-      },
-      java: {
-        method: 'dataSinks().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.datasinks.DataSink;\nimport com.llamacloud_prod.api.models.pipelines.DataSinkCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSinkCreate params = DataSinkCreate.builder()\n            .component(DataSinkCreate.Component.UnionMember0.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .name("name")\n            .sinkType(DataSinkCreate.SinkType.PINECONE)\n            .build();\n        DataSink dataSink = client.dataSinks().create(params);\n    }\n}',
       },
     },
   },
@@ -1710,6 +1710,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod data-sinks get \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'dataSinks().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasinks.DataSink;\nimport com.llamacloud_prod.api.models.datasinks.DataSinkGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSink dataSink = client.dataSinks().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'data_sinks.get',
         example:
@@ -1723,11 +1728,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sinks/$DATA_SINK_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'dataSinks().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasinks.DataSink;\nimport com.llamacloud_prod.api.models.datasinks.DataSinkGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSink dataSink = client.dataSinks().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -1760,6 +1760,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod data-sinks update \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --sink-type PINECONE",
       },
+      java: {
+        method: 'dataSinks().update',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasinks.DataSink;\nimport com.llamacloud_prod.api.models.datasinks.DataSinkUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSinkUpdateParams params = DataSinkUpdateParams.builder()\n            .dataSinkId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .sinkType(DataSinkUpdateParams.SinkType.PINECONE)\n            .build();\n        DataSink dataSink = client.dataSinks().update(params);\n    }\n}',
+      },
       python: {
         method: 'data_sinks.update',
         example:
@@ -1773,11 +1778,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sinks/$DATA_SINK_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "sink_type": "PINECONE"\n        }\'',
-      },
-      java: {
-        method: 'dataSinks().update',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasinks.DataSink;\nimport com.llamacloud_prod.api.models.datasinks.DataSinkUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSinkUpdateParams params = DataSinkUpdateParams.builder()\n            .dataSinkId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .sinkType(DataSinkUpdateParams.SinkType.PINECONE)\n            .build();\n        DataSink dataSink = client.dataSinks().update(params);\n    }\n}',
       },
     },
   },
@@ -1803,6 +1803,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod data-sinks delete \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'dataSinks().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasinks.DataSinkDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.dataSinks().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'data_sinks.delete',
         example:
@@ -1816,11 +1821,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sinks/$DATA_SINK_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'dataSinks().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasinks.DataSinkDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.dataSinks().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -1848,6 +1848,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sources list',
         example: "llamacloud-prod data-sources list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'dataSources().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasources.DataSource;\nimport com.llamacloud_prod.api.models.datasources.DataSourceListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<DataSource> dataSources = client.dataSources().list();\n    }\n}',
+      },
       python: {
         method: 'data_sources.list',
         example:
@@ -1861,11 +1866,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sources \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'dataSources().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasources.DataSource;\nimport com.llamacloud_prod.api.models.datasources.DataSourceListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<DataSource> dataSources = client.dataSources().list();\n    }\n}',
       },
     },
   },
@@ -1900,6 +1900,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod data-sources create \\\n  --api-key 'My API Key' \\\n  --component '{foo: bar}' \\\n  --name name \\\n  --source-type S3",
       },
+      java: {
+        method: 'dataSources().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.datasources.DataSource;\nimport com.llamacloud_prod.api.models.datasources.DataSourceCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceCreateParams params = DataSourceCreateParams.builder()\n            .component(DataSourceCreateParams.Component.UnionMember0.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .name("name")\n            .sourceType(DataSourceCreateParams.SourceType.S3)\n            .build();\n        DataSource dataSource = client.dataSources().create(params);\n    }\n}',
+      },
       python: {
         method: 'data_sources.create',
         example:
@@ -1913,11 +1918,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sources \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "component": {\n            "foo": "bar"\n          },\n          "name": "name",\n          "source_type": "S3"\n        }\'',
-      },
-      java: {
-        method: 'dataSources().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.datasources.DataSource;\nimport com.llamacloud_prod.api.models.datasources.DataSourceCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceCreateParams params = DataSourceCreateParams.builder()\n            .component(DataSourceCreateParams.Component.UnionMember0.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .name("name")\n            .sourceType(DataSourceCreateParams.SourceType.S3)\n            .build();\n        DataSource dataSource = client.dataSources().create(params);\n    }\n}',
       },
     },
   },
@@ -1945,6 +1945,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod data-sources get \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'dataSources().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasources.DataSource;\nimport com.llamacloud_prod.api.models.datasources.DataSourceGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSource dataSource = client.dataSources().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'data_sources.get',
         example:
@@ -1958,11 +1963,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sources/$DATA_SOURCE_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'dataSources().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasources.DataSource;\nimport com.llamacloud_prod.api.models.datasources.DataSourceGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSource dataSource = client.dataSources().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -1996,6 +1996,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod data-sources update \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --source-type S3",
       },
+      java: {
+        method: 'dataSources().update',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasources.DataSource;\nimport com.llamacloud_prod.api.models.datasources.DataSourceUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceUpdateParams params = DataSourceUpdateParams.builder()\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .sourceType(DataSourceUpdateParams.SourceType.S3)\n            .build();\n        DataSource dataSource = client.dataSources().update(params);\n    }\n}',
+      },
       python: {
         method: 'data_sources.update',
         example:
@@ -2009,11 +2014,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sources/$DATA_SOURCE_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "source_type": "S3"\n        }\'',
-      },
-      java: {
-        method: 'dataSources().update',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasources.DataSource;\nimport com.llamacloud_prod.api.models.datasources.DataSourceUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceUpdateParams params = DataSourceUpdateParams.builder()\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .sourceType(DataSourceUpdateParams.SourceType.S3)\n            .build();\n        DataSource dataSource = client.dataSources().update(params);\n    }\n}',
       },
     },
   },
@@ -2039,6 +2039,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod data-sources delete \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'dataSources().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasources.DataSourceDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.dataSources().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'data_sources.delete',
         example:
@@ -2052,11 +2057,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/data-sources/$DATA_SOURCE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'dataSources().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.datasources.DataSourceDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.dataSources().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -2089,6 +2089,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines list',
         example: "llamacloud-prod pipelines list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'pipelines().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<Pipeline> pipelines = client.pipelines().list();\n    }\n}',
+      },
       python: {
         method: 'pipelines.list',
         example:
@@ -2102,11 +2107,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<Pipeline> pipelines = client.pipelines().list();\n    }\n}',
       },
     },
   },
@@ -2150,6 +2150,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines create',
         example: "llamacloud-prod pipelines create \\\n  --api-key 'My API Key' \\\n  --name x",
       },
+      java: {
+        method: 'pipelines().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PipelineCreate params = PipelineCreate.builder()\n            .name("x")\n            .build();\n        Pipeline pipeline = client.pipelines().create(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.create',
         example:
@@ -2163,11 +2168,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x"\n        }\'',
-      },
-      java: {
-        method: 'pipelines().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PipelineCreate params = PipelineCreate.builder()\n            .name("x")\n            .build();\n        Pipeline pipeline = client.pipelines().create(params);\n    }\n}',
       },
     },
   },
@@ -2195,6 +2195,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines get \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.get',
         example:
@@ -2208,11 +2213,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -2254,6 +2254,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().update',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().update("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.update',
         example:
@@ -2267,11 +2272,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'pipelines().update',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().update("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -2298,6 +2298,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.PipelineDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.pipelines().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.delete',
         example:
@@ -2311,11 +2316,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.PipelineDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.pipelines().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -2344,6 +2344,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().getStatus',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.ManagedIngestionStatusResponse;\nimport com.llamacloud_prod.api.models.pipelines.PipelineGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().getStatus("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.get_status',
         example:
@@ -2357,11 +2362,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/status \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().getStatus',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.ManagedIngestionStatusResponse;\nimport com.llamacloud_prod.api.models.pipelines.PipelineGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().getStatus("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -2405,6 +2405,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines upsert',
         example: "llamacloud-prod pipelines upsert \\\n  --api-key 'My API Key' \\\n  --name x",
       },
+      java: {
+        method: 'pipelines().upsert',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PipelineCreate params = PipelineCreate.builder()\n            .name("x")\n            .build();\n        Pipeline pipeline = client.pipelines().upsert(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.upsert',
         example:
@@ -2418,11 +2423,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x"\n        }\'',
-      },
-      java: {
-        method: 'pipelines().upsert',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PipelineCreate params = PipelineCreate.builder()\n            .name("x")\n            .build();\n        Pipeline pipeline = client.pipelines().upsert(params);\n    }\n}',
       },
     },
   },
@@ -2473,6 +2473,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:sync create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().sync().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.sync.SyncCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().sync().create("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.sync.create',
         example:
@@ -2486,11 +2491,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/sync \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().sync().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.sync.SyncCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().sync().create("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -2518,6 +2518,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:sync cancel \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().sync().cancel',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.sync.SyncCancelParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().sync().cancel("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.sync.cancel',
         example:
@@ -2531,11 +2536,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/sync/cancel \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().sync().cancel',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.sync.SyncCancelParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().sync().cancel("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -2563,6 +2563,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:data-sources get-data-sources \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().dataSources().getDataSources',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.datasources.DataSourceGetDataSourcesParams;\nimport com.llamacloud_prod.api.models.pipelines.datasources.PipelineDataSource;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<PipelineDataSource> pipelineDataSources = client.pipelines().dataSources().getDataSources("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.data_sources.get_data_sources',
         example:
@@ -2576,11 +2581,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().dataSources().getDataSources',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.datasources.DataSourceGetDataSourcesParams;\nimport com.llamacloud_prod.api.models.pipelines.datasources.PipelineDataSource;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<PipelineDataSource> pipelineDataSources = client.pipelines().dataSources().getDataSources("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -2608,6 +2608,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:data-sources update-data-sources \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{data_source_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
       },
+      java: {
+        method: 'pipelines().dataSources().updateDataSources',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.datasources.DataSourceUpdateDataSourcesParams;\nimport com.llamacloud_prod.api.models.pipelines.datasources.PipelineDataSource;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceUpdateDataSourcesParams params = DataSourceUpdateDataSourcesParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(DataSourceUpdateDataSourcesParams.Body.builder()\n                .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n                .build())\n            .build();\n        List<PipelineDataSource> pipelineDataSources = client.pipelines().dataSources().updateDataSources(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.data_sources.update_data_sources',
         example:
@@ -2621,11 +2626,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'[\n          {\n            "data_source_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n            "sync_interval": 0\n          }\n        ]\'',
-      },
-      java: {
-        method: 'pipelines().dataSources().updateDataSources',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.datasources.DataSourceUpdateDataSourcesParams;\nimport com.llamacloud_prod.api.models.pipelines.datasources.PipelineDataSource;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceUpdateDataSourcesParams params = DataSourceUpdateDataSourcesParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(DataSourceUpdateDataSourcesParams.Body.builder()\n                .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n                .build())\n            .build();\n        List<PipelineDataSource> pipelineDataSources = client.pipelines().dataSources().updateDataSources(params);\n    }\n}',
       },
     },
   },
@@ -2653,6 +2653,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:data-sources update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().dataSources().update',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.datasources.DataSourceUpdateParams;\nimport com.llamacloud_prod.api.models.pipelines.datasources.PipelineDataSource;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceUpdateParams params = DataSourceUpdateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        PipelineDataSource pipelineDataSource = client.pipelines().dataSources().update(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.data_sources.update',
         example:
@@ -2666,11 +2671,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources/$DATA_SOURCE_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'pipelines().dataSources().update',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.datasources.DataSourceUpdateParams;\nimport com.llamacloud_prod.api.models.pipelines.datasources.PipelineDataSource;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceUpdateParams params = DataSourceUpdateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        PipelineDataSource pipelineDataSource = client.pipelines().dataSources().update(params);\n    }\n}',
       },
     },
   },
@@ -2698,6 +2698,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:data-sources get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().dataSources().getStatus',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.ManagedIngestionStatusResponse;\nimport com.llamacloud_prod.api.models.pipelines.datasources.DataSourceGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceGetStatusParams params = DataSourceGetStatusParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().dataSources().getStatus(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.data_sources.get_status',
         example:
@@ -2711,11 +2716,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources/$DATA_SOURCE_ID/status \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().dataSources().getStatus',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.ManagedIngestionStatusResponse;\nimport com.llamacloud_prod.api.models.pipelines.datasources.DataSourceGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceGetStatusParams params = DataSourceGetStatusParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().dataSources().getStatus(params);\n    }\n}',
       },
     },
   },
@@ -2743,6 +2743,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:data-sources sync \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().dataSources().sync',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.datasources.DataSourceSyncParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceSyncParams params = DataSourceSyncParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        Pipeline pipeline = client.pipelines().dataSources().sync(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.data_sources.sync',
         example:
@@ -2756,11 +2761,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/data-sources/$DATA_SOURCE_ID/sync \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().dataSources().sync',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.datasources.DataSourceSyncParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceSyncParams params = DataSourceSyncParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        Pipeline pipeline = client.pipelines().dataSources().sync(params);\n    }\n}',
       },
     },
   },
@@ -2787,6 +2787,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:images list-page-screenshots \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().images().listPageScreenshots',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageListPageScreenshotsParams;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageListPageScreenshotsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<ImageListPageScreenshotsResponse> response = client.pipelines().images().listPageScreenshots("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.images.list_page_screenshots',
         example:
@@ -2800,11 +2805,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/files/$ID/page_screenshots \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().images().listPageScreenshots',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageListPageScreenshotsParams;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageListPageScreenshotsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<ImageListPageScreenshotsResponse> response = client.pipelines().images().listPageScreenshots("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -2831,6 +2831,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:images get-page-screenshot \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --page-index 0",
       },
+      java: {
+        method: 'pipelines().images().getPageScreenshot',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageGetPageScreenshotParams;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageGetPageScreenshotResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ImageGetPageScreenshotParams params = ImageGetPageScreenshotParams.builder()\n            .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .pageIndex(0L)\n            .build();\n        ImageGetPageScreenshotResponse response = client.pipelines().images().getPageScreenshot(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.images.get_page_screenshot',
         example:
@@ -2844,11 +2849,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/files/$ID/page_screenshots/$PAGE_INDEX \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().images().getPageScreenshot',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageGetPageScreenshotParams;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageGetPageScreenshotResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ImageGetPageScreenshotParams params = ImageGetPageScreenshotParams.builder()\n            .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .pageIndex(0L)\n            .build();\n        ImageGetPageScreenshotResponse response = client.pipelines().images().getPageScreenshot(params);\n    }\n}',
       },
     },
   },
@@ -2881,6 +2881,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:images get-page-figure \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --page-index 0 \\\n  --figure-name figure_name",
       },
+      java: {
+        method: 'pipelines().images().getPageFigure',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageGetPageFigureParams;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageGetPageFigureResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ImageGetPageFigureParams params = ImageGetPageFigureParams.builder()\n            .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .pageIndex(0L)\n            .figureName("figure_name")\n            .build();\n        ImageGetPageFigureResponse response = client.pipelines().images().getPageFigure(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.images.get_page_figure',
         example:
@@ -2894,11 +2899,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/files/$ID/page-figures/$PAGE_INDEX/$FIGURE_NAME \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().images().getPageFigure',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageGetPageFigureParams;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageGetPageFigureResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ImageGetPageFigureParams params = ImageGetPageFigureParams.builder()\n            .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .pageIndex(0L)\n            .figureName("figure_name")\n            .build();\n        ImageGetPageFigureResponse response = client.pipelines().images().getPageFigure(params);\n    }\n}',
       },
     },
   },
@@ -2926,6 +2926,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:images list-page-figures \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().images().listPageFigures',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageListPageFiguresParams;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageListPageFiguresResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<ImageListPageFiguresResponse> response = client.pipelines().images().listPageFigures("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.images.list_page_figures',
         example:
@@ -2939,11 +2944,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/files/$ID/page-figures \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().images().listPageFigures',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageListPageFiguresParams;\nimport com.llamacloud_prod.api.models.pipelines.images.ImageListPageFiguresResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<ImageListPageFiguresResponse> response = client.pipelines().images().listPageFigures("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -2971,6 +2971,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:files get-status-counts \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().files().getStatusCounts',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.files.FileGetStatusCountsParams;\nimport com.llamacloud_prod.api.models.pipelines.files.FileGetStatusCountsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileGetStatusCountsResponse response = client.pipelines().files().getStatusCounts("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.files.get_status_counts',
         example:
@@ -2984,11 +2989,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files/status-counts \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().files().getStatusCounts',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.files.FileGetStatusCountsParams;\nimport com.llamacloud_prod.api.models.pipelines.files.FileGetStatusCountsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileGetStatusCountsResponse response = client.pipelines().files().getStatusCounts("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -3016,6 +3016,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:files get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().files().getStatus',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.ManagedIngestionStatusResponse;\nimport com.llamacloud_prod.api.models.pipelines.files.FileGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileGetStatusParams params = FileGetStatusParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().files().getStatus(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.files.get_status',
         example:
@@ -3029,11 +3034,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files/$FILE_ID/status \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().files().getStatus',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.ManagedIngestionStatusResponse;\nimport com.llamacloud_prod.api.models.pipelines.files.FileGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileGetStatusParams params = FileGetStatusParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().files().getStatus(params);\n    }\n}',
       },
     },
   },
@@ -3061,6 +3061,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:files create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{file_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
       },
+      java: {
+        method: 'pipelines().files().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.pipelines.files.PipelineFile;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileCreateParams params = FileCreateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(FileCreateParams.Body.builder()\n                .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n                .build())\n            .build();\n        List<PipelineFile> pipelineFiles = client.pipelines().files().create(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.files.create',
         example:
@@ -3074,11 +3079,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'[\n          {\n            "file_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n            "custom_metadata": {\n              "foo": {\n                "foo": "bar"\n              }\n            }\n          }\n        ]\'',
-      },
-      java: {
-        method: 'pipelines().files().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.pipelines.files.PipelineFile;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileCreateParams params = FileCreateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(FileCreateParams.Body.builder()\n                .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n                .build())\n            .build();\n        List<PipelineFile> pipelineFiles = client.pipelines().files().create(params);\n    }\n}',
       },
     },
   },
@@ -3106,6 +3106,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:files update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().files().update',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.files.FileUpdateParams;\nimport com.llamacloud_prod.api.models.pipelines.files.PipelineFile;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileUpdateParams params = FileUpdateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        PipelineFile pipelineFile = client.pipelines().files().update(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.files.update',
         example:
@@ -3119,11 +3124,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files/$FILE_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'pipelines().files().update',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.files.FileUpdateParams;\nimport com.llamacloud_prod.api.models.pipelines.files.PipelineFile;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileUpdateParams params = FileUpdateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        PipelineFile pipelineFile = client.pipelines().files().update(params);\n    }\n}',
       },
     },
   },
@@ -3149,6 +3149,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:files delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().files().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.files.FileDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileDeleteParams params = FileDeleteParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        client.pipelines().files().delete(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.files.delete',
         example:
@@ -3162,11 +3167,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files/$FILE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().files().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.files.FileDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileDeleteParams params = FileDeleteParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        client.pipelines().files().delete(params);\n    }\n}',
       },
     },
   },
@@ -3203,6 +3203,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:files list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().files().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.files.FileListPage;\nimport com.llamacloud_prod.api.models.pipelines.files.FileListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileListPage page = client.pipelines().files().list("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.files.list',
         example:
@@ -3216,11 +3221,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/files2 \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().files().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.files.FileListPage;\nimport com.llamacloud_prod.api.models.pipelines.files.FileListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileListPage page = client.pipelines().files().list("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -3247,6 +3247,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:metadata create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --upload-file 'Example data'",
       },
+      java: {
+        method: 'pipelines().metadata().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.metadata.MetadataCreateParams;\nimport com.llamacloud_prod.api.models.pipelines.metadata.MetadataCreateResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        MetadataCreateParams params = MetadataCreateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .uploadFile(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        MetadataCreateResponse metadata = client.pipelines().metadata().create(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.metadata.create',
         example:
@@ -3260,11 +3265,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/metadata \\\n    -X PUT \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -F 'upload_file=@/path/to/upload_file'",
-      },
-      java: {
-        method: 'pipelines().metadata().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.metadata.MetadataCreateParams;\nimport com.llamacloud_prod.api.models.pipelines.metadata.MetadataCreateResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        MetadataCreateParams params = MetadataCreateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .uploadFile(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        MetadataCreateResponse metadata = client.pipelines().metadata().create(params);\n    }\n}',
       },
     },
   },
@@ -3290,6 +3290,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:metadata delete-all \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().metadata().deleteAll',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.metadata.MetadataDeleteAllParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.pipelines().metadata().deleteAll("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.metadata.delete_all',
         example:
@@ -3303,11 +3308,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/metadata \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().metadata().deleteAll',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.metadata.MetadataDeleteAllParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.pipelines().metadata().deleteAll("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -3338,6 +3338,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:documents create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{metadata: {foo: bar}, text: text}'",
       },
+      java: {
+        method: 'pipelines().documents().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.pipelines.documents.CloudDocument;\nimport com.llamacloud_prod.api.models.pipelines.documents.CloudDocumentCreate;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentCreateParams params = DocumentCreateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(CloudDocumentCreate.builder()\n                .metadata(CloudDocumentCreate.Metadata.builder()\n                    .putAdditionalProperty("foo", JsonValue.from("bar"))\n                    .build())\n                .text("text")\n                .build())\n            .build();\n        List<CloudDocument> cloudDocuments = client.pipelines().documents().create(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.documents.create',
         example:
@@ -3351,11 +3356,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'[\n          {\n            "metadata": {\n              "foo": "bar"\n            },\n            "text": "text",\n            "id": "id",\n            "excluded_embed_metadata_keys": [\n              "string"\n            ],\n            "excluded_llm_metadata_keys": [\n              "string"\n            ],\n            "page_positions": [\n              0\n            ]\n          }\n        ]\'',
-      },
-      java: {
-        method: 'pipelines().documents().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.pipelines.documents.CloudDocument;\nimport com.llamacloud_prod.api.models.pipelines.documents.CloudDocumentCreate;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentCreateParams params = DocumentCreateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(CloudDocumentCreate.builder()\n                .metadata(CloudDocumentCreate.Metadata.builder()\n                    .putAdditionalProperty("foo", JsonValue.from("bar"))\n                    .build())\n                .text("text")\n                .build())\n            .build();\n        List<CloudDocument> cloudDocuments = client.pipelines().documents().create(params);\n    }\n}',
       },
     },
   },
@@ -3391,6 +3391,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:documents list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'pipelines().documents().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentListPage;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentListPage page = client.pipelines().documents().list("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'pipelines.documents.list',
         example:
@@ -3404,11 +3409,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/paginated \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().documents().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentListPage;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentListPage page = client.pipelines().documents().list("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -3436,6 +3436,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:documents get \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
+      java: {
+        method: 'pipelines().documents().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.documents.CloudDocument;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetParams params = DocumentGetParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        CloudDocument cloudDocument = client.pipelines().documents().get(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.documents.get',
         example:
@@ -3449,11 +3454,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/$DOCUMENT_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().documents().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.documents.CloudDocument;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetParams params = DocumentGetParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        CloudDocument cloudDocument = client.pipelines().documents().get(params);\n    }\n}',
       },
     },
   },
@@ -3479,6 +3479,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:documents delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
+      java: {
+        method: 'pipelines().documents().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentDeleteParams params = DocumentDeleteParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        client.pipelines().documents().delete(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.documents.delete',
         example:
@@ -3492,11 +3497,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/$DOCUMENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().documents().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentDeleteParams params = DocumentDeleteParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        client.pipelines().documents().delete(params);\n    }\n}',
       },
     },
   },
@@ -3524,6 +3524,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:documents get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
+      java: {
+        method: 'pipelines().documents().getStatus',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.ManagedIngestionStatusResponse;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetStatusParams params = DocumentGetStatusParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().documents().getStatus(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.documents.get_status',
         example:
@@ -3537,11 +3542,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/$DOCUMENT_ID/status \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().documents().getStatus',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.ManagedIngestionStatusResponse;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetStatusParams params = DocumentGetStatusParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().documents().getStatus(params);\n    }\n}',
       },
     },
   },
@@ -3568,6 +3568,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:documents sync \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
+      java: {
+        method: 'pipelines().documents().sync',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentSyncParams;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentSyncResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentSyncParams params = DocumentSyncParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        DocumentSyncResponse response = client.pipelines().documents().sync(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.documents.sync',
         example:
@@ -3581,11 +3586,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/$DOCUMENT_ID/sync \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().documents().sync',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentSyncParams;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentSyncResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentSyncParams params = DocumentSyncParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        DocumentSyncResponse response = client.pipelines().documents().sync(params);\n    }\n}',
       },
     },
   },
@@ -3613,6 +3613,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:documents get-chunks \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
+      java: {
+        method: 'pipelines().documents().getChunks',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentGetChunksParams;\nimport com.llamacloud_prod.api.models.pipelines.documents.TextNode;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetChunksParams params = DocumentGetChunksParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        List<TextNode> textNodes = client.pipelines().documents().getChunks(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.documents.get_chunks',
         example:
@@ -3626,11 +3631,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/$DOCUMENT_ID/chunks \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'pipelines().documents().getChunks',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentGetChunksParams;\nimport com.llamacloud_prod.api.models.pipelines.documents.TextNode;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetChunksParams params = DocumentGetChunksParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        List<TextNode> textNodes = client.pipelines().documents().getChunks(params);\n    }\n}',
       },
     },
   },
@@ -3661,6 +3661,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod pipelines:documents upsert \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{metadata: {foo: bar}, text: text}'",
       },
+      java: {
+        method: 'pipelines().documents().upsert',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.pipelines.documents.CloudDocument;\nimport com.llamacloud_prod.api.models.pipelines.documents.CloudDocumentCreate;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentUpsertParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentUpsertParams params = DocumentUpsertParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(CloudDocumentCreate.builder()\n                .metadata(CloudDocumentCreate.Metadata.builder()\n                    .putAdditionalProperty("foo", JsonValue.from("bar"))\n                    .build())\n                .text("text")\n                .build())\n            .build();\n        List<CloudDocument> cloudDocuments = client.pipelines().documents().upsert(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.documents.upsert',
         example:
@@ -3674,11 +3679,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'[\n          {\n            "metadata": {\n              "foo": "bar"\n            },\n            "text": "text",\n            "id": "id",\n            "excluded_embed_metadata_keys": [\n              "string"\n            ],\n            "excluded_llm_metadata_keys": [\n              "string"\n            ],\n            "page_positions": [\n              0\n            ]\n          }\n        ]\'',
-      },
-      java: {
-        method: 'pipelines().documents().upsert',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.pipelines.documents.CloudDocument;\nimport com.llamacloud_prod.api.models.pipelines.documents.CloudDocumentCreate;\nimport com.llamacloud_prod.api.models.pipelines.documents.DocumentUpsertParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentUpsertParams params = DocumentUpsertParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(CloudDocumentCreate.builder()\n                .metadata(CloudDocumentCreate.Metadata.builder()\n                    .putAdditionalProperty("foo", JsonValue.from("bar"))\n                    .build())\n                .text("text")\n                .build())\n            .build();\n        List<CloudDocument> cloudDocuments = client.pipelines().documents().upsert(params);\n    }\n}',
       },
     },
   },
@@ -3710,6 +3710,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'retrievers create',
         example: "llamacloud-prod retrievers create \\\n  --api-key 'My API Key' \\\n  --name x",
       },
+      java: {
+        method: 'retrievers().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.Retriever;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverCreate params = RetrieverCreate.builder()\n            .name("x")\n            .build();\n        Retriever retriever = client.retrievers().create(params);\n    }\n}',
+      },
       python: {
         method: 'retrievers.create',
         example:
@@ -3723,11 +3728,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x"\n        }\'',
-      },
-      java: {
-        method: 'retrievers().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.Retriever;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverCreate params = RetrieverCreate.builder()\n            .name("x")\n            .build();\n        Retriever retriever = client.retrievers().create(params);\n    }\n}',
       },
     },
   },
@@ -3759,6 +3759,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'retrievers upsert',
         example: "llamacloud-prod retrievers upsert \\\n  --api-key 'My API Key' \\\n  --name x",
       },
+      java: {
+        method: 'retrievers().upsert',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.Retriever;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverCreate params = RetrieverCreate.builder()\n            .name("x")\n            .build();\n        Retriever retriever = client.retrievers().upsert(params);\n    }\n}',
+      },
       python: {
         method: 'retrievers.upsert',
         example:
@@ -3772,11 +3777,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x"\n        }\'',
-      },
-      java: {
-        method: 'retrievers().upsert',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.Retriever;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverCreate params = RetrieverCreate.builder()\n            .name("x")\n            .build();\n        Retriever retriever = client.retrievers().upsert(params);\n    }\n}',
       },
     },
   },
@@ -3803,6 +3803,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'retrievers list',
         example: "llamacloud-prod retrievers list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'retrievers().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.Retriever;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<Retriever> retrievers = client.retrievers().list();\n    }\n}',
+      },
       python: {
         method: 'retrievers.list',
         example:
@@ -3816,11 +3821,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'retrievers().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.Retriever;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<Retriever> retrievers = client.retrievers().list();\n    }\n}',
       },
     },
   },
@@ -3848,6 +3848,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod retrievers get \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'retrievers().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.Retriever;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Retriever retriever = client.retrievers().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'retrievers.get',
         example:
@@ -3861,11 +3866,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/$RETRIEVER_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'retrievers().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.Retriever;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Retriever retriever = client.retrievers().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -3899,6 +3899,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod retrievers update \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --pipeline '{description: description, name: x, pipeline_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
       },
+      java: {
+        method: 'retrievers().update',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.Retriever;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverPipeline;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverUpdateParams params = RetrieverUpdateParams.builder()\n            .retrieverId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addPipeline(RetrieverPipeline.builder()\n                .description("description")\n                .name("x")\n                .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n                .build())\n            .build();\n        Retriever retriever = client.retrievers().update(params);\n    }\n}',
+      },
       python: {
         method: 'retrievers.update',
         example:
@@ -3912,11 +3917,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/$RETRIEVER_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "pipelines": [\n            {\n              "description": "description",\n              "name": "x",\n              "pipeline_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n            }\n          ]\n        }\'',
-      },
-      java: {
-        method: 'retrievers().update',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.Retriever;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverPipeline;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverUpdateParams params = RetrieverUpdateParams.builder()\n            .retrieverId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addPipeline(RetrieverPipeline.builder()\n                .description("description")\n                .name("x")\n                .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n                .build())\n            .build();\n        Retriever retriever = client.retrievers().update(params);\n    }\n}',
       },
     },
   },
@@ -3942,6 +3942,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod retrievers delete \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'retrievers().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.retrievers().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
       python: {
         method: 'retrievers.delete',
         example:
@@ -3955,11 +3960,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/$RETRIEVER_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'retrievers().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.retrievers().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
     },
   },
@@ -3994,6 +3994,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'retrievers search',
         example: "llamacloud-prod retrievers search \\\n  --api-key 'My API Key' \\\n  --query x",
       },
+      java: {
+        method: 'retrievers().search',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.CompositeRetrievalResult;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverSearchParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverSearchParams params = RetrieverSearchParams.builder()\n            .query("x")\n            .build();\n        CompositeRetrievalResult compositeRetrievalResult = client.retrievers().search(params);\n    }\n}',
+      },
       python: {
         method: 'retrievers.search',
         example:
@@ -4008,11 +4013,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "query": "x"\n        }\'',
       },
-      java: {
-        method: 'retrievers().search',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.CompositeRetrievalResult;\nimport com.llamacloud_prod.api.models.retrievers.RetrieverSearchParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverSearchParams params = RetrieverSearchParams.builder()\n            .query("x")\n            .build();\n        CompositeRetrievalResult compositeRetrievalResult = client.retrievers().search(params);\n    }\n}',
-      },
     },
   },
   {
@@ -4021,8 +4021,8 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'post',
     summary: 'Retrieve',
     description: 'Retrieve data using a Retriever.',
-    stainlessPath: '(resource) retrievers.query > (method) search',
-    qualified: 'client.retrievers.query.search',
+    stainlessPath: '(resource) retrievers.retriever > (method) search',
+    qualified: 'client.retrievers.retriever.search',
     params: [
       'retriever_id: string;',
       'query: string;',
@@ -4035,36 +4035,31 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       '{ image_nodes?: { node: object; score: number; class_name?: string; }[]; nodes?: { node: { id: string; end_char_idx: number; pipeline_id: string; retriever_id: string; retriever_pipeline_name: string; start_char_idx: number; text: string; metadata?: object; }; class_name?: string; score?: number; }[]; page_figure_nodes?: { node: object; score: number; class_name?: string; }[]; }',
     markdown:
-      "## search\n\n`client.retrievers.query.search(retriever_id: string, query: string, organization_id?: string, project_id?: string, mode?: 'routing' | 'full', rerank_config?: { top_n?: number; type?: 'system_default' | 'llm' | 'cohere' | 'bedrock' | 'score' | 'disabled'; }, rerank_top_n?: number): { image_nodes?: page_screenshot_node_with_score[]; nodes?: object[]; page_figure_nodes?: page_figure_node_with_score[]; }`\n\n**post** `/api/v1/retrievers/{retriever_id}/retrieve`\n\nRetrieve data using a Retriever.\n\n### Parameters\n\n- `retriever_id: string`\n\n- `query: string`\n  The query to retrieve against.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `mode?: 'routing' | 'full'`\n  The mode of composite retrieval.\n\n- `rerank_config?: { top_n?: number; type?: 'system_default' | 'llm' | 'cohere' | 'bedrock' | 'score' | 'disabled'; }`\n  The rerank configuration for composite retrieval.\n  - `top_n?: number`\n    The number of nodes to retrieve after reranking over retrieved nodes from all retrieval tools.\n  - `type?: 'system_default' | 'llm' | 'cohere' | 'bedrock' | 'score' | 'disabled'`\n    The type of reranker to use.\n\n- `rerank_top_n?: number`\n  (use rerank_config.top_n instead) The number of nodes to retrieve after reranking over retrieved nodes from all retrieval tools.\n\n### Returns\n\n- `{ image_nodes?: { node: object; score: number; class_name?: string; }[]; nodes?: { node: { id: string; end_char_idx: number; pipeline_id: string; retriever_id: string; retriever_pipeline_name: string; start_char_idx: number; text: string; metadata?: object; }; class_name?: string; score?: number; }[]; page_figure_nodes?: { node: object; score: number; class_name?: string; }[]; }`\n\n  - `image_nodes?: { node: { file_id: string; image_size: number; page_index: number; metadata?: object; }; score: number; class_name?: string; }[]`\n  - `nodes?: { node: { id: string; end_char_idx: number; pipeline_id: string; retriever_id: string; retriever_pipeline_name: string; start_char_idx: number; text: string; metadata?: object; }; class_name?: string; score?: number; }[]`\n  - `page_figure_nodes?: { node: { confidence: number; figure_name: string; figure_size: number; file_id: string; page_index: number; is_likely_noise?: boolean; metadata?: object; }; score: number; class_name?: string; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst compositeRetrievalResult = await client.retrievers.query.search('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { query: 'x' });\n\nconsole.log(compositeRetrievalResult);\n```",
+      "## search\n\n`client.retrievers.retriever.search(retriever_id: string, query: string, organization_id?: string, project_id?: string, mode?: 'routing' | 'full', rerank_config?: { top_n?: number; type?: 'system_default' | 'llm' | 'cohere' | 'bedrock' | 'score' | 'disabled'; }, rerank_top_n?: number): { image_nodes?: page_screenshot_node_with_score[]; nodes?: object[]; page_figure_nodes?: page_figure_node_with_score[]; }`\n\n**post** `/api/v1/retrievers/{retriever_id}/retrieve`\n\nRetrieve data using a Retriever.\n\n### Parameters\n\n- `retriever_id: string`\n\n- `query: string`\n  The query to retrieve against.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `mode?: 'routing' | 'full'`\n  The mode of composite retrieval.\n\n- `rerank_config?: { top_n?: number; type?: 'system_default' | 'llm' | 'cohere' | 'bedrock' | 'score' | 'disabled'; }`\n  The rerank configuration for composite retrieval.\n  - `top_n?: number`\n    The number of nodes to retrieve after reranking over retrieved nodes from all retrieval tools.\n  - `type?: 'system_default' | 'llm' | 'cohere' | 'bedrock' | 'score' | 'disabled'`\n    The type of reranker to use.\n\n- `rerank_top_n?: number`\n  (use rerank_config.top_n instead) The number of nodes to retrieve after reranking over retrieved nodes from all retrieval tools.\n\n### Returns\n\n- `{ image_nodes?: { node: object; score: number; class_name?: string; }[]; nodes?: { node: { id: string; end_char_idx: number; pipeline_id: string; retriever_id: string; retriever_pipeline_name: string; start_char_idx: number; text: string; metadata?: object; }; class_name?: string; score?: number; }[]; page_figure_nodes?: { node: object; score: number; class_name?: string; }[]; }`\n\n  - `image_nodes?: { node: { file_id: string; image_size: number; page_index: number; metadata?: object; }; score: number; class_name?: string; }[]`\n  - `nodes?: { node: { id: string; end_char_idx: number; pipeline_id: string; retriever_id: string; retriever_pipeline_name: string; start_char_idx: number; text: string; metadata?: object; }; class_name?: string; score?: number; }[]`\n  - `page_figure_nodes?: { node: { confidence: number; figure_name: string; figure_size: number; file_id: string; page_index: number; is_likely_noise?: boolean; metadata?: object; }; score: number; class_name?: string; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst compositeRetrievalResult = await client.retrievers.retriever.search('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { query: 'x' });\n\nconsole.log(compositeRetrievalResult);\n```",
     perLanguage: {
       go: {
-        method: 'client.Retrievers.Query.Search',
+        method: 'client.Retrievers.Retriever.Search',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcompositeRetrievalResult, err := client.Retrievers.Query.Search(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.RetrieverQuerySearchParams{\n\t\t\tQuery: "x",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", compositeRetrievalResult.ImageNodes)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloudprod.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcompositeRetrievalResult, err := client.Retrievers.Retriever.Search(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloudprod.RetrieverRetrieverSearchParams{\n\t\t\tQuery: "x",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", compositeRetrievalResult.ImageNodes)\n}\n',
       },
       cli: {
-        method: 'query search',
+        method: 'retriever search',
         example:
-          "llamacloud-prod retrievers:query search \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --query x",
+          "llamacloud-prod retrievers:retriever search \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --query x",
       },
       python: {
-        method: 'retrievers.query.search',
+        method: 'retrievers.retriever.search',
         example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncomposite_retrieval_result = client.retrievers.query.search(\n    retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    query="x",\n)\nprint(composite_retrieval_result.image_nodes)',
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\ncomposite_retrieval_result = client.retrievers.retriever.search(\n    retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    query="x",\n)\nprint(composite_retrieval_result.image_nodes)',
       },
       typescript: {
-        method: 'client.retrievers.query.search',
+        method: 'client.retrievers.retriever.search',
         example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst compositeRetrievalResult = await client.retrievers.query.search(\n  '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',\n  { query: 'x' },\n);\n\nconsole.log(compositeRetrievalResult.image_nodes);",
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst compositeRetrievalResult = await client.retrievers.retriever.search(\n  '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',\n  { query: 'x' },\n);\n\nconsole.log(compositeRetrievalResult.image_nodes);",
       },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrievers/$RETRIEVER_ID/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "query": "x"\n        }\'',
-      },
-      java: {
-        method: 'retrievers().query().search',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.CompositeRetrievalResult;\nimport com.llamacloud_prod.api.models.retrievers.query.QuerySearchParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        QuerySearchParams params = QuerySearchParams.builder()\n            .retrieverId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .query("x")\n            .build();\n        CompositeRetrievalResult compositeRetrievalResult = client.retrievers().query().search(params);\n    }\n}',
       },
     },
   },
@@ -4091,6 +4086,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'indexes get',
         example: "llamacloud-prod beta:indexes get \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
       },
+      java: {
+        method: 'beta().indexes().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexGetParams;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexGetResponse index = client.beta().indexes().get("index_id");\n    }\n}',
+      },
       python: {
         method: 'beta.indexes.get',
         example:
@@ -4104,11 +4104,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/indexes/$INDEX_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().indexes().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexGetParams;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexGetResponse index = client.beta().indexes().get("index_id");\n    }\n}',
       },
     },
   },
@@ -4133,6 +4128,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'indexes delete',
         example: "llamacloud-prod beta:indexes delete \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
       },
+      java: {
+        method: 'beta().indexes().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.beta().indexes().delete("index_id");\n    }\n}',
+      },
       python: {
         method: 'beta.indexes.delete',
         example:
@@ -4146,11 +4146,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/indexes/$INDEX_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().indexes().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.beta().indexes().delete("index_id");\n    }\n}',
       },
     },
   },
@@ -4188,6 +4183,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:indexes create \\\n  --api-key 'My API Key' \\\n  --source-directory-id dir-abc123",
       },
+      java: {
+        method: 'beta().indexes().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexCreateParams;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexCreateParams params = IndexCreateParams.builder()\n            .sourceDirectoryId("dir-abc123")\n            .build();\n        IndexCreateResponse index = client.beta().indexes().create(params);\n    }\n}',
+      },
       python: {
         method: 'beta.indexes.create',
         example:
@@ -4201,11 +4201,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/indexes \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "source_directory_id": "dir-abc123",\n          "products": [\n            {\n              "product_config_id": "cfg-abc123",\n              "product_type": "parse"\n            }\n          ],\n          "store_attachments": [\n            "screenshots"\n          ],\n          "sync_frequency": "manual",\n          "vector_target": "DEFAULT"\n        }\'',
-      },
-      java: {
-        method: 'beta().indexes().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexCreateParams;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexCreateParams params = IndexCreateParams.builder()\n            .sourceDirectoryId("dir-abc123")\n            .build();\n        IndexCreateResponse index = client.beta().indexes().create(params);\n    }\n}',
       },
     },
   },
@@ -4232,6 +4227,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'indexes sync',
         example: "llamacloud-prod beta:indexes sync \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
       },
+      java: {
+        method: 'beta().indexes().sync',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexSyncParams;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexSyncResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexSyncResponse response = client.beta().indexes().sync("index_id");\n    }\n}',
+      },
       python: {
         method: 'beta.indexes.sync',
         example:
@@ -4245,11 +4245,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/indexes/$INDEX_ID/sync \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().indexes().sync',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexSyncParams;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexSyncResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexSyncResponse response = client.beta().indexes().sync("index_id");\n    }\n}',
       },
     },
   },
@@ -4282,6 +4277,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'indexes list',
         example: "llamacloud-prod beta:indexes list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'beta().indexes().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexListPage;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexListPage page = client.beta().indexes().list();\n    }\n}',
+      },
       python: {
         method: 'beta.indexes.list',
         example:
@@ -4295,11 +4295,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/indexes \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().indexes().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexListPage;\nimport com.llamacloud_prod.api.models.beta.indexes.IndexListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexListPage page = client.beta().indexes().list();\n    }\n}',
       },
     },
   },
@@ -4341,6 +4336,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:retrieval retrieve \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123 \\\n  --query 'What are the key findings?'",
       },
+      java: {
+        method: 'beta().retrieval().retrieve',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalRetrieveParams;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalRetrieveParams params = RetrievalRetrieveParams.builder()\n            .indexId("idx-abc123")\n            .query("What are the key findings?")\n            .build();\n        RetrievalRetrieveResponse retrieval = client.beta().retrieval().retrieve(params);\n    }\n}',
+      },
       python: {
         method: 'beta.retrieval.retrieve',
         example:
@@ -4354,11 +4354,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "index_id": "idx-abc123",\n          "query": "What are the key findings?",\n          "top_k": 10\n        }\'',
-      },
-      java: {
-        method: 'beta().retrieval().retrieve',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalRetrieveParams;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalRetrieveParams params = RetrievalRetrieveParams.builder()\n            .indexId("idx-abc123")\n            .query("What are the key findings?")\n            .build();\n        RetrievalRetrieveResponse retrieval = client.beta().retrieval().retrieve(params);\n    }\n}',
       },
     },
   },
@@ -4393,6 +4388,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:retrieval find \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123",
       },
+      java: {
+        method: 'beta().retrieval().find',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalFindPage;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalFindParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalFindParams params = RetrievalFindParams.builder()\n            .indexId("idx-abc123")\n            .build();\n        RetrievalFindPage page = client.beta().retrieval().find(params);\n    }\n}',
+      },
       python: {
         method: 'beta.retrieval.find',
         example:
@@ -4406,11 +4406,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/files/find \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "index_id": "idx-abc123"\n        }\'',
-      },
-      java: {
-        method: 'beta().retrieval().find',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalFindPage;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalFindParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalFindParams params = RetrievalFindParams.builder()\n            .indexId("idx-abc123")\n            .build();\n        RetrievalFindPage page = client.beta().retrieval().find(params);\n    }\n}',
       },
     },
   },
@@ -4446,6 +4441,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:retrieval grep \\\n  --api-key 'My API Key' \\\n  --file-id file_id \\\n  --index-id idx-abc123 \\\n  --pattern 'revenue|profit'",
       },
+      java: {
+        method: 'beta().retrieval().grep',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalGrepPage;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalGrepParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalGrepParams params = RetrievalGrepParams.builder()\n            .fileId("file_id")\n            .indexId("idx-abc123")\n            .pattern("revenue|profit")\n            .build();\n        RetrievalGrepPage page = client.beta().retrieval().grep(params);\n    }\n}',
+      },
       python: {
         method: 'beta.retrieval.grep',
         example:
@@ -4459,11 +4459,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/files/grep \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "file_id",\n          "index_id": "idx-abc123",\n          "pattern": "revenue|profit"\n        }\'',
-      },
-      java: {
-        method: 'beta().retrieval().grep',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalGrepPage;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalGrepParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalGrepParams params = RetrievalGrepParams.builder()\n            .fileId("file_id")\n            .indexId("idx-abc123")\n            .pattern("revenue|profit")\n            .build();\n        RetrievalGrepPage page = client.beta().retrieval().grep(params);\n    }\n}',
       },
     },
   },
@@ -4497,6 +4492,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:retrieval read \\\n  --api-key 'My API Key' \\\n  --file-id file_id \\\n  --index-id idx-abc123",
       },
+      java: {
+        method: 'beta().retrieval().read',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalReadParams;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalReadResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalReadParams params = RetrievalReadParams.builder()\n            .fileId("file_id")\n            .indexId("idx-abc123")\n            .build();\n        RetrievalReadResponse response = client.beta().retrieval().read(params);\n    }\n}',
+      },
       python: {
         method: 'beta.retrieval.read',
         example:
@@ -4510,11 +4510,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/retrieval/files/read \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "file_id",\n          "index_id": "idx-abc123"\n        }\'',
-      },
-      java: {
-        method: 'beta().retrieval().read',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalReadParams;\nimport com.llamacloud_prod.api.models.beta.retrieval.RetrievalReadResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalReadParams params = RetrievalReadParams.builder()\n            .fileId("file_id")\n            .indexId("idx-abc123")\n            .build();\n        RetrievalReadResponse response = client.beta().retrieval().read(params);\n    }\n}',
       },
     },
   },
@@ -4546,6 +4541,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'chat list',
         example: "llamacloud-prod beta:chat list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'beta().chat().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatListPage;\nimport com.llamacloud_prod.api.models.beta.chat.ChatListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatListPage page = client.beta().chat().list();\n    }\n}',
+      },
       python: {
         method: 'beta.chat.list',
         example:
@@ -4559,11 +4559,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/chat \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().chat().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatListPage;\nimport com.llamacloud_prod.api.models.beta.chat.ChatListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatListPage page = client.beta().chat().list();\n    }\n}',
       },
     },
   },
@@ -4590,6 +4585,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'chat create',
         example: "llamacloud-prod beta:chat create \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'beta().chat().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatCreateParams;\nimport com.llamacloud_prod.api.models.beta.chat.ChatCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatCreateResponse chat = client.beta().chat().create();\n    }\n}',
+      },
       python: {
         method: 'beta.chat.create',
         example:
@@ -4603,11 +4603,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/chat \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().chat().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatCreateParams;\nimport com.llamacloud_prod.api.models.beta.chat.ChatCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatCreateResponse chat = client.beta().chat().create();\n    }\n}',
       },
     },
   },
@@ -4635,6 +4630,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:chat retrieve \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
       },
+      java: {
+        method: 'beta().chat().retrieve',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatRetrieveParams;\nimport com.llamacloud_prod.api.models.beta.chat.ChatRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatRetrieveResponse chat = client.beta().chat().retrieve("session_id");\n    }\n}',
+      },
       python: {
         method: 'beta.chat.retrieve',
         example:
@@ -4648,11 +4648,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().chat().retrieve',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatRetrieveParams;\nimport com.llamacloud_prod.api.models.beta.chat.ChatRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatRetrieveResponse chat = client.beta().chat().retrieve("session_id");\n    }\n}',
       },
     },
   },
@@ -4678,6 +4673,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:chat delete \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
       },
+      java: {
+        method: 'beta().chat().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.beta().chat().delete("session_id");\n    }\n}',
+      },
       python: {
         method: 'beta.chat.delete',
         example:
@@ -4691,11 +4691,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().chat().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.beta().chat().delete("session_id");\n    }\n}',
       },
     },
   },
@@ -4723,6 +4718,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:chat get-summary \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
       },
+      java: {
+        method: 'beta().chat().getSummary',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatGetSummaryParams;\nimport com.llamacloud_prod.api.models.beta.chat.ChatGetSummaryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatGetSummaryResponse response = client.beta().chat().getSummary("session_id");\n    }\n}',
+      },
       python: {
         method: 'beta.chat.get_summary',
         example:
@@ -4736,11 +4736,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID/summary \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().chat().getSummary',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatGetSummaryParams;\nimport com.llamacloud_prod.api.models.beta.chat.ChatGetSummaryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatGetSummaryResponse response = client.beta().chat().getSummary("session_id");\n    }\n}',
       },
     },
   },
@@ -4773,6 +4768,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:chat stream \\\n  --api-key 'My API Key' \\\n  --session-id session_id \\\n  --index-id idx-abc123 \\\n  --index-id idx-def456 \\\n  --prompt 'What were the main findings in Q3?'",
       },
+      java: {
+        method: 'beta().chat().stream',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatStreamParams;\nimport com.llamacloud_prod.api.models.beta.chat.ChatStreamResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatStreamParams params = ChatStreamParams.builder()\n            .sessionId("session_id")\n            .addIndexId("idx-abc123")\n            .addIndexId("idx-def456")\n            .prompt("What were the main findings in Q3?")\n            .build();\n        ChatStreamResponse response = client.beta().chat().stream(params);\n    }\n}',
+      },
       python: {
         method: 'beta.chat.stream',
         example:
@@ -4786,11 +4786,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/chat/$SESSION_ID/messages/stream \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "index_ids": [\n            "idx-abc123",\n            "idx-def456"\n          ],\n          "prompt": "What were the main findings in Q3?"\n        }\'',
-      },
-      java: {
-        method: 'beta().chat().stream',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.chat.ChatStreamParams;\nimport com.llamacloud_prod.api.models.beta.chat.ChatStreamResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatStreamParams params = ChatStreamParams.builder()\n            .sessionId("session_id")\n            .addIndexId("idx-abc123")\n            .addIndexId("idx-def456")\n            .prompt("What were the main findings in Q3?")\n            .build();\n        ChatStreamResponse response = client.beta().chat().stream(params);\n    }\n}',
       },
     },
   },
@@ -4817,6 +4812,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'agent_data get',
         example: "llamacloud-prod beta:agent-data get \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
+      java: {
+        method: 'beta().agentData().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentData;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentData agentData = client.beta().agentData().get("item_id");\n    }\n}',
+      },
       python: {
         method: 'beta.agent_data.get',
         example:
@@ -4830,11 +4830,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data/$ITEM_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().agentData().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentData;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentData agentData = client.beta().agentData().get("item_id");\n    }\n}',
       },
     },
   },
@@ -4862,6 +4857,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:agent-data update \\\n  --api-key 'My API Key' \\\n  --item-id item_id \\\n  --data '{foo: bar}'",
       },
+      java: {
+        method: 'beta().agentData().update',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentData;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataUpdateParams params = AgentDataUpdateParams.builder()\n            .itemId("item_id")\n            .data(AgentDataUpdateParams.Data.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .build();\n        AgentData agentData = client.beta().agentData().update(params);\n    }\n}',
+      },
       python: {
         method: 'beta.agent_data.update',
         example:
@@ -4875,11 +4875,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data/$ITEM_ID \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "data": {\n            "foo": "bar"\n          }\n        }\'',
-      },
-      java: {
-        method: 'beta().agentData().update',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentData;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataUpdateParams params = AgentDataUpdateParams.builder()\n            .itemId("item_id")\n            .data(AgentDataUpdateParams.Data.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .build();\n        AgentData agentData = client.beta().agentData().update(params);\n    }\n}',
       },
     },
   },
@@ -4906,6 +4901,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:agent-data delete \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
+      java: {
+        method: 'beta().agentData().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataDeleteParams;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataDeleteResponse agentData = client.beta().agentData().delete("item_id");\n    }\n}',
+      },
       python: {
         method: 'beta.agent_data.delete',
         example:
@@ -4919,11 +4919,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data/$ITEM_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().agentData().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataDeleteParams;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataDeleteResponse agentData = client.beta().agentData().delete("item_id");\n    }\n}',
       },
     },
   },
@@ -4957,6 +4952,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:agent-data create \\\n  --api-key 'My API Key' \\\n  --data '{foo: bar}' \\\n  --deployment-name deployment_name",
       },
+      java: {
+        method: 'beta().agentData().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentData;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataCreateParams params = AgentDataCreateParams.builder()\n            .data(AgentDataCreateParams.Data.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .deploymentName("deployment_name")\n            .build();\n        AgentData agentData = client.beta().agentData().create(params);\n    }\n}',
+      },
       python: {
         method: 'beta.agent_data.create',
         example:
@@ -4970,11 +4970,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "data": {\n            "foo": "bar"\n          },\n          "deployment_name": "deployment_name"\n        }\'',
-      },
-      java: {
-        method: 'beta().agentData().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentData;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataCreateParams params = AgentDataCreateParams.builder()\n            .data(AgentDataCreateParams.Data.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .deploymentName("deployment_name")\n            .build();\n        AgentData agentData = client.beta().agentData().create(params);\n    }\n}',
       },
     },
   },
@@ -5013,6 +5008,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:agent-data search \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
       },
+      java: {
+        method: 'beta().agentData().search',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataSearchPage;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataSearchParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataSearchParams params = AgentDataSearchParams.builder()\n            .deploymentName("deployment_name")\n            .build();\n        AgentDataSearchPage page = client.beta().agentData().search(params);\n    }\n}',
+      },
       python: {
         method: 'beta.agent_data.search',
         example:
@@ -5026,11 +5026,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data/:search \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "deployment_name": "deployment_name"\n        }\'',
-      },
-      java: {
-        method: 'beta().agentData().search',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataSearchPage;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataSearchParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataSearchParams params = AgentDataSearchParams.builder()\n            .deploymentName("deployment_name")\n            .build();\n        AgentDataSearchPage page = client.beta().agentData().search(params);\n    }\n}',
       },
     },
   },
@@ -5070,6 +5065,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:agent-data aggregate \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
       },
+      java: {
+        method: 'beta().agentData().aggregate',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataAggregatePage;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataAggregateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataAggregateParams params = AgentDataAggregateParams.builder()\n            .deploymentName("deployment_name")\n            .build();\n        AgentDataAggregatePage page = client.beta().agentData().aggregate(params);\n    }\n}',
+      },
       python: {
         method: 'beta.agent_data.aggregate',
         example:
@@ -5083,11 +5083,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data/:aggregate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "deployment_name": "deployment_name"\n        }\'',
-      },
-      java: {
-        method: 'beta().agentData().aggregate',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataAggregatePage;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataAggregateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataAggregateParams params = AgentDataAggregateParams.builder()\n            .deploymentName("deployment_name")\n            .build();\n        AgentDataAggregatePage page = client.beta().agentData().aggregate(params);\n    }\n}',
       },
     },
   },
@@ -5120,6 +5115,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:agent-data delete-by-query \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
       },
+      java: {
+        method: 'beta().agentData().deleteByQuery',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataDeleteByQueryParams;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataDeleteByQueryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataDeleteByQueryParams params = AgentDataDeleteByQueryParams.builder()\n            .deploymentName("deployment_name")\n            .build();\n        AgentDataDeleteByQueryResponse response = client.beta().agentData().deleteByQuery(params);\n    }\n}',
+      },
       python: {
         method: 'beta.agent_data.delete_by_query',
         example:
@@ -5133,11 +5133,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/agent-data/:delete \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "deployment_name": "deployment_name"\n        }\'',
-      },
-      java: {
-        method: 'beta().agentData().deleteByQuery',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataDeleteByQueryParams;\nimport com.llamacloud_prod.api.models.beta.agentdata.AgentDataDeleteByQueryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataDeleteByQueryParams params = AgentDataDeleteByQueryParams.builder()\n            .deploymentName("deployment_name")\n            .build();\n        AgentDataDeleteByQueryResponse response = client.beta().agentData().deleteByQuery(params);\n    }\n}',
       },
     },
   },
@@ -5174,6 +5169,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:sheets create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
+      java: {
+        method: 'beta().sheets().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetCreateParams;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetsJob;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetCreateParams params = SheetCreateParams.builder()\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        SheetsJob sheetsJob = client.beta().sheets().create(params);\n    }\n}',
+      },
       python: {
         method: 'beta.sheets.create',
         example:
@@ -5187,11 +5187,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/sheets/jobs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n          "configuration_id": "cfg-11111111-2222-3333-4444-555555555555"\n        }\'',
-      },
-      java: {
-        method: 'beta().sheets().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetCreateParams;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetsJob;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetCreateParams params = SheetCreateParams.builder()\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        SheetsJob sheetsJob = client.beta().sheets().create(params);\n    }\n}',
       },
     },
   },
@@ -5229,6 +5224,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'sheets list',
         example: "llamacloud-prod beta:sheets list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'beta().sheets().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetListPage;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetListPage page = client.beta().sheets().list();\n    }\n}',
+      },
       python: {
         method: 'beta.sheets.list',
         example:
@@ -5242,11 +5242,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/sheets/jobs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().sheets().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetListPage;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetListPage page = client.beta().sheets().list();\n    }\n}',
       },
     },
   },
@@ -5281,6 +5276,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:sheets get \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
       },
+      java: {
+        method: 'beta().sheets().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetGetParams;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetsJob;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetsJob sheetsJob = client.beta().sheets().get("spreadsheet_job_id");\n    }\n}',
+      },
       python: {
         method: 'beta.sheets.get',
         example:
@@ -5294,11 +5294,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/sheets/jobs/$SPREADSHEET_JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().sheets().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetGetParams;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetsJob;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetsJob sheetsJob = client.beta().sheets().get("spreadsheet_job_id");\n    }\n}',
       },
     },
   },
@@ -5333,6 +5328,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:sheets get-result-table \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id \\\n  --region-id region_id \\\n  --region-type table",
       },
+      java: {
+        method: 'beta().sheets().getResultTable',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetGetResultTableParams;\nimport com.llamacloud_prod.api.models.files.PresignedUrl;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetGetResultTableParams params = SheetGetResultTableParams.builder()\n            .spreadsheetJobId("spreadsheet_job_id")\n            .regionId("region_id")\n            .regionType(SheetGetResultTableParams.RegionType.TABLE)\n            .build();\n        PresignedUrl presignedUrl = client.beta().sheets().getResultTable(params);\n    }\n}',
+      },
       python: {
         method: 'beta.sheets.get_result_table',
         example:
@@ -5346,11 +5346,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/sheets/jobs/$SPREADSHEET_JOB_ID/regions/$REGION_ID/result/$REGION_TYPE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().sheets().getResultTable',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetGetResultTableParams;\nimport com.llamacloud_prod.api.models.files.PresignedUrl;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetGetResultTableParams params = SheetGetResultTableParams.builder()\n            .spreadsheetJobId("spreadsheet_job_id")\n            .regionId("region_id")\n            .regionType(SheetGetResultTableParams.RegionType.TABLE)\n            .build();\n        PresignedUrl presignedUrl = client.beta().sheets().getResultTable(params);\n    }\n}',
       },
     },
   },
@@ -5378,6 +5373,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:sheets delete-job \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
       },
+      java: {
+        method: 'beta().sheets().deleteJob',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetDeleteJobParams;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetDeleteJobResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetDeleteJobResponse response = client.beta().sheets().deleteJob("spreadsheet_job_id");\n    }\n}',
+      },
       python: {
         method: 'beta.sheets.delete_job',
         example:
@@ -5391,11 +5391,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/sheets/jobs/$SPREADSHEET_JOB_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().sheets().deleteJob',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetDeleteJobParams;\nimport com.llamacloud_prod.api.models.beta.sheets.SheetDeleteJobResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetDeleteJobResponse response = client.beta().sheets().deleteJob("spreadsheet_job_id");\n    }\n}',
       },
     },
   },
@@ -5430,6 +5425,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'directories create',
         example: "llamacloud-prod beta:directories create \\\n  --api-key 'My API Key' \\\n  --name x",
       },
+      java: {
+        method: 'beta().directories().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryCreateParams;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryCreateParams params = DirectoryCreateParams.builder()\n            .name("x")\n            .build();\n        DirectoryCreateResponse directory = client.beta().directories().create(params);\n    }\n}',
+      },
       python: {
         method: 'beta.directories.create',
         example:
@@ -5443,11 +5443,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x",\n          "expires_at": "2026-05-10T00:00:00Z",\n          "type": "user"\n        }\'',
-      },
-      java: {
-        method: 'beta().directories().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryCreateParams;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryCreateParams params = DirectoryCreateParams.builder()\n            .name("x")\n            .build();\n        DirectoryCreateResponse directory = client.beta().directories().create(params);\n    }\n}',
       },
     },
   },
@@ -5482,6 +5477,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'directories list',
         example: "llamacloud-prod beta:directories list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'beta().directories().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryListPage;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryListPage page = client.beta().directories().list();\n    }\n}',
+      },
       python: {
         method: 'beta.directories.list',
         example:
@@ -5495,11 +5495,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().directories().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryListPage;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryListPage page = client.beta().directories().list();\n    }\n}',
       },
     },
   },
@@ -5527,6 +5522,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:directories get \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
+      java: {
+        method: 'beta().directories().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryGetParams;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryGetResponse directory = client.beta().directories().get("directory_id");\n    }\n}',
+      },
       python: {
         method: 'beta.directories.get',
         example:
@@ -5540,11 +5540,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().directories().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryGetParams;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryGetResponse directory = client.beta().directories().get("directory_id");\n    }\n}',
       },
     },
   },
@@ -5578,6 +5573,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:directories update \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
+      java: {
+        method: 'beta().directories().update',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryUpdateParams;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryUpdateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryUpdateResponse directory = client.beta().directories().update("directory_id");\n    }\n}',
+      },
       python: {
         method: 'beta.directories.update',
         example:
@@ -5591,11 +5591,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'beta().directories().update',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryUpdateParams;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryUpdateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryUpdateResponse directory = client.beta().directories().update("directory_id");\n    }\n}',
       },
     },
   },
@@ -5621,6 +5616,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:directories delete \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
+      java: {
+        method: 'beta().directories().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.beta().directories().delete("directory_id");\n    }\n}',
+      },
       python: {
         method: 'beta.directories.delete',
         example:
@@ -5634,11 +5634,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().directories().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.DirectoryDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.beta().directories().delete("directory_id");\n    }\n}',
       },
     },
   },
@@ -5675,6 +5670,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:directories:files add \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --file-id file_id",
       },
+      java: {
+        method: 'beta().directories().files().add',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileAddParams;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileAddResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileAddParams params = FileAddParams.builder()\n            .directoryId("directory_id")\n            .fileId("file_id")\n            .build();\n        FileAddResponse response = client.beta().directories().files().add(params);\n    }\n}',
+      },
       python: {
         method: 'beta.directories.files.add',
         example:
@@ -5688,11 +5688,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_id": "file_id"\n        }\'',
-      },
-      java: {
-        method: 'beta().directories().files().add',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileAddParams;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileAddResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileAddParams params = FileAddParams.builder()\n            .directoryId("directory_id")\n            .fileId("file_id")\n            .build();\n        FileAddResponse response = client.beta().directories().files().add(params);\n    }\n}',
       },
     },
   },
@@ -5734,6 +5729,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:directories:files list \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
+      java: {
+        method: 'beta().directories().files().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileListPage;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileListPage page = client.beta().directories().files().list("directory_id");\n    }\n}',
+      },
       python: {
         method: 'beta.directories.files.list',
         example:
@@ -5747,11 +5747,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().directories().files().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileListPage;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileListPage page = client.beta().directories().files().list("directory_id");\n    }\n}',
       },
     },
   },
@@ -5786,6 +5781,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:directories:files get \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
       },
+      java: {
+        method: 'beta().directories().files().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileGetParams;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileGetParams params = FileGetParams.builder()\n            .directoryId("directory_id")\n            .directoryFileId("directory_file_id")\n            .build();\n        FileGetResponse file = client.beta().directories().files().get(params);\n    }\n}',
+      },
       python: {
         method: 'beta.directories.files.get',
         example:
@@ -5799,11 +5799,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files/$DIRECTORY_FILE_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().directories().files().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileGetParams;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileGetParams params = FileGetParams.builder()\n            .directoryId("directory_id")\n            .directoryFileId("directory_file_id")\n            .build();\n        FileGetResponse file = client.beta().directories().files().get(params);\n    }\n}',
       },
     },
   },
@@ -5841,6 +5836,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:directories:files update \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
       },
+      java: {
+        method: 'beta().directories().files().update',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileUpdateParams;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileUpdateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileUpdateParams params = FileUpdateParams.builder()\n            .directoryId("directory_id")\n            .directoryFileId("directory_file_id")\n            .build();\n        FileUpdateResponse file = client.beta().directories().files().update(params);\n    }\n}',
+      },
       python: {
         method: 'beta.directories.files.update',
         example:
@@ -5854,11 +5854,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files/$DIRECTORY_FILE_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'beta().directories().files().update',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileUpdateParams;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileUpdateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileUpdateParams params = FileUpdateParams.builder()\n            .directoryId("directory_id")\n            .directoryFileId("directory_file_id")\n            .build();\n        FileUpdateResponse file = client.beta().directories().files().update(params);\n    }\n}',
       },
     },
   },
@@ -5890,6 +5885,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:directories:files delete \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
       },
+      java: {
+        method: 'beta().directories().files().delete',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileDeleteParams params = FileDeleteParams.builder()\n            .directoryId("directory_id")\n            .directoryFileId("directory_file_id")\n            .build();\n        client.beta().directories().files().delete(params);\n    }\n}',
+      },
       python: {
         method: 'beta.directories.files.delete',
         example:
@@ -5903,11 +5903,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files/$DIRECTORY_FILE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().directories().files().delete',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileDeleteParams params = FileDeleteParams.builder()\n            .directoryId("directory_id")\n            .directoryFileId("directory_file_id")\n            .build();\n        client.beta().directories().files().delete(params);\n    }\n}',
       },
     },
   },
@@ -5945,6 +5940,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:directories:files upload \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --upload-file 'Example data'",
       },
+      java: {
+        method: 'beta().directories().files().upload',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileUploadParams;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileUploadResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileUploadParams params = FileUploadParams.builder()\n            .directoryId("directory_id")\n            .uploadFile(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        FileUploadResponse response = client.beta().directories().files().upload(params);\n    }\n}',
+      },
       python: {
         method: 'beta.directories.files.upload',
         example:
@@ -5958,11 +5958,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories/$DIRECTORY_ID/files/upload \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -F \'upload_file=@/path/to/upload_file\' \\\n    -F metadata=\'{"source": "web", "priority": 1}\'',
-      },
-      java: {
-        method: 'beta().directories().files().upload',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileUploadParams;\nimport com.llamacloud_prod.api.models.beta.directories.files.FileUploadResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileUploadParams params = FileUploadParams.builder()\n            .directoryId("directory_id")\n            .uploadFile(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        FileUploadResponse response = client.beta().directories().files().upload(params);\n    }\n}',
       },
     },
   },
@@ -5999,6 +5994,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'batch create',
         example: "llamacloud-prod beta:batch create \\\n  --api-key 'My API Key' \\\n  --job-config '{}'",
       },
+      java: {
+        method: 'beta().batch().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.BatchCreateParams;\nimport com.llamacloud_prod.api.models.beta.batch.BatchCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCreateParams params = BatchCreateParams.builder()\n            .jobConfig(BatchCreateParams.JobConfig.BatchParseJobRecordCreate.builder().build())\n            .build();\n        BatchCreateResponse batch = client.beta().batch().create(params);\n    }\n}',
+      },
       python: {
         method: 'beta.batch.create',
         example:
@@ -6012,11 +6012,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "job_config": {},\n          "directory_id": "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "item_ids": [\n            "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n            "dfl-11111111-2222-3333-4444-555555555555"\n          ]\n        }\'',
-      },
-      java: {
-        method: 'beta().batch().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.BatchCreateParams;\nimport com.llamacloud_prod.api.models.beta.batch.BatchCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCreateParams params = BatchCreateParams.builder()\n            .jobConfig(BatchCreateParams.JobConfig.BatchParseJobRecordCreate.builder().build())\n            .build();\n        BatchCreateResponse batch = client.beta().batch().create(params);\n    }\n}',
       },
     },
   },
@@ -6052,6 +6047,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'batch list',
         example: "llamacloud-prod beta:batch list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'beta().batch().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.BatchListPage;\nimport com.llamacloud_prod.api.models.beta.batch.BatchListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchListPage page = client.beta().batch().list();\n    }\n}',
+      },
       python: {
         method: 'beta.batch.list',
         example:
@@ -6065,11 +6065,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().batch().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.BatchListPage;\nimport com.llamacloud_prod.api.models.beta.batch.BatchListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchListPage page = client.beta().batch().list();\n    }\n}',
       },
     },
   },
@@ -6097,6 +6092,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'batch get_status',
         example: "llamacloud-prod beta:batch get-status \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
+      java: {
+        method: 'beta().batch().getStatus',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.BatchGetStatusParams;\nimport com.llamacloud_prod.api.models.beta.batch.BatchGetStatusResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchGetStatusResponse response = client.beta().batch().getStatus("job_id");\n    }\n}',
+      },
       python: {
         method: 'beta.batch.get_status',
         example:
@@ -6110,11 +6110,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/$JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().batch().getStatus',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.BatchGetStatusParams;\nimport com.llamacloud_prod.api.models.beta.batch.BatchGetStatusResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchGetStatusResponse response = client.beta().batch().getStatus("job_id");\n    }\n}',
       },
     },
   },
@@ -6148,6 +6143,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'batch cancel',
         example: "llamacloud-prod beta:batch cancel \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
+      java: {
+        method: 'beta().batch().cancel',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.BatchCancelParams;\nimport com.llamacloud_prod.api.models.beta.batch.BatchCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCancelResponse response = client.beta().batch().cancel("job_id");\n    }\n}',
+      },
       python: {
         method: 'beta.batch.cancel',
         example:
@@ -6161,11 +6161,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           "curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/$JOB_ID/cancel \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'beta().batch().cancel',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.BatchCancelParams;\nimport com.llamacloud_prod.api.models.beta.batch.BatchCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCancelResponse response = client.beta().batch().cancel("job_id");\n    }\n}',
       },
     },
   },
@@ -6201,6 +6196,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:batch:job-items list \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
+      java: {
+        method: 'beta().batch().jobItems().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.jobitems.JobItemListPage;\nimport com.llamacloud_prod.api.models.beta.batch.jobitems.JobItemListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobItemListPage page = client.beta().batch().jobItems().list("job_id");\n    }\n}',
+      },
       python: {
         method: 'beta.batch.job_items.list',
         example:
@@ -6214,11 +6214,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/$JOB_ID/items \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().batch().jobItems().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.jobitems.JobItemListPage;\nimport com.llamacloud_prod.api.models.beta.batch.jobitems.JobItemListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobItemListPage page = client.beta().batch().jobItems().list("job_id");\n    }\n}',
       },
     },
   },
@@ -6252,6 +6247,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:batch:job-items get-processing-results \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
+      java: {
+        method: 'beta().batch().jobItems().getProcessingResults',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.jobitems.JobItemGetProcessingResultsParams;\nimport com.llamacloud_prod.api.models.beta.batch.jobitems.JobItemGetProcessingResultsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobItemGetProcessingResultsResponse response = client.beta().batch().jobItems().getProcessingResults("item_id");\n    }\n}',
+      },
       python: {
         method: 'beta.batch.job_items.get_processing_results',
         example:
@@ -6265,11 +6265,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/items/$ITEM_ID/processing-results \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().batch().jobItems().getProcessingResults',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.batch.jobitems.JobItemGetProcessingResultsParams;\nimport com.llamacloud_prod.api.models.beta.batch.jobitems.JobItemGetProcessingResultsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobItemGetProcessingResultsResponse response = client.beta().batch().jobItems().getProcessingResults("item_id");\n    }\n}',
       },
     },
   },
@@ -6303,6 +6298,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:split create \\\n  --api-key 'My API Key' \\\n  --document-input '{type: type, value: value}'",
       },
+      java: {
+        method: 'beta().split().create',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.split.SplitCreateParams;\nimport com.llamacloud_prod.api.models.beta.split.SplitCreateResponse;\nimport com.llamacloud_prod.api.models.beta.split.SplitDocumentInput;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitCreateParams params = SplitCreateParams.builder()\n            .documentInput(SplitDocumentInput.builder()\n                .type("type")\n                .value("value")\n                .build())\n            .build();\n        SplitCreateResponse split = client.beta().split().create(params);\n    }\n}',
+      },
       python: {
         method: 'beta.split.create',
         example:
@@ -6316,11 +6316,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/split/jobs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "document_input": {\n            "type": "type",\n            "value": "value"\n          }\n        }\'',
-      },
-      java: {
-        method: 'beta().split().create',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.split.SplitCreateParams;\nimport com.llamacloud_prod.api.models.beta.split.SplitCreateResponse;\nimport com.llamacloud_prod.api.models.beta.split.SplitDocumentInput;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitCreateParams params = SplitCreateParams.builder()\n            .documentInput(SplitDocumentInput.builder()\n                .type("type")\n                .value("value")\n                .build())\n            .build();\n        SplitCreateResponse split = client.beta().split().create(params);\n    }\n}',
       },
     },
   },
@@ -6356,6 +6351,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'split list',
         example: "llamacloud-prod beta:split list \\\n  --api-key 'My API Key'",
       },
+      java: {
+        method: 'beta().split().list',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.split.SplitListPage;\nimport com.llamacloud_prod.api.models.beta.split.SplitListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitListPage page = client.beta().split().list();\n    }\n}',
+      },
       python: {
         method: 'beta.split.list',
         example:
@@ -6369,11 +6369,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/split/jobs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().split().list',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.split.SplitListPage;\nimport com.llamacloud_prod.api.models.beta.split.SplitListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitListPage page = client.beta().split().list();\n    }\n}',
       },
     },
   },
@@ -6401,6 +6396,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "llamacloud-prod beta:split get \\\n  --api-key 'My API Key' \\\n  --split-job-id split_job_id",
       },
+      java: {
+        method: 'beta().split().get',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.split.SplitGetParams;\nimport com.llamacloud_prod.api.models.beta.split.SplitGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitGetResponse split = client.beta().split().get("split_job_id");\n    }\n}',
+      },
       python: {
         method: 'beta.split.get',
         example:
@@ -6414,11 +6414,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/split/jobs/$SPLIT_JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      java: {
-        method: 'beta().split().get',
-        example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.beta.split.SplitGetParams;\nimport com.llamacloud_prod.api.models.beta.split.SplitGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitGetResponse split = client.beta().split().get("split_job_id");\n    }\n}',
       },
     },
   },
@@ -6456,6 +6451,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.pipelines.retrieve(pipeline_id: string, query: string, organization_id?: string, project_id?: string, alpha?: number, class_name?: string, dense_similarity_cutoff?: number, dense_similarity_top_k?: number, enable_reranking?: boolean, files_top_k?: number, rerank_top_n?: number, retrieval_mode?: 'chunks' | 'files_via_metadata' | 'files_via_content' | 'auto_routed', retrieve_image_nodes?: boolean, retrieve_page_figure_nodes?: boolean, retrieve_page_screenshot_nodes?: boolean, search_filters?: { filters: object | metadata_filters[]; condition?: 'and' | 'or' | 'not'; }, search_filters_inference_schema?: object, sparse_similarity_top_k?: number): { pipeline_id: string; retrieval_nodes: object[]; class_name?: string; image_nodes?: page_screenshot_node_with_score[]; inferred_search_filters?: metadata_filters; metadata?: object; page_figure_nodes?: page_figure_node_with_score[]; retrieval_latency?: object; }`\n\n**post** `/api/v1/pipelines/{pipeline_id}/retrieve`\n\nRun a retrieval query against a managed pipeline.\n\nSearches the pipeline's vector store using the provided query\nand retrieval parameters. Supports dense, sparse, and hybrid\nsearch modes with configurable top-k and reranking.\n\n### Parameters\n\n- `pipeline_id: string`\n\n- `query: string`\n  The query to retrieve against.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `alpha?: number`\n  Alpha value for hybrid retrieval to determine the weights between dense and sparse retrieval. 0 is sparse retrieval and 1 is dense retrieval.\n\n- `class_name?: string`\n\n- `dense_similarity_cutoff?: number`\n  Minimum similarity score wrt query for retrieval\n\n- `dense_similarity_top_k?: number`\n  Number of nodes for dense retrieval.\n\n- `enable_reranking?: boolean`\n  Enable reranking for retrieval\n\n- `files_top_k?: number`\n  Number of files to retrieve (only for retrieval mode files_via_metadata and files_via_content).\n\n- `rerank_top_n?: number`\n  Number of reranked nodes for returning.\n\n- `retrieval_mode?: 'chunks' | 'files_via_metadata' | 'files_via_content' | 'auto_routed'`\n  The retrieval mode for the query.\n\n- `retrieve_image_nodes?: boolean`\n  Whether to retrieve image nodes.\n\n- `retrieve_page_figure_nodes?: boolean`\n  Whether to retrieve page figure nodes.\n\n- `retrieve_page_screenshot_nodes?: boolean`\n  Whether to retrieve page screenshot nodes.\n\n- `search_filters?: { filters: { key: string; value: number | string | string[] | number[] | number[]; operator?: string; } | { filters: object | metadata_filters[]; condition?: 'and' | 'or' | 'not'; }[]; condition?: 'and' | 'or' | 'not'; }`\n  Metadata filters for vector stores.\n  - `filters: { key: string; value: number | string | string[] | number[] | number[]; operator?: string; } | { filters: { key: string; value: number | string | string[] | number[] | number[]; operator?: string; } | { filters: object | metadata_filters[]; condition?: 'and' | 'or' | 'not'; }[]; condition?: 'and' | 'or' | 'not'; }[]`\n  - `condition?: 'and' | 'or' | 'not'`\n    Vector store filter conditions to combine different filters.\n\n- `search_filters_inference_schema?: object`\n  JSON Schema that will be used to infer search_filters. Omit or leave as null to skip inference.\n\n- `sparse_similarity_top_k?: number`\n  Number of nodes for sparse retrieval.\n\n### Returns\n\n- `{ pipeline_id: string; retrieval_nodes: { node: object; class_name?: string; score?: number; }[]; class_name?: string; image_nodes?: { node: object; score: number; class_name?: string; }[]; inferred_search_filters?: { filters: object | metadata_filters[]; condition?: 'and' | 'or' | 'not'; }; metadata?: object; page_figure_nodes?: { node: object; score: number; class_name?: string; }[]; retrieval_latency?: object; }`\n  Schema for the result of an retrieval execution.\n\n  - `pipeline_id: string`\n  - `retrieval_nodes: { node: { class_name?: string; embedding?: number[]; end_char_idx?: number; excluded_embed_metadata_keys?: string[]; excluded_llm_metadata_keys?: string[]; extra_info?: object; id_?: string; metadata_seperator?: string; metadata_template?: string; mimetype?: string; relationships?: object; start_char_idx?: number; text?: string; text_template?: string; }; class_name?: string; score?: number; }[]`\n  - `class_name?: string`\n  - `image_nodes?: { node: { file_id: string; image_size: number; page_index: number; metadata?: object; }; score: number; class_name?: string; }[]`\n  - `inferred_search_filters?: { filters: { key: string; value: number | string | string[] | number[] | number[]; operator?: string; } | { filters: object | metadata_filters[]; condition?: 'and' | 'or' | 'not'; }[]; condition?: 'and' | 'or' | 'not'; }`\n  - `metadata?: object`\n  - `page_figure_nodes?: { node: { confidence: number; figure_name: string; figure_size: number; file_id: string; page_index: number; is_likely_noise?: boolean; metadata?: object; }; score: number; class_name?: string; }[]`\n  - `retrieval_latency?: object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst pipeline = await client.pipelines.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { query: 'x' });\n\nconsole.log(pipeline);\n```",
     perLanguage: {
+      java: {
+        method: 'pipelines().retrieve',
+        example:
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.PipelineRetrieveParams;\nimport com.llamacloud_prod.api.models.pipelines.PipelineRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PipelineRetrieveParams params = PipelineRetrieveParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .query("x")\n            .build();\n        PipelineRetrieveResponse pipeline = client.pipelines().retrieve(params);\n    }\n}',
+      },
       python: {
         method: 'pipelines.retrieve',
         example:
@@ -6470,10 +6470,21 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/retrieve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "query": "x"\n        }\'',
       },
+    },
+  },
+  {
+    name: 'search',
+    endpoint: '/api/v1/retrievers/{retriever_id}/retrieve',
+    httpMethod: 'post',
+    summary: 'Retrieve',
+    description: 'Retrieve data using a Retriever.',
+    stainlessPath: '(resource) retrievers.query > (method) search',
+    qualified: 'search',
+    perLanguage: {
       java: {
-        method: 'pipelines().retrieve',
+        method: 'retrievers().query().search',
         example:
-          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.pipelines.PipelineRetrieveParams;\nimport com.llamacloud_prod.api.models.pipelines.PipelineRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PipelineRetrieveParams params = PipelineRetrieveParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .query("x")\n            .build();\n        PipelineRetrieveResponse pipeline = client.pipelines().retrieve(params);\n    }\n}',
+          'package com.llamacloud_prod.api.example;\n\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.retrievers.CompositeRetrievalResult;\nimport com.llamacloud_prod.api.models.retrievers.query.QuerySearchParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        QuerySearchParams params = QuerySearchParams.builder()\n            .retrieverId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .query("x")\n            .build();\n        CompositeRetrievalResult compositeRetrievalResult = client.retrievers().query().search(params);\n    }\n}',
       },
     },
   },
@@ -6491,6 +6502,11 @@ const EMBEDDED_READMES: { language: string; content: string }[] = [
       "# Llama Cloud CLI\n\nThe official CLI for the [Llama Cloud REST API](https://developers.llamaindex.ai/).\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n<!-- x-release-please-start-version -->\n\n## Installation\n\n### Installing with Go\n\nTo test or install the CLI locally, you need [Go](https://go.dev/doc/install) version 1.22 or later installed.\n\n~~~sh\ngo install 'github.com/run-llama/llama-parse-cli/cmd/llamacloud-prod@latest'\n~~~\n\nOnce you have run `go install`, the binary is placed in your Go bin directory:\n\n- **Default location**: `$HOME/go/bin` (or `$GOPATH/bin` if GOPATH is set)\n- **Check your path**: Run `go env GOPATH` to see the base directory\n\nIf commands aren't found after installation, add the Go bin directory to your PATH:\n\n~~~sh\n# Add to your shell profile (.zshrc, .bashrc, etc.)\nexport PATH=\"$PATH:$(go env GOPATH)/bin\"\n~~~\n\n<!-- x-release-please-end -->\n\n### Running Locally\n\nAfter cloning the git repository for this project, you can use the\n`scripts/run` script to run the tool locally:\n\n~~~sh\n./scripts/run args...\n~~~\n\n## Usage\n\nThe CLI follows a resource-based command structure:\n\n~~~sh\nllamacloud-prod [resource] <command> [flags...]\n~~~\n\n~~~sh\nllamacloud-prod parsing create \\\n  --api-key 'My API Key' \\\n  --tier agentic \\\n  --version latest \\\n  --file-id abc1234\n~~~\n\nFor details about specific commands, use the `--help` flag.\n\n### Environment variables\n\n| Environment variable  | Required |\n| --------------------- | -------- |\n| `LLAMA_CLOUD_API_KEY` | yes      |\n\n### Global flags\n\n- `--api-key` (can also be set with `LLAMA_CLOUD_API_KEY` env var)\n- `--help` - Show command line usage\n- `--debug` - Enable debug logging (includes HTTP request/response details)\n- `--version`, `-v` - Show the CLI version\n- `--base-url` - Use a custom API backend URL\n- `--format` - Change the output format (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--format-error` - Change the output format for errors (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--transform` - Transform the data output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n- `--transform-error` - Transform the error output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n\n### Passing files as arguments\n\nTo pass files to your API, you can use the `@myfile.ext` syntax:\n\n~~~bash\nllamacloud-prod <command> --arg @abe.jpg\n~~~\n\nFiles can also be passed inside JSON or YAML blobs:\n\n~~~bash\nllamacloud-prod <command> --arg '{image: \"@abe.jpg\"}'\n# Equivalent:\nllamacloud-prod <command> <<YAML\narg:\n  image: \"@abe.jpg\"\nYAML\n~~~\n\nIf you need to pass a string literal that begins with an `@` sign, you can\nescape the `@` sign to avoid accidentally passing a file.\n\n~~~bash\nllamacloud-prod <command> --username '\\@abe'\n~~~\n\n#### Explicit encoding\n\nFor JSON endpoints, the CLI tool does filetype sniffing to determine whether the\nfile contents should be sent as a string literal (for plain text files) or as a\nbase64-encoded string literal (for binary files). If you need to explicitly send\nthe file as either plain text or base64-encoded data, you can use\n`@file://myfile.txt` (for string encoding) or `@data://myfile.dat` (for\nbase64-encoding). Note that absolute paths will begin with `@file://` or\n`@data://`, followed by a third `/` (for example, `@file:///tmp/file.txt`).\n\n~~~bash\nllamacloud-prod <command> --arg @data://file.txt\n~~~\n\n## Linking different Go SDK versions\n\nYou can link the CLI against a different version of the Llama Cloud Go SDK\nfor development purposes using the `./scripts/link` script.\n\nTo link to a specific version from a repository (version can be a branch,\ngit tag, or commit hash):\n\n~~~bash\n./scripts/link github.com/org/repo@version\n~~~\n\nTo link to a local copy of the SDK:\n\n~~~bash\n./scripts/link ../path/to/llamacloudprod-go\n~~~\n\nIf you run the link script without any arguments, it will default to `../llamacloudprod-go`.\n",
   },
   {
+    language: 'java',
+    content:
+      '# Llama Cloud Java API Library\n\n<!-- x-release-please-start-version -->\n[![Maven Central](https://img.shields.io/maven-central/v/com.llamacloud_prod.api/llama-cloud-java)](https://central.sonatype.com/artifact/com.llamacloud_prod.api/llama-cloud-java/0.0.1)\n[![javadoc](https://javadoc.io/badge2/com.llamacloud_prod.api/llama-cloud-java/0.0.1/javadoc.svg)](https://javadoc.io/doc/com.llamacloud_prod.api/llama-cloud-java/0.0.1)\n<!-- x-release-please-end -->\n\nThe Llama Cloud Java SDK provides convenient access to the [Llama Cloud REST API](https://developers.llamaindex.ai/)   from applications written in Java.\n\n\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## MCP Server\n\nUse the Llama Cloud MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40llamaindex%2Fllama-cloud-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBsbGFtYWluZGV4L2xsYW1hLWNsb3VkLW1jcCJdLCJlbnYiOnsiTExBTUFfQ0xPVURfQVBJX0tFWSI6Ik15IEFQSSBLZXkifX0)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40llamaindex%2Fllama-cloud-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40llamaindex%2Fllama-cloud-mcp%22%5D%2C%22env%22%3A%7B%22LLAMA_CLOUD_API_KEY%22%3A%22My%20API%20Key%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n<!-- x-release-please-start-version -->\n\nThe REST API documentation can be found on [developers.llamaindex.ai](https://developers.llamaindex.ai/). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.llamacloud_prod.api/llama-cloud-java/0.0.1).\n\n<!-- x-release-please-end -->\n\n## Installation\n\n<!-- x-release-please-start-version -->\n\n### Gradle\n\n~~~kotlin\nimplementation("com.llamacloud_prod.api:llama-cloud-java:0.0.1")\n~~~\n\n### Maven\n\n~~~xml\n<dependency>\n  <groupId>com.llamacloud_prod.api</groupId>\n  <artifactId>llama-cloud-java</artifactId>\n  <version>0.0.1</version>\n</dependency>\n~~~\n\n<!-- x-release-please-end -->\n\n## Requirements\n\nThis library requires Java 8 or later.\n\n## Usage\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(ParsingCreateParams.Tier.AGENTIC)\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\nParsingCreateResponse parsing = client.parsing().create(params);\n```\n\n## Client configuration\n\nConfigure the client using system properties or environment variables:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n```\n\nOr manually:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .apiKey("My API Key")\n    .build();\n```\n\nOr using a combination of the two approaches:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    // Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n    // Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\n    .fromEnv()\n    .apiKey("My API Key")\n    .build();\n```\n\nSee this table for the available options:\n\n| Setter    | System property      | Environment variable   | Required | Default value                       |\n| --------- | -------------------- | ---------------------- | -------- | ----------------------------------- |\n| `apiKey`  | `llamacloud.apiKey`  | `LLAMA_CLOUD_API_KEY`  | true     | -                                   |\n| `baseUrl` | `llamacloud.baseUrl` | `LLAMA_CLOUD_BASE_URL` | true     | `"https://api.cloud.llamaindex.ai"` |\n\nSystem properties take precedence over environment variables.\n\n> [!TIP]\n> Don\'t create more than one client in the same application. Each client has a connection pool and\n> thread pools, which are more efficient to share between requests.\n\n### Modifying configuration\n\nTo temporarily use a modified client configuration, while reusing the same connection and thread       pools, call `withOptions()` on any client or service:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\n\nLlamaCloudClient clientWithOptions = client.withOptions(optionsBuilder -> {\n    optionsBuilder.baseUrl("https://example.com");\n    optionsBuilder.maxRetries(42);\n});\n```\n\nThe `withOptions()` method does not affect the original client or service.\n\n## Requests and responses\n\nTo send a request to the Llama Cloud API, build an instance of some `Params` class and pass it to the     corresponding client method. When the response is received, it will be deserialized into an instance of     a Java class.\n\nFor example, `client.parsing().create(...)` should be called with an instance of `ParsingCreateParams`, and it     will return an instance of `ParsingCreateResponse`.\n\n## Immutability\n\nEach class in the SDK has an associated   [builder](https://blogs.oracle.com/javamagazine/post/exploring-joshua-blochs-builder-design-pattern-in-java)   or factory method for constructing it.\n\nEach class is [immutable](https://docs.oracle.com/javase/tutorial/essential/concurrency/immutable.html)   once constructed. If the class has an associated builder, then it has a `toBuilder()` method, which can   be used to convert it back to a builder for making a modified copy.\n\nBecause each class is immutable, builder modification will _never_ affect already built class instances.\n\n## Asynchronous execution\n\nThe default client is synchronous. To switch to asynchronous execution, call the `async()` method:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\nimport java.util.concurrent.CompletableFuture;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(ParsingCreateParams.Tier.AGENTIC)\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\nCompletableFuture<ParsingCreateResponse> parsing = client.async().parsing().create(params);\n```\n\nOr create an asynchronous client from the beginning:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClientAsync;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClientAsync;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\nimport java.util.concurrent.CompletableFuture;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClientAsync client = LlamaCloudOkHttpClientAsync.fromEnv();\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(ParsingCreateParams.Tier.AGENTIC)\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\nCompletableFuture<ParsingCreateResponse> parsing = client.parsing().create(params);\n```\n\nThe asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.\n\n\n\n## File uploads\n\nThe SDK defines methods that accept files.\n\nTo upload a file, pass a [`Path`](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html):\n\n```java\nimport com.llamacloud_prod.api.models.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.files.FileCreateResponse;\nimport java.nio.file.Paths;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file(Paths.get("/path/to/file"))\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\nOr an arbitrary [`InputStream`](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html):\n\n```java\nimport com.llamacloud_prod.api.models.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.files.FileCreateResponse;\nimport java.net.URL;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file(new URL("https://example.com//path/to/file").openStream())\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\nOr a `byte[]` array:\n\n```java\nimport com.llamacloud_prod.api.models.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.files.FileCreateResponse;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file("content".getBytes())\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\nNote that when passing a non-`Path` its filename is unknown so it will not be included in the request.     To manually set a filename, pass a [`MultipartField`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/Values.kt):\n\n```java\nimport com.llamacloud_prod.api.core.MultipartField;\nimport com.llamacloud_prod.api.models.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.files.FileCreateResponse;\nimport java.io.InputStream;\nimport java.net.URL;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file(MultipartField.<InputStream>builder()\n        .value(new URL("https://example.com//path/to/file").openStream())\n        .filename("/path/to/file")\n        .build())\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\n\n\n## Raw responses\n\nThe SDK defines methods that deserialize responses into instances of Java classes.       However, these methods don\'t provide access to the response headers, status code, or the raw response       body.\n\nTo access this data, prefix any HTTP method call on a client or service with `withRawResponse()`:\n\n```java\nimport com.llamacloud_prod.api.core.http.Headers;\nimport com.llamacloud_prod.api.core.http.HttpResponseFor;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineListParams;\n\nPipelineListParams params = PipelineListParams.builder()\n    .projectId("my-project-id")\n    .build();\nHttpResponseFor<List<Pipeline>> pipelines = client.pipelines().withRawResponse().list(params);\n\nint statusCode = pipelines.statusCode();\nHeaders headers = pipelines.headers();\n```\n\nYou can still deserialize the response into an instance of a Java class if needed:\n\n```java\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\n\nList<Pipeline> parsedPipelines = pipelines.parse();\n```\n\n## Error handling\n\nThe SDK throws custom unchecked exception types:\n\n- [`LlamaCloudServiceException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudServiceException.kt): Base class for HTTP errors. See this table for which exception       subclass is thrown for each HTTP status code:\n\n  | Status | Exception                                          |\n  | ------ | -------------------------------------------------- |\n  | 400    | [`BadRequestException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/BadRequestException.kt)           |\n  | 401    | [`UnauthorizedException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/UnauthorizedException.kt)         |\n  | 403    | [`PermissionDeniedException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/PermissionDeniedException.kt)     |\n  | 404    | [`NotFoundException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/NotFoundException.kt)             |\n  | 422    | [`UnprocessableEntityException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/UnprocessableEntityException.kt)  |\n  | 429    | [`RateLimitException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/RateLimitException.kt)            |\n  | 5xx    | [`InternalServerException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/InternalServerException.kt)       |\n  | others | [`UnexpectedStatusCodeException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/UnexpectedStatusCodeException.kt) |\n\n- [`LlamaCloudIoException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudIoException.kt): I/O networking errors.\n\n- [`LlamaCloudRetryableException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudRetryableException.kt): Generic error indicating a failure that could be retried by the client.\n\n- [`LlamaCloudInvalidDataException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudInvalidDataException.kt): Failure to interpret successfully parsed data. For example,       when accessing a property that\'s supposed to be required, but the API unexpectedly omitted it from the       response.\n\n- [`LlamaCloudException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudException.kt): Base class for all exceptions. Most errors will result in one of the       previously mentioned ones, but completely generic errors may be thrown using the base class.\n\n## Pagination\n\nThe SDK defines methods that return a paginated lists of results. It provides convenient ways to access     the results either one page at a time or item-by-item across all pages.\n\n### Auto-pagination\n\nTo iterate through all results across all pages, use the `autoPager()` method, which automatically     fetches more pages as needed.\n\nWhen using the synchronous client, the method returns an [`Iterable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)\n\n```java\nimport com.llamacloud_prod.api.models.extract.ExtractListPage;\nimport com.llamacloud_prod.api.models.extract.ExtractV2Job;\n\nExtractListPage page = client.extract().list();\n\n// Process as an Iterable\nfor (ExtractV2Job extract : page.autoPager()) {\n    System.out.println(extract);\n}\n\n// Process as a Stream\npage.autoPager()\n    .stream()\n    .limit(50)\n    .forEach(extract -> System.out.println(extract));\n```\n\nWhen using the asynchronous client, the method returns an [`AsyncStreamResponse`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/http/AsyncStreamResponse.kt):\n\n```java\nimport com.llamacloud_prod.api.core.http.AsyncStreamResponse;\nimport com.llamacloud_prod.api.models.extract.ExtractListPageAsync;\nimport com.llamacloud_prod.api.models.extract.ExtractV2Job;\nimport java.util.Optional;\nimport java.util.concurrent.CompletableFuture;\n\nCompletableFuture<ExtractListPageAsync> pageFuture = client.async().extract().list();\n\npageFuture.thenRun(page -> page.autoPager().subscribe(extract -> {\n    System.out.println(extract);\n}));\n\n// If you need to handle errors or completion of the stream\npageFuture.thenRun(page -> page.autoPager().subscribe(new AsyncStreamResponse.Handler<>() {\n    @Override\n    public void onNext(ExtractV2Job extract) {\n        System.out.println(extract);\n    }\n\n    @Override\n    public void onComplete(Optional<Throwable> error) {\n        if (error.isPresent()) {\n            System.out.println("Something went wrong!");\n            throw new RuntimeException(error.get());\n        } else {\n            System.out.println("No more!");\n        }\n    }\n}));\n\n// Or use futures\npageFuture.thenRun(page -> page.autoPager()\n    .subscribe(extract -> {\n        System.out.println(extract);\n    })\n    .onCompleteFuture()\n    .whenComplete((unused, error) -> {\n        if (error != null) {\n            System.out.println("Something went wrong!");\n            throw new RuntimeException(error);\n        } else {\n            System.out.println("No more!");\n        }\n    }));\n```\n\n### Manual pagination\n\nTo access individual page items and manually request the next page, use the `items()`,\n`hasNextPage()`, and `nextPage()` methods:\n\n```java\nimport com.llamacloud_prod.api.models.extract.ExtractListPage;\nimport com.llamacloud_prod.api.models.extract.ExtractV2Job;\n\nExtractListPage page = client.extract().list();\nwhile (true) {\n    for (ExtractV2Job extract : page.items()) {\n        System.out.println(extract);\n    }\n\n    if (!page.hasNextPage()) {\n        break;\n    }\n\n    page = page.nextPage();\n}\n```\n\n## Logging\n\nEnable logging by setting the `LLAMA_CLOUD_LOG` environment variable to   `info`:\n\n```sh\nexport LLAMA_CLOUD_LOG=info\n```\n\nOr to `debug` for more verbose logging:\n\n```sh\nexport LLAMA_CLOUD_LOG=debug\n```\n\nOr configure the client manually using the `logLevel` method:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.LogLevel;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .logLevel(LogLevel.INFO)\n    .build();\n```\n\n## ProGuard and R8\n\nAlthough the SDK uses reflection, it is still usable with     [ProGuard](https://github.com/Guardsquare/proguard) and     [R8](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization) because     `llama-cloud-java-core` is published with a     [configuration file](llama-cloud-java-core/src/main/resources/META-INF/proguard/llama-cloud-java-core.pro) containing     [keep rules](https://www.guardsquare.com/manual/configuration/usage).\n\nProGuard and R8 should automatically detect and use the published rules, but you can also manually copy     the keep rules if necessary.\n\n\n\n\n\n## Jackson\n\nThe SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON     serialization/deserialization. It is compatible with version 2.13.4 or higher,     but depends on version 2.18.2 by default.\n\nThe SDK throws an exception if it detects an incompatible Jackson version at runtime (e.g. if the     default version was overridden in your Maven or Gradle config).\n\nIf the SDK threw an exception, but you\'re _certain_ the version is compatible, then disable the version     check using the `checkJacksonVersionCompatibility` on [`LlamaCloudOkHttpClient`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClient.kt) or     [`LlamaCloudOkHttpClientAsync`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClientAsync.kt).\n\n> [!CAUTION]\n> We make no guarantee that the SDK works correctly when the Jackson version check is disabled.\n\nAlso note that there are bugs in older Jackson versions that can affect the SDK. We don\'t work around all     Jackson bugs ([example](https://github.com/FasterXML/jackson-databind/issues/3240)) and expect users to     upgrade Jackson for those instead.\n\n## Network options\n\n### Retries\n\nThe SDK automatically retries 2 times by default, with a short exponential backoff between requests.\n\nOnly the following error types are retried:\n- Connection errors (for example, due to a network connectivity problem)\n- 408 Request Timeout\n- 409 Conflict\n- 429 Rate Limit\n- 5xx Internal\n\nThe API may also explicitly instruct the SDK to retry or not retry a request.\n\nTo set a custom number of retries, configure the client using the `maxRetries` method:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .maxRetries(4)\n    .build();\n```\n\n### Timeouts\n\nRequests time out after 1 minute by default.\n\nTo set a custom timeout, configure the method call using the `timeout` method:\n\n```java\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\n\nList<Pipeline> pipelines = client.pipelines().list(RequestOptions.builder().timeout(Duration.ofSeconds(30)).build());\n```\n\nOr configure the default for all method calls at the client level:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport java.time.Duration;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .timeout(Duration.ofSeconds(30))\n    .build();\n```\n\n### Proxies\n\nTo route requests through a proxy, configure the client using the `proxy` method:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport java.net.InetSocketAddress;\nimport java.net.Proxy;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .proxy(new Proxy(\n      Proxy.Type.HTTP, new InetSocketAddress(\n        "https://example.com", 8080\n      )\n    ))\n    .build();\n```\n\nIf the proxy responds with `407 Proxy Authentication Required`, supply credentials by also   configuring `proxyAuthenticator`:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.http.ProxyAuthenticator;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .proxy(...)\n    // Or a custom implementation of `ProxyAuthenticator`.\n    .proxyAuthenticator(ProxyAuthenticator.basic("username", "password"))\n    .build();\n```\n\n### Connection pooling\n\nTo customize the underlying OkHttp connection pool, configure the client using the   `maxIdleConnections` and `keepAliveDuration` methods:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport java.time.Duration;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    // If `maxIdleConnections` is set, then `keepAliveDuration` must be set, and vice versa.\n    .maxIdleConnections(10)\n    .keepAliveDuration(Duration.ofMinutes(2))\n    .build();\n```\n\nIf both options are unset, OkHttp\'s default connection pool settings are used.\n\n### HTTPS\n\n> [!NOTE]\n> Most applications should not call these methods, and instead use the system defaults. The defaults include\n> special optimizations that can be lost if the implementations are modified.\n\nTo configure how HTTPS connections are secured, configure the client using the `sslSocketFactory`,   `trustManager`, and `hostnameVerifier` methods:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    // If `sslSocketFactory` is set, then `trustManager` must be set, and vice versa.\n    .sslSocketFactory(yourSSLSocketFactory)\n    .trustManager(yourTrustManager)\n    .hostnameVerifier(yourHostnameVerifier)\n    .build();\n```\n\n\n\n### Custom HTTP client\n\nThe SDK consists of three artifacts:\n- `llama-cloud-java-core`\n  - Contains core SDK logic\n  - Does not depend on [OkHttp](https://square.github.io/okhttp)\n  - Exposes [`LlamaCloudClient`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClient.kt), [`LlamaCloudClientAsync`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientAsync.kt),             [`LlamaCloudClientImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientImpl.kt), and [`LlamaCloudClientAsyncImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientAsyncImpl.kt), all of which can             work with any HTTP client\n- `llama-cloud-java-client-okhttp`\n  - Depends on [OkHttp](https://square.github.io/okhttp)\n  - Exposes [`LlamaCloudOkHttpClient`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClient.kt) and [`LlamaCloudOkHttpClientAsync`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClientAsync.kt), which             provide a way to construct [`LlamaCloudClientImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientImpl.kt) and             [`LlamaCloudClientAsyncImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientAsyncImpl.kt), respectively, using OkHttp\n- `llama-cloud-java`\n  - Depends on and exposes the APIs of both `llama-cloud-java-core` and `llama-cloud-java-client-okhttp`\n  - Does not have its own logic\n\nThis structure allows replacing the SDK\'s default HTTP client without pulling in unnecessary dependencies.\n\n#### Customized [`OkHttpClient`](https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.html)\n\n> [!TIP]\n> Try the available [network options](#network-options) before replacing the default client.\n\nTo use a customized `OkHttpClient`:\n\n1. Replace your [`llama-cloud-java` dependency](#installation) with `llama-cloud-java-core`\n2. Copy `llama-cloud-java-client-okhttp`\'s [`OkHttpClient`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/OkHttpClient.kt) class into your code and        customize it\n3. Construct [`LlamaCloudClientImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientImpl.kt) or [`LlamaCloudClientAsyncImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientAsyncImpl.kt), similarly to        [`LlamaCloudOkHttpClient`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClient.kt) or [`LlamaCloudOkHttpClientAsync`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClientAsync.kt), using your        customized client\n\n### Completely custom HTTP client\n\nTo use a completely custom HTTP client:\n\n1. Replace your [`llama-cloud-java` dependency](#installation) with `llama-cloud-java-core`\n2. Write a class that implements the [`HttpClient`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/http/HttpClient.kt) interface\n3. Construct [`LlamaCloudClientImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientImpl.kt) or [`LlamaCloudClientAsyncImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientAsyncImpl.kt), similarly to        [`LlamaCloudOkHttpClient`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClient.kt) or [`LlamaCloudOkHttpClientAsync`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClientAsync.kt), using your new        client class\n\n## Undocumented API functionality\n\nThe SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.\n\n### Parameters\n\nTo set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQueryParam`, or       `putAdditionalBodyProperty` methods on any `Params` class:\n\n```java\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .putAdditionalHeader("Secret-Header", "42")\n    .putAdditionalQueryParam("secret_query_param", "42")\n    .putAdditionalBodyProperty("secretProperty", JsonValue.from("42"))\n    .build();\n```\n\nThese can be accessed on the built object later using the `_additionalHeaders()`,       `_additionalQueryParams()`, and `_additionalBodyProperties()` methods.\n\nTo set undocumented parameters on _nested_ headers, query params, or body classes, call the         `putAdditionalProperty` method on the nested class:\n\n```java\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .agenticOptions(ParsingCreateParams.AgenticOptions.builder()\n        .putAdditionalProperty("secretProperty", JsonValue.from("42"))\n        .build())\n    .build();\n```\n\nThese properties can be accessed on the nested built object later using the         `_additionalProperties()` method.\n\nTo set a documented parameter or property to an undocumented or not yet supported _value_, pass a       [`JsonValue`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/Values.kt) object to its setter:\n\n```java\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(JsonValue.from(42))\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\n```\n\nThe most straightforward way to create a [`JsonValue`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/Values.kt) is using its       `from(...)` method:\n\n```java\nimport com.llamacloud_prod.api.core.JsonValue;\nimport java.util.List;\nimport java.util.Map;\n\n// Create primitive JSON values\nJsonValue nullValue = JsonValue.from(null);\nJsonValue booleanValue = JsonValue.from(true);\nJsonValue numberValue = JsonValue.from(42);\nJsonValue stringValue = JsonValue.from("Hello World!");\n\n// Create a JSON array value equivalent to `["Hello", "World"]`\nJsonValue arrayValue = JsonValue.from(List.of(\n  "Hello", "World"\n));\n\n// Create a JSON object value equivalent to `{ "a": 1, "b": 2 }`\nJsonValue objectValue = JsonValue.from(Map.of(\n  "a", 1,\n  "b", 2\n));\n\n// Create an arbitrarily nested JSON equivalent to:\n// {\n//   "a": [1, 2],\n//   "b": [3, 4]\n// }\nJsonValue complexValue = JsonValue.from(Map.of(\n  "a", List.of(\n    1, 2\n  ),\n  "b", List.of(\n    3, 4\n  )\n));\n```\n\nNormally a `Builder` class\'s `build` method will throw         [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html)         if any required parameter or property is unset.\n\nTo forcibly omit a required parameter or property, pass [`JsonMissing`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/Values.kt):\n\n```java\nimport com.llamacloud_prod.api.core.JsonMissing;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .version(ParsingCreateParams.Version.LATEST)\n    .tier(JsonMissing.of())\n    .build();\n```\n\n### Response properties\n\nTo access undocumented response properties, call the `_additionalProperties()` method:\n\n```java\nimport com.llamacloud_prod.api.core.JsonValue;\nimport java.util.Map;\n\nMap<String, JsonValue> additionalProperties = client.parsing().create(params)._additionalProperties();\nJsonValue secretPropertyValue = additionalProperties.get("secretProperty");\n\nString result = secretPropertyValue.accept(new JsonValue.Visitor<>() {\n    @Override\n    public String visitNull() {\n        return "It\'s null!";\n    }\n\n    @Override\n    public String visitBoolean(boolean value) {\n        return "It\'s a boolean!";\n    }\n\n    @Override\n    public String visitNumber(Number value) {\n        return "It\'s a number!";\n    }\n\n    // Other methods include `visitMissing`, `visitString`, `visitArray`, and `visitObject`\n    // The default implementation of each unimplemented method delegates to `visitDefault`, which throws by default, but can also be overridden\n});\n```\n\nTo access a property\'s raw JSON value, which may be undocumented, call its `_` prefixed method:\n\n```java\nimport com.llamacloud_prod.api.core.JsonField;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\nimport java.util.Optional;\n\nJsonField<ParsingCreateParams.Tier> tier = client.parsing().create(params)._tier();\n\nif (tier.isMissing()) {\n  // The property is absent from the JSON response\n} else if (tier.isNull()) {\n  // The property was set to literal null\n} else {\n  // Check if value was provided as a string\n  // Other methods include `asNumber()`, `asBoolean()`, etc.\n  Optional<String> jsonString = tier.asString();\n\n  // Try to deserialize into a custom type\n  MyClass myObject = tier.asUnknown().orElseThrow().convert(MyClass.class);\n}\n```\n\n### Response validation\n\nIn rare cases, the API may return a response that doesn\'t match the expected type. For example, the SDK     may expect a property to contain a `String`, but the API could return something else.\n\nBy default, the SDK will not throw an exception in this case. It will throw     [`LlamaCloudInvalidDataException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudInvalidDataException.kt) only if you directly access the property.\n\nValidating the response is _not_ forwards compatible with new types from the API for existing fields.\n\nIf you would still prefer to check that the response is completely well-typed upfront, then either call     `validate()`:\n\n```java\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\n\nParsingCreateResponse parsing = client.parsing().create(params).validate();\n```\n\nOr configure the method call to validate the response using the `responseValidation` method:\n\n```java\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\n\nParsingCreateResponse parsing = client.parsing().create(\n  params, RequestOptions.builder().responseValidation(true).build()\n);\n```\n\nOr configure the default for all method calls at the client level:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .responseValidation(true)\n    .build();\n```\n\n## FAQ\n\n### Why don\'t you use plain `enum` classes?\n\nJava `enum` classes are not trivially   [forwards compatible](https://www.stainless.com/blog/making-java-enums-forwards-compatible). Using them in   the SDK could cause runtime exceptions if the API is updated to respond with a new enum value.\n\n### Why do you represent fields using `JsonField<T>` instead of just plain `T`?\n\nUsing `JsonField<T>` enables a few features:\n\n- Allowing usage of [undocumented API functionality](#undocumented-api-functionality)\n- Lazily [validating the API response against the expected shape](#response-validation)\n- Representing absent vs explicitly null values\n\n### Why don\'t you use [`data` classes](https://kotlinlang.org/docs/data-classes.html)?\n\nIt is not [backwards compatible to add new fields to a data class](https://kotlinlang.org/docs/api-guidelines-backward-compatibility.html#avoid-using-data-classes-in-your-api)   and we don\'t want to introduce a breaking change every time we add a field to a class.\n\n### Why don\'t you use checked exceptions?\n\nChecked exceptions are widely considered a mistake in the Java programming language. In fact, they were   omitted from Kotlin for this reason.\n\nChecked exceptions:\n\n- Are verbose to handle\n- Encourage error handling at the wrong level of abstraction, where nothing can be done about the error\n- Are tedious to propagate due to the [function coloring problem](https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function)\n- Don\'t play well with lambdas (also due to the function coloring problem)\n\n## Semantic versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n2. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/run-llama/llama-parse-java/issues) with questions, bugs, or suggestions.\n',
+  },
+  {
     language: 'python',
     content:
       '# Llama Cloud Python API library\n\n<!-- prettier-ignore -->\n[![PyPI version](https://img.shields.io/pypi/v/llama_cloud.svg?label=pypi%20(stable))](https://pypi.org/project/llama_cloud/)\n\nThe Llama Cloud Python library provides convenient access to the Llama Cloud REST API from any Python 3.9+\napplication. The library includes type definitions for all request params and response fields,\nand offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).\n\n\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## MCP Server\n\nUse the Llama Cloud MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40llamaindex%2Fllama-cloud-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBsbGFtYWluZGV4L2xsYW1hLWNsb3VkLW1jcCJdLCJlbnYiOnsiTExBTUFfQ0xPVURfQVBJX0tFWSI6Ik15IEFQSSBLZXkifX0)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40llamaindex%2Fllama-cloud-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40llamaindex%2Fllama-cloud-mcp%22%5D%2C%22env%22%3A%7B%22LLAMA_CLOUD_API_KEY%22%3A%22My%20API%20Key%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Documentation\n\nThe REST API documentation can be found on [developers.llamaindex.ai](https://developers.llamaindex.ai/). The full API of this library can be found in [api.md](api.md).\n\n## Installation\n\n```sh\n# install from PyPI\npip install llama_cloud\n```\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n```python\nimport os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\n\nparsing = client.parsing.create(\n    tier="agentic",\n    version="latest",\n    file_id="abc1234",\n)\nprint(parsing.id)\n```\n\nWhile you can provide an `api_key` keyword argument,\nwe recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)\nto add `LLAMA_CLOUD_API_KEY="My API Key"` to your `.env` file\nso that your API Key is not stored in source control.\n\n## Async usage\n\nSimply import `AsyncLlamaCloud` instead of `LlamaCloud` and use `await` with each API call:\n\n```python\nimport os\nimport asyncio\nfrom llama_cloud import AsyncLlamaCloud\n\nclient = AsyncLlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\n\nasync def main() -> None:\n  parsing = await client.parsing.create(\n      tier="agentic",\n      version="latest",\n      file_id="abc1234",\n  )\n  print(parsing.id)\n\nasyncio.run(main())\n```\n\nFunctionality between the synchronous and asynchronous clients is otherwise identical.\n\n### With aiohttp\n\nBy default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.\n\nYou can enable this by installing `aiohttp`:\n\n```sh\n# install from PyPI\npip install llama_cloud[aiohttp]\n```\n\nThen you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:\n\n```python\nimport os\nimport asyncio\nfrom llama_cloud import DefaultAioHttpClient\nfrom llama_cloud import AsyncLlamaCloud\n\nasync def main() -> None:\n  async with AsyncLlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n    http_client=DefaultAioHttpClient(),\n) as client:\n    parsing = await client.parsing.create(\n        tier="agentic",\n        version="latest",\n        file_id="abc1234",\n    )\n    print(parsing.id)\n\nasyncio.run(main())\n```\n\n\n\n## Using types\n\nNested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:\n\n- Serializing back into JSON, `model.to_json()`\n- Converting to a dictionary, `model.to_dict()`\n\nTyped requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.\n\n## Pagination\n\nList methods in the Llama Cloud API are paginated.\n\nThis library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:\n\n```python\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\nall_extracts = []\n# Automatically fetches more pages as needed.\nfor extract in client.extract.list(\n    page_size=20,\n):\n    # Do something with extract here\n    all_extracts.append(extract)\nprint(all_extracts)\n```\n\nOr, asynchronously:\n\n```python\nimport asyncio\nfrom llama_cloud import AsyncLlamaCloud\n\nclient = AsyncLlamaCloud()\n\nasync def main() -> None:\n    all_extracts = []\n    # Iterate through items across all pages, issuing requests as needed.\n    async for extract in client.extract.list(\n    page_size=20,\n):\n        all_extracts.append(extract)\n    print(all_extracts)\n\nasyncio.run(main())\n```\n\nAlternatively, you can use the `.has_next_page()`, `.next_page_info()`, or  `.get_next_page()` methods for more granular control working with pages:\n\n```python\nfirst_page = await client.extract.list(\n    page_size=20,\n)\nif first_page.has_next_page():\n    print(f"will fetch next page using these details: {first_page.next_page_info()}")\n    next_page = await first_page.get_next_page()\n    print(f"number of items we just fetched: {len(next_page.items)}")\n\n# Remove `await` for non-async usage.\n```\n\nOr just work directly with the returned data:\n\n```python\nfirst_page = await client.extract.list(\n    page_size=20,\n)\n\nprint(f"next page cursor: {first_page.next_page_token}") # => "next page cursor: ..."\nfor extract in first_page.items:\n    print(extract.id)\n\n# Remove `await` for non-async usage.\n```\n\n## Nested params\n\nNested parameters are dictionaries, typed using `TypedDict`, for example:\n\n```python\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\nparsing = client.parsing.create(\n    tier="fast",\n    version="latest",\n    agentic_options={},\n)\nprint(parsing.agentic_options)\n```\n\n## File uploads\n\nRequest parameters that correspond to file uploads can be passed as `bytes`, or a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.\n\n```python\nfrom pathlib import Path\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\nclient.files.create(\n    file=Path("/path/to/file"),\n    purpose="purpose",\n)\n```\n\nThe async client uses the exact same interface. If you pass a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance, the file contents will be read asynchronously automatically.\n\n## Handling errors\n\nWhen the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `llama_cloud.APIConnectionError` is raised.\n\nWhen the API returns a non-success status code (that is, 4xx or 5xx\nresponse), a subclass of `llama_cloud.APIStatusError` is raised, containing `status_code` and `response` properties.\n\nAll errors inherit from `llama_cloud.APIError`.\n\n```python\nimport llama_cloud\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\n\ntry:\n    client.pipelines.list(\n        project_id="my-project-id",\n    )\nexcept llama_cloud.APIConnectionError as e:\n    print("The server could not be reached")\n    print(e.__cause__) # an underlying Exception, likely raised within httpx.\nexcept llama_cloud.RateLimitError as e:\n    print("A 429 status code was received; we should back off a bit.")\nexcept llama_cloud.APIStatusError as e:\n    print("Another non-200-range status code was received")\n    print(e.status_code)\n    print(e.response)\n```\n\nError codes are as follows:\n\n| Status Code | Error Type                 |\n| ----------- | -------------------------- |\n| 400         | `BadRequestError`          |\n| 401         | `AuthenticationError`      |\n| 403         | `PermissionDeniedError`    |\n| 404         | `NotFoundError`            |\n| 422         | `UnprocessableEntityError` |\n| 429         | `RateLimitError`           |\n| >=500       | `InternalServerError`      |\n| N/A         | `APIConnectionError`       |\n\n### Retries\n\nCertain errors are automatically retried 2 times by default, with a short exponential backoff.\nConnection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,\n429 Rate Limit, and >=500 Internal errors are all retried by default.\n\nYou can use the `max_retries` option to configure or disable retry settings:\n\n```python\nfrom llama_cloud import LlamaCloud\n\n# Configure the default for all requests:\nclient = LlamaCloud(\n    # default is 2\n    max_retries=0,\n)\n\n# Or, configure per-request:\nclient.with_options(max_retries = 5).pipelines.list(\n    project_id="my-project-id",\n)\n```\n\n### Timeouts\n\nBy default requests time out after 1 minute. You can configure this with a `timeout` option,\nwhich accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:\n\n```python\nfrom llama_cloud import LlamaCloud\n\n# Configure the default for all requests:\nclient = LlamaCloud(\n    # 20 seconds (default is 1 minute)\n    timeout=20.0,\n)\n\n# More granular control:\nclient = LlamaCloud(\n    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),\n)\n\n# Override per-request:\nclient.with_options(timeout = 5.0).pipelines.list(\n    project_id="my-project-id",\n)\n```\n\nOn timeout, an `APITimeoutError` is thrown.\n\nNote that requests that time out are [retried twice by default](#retries).\n\n\n\n## Advanced\n\n### Logging\n\nWe use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.\n\nYou can enable logging by setting the environment variable `LLAMA_CLOUD_LOG` to `info`.\n\n```shell\n$ export LLAMA_CLOUD_LOG=info\n```\n\nOr to `debug` for more verbose logging.\n\n### How to tell whether `None` means `null` or missing\n\nIn an API response, a field may be explicitly `null`, or missing entirely; in either case, its value is `None` in this library. You can differentiate the two cases with `.model_fields_set`:\n\n```py\nif response.my_field is None:\n  if \'my_field\' not in response.model_fields_set:\n    print(\'Got json like {}, without a "my_field" key present at all.\')\n  else:\n    print(\'Got json like {"my_field": null}.\')\n```\n\n### Accessing raw response data (e.g. headers)\n\nThe "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,\n\n```py\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud()\nresponse = client.pipelines.with_raw_response.list(\n    project_id="my-project-id",\n)\nprint(response.headers.get(\'X-My-Header\'))\n\npipeline = response.parse()  # get the object that `pipelines.list()` would have returned\nprint(pipeline)\n```\n\nThese methods return an [`APIResponse`](https://github.com/run-llama/llama-parse-py/tree/main/src/llama_cloud/_response.py) object.\n\nThe async client returns an [`AsyncAPIResponse`](https://github.com/run-llama/llama-parse-py/tree/main/src/llama_cloud/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.\n\n#### `.with_streaming_response`\n\nThe above interface eagerly reads the full response body when you make the request, which may not always be what you want.\n\nTo stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.\n\n```python\nwith client.pipelines.with_streaming_response.list(\n    project_id="my-project-id",\n) as response :\n    print(response.headers.get(\'X-My-Header\'))\n\n    for line in response.iter_lines():\n      print(line)\n```\n\nThe context manager is required so that the response will reliably be closed.\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API.\n\nIf you need to access undocumented endpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can make requests using `client.get`, `client.post`, and other\nhttp verbs. Options on the client will be respected (such as retries) when making this request.\n\n```py\nimport httpx\n\nresponse = client.post(\n    "/foo",\n    cast_to=httpx.Response,\n    body={"my_param": True},\n)\n\nprint(response.headers.get("x-foo"))\n```\n\n#### Undocumented request params\n\nIf you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` request\noptions.\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you can access the extra fields like `response.unknown_prop`. You\ncan also get all the extra fields on the Pydantic model as a dict with\n[`response.model_extra`](https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_extra).\n\n### Configuring the HTTP client\n\nYou can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:\n\n- Support for [proxies](https://www.python-httpx.org/advanced/proxies/)\n- Custom [transports](https://www.python-httpx.org/advanced/transports/)\n- Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality\n\n```python\nimport httpx\nfrom llama_cloud import LlamaCloud, DefaultHttpxClient\n\nclient = LlamaCloud(\n    # Or use the `LLAMA_CLOUD_BASE_URL` env var\n    base_url="http://my.test.server.example.com:8083",\n    http_client=DefaultHttpxClient(proxy="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0")),\n)\n```\n\nYou can also customize the client on a per-request basis by using `with_options()`:\n\n```python\nclient.with_options(http_client=DefaultHttpxClient(...))\n```\n\n### Managing HTTP resources\n\nBy default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.\n\n```py\nfrom llama_cloud import LlamaCloud\n\nwith LlamaCloud() as client:\n  # make requests here\n  ...\n\n# HTTP client is now closed\n```\n\n## Versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes that only affect static types, without breaking runtime behavior.\n2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n3. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/run-llama/llama-parse-py/issues) with questions, bugs, or suggestions.\n\n### Determining the installed version\n\nIf you\'ve upgraded to the latest version but aren\'t seeing any new features you were expecting then your python environment is likely still using an older version.\n\nYou can determine the version that is being used at runtime with:\n\n```py\nimport llama_cloud\nprint(llama_cloud.__version__)\n```\n\n## Requirements\n\nPython 3.9 or higher.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n',
@@ -6499,11 +6515,6 @@ const EMBEDDED_READMES: { language: string; content: string }[] = [
     language: 'typescript',
     content:
       "# Llama Cloud TypeScript API Library\n\n[![NPM version](https://img.shields.io/npm/v/@llamaindex/llama-cloud.svg?label=npm%20(stable))](https://npmjs.org/package/@llamaindex/llama-cloud) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@llamaindex/llama-cloud)\n\nThis library provides convenient access to the Llama Cloud REST API from server-side TypeScript or JavaScript.\n\n\n\nThe REST API documentation can be found on [developers.llamaindex.ai](https://developers.llamaindex.ai/). The full API of this library can be found in [api.md](api.md).\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## MCP Server\n\nUse the Llama Cloud MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40llamaindex%2Fllama-cloud-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBsbGFtYWluZGV4L2xsYW1hLWNsb3VkLW1jcCJdLCJlbnYiOnsiTExBTUFfQ0xPVURfQVBJX0tFWSI6Ik15IEFQSSBLZXkifX0)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40llamaindex%2Fllama-cloud-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40llamaindex%2Fllama-cloud-mcp%22%5D%2C%22env%22%3A%7B%22LLAMA_CLOUD_API_KEY%22%3A%22My%20API%20Key%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Installation\n\n```sh\nnpm install @llamaindex/llama-cloud\n```\n\n\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n<!-- prettier-ignore -->\n```js\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst parsing = await client.parsing.create({\n  tier: 'agentic',\n  version: 'latest',\n  file_id: 'abc1234',\n});\n\nconsole.log(parsing.id);\n```\n\n\n\n### Request & Response types\n\nThis library includes TypeScript definitions for all request params and response fields. You may import and use them like so:\n\n<!-- prettier-ignore -->\n```ts\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst params: LlamaCloud.PipelineListParams = { project_id: 'my-project-id' };\nconst pipelines: LlamaCloud.PipelineListResponse = await client.pipelines.list(params);\n```\n\nDocumentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.\n\n## File uploads\n\nRequest parameters that correspond to file uploads can be passed in many different forms:\n- `File` (or an object with the same structure)\n- a `fetch` `Response` (or an object with the same structure)\n- an `fs.ReadStream`\n- the return value of our `toFile` helper\n\n```ts\nimport fs from 'fs';\nimport LlamaCloud, { toFile } from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// If you have access to Node `fs` we recommend using `fs.createReadStream()`:\nawait client.files.create({ file: fs.createReadStream('/path/to/file'), purpose: 'purpose' });\n\n// Or if you have the web `File` API you can pass a `File` instance:\nawait client.files.create({ file: new File(['my bytes'], 'file'), purpose: 'purpose' });\n\n// You can also pass a `fetch` `Response`:\nawait client.files.create({ file: await fetch('https://somesite/file'), purpose: 'purpose' });\n\n// Finally, if none of the above are convenient, you can use our `toFile` helper:\nawait client.files.create({\n  file: await toFile(Buffer.from('my bytes'), 'file'),\n  purpose: 'purpose',\n});\nawait client.files.create({\n  file: await toFile(new Uint8Array([0, 1, 2]), 'file'),\n  purpose: 'purpose',\n});\n```\n\n\n\n## Handling errors\n\nWhen the library is unable to connect to the API,\nor if the API returns a non-success status code (i.e., 4xx or 5xx response),\na subclass of `APIError` will be thrown:\n\n<!-- prettier-ignore -->\n```ts\nconst pipelines = await client.pipelines\n  .list({ project_id: 'my-project-id' })\n  .catch(async (err) => {\n    if (err instanceof LlamaCloud.APIError) {\n      console.log(err.status); // 400\n      console.log(err.name); // BadRequestError\n      console.log(err.headers); // {server: 'nginx', ...}\n    } else {\n      throw err;\n    }\n  });\n```\n\nError codes are as follows:\n\n| Status Code | Error Type                 |\n| ----------- | -------------------------- |\n| 400         | `BadRequestError`          |\n| 401         | `AuthenticationError`      |\n| 403         | `PermissionDeniedError`    |\n| 404         | `NotFoundError`            |\n| 422         | `UnprocessableEntityError` |\n| 429         | `RateLimitError`           |\n| >=500       | `InternalServerError`      |\n| N/A         | `APIConnectionError`       |\n\n### Retries\n\nCertain errors will be automatically retried 2 times by default, with a short exponential backoff.\nConnection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,\n429 Rate Limit, and >=500 Internal errors will all be retried by default.\n\nYou can use the `maxRetries` option to configure or disable this:\n\n<!-- prettier-ignore -->\n```js\n// Configure the default for all requests:\nconst client = new LlamaCloud({\n  maxRetries: 0, // default is 2\n});\n\n// Or, configure per-request:\nawait client.pipelines.list({ project_id: 'my-project-id' }, {\n  maxRetries: 5,\n});\n```\n\n### Timeouts\n\nRequests time out after 1 minute by default. You can configure this with a `timeout` option:\n\n<!-- prettier-ignore -->\n```ts\n// Configure the default for all requests:\nconst client = new LlamaCloud({\n  timeout: 20 * 1000, // 20 seconds (default is 1 minute)\n});\n\n// Override per-request:\nawait client.pipelines.list({ project_id: 'my-project-id' }, {\n  timeout: 5 * 1000,\n});\n```\n\nOn timeout, an `APIConnectionTimeoutError` is thrown.\n\nNote that requests which time out will be [retried twice by default](#retries).\n\n## Auto-pagination\n\nList methods in the LlamaCloud API are paginated.\nYou can use the `for await … of` syntax to iterate through items across all pages:\n\n```ts\nasync function fetchAllExtractV2Jobs(params) {\n  const allExtractV2Jobs = [];\n  // Automatically fetches more pages as needed.\n  for await (const extractV2Job of client.extract.list({ page_size: 20 })) {\n    allExtractV2Jobs.push(extractV2Job);\n  }\n  return allExtractV2Jobs;\n}\n```\n\nAlternatively, you can request a single page at a time:\n\n```ts\nlet page = await client.extract.list({ page_size: 20 });\nfor (const extractV2Job of page.items) {\n  console.log(extractV2Job);\n}\n\n// Convenience methods are provided for manually paginating:\nwhile (page.hasNextPage()) {\n  page = await page.getNextPage();\n  // ...\n}\n```\n\n\n\n## Advanced Usage\n\n### Accessing raw Response data (e.g., headers)\n\nThe \"raw\" `Response` returned by `fetch()` can be accessed through the `.asResponse()` method on the `APIPromise` type that all methods return.\nThis method returns as soon as the headers for a successful response are received and does not consume the response body, so you are free to write custom parsing or streaming logic.\n\nYou can also use the `.withResponse()` method to get the raw `Response` along with the parsed data.\nUnlike `.asResponse()` this method consumes the body, returning once it is parsed.\n\n<!-- prettier-ignore -->\n```ts\nconst client = new LlamaCloud();\n\nconst response = await client.pipelines.list({ project_id: 'my-project-id' }).asResponse();\nconsole.log(response.headers.get('X-My-Header'));\nconsole.log(response.statusText); // access the underlying Response object\n\nconst { data: pipelines, response: raw } = await client.pipelines\n  .list({ project_id: 'my-project-id' })\n  .withResponse();\nconsole.log(raw.headers.get('X-My-Header'));\nconsole.log(pipelines);\n```\n\n### Logging\n\n> [!IMPORTANT]\n> All log messages are intended for debugging only. The format and content of log messages\n> may change between releases.\n\n#### Log levels\n\nThe log level can be configured in two ways:\n\n1. Via the `LLAMA_CLOUD_LOG` environment variable\n2. Using the `logLevel` client option (overrides the environment variable if set)\n\n```ts\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  logLevel: 'debug', // Show all log messages\n});\n```\n\nAvailable log levels, from most to least verbose:\n\n- `'debug'` - Show debug messages, info, warnings, and errors\n- `'info'` - Show info messages, warnings, and errors\n- `'warn'` - Show warnings and errors (default)\n- `'error'` - Show only errors\n- `'off'` - Disable all logging\n\nAt the `'debug'` level, all HTTP requests and responses are logged, including headers and bodies.\nSome authentication-related headers are redacted, but sensitive data in request and response bodies\nmay still be visible.\n\n#### Custom logger\n\nBy default, this library logs to `globalThis.console`. You can also provide a custom logger.\nMost logging libraries are supported, including [pino](https://www.npmjs.com/package/pino), [winston](https://www.npmjs.com/package/winston), [bunyan](https://www.npmjs.com/package/bunyan), [consola](https://www.npmjs.com/package/consola), [signale](https://www.npmjs.com/package/signale), and [@std/log](https://jsr.io/@std/log). If your logger doesn't work, please open an issue.\n\nWhen providing a custom logger, the `logLevel` option still controls which messages are emitted, messages\nbelow the configured level will not be sent to your logger.\n\n```ts\nimport LlamaCloud from '@llamaindex/llama-cloud';\nimport pino from 'pino';\n\nconst logger = pino();\n\nconst client = new LlamaCloud({\n  logger: logger.child({ name: 'LlamaCloud' }),\n  logLevel: 'debug', // Send all messages to pino, allowing it to filter\n});\n```\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API. If you need to access undocumented\nendpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can use `client.get`, `client.post`, and other HTTP verbs.\nOptions on the client, such as retries, will be respected when making these requests.\n\n```ts\nawait client.post('/some/path', {\n  body: { some_prop: 'foo' },\n  query: { some_query_arg: 'bar' },\n});\n```\n\n#### Undocumented request params\n\nTo make requests using undocumented parameters, you may use `// @ts-expect-error` on the undocumented\nparameter. This library doesn't validate at runtime that the request matches the type, so any extra values you\nsend will be sent as-is.\n\n```ts\nclient.parsing.create({\n  // ...\n  // @ts-expect-error baz is not yet public\n  baz: 'undocumented option',\n});\n```\n\nFor requests with the `GET` verb, any extra params will be in the query, all other requests will send the\nextra param in the body.\n\nIf you want to explicitly send an extra argument, you can do so with the `query`, `body`, and `headers` request\noptions.\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you may access the response object with `// @ts-expect-error` on\nthe response object, or cast the response object to the requisite type. Like the request params, we do not\nvalidate or strip extra properties from the response from the API.\n\n### Customizing the fetch client\n\nBy default, this library expects a global `fetch` function is defined.\n\nIf you want to use a different `fetch` function, you can either polyfill the global:\n\n```ts\nimport fetch from 'my-fetch';\n\nglobalThis.fetch = fetch;\n```\n\nOr pass it to the client:\n\n```ts\nimport LlamaCloud from '@llamaindex/llama-cloud';\nimport fetch from 'my-fetch';\n\nconst client = new LlamaCloud({ fetch });\n```\n\n### Fetch options\n\nIf you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)\n\n```ts\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  fetchOptions: {\n    // `RequestInit` options\n  },\n});\n```\n\n#### Configuring proxies\n\nTo modify proxy behavior, you can provide custom `fetchOptions` that add runtime-specific proxy\noptions to requests:\n\n<img src=\"https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg\" align=\"top\" width=\"18\" height=\"21\"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>\n\n```ts\nimport LlamaCloud from '@llamaindex/llama-cloud';\nimport * as undici from 'undici';\n\nconst proxyAgent = new undici.ProxyAgent('http://localhost:8888');\nconst client = new LlamaCloud({\n  fetchOptions: {\n    dispatcher: proxyAgent,\n  },\n});\n```\n\n<img src=\"https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg\" align=\"top\" width=\"18\" height=\"21\"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>\n\n```ts\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  fetchOptions: {\n    proxy: 'http://localhost:8888',\n  },\n});\n```\n\n<img src=\"https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg\" align=\"top\" width=\"18\" height=\"21\"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>\n\n```ts\nimport LlamaCloud from 'npm:@llamaindex/llama-cloud';\n\nconst httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });\nconst client = new LlamaCloud({\n  fetchOptions: {\n    client: httpClient,\n  },\n});\n```\n\n## Frequently Asked Questions\n\n## Semantic versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes that only affect static types, without breaking runtime behavior.\n2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n3. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/run-llama/llama-parse-ts/issues) with questions, bugs, or suggestions.\n\n## Requirements\n\nTypeScript >= 4.9 is supported.\n\nThe following runtimes are supported:\n\n- Web browsers (Up-to-date Chrome, Firefox, Safari, Edge, and more)\n- Node.js 20 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.\n- Deno v1.28.0 or higher.\n- Bun 1.0 or later.\n- Cloudflare Workers.\n- Vercel Edge Runtime.\n- Jest 28 or greater with the `\"node\"` environment (`\"jsdom\"` is not supported at this time).\n- Nitro v2.6 or greater.\n\nNote that React Native is not supported at this time.\n\nIf you are interested in other runtime environments, please open or upvote an issue on GitHub.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n",
-  },
-  {
-    language: 'java',
-    content:
-      '# Llama Cloud Java API Library\n\n<!-- x-release-please-start-version -->\n[![Maven Central](https://img.shields.io/maven-central/v/com.llamacloud_prod.api/llama-cloud-java)](https://central.sonatype.com/artifact/com.llamacloud_prod.api/llama-cloud-java/0.0.1)\n[![javadoc](https://javadoc.io/badge2/com.llamacloud_prod.api/llama-cloud-java/0.0.1/javadoc.svg)](https://javadoc.io/doc/com.llamacloud_prod.api/llama-cloud-java/0.0.1)\n<!-- x-release-please-end -->\n\nThe Llama Cloud Java SDK provides convenient access to the [Llama Cloud REST API](https://developers.llamaindex.ai/)   from applications written in Java.\n\n\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## MCP Server\n\nUse the Llama Cloud MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40llamaindex%2Fllama-cloud-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBsbGFtYWluZGV4L2xsYW1hLWNsb3VkLW1jcCJdLCJlbnYiOnsiTExBTUFfQ0xPVURfQVBJX0tFWSI6Ik15IEFQSSBLZXkifX0)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40llamaindex%2Fllama-cloud-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40llamaindex%2Fllama-cloud-mcp%22%5D%2C%22env%22%3A%7B%22LLAMA_CLOUD_API_KEY%22%3A%22My%20API%20Key%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n<!-- x-release-please-start-version -->\n\nThe REST API documentation can be found on [developers.llamaindex.ai](https://developers.llamaindex.ai/). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.llamacloud_prod.api/llama-cloud-java/0.0.1).\n\n<!-- x-release-please-end -->\n\n## Installation\n\n<!-- x-release-please-start-version -->\n\n### Gradle\n\n~~~kotlin\nimplementation("com.llamacloud_prod.api:llama-cloud-java:0.0.1")\n~~~\n\n### Maven\n\n~~~xml\n<dependency>\n  <groupId>com.llamacloud_prod.api</groupId>\n  <artifactId>llama-cloud-java</artifactId>\n  <version>0.0.1</version>\n</dependency>\n~~~\n\n<!-- x-release-please-end -->\n\n## Requirements\n\nThis library requires Java 8 or later.\n\n## Usage\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(ParsingCreateParams.Tier.AGENTIC)\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\nParsingCreateResponse parsing = client.parsing().create(params);\n```\n\n## Client configuration\n\nConfigure the client using system properties or environment variables:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n```\n\nOr manually:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .apiKey("My API Key")\n    .build();\n```\n\nOr using a combination of the two approaches:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    // Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n    // Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\n    .fromEnv()\n    .apiKey("My API Key")\n    .build();\n```\n\nSee this table for the available options:\n\n| Setter    | System property      | Environment variable   | Required | Default value                       |\n| --------- | -------------------- | ---------------------- | -------- | ----------------------------------- |\n| `apiKey`  | `llamacloud.apiKey`  | `LLAMA_CLOUD_API_KEY`  | true     | -                                   |\n| `baseUrl` | `llamacloud.baseUrl` | `LLAMA_CLOUD_BASE_URL` | true     | `"https://api.cloud.llamaindex.ai"` |\n\nSystem properties take precedence over environment variables.\n\n> [!TIP]\n> Don\'t create more than one client in the same application. Each client has a connection pool and\n> thread pools, which are more efficient to share between requests.\n\n### Modifying configuration\n\nTo temporarily use a modified client configuration, while reusing the same connection and thread       pools, call `withOptions()` on any client or service:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\n\nLlamaCloudClient clientWithOptions = client.withOptions(optionsBuilder -> {\n    optionsBuilder.baseUrl("https://example.com");\n    optionsBuilder.maxRetries(42);\n});\n```\n\nThe `withOptions()` method does not affect the original client or service.\n\n## Requests and responses\n\nTo send a request to the Llama Cloud API, build an instance of some `Params` class and pass it to the     corresponding client method. When the response is received, it will be deserialized into an instance of     a Java class.\n\nFor example, `client.parsing().create(...)` should be called with an instance of `ParsingCreateParams`, and it     will return an instance of `ParsingCreateResponse`.\n\n## Immutability\n\nEach class in the SDK has an associated   [builder](https://blogs.oracle.com/javamagazine/post/exploring-joshua-blochs-builder-design-pattern-in-java)   or factory method for constructing it.\n\nEach class is [immutable](https://docs.oracle.com/javase/tutorial/essential/concurrency/immutable.html)   once constructed. If the class has an associated builder, then it has a `toBuilder()` method, which can   be used to convert it back to a builder for making a modified copy.\n\nBecause each class is immutable, builder modification will _never_ affect already built class instances.\n\n## Asynchronous execution\n\nThe default client is synchronous. To switch to asynchronous execution, call the `async()` method:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\nimport java.util.concurrent.CompletableFuture;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(ParsingCreateParams.Tier.AGENTIC)\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\nCompletableFuture<ParsingCreateResponse> parsing = client.async().parsing().create(params);\n```\n\nOr create an asynchronous client from the beginning:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClientAsync;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClientAsync;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\nimport java.util.concurrent.CompletableFuture;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClientAsync client = LlamaCloudOkHttpClientAsync.fromEnv();\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(ParsingCreateParams.Tier.AGENTIC)\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\nCompletableFuture<ParsingCreateResponse> parsing = client.parsing().create(params);\n```\n\nThe asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.\n\n\n\n## File uploads\n\nThe SDK defines methods that accept files.\n\nTo upload a file, pass a [`Path`](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html):\n\n```java\nimport com.llamacloud_prod.api.models.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.files.FileCreateResponse;\nimport java.nio.file.Paths;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file(Paths.get("/path/to/file"))\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\nOr an arbitrary [`InputStream`](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html):\n\n```java\nimport com.llamacloud_prod.api.models.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.files.FileCreateResponse;\nimport java.net.URL;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file(new URL("https://example.com//path/to/file").openStream())\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\nOr a `byte[]` array:\n\n```java\nimport com.llamacloud_prod.api.models.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.files.FileCreateResponse;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file("content".getBytes())\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\nNote that when passing a non-`Path` its filename is unknown so it will not be included in the request.     To manually set a filename, pass a [`MultipartField`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/Values.kt):\n\n```java\nimport com.llamacloud_prod.api.core.MultipartField;\nimport com.llamacloud_prod.api.models.files.FileCreateParams;\nimport com.llamacloud_prod.api.models.files.FileCreateResponse;\nimport java.io.InputStream;\nimport java.net.URL;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file(MultipartField.<InputStream>builder()\n        .value(new URL("https://example.com//path/to/file").openStream())\n        .filename("/path/to/file")\n        .build())\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\n\n\n## Raw responses\n\nThe SDK defines methods that deserialize responses into instances of Java classes.       However, these methods don\'t provide access to the response headers, status code, or the raw response       body.\n\nTo access this data, prefix any HTTP method call on a client or service with `withRawResponse()`:\n\n```java\nimport com.llamacloud_prod.api.core.http.Headers;\nimport com.llamacloud_prod.api.core.http.HttpResponseFor;\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\nimport com.llamacloud_prod.api.models.pipelines.PipelineListParams;\n\nPipelineListParams params = PipelineListParams.builder()\n    .projectId("my-project-id")\n    .build();\nHttpResponseFor<List<Pipeline>> pipelines = client.pipelines().withRawResponse().list(params);\n\nint statusCode = pipelines.statusCode();\nHeaders headers = pipelines.headers();\n```\n\nYou can still deserialize the response into an instance of a Java class if needed:\n\n```java\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\n\nList<Pipeline> parsedPipelines = pipelines.parse();\n```\n\n## Error handling\n\nThe SDK throws custom unchecked exception types:\n\n- [`LlamaCloudServiceException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudServiceException.kt): Base class for HTTP errors. See this table for which exception       subclass is thrown for each HTTP status code:\n\n  | Status | Exception                                          |\n  | ------ | -------------------------------------------------- |\n  | 400    | [`BadRequestException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/BadRequestException.kt)           |\n  | 401    | [`UnauthorizedException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/UnauthorizedException.kt)         |\n  | 403    | [`PermissionDeniedException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/PermissionDeniedException.kt)     |\n  | 404    | [`NotFoundException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/NotFoundException.kt)             |\n  | 422    | [`UnprocessableEntityException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/UnprocessableEntityException.kt)  |\n  | 429    | [`RateLimitException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/RateLimitException.kt)            |\n  | 5xx    | [`InternalServerException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/InternalServerException.kt)       |\n  | others | [`UnexpectedStatusCodeException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/UnexpectedStatusCodeException.kt) |\n\n- [`LlamaCloudIoException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudIoException.kt): I/O networking errors.\n\n- [`LlamaCloudRetryableException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudRetryableException.kt): Generic error indicating a failure that could be retried by the client.\n\n- [`LlamaCloudInvalidDataException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudInvalidDataException.kt): Failure to interpret successfully parsed data. For example,       when accessing a property that\'s supposed to be required, but the API unexpectedly omitted it from the       response.\n\n- [`LlamaCloudException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudException.kt): Base class for all exceptions. Most errors will result in one of the       previously mentioned ones, but completely generic errors may be thrown using the base class.\n\n## Pagination\n\nThe SDK defines methods that return a paginated lists of results. It provides convenient ways to access     the results either one page at a time or item-by-item across all pages.\n\n### Auto-pagination\n\nTo iterate through all results across all pages, use the `autoPager()` method, which automatically     fetches more pages as needed.\n\nWhen using the synchronous client, the method returns an [`Iterable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)\n\n```java\nimport com.llamacloud_prod.api.models.extract.ExtractListPage;\nimport com.llamacloud_prod.api.models.extract.ExtractV2Job;\n\nExtractListPage page = client.extract().list();\n\n// Process as an Iterable\nfor (ExtractV2Job extract : page.autoPager()) {\n    System.out.println(extract);\n}\n\n// Process as a Stream\npage.autoPager()\n    .stream()\n    .limit(50)\n    .forEach(extract -> System.out.println(extract));\n```\n\nWhen using the asynchronous client, the method returns an [`AsyncStreamResponse`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/http/AsyncStreamResponse.kt):\n\n```java\nimport com.llamacloud_prod.api.core.http.AsyncStreamResponse;\nimport com.llamacloud_prod.api.models.extract.ExtractListPageAsync;\nimport com.llamacloud_prod.api.models.extract.ExtractV2Job;\nimport java.util.Optional;\nimport java.util.concurrent.CompletableFuture;\n\nCompletableFuture<ExtractListPageAsync> pageFuture = client.async().extract().list();\n\npageFuture.thenRun(page -> page.autoPager().subscribe(extract -> {\n    System.out.println(extract);\n}));\n\n// If you need to handle errors or completion of the stream\npageFuture.thenRun(page -> page.autoPager().subscribe(new AsyncStreamResponse.Handler<>() {\n    @Override\n    public void onNext(ExtractV2Job extract) {\n        System.out.println(extract);\n    }\n\n    @Override\n    public void onComplete(Optional<Throwable> error) {\n        if (error.isPresent()) {\n            System.out.println("Something went wrong!");\n            throw new RuntimeException(error.get());\n        } else {\n            System.out.println("No more!");\n        }\n    }\n}));\n\n// Or use futures\npageFuture.thenRun(page -> page.autoPager()\n    .subscribe(extract -> {\n        System.out.println(extract);\n    })\n    .onCompleteFuture()\n    .whenComplete((unused, error) -> {\n        if (error != null) {\n            System.out.println("Something went wrong!");\n            throw new RuntimeException(error);\n        } else {\n            System.out.println("No more!");\n        }\n    }));\n```\n\n### Manual pagination\n\nTo access individual page items and manually request the next page, use the `items()`,\n`hasNextPage()`, and `nextPage()` methods:\n\n```java\nimport com.llamacloud_prod.api.models.extract.ExtractListPage;\nimport com.llamacloud_prod.api.models.extract.ExtractV2Job;\n\nExtractListPage page = client.extract().list();\nwhile (true) {\n    for (ExtractV2Job extract : page.items()) {\n        System.out.println(extract);\n    }\n\n    if (!page.hasNextPage()) {\n        break;\n    }\n\n    page = page.nextPage();\n}\n```\n\n## Logging\n\nEnable logging by setting the `LLAMA_CLOUD_LOG` environment variable to   `info`:\n\n```sh\nexport LLAMA_CLOUD_LOG=info\n```\n\nOr to `debug` for more verbose logging:\n\n```sh\nexport LLAMA_CLOUD_LOG=debug\n```\n\nOr configure the client manually using the `logLevel` method:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.LogLevel;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .logLevel(LogLevel.INFO)\n    .build();\n```\n\n## ProGuard and R8\n\nAlthough the SDK uses reflection, it is still usable with     [ProGuard](https://github.com/Guardsquare/proguard) and     [R8](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization) because     `llama-cloud-java-core` is published with a     [configuration file](llama-cloud-java-core/src/main/resources/META-INF/proguard/llama-cloud-java-core.pro) containing     [keep rules](https://www.guardsquare.com/manual/configuration/usage).\n\nProGuard and R8 should automatically detect and use the published rules, but you can also manually copy     the keep rules if necessary.\n\n\n\n\n\n## Jackson\n\nThe SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON     serialization/deserialization. It is compatible with version 2.13.4 or higher,     but depends on version 2.18.2 by default.\n\nThe SDK throws an exception if it detects an incompatible Jackson version at runtime (e.g. if the     default version was overridden in your Maven or Gradle config).\n\nIf the SDK threw an exception, but you\'re _certain_ the version is compatible, then disable the version     check using the `checkJacksonVersionCompatibility` on [`LlamaCloudOkHttpClient`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClient.kt) or     [`LlamaCloudOkHttpClientAsync`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClientAsync.kt).\n\n> [!CAUTION]\n> We make no guarantee that the SDK works correctly when the Jackson version check is disabled.\n\nAlso note that there are bugs in older Jackson versions that can affect the SDK. We don\'t work around all     Jackson bugs ([example](https://github.com/FasterXML/jackson-databind/issues/3240)) and expect users to     upgrade Jackson for those instead.\n\n## Network options\n\n### Retries\n\nThe SDK automatically retries 2 times by default, with a short exponential backoff between requests.\n\nOnly the following error types are retried:\n- Connection errors (for example, due to a network connectivity problem)\n- 408 Request Timeout\n- 409 Conflict\n- 429 Rate Limit\n- 5xx Internal\n\nThe API may also explicitly instruct the SDK to retry or not retry a request.\n\nTo set a custom number of retries, configure the client using the `maxRetries` method:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .maxRetries(4)\n    .build();\n```\n\n### Timeouts\n\nRequests time out after 1 minute by default.\n\nTo set a custom timeout, configure the method call using the `timeout` method:\n\n```java\nimport com.llamacloud_prod.api.models.pipelines.Pipeline;\n\nList<Pipeline> pipelines = client.pipelines().list(RequestOptions.builder().timeout(Duration.ofSeconds(30)).build());\n```\n\nOr configure the default for all method calls at the client level:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport java.time.Duration;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .timeout(Duration.ofSeconds(30))\n    .build();\n```\n\n### Proxies\n\nTo route requests through a proxy, configure the client using the `proxy` method:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport java.net.InetSocketAddress;\nimport java.net.Proxy;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .proxy(new Proxy(\n      Proxy.Type.HTTP, new InetSocketAddress(\n        "https://example.com", 8080\n      )\n    ))\n    .build();\n```\n\nIf the proxy responds with `407 Proxy Authentication Required`, supply credentials by also   configuring `proxyAuthenticator`:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport com.llamacloud_prod.api.core.http.ProxyAuthenticator;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .proxy(...)\n    // Or a custom implementation of `ProxyAuthenticator`.\n    .proxyAuthenticator(ProxyAuthenticator.basic("username", "password"))\n    .build();\n```\n\n### Connection pooling\n\nTo customize the underlying OkHttp connection pool, configure the client using the   `maxIdleConnections` and `keepAliveDuration` methods:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\nimport java.time.Duration;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    // If `maxIdleConnections` is set, then `keepAliveDuration` must be set, and vice versa.\n    .maxIdleConnections(10)\n    .keepAliveDuration(Duration.ofMinutes(2))\n    .build();\n```\n\nIf both options are unset, OkHttp\'s default connection pool settings are used.\n\n### HTTPS\n\n> [!NOTE]\n> Most applications should not call these methods, and instead use the system defaults. The defaults include\n> special optimizations that can be lost if the implementations are modified.\n\nTo configure how HTTPS connections are secured, configure the client using the `sslSocketFactory`,   `trustManager`, and `hostnameVerifier` methods:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    // If `sslSocketFactory` is set, then `trustManager` must be set, and vice versa.\n    .sslSocketFactory(yourSSLSocketFactory)\n    .trustManager(yourTrustManager)\n    .hostnameVerifier(yourHostnameVerifier)\n    .build();\n```\n\n\n\n### Custom HTTP client\n\nThe SDK consists of three artifacts:\n- `llama-cloud-java-core`\n  - Contains core SDK logic\n  - Does not depend on [OkHttp](https://square.github.io/okhttp)\n  - Exposes [`LlamaCloudClient`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClient.kt), [`LlamaCloudClientAsync`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientAsync.kt),             [`LlamaCloudClientImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientImpl.kt), and [`LlamaCloudClientAsyncImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientAsyncImpl.kt), all of which can             work with any HTTP client\n- `llama-cloud-java-client-okhttp`\n  - Depends on [OkHttp](https://square.github.io/okhttp)\n  - Exposes [`LlamaCloudOkHttpClient`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClient.kt) and [`LlamaCloudOkHttpClientAsync`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClientAsync.kt), which             provide a way to construct [`LlamaCloudClientImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientImpl.kt) and             [`LlamaCloudClientAsyncImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientAsyncImpl.kt), respectively, using OkHttp\n- `llama-cloud-java`\n  - Depends on and exposes the APIs of both `llama-cloud-java-core` and `llama-cloud-java-client-okhttp`\n  - Does not have its own logic\n\nThis structure allows replacing the SDK\'s default HTTP client without pulling in unnecessary dependencies.\n\n#### Customized [`OkHttpClient`](https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.html)\n\n> [!TIP]\n> Try the available [network options](#network-options) before replacing the default client.\n\nTo use a customized `OkHttpClient`:\n\n1. Replace your [`llama-cloud-java` dependency](#installation) with `llama-cloud-java-core`\n2. Copy `llama-cloud-java-client-okhttp`\'s [`OkHttpClient`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/OkHttpClient.kt) class into your code and        customize it\n3. Construct [`LlamaCloudClientImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientImpl.kt) or [`LlamaCloudClientAsyncImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientAsyncImpl.kt), similarly to        [`LlamaCloudOkHttpClient`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClient.kt) or [`LlamaCloudOkHttpClientAsync`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClientAsync.kt), using your        customized client\n\n### Completely custom HTTP client\n\nTo use a completely custom HTTP client:\n\n1. Replace your [`llama-cloud-java` dependency](#installation) with `llama-cloud-java-core`\n2. Write a class that implements the [`HttpClient`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/http/HttpClient.kt) interface\n3. Construct [`LlamaCloudClientImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientImpl.kt) or [`LlamaCloudClientAsyncImpl`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/client/LlamaCloudClientAsyncImpl.kt), similarly to        [`LlamaCloudOkHttpClient`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClient.kt) or [`LlamaCloudOkHttpClientAsync`](llama-cloud-java-client-okhttp/src/main/kotlin/com/llamacloud_prod/api/client/okhttp/LlamaCloudOkHttpClientAsync.kt), using your new        client class\n\n## Undocumented API functionality\n\nThe SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.\n\n### Parameters\n\nTo set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQueryParam`, or       `putAdditionalBodyProperty` methods on any `Params` class:\n\n```java\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .putAdditionalHeader("Secret-Header", "42")\n    .putAdditionalQueryParam("secret_query_param", "42")\n    .putAdditionalBodyProperty("secretProperty", JsonValue.from("42"))\n    .build();\n```\n\nThese can be accessed on the built object later using the `_additionalHeaders()`,       `_additionalQueryParams()`, and `_additionalBodyProperties()` methods.\n\nTo set undocumented parameters on _nested_ headers, query params, or body classes, call the         `putAdditionalProperty` method on the nested class:\n\n```java\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .agenticOptions(ParsingCreateParams.AgenticOptions.builder()\n        .putAdditionalProperty("secretProperty", JsonValue.from("42"))\n        .build())\n    .build();\n```\n\nThese properties can be accessed on the nested built object later using the         `_additionalProperties()` method.\n\nTo set a documented parameter or property to an undocumented or not yet supported _value_, pass a       [`JsonValue`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/Values.kt) object to its setter:\n\n```java\nimport com.llamacloud_prod.api.core.JsonValue;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(JsonValue.from(42))\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\n```\n\nThe most straightforward way to create a [`JsonValue`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/Values.kt) is using its       `from(...)` method:\n\n```java\nimport com.llamacloud_prod.api.core.JsonValue;\nimport java.util.List;\nimport java.util.Map;\n\n// Create primitive JSON values\nJsonValue nullValue = JsonValue.from(null);\nJsonValue booleanValue = JsonValue.from(true);\nJsonValue numberValue = JsonValue.from(42);\nJsonValue stringValue = JsonValue.from("Hello World!");\n\n// Create a JSON array value equivalent to `["Hello", "World"]`\nJsonValue arrayValue = JsonValue.from(List.of(\n  "Hello", "World"\n));\n\n// Create a JSON object value equivalent to `{ "a": 1, "b": 2 }`\nJsonValue objectValue = JsonValue.from(Map.of(\n  "a", 1,\n  "b", 2\n));\n\n// Create an arbitrarily nested JSON equivalent to:\n// {\n//   "a": [1, 2],\n//   "b": [3, 4]\n// }\nJsonValue complexValue = JsonValue.from(Map.of(\n  "a", List.of(\n    1, 2\n  ),\n  "b", List.of(\n    3, 4\n  )\n));\n```\n\nNormally a `Builder` class\'s `build` method will throw         [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html)         if any required parameter or property is unset.\n\nTo forcibly omit a required parameter or property, pass [`JsonMissing`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/core/Values.kt):\n\n```java\nimport com.llamacloud_prod.api.core.JsonMissing;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .version(ParsingCreateParams.Version.LATEST)\n    .tier(JsonMissing.of())\n    .build();\n```\n\n### Response properties\n\nTo access undocumented response properties, call the `_additionalProperties()` method:\n\n```java\nimport com.llamacloud_prod.api.core.JsonValue;\nimport java.util.Map;\n\nMap<String, JsonValue> additionalProperties = client.parsing().create(params)._additionalProperties();\nJsonValue secretPropertyValue = additionalProperties.get("secretProperty");\n\nString result = secretPropertyValue.accept(new JsonValue.Visitor<>() {\n    @Override\n    public String visitNull() {\n        return "It\'s null!";\n    }\n\n    @Override\n    public String visitBoolean(boolean value) {\n        return "It\'s a boolean!";\n    }\n\n    @Override\n    public String visitNumber(Number value) {\n        return "It\'s a number!";\n    }\n\n    // Other methods include `visitMissing`, `visitString`, `visitArray`, and `visitObject`\n    // The default implementation of each unimplemented method delegates to `visitDefault`, which throws by default, but can also be overridden\n});\n```\n\nTo access a property\'s raw JSON value, which may be undocumented, call its `_` prefixed method:\n\n```java\nimport com.llamacloud_prod.api.core.JsonField;\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateParams;\nimport java.util.Optional;\n\nJsonField<ParsingCreateParams.Tier> tier = client.parsing().create(params)._tier();\n\nif (tier.isMissing()) {\n  // The property is absent from the JSON response\n} else if (tier.isNull()) {\n  // The property was set to literal null\n} else {\n  // Check if value was provided as a string\n  // Other methods include `asNumber()`, `asBoolean()`, etc.\n  Optional<String> jsonString = tier.asString();\n\n  // Try to deserialize into a custom type\n  MyClass myObject = tier.asUnknown().orElseThrow().convert(MyClass.class);\n}\n```\n\n### Response validation\n\nIn rare cases, the API may return a response that doesn\'t match the expected type. For example, the SDK     may expect a property to contain a `String`, but the API could return something else.\n\nBy default, the SDK will not throw an exception in this case. It will throw     [`LlamaCloudInvalidDataException`](llama-cloud-java-core/src/main/kotlin/com/llamacloud_prod/api/errors/LlamaCloudInvalidDataException.kt) only if you directly access the property.\n\nValidating the response is _not_ forwards compatible with new types from the API for existing fields.\n\nIf you would still prefer to check that the response is completely well-typed upfront, then either call     `validate()`:\n\n```java\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\n\nParsingCreateResponse parsing = client.parsing().create(params).validate();\n```\n\nOr configure the method call to validate the response using the `responseValidation` method:\n\n```java\nimport com.llamacloud_prod.api.models.parsing.ParsingCreateResponse;\n\nParsingCreateResponse parsing = client.parsing().create(\n  params, RequestOptions.builder().responseValidation(true).build()\n);\n```\n\nOr configure the default for all method calls at the client level:\n\n```java\nimport com.llamacloud_prod.api.client.LlamaCloudClient;\nimport com.llamacloud_prod.api.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .responseValidation(true)\n    .build();\n```\n\n## FAQ\n\n### Why don\'t you use plain `enum` classes?\n\nJava `enum` classes are not trivially   [forwards compatible](https://www.stainless.com/blog/making-java-enums-forwards-compatible). Using them in   the SDK could cause runtime exceptions if the API is updated to respond with a new enum value.\n\n### Why do you represent fields using `JsonField<T>` instead of just plain `T`?\n\nUsing `JsonField<T>` enables a few features:\n\n- Allowing usage of [undocumented API functionality](#undocumented-api-functionality)\n- Lazily [validating the API response against the expected shape](#response-validation)\n- Representing absent vs explicitly null values\n\n### Why don\'t you use [`data` classes](https://kotlinlang.org/docs/data-classes.html)?\n\nIt is not [backwards compatible to add new fields to a data class](https://kotlinlang.org/docs/api-guidelines-backward-compatibility.html#avoid-using-data-classes-in-your-api)   and we don\'t want to introduce a breaking change every time we add a field to a class.\n\n### Why don\'t you use checked exceptions?\n\nChecked exceptions are widely considered a mistake in the Java programming language. In fact, they were   omitted from Kotlin for this reason.\n\nChecked exceptions:\n\n- Are verbose to handle\n- Encourage error handling at the wrong level of abstraction, where nothing can be done about the error\n- Are tedious to propagate due to the [function coloring problem](https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function)\n- Don\'t play well with lambdas (also due to the function coloring problem)\n\n## Semantic versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n2. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/run-llama/llama-parse-java/issues) with questions, bugs, or suggestions.\n',
   },
 ];
 

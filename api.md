@@ -369,11 +369,11 @@ Methods:
 - <code title="delete /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">delete</a>(retrieverID, { ...params }) -> void</code>
 - <code title="post /api/v1/retrievers/retrieve">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">search</a>({ ...params }) -> CompositeRetrievalResult</code>
 
-## Query
+## Retriever
 
 Methods:
 
-- <code title="post /api/v1/retrievers/{retriever_id}/retrieve">client.retrievers.query.<a href="./src/resources/retrievers/query.ts">search</a>(retrieverID, { ...params }) -> CompositeRetrievalResult</code>
+- <code title="post /api/v1/retrievers/{retriever_id}/retrieve">client.retrievers.retriever.<a href="./src/resources/retrievers/retriever.ts">search</a>(retrieverID, { ...params }) -> CompositeRetrievalResult</code>
 
 # Beta
 
