@@ -191,7 +191,7 @@ const fuse = new Fuse(
     'client.retrievers.search',
     'client.retrievers.update',
     'client.retrievers.upsert',
-    'client.retrievers.retriever.search',
+    'client.retrievers.query.search',
     'client.beta.indexes.create',
     'client.beta.indexes.delete',
     'client.beta.indexes.get',

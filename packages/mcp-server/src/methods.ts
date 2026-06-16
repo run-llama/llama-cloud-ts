@@ -509,8 +509,8 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/retrievers/retrieve',
   },
   {
-    clientCallName: 'client.retrievers.retriever.search',
-    fullyQualifiedName: 'retrievers.retriever.search',
+    clientCallName: 'client.retrievers.query.search',
+    fullyQualifiedName: 'retrievers.query.search',
     httpMethod: 'post',
     httpPath: '/api/v1/retrievers/{retriever_id}/retrieve',
   },
