@@ -6,7 +6,11 @@ on:
     inputs:
       path:
         description: The path to run the release in, e.g. '.' or 'packages/mcp-server'
+<<<<<<< HEAD
+        required: true
+=======
         required: false
+>>>>>>> 53514b3 (Apply custom code)
 
 jobs:
   publish:
