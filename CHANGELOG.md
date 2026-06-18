@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.10.0 (2026-06-18)
+
+Full Changelog: [v2.9.0...v2.10.0](https://github.com/run-llama/llama-parse-ts/compare/v2.9.0...v2.10.0)
+
+### Features
+
+* **api:** api update ([360dc53](https://github.com/run-llama/llama-parse-ts/commit/360dc53057198d074bf6237043e1f4adfef53fc4))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([4319932](https://github.com/run-llama/llama-parse-ts/commit/4319932c71a0628ba9385b1148669f7b0621b1b2))
+
+
+### Chores
+
+* configure new SDK language ([bfce694](https://github.com/run-llama/llama-parse-ts/commit/bfce694ca6395ba15206cb247813d89dedcc75b3))
+* update SDK settings ([69b253c](https://github.com/run-llama/llama-parse-ts/commit/69b253c17de3a31965ddf001e58952da9ae6f7c4))
+* update SDK settings ([162f77b](https://github.com/run-llama/llama-parse-ts/commit/162f77b6ddf5d6e805a76b952eb2a4450f45d30b))
+* update SDK settings ([3fc6d67](https://github.com/run-llama/llama-parse-ts/commit/3fc6d67e5649d33e337b46c47776ce0b74960306))
+
 ## 2.9.0 (2026-06-09)
 
 Full Changelog: [v2.8.0...v2.9.0](https://github.com/run-llama/llama-parse-ts/compare/v2.8.0...v2.9.0)
