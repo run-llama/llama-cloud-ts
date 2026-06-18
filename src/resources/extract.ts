@@ -222,7 +222,9 @@ export interface ExtractConfiguration {
 
   /**
    * Use 'latest' for the latest release for the selected tier or a date string
-   * (YYYY-MM-DD format) to pin to the nearest release at or before that date.
+   * (YYYY-MM-DD format) to pin to the nearest release at or before that date. Job
+   * responses always report the concrete resolved version the job runs, fixed at job
+   * creation; saved configurations keep the value as provided.
    */
   version?: string;
 }
@@ -404,6 +406,11 @@ export namespace ExtractV2JobCreate {
       | 'sheets.error'
       | 'sheets.partial_success'
       | 'sheets.cancelled'
+      | 'split.pending'
+      | 'split.processing'
+      | 'split.success'
+      | 'split.error'
+      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -594,6 +601,11 @@ export namespace ExtractCreateParams {
       | 'sheets.error'
       | 'sheets.partial_success'
       | 'sheets.cancelled'
+      | 'split.pending'
+      | 'split.processing'
+      | 'split.success'
+      | 'split.error'
+      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 

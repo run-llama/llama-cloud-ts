@@ -29,6 +29,7 @@ describe('resource parsing', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       agentic_options: { custom_prompt: 'custom_prompt' },
       client_name: 'client_name',
+      configuration_id: 'configuration_id',
       crop_box: {
         bottom: 0,
         left: 0,
@@ -45,6 +46,7 @@ describe('resource parsing', () => {
           remove_fixed_elements: true,
           remove_navigation_elements: true,
         },
+        image: { camera_photo_correction: true },
         pdf: {},
         presentation: { out_of_bounds_content: true, skip_embedded_data: true },
         spreadsheet: {

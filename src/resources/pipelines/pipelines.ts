@@ -84,6 +84,8 @@ export class Pipelines extends APIResource {
    *
    * A pipeline connects data sources to a vector store for RAG. After creation, call
    * `POST /pipelines/{id}/sync` to start ingesting documents.
+   *
+   * @deprecated
    */
   create(params: PipelineCreateParams, options?: RequestOptions): APIPromise<Pipeline> {
     const { organization_id, project_id, ...body } = params;
@@ -100,6 +102,8 @@ export class Pipelines extends APIResource {
    * Searches the pipeline's vector store using the provided query and retrieval
    * parameters. Supports dense, sparse, and hybrid search modes with configurable
    * top-k and reranking.
+   *
+   * @deprecated
    */
   retrieve(
     pipelineID: string,
@@ -116,6 +120,8 @@ export class Pipelines extends APIResource {
 
   /**
    * Update an existing pipeline's configuration.
+   *
+   * @deprecated
    */
   update(pipelineID: string, body: PipelineUpdateParams, options?: RequestOptions): APIPromise<Pipeline> {
     return this._client.put(path`/api/v1/pipelines/${pipelineID}`, { body, ...options });
@@ -123,6 +129,8 @@ export class Pipelines extends APIResource {
 
   /**
    * Search for pipelines by name, type, or project.
+   *
+   * @deprecated
    */
   list(
     query: PipelineListParams | null | undefined = {},
@@ -136,6 +144,8 @@ export class Pipelines extends APIResource {
    *
    * Removes pipeline files, data sources, and vector store data. This operation is
    * irreversible.
+   *
+   * @deprecated
    */
   delete(pipelineID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/v1/pipelines/${pipelineID}`, {
@@ -146,6 +156,8 @@ export class Pipelines extends APIResource {
 
   /**
    * Get a pipeline by ID.
+   *
+   * @deprecated
    */
   get(pipelineID: string, options?: RequestOptions): APIPromise<Pipeline> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}`, options);
@@ -156,6 +168,8 @@ export class Pipelines extends APIResource {
    *
    * Returns document counts, sync progress, and the last effective timestamp. Only
    * available for managed pipelines.
+   *
+   * @deprecated
    */
   getStatus(
     pipelineID: string,
@@ -170,6 +184,8 @@ export class Pipelines extends APIResource {
    *
    * Updates the pipeline if one with the same name and project already exists,
    * otherwise creates a new one.
+   *
+   * @deprecated
    */
   upsert(params: PipelineUpsertParams, options?: RequestOptions): APIPromise<Pipeline> {
     const { organization_id, project_id, ...body } = params;
@@ -938,6 +954,11 @@ export namespace LlamaParseParameters {
       | 'sheets.error'
       | 'sheets.partial_success'
       | 'sheets.cancelled'
+      | 'split.pending'
+      | 'split.processing'
+      | 'split.success'
+      | 'split.error'
+      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 

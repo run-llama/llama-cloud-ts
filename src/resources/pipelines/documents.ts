@@ -15,6 +15,8 @@ import { path } from '../../internal/utils/path';
 export class Documents extends APIResource {
   /**
    * Batch create documents for a pipeline.
+   *
+   * @deprecated
    */
   create(
     pipelineID: string,
@@ -27,6 +29,8 @@ export class Documents extends APIResource {
 
   /**
    * Return a list of documents for a pipeline.
+   *
+   * @deprecated
    */
   list(
     pipelineID: string,
@@ -43,6 +47,8 @@ export class Documents extends APIResource {
   /**
    * Delete a document from a pipeline; runs async (vectors first, then MongoDB
    * record).
+   *
+   * @deprecated
    */
   delete(documentID: string, params: DocumentDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { pipeline_id } = params;
@@ -54,6 +60,8 @@ export class Documents extends APIResource {
 
   /**
    * Return a single document for a pipeline.
+   *
+   * @deprecated
    */
   get(documentID: string, params: DocumentGetParams, options?: RequestOptions): APIPromise<CloudDocument> {
     const { pipeline_id } = params;
@@ -62,6 +70,8 @@ export class Documents extends APIResource {
 
   /**
    * Return a list of chunks for a pipeline document.
+   *
+   * @deprecated
    */
   getChunks(
     documentID: string,
@@ -74,6 +84,8 @@ export class Documents extends APIResource {
 
   /**
    * Return a single document for a pipeline.
+   *
+   * @deprecated
    */
   getStatus(
     documentID: string,
@@ -86,6 +98,8 @@ export class Documents extends APIResource {
 
   /**
    * Sync a specific document for a pipeline.
+   *
+   * @deprecated
    */
   sync(documentID: string, params: DocumentSyncParams, options?: RequestOptions): APIPromise<unknown> {
     const { pipeline_id } = params;
@@ -94,6 +108,8 @@ export class Documents extends APIResource {
 
   /**
    * Batch create or update a document for a pipeline.
+   *
+   * @deprecated
    */
   upsert(
     pipelineID: string,

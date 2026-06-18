@@ -169,7 +169,8 @@ export interface ClassifyCreateRequest {
   parse_job_id?: string | null;
 
   /**
-   * Idempotency key scoped to the project
+   * Idempotency key scoped to the project. Reusing a key returns the original job;
+   * the new request body is ignored.
    */
   transaction_id?: string | null;
 
@@ -211,6 +212,11 @@ export namespace ClassifyCreateRequest {
       | 'sheets.error'
       | 'sheets.partial_success'
       | 'sheets.cancelled'
+      | 'split.pending'
+      | 'split.processing'
+      | 'split.success'
+      | 'split.error'
+      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -513,7 +519,8 @@ export interface ClassifyCreateParams {
   parse_job_id?: string | null;
 
   /**
-   * Body param: Idempotency key scoped to the project
+   * Body param: Idempotency key scoped to the project. Reusing a key returns the
+   * original job; the new request body is ignored.
    */
   transaction_id?: string | null;
 
@@ -555,6 +562,11 @@ export namespace ClassifyCreateParams {
       | 'sheets.error'
       | 'sheets.partial_success'
       | 'sheets.cancelled'
+      | 'split.pending'
+      | 'split.processing'
+      | 'split.success'
+      | 'split.error'
+      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
