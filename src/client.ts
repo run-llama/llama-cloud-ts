@@ -159,6 +159,15 @@ import {
   ProjectListResponse,
   Projects,
 } from './resources/projects';
+import {
+  SheetCreateParams,
+  SheetDeleteJobParams,
+  SheetDeleteJobResponse,
+  SheetGetParams,
+  SheetGetResultTableParams,
+  SheetListParams,
+  Sheets,
+} from './resources/sheets';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
 import {
@@ -961,6 +970,7 @@ export class LlamaCloud {
   static toFile = Uploads.toFile;
 
   files: API.Files = new API.Files(this);
+  sheets: API.Sheets = new API.Sheets(this);
   parsing: API.Parsing = new API.Parsing(this);
   extract: API.Extract = new API.Extract(this);
   classifier: API.Classifier = new API.Classifier(this);
@@ -976,6 +986,7 @@ export class LlamaCloud {
 }
 
 LlamaCloud.Files = Files;
+LlamaCloud.Sheets = Sheets;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Extract = Extract;
 LlamaCloud.Classifier = Classifier;
@@ -1047,6 +1058,16 @@ export declare namespace LlamaCloud {
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGetParams as FileGetParams,
+  };
+
+  export {
+    Sheets as Sheets,
+    type SheetDeleteJobResponse as SheetDeleteJobResponse,
+    type SheetCreateParams as SheetCreateParams,
+    type SheetListParams as SheetListParams,
+    type SheetGetParams as SheetGetParams,
+    type SheetGetResultTableParams as SheetGetResultTableParams,
+    type SheetDeleteJobParams as SheetDeleteJobParams,
   };
 
   export {

@@ -1365,7 +1365,7 @@ export interface ParsingCreateParams {
    * (balanced), 'agentic' (AI-powered with custom prompts), or 'agentic_plus'
    * (premium AI with highest accuracy)
    */
-  tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';
+  tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus' | (string & {});
 
   /**
    * Body param: Version for the selected tier. Use `latest`, or pin one of that
@@ -1374,13 +1374,13 @@ export interface ParsingCreateParams {
    * Current `latest` by tier:
    *
    * - `fast`: `2025-12-11`
-   * - `cost_effective`: `2026-06-05`
-   * - `agentic`: `2026-06-04`
-   * - `agentic_plus`: `2026-06-04`
+   * - `cost_effective`: `2026-06-11`
+   * - `agentic`: `2026-06-11`
+   * - `agentic_plus`: `2026-06-11`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-06-05' | '2026-06-04' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-11' | '2025-12-11' | (string & {});
 
   /**
    * Query param
@@ -1406,6 +1406,12 @@ export interface ParsingCreateParams {
    * analytics and debugging. Example: 'my-app-v2'
    */
   client_name?: string | null;
+
+  /**
+   * Body param: ID of a saved parse configuration. When set, `tier` and `version`
+   * default to the saved configuration's values — omit them or pass `'configured'`.
+   */
+  configuration_id?: string | null;
 
   /**
    * Body param: Crop boundaries to process only a portion of each page. Values are
@@ -1536,6 +1542,11 @@ export namespace ParsingCreateParams {
     html?: InputOptions.HTML;
 
     /**
+     * Image parsing options (applies to .jpg, .jpeg, .png, .webp files)
+     */
+    image?: InputOptions.Image;
+
+    /**
      * PDF-specific parsing options (applies to .pdf files)
      */
     pdf?: unknown;
@@ -1572,6 +1583,20 @@ export namespace ParsingCreateParams {
        * Remove navigation elements (nav bars, sidebars, menus) to focus on main content
        */
       remove_navigation_elements?: boolean | null;
+    }
+
+    /**
+     * Image parsing options (applies to .jpg, .jpeg, .png, .webp files)
+     */
+    export interface Image {
+      /**
+       * Detect documents photographed with a camera (e.g. phone scans of receipts or
+       * forms), then crop, perspective-correct, and flatten uneven lighting and shadows
+       * before parsing. Supports JPEG, PNG, WebP, and HEIC/HEIF inputs. Improves results
+       * when the document is tilted or surrounded by background. Images that already
+       * look like clean scans are left untouched
+       */
+      camera_photo_correction?: boolean | null;
     }
 
     /**
@@ -2183,13 +2208,13 @@ export namespace ParsingCreateParams {
          * Current `latest` by tier:
          *
          * - `fast`: `2025-12-11`
-         * - `cost_effective`: `2026-06-05`
-         * - `agentic`: `2026-06-04`
-         * - `agentic_plus`: `2026-06-04`
+         * - `cost_effective`: `2026-06-11`
+         * - `agentic`: `2026-06-11`
+         * - `agentic_plus`: `2026-06-11`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-06-05' | '2026-06-04' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-11' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {

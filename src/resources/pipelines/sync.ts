@@ -12,6 +12,8 @@ export class Sync extends APIResource {
    *
    * Processes new and updated documents from data sources and files, then updates
    * the index for retrieval.
+   *
+   * @deprecated
    */
   create(pipelineID: string, options?: RequestOptions): APIPromise<PipelinesAPI.Pipeline> {
     return this._client.post(path`/api/v1/pipelines/${pipelineID}/sync`, options);
@@ -19,6 +21,8 @@ export class Sync extends APIResource {
 
   /**
    * Cancel all running sync jobs for a pipeline.
+   *
+   * @deprecated
    */
   cancel(pipelineID: string, options?: RequestOptions): APIPromise<PipelinesAPI.Pipeline> {
     return this._client.post(path`/api/v1/pipelines/${pipelineID}/sync/cancel`, options);

@@ -41,6 +41,20 @@ Methods:
 - <code title="delete /api/v1/beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID, { ...params }) -> void</code>
 - <code title="get /api/v1/beta/files/{file_id}/content">client.files.<a href="./src/resources/files.ts">get</a>(fileID, { ...params }) -> PresignedURL</code>
 
+# Sheets
+
+Types:
+
+- <code><a href="./src/resources/sheets.ts">SheetDeleteJobResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/sheets/jobs">client.sheets.<a href="./src/resources/sheets.ts">create</a>({ ...params }) -> SheetsJob</code>
+- <code title="get /api/v1/sheets/jobs">client.sheets.<a href="./src/resources/sheets.ts">list</a>({ ...params }) -> SheetsJobsPaginatedCursor</code>
+- <code title="get /api/v1/sheets/jobs/{spreadsheet_job_id}">client.sheets.<a href="./src/resources/sheets.ts">get</a>(spreadsheetJobID, { ...params }) -> SheetsJob</code>
+- <code title="get /api/v1/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}">client.sheets.<a href="./src/resources/sheets.ts">getResultTable</a>(regionType, { ...params }) -> PresignedURL</code>
+- <code title="delete /api/v1/sheets/jobs/{spreadsheet_job_id}">client.sheets.<a href="./src/resources/sheets.ts">deleteJob</a>(spreadsheetJobID, { ...params }) -> unknown</code>
+
 # Parsing
 
 Types:

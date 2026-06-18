@@ -186,3 +186,12 @@ export {
   type RetrieverDeleteParams,
   type RetrieverSearchParams,
 } from './retrievers/retrievers';
+export {
+  Sheets,
+  type SheetDeleteJobResponse,
+  type SheetCreateParams,
+  type SheetListParams,
+  type SheetGetParams,
+  type SheetGetResultTableParams,
+  type SheetDeleteJobParams,
+} from './sheets';

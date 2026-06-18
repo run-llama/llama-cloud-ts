@@ -11,6 +11,8 @@ import { path } from '../../internal/utils/path';
 export class DataSources extends APIResource {
   /**
    * Get data sources for a pipeline.
+   *
+   * @deprecated
    */
   getDataSources(pipelineID: string, options?: RequestOptions): APIPromise<DataSourceGetDataSourcesResponse> {
     return this._client.get(path`/api/v1/pipelines/${pipelineID}/data-sources`, options);
@@ -18,6 +20,8 @@ export class DataSources extends APIResource {
 
   /**
    * Add data sources to a pipeline.
+   *
+   * @deprecated
    */
   updateDataSources(
     pipelineID: string,
@@ -30,6 +34,8 @@ export class DataSources extends APIResource {
 
   /**
    * Update the configuration of a data source in a pipeline.
+   *
+   * @deprecated
    */
   update(
     dataSourceID: string,
@@ -45,6 +51,8 @@ export class DataSources extends APIResource {
 
   /**
    * Get the status of a data source for a pipeline.
+   *
+   * @deprecated
    */
   getStatus(
     dataSourceID: string,
@@ -61,6 +69,8 @@ export class DataSources extends APIResource {
   /**
    * Run incremental ingestion: pull upstream changes from the data source into the
    * data sink.
+   *
+   * @deprecated
    */
   sync(
     dataSourceID: string,
