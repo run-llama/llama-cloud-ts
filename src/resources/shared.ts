@@ -191,6 +191,15 @@ export interface CloudConfluenceDataSource {
   supports_access_control?: boolean;
 
   /**
+   * Whether to fetch space-level permissions (allowed users/groups) and attach them
+   * to document metadata for access control. Disable for Confluence Server/Data
+   * Center versions whose permission APIs are unavailable (e.g. the JSON-RPC API
+   * removed in Data Center 9.2.6+), which otherwise surface as 401 errors during
+   * sync.
+   */
+  sync_permissions?: boolean;
+
+  /**
    * The username to use for authentication.
    */
   user_name?: string | null;

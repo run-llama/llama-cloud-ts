@@ -17,14 +17,7 @@ export class Sheets extends APIResource {
    * default configuration is used. Optionally include `webhook_configurations` to
    * receive `sheets.*` status notifications.
    *
-   * Experimental: not production-ready and subject to change.
-   *
-   * @example
-   * ```ts
-   * const sheetsJob = await client.beta.sheets.create({
-   *   file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-   * });
-   * ```
+   * @deprecated
    */
   create(params: SheetCreateParams, options?: RequestOptions): APIPromise<SheetsJob> {
     const { organization_id, project_id, ...body } = params;
@@ -36,16 +29,9 @@ export class Sheets extends APIResource {
   }
 
   /**
-   * List spreadsheet parsing jobs. Experimental: not production-ready and subject to
-   * change.
+   * List spreadsheet parsing jobs.
    *
-   * @example
-   * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const sheetsJob of client.beta.sheets.list()) {
-   *   // ...
-   * }
-   * ```
+   * @deprecated
    */
   list(
     query: SheetListParams | null | undefined = {},
@@ -58,15 +44,9 @@ export class Sheets extends APIResource {
   }
 
   /**
-   * Delete a spreadsheet parsing job and its associated data. Experimental: not
-   * production-ready and subject to change.
+   * Delete a spreadsheet parsing job and its associated data.
    *
-   * @example
-   * ```ts
-   * const response = await client.beta.sheets.deleteJob(
-   *   'spreadsheet_job_id',
-   * );
-   * ```
+   * @deprecated
    */
   deleteJob(
     spreadsheetJobID: string,
@@ -83,14 +63,9 @@ export class Sheets extends APIResource {
   /**
    * Get a spreadsheet parsing job. When `include_results=True` (default), embeds
    * extracted regions and results if complete, skipping the separate `/results`
-   * call. Experimental: not production-ready and subject to change.
+   * call.
    *
-   * @example
-   * ```ts
-   * const sheetsJob = await client.beta.sheets.get(
-   *   'spreadsheet_job_id',
-   * );
-   * ```
+   * @deprecated
    */
   get(
     spreadsheetJobID: string,
@@ -101,17 +76,9 @@ export class Sheets extends APIResource {
   }
 
   /**
-   * Generate a presigned URL to download a specific extracted region. Experimental:
-   * not production-ready and subject to change.
+   * Generate a presigned URL to download a specific extracted region.
    *
-   * @example
-   * ```ts
-   * const presignedURL =
-   *   await client.beta.sheets.getResultTable('table', {
-   *     spreadsheet_job_id: 'spreadsheet_job_id',
-   *     region_id: 'region_id',
-   *   });
-   * ```
+   * @deprecated
    */
   getResultTable(
     regionType: 'table' | 'extra' | 'cell_metadata',
@@ -383,6 +350,11 @@ export namespace SheetsJob {
         | 'sheets.error'
         | 'sheets.partial_success'
         | 'sheets.cancelled'
+        | 'split.pending'
+        | 'split.processing'
+        | 'split.success'
+        | 'split.error'
+        | 'split.cancelled'
         | 'unmapped_event'
       > | null;
 
@@ -583,6 +555,11 @@ export namespace SheetCreateParams {
       | 'sheets.error'
       | 'sheets.partial_success'
       | 'sheets.cancelled'
+      | 'split.pending'
+      | 'split.processing'
+      | 'split.success'
+      | 'split.error'
+      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 

@@ -15,6 +15,8 @@ import { path } from '../../internal/utils/path';
 export class Files extends APIResource {
   /**
    * Add files to a pipeline.
+   *
+   * @deprecated
    */
   create(
     pipelineID: string,
@@ -27,6 +29,8 @@ export class Files extends APIResource {
 
   /**
    * Update a file for a pipeline.
+   *
+   * @deprecated
    */
   update(fileID: string, params: FileUpdateParams, options?: RequestOptions): APIPromise<PipelineFile> {
     const { pipeline_id, ...body } = params;
@@ -52,6 +56,8 @@ export class Files extends APIResource {
 
   /**
    * Delete a file from a pipeline.
+   *
+   * @deprecated
    */
   delete(fileID: string, params: FileDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { pipeline_id } = params;
@@ -63,6 +69,8 @@ export class Files extends APIResource {
 
   /**
    * Get status of a file for a pipeline.
+   *
+   * @deprecated
    */
   getStatus(
     fileID: string,
@@ -75,6 +83,8 @@ export class Files extends APIResource {
 
   /**
    * Get files for a pipeline.
+   *
+   * @deprecated
    */
   getStatusCounts(
     pipelineID: string,
