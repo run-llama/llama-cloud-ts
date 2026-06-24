@@ -15,6 +15,8 @@ import { path } from '../../internal/utils/path';
 export class Documents extends APIResource {
   /**
    * Batch create documents for a pipeline.
+   *
+   * @deprecated
    */
   create(
     pipelineID: string,
@@ -27,6 +29,8 @@ export class Documents extends APIResource {
 
   /**
    * Return a list of documents for a pipeline.
+   *
+   * @deprecated
    */
   list(
     pipelineID: string,
@@ -41,8 +45,20 @@ export class Documents extends APIResource {
   }
 
   /**
+   * Return a single document for a pipeline.
+   *
+   * @deprecated
+   */
+  get(documentID: string, params: DocumentGetParams, options?: RequestOptions): APIPromise<CloudDocument> {
+    const { pipeline_id } = params;
+    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}`, options);
+  }
+
+  /**
    * Delete a document from a pipeline; runs async (vectors first, then MongoDB
    * record).
+   *
+   * @deprecated
    */
   delete(documentID: string, params: DocumentDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { pipeline_id } = params;
@@ -54,26 +70,8 @@ export class Documents extends APIResource {
 
   /**
    * Return a single document for a pipeline.
-   */
-  get(documentID: string, params: DocumentGetParams, options?: RequestOptions): APIPromise<CloudDocument> {
-    const { pipeline_id } = params;
-    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}`, options);
-  }
-
-  /**
-   * Return a list of chunks for a pipeline document.
-   */
-  getChunks(
-    documentID: string,
-    params: DocumentGetChunksParams,
-    options?: RequestOptions,
-  ): APIPromise<DocumentGetChunksResponse> {
-    const { pipeline_id } = params;
-    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/chunks`, options);
-  }
-
-  /**
-   * Return a single document for a pipeline.
+   *
+   * @deprecated
    */
   getStatus(
     documentID: string,
@@ -86,6 +84,8 @@ export class Documents extends APIResource {
 
   /**
    * Sync a specific document for a pipeline.
+   *
+   * @deprecated
    */
   sync(documentID: string, params: DocumentSyncParams, options?: RequestOptions): APIPromise<unknown> {
     const { pipeline_id } = params;
@@ -93,7 +93,23 @@ export class Documents extends APIResource {
   }
 
   /**
+   * Return a list of chunks for a pipeline document.
+   *
+   * @deprecated
+   */
+  getChunks(
+    documentID: string,
+    params: DocumentGetChunksParams,
+    options?: RequestOptions,
+  ): APIPromise<DocumentGetChunksResponse> {
+    const { pipeline_id } = params;
+    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/chunks`, options);
+  }
+
+  /**
    * Batch create or update a document for a pipeline.
+   *
+   * @deprecated
    */
   upsert(
     pipelineID: string,
@@ -272,15 +288,11 @@ export interface DocumentListParams extends PaginatedCloudDocumentsParams {
   status_refresh_policy?: 'cached' | 'ttl';
 }
 
-export interface DocumentDeleteParams {
-  pipeline_id: string;
-}
-
 export interface DocumentGetParams {
   pipeline_id: string;
 }
 
-export interface DocumentGetChunksParams {
+export interface DocumentDeleteParams {
   pipeline_id: string;
 }
 
@@ -289,6 +301,10 @@ export interface DocumentGetStatusParams {
 }
 
 export interface DocumentSyncParams {
+  pipeline_id: string;
+}
+
+export interface DocumentGetChunksParams {
   pipeline_id: string;
 }
 
@@ -308,11 +324,11 @@ export declare namespace Documents {
     type CloudDocumentsPaginatedCloudDocuments as CloudDocumentsPaginatedCloudDocuments,
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
-    type DocumentDeleteParams as DocumentDeleteParams,
     type DocumentGetParams as DocumentGetParams,
-    type DocumentGetChunksParams as DocumentGetChunksParams,
+    type DocumentDeleteParams as DocumentDeleteParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,
     type DocumentSyncParams as DocumentSyncParams,
+    type DocumentGetChunksParams as DocumentGetChunksParams,
     type DocumentUpsertParams as DocumentUpsertParams,
   };
 }

@@ -66,47 +66,6 @@ export class Extract extends APIResource {
   }
 
   /**
-   * Delete an extraction job and its results.
-   *
-   * @example
-   * ```ts
-   * const extract = await client.extract.delete('job_id');
-   * ```
-   */
-  delete(
-    jobID: string,
-    params: ExtractDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { organization_id, project_id } = params ?? {};
-    return this._client.delete(path`/api/v2/extract/${jobID}`, {
-      query: { organization_id, project_id },
-      ...options,
-    });
-  }
-
-  /**
-   * Generate a JSON schema and return a product configuration request.
-   *
-   * @example
-   * ```ts
-   * const configurationCreate =
-   *   await client.extract.generateSchema();
-   * ```
-   */
-  generateSchema(
-    params: ExtractGenerateSchemaParams,
-    options?: RequestOptions,
-  ): APIPromise<ConfigurationsAPI.ConfigurationCreate> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v2/extract/schema/generate', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
-  }
-
-  /**
    * Get a single extraction job by ID.
    *
    * Returns the job status and results when complete. Use `expand=configuration` to
@@ -124,6 +83,26 @@ export class Extract extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ExtractV2Job> {
     return this._client.get(path`/api/v2/extract/${jobID}`, { query, ...options });
+  }
+
+  /**
+   * Delete an extraction job and its results.
+   *
+   * @example
+   * ```ts
+   * const extract = await client.extract.delete('job_id');
+   * ```
+   */
+  delete(
+    jobID: string,
+    params: ExtractDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v2/extract/${jobID}`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
   }
 
   /**
@@ -155,6 +134,27 @@ export class Extract extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ExtractV2SchemaValidateResponse> {
     return this._client.post('/api/v2/extract/schema/validation', { body, ...options });
+  }
+
+  /**
+   * Generate a JSON schema and return a product configuration request.
+   *
+   * @example
+   * ```ts
+   * const configurationCreate =
+   *   await client.extract.generateSchema();
+   * ```
+   */
+  generateSchema(
+    params: ExtractGenerateSchemaParams,
+    options?: RequestOptions,
+  ): APIPromise<ConfigurationsAPI.ConfigurationCreate> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v2/extract/schema/generate', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -330,7 +330,9 @@ export interface ExtractConfiguration {
 
   /**
    * Use 'latest' for the latest release for the selected tier or a date string
-   * (YYYY-MM-DD format) to pin to the nearest release at or before that date.
+   * (YYYY-MM-DD format) to pin to the nearest release at or before that date. Job
+   * responses always report the concrete resolved version the job runs, fixed at job
+   * creation; saved configurations keep the value as provided.
    */
   version?: string;
 }
@@ -512,6 +514,11 @@ export namespace ExtractV2JobCreate {
       | 'sheets.error'
       | 'sheets.partial_success'
       | 'sheets.cancelled'
+      | 'split.pending'
+      | 'split.processing'
+      | 'split.success'
+      | 'split.error'
+      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -702,6 +709,11 @@ export namespace ExtractCreateParams {
       | 'sheets.error'
       | 'sheets.partial_success'
       | 'sheets.cancelled'
+      | 'split.pending'
+      | 'split.processing'
+      | 'split.success'
+      | 'split.error'
+      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -773,10 +785,30 @@ export interface ExtractListParams extends PaginatedCursorParams {
   status?: 'PENDING' | 'THROTTLED' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | null;
 }
 
+export interface ExtractGetParams {
+  /**
+   * Additional fields to include: configuration, extract_metadata
+   */
+  expand?: Array<string>;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface ExtractDeleteParams {
   organization_id?: string | null;
 
   project_id?: string | null;
+}
+
+export interface ExtractValidateSchemaParams {
+  /**
+   * JSON Schema to validate for use with extract jobs
+   */
+  data_schema: {
+    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
+  };
 }
 
 export interface ExtractGenerateSchemaParams {
@@ -813,26 +845,6 @@ export interface ExtractGenerateSchemaParams {
   prompt?: string | null;
 }
 
-export interface ExtractGetParams {
-  /**
-   * Additional fields to include: configuration, extract_metadata
-   */
-  expand?: Array<string>;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface ExtractValidateSchemaParams {
-  /**
-   * JSON Schema to validate for use with extract jobs
-   */
-  data_schema: {
-    [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
-  };
-}
-
 export declare namespace Extract {
   export {
     type ExtractConfiguration as ExtractConfiguration,
@@ -849,9 +861,9 @@ export declare namespace Extract {
     type ExtractV2JobsPaginatedCursor as ExtractV2JobsPaginatedCursor,
     type ExtractCreateParams as ExtractCreateParams,
     type ExtractListParams as ExtractListParams,
-    type ExtractDeleteParams as ExtractDeleteParams,
-    type ExtractGenerateSchemaParams as ExtractGenerateSchemaParams,
     type ExtractGetParams as ExtractGetParams,
+    type ExtractDeleteParams as ExtractDeleteParams,
     type ExtractValidateSchemaParams as ExtractValidateSchemaParams,
+    type ExtractGenerateSchemaParams as ExtractGenerateSchemaParams,
   };
 }

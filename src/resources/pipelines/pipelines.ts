@@ -80,10 +80,24 @@ export class Pipelines extends APIResource {
   documents: DocumentsAPI.Documents = new DocumentsAPI.Documents(this._client);
 
   /**
+   * Search for pipelines by name, type, or project.
+   *
+   * @deprecated
+   */
+  list(
+    query: PipelineListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PipelineListResponse> {
+    return this._client.get('/api/v1/pipelines', { query, ...options });
+  }
+
+  /**
    * Create a new managed ingestion pipeline.
    *
    * A pipeline connects data sources to a vector store for RAG. After creation, call
    * `POST /pipelines/{id}/sync` to start ingesting documents.
+   *
+   * @deprecated
    */
   create(params: PipelineCreateParams, options?: RequestOptions): APIPromise<Pipeline> {
     const { organization_id, project_id, ...body } = params;
@@ -95,40 +109,21 @@ export class Pipelines extends APIResource {
   }
 
   /**
-   * Run a retrieval query against a managed pipeline.
+   * Get a pipeline by ID.
    *
-   * Searches the pipeline's vector store using the provided query and retrieval
-   * parameters. Supports dense, sparse, and hybrid search modes with configurable
-   * top-k and reranking.
+   * @deprecated
    */
-  retrieve(
-    pipelineID: string,
-    params: PipelineRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<PipelineRetrieveResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post(path`/api/v1/pipelines/${pipelineID}/retrieve`, {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
+  get(pipelineID: string, options?: RequestOptions): APIPromise<Pipeline> {
+    return this._client.get(path`/api/v1/pipelines/${pipelineID}`, options);
   }
 
   /**
    * Update an existing pipeline's configuration.
+   *
+   * @deprecated
    */
   update(pipelineID: string, body: PipelineUpdateParams, options?: RequestOptions): APIPromise<Pipeline> {
     return this._client.put(path`/api/v1/pipelines/${pipelineID}`, { body, ...options });
-  }
-
-  /**
-   * Search for pipelines by name, type, or project.
-   */
-  list(
-    query: PipelineListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<PipelineListResponse> {
-    return this._client.get('/api/v1/pipelines', { query, ...options });
   }
 
   /**
@@ -136,6 +131,8 @@ export class Pipelines extends APIResource {
    *
    * Removes pipeline files, data sources, and vector store data. This operation is
    * irreversible.
+   *
+   * @deprecated
    */
   delete(pipelineID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/v1/pipelines/${pipelineID}`, {
@@ -145,17 +142,12 @@ export class Pipelines extends APIResource {
   }
 
   /**
-   * Get a pipeline by ID.
-   */
-  get(pipelineID: string, options?: RequestOptions): APIPromise<Pipeline> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}`, options);
-  }
-
-  /**
    * Get the ingestion status of a managed pipeline.
    *
    * Returns document counts, sync progress, and the last effective timestamp. Only
    * available for managed pipelines.
+   *
+   * @deprecated
    */
   getStatus(
     pipelineID: string,
@@ -170,10 +162,34 @@ export class Pipelines extends APIResource {
    *
    * Updates the pipeline if one with the same name and project already exists,
    * otherwise creates a new one.
+   *
+   * @deprecated
    */
   upsert(params: PipelineUpsertParams, options?: RequestOptions): APIPromise<Pipeline> {
     const { organization_id, project_id, ...body } = params;
     return this._client.put('/api/v1/pipelines', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
+
+  /**
+   * Run a retrieval query against a managed pipeline.
+   *
+   * Searches the pipeline's vector store using the provided query and retrieval
+   * parameters. Supports dense, sparse, and hybrid search modes with configurable
+   * top-k and reranking.
+   *
+   * @deprecated
+   */
+  retrieve(
+    pipelineID: string,
+    params: PipelineRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<PipelineRetrieveResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post(path`/api/v1/pipelines/${pipelineID}/retrieve`, {
       query: { organization_id, project_id },
       body,
       ...options,
@@ -938,6 +954,11 @@ export namespace LlamaParseParameters {
       | 'sheets.error'
       | 'sheets.partial_success'
       | 'sheets.cancelled'
+      | 'split.pending'
+      | 'split.processing'
+      | 'split.success'
+      | 'split.error'
+      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -1802,7 +1823,188 @@ export namespace PipelineRetrieveResponse {
 
 export type PipelineListResponse = Array<Pipeline>;
 
+export interface PipelineListParams {
+  organization_id?: string | null;
+
+  pipeline_name?: string | null;
+
+  /**
+   * Enum for representing the type of a pipeline
+   */
+  pipeline_type?: PipelineType | null;
+
+  project_id?: string | null;
+
+  project_name?: string | null;
+}
+
 export interface PipelineCreateParams {
+  /**
+   * Body param
+   */
+  name: string;
+
+  /**
+   * Query param
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: Schema for creating a data sink.
+   */
+  data_sink?: DataSinkCreate | null;
+
+  /**
+   * Body param: Data sink ID. When provided instead of data_sink, the data sink will
+   * be looked up by ID.
+   */
+  data_sink_id?: string | null;
+
+  /**
+   * Body param
+   */
+  embedding_config?:
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig
+    | null;
+
+  /**
+   * Body param: Embedding model config ID. When provided instead of
+   * embedding_config, the embedding model config will be looked up by ID.
+   */
+  embedding_model_config_id?: string | null;
+
+  /**
+   * Body param: Settings that can be configured for how to use LlamaParse to parse
+   * files within a LlamaCloud pipeline.
+   */
+  llama_parse_parameters?: LlamaParseParameters;
+
+  /**
+   * Body param: The ID of the ManagedPipeline this playground pipeline is linked to.
+   */
+  managed_pipeline_id?: string | null;
+
+  /**
+   * Body param: Metadata configuration for the pipeline.
+   */
+  metadata_config?: PipelineMetadataConfig | null;
+
+  /**
+   * Body param: Type of pipeline. Either PLAYGROUND or MANAGED.
+   */
+  pipeline_type?: PipelineType;
+
+  /**
+   * Body param: Preset retrieval parameters for the pipeline.
+   */
+  preset_retrieval_parameters?: PresetRetrievalParams;
+
+  /**
+   * Body param: Configuration for sparse embedding models used in hybrid search.
+   *
+   * This allows users to choose between Splade and BM25 models for sparse retrieval
+   * in managed data sinks.
+   */
+  sparse_model_config?: SparseModelConfig | null;
+
+  /**
+   * Body param: Status of the pipeline deployment.
+   */
+  status?: string | null;
+
+  /**
+   * Body param: Configuration for the transformation.
+   */
+  transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
+}
+
+export interface PipelineUpdateParams {
+  /**
+   * Schema for creating a data sink.
+   */
+  data_sink?: DataSinkCreate | null;
+
+  /**
+   * Data sink ID. When provided instead of data_sink, the data sink will be looked
+   * up by ID.
+   */
+  data_sink_id?: string | null;
+
+  embedding_config?:
+    | AzureOpenAIEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | BedrockEmbeddingConfig
+    | null;
+
+  /**
+   * Embedding model config ID. When provided instead of embedding_config, the
+   * embedding model config will be looked up by ID.
+   */
+  embedding_model_config_id?: string | null;
+
+  /**
+   * Settings that can be configured for how to use LlamaParse to parse files within
+   * a LlamaCloud pipeline.
+   */
+  llama_parse_parameters?: LlamaParseParameters | null;
+
+  /**
+   * The ID of the ManagedPipeline this playground pipeline is linked to.
+   */
+  managed_pipeline_id?: string | null;
+
+  /**
+   * Metadata configuration for the pipeline.
+   */
+  metadata_config?: PipelineMetadataConfig | null;
+
+  name?: string | null;
+
+  /**
+   * Schema for the search params for an retrieval execution that can be preset for a
+   * pipeline.
+   */
+  preset_retrieval_parameters?: PresetRetrievalParams | null;
+
+  /**
+   * Configuration for sparse embedding models used in hybrid search.
+   *
+   * This allows users to choose between Splade and BM25 models for sparse retrieval
+   * in managed data sinks.
+   */
+  sparse_model_config?: SparseModelConfig | null;
+
+  /**
+   * Status of the pipeline deployment.
+   */
+  status?: string | null;
+
+  /**
+   * Configuration for the transformation.
+   */
+  transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
+}
+
+export interface PipelineGetStatusParams {
+  full_details?: boolean | null;
+}
+
+export interface PipelineUpsertParams {
   /**
    * Body param
    */
@@ -1985,187 +2187,6 @@ export interface PipelineRetrieveParams {
   sparse_similarity_top_k?: number | null;
 }
 
-export interface PipelineUpdateParams {
-  /**
-   * Schema for creating a data sink.
-   */
-  data_sink?: DataSinkCreate | null;
-
-  /**
-   * Data sink ID. When provided instead of data_sink, the data sink will be looked
-   * up by ID.
-   */
-  data_sink_id?: string | null;
-
-  embedding_config?:
-    | AzureOpenAIEmbeddingConfig
-    | CohereEmbeddingConfig
-    | GeminiEmbeddingConfig
-    | HuggingFaceInferenceAPIEmbeddingConfig
-    | OpenAIEmbeddingConfig
-    | VertexAIEmbeddingConfig
-    | BedrockEmbeddingConfig
-    | null;
-
-  /**
-   * Embedding model config ID. When provided instead of embedding_config, the
-   * embedding model config will be looked up by ID.
-   */
-  embedding_model_config_id?: string | null;
-
-  /**
-   * Settings that can be configured for how to use LlamaParse to parse files within
-   * a LlamaCloud pipeline.
-   */
-  llama_parse_parameters?: LlamaParseParameters | null;
-
-  /**
-   * The ID of the ManagedPipeline this playground pipeline is linked to.
-   */
-  managed_pipeline_id?: string | null;
-
-  /**
-   * Metadata configuration for the pipeline.
-   */
-  metadata_config?: PipelineMetadataConfig | null;
-
-  name?: string | null;
-
-  /**
-   * Schema for the search params for an retrieval execution that can be preset for a
-   * pipeline.
-   */
-  preset_retrieval_parameters?: PresetRetrievalParams | null;
-
-  /**
-   * Configuration for sparse embedding models used in hybrid search.
-   *
-   * This allows users to choose between Splade and BM25 models for sparse retrieval
-   * in managed data sinks.
-   */
-  sparse_model_config?: SparseModelConfig | null;
-
-  /**
-   * Status of the pipeline deployment.
-   */
-  status?: string | null;
-
-  /**
-   * Configuration for the transformation.
-   */
-  transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
-}
-
-export interface PipelineListParams {
-  organization_id?: string | null;
-
-  pipeline_name?: string | null;
-
-  /**
-   * Enum for representing the type of a pipeline
-   */
-  pipeline_type?: PipelineType | null;
-
-  project_id?: string | null;
-
-  project_name?: string | null;
-}
-
-export interface PipelineGetStatusParams {
-  full_details?: boolean | null;
-}
-
-export interface PipelineUpsertParams {
-  /**
-   * Body param
-   */
-  name: string;
-
-  /**
-   * Query param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Schema for creating a data sink.
-   */
-  data_sink?: DataSinkCreate | null;
-
-  /**
-   * Body param: Data sink ID. When provided instead of data_sink, the data sink will
-   * be looked up by ID.
-   */
-  data_sink_id?: string | null;
-
-  /**
-   * Body param
-   */
-  embedding_config?:
-    | AzureOpenAIEmbeddingConfig
-    | CohereEmbeddingConfig
-    | GeminiEmbeddingConfig
-    | HuggingFaceInferenceAPIEmbeddingConfig
-    | OpenAIEmbeddingConfig
-    | VertexAIEmbeddingConfig
-    | BedrockEmbeddingConfig
-    | null;
-
-  /**
-   * Body param: Embedding model config ID. When provided instead of
-   * embedding_config, the embedding model config will be looked up by ID.
-   */
-  embedding_model_config_id?: string | null;
-
-  /**
-   * Body param: Settings that can be configured for how to use LlamaParse to parse
-   * files within a LlamaCloud pipeline.
-   */
-  llama_parse_parameters?: LlamaParseParameters;
-
-  /**
-   * Body param: The ID of the ManagedPipeline this playground pipeline is linked to.
-   */
-  managed_pipeline_id?: string | null;
-
-  /**
-   * Body param: Metadata configuration for the pipeline.
-   */
-  metadata_config?: PipelineMetadataConfig | null;
-
-  /**
-   * Body param: Type of pipeline. Either PLAYGROUND or MANAGED.
-   */
-  pipeline_type?: PipelineType;
-
-  /**
-   * Body param: Preset retrieval parameters for the pipeline.
-   */
-  preset_retrieval_parameters?: PresetRetrievalParams;
-
-  /**
-   * Body param: Configuration for sparse embedding models used in hybrid search.
-   *
-   * This allows users to choose between Splade and BM25 models for sparse retrieval
-   * in managed data sinks.
-   */
-  sparse_model_config?: SparseModelConfig | null;
-
-  /**
-   * Body param: Status of the pipeline deployment.
-   */
-  status?: string | null;
-
-  /**
-   * Body param: Configuration for the transformation.
-   */
-  transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
-}
-
 Pipelines.Sync = Sync;
 Pipelines.DataSources = DataSources;
 Pipelines.Images = Images;
@@ -2208,12 +2229,12 @@ export declare namespace Pipelines {
     type VertexTextEmbedding as VertexTextEmbedding,
     type PipelineRetrieveResponse as PipelineRetrieveResponse,
     type PipelineListResponse as PipelineListResponse,
-    type PipelineCreateParams as PipelineCreateParams,
-    type PipelineRetrieveParams as PipelineRetrieveParams,
-    type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineListParams as PipelineListParams,
+    type PipelineCreateParams as PipelineCreateParams,
+    type PipelineUpdateParams as PipelineUpdateParams,
     type PipelineGetStatusParams as PipelineGetStatusParams,
     type PipelineUpsertParams as PipelineUpsertParams,
+    type PipelineRetrieveParams as PipelineRetrieveParams,
   };
 
   export { Sync as Sync };
@@ -2223,10 +2244,10 @@ export declare namespace Pipelines {
     type PipelineDataSource as PipelineDataSource,
     type DataSourceGetDataSourcesResponse as DataSourceGetDataSourcesResponse,
     type DataSourceUpdateDataSourcesResponse as DataSourceUpdateDataSourcesResponse,
+    type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceGetStatusParams as DataSourceGetStatusParams,
     type DataSourceSyncParams as DataSourceSyncParams,
-    type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
   };
 
   export {
@@ -2235,10 +2256,10 @@ export declare namespace Pipelines {
     type ImageGetPageScreenshotResponse as ImageGetPageScreenshotResponse,
     type ImageListPageFiguresResponse as ImageListPageFiguresResponse,
     type ImageListPageScreenshotsResponse as ImageListPageScreenshotsResponse,
-    type ImageGetPageFigureParams as ImageGetPageFigureParams,
-    type ImageGetPageScreenshotParams as ImageGetPageScreenshotParams,
-    type ImageListPageFiguresParams as ImageListPageFiguresParams,
     type ImageListPageScreenshotsParams as ImageListPageScreenshotsParams,
+    type ImageGetPageScreenshotParams as ImageGetPageScreenshotParams,
+    type ImageGetPageFigureParams as ImageGetPageFigureParams,
+    type ImageListPageFiguresParams as ImageListPageFiguresParams,
   };
 
   export {
@@ -2247,12 +2268,12 @@ export declare namespace Pipelines {
     type FileCreateResponse as FileCreateResponse,
     type FileGetStatusCountsResponse as FileGetStatusCountsResponse,
     type PipelineFilesPaginatedPipelineFiles as PipelineFilesPaginatedPipelineFiles,
+    type FileGetStatusCountsParams as FileGetStatusCountsParams,
+    type FileGetStatusParams as FileGetStatusParams,
     type FileCreateParams as FileCreateParams,
     type FileUpdateParams as FileUpdateParams,
-    type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
-    type FileGetStatusParams as FileGetStatusParams,
-    type FileGetStatusCountsParams as FileGetStatusCountsParams,
+    type FileListParams as FileListParams,
   };
 
   export {
@@ -2273,11 +2294,11 @@ export declare namespace Pipelines {
     type CloudDocumentsPaginatedCloudDocuments as CloudDocumentsPaginatedCloudDocuments,
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
-    type DocumentDeleteParams as DocumentDeleteParams,
     type DocumentGetParams as DocumentGetParams,
-    type DocumentGetChunksParams as DocumentGetChunksParams,
+    type DocumentDeleteParams as DocumentDeleteParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,
     type DocumentSyncParams as DocumentSyncParams,
+    type DocumentGetChunksParams as DocumentGetChunksParams,
     type DocumentUpsertParams as DocumentUpsertParams,
   };
 }

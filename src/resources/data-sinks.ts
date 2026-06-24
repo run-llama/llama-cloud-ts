@@ -9,6 +9,16 @@ import { path } from '../internal/utils/path';
 
 export class DataSinks extends APIResource {
   /**
+   * List data sinks for a given project.
+   */
+  list(
+    query: DataSinkListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<DataSinkListResponse> {
+    return this._client.get('/api/v1/data-sinks', { query, ...options });
+  }
+
+  /**
    * Create a new data sink.
    */
   create(params: DataSinkCreateParams, options?: RequestOptions): APIPromise<DataSink> {
@@ -21,20 +31,17 @@ export class DataSinks extends APIResource {
   }
 
   /**
+   * Get a data sink by ID.
+   */
+  get(dataSinkID: string, options?: RequestOptions): APIPromise<DataSink> {
+    return this._client.get(path`/api/v1/data-sinks/${dataSinkID}`, options);
+  }
+
+  /**
    * Update a data sink by ID.
    */
   update(dataSinkID: string, body: DataSinkUpdateParams, options?: RequestOptions): APIPromise<DataSink> {
     return this._client.put(path`/api/v1/data-sinks/${dataSinkID}`, { body, ...options });
-  }
-
-  /**
-   * List data sinks for a given project.
-   */
-  list(
-    query: DataSinkListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<DataSinkListResponse> {
-    return this._client.get('/api/v1/data-sinks', { query, ...options });
   }
 
   /**
@@ -45,13 +52,6 @@ export class DataSinks extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
-  }
-
-  /**
-   * Get a data sink by ID.
-   */
-  get(dataSinkID: string, options?: RequestOptions): APIPromise<DataSink> {
-    return this._client.get(path`/api/v1/data-sinks/${dataSinkID}`, options);
   }
 }
 
@@ -98,6 +98,12 @@ export interface DataSink {
 }
 
 export type DataSinkListResponse = Array<DataSink>;
+
+export interface DataSinkListParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
 
 export interface DataSinkCreateParams {
   /**
@@ -157,18 +163,12 @@ export interface DataSinkUpdateParams {
   name?: string | null;
 }
 
-export interface DataSinkListParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export declare namespace DataSinks {
   export {
     type DataSink as DataSink,
     type DataSinkListResponse as DataSinkListResponse,
+    type DataSinkListParams as DataSinkListParams,
     type DataSinkCreateParams as DataSinkCreateParams,
     type DataSinkUpdateParams as DataSinkUpdateParams,
-    type DataSinkListParams as DataSinkListParams,
   };
 }

@@ -29,6 +29,7 @@ describe('resource parsing', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       agentic_options: { custom_prompt: 'custom_prompt' },
       client_name: 'client_name',
+      configuration_id: 'configuration_id',
       crop_box: {
         bottom: 0,
         left: 0,
@@ -45,6 +46,7 @@ describe('resource parsing', () => {
           remove_fixed_elements: true,
           remove_navigation_elements: true,
         },
+        image: { camera_photo_correction: true },
         pdf: {},
         presentation: { out_of_bounds_content: true, skip_embedded_data: true },
         spreadsheet: {
@@ -175,6 +177,35 @@ describe('resource parsing', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('get', async () => {
+    const responsePromise = client.parsing.get('job_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('get: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.parsing.get(
+        'job_id',
+        {
+          expand: ['string'],
+          image_filenames: 'image_filenames',
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.parsing.list();
     const rawResponse = await responsePromise.asResponse();
@@ -200,35 +231,6 @@ describe('resource parsing', () => {
           page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           status: 'PENDING',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
-  });
-
-  // Mock server tests are disabled
-  test.skip('get', async () => {
-    const responsePromise = client.parsing.get('job_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('get: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.parsing.get(
-        'job_id',
-        {
-          expand: ['string'],
-          image_filenames: 'image_filenames',
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         },
         { path: '/_stainless_unknown_path' },
       ),

@@ -24,6 +24,19 @@ export class Configurations extends APIResource {
   }
 
   /**
+   * List product configurations for the current project.
+   */
+  list(
+    query: ConfigurationListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ConfigurationResponsesPaginatedCursor, ConfigurationResponse> {
+    return this._client.getAPIList('/api/v1/beta/configurations', PaginatedCursor<ConfigurationResponse>, {
+      query,
+      ...options,
+    });
+  }
+
+  /**
    * Get a single product configuration by ID.
    */
   retrieve(
@@ -46,19 +59,6 @@ export class Configurations extends APIResource {
     return this._client.put(path`/api/v1/beta/configurations/${configID}`, {
       query: { organization_id, project_id },
       body,
-      ...options,
-    });
-  }
-
-  /**
-   * List product configurations for the current project.
-   */
-  list(
-    query: ConfigurationListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<ConfigurationResponsesPaginatedCursor, ConfigurationResponse> {
-    return this._client.getAPIList('/api/v1/beta/configurations', PaginatedCursor<ConfigurationResponse>, {
-      query,
       ...options,
     });
   }
@@ -400,7 +400,9 @@ export interface ExtractV2Parameters {
 
   /**
    * Use 'latest' for the latest release for the selected tier or a date string
-   * (YYYY-MM-DD format) to pin to the nearest release at or before that date.
+   * (YYYY-MM-DD format) to pin to the nearest release at or before that date. Job
+   * responses always report the concrete resolved version the job runs, fixed at job
+   * creation; saved configurations keep the value as provided.
    */
   version?: string;
 }
@@ -432,13 +434,13 @@ export interface ParseV2Parameters {
    * Current `latest` by tier:
    *
    * - `fast`: `2025-12-11`
-   * - `cost_effective`: `2026-06-05`
-   * - `agentic`: `2026-06-04`
-   * - `agentic_plus`: `2026-06-04`
+   * - `cost_effective`: `2026-06-11`
+   * - `agentic`: `2026-06-11`
+   * - `agentic_plus`: `2026-06-11`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-06-05' | '2026-06-04' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-11' | '2025-12-11' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -566,6 +568,11 @@ export namespace ParseV2Parameters {
     html?: InputOptions.HTML;
 
     /**
+     * Image parsing options (applies to .jpg, .jpeg, .png, .webp files)
+     */
+    image?: InputOptions.Image;
+
+    /**
      * PDF-specific parsing options (applies to .pdf files)
      */
     pdf?: unknown;
@@ -602,6 +609,20 @@ export namespace ParseV2Parameters {
        * Remove navigation elements (nav bars, sidebars, menus) to focus on main content
        */
       remove_navigation_elements?: boolean | null;
+    }
+
+    /**
+     * Image parsing options (applies to .jpg, .jpeg, .png, .webp files)
+     */
+    export interface Image {
+      /**
+       * Detect documents photographed with a camera (e.g. phone scans of receipts or
+       * forms), then crop, perspective-correct, and flatten uneven lighting and shadows
+       * before parsing. Supports JPEG, PNG, WebP, and HEIC/HEIF inputs. Improves results
+       * when the document is tilted or surrounded by background. Images that already
+       * look like clean scans are left untouched
+       */
+      camera_photo_correction?: boolean | null;
     }
 
     /**
@@ -1213,13 +1234,13 @@ export namespace ParseV2Parameters {
          * Current `latest` by tier:
          *
          * - `fast`: `2025-12-11`
-         * - `cost_effective`: `2026-06-05`
-         * - `agentic`: `2026-06-04`
-         * - `agentic_plus`: `2026-06-04`
+         * - `cost_effective`: `2026-06-11`
+         * - `agentic`: `2026-06-11`
+         * - `agentic_plus`: `2026-06-11`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-06-05' | '2026-06-04' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-11' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -1523,6 +1544,29 @@ export namespace ConfigurationCreateParams {
   }
 }
 
+export interface ConfigurationListParams extends PaginatedCursorParams {
+  /**
+   * Return only the latest version per configuration name.
+   */
+  latest_only?: boolean;
+
+  /**
+   * Filter by configuration name.
+   */
+  name?: string | null;
+
+  organization_id?: string | null;
+
+  /**
+   * Filter by one or more product types. Repeat the parameter for multiple values.
+   */
+  product_type?: Array<
+    'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'
+  > | null;
+
+  project_id?: string | null;
+}
+
 export interface ConfigurationRetrieveParams {
   organization_id?: string | null;
 
@@ -1618,29 +1662,6 @@ export namespace ConfigurationUpdateParams {
   }
 }
 
-export interface ConfigurationListParams extends PaginatedCursorParams {
-  /**
-   * Return only the latest version per configuration name.
-   */
-  latest_only?: boolean;
-
-  /**
-   * Filter by configuration name.
-   */
-  name?: string | null;
-
-  organization_id?: string | null;
-
-  /**
-   * Filter by one or more product types. Repeat the parameter for multiple values.
-   */
-  product_type?: Array<
-    'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'
-  > | null;
-
-  project_id?: string | null;
-}
-
 export interface ConfigurationDeleteParams {
   organization_id?: string | null;
 
@@ -1658,9 +1679,9 @@ export declare namespace Configurations {
     type UntypedParameters as UntypedParameters,
     type ConfigurationResponsesPaginatedCursor as ConfigurationResponsesPaginatedCursor,
     type ConfigurationCreateParams as ConfigurationCreateParams,
+    type ConfigurationListParams as ConfigurationListParams,
     type ConfigurationRetrieveParams as ConfigurationRetrieveParams,
     type ConfigurationUpdateParams as ConfigurationUpdateParams,
-    type ConfigurationListParams as ConfigurationListParams,
     type ConfigurationDeleteParams as ConfigurationDeleteParams,
   };
 }

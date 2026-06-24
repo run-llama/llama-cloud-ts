@@ -5,10 +5,10 @@ export {
   type PipelineDataSource,
   type DataSourceGetDataSourcesResponse,
   type DataSourceUpdateDataSourcesResponse,
+  type DataSourceUpdateDataSourcesParams,
   type DataSourceUpdateParams,
   type DataSourceGetStatusParams,
   type DataSourceSyncParams,
-  type DataSourceUpdateDataSourcesParams,
 } from './data-sources';
 export {
   Documents,
@@ -21,11 +21,11 @@ export {
   type DocumentUpsertResponse,
   type DocumentCreateParams,
   type DocumentListParams,
-  type DocumentDeleteParams,
   type DocumentGetParams,
-  type DocumentGetChunksParams,
+  type DocumentDeleteParams,
   type DocumentGetStatusParams,
   type DocumentSyncParams,
+  type DocumentGetChunksParams,
   type DocumentUpsertParams,
   type CloudDocumentsPaginatedCloudDocuments,
 } from './documents';
@@ -34,12 +34,12 @@ export {
   type PipelineFile,
   type FileCreateResponse,
   type FileGetStatusCountsResponse,
+  type FileGetStatusCountsParams,
+  type FileGetStatusParams,
   type FileCreateParams,
   type FileUpdateParams,
-  type FileListParams,
   type FileDeleteParams,
-  type FileGetStatusParams,
-  type FileGetStatusCountsParams,
+  type FileListParams,
   type PipelineFilesPaginatedPipelineFiles,
 } from './files';
 export {
@@ -48,10 +48,10 @@ export {
   type ImageGetPageScreenshotResponse,
   type ImageListPageFiguresResponse,
   type ImageListPageScreenshotsResponse,
-  type ImageGetPageFigureParams,
-  type ImageGetPageScreenshotParams,
-  type ImageListPageFiguresParams,
   type ImageListPageScreenshotsParams,
+  type ImageGetPageScreenshotParams,
+  type ImageGetPageFigureParams,
+  type ImageListPageFiguresParams,
 } from './images';
 export { Metadata, type MetadataCreateResponse, type MetadataCreateParams } from './metadata';
 export {
@@ -89,11 +89,11 @@ export {
   type VertexTextEmbedding,
   type PipelineRetrieveResponse,
   type PipelineListResponse,
-  type PipelineCreateParams,
-  type PipelineRetrieveParams,
-  type PipelineUpdateParams,
   type PipelineListParams,
+  type PipelineCreateParams,
+  type PipelineUpdateParams,
   type PipelineGetStatusParams,
   type PipelineUpsertParams,
+  type PipelineRetrieveParams,
 } from './pipelines';
 export { Sync } from './sync';

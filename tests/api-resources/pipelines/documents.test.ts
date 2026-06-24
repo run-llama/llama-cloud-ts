@@ -75,27 +75,6 @@ describe('resource documents', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('delete: only required params', async () => {
-    const responsePromise = client.pipelines.documents.delete('document_id', {
-      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('delete: required and optional params', async () => {
-    const response = await client.pipelines.documents.delete('document_id', {
-      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    });
-  });
-
-  // Mock server tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.pipelines.documents.get('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -117,8 +96,8 @@ describe('resource documents', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getChunks: only required params', async () => {
-    const responsePromise = client.pipelines.documents.getChunks('document_id', {
+  test.skip('delete: only required params', async () => {
+    const responsePromise = client.pipelines.documents.delete('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -131,8 +110,8 @@ describe('resource documents', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getChunks: required and optional params', async () => {
-    const response = await client.pipelines.documents.getChunks('document_id', {
+  test.skip('delete: required and optional params', async () => {
+    const response = await client.pipelines.documents.delete('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
@@ -175,6 +154,27 @@ describe('resource documents', () => {
   // Mock server tests are disabled
   test.skip('sync: required and optional params', async () => {
     const response = await client.pipelines.documents.sync('document_id', {
+      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('getChunks: only required params', async () => {
+    const responsePromise = client.pipelines.documents.getChunks('document_id', {
+      pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('getChunks: required and optional params', async () => {
+    const response = await client.pipelines.documents.getChunks('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });

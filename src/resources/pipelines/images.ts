@@ -7,18 +7,14 @@ import { path } from '../../internal/utils/path';
 
 export class Images extends APIResource {
   /**
-   * Get a specific figure from a page of a file.
+   * List metadata for all screenshots of pages from a file.
    */
-  getPageFigure(
-    figureName: string,
-    params: ImageGetPageFigureParams,
+  listPageScreenshots(
+    id: string,
+    query: ImageListPageScreenshotsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { id, page_index, ...query } = params;
-    return this._client.get(path`/api/v1/files/${id}/page-figures/${page_index}/${figureName}`, {
-      query,
-      ...options,
-    });
+  ): APIPromise<ImageListPageScreenshotsResponse> {
+    return this._client.get(path`/api/v1/files/${id}/page_screenshots`, { query, ...options });
   }
 
   /**
@@ -34,6 +30,21 @@ export class Images extends APIResource {
   }
 
   /**
+   * Get a specific figure from a page of a file.
+   */
+  getPageFigure(
+    figureName: string,
+    params: ImageGetPageFigureParams,
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { id, page_index, ...query } = params;
+    return this._client.get(path`/api/v1/files/${id}/page-figures/${page_index}/${figureName}`, {
+      query,
+      ...options,
+    });
+  }
+
+  /**
    * List metadata for all figures from all pages of a file.
    */
   listPageFigures(
@@ -42,17 +53,6 @@ export class Images extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ImageListPageFiguresResponse> {
     return this._client.get(path`/api/v1/files/${id}/page-figures`, { query, ...options });
-  }
-
-  /**
-   * List metadata for all screenshots of pages from a file.
-   */
-  listPageScreenshots(
-    id: string,
-    query: ImageListPageScreenshotsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ImageListPageScreenshotsResponse> {
-    return this._client.get(path`/api/v1/files/${id}/page_screenshots`, { query, ...options });
   }
 }
 
@@ -129,6 +129,29 @@ export namespace ImageListPageScreenshotsResponse {
   }
 }
 
+export interface ImageListPageScreenshotsParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface ImageGetPageScreenshotParams {
+  /**
+   * Path param
+   */
+  id: string;
+
+  /**
+   * Query param
+   */
+  organization_id?: string | null;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+}
+
 export interface ImageGetPageFigureParams {
   /**
    * Path param
@@ -151,30 +174,7 @@ export interface ImageGetPageFigureParams {
   project_id?: string | null;
 }
 
-export interface ImageGetPageScreenshotParams {
-  /**
-   * Path param
-   */
-  id: string;
-
-  /**
-   * Query param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
-}
-
 export interface ImageListPageFiguresParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface ImageListPageScreenshotsParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -186,9 +186,9 @@ export declare namespace Images {
     type ImageGetPageScreenshotResponse as ImageGetPageScreenshotResponse,
     type ImageListPageFiguresResponse as ImageListPageFiguresResponse,
     type ImageListPageScreenshotsResponse as ImageListPageScreenshotsResponse,
-    type ImageGetPageFigureParams as ImageGetPageFigureParams,
-    type ImageGetPageScreenshotParams as ImageGetPageScreenshotParams,
-    type ImageListPageFiguresParams as ImageListPageFiguresParams,
     type ImageListPageScreenshotsParams as ImageListPageScreenshotsParams,
+    type ImageGetPageScreenshotParams as ImageGetPageScreenshotParams,
+    type ImageGetPageFigureParams as ImageGetPageFigureParams,
+    type ImageListPageFiguresParams as ImageListPageFiguresParams,
   };
 }

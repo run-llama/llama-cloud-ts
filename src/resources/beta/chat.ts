@@ -9,6 +9,24 @@ import { path } from '../../internal/utils/path';
 
 export class Chat extends APIResource {
   /**
+   * List all chat sessions for the current project.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const chatListResponse of client.beta.chat.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(
+    query: ChatListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ChatListResponsesPaginatedCursor, ChatListResponse> {
+    return this._client.getAPIList('/api/v1/chat', PaginatedCursor<ChatListResponse>, { query, ...options });
+  }
+
+  /**
    * Create a chat session, optionally bound to indexes (locked after the first
    * message).
    *
@@ -39,24 +57,6 @@ export class Chat extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ChatRetrieveResponse> {
     return this._client.get(path`/api/v1/chat/${sessionID}`, { query, ...options });
-  }
-
-  /**
-   * List all chat sessions for the current project.
-   *
-   * @example
-   * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const chatListResponse of client.beta.chat.list()) {
-   *   // ...
-   * }
-   * ```
-   */
-  list(
-    query: ChatListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<ChatListResponsesPaginatedCursor, ChatListResponse> {
-    return this._client.getAPIList('/api/v1/chat', PaginatedCursor<ChatListResponse>, { query, ...options });
   }
 
   /**
@@ -440,6 +440,12 @@ export namespace ChatGetSummaryResponse {
 
 export type ChatStreamResponse = unknown;
 
+export interface ChatListParams extends PaginatedCursorParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface ChatCreateParams {
   /**
    * Query param
@@ -460,12 +466,6 @@ export interface ChatCreateParams {
 }
 
 export interface ChatRetrieveParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface ChatListParams extends PaginatedCursorParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -513,9 +513,9 @@ export declare namespace Chat {
     type ChatGetSummaryResponse as ChatGetSummaryResponse,
     type ChatStreamResponse as ChatStreamResponse,
     type ChatListResponsesPaginatedCursor as ChatListResponsesPaginatedCursor,
+    type ChatListParams as ChatListParams,
     type ChatCreateParams as ChatCreateParams,
     type ChatRetrieveParams as ChatRetrieveParams,
-    type ChatListParams as ChatListParams,
     type ChatDeleteParams as ChatDeleteParams,
     type ChatGetSummaryParams as ChatGetSummaryParams,
     type ChatStreamParams as ChatStreamParams,

@@ -29,6 +29,20 @@ export class Files extends APIResource {
   }
 
   /**
+   * Query files with filtering and pagination. Deprecated: use `GET /files`.
+   *
+   * @deprecated Use the GET /files endpoint instead
+   */
+  query(params: FileQueryParams, options?: RequestOptions): APIPromise<FileQueryResponse> {
+    const { organization_id, project_id, ...body } = params;
+    return this._client.post('/api/v1/beta/files/query', {
+      query: { organization_id, project_id },
+      body,
+      ...options,
+    });
+  }
+
+  /**
    * List files with optional filtering and pagination.
    *
    * Filter by `file_name`, `file_ids`, or `external_file_id`. Supports cursor-based
@@ -69,20 +83,6 @@ export class Files extends APIResource {
     options?: RequestOptions,
   ): APIPromise<PresignedURL> {
     return this._client.get(path`/api/v1/beta/files/${fileID}/content`, { query, ...options });
-  }
-
-  /**
-   * Query files with filtering and pagination. Deprecated: use `GET /files`.
-   *
-   * @deprecated Use the GET /files endpoint instead
-   */
-  query(params: FileQueryParams, options?: RequestOptions): APIPromise<FileQueryResponse> {
-    const { organization_id, project_id, ...body } = params;
-    return this._client.post('/api/v1/beta/files/query', {
-      query: { organization_id, project_id },
-      body,
-      ...options,
-    });
   }
 }
 
@@ -395,52 +395,6 @@ export interface FileCreateParams {
   external_file_id?: string | null;
 }
 
-export interface FileListParams extends PaginatedCursorParams {
-  /**
-   * Fields to expand on each file.
-   */
-  expand?: Array<string> | null;
-
-  /**
-   * Filter by external file ID.
-   */
-  external_file_id?: string | null;
-
-  /**
-   * Filter by specific file IDs.
-   */
-  file_ids?: Array<string> | null;
-
-  /**
-   * Filter by file name (exact match).
-   */
-  file_name?: string | null;
-
-  /**
-   * A comma-separated list of fields to order by, sorted in ascending order. Use
-   * 'field_name desc' to specify descending order.
-   */
-  order_by?: string | null;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface FileDeleteParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
-export interface FileGetParams {
-  expires_at_seconds?: number | null;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export interface FileQueryParams {
   /**
    * Query param
@@ -514,6 +468,52 @@ export namespace FileQueryParams {
   }
 }
 
+export interface FileListParams extends PaginatedCursorParams {
+  /**
+   * Fields to expand on each file.
+   */
+  expand?: Array<string> | null;
+
+  /**
+   * Filter by external file ID.
+   */
+  external_file_id?: string | null;
+
+  /**
+   * Filter by specific file IDs.
+   */
+  file_ids?: Array<string> | null;
+
+  /**
+   * Filter by file name (exact match).
+   */
+  file_name?: string | null;
+
+  /**
+   * A comma-separated list of fields to order by, sorted in ascending order. Use
+   * 'field_name desc' to specify descending order.
+   */
+  order_by?: string | null;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface FileDeleteParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface FileGetParams {
+  expires_at_seconds?: number | null;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export declare namespace Files {
   export {
     type File as File,
@@ -523,9 +523,9 @@ export declare namespace Files {
     type FileQueryResponse as FileQueryResponse,
     type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
     type FileCreateParams as FileCreateParams,
+    type FileQueryParams as FileQueryParams,
     type FileListParams as FileListParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGetParams as FileGetParams,
-    type FileQueryParams as FileQueryParams,
   };
 }

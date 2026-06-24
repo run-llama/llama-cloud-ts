@@ -17,6 +17,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/files',
   },
   {
+    clientCallName: 'client.files.query',
+    fullyQualifiedName: 'files.query',
+    httpMethod: 'post',
+    httpPath: '/api/v1/beta/files/query',
+  },
+  {
     clientCallName: 'client.files.list',
     fullyQualifiedName: 'files.list',
     httpMethod: 'get',
@@ -35,10 +41,34 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/files/{file_id}/content',
   },
   {
-    clientCallName: 'client.files.query',
-    fullyQualifiedName: 'files.query',
+    clientCallName: 'client.sheets.create',
+    fullyQualifiedName: 'sheets.create',
     httpMethod: 'post',
-    httpPath: '/api/v1/beta/files/query',
+    httpPath: '/api/v1/sheets/jobs',
+  },
+  {
+    clientCallName: 'client.sheets.list',
+    fullyQualifiedName: 'sheets.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/sheets/jobs',
+  },
+  {
+    clientCallName: 'client.sheets.get',
+    fullyQualifiedName: 'sheets.get',
+    httpMethod: 'get',
+    httpPath: '/api/v1/sheets/jobs/{spreadsheet_job_id}',
+  },
+  {
+    clientCallName: 'client.sheets.getResultTable',
+    fullyQualifiedName: 'sheets.getResultTable',
+    httpMethod: 'get',
+    httpPath: '/api/v1/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}',
+  },
+  {
+    clientCallName: 'client.sheets.deleteJob',
+    fullyQualifiedName: 'sheets.deleteJob',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/sheets/jobs/{spreadsheet_job_id}',
   },
   {
     clientCallName: 'client.parsing.create',
@@ -47,16 +77,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/parse',
   },
   {
-    clientCallName: 'client.parsing.list',
-    fullyQualifiedName: 'parsing.list',
-    httpMethod: 'get',
-    httpPath: '/api/v2/parse',
-  },
-  {
     clientCallName: 'client.parsing.get',
     fullyQualifiedName: 'parsing.get',
     httpMethod: 'get',
     httpPath: '/api/v2/parse/{job_id}',
+  },
+  {
+    clientCallName: 'client.parsing.list',
+    fullyQualifiedName: 'parsing.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/parse',
   },
   {
     clientCallName: 'client.extract.create',
@@ -71,21 +101,15 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/extract',
   },
   {
-    clientCallName: 'client.extract.delete',
-    fullyQualifiedName: 'extract.delete',
-    httpMethod: 'delete',
-    httpPath: '/api/v2/extract/{job_id}',
-  },
-  {
-    clientCallName: 'client.extract.generateSchema',
-    fullyQualifiedName: 'extract.generateSchema',
-    httpMethod: 'post',
-    httpPath: '/api/v2/extract/schema/generate',
-  },
-  {
     clientCallName: 'client.extract.get',
     fullyQualifiedName: 'extract.get',
     httpMethod: 'get',
+    httpPath: '/api/v2/extract/{job_id}',
+  },
+  {
+    clientCallName: 'client.extract.delete',
+    fullyQualifiedName: 'extract.delete',
+    httpMethod: 'delete',
     httpPath: '/api/v2/extract/{job_id}',
   },
   {
@@ -93,6 +117,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'extract.validateSchema',
     httpMethod: 'post',
     httpPath: '/api/v2/extract/schema/validation',
+  },
+  {
+    clientCallName: 'client.extract.generateSchema',
+    fullyQualifiedName: 'extract.generateSchema',
+    httpMethod: 'post',
+    httpPath: '/api/v2/extract/schema/generate',
   },
   {
     clientCallName: 'client.classifier.jobs.create',
@@ -161,6 +191,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/configurations',
   },
   {
+    clientCallName: 'client.configurations.list',
+    fullyQualifiedName: 'configurations.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/configurations',
+  },
+  {
     clientCallName: 'client.configurations.retrieve',
     fullyQualifiedName: 'configurations.retrieve',
     httpMethod: 'get',
@@ -171,12 +207,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'configurations.update',
     httpMethod: 'put',
     httpPath: '/api/v1/beta/configurations/{config_id}',
-  },
-  {
-    clientCallName: 'client.configurations.list',
-    fullyQualifiedName: 'configurations.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/configurations',
   },
   {
     clientCallName: 'client.configurations.delete',
@@ -197,28 +227,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/projects/{project_id}',
   },
   {
-    clientCallName: 'client.dataSinks.create',
-    fullyQualifiedName: 'dataSinks.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/data-sinks',
-  },
-  {
-    clientCallName: 'client.dataSinks.update',
-    fullyQualifiedName: 'dataSinks.update',
-    httpMethod: 'put',
-    httpPath: '/api/v1/data-sinks/{data_sink_id}',
-  },
-  {
     clientCallName: 'client.dataSinks.list',
     fullyQualifiedName: 'dataSinks.list',
     httpMethod: 'get',
     httpPath: '/api/v1/data-sinks',
   },
   {
-    clientCallName: 'client.dataSinks.delete',
-    fullyQualifiedName: 'dataSinks.delete',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/data-sinks/{data_sink_id}',
+    clientCallName: 'client.dataSinks.create',
+    fullyQualifiedName: 'dataSinks.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/data-sinks',
   },
   {
     clientCallName: 'client.dataSinks.get',
@@ -227,16 +245,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/data-sinks/{data_sink_id}',
   },
   {
-    clientCallName: 'client.dataSources.create',
-    fullyQualifiedName: 'dataSources.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/data-sources',
+    clientCallName: 'client.dataSinks.update',
+    fullyQualifiedName: 'dataSinks.update',
+    httpMethod: 'put',
+    httpPath: '/api/v1/data-sinks/{data_sink_id}',
   },
   {
-    clientCallName: 'client.dataSources.update',
-    fullyQualifiedName: 'dataSources.update',
-    httpMethod: 'put',
-    httpPath: '/api/v1/data-sources/{data_source_id}',
+    clientCallName: 'client.dataSinks.delete',
+    fullyQualifiedName: 'dataSinks.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/data-sinks/{data_sink_id}',
   },
   {
     clientCallName: 'client.dataSources.list',
@@ -245,10 +263,10 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/data-sources',
   },
   {
-    clientCallName: 'client.dataSources.delete',
-    fullyQualifiedName: 'dataSources.delete',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/data-sources/{data_source_id}',
+    clientCallName: 'client.dataSources.create',
+    fullyQualifiedName: 'dataSources.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/data-sources',
   },
   {
     clientCallName: 'client.dataSources.get',
@@ -257,22 +275,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/data-sources/{data_source_id}',
   },
   {
-    clientCallName: 'client.pipelines.create',
-    fullyQualifiedName: 'pipelines.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/pipelines',
-  },
-  {
-    clientCallName: 'client.pipelines.retrieve',
-    fullyQualifiedName: 'pipelines.retrieve',
-    httpMethod: 'post',
-    httpPath: '/api/v1/pipelines/{pipeline_id}/retrieve',
-  },
-  {
-    clientCallName: 'client.pipelines.update',
-    fullyQualifiedName: 'pipelines.update',
+    clientCallName: 'client.dataSources.update',
+    fullyQualifiedName: 'dataSources.update',
     httpMethod: 'put',
-    httpPath: '/api/v1/pipelines/{pipeline_id}',
+    httpPath: '/api/v1/data-sources/{data_source_id}',
+  },
+  {
+    clientCallName: 'client.dataSources.delete',
+    fullyQualifiedName: 'dataSources.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/data-sources/{data_source_id}',
   },
   {
     clientCallName: 'client.pipelines.list',
@@ -281,15 +293,27 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/pipelines',
   },
   {
-    clientCallName: 'client.pipelines.delete',
-    fullyQualifiedName: 'pipelines.delete',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/pipelines/{pipeline_id}',
+    clientCallName: 'client.pipelines.create',
+    fullyQualifiedName: 'pipelines.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/pipelines',
   },
   {
     clientCallName: 'client.pipelines.get',
     fullyQualifiedName: 'pipelines.get',
     httpMethod: 'get',
+    httpPath: '/api/v1/pipelines/{pipeline_id}',
+  },
+  {
+    clientCallName: 'client.pipelines.update',
+    fullyQualifiedName: 'pipelines.update',
+    httpMethod: 'put',
+    httpPath: '/api/v1/pipelines/{pipeline_id}',
+  },
+  {
+    clientCallName: 'client.pipelines.delete',
+    fullyQualifiedName: 'pipelines.delete',
+    httpMethod: 'delete',
     httpPath: '/api/v1/pipelines/{pipeline_id}',
   },
   {
@@ -305,6 +329,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/pipelines',
   },
   {
+    clientCallName: 'client.pipelines.retrieve',
+    fullyQualifiedName: 'pipelines.retrieve',
+    httpMethod: 'post',
+    httpPath: '/api/v1/pipelines/{pipeline_id}/retrieve',
+  },
+  {
     clientCallName: 'client.pipelines.sync.create',
     fullyQualifiedName: 'pipelines.sync.create',
     httpMethod: 'post',
@@ -317,16 +347,22 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/pipelines/{pipeline_id}/sync/cancel',
   },
   {
-    clientCallName: 'client.pipelines.dataSources.update',
-    fullyQualifiedName: 'pipelines.dataSources.update',
-    httpMethod: 'put',
-    httpPath: '/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}',
-  },
-  {
     clientCallName: 'client.pipelines.dataSources.getDataSources',
     fullyQualifiedName: 'pipelines.dataSources.getDataSources',
     httpMethod: 'get',
     httpPath: '/api/v1/pipelines/{pipeline_id}/data-sources',
+  },
+  {
+    clientCallName: 'client.pipelines.dataSources.updateDataSources',
+    fullyQualifiedName: 'pipelines.dataSources.updateDataSources',
+    httpMethod: 'put',
+    httpPath: '/api/v1/pipelines/{pipeline_id}/data-sources',
+  },
+  {
+    clientCallName: 'client.pipelines.dataSources.update',
+    fullyQualifiedName: 'pipelines.dataSources.update',
+    httpMethod: 'put',
+    httpPath: '/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}',
   },
   {
     clientCallName: 'client.pipelines.dataSources.getStatus',
@@ -341,16 +377,10 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/sync',
   },
   {
-    clientCallName: 'client.pipelines.dataSources.updateDataSources',
-    fullyQualifiedName: 'pipelines.dataSources.updateDataSources',
-    httpMethod: 'put',
-    httpPath: '/api/v1/pipelines/{pipeline_id}/data-sources',
-  },
-  {
-    clientCallName: 'client.pipelines.images.getPageFigure',
-    fullyQualifiedName: 'pipelines.images.getPageFigure',
+    clientCallName: 'client.pipelines.images.listPageScreenshots',
+    fullyQualifiedName: 'pipelines.images.listPageScreenshots',
     httpMethod: 'get',
-    httpPath: '/api/v1/files/{id}/page-figures/{page_index}/{figure_name}',
+    httpPath: '/api/v1/files/{id}/page_screenshots',
   },
   {
     clientCallName: 'client.pipelines.images.getPageScreenshot',
@@ -359,16 +389,28 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/files/{id}/page_screenshots/{page_index}',
   },
   {
+    clientCallName: 'client.pipelines.images.getPageFigure',
+    fullyQualifiedName: 'pipelines.images.getPageFigure',
+    httpMethod: 'get',
+    httpPath: '/api/v1/files/{id}/page-figures/{page_index}/{figure_name}',
+  },
+  {
     clientCallName: 'client.pipelines.images.listPageFigures',
     fullyQualifiedName: 'pipelines.images.listPageFigures',
     httpMethod: 'get',
     httpPath: '/api/v1/files/{id}/page-figures',
   },
   {
-    clientCallName: 'client.pipelines.images.listPageScreenshots',
-    fullyQualifiedName: 'pipelines.images.listPageScreenshots',
+    clientCallName: 'client.pipelines.files.getStatusCounts',
+    fullyQualifiedName: 'pipelines.files.getStatusCounts',
     httpMethod: 'get',
-    httpPath: '/api/v1/files/{id}/page_screenshots',
+    httpPath: '/api/v1/pipelines/{pipeline_id}/files/status-counts',
+  },
+  {
+    clientCallName: 'client.pipelines.files.getStatus',
+    fullyQualifiedName: 'pipelines.files.getStatus',
+    httpMethod: 'get',
+    httpPath: '/api/v1/pipelines/{pipeline_id}/files/{file_id}/status',
   },
   {
     clientCallName: 'client.pipelines.files.create',
@@ -383,28 +425,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/pipelines/{pipeline_id}/files/{file_id}',
   },
   {
-    clientCallName: 'client.pipelines.files.list',
-    fullyQualifiedName: 'pipelines.files.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/pipelines/{pipeline_id}/files2',
-  },
-  {
     clientCallName: 'client.pipelines.files.delete',
     fullyQualifiedName: 'pipelines.files.delete',
     httpMethod: 'delete',
     httpPath: '/api/v1/pipelines/{pipeline_id}/files/{file_id}',
   },
   {
-    clientCallName: 'client.pipelines.files.getStatus',
-    fullyQualifiedName: 'pipelines.files.getStatus',
+    clientCallName: 'client.pipelines.files.list',
+    fullyQualifiedName: 'pipelines.files.list',
     httpMethod: 'get',
-    httpPath: '/api/v1/pipelines/{pipeline_id}/files/{file_id}/status',
-  },
-  {
-    clientCallName: 'client.pipelines.files.getStatusCounts',
-    fullyQualifiedName: 'pipelines.files.getStatusCounts',
-    httpMethod: 'get',
-    httpPath: '/api/v1/pipelines/{pipeline_id}/files/status-counts',
+    httpPath: '/api/v1/pipelines/{pipeline_id}/files2',
   },
   {
     clientCallName: 'client.pipelines.metadata.create',
@@ -431,22 +461,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/pipelines/{pipeline_id}/documents/paginated',
   },
   {
-    clientCallName: 'client.pipelines.documents.delete',
-    fullyQualifiedName: 'pipelines.documents.delete',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/pipelines/{pipeline_id}/documents/{document_id}',
-  },
-  {
     clientCallName: 'client.pipelines.documents.get',
     fullyQualifiedName: 'pipelines.documents.get',
     httpMethod: 'get',
     httpPath: '/api/v1/pipelines/{pipeline_id}/documents/{document_id}',
   },
   {
-    clientCallName: 'client.pipelines.documents.getChunks',
-    fullyQualifiedName: 'pipelines.documents.getChunks',
-    httpMethod: 'get',
-    httpPath: '/api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks',
+    clientCallName: 'client.pipelines.documents.delete',
+    fullyQualifiedName: 'pipelines.documents.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/pipelines/{pipeline_id}/documents/{document_id}',
   },
   {
     clientCallName: 'client.pipelines.documents.getStatus',
@@ -461,6 +485,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync',
   },
   {
+    clientCallName: 'client.pipelines.documents.getChunks',
+    fullyQualifiedName: 'pipelines.documents.getChunks',
+    httpMethod: 'get',
+    httpPath: '/api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks',
+  },
+  {
     clientCallName: 'client.pipelines.documents.upsert',
     fullyQualifiedName: 'pipelines.documents.upsert',
     httpMethod: 'put',
@@ -473,10 +503,10 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/retrievers',
   },
   {
-    clientCallName: 'client.retrievers.update',
-    fullyQualifiedName: 'retrievers.update',
+    clientCallName: 'client.retrievers.upsert',
+    fullyQualifiedName: 'retrievers.upsert',
     httpMethod: 'put',
-    httpPath: '/api/v1/retrievers/{retriever_id}',
+    httpPath: '/api/v1/retrievers',
   },
   {
     clientCallName: 'client.retrievers.list',
@@ -485,15 +515,21 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/retrievers',
   },
   {
-    clientCallName: 'client.retrievers.delete',
-    fullyQualifiedName: 'retrievers.delete',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/retrievers/{retriever_id}',
-  },
-  {
     clientCallName: 'client.retrievers.get',
     fullyQualifiedName: 'retrievers.get',
     httpMethod: 'get',
+    httpPath: '/api/v1/retrievers/{retriever_id}',
+  },
+  {
+    clientCallName: 'client.retrievers.update',
+    fullyQualifiedName: 'retrievers.update',
+    httpMethod: 'put',
+    httpPath: '/api/v1/retrievers/{retriever_id}',
+  },
+  {
+    clientCallName: 'client.retrievers.delete',
+    fullyQualifiedName: 'retrievers.delete',
+    httpMethod: 'delete',
     httpPath: '/api/v1/retrievers/{retriever_id}',
   },
   {
@@ -503,34 +539,10 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/retrievers/retrieve',
   },
   {
-    clientCallName: 'client.retrievers.upsert',
-    fullyQualifiedName: 'retrievers.upsert',
-    httpMethod: 'put',
-    httpPath: '/api/v1/retrievers',
-  },
-  {
     clientCallName: 'client.retrievers.retriever.search',
     fullyQualifiedName: 'retrievers.retriever.search',
     httpMethod: 'post',
     httpPath: '/api/v1/retrievers/{retriever_id}/retrieve',
-  },
-  {
-    clientCallName: 'client.beta.indexes.create',
-    fullyQualifiedName: 'beta.indexes.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/indexes',
-  },
-  {
-    clientCallName: 'client.beta.indexes.list',
-    fullyQualifiedName: 'beta.indexes.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/indexes',
-  },
-  {
-    clientCallName: 'client.beta.indexes.delete',
-    fullyQualifiedName: 'beta.indexes.delete',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/indexes/{index_id}',
   },
   {
     clientCallName: 'client.beta.indexes.get',
@@ -539,10 +551,28 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/indexes/{index_id}',
   },
   {
+    clientCallName: 'client.beta.indexes.delete',
+    fullyQualifiedName: 'beta.indexes.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/indexes/{index_id}',
+  },
+  {
+    clientCallName: 'client.beta.indexes.create',
+    fullyQualifiedName: 'beta.indexes.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/indexes',
+  },
+  {
     clientCallName: 'client.beta.indexes.sync',
     fullyQualifiedName: 'beta.indexes.sync',
     httpMethod: 'post',
     httpPath: '/api/v1/indexes/{index_id}/sync',
+  },
+  {
+    clientCallName: 'client.beta.indexes.list',
+    fullyQualifiedName: 'beta.indexes.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/indexes',
   },
   {
     clientCallName: 'client.beta.retrieval.retrieve',
@@ -569,6 +599,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/retrieval/files/read',
   },
   {
+    clientCallName: 'client.beta.chat.list',
+    fullyQualifiedName: 'beta.chat.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/chat',
+  },
+  {
     clientCallName: 'client.beta.chat.create',
     fullyQualifiedName: 'beta.chat.create',
     httpMethod: 'post',
@@ -579,12 +615,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'beta.chat.retrieve',
     httpMethod: 'get',
     httpPath: '/api/v1/chat/{session_id}',
-  },
-  {
-    clientCallName: 'client.beta.chat.list',
-    fullyQualifiedName: 'beta.chat.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/chat',
   },
   {
     clientCallName: 'client.beta.chat.delete',
@@ -605,10 +635,10 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/chat/{session_id}/messages/stream',
   },
   {
-    clientCallName: 'client.beta.agentData.create',
-    fullyQualifiedName: 'beta.agentData.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/beta/agent-data',
+    clientCallName: 'client.beta.agentData.get',
+    fullyQualifiedName: 'beta.agentData.get',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/agent-data/{item_id}',
   },
   {
     clientCallName: 'client.beta.agentData.update',
@@ -623,6 +653,18 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/agent-data/{item_id}',
   },
   {
+    clientCallName: 'client.beta.agentData.create',
+    fullyQualifiedName: 'beta.agentData.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/beta/agent-data',
+  },
+  {
+    clientCallName: 'client.beta.agentData.search',
+    fullyQualifiedName: 'beta.agentData.search',
+    httpMethod: 'post',
+    httpPath: '/api/v1/beta/agent-data/:search',
+  },
+  {
     clientCallName: 'client.beta.agentData.aggregate',
     fullyQualifiedName: 'beta.agentData.aggregate',
     httpMethod: 'post',
@@ -633,18 +675,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'beta.agentData.deleteByQuery',
     httpMethod: 'post',
     httpPath: '/api/v1/beta/agent-data/:delete',
-  },
-  {
-    clientCallName: 'client.beta.agentData.get',
-    fullyQualifiedName: 'beta.agentData.get',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/agent-data/{item_id}',
-  },
-  {
-    clientCallName: 'client.beta.agentData.search',
-    fullyQualifiedName: 'beta.agentData.search',
-    httpMethod: 'post',
-    httpPath: '/api/v1/beta/agent-data/:search',
   },
   {
     clientCallName: 'client.beta.sheets.create',
@@ -659,12 +689,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/sheets/jobs',
   },
   {
-    clientCallName: 'client.beta.sheets.deleteJob',
-    fullyQualifiedName: 'beta.sheets.deleteJob',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/beta/sheets/jobs/{spreadsheet_job_id}',
-  },
-  {
     clientCallName: 'client.beta.sheets.get',
     fullyQualifiedName: 'beta.sheets.get',
     httpMethod: 'get',
@@ -677,16 +701,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}',
   },
   {
+    clientCallName: 'client.beta.sheets.deleteJob',
+    fullyQualifiedName: 'beta.sheets.deleteJob',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/beta/sheets/jobs/{spreadsheet_job_id}',
+  },
+  {
     clientCallName: 'client.beta.directories.create',
     fullyQualifiedName: 'beta.directories.create',
     httpMethod: 'post',
     httpPath: '/api/v1/beta/directories',
-  },
-  {
-    clientCallName: 'client.beta.directories.update',
-    fullyQualifiedName: 'beta.directories.update',
-    httpMethod: 'patch',
-    httpPath: '/api/v1/beta/directories/{directory_id}',
   },
   {
     clientCallName: 'client.beta.directories.list',
@@ -695,34 +719,22 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/directories',
   },
   {
-    clientCallName: 'client.beta.directories.delete',
-    fullyQualifiedName: 'beta.directories.delete',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/beta/directories/{directory_id}',
-  },
-  {
     clientCallName: 'client.beta.directories.get',
     fullyQualifiedName: 'beta.directories.get',
     httpMethod: 'get',
     httpPath: '/api/v1/beta/directories/{directory_id}',
   },
   {
-    clientCallName: 'client.beta.directories.files.update',
-    fullyQualifiedName: 'beta.directories.files.update',
+    clientCallName: 'client.beta.directories.update',
+    fullyQualifiedName: 'beta.directories.update',
     httpMethod: 'patch',
-    httpPath: '/api/v1/beta/directories/{directory_id}/files/{directory_file_id}',
+    httpPath: '/api/v1/beta/directories/{directory_id}',
   },
   {
-    clientCallName: 'client.beta.directories.files.list',
-    fullyQualifiedName: 'beta.directories.files.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/directories/{directory_id}/files',
-  },
-  {
-    clientCallName: 'client.beta.directories.files.delete',
-    fullyQualifiedName: 'beta.directories.files.delete',
+    clientCallName: 'client.beta.directories.delete',
+    fullyQualifiedName: 'beta.directories.delete',
     httpMethod: 'delete',
-    httpPath: '/api/v1/beta/directories/{directory_id}/files/{directory_file_id}',
+    httpPath: '/api/v1/beta/directories/{directory_id}',
   },
   {
     clientCallName: 'client.beta.directories.files.add',
@@ -731,9 +743,27 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/directories/{directory_id}/files',
   },
   {
+    clientCallName: 'client.beta.directories.files.list',
+    fullyQualifiedName: 'beta.directories.files.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/directories/{directory_id}/files',
+  },
+  {
     clientCallName: 'client.beta.directories.files.get',
     fullyQualifiedName: 'beta.directories.files.get',
     httpMethod: 'get',
+    httpPath: '/api/v1/beta/directories/{directory_id}/files/{directory_file_id}',
+  },
+  {
+    clientCallName: 'client.beta.directories.files.update',
+    fullyQualifiedName: 'beta.directories.files.update',
+    httpMethod: 'patch',
+    httpPath: '/api/v1/beta/directories/{directory_id}/files/{directory_file_id}',
+  },
+  {
+    clientCallName: 'client.beta.directories.files.delete',
+    fullyQualifiedName: 'beta.directories.files.delete',
+    httpMethod: 'delete',
     httpPath: '/api/v1/beta/directories/{directory_id}/files/{directory_file_id}',
   },
   {
@@ -755,16 +785,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/batch-processing',
   },
   {
-    clientCallName: 'client.beta.batch.cancel',
-    fullyQualifiedName: 'beta.batch.cancel',
-    httpMethod: 'post',
-    httpPath: '/api/v1/beta/batch-processing/{job_id}/cancel',
-  },
-  {
     clientCallName: 'client.beta.batch.getStatus',
     fullyQualifiedName: 'beta.batch.getStatus',
     httpMethod: 'get',
     httpPath: '/api/v1/beta/batch-processing/{job_id}',
+  },
+  {
+    clientCallName: 'client.beta.batch.cancel',
+    fullyQualifiedName: 'beta.batch.cancel',
+    httpMethod: 'post',
+    httpPath: '/api/v1/beta/batch-processing/{job_id}/cancel',
   },
   {
     clientCallName: 'client.beta.batch.jobItems.list',

@@ -11,6 +11,8 @@ import { path } from '../../internal/utils/path';
 export class Metadata extends APIResource {
   /**
    * Import metadata for a pipeline.
+   *
+   * @deprecated
    */
   create(
     pipelineID: string,
@@ -25,6 +27,8 @@ export class Metadata extends APIResource {
 
   /**
    * Delete metadata for all files in a pipeline.
+   *
+   * @deprecated
    */
   deleteAll(pipelineID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/v1/pipelines/${pipelineID}/metadata`, {
