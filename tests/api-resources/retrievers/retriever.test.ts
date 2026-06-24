@@ -28,8 +28,8 @@ describe('resource retriever', () => {
       query: 'x',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      mode: 'routing',
-      rerank_config: { top_n: 1, type: 'system_default' },
+      mode: 'full',
+      rerank_config: { top_n: 1, type: 'bedrock' },
       rerank_top_n: 0,
     });
   });

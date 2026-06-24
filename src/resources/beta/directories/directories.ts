@@ -178,7 +178,7 @@ export interface DirectoryCreateResponse {
   /**
    * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
    */
-  type?: 'user' | 'index' | 'ephemeral' | 'system_ephemeral' | null;
+  type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user' | null;
 
   /**
    * Update datetime
@@ -233,7 +233,7 @@ export interface DirectoryUpdateResponse {
   /**
    * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
    */
-  type?: 'user' | 'index' | 'ephemeral' | 'system_ephemeral' | null;
+  type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user' | null;
 
   /**
    * Update datetime
@@ -288,7 +288,7 @@ export interface DirectoryListResponse {
   /**
    * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
    */
-  type?: 'user' | 'index' | 'ephemeral' | 'system_ephemeral' | null;
+  type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user' | null;
 
   /**
    * Update datetime
@@ -343,7 +343,7 @@ export interface DirectoryGetResponse {
   /**
    * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
    */
-  type?: 'user' | 'index' | 'ephemeral' | 'system_ephemeral' | null;
+  type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user' | null;
 
   /**
    * Update datetime
@@ -386,7 +386,7 @@ export interface DirectoryCreateParams {
    * Body param: Directory type. Use 'ephemeral' for batch processing with automatic
    * cleanup.
    */
-  type?: 'user' | 'ephemeral';
+  type?: 'ephemeral' | 'user';
 }
 
 export interface DirectoryListParams extends PaginatedCursorParams {
@@ -398,7 +398,7 @@ export interface DirectoryListParams extends PaginatedCursorParams {
 
   project_id?: string | null;
 
-  type?: 'user' | 'index' | 'ephemeral' | null;
+  type?: 'ephemeral' | 'index' | 'user' | null;
 }
 
 export interface DirectoryGetParams {

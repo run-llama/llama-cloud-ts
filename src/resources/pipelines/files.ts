@@ -192,7 +192,7 @@ export interface PipelineFile {
   /**
    * Status of the pipeline file.
    */
-  status?: 'NOT_STARTED' | 'IN_PROGRESS' | 'SUCCESS' | 'ERROR' | 'CANCELLED' | null;
+  status?: 'CANCELLED' | 'ERROR' | 'IN_PROGRESS' | 'NOT_STARTED' | 'SUCCESS' | null;
 
   /**
    * The last time the status was updated.
@@ -297,7 +297,7 @@ export interface FileListParams extends PaginatedPipelineFilesParams {
   /**
    * Filter by file statuses
    */
-  statuses?: Array<'NOT_STARTED' | 'IN_PROGRESS' | 'SUCCESS' | 'ERROR' | 'CANCELLED'> | null;
+  statuses?: Array<'CANCELLED' | 'ERROR' | 'IN_PROGRESS' | 'NOT_STARTED' | 'SUCCESS'> | null;
 }
 
 export declare namespace Files {

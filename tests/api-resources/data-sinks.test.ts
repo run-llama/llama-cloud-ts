@@ -39,7 +39,7 @@ describe('resource dataSinks', () => {
     const responsePromise = client.dataSinks.create({
       component: { foo: 'bar' },
       name: 'name',
-      sink_type: 'PINECONE',
+      sink_type: 'ASTRA_DB',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -55,7 +55,7 @@ describe('resource dataSinks', () => {
     const response = await client.dataSinks.create({
       component: { foo: 'bar' },
       name: 'name',
-      sink_type: 'PINECONE',
+      sink_type: 'ASTRA_DB',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
@@ -76,7 +76,7 @@ describe('resource dataSinks', () => {
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.dataSinks.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      sink_type: 'PINECONE',
+      sink_type: 'ASTRA_DB',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -90,7 +90,7 @@ describe('resource dataSinks', () => {
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.dataSinks.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      sink_type: 'PINECONE',
+      sink_type: 'ASTRA_DB',
       component: { foo: 'bar' },
       name: 'name',
     });

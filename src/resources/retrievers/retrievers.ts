@@ -104,7 +104,7 @@ export class Retrievers extends APIResource {
 /**
  * Enum for the mode of composite retrieval.
  */
-export type CompositeRetrievalMode = 'routing' | 'full';
+export type CompositeRetrievalMode = 'full' | 'routing';
 
 export interface CompositeRetrievalResult {
   /**
@@ -188,7 +188,7 @@ export interface ReRankConfig {
   /**
    * The type of reranker to use.
    */
-  type?: 'system_default' | 'llm' | 'cohere' | 'bedrock' | 'score' | 'disabled';
+  type?: 'bedrock' | 'cohere' | 'disabled' | 'llm' | 'score' | 'system_default';
 }
 
 /**

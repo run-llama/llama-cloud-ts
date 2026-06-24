@@ -84,7 +84,7 @@ export interface DataSink {
 
   project_id: string;
 
-  sink_type: 'PINECONE' | 'POSTGRES' | 'QDRANT' | 'AZUREAI_SEARCH' | 'MONGODB_ATLAS' | 'MILVUS' | 'ASTRA_DB';
+  sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT';
 
   /**
    * Creation datetime
@@ -127,7 +127,7 @@ export interface DataSinkCreateParams {
   /**
    * Body param
    */
-  sink_type: 'PINECONE' | 'POSTGRES' | 'QDRANT' | 'AZUREAI_SEARCH' | 'MONGODB_ATLAS' | 'MILVUS' | 'ASTRA_DB';
+  sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT';
 
   /**
    * Query param
@@ -141,7 +141,7 @@ export interface DataSinkCreateParams {
 }
 
 export interface DataSinkUpdateParams {
-  sink_type: 'PINECONE' | 'POSTGRES' | 'QDRANT' | 'AZUREAI_SEARCH' | 'MONGODB_ATLAS' | 'MILVUS' | 'ASTRA_DB';
+  sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT';
 
   /**
    * Component that implements the data sink

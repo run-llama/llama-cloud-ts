@@ -506,7 +506,7 @@ export namespace SplitCreateParams {
        * be assigned to a defined category. 'omit': pages can be classified as
        * 'uncategorized' but are excluded from results.
        */
-      allow_uncategorized?: 'include' | 'forbid' | 'omit';
+      allow_uncategorized?: 'forbid' | 'include' | 'omit';
     }
   }
 }
@@ -534,7 +534,7 @@ export interface SplitListParams extends PaginatedCursorParams {
   /**
    * Filter by job status (pending, processing, completed, failed, cancelled)
    */
-  status?: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled' | null;
+  status?: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing' | null;
 }
 
 export interface SplitGetParams {

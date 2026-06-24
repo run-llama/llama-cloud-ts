@@ -333,13 +333,13 @@ export interface RetrievalRetrieveParams {
 
 export namespace RetrievalRetrieveParams {
   export interface FilterTypeUnionStrIntBoolFloat {
-    operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin';
+    operator: 'eq' | 'gt' | 'gte' | 'in' | 'lt' | 'lte' | 'ne' | 'nin';
 
     value: string | boolean | number | Array<string | boolean | number>;
   }
 
   export interface UnionMember1 {
-    operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin';
+    operator: 'eq' | 'gt' | 'gte' | 'in' | 'lt' | 'lte' | 'ne' | 'nin';
 
     value: number | Array<number>;
   }
@@ -368,7 +368,7 @@ export namespace RetrievalRetrieveParams {
 
   export namespace StaticFilters {
     export interface ParsedDirectoryFileID {
-      operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'nin';
+      operator: 'eq' | 'gt' | 'gte' | 'in' | 'lt' | 'lte' | 'ne' | 'nin';
 
       value: string | Array<string>;
     }

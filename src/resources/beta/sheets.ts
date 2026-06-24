@@ -64,7 +64,7 @@ export class Sheets extends APIResource {
    * @deprecated
    */
   getResultTable(
-    regionType: 'table' | 'extra' | 'cell_metadata',
+    regionType: 'cell_metadata' | 'extra' | 'table',
     params: SheetGetResultTableParams,
     options?: RequestOptions,
   ): APIPromise<FilesAPI.PresignedURL> {
@@ -248,7 +248,7 @@ export interface SheetsJob {
   /**
    * The status of the parsing job
    */
-  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED';
+  status: 'CANCELLED' | 'ERROR' | 'PARTIAL_SUCCESS' | 'PENDING' | 'SUCCESS';
 
   /**
    * When the job was last updated
@@ -328,33 +328,33 @@ export namespace SheetsJob {
        * events are delivered.
        */
       webhook_events?: Array<
-        | 'extract.pending'
-        | 'extract.success'
-        | 'extract.error'
-        | 'extract.partial_success'
-        | 'extract.cancelled'
-        | 'parse.pending'
-        | 'parse.running'
-        | 'parse.success'
-        | 'parse.error'
-        | 'parse.partial_success'
-        | 'parse.cancelled'
+        | 'classify.cancelled'
+        | 'classify.error'
+        | 'classify.partial_success'
         | 'classify.pending'
         | 'classify.running'
         | 'classify.success'
-        | 'classify.error'
-        | 'classify.partial_success'
-        | 'classify.cancelled'
-        | 'sheets.pending'
-        | 'sheets.success'
+        | 'extract.cancelled'
+        | 'extract.error'
+        | 'extract.partial_success'
+        | 'extract.pending'
+        | 'extract.success'
+        | 'parse.cancelled'
+        | 'parse.error'
+        | 'parse.partial_success'
+        | 'parse.pending'
+        | 'parse.running'
+        | 'parse.success'
+        | 'sheets.cancelled'
         | 'sheets.error'
         | 'sheets.partial_success'
-        | 'sheets.cancelled'
+        | 'sheets.pending'
+        | 'sheets.success'
+        | 'split.cancelled'
+        | 'split.error'
         | 'split.pending'
         | 'split.processing'
         | 'split.success'
-        | 'split.error'
-        | 'split.cancelled'
         | 'unmapped_event'
       > | null;
 
@@ -533,33 +533,33 @@ export namespace SheetCreateParams {
      * events are delivered.
      */
     webhook_events?: Array<
-      | 'extract.pending'
-      | 'extract.success'
-      | 'extract.error'
-      | 'extract.partial_success'
-      | 'extract.cancelled'
-      | 'parse.pending'
-      | 'parse.running'
-      | 'parse.success'
-      | 'parse.error'
-      | 'parse.partial_success'
-      | 'parse.cancelled'
+      | 'classify.cancelled'
+      | 'classify.error'
+      | 'classify.partial_success'
       | 'classify.pending'
       | 'classify.running'
       | 'classify.success'
-      | 'classify.error'
-      | 'classify.partial_success'
-      | 'classify.cancelled'
-      | 'sheets.pending'
-      | 'sheets.success'
+      | 'extract.cancelled'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.pending'
+      | 'extract.success'
+      | 'parse.cancelled'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'sheets.cancelled'
       | 'sheets.error'
       | 'sheets.partial_success'
-      | 'sheets.cancelled'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'split.cancelled'
+      | 'split.error'
       | 'split.pending'
       | 'split.processing'
       | 'split.success'
-      | 'split.error'
-      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -610,7 +610,7 @@ export interface SheetListParams extends PaginatedCursorParams {
   /**
    * Filter by job status
    */
-  status?: 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED' | null;
+  status?: 'CANCELLED' | 'ERROR' | 'PARTIAL_SUCCESS' | 'PENDING' | 'SUCCESS' | null;
 }
 
 export interface SheetGetParams {

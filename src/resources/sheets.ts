@@ -81,7 +81,7 @@ export class Sheets extends APIResource {
    * @example
    * ```ts
    * const presignedURL = await client.sheets.getResultTable(
-   *   'table',
+   *   'cell_metadata',
    *   {
    *     spreadsheet_job_id: 'spreadsheet_job_id',
    *     region_id: 'region_id',
@@ -90,7 +90,7 @@ export class Sheets extends APIResource {
    * ```
    */
   getResultTable(
-    regionType: 'table' | 'extra' | 'cell_metadata',
+    regionType: 'cell_metadata' | 'extra' | 'table',
     params: SheetGetResultTableParams,
     options?: RequestOptions,
   ): APIPromise<FilesAPI.PresignedURL> {
@@ -173,33 +173,33 @@ export namespace SheetCreateParams {
      * events are delivered.
      */
     webhook_events?: Array<
-      | 'extract.pending'
-      | 'extract.success'
-      | 'extract.error'
-      | 'extract.partial_success'
-      | 'extract.cancelled'
-      | 'parse.pending'
-      | 'parse.running'
-      | 'parse.success'
-      | 'parse.error'
-      | 'parse.partial_success'
-      | 'parse.cancelled'
+      | 'classify.cancelled'
+      | 'classify.error'
+      | 'classify.partial_success'
       | 'classify.pending'
       | 'classify.running'
       | 'classify.success'
-      | 'classify.error'
-      | 'classify.partial_success'
-      | 'classify.cancelled'
-      | 'sheets.pending'
-      | 'sheets.success'
+      | 'extract.cancelled'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.pending'
+      | 'extract.success'
+      | 'parse.cancelled'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'sheets.cancelled'
       | 'sheets.error'
       | 'sheets.partial_success'
-      | 'sheets.cancelled'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'split.cancelled'
+      | 'split.error'
       | 'split.pending'
       | 'split.processing'
       | 'split.success'
-      | 'split.error'
-      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -250,7 +250,7 @@ export interface SheetListParams extends PaginatedCursorParams {
   /**
    * Filter by job status
    */
-  status?: 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED' | null;
+  status?: 'CANCELLED' | 'ERROR' | 'PARTIAL_SUCCESS' | 'PENDING' | 'SUCCESS' | null;
 }
 
 export interface SheetGetParams {

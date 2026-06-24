@@ -85,7 +85,7 @@ describe('resource sheets', () => {
           page_size: 0,
           page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          status: 'PENDING',
+          status: 'CANCELLED',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -123,7 +123,7 @@ describe('resource sheets', () => {
 
   // Mock server tests are disabled
   test.skip('getResultTable: only required params', async () => {
-    const responsePromise = client.sheets.getResultTable('table', {
+    const responsePromise = client.sheets.getResultTable('cell_metadata', {
       spreadsheet_job_id: 'spreadsheet_job_id',
       region_id: 'region_id',
     });
@@ -138,7 +138,7 @@ describe('resource sheets', () => {
 
   // Mock server tests are disabled
   test.skip('getResultTable: required and optional params', async () => {
-    const response = await client.sheets.getResultTable('table', {
+    const response = await client.sheets.getResultTable('cell_metadata', {
       spreadsheet_job_id: 'spreadsheet_job_id',
       region_id: 'region_id',
       expires_at_seconds: 0,
