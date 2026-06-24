@@ -1374,13 +1374,13 @@ export interface ParsingCreateParams {
    * Current `latest` by tier:
    *
    * - `fast`: `2025-12-11`
-   * - `cost_effective`: `2026-06-17`
-   * - `agentic`: `2026-06-11`
-   * - `agentic_plus`: `2026-06-11`
+   * - `cost_effective`: `2026-06-18`
+   * - `agentic`: `2026-06-18`
+   * - `agentic_plus`: `2026-06-18`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-06-17' | '2026-06-11' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-18' | '2025-12-11' | (string & {});
 
   /**
    * Query param
@@ -2208,13 +2208,13 @@ export namespace ParsingCreateParams {
          * Current `latest` by tier:
          *
          * - `fast`: `2025-12-11`
-         * - `cost_effective`: `2026-06-17`
-         * - `agentic`: `2026-06-11`
-         * - `agentic_plus`: `2026-06-11`
+         * - `cost_effective`: `2026-06-18`
+         * - `agentic`: `2026-06-18`
+         * - `agentic_plus`: `2026-06-18`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-06-17' | '2026-06-11' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-18' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
