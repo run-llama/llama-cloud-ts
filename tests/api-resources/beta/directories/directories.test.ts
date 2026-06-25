@@ -57,7 +57,7 @@ describe('resource directories', () => {
           page_size: 0,
           page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          type: 'user',
+          type: 'ephemeral',
         },
         { path: '/_stainless_unknown_path' },
       ),

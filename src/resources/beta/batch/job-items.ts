@@ -83,7 +83,7 @@ export interface JobItemListResponse {
   /**
    * Processing status of this item
    */
-  status: 'pending' | 'processing' | 'completed' | 'failed' | 'skipped' | 'cancelled';
+  status: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing' | 'skipped';
 
   /**
    * When processing completed for this item
@@ -156,7 +156,7 @@ export namespace JobItemGetProcessingResultsResponse {
     /**
      * Type of processing performed
      */
-    job_type: 'parse' | 'extract' | 'classify';
+    job_type: 'classify' | 'extract' | 'parse';
 
     /**
      * Location of the processing output
@@ -363,7 +363,7 @@ export namespace JobItemGetProcessingResultsResponse {
 
         ignore_document_elements_for_layout_detection?: boolean | null;
 
-        images_to_save?: Array<'screenshot' | 'embedded' | 'layout'> | null;
+        images_to_save?: Array<'embedded' | 'layout' | 'screenshot'> | null;
 
         inline_images_in_markdown?: boolean | null;
 
@@ -477,7 +477,7 @@ export namespace JobItemGetProcessingResultsResponse {
          * The priority for the request. This field may be ignored or overwritten depending
          * on the organization tier.
          */
-        priority?: 'low' | 'medium' | 'high' | 'critical' | null;
+        priority?: 'critical' | 'high' | 'low' | 'medium' | null;
 
         project_id?: string | null;
 
@@ -569,33 +569,33 @@ export namespace JobItemGetProcessingResultsResponse {
            * events are delivered.
            */
           webhook_events?: Array<
-            | 'extract.pending'
-            | 'extract.success'
-            | 'extract.error'
-            | 'extract.partial_success'
-            | 'extract.cancelled'
-            | 'parse.pending'
-            | 'parse.running'
-            | 'parse.success'
-            | 'parse.error'
-            | 'parse.partial_success'
-            | 'parse.cancelled'
+            | 'classify.cancelled'
+            | 'classify.error'
+            | 'classify.partial_success'
             | 'classify.pending'
             | 'classify.running'
             | 'classify.success'
-            | 'classify.error'
-            | 'classify.partial_success'
-            | 'classify.cancelled'
-            | 'sheets.pending'
-            | 'sheets.success'
+            | 'extract.cancelled'
+            | 'extract.error'
+            | 'extract.partial_success'
+            | 'extract.pending'
+            | 'extract.success'
+            | 'parse.cancelled'
+            | 'parse.error'
+            | 'parse.partial_success'
+            | 'parse.pending'
+            | 'parse.running'
+            | 'parse.success'
+            | 'sheets.cancelled'
             | 'sheets.error'
             | 'sheets.partial_success'
-            | 'sheets.cancelled'
+            | 'sheets.pending'
+            | 'sheets.success'
+            | 'split.cancelled'
+            | 'split.error'
             | 'split.pending'
             | 'split.processing'
             | 'split.success'
-            | 'split.error'
-            | 'split.cancelled'
             | 'unmapped_event'
           > | null;
 
@@ -627,14 +627,14 @@ export interface JobItemListParams extends PaginatedBatchItemsParams {
   /**
    * Filter items by status
    */
-  status?: 'pending' | 'processing' | 'completed' | 'failed' | 'skipped' | 'cancelled' | null;
+  status?: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing' | 'skipped' | null;
 }
 
 export interface JobItemGetProcessingResultsParams {
   /**
    * Filter results by job type
    */
-  job_type?: 'parse' | 'extract' | 'classify' | null;
+  job_type?: 'classify' | 'extract' | 'parse' | null;
 
   organization_id?: string | null;
 

@@ -106,7 +106,7 @@ export interface CloudBoxDataSource {
   /**
    * The type of authentication to use (Developer Token or CCG)
    */
-  authentication_mechanism: 'developer_token' | 'ccg';
+  authentication_mechanism: 'ccg' | 'developer_token';
 
   class_name?: string;
 
@@ -636,7 +636,7 @@ export interface PgVectorHnswSettings {
   /**
    * The distance method to use.
    */
-  distance_method?: 'l2' | 'ip' | 'cosine' | 'l1' | 'hamming' | 'jaccard';
+  distance_method?: 'cosine' | 'hamming' | 'ip' | 'jaccard' | 'l1' | 'l2';
 
   /**
    * The number of edges to use during the construction phase.
@@ -656,5 +656,5 @@ export interface PgVectorHnswSettings {
   /**
    * The type of vector to use.
    */
-  vector_type?: 'vector' | 'half_vec' | 'bit' | 'sparse_vec';
+  vector_type?: 'bit' | 'half_vec' | 'sparse_vec' | 'vector';
 }

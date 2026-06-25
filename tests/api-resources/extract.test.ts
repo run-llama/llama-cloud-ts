@@ -28,8 +28,8 @@ describe('resource extract', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       configuration: {
         data_schema: {
-          properties: { vendor_name: 'bar', total_amount: 'bar' },
-          required: ['vendor_name', 'total_amount'],
+          properties: { total_amount: 'bar', vendor_name: 'bar' },
+          required: ['total_amount', 'vendor_name'],
           type: 'object',
         },
         cite_sources: true,
@@ -85,7 +85,7 @@ describe('resource extract', () => {
           page_size: 0,
           page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          status: 'PENDING',
+          status: 'CANCELLED',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -152,12 +152,12 @@ describe('resource extract', () => {
     const responsePromise = client.extract.validateSchema({
       data_schema: {
         properties: {
-          vendor_name: 'bar',
           invoice_number: 'bar',
-          total_amount: 'bar',
           line_items: 'bar',
+          total_amount: 'bar',
+          vendor_name: 'bar',
         },
-        required: ['vendor_name', 'invoice_number', 'total_amount'],
+        required: ['invoice_number', 'total_amount', 'vendor_name'],
         type: 'object',
       },
     });
@@ -175,12 +175,12 @@ describe('resource extract', () => {
     const response = await client.extract.validateSchema({
       data_schema: {
         properties: {
-          vendor_name: 'bar',
           invoice_number: 'bar',
-          total_amount: 'bar',
           line_items: 'bar',
+          total_amount: 'bar',
+          vendor_name: 'bar',
         },
-        required: ['vendor_name', 'invoice_number', 'total_amount'],
+        required: ['invoice_number', 'total_amount', 'vendor_name'],
         type: 'object',
       },
     });

@@ -110,7 +110,7 @@ export interface BatchCreateResponse {
   /**
    * Current batch status.
    */
-  status: 'PENDING' | 'THROTTLED' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED';
 
   /**
    * Creation datetime
@@ -253,7 +253,7 @@ export interface BatchListResponse {
   /**
    * Current batch status.
    */
-  status: 'PENDING' | 'THROTTLED' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED';
 
   /**
    * Creation datetime
@@ -396,7 +396,7 @@ export interface BatchGetResponse {
   /**
    * Current batch status.
    */
-  status: 'PENDING' | 'THROTTLED' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED';
 
   /**
    * Creation datetime
@@ -560,7 +560,7 @@ export interface BatchListParams extends PaginatedCursorParams {
 
   source_directory_id?: string | null;
 
-  status?: 'PENDING' | 'THROTTLED' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | null;
+  status?: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED' | null;
 }
 
 export interface BatchGetParams {

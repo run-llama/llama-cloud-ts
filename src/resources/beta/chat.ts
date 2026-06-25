@@ -185,13 +185,13 @@ export interface ChatRetrieveResponse {
    * Ordered list of events that make up the conversation history.
    */
   events: Array<
-    | ChatRetrieveResponse.ThinkingDeltaEvent
+    | ChatRetrieveResponse.StopEvent
     | ChatRetrieveResponse.TextDeltaEvent
-    | ChatRetrieveResponse.ThinkingEvent
     | ChatRetrieveResponse.TextEvent
+    | ChatRetrieveResponse.ThinkingDeltaEvent
+    | ChatRetrieveResponse.ThinkingEvent
     | ChatRetrieveResponse.ToolCallEvent
     | ChatRetrieveResponse.ToolResultEvent
-    | ChatRetrieveResponse.StopEvent
     | ChatRetrieveResponse.UserInputEvent
   >;
 
@@ -223,10 +223,26 @@ export interface ChatRetrieveResponse {
 }
 
 export namespace ChatRetrieveResponse {
-  export interface ThinkingDeltaEvent {
-    content: string;
+  export interface StopEvent {
+    error: string | null;
 
-    type?: 'thinking_delta';
+    is_error: boolean;
+
+    usage: StopEvent.Usage;
+
+    type?: 'stop';
+  }
+
+  export namespace StopEvent {
+    export interface Usage {
+      duration_ms?: number;
+
+      total_input_tokens?: number | null;
+
+      total_output_tokens?: number | null;
+
+      turns?: number;
+    }
   }
 
   export interface TextDeltaEvent {
@@ -235,16 +251,22 @@ export namespace ChatRetrieveResponse {
     type?: 'text_delta';
   }
 
-  export interface ThinkingEvent {
-    content: string;
-
-    type?: 'thinking';
-  }
-
   export interface TextEvent {
     content: string;
 
     type?: 'text';
+  }
+
+  export interface ThinkingDeltaEvent {
+    content: string;
+
+    type?: 'thinking_delta';
+  }
+
+  export interface ThinkingEvent {
+    content: string;
+
+    type?: 'thinking';
   }
 
   export interface ToolCallEvent {
@@ -280,28 +302,6 @@ export namespace ChatRetrieveResponse {
       attachment_name: string;
 
       source_id: string;
-    }
-  }
-
-  export interface StopEvent {
-    error: string | null;
-
-    is_error: boolean;
-
-    usage: StopEvent.Usage;
-
-    type?: 'stop';
-  }
-
-  export namespace StopEvent {
-    export interface Usage {
-      duration_ms?: number;
-
-      total_input_tokens?: number | null;
-
-      total_output_tokens?: number | null;
-
-      turns?: number;
     }
   }
 

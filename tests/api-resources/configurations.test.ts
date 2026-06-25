@@ -12,7 +12,10 @@ describe('resource configurations', () => {
   test.skip('create: only required params', async () => {
     const responsePromise = client.configurations.create({
       name: 'x',
-      parameters: { categories: [{ name: 'x' }], product_type: 'split_v1' },
+      parameters: {
+        product_type: 'classify_v2',
+        rules: [{ description: 'contains invoice number, line items, and total amount', type: 'invoice' }],
+      },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -28,9 +31,14 @@ describe('resource configurations', () => {
     const response = await client.configurations.create({
       name: 'x',
       parameters: {
-        categories: [{ name: 'x', description: 'x' }],
-        product_type: 'split_v1',
-        splitting_strategy: { allow_uncategorized: 'include' },
+        product_type: 'classify_v2',
+        rules: [{ description: 'contains invoice number, line items, and total amount', type: 'invoice' }],
+        mode: 'FAST',
+        parsing_configuration: {
+          lang: 'en',
+          max_pages: 10,
+          target_pages: '1,3,5-7',
+        },
       },
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -60,7 +68,7 @@ describe('resource configurations', () => {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           page_size: 0,
           page_token: 'page_token',
-          product_type: ['split_v1', 'extract_v2'],
+          product_type: ['classify_v2', 'extract_v2'],
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         },
         { path: '/_stainless_unknown_path' },

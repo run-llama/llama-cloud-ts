@@ -39,7 +39,7 @@ describe('resource dataSources', () => {
     const responsePromise = client.dataSources.create({
       component: { foo: 'bar' },
       name: 'name',
-      source_type: 'S3',
+      source_type: 'AZURE_STORAGE_BLOB',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -55,7 +55,7 @@ describe('resource dataSources', () => {
     const response = await client.dataSources.create({
       component: { foo: 'bar' },
       name: 'name',
-      source_type: 'S3',
+      source_type: 'AZURE_STORAGE_BLOB',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       custom_metadata: { foo: { foo: 'bar' } },
@@ -77,7 +77,7 @@ describe('resource dataSources', () => {
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.dataSources.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      source_type: 'S3',
+      source_type: 'AZURE_STORAGE_BLOB',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -91,7 +91,7 @@ describe('resource dataSources', () => {
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.dataSources.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      source_type: 'S3',
+      source_type: 'AZURE_STORAGE_BLOB',
       component: { foo: 'bar' },
       custom_metadata: { foo: { foo: 'bar' } },
       name: 'name',

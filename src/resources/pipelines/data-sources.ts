@@ -134,17 +134,17 @@ export interface PipelineDataSource {
   project_id: string;
 
   source_type:
-    | 'S3'
     | 'AZURE_STORAGE_BLOB'
-    | 'GOOGLE_DRIVE'
-    | 'MICROSOFT_ONEDRIVE'
-    | 'MICROSOFT_SHAREPOINT'
-    | 'SLACK'
-    | 'NOTION_PAGE'
+    | 'BOX'
     | 'CONFLUENCE'
+    | 'GOOGLE_DRIVE'
     | 'JIRA'
     | 'JIRA_V2'
-    | 'BOX';
+    | 'MICROSOFT_ONEDRIVE'
+    | 'MICROSOFT_SHAREPOINT'
+    | 'NOTION_PAGE'
+    | 'S3'
+    | 'SLACK';
 
   /**
    * Creation datetime
@@ -161,7 +161,7 @@ export interface PipelineDataSource {
   /**
    * The status of the data source in the pipeline.
    */
-  status?: 'NOT_STARTED' | 'IN_PROGRESS' | 'SUCCESS' | 'ERROR' | 'CANCELLED' | null;
+  status?: 'CANCELLED' | 'ERROR' | 'IN_PROGRESS' | 'NOT_STARTED' | 'SUCCESS' | null;
 
   /**
    * The last time the status was updated.

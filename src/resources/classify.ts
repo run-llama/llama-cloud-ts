@@ -302,33 +302,33 @@ export namespace ClassifyCreateRequest {
      * events are delivered.
      */
     webhook_events?: Array<
-      | 'extract.pending'
-      | 'extract.success'
-      | 'extract.error'
-      | 'extract.partial_success'
-      | 'extract.cancelled'
-      | 'parse.pending'
-      | 'parse.running'
-      | 'parse.success'
-      | 'parse.error'
-      | 'parse.partial_success'
-      | 'parse.cancelled'
+      | 'classify.cancelled'
+      | 'classify.error'
+      | 'classify.partial_success'
       | 'classify.pending'
       | 'classify.running'
       | 'classify.success'
-      | 'classify.error'
-      | 'classify.partial_success'
-      | 'classify.cancelled'
-      | 'sheets.pending'
-      | 'sheets.success'
+      | 'extract.cancelled'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.pending'
+      | 'extract.success'
+      | 'parse.cancelled'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'sheets.cancelled'
       | 'sheets.error'
       | 'sheets.partial_success'
-      | 'sheets.cancelled'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'split.cancelled'
+      | 'split.error'
       | 'split.pending'
       | 'split.processing'
       | 'split.success'
-      | 'split.error'
-      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -386,7 +386,7 @@ export interface ClassifyCreateResponse {
   /**
    * Whether the input was a file or parse job (FILE or PARSE_JOB)
    */
-  document_input_type: 'url' | 'file_id' | 'parse_job_id';
+  document_input_type: 'file_id' | 'parse_job_id' | 'url';
 
   /**
    * ID of the input file or parse job
@@ -401,7 +401,7 @@ export interface ClassifyCreateResponse {
   /**
    * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
    */
-  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+  status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
 
   /**
    * User who created this job
@@ -461,7 +461,7 @@ export interface ClassifyListResponse {
   /**
    * Whether the input was a file or parse job (FILE or PARSE_JOB)
    */
-  document_input_type: 'url' | 'file_id' | 'parse_job_id';
+  document_input_type: 'file_id' | 'parse_job_id' | 'url';
 
   /**
    * ID of the input file or parse job
@@ -476,7 +476,7 @@ export interface ClassifyListResponse {
   /**
    * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
    */
-  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+  status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
 
   /**
    * User who created this job
@@ -536,7 +536,7 @@ export interface ClassifyGetResponse {
   /**
    * Whether the input was a file or parse job (FILE or PARSE_JOB)
    */
-  document_input_type: 'url' | 'file_id' | 'parse_job_id';
+  document_input_type: 'file_id' | 'parse_job_id' | 'url';
 
   /**
    * ID of the input file or parse job
@@ -551,7 +551,7 @@ export interface ClassifyGetResponse {
   /**
    * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
    */
-  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+  status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
 
   /**
    * User who created this job
@@ -652,33 +652,33 @@ export namespace ClassifyCreateParams {
      * events are delivered.
      */
     webhook_events?: Array<
-      | 'extract.pending'
-      | 'extract.success'
-      | 'extract.error'
-      | 'extract.partial_success'
-      | 'extract.cancelled'
-      | 'parse.pending'
-      | 'parse.running'
-      | 'parse.success'
-      | 'parse.error'
-      | 'parse.partial_success'
-      | 'parse.cancelled'
+      | 'classify.cancelled'
+      | 'classify.error'
+      | 'classify.partial_success'
       | 'classify.pending'
       | 'classify.running'
       | 'classify.success'
-      | 'classify.error'
-      | 'classify.partial_success'
-      | 'classify.cancelled'
-      | 'sheets.pending'
-      | 'sheets.success'
+      | 'extract.cancelled'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.pending'
+      | 'extract.success'
+      | 'parse.cancelled'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'sheets.cancelled'
       | 'sheets.error'
       | 'sheets.partial_success'
-      | 'sheets.cancelled'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'split.cancelled'
+      | 'split.error'
       | 'split.pending'
       | 'split.processing'
       | 'split.success'
-      | 'split.error'
-      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -727,7 +727,7 @@ export interface ClassifyListParams extends PaginatedCursorParams {
   /**
    * Filter by job status
    */
-  status?: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | null;
+  status?: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | null;
 }
 
 export interface ClassifyGetParams {

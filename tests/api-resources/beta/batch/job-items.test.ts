@@ -31,7 +31,7 @@ describe('resource jobItems', () => {
           offset: 0,
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          status: 'pending',
+          status: 'cancelled',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -57,7 +57,7 @@ describe('resource jobItems', () => {
       client.beta.batch.jobItems.getProcessingResults(
         'item_id',
         {
-          job_type: 'parse',
+          job_type: 'classify',
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         },

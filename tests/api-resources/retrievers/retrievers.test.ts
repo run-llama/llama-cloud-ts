@@ -39,7 +39,7 @@ describe('resource retrievers', () => {
             enable_reranking: true,
             files_top_k: 1,
             rerank_top_n: 1,
-            retrieval_mode: 'chunks',
+            retrieval_mode: 'auto_routed',
             retrieve_image_nodes: true,
             retrieve_page_figure_nodes: true,
             retrieve_page_screenshot_nodes: true,
@@ -48,7 +48,7 @@ describe('resource retrievers', () => {
                 {
                   key: 'key',
                   value: 0,
-                  operator: '==',
+                  operator: '!=',
                 },
               ],
               condition: 'and',
@@ -92,7 +92,7 @@ describe('resource retrievers', () => {
             enable_reranking: true,
             files_top_k: 1,
             rerank_top_n: 1,
-            retrieval_mode: 'chunks',
+            retrieval_mode: 'auto_routed',
             retrieve_image_nodes: true,
             retrieve_page_figure_nodes: true,
             retrieve_page_screenshot_nodes: true,
@@ -101,7 +101,7 @@ describe('resource retrievers', () => {
                 {
                   key: 'key',
                   value: 0,
-                  operator: '==',
+                  operator: '!=',
                 },
               ],
               condition: 'and',
@@ -204,7 +204,7 @@ describe('resource retrievers', () => {
             enable_reranking: true,
             files_top_k: 1,
             rerank_top_n: 1,
-            retrieval_mode: 'chunks',
+            retrieval_mode: 'auto_routed',
             retrieve_image_nodes: true,
             retrieve_page_figure_nodes: true,
             retrieve_page_screenshot_nodes: true,
@@ -213,7 +213,7 @@ describe('resource retrievers', () => {
                 {
                   key: 'key',
                   value: 0,
-                  operator: '==',
+                  operator: '!=',
                 },
               ],
               condition: 'and',
@@ -274,7 +274,7 @@ describe('resource retrievers', () => {
       query: 'x',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      mode: 'routing',
+      mode: 'full',
       pipelines: [
         {
           description: 'description',
@@ -288,7 +288,7 @@ describe('resource retrievers', () => {
             enable_reranking: true,
             files_top_k: 1,
             rerank_top_n: 1,
-            retrieval_mode: 'chunks',
+            retrieval_mode: 'auto_routed',
             retrieve_image_nodes: true,
             retrieve_page_figure_nodes: true,
             retrieve_page_screenshot_nodes: true,
@@ -297,7 +297,7 @@ describe('resource retrievers', () => {
                 {
                   key: 'key',
                   value: 0,
-                  operator: '==',
+                  operator: '!=',
                 },
               ],
               condition: 'and',
@@ -307,7 +307,7 @@ describe('resource retrievers', () => {
           },
         },
       ],
-      rerank_config: { top_n: 1, type: 'system_default' },
+      rerank_config: { top_n: 1, type: 'bedrock' },
       rerank_top_n: 0,
     });
   });
