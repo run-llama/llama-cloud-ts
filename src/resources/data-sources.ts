@@ -94,17 +94,17 @@ export interface DataSource {
   project_id: string;
 
   source_type:
-    | 'S3'
     | 'AZURE_STORAGE_BLOB'
-    | 'GOOGLE_DRIVE'
-    | 'MICROSOFT_ONEDRIVE'
-    | 'MICROSOFT_SHAREPOINT'
-    | 'SLACK'
-    | 'NOTION_PAGE'
+    | 'BOX'
     | 'CONFLUENCE'
+    | 'GOOGLE_DRIVE'
     | 'JIRA'
     | 'JIRA_V2'
-    | 'BOX';
+    | 'MICROSOFT_ONEDRIVE'
+    | 'MICROSOFT_SHAREPOINT'
+    | 'NOTION_PAGE'
+    | 'S3'
+    | 'SLACK';
 
   /**
    * Creation datetime
@@ -171,17 +171,17 @@ export interface DataSourceCreateParams {
    * Body param
    */
   source_type:
-    | 'S3'
     | 'AZURE_STORAGE_BLOB'
-    | 'GOOGLE_DRIVE'
-    | 'MICROSOFT_ONEDRIVE'
-    | 'MICROSOFT_SHAREPOINT'
-    | 'SLACK'
-    | 'NOTION_PAGE'
+    | 'BOX'
     | 'CONFLUENCE'
+    | 'GOOGLE_DRIVE'
     | 'JIRA'
     | 'JIRA_V2'
-    | 'BOX';
+    | 'MICROSOFT_ONEDRIVE'
+    | 'MICROSOFT_SHAREPOINT'
+    | 'NOTION_PAGE'
+    | 'S3'
+    | 'SLACK';
 
   /**
    * Query param
@@ -204,17 +204,17 @@ export interface DataSourceCreateParams {
 
 export interface DataSourceUpdateParams {
   source_type:
-    | 'S3'
     | 'AZURE_STORAGE_BLOB'
-    | 'GOOGLE_DRIVE'
-    | 'MICROSOFT_ONEDRIVE'
-    | 'MICROSOFT_SHAREPOINT'
-    | 'SLACK'
-    | 'NOTION_PAGE'
+    | 'BOX'
     | 'CONFLUENCE'
+    | 'GOOGLE_DRIVE'
     | 'JIRA'
     | 'JIRA_V2'
-    | 'BOX';
+    | 'MICROSOFT_ONEDRIVE'
+    | 'MICROSOFT_SHAREPOINT'
+    | 'NOTION_PAGE'
+    | 'S3'
+    | 'SLACK';
 
   /**
    * Component that implements the data source

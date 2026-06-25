@@ -326,13 +326,13 @@ export interface CodeItem {
 /**
  * Enum for representing the different available page error handling modes.
  */
-export type FailPageMode = 'raw_text' | 'blank_page' | 'error_message';
+export type FailPageMode = 'blank_page' | 'error_message' | 'raw_text';
 
 export interface FooterItem {
   /**
    * List of items within the footer
    */
-  items: Array<TextItem | HeadingItem | ListItem | CodeItem | TableItem | ImageItem | LinkItem>;
+  items: Array<CodeItem | HeadingItem | ImageItem | LinkItem | ListItem | TableItem | TextItem>;
 
   /**
    * Markdown representation preserving formatting
@@ -354,7 +354,7 @@ export interface HeaderItem {
   /**
    * List of items within the header
    */
-  items: Array<TextItem | HeadingItem | ListItem | CodeItem | TableItem | ImageItem | LinkItem>;
+  items: Array<CodeItem | HeadingItem | ImageItem | LinkItem | ListItem | TableItem | TextItem>;
 
   /**
    * Markdown representation preserving formatting
@@ -484,153 +484,153 @@ export interface ListItem {
  * Enum for supported file extensions.
  */
 export type LlamaParseSupportedFileExtensions =
-  | '.pdf'
   | '.abw'
   | '.awt'
+  | '.azw'
+  | '.azw3'
+  | '.azw4'
+  | '.bmp'
+  | '.cb7'
+  | '.cbc'
+  | '.cbr'
+  | '.cbz'
   | '.cgm'
+  | '.chm'
+  | '.csv'
   | '.cwk'
+  | '.dbf'
+  | '.dif'
+  | '.djvu'
   | '.doc'
   | '.docm'
   | '.docx'
   | '.dot'
   | '.dotm'
   | '.dotx'
+  | '.epub'
+  | '.et'
+  | '.eth'
+  | '.fb2'
+  | '.fbz'
   | '.fodg'
   | '.fodp'
-  | '.fopd'
+  | '.fods'
   | '.fodt'
-  | '.fb2'
+  | '.fopd'
+  | '.gif'
+  | '.heic'
+  | '.heif'
+  | '.htm'
+  | '.html'
+  | '.htmlz'
   | '.hwp'
+  | '.jpeg'
+  | '.jpg'
+  | '.key'
+  | '.lit'
+  | '.lrf'
   | '.lwp'
+  | '.m4a'
   | '.mcw'
+  | '.md'
+  | '.mobi'
+  | '.mp3'
+  | '.mp4'
+  | '.mpeg'
+  | '.mpga'
   | '.mw'
   | '.mwd'
+  | '.numbers'
   | '.odf'
+  | '.odg'
+  | '.odp'
+  | '.ods'
   | '.odt'
   | '.otg'
+  | '.otp'
+  | '.ots'
   | '.ott'
   | '.pages'
   | '.pbd'
-  | '.psw'
-  | '.rtf'
-  | '.sda'
-  | '.sdd'
-  | '.sdp'
-  | '.sdw'
-  | '.sgl'
-  | '.std'
-  | '.stw'
-  | '.sxd'
-  | '.sxg'
-  | '.sxm'
-  | '.sxw'
-  | '.uof'
-  | '.uop'
-  | '.uot'
-  | '.vor'
-  | '.wpd'
-  | '.wps'
-  | '.wpt'
-  | '.wri'
-  | '.wn'
-  | '.xml'
-  | '.zabw'
-  | '.key'
-  | '.odp'
-  | '.odg'
-  | '.otp'
+  | '.pdb'
+  | '.pdf'
+  | '.pml'
+  | '.png'
   | '.pot'
   | '.potm'
   | '.potx'
   | '.ppt'
   | '.pptm'
   | '.pptx'
+  | '.prc'
+  | '.prn'
+  | '.psw'
+  | '.qpw'
+  | '.rb'
+  | '.rtf'
+  | '.sda'
+  | '.sdd'
+  | '.sdp'
+  | '.sdw'
+  | '.sgl'
+  | '.slk'
+  | '.snb'
+  | '.stc'
+  | '.std'
   | '.sti'
+  | '.stw'
+  | '.svg'
+  | '.sxc'
+  | '.sxd'
+  | '.sxg'
   | '.sxi'
+  | '.sxm'
+  | '.sxw'
+  | '.sylk'
+  | '.tcr'
+  | '.tif'
+  | '.tiff'
+  | '.tsv'
+  | '.txtz'
+  | '.uof'
+  | '.uop'
+  | '.uos'
+  | '.uos1'
+  | '.uos2'
+  | '.uot'
+  | '.vdx'
+  | '.vor'
   | '.vsd'
   | '.vsdm'
   | '.vsdx'
-  | '.vdx'
-  | '.bmp'
-  | '.gif'
-  | '.heic'
-  | '.heif'
-  | '.jpg'
-  | '.jpeg'
-  | '.png'
-  | '.svg'
-  | '.tif'
-  | '.tiff'
-  | '.webp'
-  | '.htm'
-  | '.html'
-  | '.xhtm'
-  | '.csv'
-  | '.dbf'
-  | '.dif'
-  | '.et'
-  | '.eth'
-  | '.fods'
-  | '.numbers'
-  | '.ods'
-  | '.ots'
-  | '.prn'
-  | '.qpw'
-  | '.slk'
-  | '.stc'
-  | '.sxc'
-  | '.sylk'
-  | '.tsv'
-  | '.uos1'
-  | '.uos2'
-  | '.uos'
+  | '.wav'
   | '.wb1'
   | '.wb2'
   | '.wb3'
+  | '.webm'
+  | '.webp'
   | '.wk1'
   | '.wk2'
   | '.wk3'
   | '.wk4'
   | '.wks'
+  | '.wn'
+  | '.wpd'
+  | '.wps'
+  | '.wpt'
   | '.wq1'
   | '.wq2'
+  | '.wri'
+  | '.xhtm'
   | '.xlr'
   | '.xls'
   | '.xlsb'
   | '.xlsm'
   | '.xlsx'
   | '.xlw'
-  | '.azw'
-  | '.azw3'
-  | '.azw4'
-  | '.cb7'
-  | '.cbc'
-  | '.cbr'
-  | '.cbz'
-  | '.chm'
-  | '.djvu'
-  | '.epub'
-  | '.fbz'
-  | '.htmlz'
-  | '.lit'
-  | '.lrf'
-  | '.md'
-  | '.mobi'
-  | '.pdb'
-  | '.pml'
-  | '.prc'
-  | '.rb'
-  | '.snb'
-  | '.tcr'
-  | '.txtz'
-  | '.m4a'
-  | '.mp3'
-  | '.mp4'
-  | '.mpeg'
-  | '.mpga'
-  | '.wav'
-  | '.webm'
-  | '.yxmd';
+  | '.xml'
+  | '.yxmd'
+  | '.zabw';
 
 /**
  * A parse job (v1).
@@ -661,30 +661,63 @@ export interface ParsingJob {
  * Enum for representing the languages supported by the parser.
  */
 export type ParsingLanguages =
+  | 'abq'
+  | 'ady'
   | 'af'
+  | 'ang'
+  | 'ar'
+  | 'as'
+  | 'ava'
   | 'az'
+  | 'be'
+  | 'bg'
+  | 'bgc'
+  | 'bh'
+  | 'bho'
+  | 'bn'
   | 'bs'
+  | 'ch_sim'
+  | 'ch_tra'
+  | 'che'
   | 'cs'
   | 'cy'
   | 'da'
+  | 'dar'
   | 'de'
   | 'en'
   | 'es'
   | 'et'
+  | 'fa'
   | 'fr'
   | 'ga'
+  | 'gom'
+  | 'hi'
   | 'hr'
   | 'hu'
   | 'id'
+  | 'inh'
   | 'is'
   | 'it'
+  | 'ja'
+  | 'kbd'
+  | 'kn'
+  | 'ko'
   | 'ku'
   | 'la'
+  | 'lbe'
+  | 'lez'
   | 'lt'
   | 'lv'
+  | 'mah'
+  | 'mai'
   | 'mi'
+  | 'mn'
+  | 'mni'
+  | 'mr'
   | 'ms'
   | 'mt'
+  | 'ne'
+  | 'new'
   | 'nl'
   | 'no'
   | 'oc'
@@ -692,79 +725,46 @@ export type ParsingLanguages =
   | 'pl'
   | 'pt'
   | 'ro'
+  | 'rs_cyrillic'
   | 'rs_latin'
+  | 'ru'
+  | 'sa'
+  | 'sck'
   | 'sk'
   | 'sl'
   | 'sq'
   | 'sv'
   | 'sw'
+  | 'ta'
+  | 'tab'
+  | 'te'
+  | 'th'
+  | 'tjk'
   | 'tl'
   | 'tr'
-  | 'uz'
-  | 'vi'
-  | 'ar'
-  | 'fa'
   | 'ug'
-  | 'ur'
-  | 'bn'
-  | 'as'
-  | 'mni'
-  | 'ru'
-  | 'rs_cyrillic'
-  | 'be'
-  | 'bg'
   | 'uk'
-  | 'mn'
-  | 'abq'
-  | 'ady'
-  | 'kbd'
-  | 'ava'
-  | 'dar'
-  | 'inh'
-  | 'che'
-  | 'lbe'
-  | 'lez'
-  | 'tab'
-  | 'tjk'
-  | 'hi'
-  | 'mr'
-  | 'ne'
-  | 'bh'
-  | 'mai'
-  | 'ang'
-  | 'bho'
-  | 'mah'
-  | 'sck'
-  | 'new'
-  | 'gom'
-  | 'sa'
-  | 'bgc'
-  | 'th'
-  | 'ch_sim'
-  | 'ch_tra'
-  | 'ja'
-  | 'ko'
-  | 'ta'
-  | 'te'
-  | 'kn';
+  | 'ur'
+  | 'uz'
+  | 'vi';
 
 /**
  * Enum for representing the mode of parsing to be used.
  */
 export type ParsingMode =
-  | 'parse_page_without_llm'
-  | 'parse_page_with_llm'
-  | 'parse_page_with_lvm'
-  | 'parse_page_with_agent'
-  | 'parse_page_with_layout_agent'
+  | 'parse_document_with_agent'
   | 'parse_document_with_llm'
   | 'parse_document_with_lvm'
-  | 'parse_document_with_agent';
+  | 'parse_page_with_agent'
+  | 'parse_page_with_layout_agent'
+  | 'parse_page_with_llm'
+  | 'parse_page_with_lvm'
+  | 'parse_page_without_llm';
 
 /**
  * Enum for representing the status of a job
  */
-export type StatusEnum = 'PENDING' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED';
+export type StatusEnum = 'CANCELLED' | 'ERROR' | 'PARTIAL_SUCCESS' | 'PENDING' | 'SUCCESS';
 
 export interface TableItem {
   /**
@@ -870,7 +870,7 @@ export interface ParsingCreateResponse {
   /**
    * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
    */
-  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
 
   /**
    * Creation datetime
@@ -915,7 +915,7 @@ export interface ParsingListResponse {
   /**
    * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
    */
-  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
 
   /**
    * Creation datetime
@@ -1021,7 +1021,7 @@ export namespace ParsingGetResponse {
     /**
      * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
      */
-    status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+    status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
 
     /**
      * Creation datetime
@@ -1088,7 +1088,7 @@ export namespace ParsingGetResponse {
        * Image category: 'screenshot' (full page), 'embedded' (images in document), or
        * 'layout' (cropped from layout detection)
        */
-      category?: 'screenshot' | 'embedded' | 'layout' | null;
+      category?: 'embedded' | 'layout' | 'screenshot' | null;
 
       /**
        * MIME type of the image
@@ -1151,15 +1151,15 @@ export namespace ParsingGetResponse {
        * List of structured items on the page
        */
       items: Array<
-        | ParsingAPI.TextItem
-        | ParsingAPI.HeadingItem
-        | ParsingAPI.ListItem
         | ParsingAPI.CodeItem
-        | ParsingAPI.TableItem
+        | ParsingAPI.FooterItem
+        | ParsingAPI.HeaderItem
+        | ParsingAPI.HeadingItem
         | ParsingAPI.ImageItem
         | ParsingAPI.LinkItem
-        | ParsingAPI.HeaderItem
-        | ParsingAPI.FooterItem
+        | ParsingAPI.ListItem
+        | ParsingAPI.TableItem
+        | ParsingAPI.TextItem
       >;
 
       /**
@@ -1374,13 +1374,13 @@ export interface ParsingCreateParams {
    * Current `latest` by tier:
    *
    * - `fast`: `2025-12-11`
-   * - `cost_effective`: `2026-06-11`
-   * - `agentic`: `2026-06-11`
-   * - `agentic_plus`: `2026-06-11`
+   * - `cost_effective`: `2026-06-18`
+   * - `agentic`: `2026-06-18`
+   * - `agentic_plus`: `2026-06-18`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-06-11' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-18' | '2025-12-11' | (string & {});
 
   /**
    * Query param
@@ -1687,7 +1687,7 @@ export namespace ParsingCreateParams {
      * (cropped regions from layout detection like figures and diagrams). Empty list
      * saves no images
      */
-    images_to_save?: Array<'screenshot' | 'embedded' | 'layout'>;
+    images_to_save?: Array<'embedded' | 'layout' | 'screenshot'>;
 
     /**
      * Markdown formatting options including table styles and link annotations
@@ -1937,7 +1937,7 @@ export namespace ParsingCreateParams {
      * 'agentic' (balanced), 'agentic_plus' (highest accuracy). Automatically enables
      * extract_layout and precise_bounding_box when set
      */
-    specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient' | null;
+    specialized_chart_parsing?: 'agentic' | 'agentic_plus' | 'efficient' | null;
   }
 
   export namespace ProcessingOptions {
@@ -2194,12 +2194,12 @@ export namespace ParsingCreateParams {
         /**
          * Enable specialized chart parsing with the specified mode
          */
-        specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient' | null;
+        specialized_chart_parsing?: 'agentic' | 'agentic_plus' | 'efficient' | null;
 
         /**
          * Override the parsing tier for matched pages. Must be paired with version
          */
-        tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus' | null;
+        tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
 
         /**
          * Version for the override tier. Required when `tier` is set. Use `latest`, or pin
@@ -2208,13 +2208,13 @@ export namespace ParsingCreateParams {
          * Current `latest` by tier:
          *
          * - `fast`: `2025-12-11`
-         * - `cost_effective`: `2026-06-11`
-         * - `agentic`: `2026-06-11`
-         * - `agentic_plus`: `2026-06-11`
+         * - `cost_effective`: `2026-06-18`
+         * - `agentic`: `2026-06-18`
+         * - `agentic_plus`: `2026-06-18`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-06-11' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-18' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -2372,7 +2372,7 @@ export namespace ParsingCreateParams {
      * Format of the webhook payload body. 'string' (default) sends the payload as a
      * JSON-encoded string; 'json' sends it as a JSON object.
      */
-    webhook_output_format?: 'string' | 'json' | null;
+    webhook_output_format?: 'json' | 'string' | null;
 
     /**
      * HTTPS URL to receive webhook POST requests. Must be publicly accessible
@@ -2424,7 +2424,7 @@ export interface ParsingListParams extends PaginatedCursorParams {
   /**
    * Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)
    */
-  status?: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | null;
+  status?: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | null;
 }
 
 export declare namespace Parsing {

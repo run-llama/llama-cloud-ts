@@ -139,7 +139,7 @@ export interface BatchCreateResponse {
   /**
    * Type of processing operation (parse or classify)
    */
-  job_type: 'parse' | 'extract' | 'classify';
+  job_type: 'classify' | 'extract' | 'parse';
 
   /**
    * Project this job belongs to
@@ -149,7 +149,7 @@ export interface BatchCreateResponse {
   /**
    * Current job status
    */
-  status: 'pending' | 'running' | 'dispatched' | 'completed' | 'failed' | 'cancelled';
+  status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running';
 
   /**
    * Total number of items in the job
@@ -226,7 +226,7 @@ export interface BatchListResponse {
   /**
    * Type of processing operation (parse or classify)
    */
-  job_type: 'parse' | 'extract' | 'classify';
+  job_type: 'classify' | 'extract' | 'parse';
 
   /**
    * Project this job belongs to
@@ -236,7 +236,7 @@ export interface BatchListResponse {
   /**
    * Current job status
    */
-  status: 'pending' | 'running' | 'dispatched' | 'completed' | 'failed' | 'cancelled';
+  status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running';
 
   /**
    * Total number of items in the job
@@ -323,7 +323,7 @@ export interface BatchCancelResponse {
   /**
    * New status (should be 'cancelled')
    */
-  status: 'pending' | 'running' | 'dispatched' | 'completed' | 'failed' | 'cancelled';
+  status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running';
 }
 
 /**
@@ -354,7 +354,7 @@ export namespace BatchGetStatusResponse {
     /**
      * Type of processing operation (parse or classify)
      */
-    job_type: 'parse' | 'extract' | 'classify';
+    job_type: 'classify' | 'extract' | 'parse';
 
     /**
      * Project this job belongs to
@@ -364,7 +364,7 @@ export namespace BatchGetStatusResponse {
     /**
      * Current job status
      */
-    status: 'pending' | 'running' | 'dispatched' | 'completed' | 'failed' | 'cancelled';
+    status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running';
 
     /**
      * Total number of items in the job
@@ -650,7 +650,7 @@ export namespace BatchCreateParams {
 
       ignore_document_elements_for_layout_detection?: boolean | null;
 
-      images_to_save?: Array<'screenshot' | 'embedded' | 'layout'> | null;
+      images_to_save?: Array<'embedded' | 'layout' | 'screenshot'> | null;
 
       inline_images_in_markdown?: boolean | null;
 
@@ -764,7 +764,7 @@ export namespace BatchCreateParams {
        * The priority for the request. This field may be ignored or overwritten depending
        * on the organization tier.
        */
-      priority?: 'low' | 'medium' | 'high' | 'critical' | null;
+      priority?: 'critical' | 'high' | 'low' | 'medium' | null;
 
       project_id?: string | null;
 
@@ -856,33 +856,33 @@ export namespace BatchCreateParams {
          * events are delivered.
          */
         webhook_events?: Array<
-          | 'extract.pending'
-          | 'extract.success'
-          | 'extract.error'
-          | 'extract.partial_success'
-          | 'extract.cancelled'
-          | 'parse.pending'
-          | 'parse.running'
-          | 'parse.success'
-          | 'parse.error'
-          | 'parse.partial_success'
-          | 'parse.cancelled'
+          | 'classify.cancelled'
+          | 'classify.error'
+          | 'classify.partial_success'
           | 'classify.pending'
           | 'classify.running'
           | 'classify.success'
-          | 'classify.error'
-          | 'classify.partial_success'
-          | 'classify.cancelled'
-          | 'sheets.pending'
-          | 'sheets.success'
+          | 'extract.cancelled'
+          | 'extract.error'
+          | 'extract.partial_success'
+          | 'extract.pending'
+          | 'extract.success'
+          | 'parse.cancelled'
+          | 'parse.error'
+          | 'parse.partial_success'
+          | 'parse.pending'
+          | 'parse.running'
+          | 'parse.success'
+          | 'sheets.cancelled'
           | 'sheets.error'
           | 'sheets.partial_success'
-          | 'sheets.cancelled'
+          | 'sheets.pending'
+          | 'sheets.success'
+          | 'split.cancelled'
+          | 'split.error'
           | 'split.pending'
           | 'split.processing'
           | 'split.success'
-          | 'split.error'
-          | 'split.cancelled'
           | 'unmapped_event'
         > | null;
 
@@ -914,7 +914,7 @@ export interface BatchListParams extends PaginatedBatchItemsParams {
   /**
    * Filter by job type (PARSE, EXTRACT, CLASSIFY)
    */
-  job_type?: 'parse' | 'extract' | 'classify' | null;
+  job_type?: 'classify' | 'extract' | 'parse' | null;
 
   organization_id?: string | null;
 
@@ -923,7 +923,7 @@ export interface BatchListParams extends PaginatedBatchItemsParams {
   /**
    * Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)
    */
-  status?: 'pending' | 'running' | 'dispatched' | 'completed' | 'failed' | 'cancelled' | null;
+  status?: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running' | null;
 }
 
 export interface BatchGetStatusParams {

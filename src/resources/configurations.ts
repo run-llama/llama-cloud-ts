@@ -158,10 +158,10 @@ export interface ConfigurationCreate {
    * Product-specific configuration parameters.
    */
   parameters:
-    | SplitV1Parameters
-    | ExtractV2Parameters
     | ClassifyV2Parameters
+    | ExtractV2Parameters
     | ParseV2Parameters
+    | SplitV1Parameters
     | ConfigurationCreate.SpreadsheetV1Parameters
     | UntypedParameters;
 }
@@ -244,17 +244,17 @@ export interface ConfigurationResponse {
    * Product-specific configuration parameters.
    */
   parameters:
-    | SplitV1Parameters
-    | ExtractV2Parameters
     | ClassifyV2Parameters
+    | ExtractV2Parameters
     | ParseV2Parameters
+    | SplitV1Parameters
     | ConfigurationResponse.SpreadsheetV1Parameters
     | UntypedParameters;
 
   /**
    * Product type.
    */
-  product_type: 'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown';
+  product_type: 'classify_v2' | 'extract_v2' | 'parse_v2' | 'split_v1' | 'spreadsheet_v1' | 'unknown';
 
   /**
    * Version identifier (datetime string).
@@ -396,7 +396,7 @@ export interface ExtractV2Parameters {
   /**
    * Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)
    */
-  tier?: 'cost_effective' | 'agentic';
+  tier?: 'agentic' | 'cost_effective';
 
   /**
    * Use 'latest' for the latest release for the selected tier or a date string
@@ -425,7 +425,7 @@ export interface ParseV2Parameters {
    * 'agentic' (AI-powered with custom prompts), or 'agentic_plus' (premium AI with
    * highest accuracy)
    */
-  tier: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus';
+  tier: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast';
 
   /**
    * Version for the selected tier. Use `latest`, or pin one of that tier's dated
@@ -434,13 +434,13 @@ export interface ParseV2Parameters {
    * Current `latest` by tier:
    *
    * - `fast`: `2025-12-11`
-   * - `cost_effective`: `2026-06-11`
-   * - `agentic`: `2026-06-11`
-   * - `agentic_plus`: `2026-06-11`
+   * - `cost_effective`: `2026-06-18`
+   * - `agentic`: `2026-06-18`
+   * - `agentic_plus`: `2026-06-18`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-06-11' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-18' | '2025-12-11' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -713,7 +713,7 @@ export namespace ParseV2Parameters {
      * (cropped regions from layout detection like figures and diagrams). Empty list
      * saves no images
      */
-    images_to_save?: Array<'screenshot' | 'embedded' | 'layout'>;
+    images_to_save?: Array<'embedded' | 'layout' | 'screenshot'>;
 
     /**
      * Markdown formatting options including table styles and link annotations
@@ -963,7 +963,7 @@ export namespace ParseV2Parameters {
      * 'agentic' (balanced), 'agentic_plus' (highest accuracy). Automatically enables
      * extract_layout and precise_bounding_box when set
      */
-    specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient' | null;
+    specialized_chart_parsing?: 'agentic' | 'agentic_plus' | 'efficient' | null;
   }
 
   export namespace ProcessingOptions {
@@ -1220,12 +1220,12 @@ export namespace ParseV2Parameters {
         /**
          * Enable specialized chart parsing with the specified mode
          */
-        specialized_chart_parsing?: 'agentic_plus' | 'agentic' | 'efficient' | null;
+        specialized_chart_parsing?: 'agentic' | 'agentic_plus' | 'efficient' | null;
 
         /**
          * Override the parsing tier for matched pages. Must be paired with version
          */
-        tier?: 'fast' | 'cost_effective' | 'agentic' | 'agentic_plus' | null;
+        tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
 
         /**
          * Version for the override tier. Required when `tier` is set. Use `latest`, or pin
@@ -1234,13 +1234,13 @@ export namespace ParseV2Parameters {
          * Current `latest` by tier:
          *
          * - `fast`: `2025-12-11`
-         * - `cost_effective`: `2026-06-11`
-         * - `agentic`: `2026-06-11`
-         * - `agentic_plus`: `2026-06-11`
+         * - `cost_effective`: `2026-06-18`
+         * - `agentic`: `2026-06-18`
+         * - `agentic_plus`: `2026-06-18`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-06-11' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-18' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -1398,7 +1398,7 @@ export namespace ParseV2Parameters {
      * Format of the webhook payload body. 'string' (default) sends the payload as a
      * JSON-encoded string; 'json' sends it as a JSON object.
      */
-    webhook_output_format?: 'string' | 'json' | null;
+    webhook_output_format?: 'json' | 'string' | null;
 
     /**
      * HTTPS URL to receive webhook POST requests. Must be publicly accessible
@@ -1438,7 +1438,7 @@ export namespace SplitV1Parameters {
      * be assigned to a defined category. 'omit': pages can be classified as
      * 'uncategorized' but are excluded from results.
      */
-    allow_uncategorized?: 'include' | 'forbid' | 'omit';
+    allow_uncategorized?: 'forbid' | 'include' | 'omit';
   }
 }
 
@@ -1466,10 +1466,10 @@ export interface ConfigurationCreateParams {
    * Body param: Product-specific configuration parameters.
    */
   parameters:
-    | SplitV1Parameters
-    | ExtractV2Parameters
     | ClassifyV2Parameters
+    | ExtractV2Parameters
     | ParseV2Parameters
+    | SplitV1Parameters
     | ConfigurationCreateParams.SpreadsheetV1Parameters
     | UntypedParameters;
 
@@ -1561,7 +1561,7 @@ export interface ConfigurationListParams extends PaginatedCursorParams {
    * Filter by one or more product types. Repeat the parameter for multiple values.
    */
   product_type?: Array<
-    'split_v1' | 'extract_v2' | 'classify_v2' | 'parse_v2' | 'spreadsheet_v1' | 'unknown'
+    'classify_v2' | 'extract_v2' | 'parse_v2' | 'split_v1' | 'spreadsheet_v1' | 'unknown'
   > | null;
 
   project_id?: string | null;
@@ -1593,10 +1593,10 @@ export interface ConfigurationUpdateParams {
    * Body param: Updated parameters (omit to leave unchanged).
    */
   parameters?:
-    | SplitV1Parameters
-    | ExtractV2Parameters
     | ClassifyV2Parameters
+    | ExtractV2Parameters
     | ParseV2Parameters
+    | SplitV1Parameters
     | ConfigurationUpdateParams.SpreadsheetV1Parameters
     | UntypedParameters
     | null;

@@ -525,7 +525,7 @@ export interface DataSinkCreate {
    */
   name: string;
 
-  sink_type: 'PINECONE' | 'POSTGRES' | 'QDRANT' | 'AZUREAI_SEARCH' | 'MONGODB_ATLAS' | 'MILVUS' | 'ASTRA_DB';
+  sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT';
 }
 
 export interface GeminiEmbedding {
@@ -631,7 +631,7 @@ export interface HuggingFaceInferenceAPIEmbedding {
   /**
    * Enum of possible pooling choices with pooling behaviors.
    */
-  pooling?: 'cls' | 'mean' | 'last' | null;
+  pooling?: 'cls' | 'last' | 'mean' | null;
 
   /**
    * Instruction to prepend during query embedding.
@@ -758,7 +758,7 @@ export interface LlamaParseParameters {
 
   ignore_document_elements_for_layout_detection?: boolean | null;
 
-  images_to_save?: Array<'screenshot' | 'embedded' | 'layout'> | null;
+  images_to_save?: Array<'embedded' | 'layout' | 'screenshot'> | null;
 
   inline_images_in_markdown?: boolean | null;
 
@@ -847,7 +847,7 @@ export interface LlamaParseParameters {
    * The priority for the request. This field may be ignored or overwritten depending
    * on the organization tier.
    */
-  priority?: 'low' | 'medium' | 'high' | 'critical' | null;
+  priority?: 'critical' | 'high' | 'low' | 'medium' | null;
 
   project_id?: string | null;
 
@@ -932,33 +932,33 @@ export namespace LlamaParseParameters {
      * events are delivered.
      */
     webhook_events?: Array<
-      | 'extract.pending'
-      | 'extract.success'
-      | 'extract.error'
-      | 'extract.partial_success'
-      | 'extract.cancelled'
-      | 'parse.pending'
-      | 'parse.running'
-      | 'parse.success'
-      | 'parse.error'
-      | 'parse.partial_success'
-      | 'parse.cancelled'
+      | 'classify.cancelled'
+      | 'classify.error'
+      | 'classify.partial_success'
       | 'classify.pending'
       | 'classify.running'
       | 'classify.success'
-      | 'classify.error'
-      | 'classify.partial_success'
-      | 'classify.cancelled'
-      | 'sheets.pending'
-      | 'sheets.success'
+      | 'extract.cancelled'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.pending'
+      | 'extract.success'
+      | 'parse.cancelled'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'sheets.cancelled'
       | 'sheets.error'
       | 'sheets.partial_success'
-      | 'sheets.cancelled'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'split.cancelled'
+      | 'split.error'
       | 'split.pending'
       | 'split.processing'
       | 'split.success'
-      | 'split.error'
-      | 'split.cancelled'
       | 'unmapped_event'
     > | null;
 
@@ -986,19 +986,19 @@ export interface LlmParameters {
    * The name of the model to use for LLM completions.
    */
   model_name?:
-    | 'GPT_4O'
-    | 'GPT_4O_MINI'
-    | 'GPT_4_1'
-    | 'GPT_4_1_NANO'
-    | 'GPT_4_1_MINI'
     | 'AZURE_OPENAI_GPT_4O'
     | 'AZURE_OPENAI_GPT_4O_MINI'
     | 'AZURE_OPENAI_GPT_4_1'
     | 'AZURE_OPENAI_GPT_4_1_MINI'
     | 'AZURE_OPENAI_GPT_4_1_NANO'
-    | 'CLAUDE_4_5_SONNET'
     | 'BEDROCK_CLAUDE_3_5_SONNET_V1'
-    | 'BEDROCK_CLAUDE_3_5_SONNET_V2';
+    | 'BEDROCK_CLAUDE_3_5_SONNET_V2'
+    | 'CLAUDE_4_5_SONNET'
+    | 'GPT_4O'
+    | 'GPT_4O_MINI'
+    | 'GPT_4_1'
+    | 'GPT_4_1_MINI'
+    | 'GPT_4_1_NANO';
 
   /**
    * The system prompt to use for the completion.
@@ -1025,7 +1025,7 @@ export interface ManagedIngestionStatusResponse {
   /**
    * Status of the ingestion.
    */
-  status: 'NOT_STARTED' | 'IN_PROGRESS' | 'SUCCESS' | 'ERROR' | 'PARTIAL_SUCCESS' | 'CANCELLED';
+  status: 'CANCELLED' | 'ERROR' | 'IN_PROGRESS' | 'NOT_STARTED' | 'PARTIAL_SUCCESS' | 'SUCCESS';
 
   /**
    * Date of the deployment.
@@ -1064,13 +1064,13 @@ export namespace ManagedIngestionStatusResponse {
      * Name of the job that failed.
      */
     step:
-      | 'MANAGED_INGESTION'
       | 'DATA_SOURCE'
       | 'FILE_UPDATER'
-      | 'PARSE'
-      | 'TRANSFORM'
       | 'INGESTION'
-      | 'METADATA_UPDATE';
+      | 'MANAGED_INGESTION'
+      | 'METADATA_UPDATE'
+      | 'PARSE'
+      | 'TRANSFORM';
   }
 }
 
@@ -1078,14 +1078,14 @@ export namespace ManagedIngestionStatusResponse {
  * Message role.
  */
 export type MessageRole =
-  | 'system'
-  | 'developer'
-  | 'user'
   | 'assistant'
-  | 'function'
-  | 'tool'
   | 'chatbot'
-  | 'model';
+  | 'developer'
+  | 'function'
+  | 'model'
+  | 'system'
+  | 'tool'
+  | 'user';
 
 /**
  * Metadata filters for vector stores.
@@ -1096,7 +1096,7 @@ export interface MetadataFilters {
   /**
    * Vector store filter conditions to combine different filters.
    */
-  condition?: 'and' | 'or' | 'not' | null;
+  condition?: 'and' | 'not' | 'or' | null;
 }
 
 export namespace MetadataFilters {
@@ -1117,20 +1117,20 @@ export namespace MetadataFilters {
      * Vector store filter operator.
      */
     operator?:
+      | '!='
+      | '<'
+      | '<='
       | '=='
       | '>'
-      | '<'
-      | '!='
       | '>='
-      | '<='
-      | 'in'
-      | 'nin'
-      | 'any'
       | 'all'
-      | 'text_match'
-      | 'text_match_insensitive'
+      | 'any'
       | 'contains'
-      | 'is_empty';
+      | 'in'
+      | 'is_empty'
+      | 'nin'
+      | 'text_match'
+      | 'text_match_insensitive';
   }
 }
 
@@ -1313,14 +1313,14 @@ export interface Pipeline {
   id: string;
 
   embedding_config:
-    | Pipeline.ManagedOpenAIEmbeddingConfig
     | AzureOpenAIEmbeddingConfig
+    | BedrockEmbeddingConfig
     | CohereEmbeddingConfig
     | GeminiEmbeddingConfig
     | HuggingFaceInferenceAPIEmbeddingConfig
+    | Pipeline.ManagedOpenAIEmbeddingConfig
     | OpenAIEmbeddingConfig
-    | VertexAIEmbeddingConfig
-    | BedrockEmbeddingConfig;
+    | VertexAIEmbeddingConfig;
 
   name: string;
 
@@ -1472,12 +1472,12 @@ export namespace Pipeline {
      */
     embedding_config:
       | PipelinesAPI.AzureOpenAIEmbeddingConfig
+      | PipelinesAPI.BedrockEmbeddingConfig
       | PipelinesAPI.CohereEmbeddingConfig
       | PipelinesAPI.GeminiEmbeddingConfig
       | PipelinesAPI.HuggingFaceInferenceAPIEmbeddingConfig
       | PipelinesAPI.OpenAIEmbeddingConfig
-      | PipelinesAPI.VertexAIEmbeddingConfig
-      | PipelinesAPI.BedrockEmbeddingConfig;
+      | PipelinesAPI.VertexAIEmbeddingConfig;
 
     /**
      * The name of the embedding model config.
@@ -1517,12 +1517,12 @@ export interface PipelineCreate {
 
   embedding_config?:
     | AzureOpenAIEmbeddingConfig
+    | BedrockEmbeddingConfig
     | CohereEmbeddingConfig
     | GeminiEmbeddingConfig
     | HuggingFaceInferenceAPIEmbeddingConfig
     | OpenAIEmbeddingConfig
     | VertexAIEmbeddingConfig
-    | BedrockEmbeddingConfig
     | null;
 
   /**
@@ -1591,7 +1591,7 @@ export interface PipelineMetadataConfig {
 /**
  * Enum for representing the type of a pipeline
  */
-export type PipelineType = 'PLAYGROUND' | 'MANAGED';
+export type PipelineType = 'MANAGED' | 'PLAYGROUND';
 
 /**
  * Schema for the search params for an retrieval execution that can be preset for a
@@ -1671,7 +1671,7 @@ export interface PresetRetrievalParams {
   sparse_similarity_top_k?: number | null;
 }
 
-export type RetrievalMode = 'chunks' | 'files_via_metadata' | 'files_via_content' | 'auto_routed';
+export type RetrievalMode = 'auto_routed' | 'chunks' | 'files_via_content' | 'files_via_metadata';
 
 /**
  * Configuration for sparse embedding models used in hybrid search.
@@ -1687,7 +1687,7 @@ export interface SparseModelConfig {
    * for new pipelines), 'splade' uses HuggingFace Splade model, 'auto' selects based
    * on deployment mode (BYOC uses term frequency, Cloud uses Splade).
    */
-  model_type?: 'splade' | 'bm25' | 'auto';
+  model_type?: 'auto' | 'bm25' | 'splade';
 }
 
 export interface VertexAIEmbeddingConfig {
@@ -1748,7 +1748,7 @@ export interface VertexTextEmbedding {
   /**
    * The embedding mode to use.
    */
-  embed_mode?: 'default' | 'classification' | 'clustering' | 'similarity' | 'retrieval';
+  embed_mode?: 'classification' | 'clustering' | 'default' | 'retrieval' | 'similarity';
 
   /**
    * The modelId of the VertexAI model to use.
@@ -1870,12 +1870,12 @@ export interface PipelineCreateParams {
    */
   embedding_config?:
     | AzureOpenAIEmbeddingConfig
+    | BedrockEmbeddingConfig
     | CohereEmbeddingConfig
     | GeminiEmbeddingConfig
     | HuggingFaceInferenceAPIEmbeddingConfig
     | OpenAIEmbeddingConfig
     | VertexAIEmbeddingConfig
-    | BedrockEmbeddingConfig
     | null;
 
   /**
@@ -1943,12 +1943,12 @@ export interface PipelineUpdateParams {
 
   embedding_config?:
     | AzureOpenAIEmbeddingConfig
+    | BedrockEmbeddingConfig
     | CohereEmbeddingConfig
     | GeminiEmbeddingConfig
     | HuggingFaceInferenceAPIEmbeddingConfig
     | OpenAIEmbeddingConfig
     | VertexAIEmbeddingConfig
-    | BedrockEmbeddingConfig
     | null;
 
   /**
@@ -2036,12 +2036,12 @@ export interface PipelineUpsertParams {
    */
   embedding_config?:
     | AzureOpenAIEmbeddingConfig
+    | BedrockEmbeddingConfig
     | CohereEmbeddingConfig
     | GeminiEmbeddingConfig
     | HuggingFaceInferenceAPIEmbeddingConfig
     | OpenAIEmbeddingConfig
     | VertexAIEmbeddingConfig
-    | BedrockEmbeddingConfig
     | null;
 
   /**
