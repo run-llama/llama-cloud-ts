@@ -390,15 +390,29 @@ export interface DirectoryCreateParams {
 }
 
 export interface DirectoryListParams extends PaginatedCursorParams {
+  /**
+   * Include deleted directories.
+   */
   include_deleted?: boolean;
 
+  /**
+   * Directory name to match.
+   */
   name?: string | null;
 
   organization_id?: string | null;
 
   project_id?: string | null;
 
+  /**
+   * Directory type to include.
+   */
   type?: 'ephemeral' | 'index' | 'user' | null;
+
+  /**
+   * Filter by one or more directory types. Repeat the parameter for multiple values.
+   */
+  types?: Array<'ephemeral' | 'index' | 'user'> | null;
 }
 
 export interface DirectoryGetParams {
