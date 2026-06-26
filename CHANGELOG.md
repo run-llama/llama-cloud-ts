@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.9.1](https://github.com/run-llama/llama-parse-ts/compare/v2.9.0...v2.9.1) (2026-06-25)
+
+
+### Features
+
+* initial stlc build ([11c7af3](https://github.com/run-llama/llama-parse-ts/commit/11c7af39d3a91c17bd46184a6d0277421f17775f))
+* initial stlc build ([e703376](https://github.com/run-llama/llama-parse-ts/commit/e7033768542f2137cacaae46a7e164bb64909e9b))
+
+
+### Bug Fixes
+
+* remove duplicate release key from publish workflow ([444d60d](https://github.com/run-llama/llama-parse-ts/commit/444d60d76e78c627721cb6e5cf9703a38578374a))
+* resolve custom-code merge conflicts in TS resources ([dade8ab](https://github.com/run-llama/llama-parse-ts/commit/dade8ab105f023e1c8c5019786c713d31fb6e3c2))
+
+
+### Chores
+
+* release 2.9.1 ([7abb341](https://github.com/run-llama/llama-parse-ts/commit/7abb34192a39485f6e5bf37c0d655ab641985c48))
+* **spec:** sync OpenAPI spec from platform ([8627f82](https://github.com/run-llama/llama-parse-ts/commit/8627f829afb88f9efa25eb0fab2afc54f61aa373))
+
 ## 2.9.0 (2026-06-09)
 
 Full Changelog: [v2.8.0...v2.9.0](https://github.com/run-llama/llama-parse-ts/compare/v2.8.0...v2.9.0)
