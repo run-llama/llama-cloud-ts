@@ -5662,14 +5662,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'organization_id?: string;',
       'project_id?: string;',
       'description?: string;',
-      'expires_at?: string;',
       'system_metadata?: object;',
       "type?: 'ephemeral' | 'user';",
     ],
     response:
       "{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; expires_at?: string; system_metadata?: object; type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user'; updated_at?: string; }",
     markdown:
-      "## create\n\n`client.beta.directories.create(name: string, organization_id?: string, project_id?: string, description?: string, expires_at?: string, system_metadata?: object, type?: 'ephemeral' | 'user'): { id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; expires_at?: string; system_metadata?: object; type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user'; updated_at?: string; }`\n\n**post** `/api/v1/beta/directories`\n\nCreate a new directory within the specified project.\n\n### Parameters\n\n- `name: string`\n  Human-readable name for the directory.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `description?: string`\n  Optional description shown to users.\n\n- `expires_at?: string`\n  When this directory expires. Required for ephemeral directories.\n\n- `system_metadata?: object`\n  Reserved system-managed metadata.\n\n- `type?: 'ephemeral' | 'user'`\n  Directory type. Use 'ephemeral' for batch processing with automatic cleanup.\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; expires_at?: string; system_metadata?: object; type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user'; updated_at?: string; }`\n  API response schema for a directory.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `description?: string`\n  - `expires_at?: string`\n  - `system_metadata?: object`\n  - `type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user'`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst directory = await client.beta.directories.create({ name: 'x' });\n\nconsole.log(directory);\n```",
+      "## create\n\n`client.beta.directories.create(name: string, organization_id?: string, project_id?: string, description?: string, system_metadata?: object, type?: 'ephemeral' | 'user'): { id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; expires_at?: string; system_metadata?: object; type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user'; updated_at?: string; }`\n\n**post** `/api/v1/beta/directories`\n\nCreate a new directory within the specified project.\n\n### Parameters\n\n- `name: string`\n  Human-readable name for the directory.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `description?: string`\n  Optional description shown to users.\n\n- `system_metadata?: object`\n  Reserved system-managed metadata.\n\n- `type?: 'ephemeral' | 'user'`\n  Directory type. Use 'ephemeral' for batch processing with automatic cleanup.\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; deleted_at?: string; description?: string; expires_at?: string; system_metadata?: object; type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user'; updated_at?: string; }`\n  API response schema for a directory.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `deleted_at?: string`\n  - `description?: string`\n  - `expires_at?: string`\n  - `system_metadata?: object`\n  - `type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user'`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst directory = await client.beta.directories.create({ name: 'x' });\n\nconsole.log(directory);\n```",
     perLanguage: {
       go: {
         method: 'client.Beta.Directories.New',
@@ -5693,7 +5692,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x",\n          "expires_at": "2026-05-10T00:00:00Z",\n          "type": "user"\n        }\'',
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/directories \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "name": "x",\n          "type": "user"\n        }\'',
       },
       cli: {
         method: 'directories create',
