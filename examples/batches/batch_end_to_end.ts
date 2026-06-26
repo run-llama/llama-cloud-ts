@@ -21,9 +21,11 @@ async function runBatch() {
   const client = new LlamaCloud();
 
   // 1. Ephemeral directories are automatically eligible for cleanup.
+  const expiresAt = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString();
   const directory = await client.beta.directories.create({
     name: 'batch-example',
     type: 'ephemeral',
+    expires_at: expiresAt,
   });
   console.log(`Created directory ${directory.id}`);
 
