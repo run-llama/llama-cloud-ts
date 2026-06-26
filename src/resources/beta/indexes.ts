@@ -125,6 +125,11 @@ export interface IndexCreateResponse {
   name: string;
 
   /**
+   * ID of the output directory holding the indexed files.
+   */
+  output_directory_id: string;
+
+  /**
    * Project this index belongs to.
    */
   project_id: string;
@@ -190,6 +195,11 @@ export interface IndexListResponse {
   name: string;
 
   /**
+   * ID of the output directory holding the indexed files.
+   */
+  output_directory_id: string;
+
+  /**
    * Project this index belongs to.
    */
   project_id: string;
@@ -253,6 +263,11 @@ export interface IndexGetResponse {
    * Index name.
    */
   name: string;
+
+  /**
+   * ID of the output directory holding the indexed files.
+   */
+  output_directory_id: string;
 
   /**
    * Project this index belongs to.
