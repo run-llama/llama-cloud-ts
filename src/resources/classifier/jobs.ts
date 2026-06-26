@@ -392,6 +392,14 @@ export namespace JobCreateParams {
     webhook_output_format?: 'json' | 'string' | null;
 
     /**
+     * Shared signing secret used to sign webhook deliveries. When set, each request
+     * includes an HMAC-SHA256 signature of the request body in the 'LC-Signature'
+     * header (value 'sha256=<hex>'). Recompute the HMAC over the raw request body with
+     * this secret to verify the delivery is authentic.
+     */
+    webhook_signing_secret?: string | null;
+
+    /**
      * HTTPS URL to receive webhook POST requests. Must be publicly accessible
      */
     webhook_url?: string | null;

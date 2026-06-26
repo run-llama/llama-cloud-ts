@@ -343,6 +343,14 @@ export namespace ClassifyCreateRequest {
     webhook_output_format?: string | null;
 
     /**
+     * Shared signing secret used to sign webhook deliveries. When set, each request
+     * includes an HMAC-SHA256 signature of the request body in the 'LC-Signature'
+     * header (value 'sha256=<hex>'). Recompute the HMAC over the raw request body with
+     * this secret to verify the delivery is authentic.
+     */
+    webhook_signing_secret?: string | null;
+
+    /**
      * URL to receive webhook POST notifications
      */
     webhook_url?: string | null;
@@ -691,6 +699,14 @@ export namespace ClassifyCreateParams {
      * Response format sent to the webhook: 'string' (default) or 'json'
      */
     webhook_output_format?: string | null;
+
+    /**
+     * Shared signing secret used to sign webhook deliveries. When set, each request
+     * includes an HMAC-SHA256 signature of the request body in the 'LC-Signature'
+     * header (value 'sha256=<hex>'). Recompute the HMAC over the raw request body with
+     * this secret to verify the delivery is authentic.
+     */
+    webhook_signing_secret?: string | null;
 
     /**
      * URL to receive webhook POST notifications

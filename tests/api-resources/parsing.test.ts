@@ -170,6 +170,7 @@ describe('resource parsing', () => {
           webhook_events: ['parse.success', 'parse.error'],
           webhook_headers: { foo: 'bar' },
           webhook_output_format: 'json',
+          webhook_signing_secret: 'webhook_signing_secret',
           webhook_url: 'https:',
         },
       ],
