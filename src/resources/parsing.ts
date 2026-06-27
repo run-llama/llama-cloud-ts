@@ -1522,6 +1522,11 @@ export interface ParsingCreateParams {
   user_metadata?: { [key: string]: string } | null;
 
   /**
+   * Body param: IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
+
+  /**
    * Body param: Webhook endpoints for job status notifications. Multiple webhooks
    * can be configured for different events or services
    */

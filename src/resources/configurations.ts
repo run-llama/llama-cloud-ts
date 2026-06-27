@@ -505,6 +505,11 @@ export interface ParseV2Parameters {
   processing_options?: ParseV2Parameters.ProcessingOptions;
 
   /**
+   * IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
+
+  /**
    * Webhook endpoints for job status notifications. Multiple webhooks can be
    * configured for different events or services
    */
