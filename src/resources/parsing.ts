@@ -27,6 +27,14 @@ export class Parsing extends APIResource {
    *
    * The job runs asynchronously. Poll `GET /parse/{job_id}` with `expand=text` or
    * `expand=markdown` to retrieve results.
+   *
+   * @example
+   * ```ts
+   * const parsing = await client.parsing.create({
+   *   tier: 'fast',
+   *   version: 'latest',
+   * });
+   * ```
    */
   create(
     params: ParsingCreateParams & { upload_file?: Uploadable },
@@ -68,6 +76,11 @@ export class Parsing extends APIResource {
    *
    * Content metadata fields (e.g. `text_content_metadata`) return presigned URLs for
    * downloading large results.
+   *
+   * @example
+   * ```ts
+   * const parsing = await client.parsing.get('job_id');
+   * ```
    */
   get(
     jobID: string,
@@ -82,6 +95,14 @@ export class Parsing extends APIResource {
    *
    * Filter by `status` or creation date range. Results are paginated — use
    * `page_token` from the response to fetch subsequent pages.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const parsingListResponse of client.parsing.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: ParsingListParams | null | undefined = {},
@@ -896,6 +917,11 @@ export interface ParsingCreateResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Key/value tags associated with this job.
+   */
+  user_metadata?: { [key: string]: string } | null;
 }
 
 /**
@@ -941,6 +967,11 @@ export interface ParsingListResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Key/value tags associated with this job.
+   */
+  user_metadata?: { [key: string]: string } | null;
 }
 
 /**
@@ -1047,6 +1078,11 @@ export namespace ParsingGetResponse {
      * Update datetime
      */
     updated_at?: string | null;
+
+    /**
+     * Key/value tags associated with this job.
+     */
+    user_metadata?: { [key: string]: string } | null;
   }
 
   /**
@@ -1477,6 +1513,13 @@ export interface ParsingCreateParams {
    * Body param: Public URL of the document to parse. Mutually exclusive with file_id
    */
   source_url?: string | null;
+
+  /**
+   * Body param: Arbitrary key/value tags to attach to this job. Returned when
+   * retrieving the job. Not searchable. Limits apply to the number of entries and
+   * the length of keys and values; oversized metadata is rejected.
+   */
+  user_metadata?: { [key: string]: string } | null;
 
   /**
    * Body param: Webhook endpoints for job status notifications. Multiple webhooks
