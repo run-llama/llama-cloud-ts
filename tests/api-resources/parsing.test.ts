@@ -165,11 +165,14 @@ describe('resource parsing', () => {
         specialized_chart_parsing: 'agentic',
       },
       source_url: 'https:',
+      user_metadata: { owner: 'jerry', team: 'research' },
+      webhook_configuration_ids: ['whc-...', 'whc-...'],
       webhook_configurations: [
         {
           webhook_events: ['parse.success', 'parse.error'],
           webhook_headers: { foo: 'bar' },
           webhook_output_format: 'json',
+          webhook_signing_secret: 'webhook_signing_secret',
           webhook_url: 'https:',
         },
       ],

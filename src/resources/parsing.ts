@@ -27,6 +27,14 @@ export class Parsing extends APIResource {
    *
    * The job runs asynchronously. Poll `GET /parse/{job_id}` with `expand=text` or
    * `expand=markdown` to retrieve results.
+   *
+   * @example
+   * ```ts
+   * const parsing = await client.parsing.create({
+   *   tier: 'fast',
+   *   version: 'latest',
+   * });
+   * ```
    */
   create(
     params: ParsingCreateParams & { upload_file?: Uploadable },
@@ -68,6 +76,11 @@ export class Parsing extends APIResource {
    *
    * Content metadata fields (e.g. `text_content_metadata`) return presigned URLs for
    * downloading large results.
+   *
+   * @example
+   * ```ts
+   * const parsing = await client.parsing.get('job_id');
+   * ```
    */
   get(
     jobID: string,
@@ -82,6 +95,14 @@ export class Parsing extends APIResource {
    *
    * Filter by `status` or creation date range. Results are paginated — use
    * `page_token` from the response to fetch subsequent pages.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const parsingListResponse of client.parsing.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: ParsingListParams | null | undefined = {},
@@ -896,6 +917,11 @@ export interface ParsingCreateResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Key/value tags associated with this job.
+   */
+  user_metadata?: { [key: string]: string } | null;
 }
 
 /**
@@ -941,6 +967,11 @@ export interface ParsingListResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Key/value tags associated with this job.
+   */
+  user_metadata?: { [key: string]: string } | null;
 }
 
 /**
@@ -1047,6 +1078,11 @@ export namespace ParsingGetResponse {
      * Update datetime
      */
     updated_at?: string | null;
+
+    /**
+     * Key/value tags associated with this job.
+     */
+    user_metadata?: { [key: string]: string } | null;
   }
 
   /**
@@ -1374,13 +1410,13 @@ export interface ParsingCreateParams {
    * Current `latest` by tier:
    *
    * - `fast`: `2025-12-11`
-   * - `cost_effective`: `2026-06-18`
+   * - `cost_effective`: `2026-06-26`
    * - `agentic`: `2026-06-18`
    * - `agentic_plus`: `2026-06-18`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-06-18' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-26' | '2026-06-18' | '2025-12-11' | (string & {});
 
   /**
    * Query param
@@ -1477,6 +1513,18 @@ export interface ParsingCreateParams {
    * Body param: Public URL of the document to parse. Mutually exclusive with file_id
    */
   source_url?: string | null;
+
+  /**
+   * Body param: Arbitrary key/value tags to attach to this job. Returned when
+   * retrieving the job. Not searchable. Limits apply to the number of entries and
+   * the length of keys and values; oversized metadata is rejected.
+   */
+  user_metadata?: { [key: string]: string } | null;
+
+  /**
+   * Body param: IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
 
   /**
    * Body param: Webhook endpoints for job status notifications. Multiple webhooks
@@ -2208,13 +2256,13 @@ export namespace ParsingCreateParams {
          * Current `latest` by tier:
          *
          * - `fast`: `2025-12-11`
-         * - `cost_effective`: `2026-06-18`
+         * - `cost_effective`: `2026-06-26`
          * - `agentic`: `2026-06-18`
          * - `agentic_plus`: `2026-06-18`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-06-18' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-26' | '2026-06-18' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -2373,6 +2421,14 @@ export namespace ParsingCreateParams {
      * JSON-encoded string; 'json' sends it as a JSON object.
      */
     webhook_output_format?: 'json' | 'string' | null;
+
+    /**
+     * Shared signing secret used to sign webhook deliveries. When set, each request
+     * includes an HMAC-SHA256 signature of the request body in the 'LC-Signature'
+     * header (value 'sha256=<hex>'). Recompute the HMAC over the raw request body with
+     * this secret to verify the delivery is authentic.
+     */
+    webhook_signing_secret?: string | null;
 
     /**
      * HTTPS URL to receive webhook POST requests. Must be publicly accessible

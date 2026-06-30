@@ -434,13 +434,13 @@ export interface ParseV2Parameters {
    * Current `latest` by tier:
    *
    * - `fast`: `2025-12-11`
-   * - `cost_effective`: `2026-06-18`
+   * - `cost_effective`: `2026-06-26`
    * - `agentic`: `2026-06-18`
    * - `agentic_plus`: `2026-06-18`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-06-18' | '2025-12-11' | (string & {});
+  version: 'latest' | '2026-06-26' | '2026-06-18' | '2025-12-11' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -503,6 +503,11 @@ export interface ParseV2Parameters {
    * Document processing options including OCR, table extraction, and chart parsing
    */
   processing_options?: ParseV2Parameters.ProcessingOptions;
+
+  /**
+   * IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
 
   /**
    * Webhook endpoints for job status notifications. Multiple webhooks can be
@@ -1234,13 +1239,13 @@ export namespace ParseV2Parameters {
          * Current `latest` by tier:
          *
          * - `fast`: `2025-12-11`
-         * - `cost_effective`: `2026-06-18`
+         * - `cost_effective`: `2026-06-26`
          * - `agentic`: `2026-06-18`
          * - `agentic_plus`: `2026-06-18`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-06-18' | '2025-12-11' | (string & {}) | null;
+        version?: 'latest' | '2026-06-26' | '2026-06-18' | '2025-12-11' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -1399,6 +1404,14 @@ export namespace ParseV2Parameters {
      * JSON-encoded string; 'json' sends it as a JSON object.
      */
     webhook_output_format?: 'json' | 'string' | null;
+
+    /**
+     * Shared signing secret used to sign webhook deliveries. When set, each request
+     * includes an HMAC-SHA256 signature of the request body in the 'LC-Signature'
+     * header (value 'sha256=<hex>'). Recompute the HMAC over the raw request body with
+     * this secret to verify the delivery is authentic.
+     */
+    webhook_signing_secret?: string | null;
 
     /**
      * HTTPS URL to receive webhook POST requests. Must be publicly accessible

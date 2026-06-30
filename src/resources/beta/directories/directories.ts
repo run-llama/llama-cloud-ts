@@ -373,11 +373,6 @@ export interface DirectoryCreateParams {
   description?: string | null;
 
   /**
-   * Body param: When this directory expires. Required for ephemeral directories.
-   */
-  expires_at?: string | null;
-
-  /**
    * Body param: Reserved system-managed metadata.
    */
   system_metadata?: { [key: string]: unknown } | null;
