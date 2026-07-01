@@ -1,19 +1,5 @@
 # Changelog
 
-## [2.10.0](https://github.com/run-llama/llama-parse-ts/compare/v2.9.1...v2.10.0) (2026-06-30)
-
-
-### Features
-
-* **index:** add output_directory_id to IndexResponse ([#21149](https://github.com/run-llama/llama-parse-ts/issues/21149)) ([31ced7b](https://github.com/run-llama/llama-parse-ts/commit/31ced7b9671fd5970e6a251f03e90a9422939855))
-* **java:** enable Maven Central publishing (ai.llamaindex:llama-cloud) ([2afee9f](https://github.com/run-llama/llama-parse-ts/commit/2afee9f7f22ba0dafecc612777243996be2804da))
-
-
-### Bug Fixes
-
-* **ci:** make cli SDK push race-proof and self-heal the seal-back loop ([69de499](https://github.com/run-llama/llama-parse-ts/commit/69de499707a1fc16ef618173510ce0f9cc77cd42))
-* **ts:** drop removed expires_at from batch example; remove stale eslint-disable directives; take generated mcp docs-search ([3e1c6f2](https://github.com/run-llama/llama-parse-ts/commit/3e1c6f286e1a5c147727f2abaa8a4e5099bf0781))
-
 ## 2.9.0 (2026-06-09)
 
 Full Changelog: [v2.8.0...v2.9.0](https://github.com/run-llama/llama-parse-ts/compare/v2.8.0...v2.9.0)
