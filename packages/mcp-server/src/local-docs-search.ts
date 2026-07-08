@@ -98,7 +98,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files create',
         example:
-          "llamacloud-prod files create \\\n  --api-key 'My API Key' \\\n  --file 'Example data' \\\n  --purpose purpose",
+          "llp files create \\\n  --api-key 'My API Key' \\\n  --file 'Example data' \\\n  --purpose purpose",
       },
     },
   },
@@ -149,7 +149,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'files query',
-        example: "llamacloud-prod files query \\\n  --api-key 'My API Key'",
+        example: "llp files query \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -204,7 +204,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'files list',
-        example: "llamacloud-prod files list \\\n  --api-key 'My API Key'",
+        example: "llp files list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -247,7 +247,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files delete',
         example:
-          "llamacloud-prod files delete \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp files delete \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -296,7 +296,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files get',
         example:
-          "llamacloud-prod files get \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp files get \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -350,7 +350,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'sheets create',
         example:
-          "llamacloud-prod sheets create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp sheets create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -405,7 +405,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'sheets list',
-        example: "llamacloud-prod sheets list \\\n  --api-key 'My API Key'",
+        example: "llp sheets list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -456,8 +456,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'sheets get',
-        example:
-          "llamacloud-prod sheets get \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
+        example: "llp sheets get \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
       },
     },
   },
@@ -508,7 +507,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'sheets get_result_table',
         example:
-          "llamacloud-prod sheets get-result-table \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id \\\n  --region-id region_id \\\n  --region-type cell_metadata",
+          "llp sheets get-result-table \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id \\\n  --region-id region_id \\\n  --region-type cell_metadata",
       },
     },
   },
@@ -552,7 +551,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'sheets delete_job',
         example:
-          "llamacloud-prod sheets delete-job \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
+          "llp sheets delete-job \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
       },
     },
   },
@@ -619,8 +618,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'parsing create',
-        example:
-          "llamacloud-prod parsing create \\\n  --api-key 'My API Key' \\\n  --tier fast \\\n  --version latest",
+        example: "llp parsing create \\\n  --api-key 'My API Key' \\\n  --tier fast \\\n  --version latest",
       },
     },
   },
@@ -671,7 +669,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'parsing get',
-        example: "llamacloud-prod parsing get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+        example: "llp parsing get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
     },
   },
@@ -725,7 +723,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'parsing list',
-        example: "llamacloud-prod parsing list \\\n  --api-key 'My API Key'",
+        example: "llp parsing list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -778,7 +776,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'extract create',
         example:
-          "llamacloud-prod extract create \\\n  --api-key 'My API Key' \\\n  --file-input dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+          "llp extract create \\\n  --api-key 'My API Key' \\\n  --file-input dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
       },
     },
   },
@@ -837,7 +835,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'extract list',
-        example: "llamacloud-prod extract list \\\n  --api-key 'My API Key'",
+        example: "llp extract list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -882,7 +880,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'extract get',
-        example: "llamacloud-prod extract get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+        example: "llp extract get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
     },
   },
@@ -925,7 +923,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'extract delete',
-        example: "llamacloud-prod extract delete \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+        example: "llp extract delete \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
     },
   },
@@ -969,7 +967,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'extract validate_schema',
         example:
-          "llamacloud-prod extract validate-schema \\\n  --api-key 'My API Key' \\\n  --data-schema '{properties: {invoice_number: bar, line_items: bar, total_amount: bar, vendor_name: bar}, required: [invoice_number, total_amount, vendor_name], type: object}'",
+          "llp extract validate-schema \\\n  --api-key 'My API Key' \\\n  --data-schema '{properties: {invoice_number: bar, line_items: bar, total_amount: bar, vendor_name: bar}, required: [invoice_number, total_amount, vendor_name], type: object}'",
       },
     },
   },
@@ -1020,7 +1018,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'extract generate_schema',
-        example: "llamacloud-prod extract generate-schema \\\n  --api-key 'My API Key'",
+        example: "llp extract generate-schema \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -1073,7 +1071,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'jobs create',
         example:
-          "llamacloud-prod classifier:jobs create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --rule \"{description: 'contains invoice number, line items, and total amount', type: invoice}\"",
+          "llp classifier:jobs create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --rule \"{description: 'contains invoice number, line items, and total amount', type: invoice}\"",
       },
     },
   },
@@ -1122,7 +1120,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'jobs list',
-        example: "llamacloud-prod classifier:jobs list \\\n  --api-key 'My API Key'",
+        example: "llp classifier:jobs list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -1167,7 +1165,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'jobs get',
         example:
-          "llamacloud-prod classifier:jobs get \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp classifier:jobs get \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -1213,7 +1211,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'jobs get_results',
         example:
-          "llamacloud-prod classifier:jobs get-results \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp classifier:jobs get-results \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -1263,7 +1261,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'batches create',
         example:
-          "llamacloud-prod batches create \\\n  --api-key 'My API Key' \\\n  --config '{job: {configuration_id: cfg-PARSE_AGENTIC, type: parse_v2}}' \\\n  --source-directory-id dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+          "llp batches create \\\n  --api-key 'My API Key' \\\n  --config '{job: {configuration_id: cfg-PARSE_AGENTIC, type: parse_v2}}' \\\n  --source-directory-id dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
       },
     },
   },
@@ -1316,7 +1314,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'batches list',
-        example: "llamacloud-prod batches list \\\n  --api-key 'My API Key'",
+        example: "llp batches list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -1360,7 +1358,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'batches get',
-        example: "llamacloud-prod batches get \\\n  --api-key 'My API Key' \\\n  --batch-id batch_id",
+        example: "llp batches get \\\n  --api-key 'My API Key' \\\n  --batch-id batch_id",
       },
     },
   },
@@ -1415,7 +1413,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'classify create',
-        example: "llamacloud-prod classify create \\\n  --api-key 'My API Key'",
+        example: "llp classify create \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -1470,7 +1468,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'classify list',
-        example: "llamacloud-prod classify list \\\n  --api-key 'My API Key'",
+        example: "llp classify list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -1515,7 +1513,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'classify get',
-        example: "llamacloud-prod classify get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+        example: "llp classify get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
     },
   },
@@ -1566,7 +1564,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'configurations create',
         example:
-          "llamacloud-prod configurations create \\\n  --api-key 'My API Key' \\\n  --name x \\\n  --parameters \"{product_type: classify_v2, rules: [{description: 'contains invoice number, line items, and total amount', type: invoice}]}\"",
+          "llp configurations create \\\n  --api-key 'My API Key' \\\n  --name x \\\n  --parameters \"{product_type: classify_v2, rules: [{description: 'contains invoice number, line items, and total amount', type: invoice}]}\"",
       },
     },
   },
@@ -1618,7 +1616,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'configurations list',
-        example: "llamacloud-prod configurations list \\\n  --api-key 'My API Key'",
+        example: "llp configurations list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -1662,8 +1660,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'configurations retrieve',
-        example:
-          "llamacloud-prod configurations retrieve \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
+        example: "llp configurations retrieve \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
     },
   },
@@ -1713,8 +1710,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'configurations update',
-        example:
-          "llamacloud-prod configurations update \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
+        example: "llp configurations update \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
     },
   },
@@ -1756,8 +1752,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'configurations delete',
-        example:
-          "llamacloud-prod configurations delete \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
+        example: "llp configurations delete \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
     },
   },
@@ -1801,7 +1796,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'projects list',
-        example: "llamacloud-prod projects list \\\n  --api-key 'My API Key'",
+        example: "llp projects list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -1846,7 +1841,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'projects get',
         example:
-          "llamacloud-prod projects get \\\n  --api-key 'My API Key' \\\n  --project-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp projects get \\\n  --api-key 'My API Key' \\\n  --project-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -1890,7 +1885,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'data_sinks list',
-        example: "llamacloud-prod data-sinks list \\\n  --api-key 'My API Key'",
+        example: "llp data-sinks list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -1941,7 +1936,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sinks create',
         example:
-          "llamacloud-prod data-sinks create \\\n  --api-key 'My API Key' \\\n  --component '{foo: bar}' \\\n  --name name \\\n  --sink-type ASTRA_DB",
+          "llp data-sinks create \\\n  --api-key 'My API Key' \\\n  --component '{foo: bar}' \\\n  --name name \\\n  --sink-type ASTRA_DB",
       },
     },
   },
@@ -1986,7 +1981,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sinks get',
         example:
-          "llamacloud-prod data-sinks get \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp data-sinks get \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2036,7 +2031,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sinks update',
         example:
-          "llamacloud-prod data-sinks update \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --sink-type ASTRA_DB",
+          "llp data-sinks update \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --sink-type ASTRA_DB",
       },
     },
   },
@@ -2079,7 +2074,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sinks delete',
         example:
-          "llamacloud-prod data-sinks delete \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp data-sinks delete \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2124,7 +2119,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'data_sources list',
-        example: "llamacloud-prod data-sources list \\\n  --api-key 'My API Key'",
+        example: "llp data-sources list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -2176,7 +2171,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sources create',
         example:
-          "llamacloud-prod data-sources create \\\n  --api-key 'My API Key' \\\n  --component '{foo: bar}' \\\n  --name name \\\n  --source-type AZURE_STORAGE_BLOB",
+          "llp data-sources create \\\n  --api-key 'My API Key' \\\n  --component '{foo: bar}' \\\n  --name name \\\n  --source-type AZURE_STORAGE_BLOB",
       },
     },
   },
@@ -2221,7 +2216,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sources get',
         example:
-          "llamacloud-prod data-sources get \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp data-sources get \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2272,7 +2267,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sources update',
         example:
-          "llamacloud-prod data-sources update \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --source-type AZURE_STORAGE_BLOB",
+          "llp data-sources update \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --source-type AZURE_STORAGE_BLOB",
       },
     },
   },
@@ -2315,7 +2310,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sources delete',
         example:
-          "llamacloud-prod data-sources delete \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp data-sources delete \\\n  --api-key 'My API Key' \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2365,7 +2360,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'pipelines list',
-        example: "llamacloud-prod pipelines list \\\n  --api-key 'My API Key'",
+        example: "llp pipelines list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -2426,7 +2421,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'pipelines create',
-        example: "llamacloud-prod pipelines create \\\n  --api-key 'My API Key' \\\n  --name x",
+        example: "llp pipelines create \\\n  --api-key 'My API Key' \\\n  --name x",
       },
     },
   },
@@ -2471,7 +2466,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'pipelines get',
         example:
-          "llamacloud-prod pipelines get \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines get \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2530,7 +2525,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'pipelines update',
         example:
-          "llamacloud-prod pipelines update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2574,7 +2569,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'pipelines delete',
         example:
-          "llamacloud-prod pipelines delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2620,7 +2615,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'pipelines get_status',
         example:
-          "llamacloud-prod pipelines get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2681,7 +2676,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'pipelines upsert',
-        example: "llamacloud-prod pipelines upsert \\\n  --api-key 'My API Key' \\\n  --name x",
+        example: "llp pipelines upsert \\\n  --api-key 'My API Key' \\\n  --name x",
       },
     },
   },
@@ -2703,7 +2698,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'pipelines run_search',
         example:
-          "llamacloud-prod pipelines run-search \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --query x",
+          "llp pipelines run-search \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --query x",
       },
     },
   },
@@ -2749,7 +2744,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'sync create',
         example:
-          "llamacloud-prod pipelines:sync create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:sync create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2794,7 +2789,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'sync cancel',
         example:
-          "llamacloud-prod pipelines:sync cancel \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:sync cancel \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2839,7 +2834,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sources get_data_sources',
         example:
-          "llamacloud-prod pipelines:data-sources get-data-sources \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:data-sources get-data-sources \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2884,7 +2879,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sources update_data_sources',
         example:
-          "llamacloud-prod pipelines:data-sources update-data-sources \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{data_source_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
+          "llp pipelines:data-sources update-data-sources \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{data_source_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
       },
     },
   },
@@ -2929,7 +2924,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sources update',
         example:
-          "llamacloud-prod pipelines:data-sources update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:data-sources update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -2974,7 +2969,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sources get_status',
         example:
-          "llamacloud-prod pipelines:data-sources get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:data-sources get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3019,7 +3014,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'data_sources sync',
         example:
-          "llamacloud-prod pipelines:data-sources sync \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:data-sources sync \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --data-source-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3063,7 +3058,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'images list_page_screenshots',
         example:
-          "llamacloud-prod pipelines:images list-page-screenshots \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:images list-page-screenshots \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3107,7 +3102,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'images get_page_screenshot',
         example:
-          "llamacloud-prod pipelines:images get-page-screenshot \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --page-index 0",
+          "llp pipelines:images get-page-screenshot \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --page-index 0",
       },
     },
   },
@@ -3157,7 +3152,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'images get_page_figure',
         example:
-          "llamacloud-prod pipelines:images get-page-figure \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --page-index 0 \\\n  --figure-name figure_name",
+          "llp pipelines:images get-page-figure \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --page-index 0 \\\n  --figure-name figure_name",
       },
     },
   },
@@ -3202,7 +3197,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'images list_page_figures',
         example:
-          "llamacloud-prod pipelines:images list-page-figures \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:images list-page-figures \\\n  --api-key 'My API Key' \\\n  --id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3247,7 +3242,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files get_status_counts',
         example:
-          "llamacloud-prod pipelines:files get-status-counts \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:files get-status-counts \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3292,7 +3287,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files get_status',
         example:
-          "llamacloud-prod pipelines:files get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:files get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3337,7 +3332,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files create',
         example:
-          "llamacloud-prod pipelines:files create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{file_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
+          "llp pipelines:files create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{file_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
       },
     },
   },
@@ -3382,7 +3377,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files update',
         example:
-          "llamacloud-prod pipelines:files update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:files update \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3425,7 +3420,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files delete',
         example:
-          "llamacloud-prod pipelines:files delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:files delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3479,7 +3474,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files list',
         example:
-          "llamacloud-prod pipelines:files list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:files list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3523,7 +3518,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'metadata create',
         example:
-          "llamacloud-prod pipelines:metadata create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --upload-file 'Example data'",
+          "llp pipelines:metadata create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --upload-file 'Example data'",
       },
     },
   },
@@ -3566,7 +3561,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'metadata delete_all',
         example:
-          "llamacloud-prod pipelines:metadata delete-all \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:metadata delete-all \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3614,7 +3609,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'documents create',
         example:
-          "llamacloud-prod pipelines:documents create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{metadata: {foo: bar}, text: text}'",
+          "llp pipelines:documents create \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{metadata: {foo: bar}, text: text}'",
       },
     },
   },
@@ -3667,7 +3662,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'documents list',
         example:
-          "llamacloud-prod pipelines:documents list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp pipelines:documents list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -3712,7 +3707,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'documents get',
         example:
-          "llamacloud-prod pipelines:documents get \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
+          "llp pipelines:documents get \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
     },
   },
@@ -3755,7 +3750,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'documents delete',
         example:
-          "llamacloud-prod pipelines:documents delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
+          "llp pipelines:documents delete \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
     },
   },
@@ -3800,7 +3795,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'documents get_status',
         example:
-          "llamacloud-prod pipelines:documents get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
+          "llp pipelines:documents get-status \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
     },
   },
@@ -3844,7 +3839,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'documents sync',
         example:
-          "llamacloud-prod pipelines:documents sync \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
+          "llp pipelines:documents sync \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
     },
   },
@@ -3889,7 +3884,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'documents get_chunks',
         example:
-          "llamacloud-prod pipelines:documents get-chunks \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
+          "llp pipelines:documents get-chunks \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --document-id document_id",
       },
     },
   },
@@ -3937,7 +3932,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'documents upsert',
         example:
-          "llamacloud-prod pipelines:documents upsert \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{metadata: {foo: bar}, text: text}'",
+          "llp pipelines:documents upsert \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --body '{metadata: {foo: bar}, text: text}'",
       },
     },
   },
@@ -3986,7 +3981,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'retrievers create',
-        example: "llamacloud-prod retrievers create \\\n  --api-key 'My API Key' \\\n  --name x",
+        example: "llp retrievers create \\\n  --api-key 'My API Key' \\\n  --name x",
       },
     },
   },
@@ -4035,7 +4030,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'retrievers upsert',
-        example: "llamacloud-prod retrievers upsert \\\n  --api-key 'My API Key' \\\n  --name x",
+        example: "llp retrievers upsert \\\n  --api-key 'My API Key' \\\n  --name x",
       },
     },
   },
@@ -4079,7 +4074,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'retrievers list',
-        example: "llamacloud-prod retrievers list \\\n  --api-key 'My API Key'",
+        example: "llp retrievers list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -4124,7 +4119,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'retrievers get',
         example:
-          "llamacloud-prod retrievers get \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp retrievers get \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -4175,7 +4170,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'retrievers update',
         example:
-          "llamacloud-prod retrievers update \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --pipeline '{description: description, name: x, pipeline_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
+          "llp retrievers update \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --pipeline '{description: description, name: x, pipeline_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e}'",
       },
     },
   },
@@ -4218,7 +4213,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'retrievers delete',
         example:
-          "llamacloud-prod retrievers delete \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp retrievers delete \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -4270,7 +4265,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'retrievers search',
-        example: "llamacloud-prod retrievers search \\\n  --api-key 'My API Key' \\\n  --query x",
+        example: "llp retrievers search \\\n  --api-key 'My API Key' \\\n  --query x",
       },
     },
   },
@@ -4318,7 +4313,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'retriever search',
         example:
-          "llamacloud-prod retrievers:retriever search \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --query x",
+          "llp retrievers:retriever search \\\n  --api-key 'My API Key' \\\n  --retriever-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e \\\n  --query x",
       },
     },
   },
@@ -4362,7 +4357,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'indexes get',
-        example: "llamacloud-prod beta:indexes get \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
+        example: "llp beta:indexes get \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
       },
     },
   },
@@ -4404,7 +4399,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'indexes delete',
-        example: "llamacloud-prod beta:indexes delete \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
+        example: "llp beta:indexes delete \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
       },
     },
   },
@@ -4459,7 +4454,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'indexes create',
         example:
-          "llamacloud-prod beta:indexes create \\\n  --api-key 'My API Key' \\\n  --source-directory-id dir-abc123",
+          "llp beta:indexes create \\\n  --api-key 'My API Key' \\\n  --source-directory-id dir-abc123",
       },
     },
   },
@@ -4503,7 +4498,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'indexes sync',
-        example: "llamacloud-prod beta:indexes sync \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
+        example: "llp beta:indexes sync \\\n  --api-key 'My API Key' \\\n  --index-id index_id",
       },
     },
   },
@@ -4553,7 +4548,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'indexes list',
-        example: "llamacloud-prod beta:indexes list \\\n  --api-key 'My API Key'",
+        example: "llp beta:indexes list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -4612,7 +4607,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'retrieval retrieve',
         example:
-          "llamacloud-prod beta:retrieval retrieve \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123 \\\n  --query 'What are the key findings?'",
+          "llp beta:retrieval retrieve \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123 \\\n  --query 'What are the key findings?'",
       },
     },
   },
@@ -4663,8 +4658,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'retrieval find',
-        example:
-          "llamacloud-prod beta:retrieval find \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123",
+        example: "llp beta:retrieval find \\\n  --api-key 'My API Key' \\\n  --index-id idx-abc123",
       },
     },
   },
@@ -4717,7 +4711,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'retrieval grep',
         example:
-          "llamacloud-prod beta:retrieval grep \\\n  --api-key 'My API Key' \\\n  --file-id file_id \\\n  --index-id idx-abc123 \\\n  --pattern 'revenue|profit'",
+          "llp beta:retrieval grep \\\n  --api-key 'My API Key' \\\n  --file-id file_id \\\n  --index-id idx-abc123 \\\n  --pattern 'revenue|profit'",
       },
     },
   },
@@ -4768,7 +4762,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'retrieval read',
         example:
-          "llamacloud-prod beta:retrieval read \\\n  --api-key 'My API Key' \\\n  --file-id file_id \\\n  --index-id idx-abc123",
+          "llp beta:retrieval read \\\n  --api-key 'My API Key' \\\n  --file-id file_id \\\n  --index-id idx-abc123",
       },
     },
   },
@@ -4817,7 +4811,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'chat list',
-        example: "llamacloud-prod beta:chat list \\\n  --api-key 'My API Key'",
+        example: "llp beta:chat list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -4861,7 +4855,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'chat create',
-        example: "llamacloud-prod beta:chat create \\\n  --api-key 'My API Key'",
+        example: "llp beta:chat create \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -4905,8 +4899,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'chat retrieve',
-        example:
-          "llamacloud-prod beta:chat retrieve \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
+        example: "llp beta:chat retrieve \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
       },
     },
   },
@@ -4948,8 +4941,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'chat delete',
-        example:
-          "llamacloud-prod beta:chat delete \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
+        example: "llp beta:chat delete \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
       },
     },
   },
@@ -4993,8 +4985,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'chat get_summary',
-        example:
-          "llamacloud-prod beta:chat get-summary \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
+        example: "llp beta:chat get-summary \\\n  --api-key 'My API Key' \\\n  --session-id session_id",
       },
     },
   },
@@ -5044,7 +5035,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'chat stream',
         example:
-          "llamacloud-prod beta:chat stream \\\n  --api-key 'My API Key' \\\n  --session-id session_id \\\n  --index-id idx-abc123 \\\n  --index-id idx-def456 \\\n  --prompt 'What were the main findings in Q3?'",
+          "llp beta:chat stream \\\n  --api-key 'My API Key' \\\n  --session-id session_id \\\n  --index-id idx-abc123 \\\n  --index-id idx-def456 \\\n  --prompt 'What were the main findings in Q3?'",
       },
     },
   },
@@ -5088,7 +5079,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'agent_data get',
-        example: "llamacloud-prod beta:agent-data get \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
+        example: "llp beta:agent-data get \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
     },
   },
@@ -5133,7 +5124,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'agent_data update',
         example:
-          "llamacloud-prod beta:agent-data update \\\n  --api-key 'My API Key' \\\n  --item-id item_id \\\n  --data '{foo: bar}'",
+          "llp beta:agent-data update \\\n  --api-key 'My API Key' \\\n  --item-id item_id \\\n  --data '{foo: bar}'",
       },
     },
   },
@@ -5176,8 +5167,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'agent_data delete',
-        example:
-          "llamacloud-prod beta:agent-data delete \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
+        example: "llp beta:agent-data delete \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
     },
   },
@@ -5228,7 +5218,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'agent_data create',
         example:
-          "llamacloud-prod beta:agent-data create \\\n  --api-key 'My API Key' \\\n  --data '{foo: bar}' \\\n  --deployment-name deployment_name",
+          "llp beta:agent-data create \\\n  --api-key 'My API Key' \\\n  --data '{foo: bar}' \\\n  --deployment-name deployment_name",
       },
     },
   },
@@ -5284,7 +5274,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'agent_data search',
         example:
-          "llamacloud-prod beta:agent-data search \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
+          "llp beta:agent-data search \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
       },
     },
   },
@@ -5341,7 +5331,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'agent_data aggregate',
         example:
-          "llamacloud-prod beta:agent-data aggregate \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
+          "llp beta:agent-data aggregate \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
       },
     },
   },
@@ -5391,7 +5381,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'agent_data delete_by_query',
         example:
-          "llamacloud-prod beta:agent-data delete-by-query \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
+          "llp beta:agent-data delete-by-query \\\n  --api-key 'My API Key' \\\n  --deployment-name deployment_name",
       },
     },
   },
@@ -5445,7 +5435,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'sheets create',
         example:
-          "llamacloud-prod beta:sheets create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp beta:sheets create \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
@@ -5500,7 +5490,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'sheets list',
-        example: "llamacloud-prod beta:sheets list \\\n  --api-key 'My API Key'",
+        example: "llp beta:sheets list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -5552,7 +5542,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'sheets get',
         example:
-          "llamacloud-prod beta:sheets get \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
+          "llp beta:sheets get \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
       },
     },
   },
@@ -5603,7 +5593,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'sheets get_result_table',
         example:
-          "llamacloud-prod beta:sheets get-result-table \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id \\\n  --region-id region_id \\\n  --region-type cell_metadata",
+          "llp beta:sheets get-result-table \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id \\\n  --region-id region_id \\\n  --region-type cell_metadata",
       },
     },
   },
@@ -5647,7 +5637,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'sheets delete_job',
         example:
-          "llamacloud-prod beta:sheets delete-job \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
+          "llp beta:sheets delete-job \\\n  --api-key 'My API Key' \\\n  --spreadsheet-job-id spreadsheet_job_id",
       },
     },
   },
@@ -5698,7 +5688,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'directories create',
-        example: "llamacloud-prod beta:directories create \\\n  --api-key 'My API Key' \\\n  --name x",
+        example: "llp beta:directories create \\\n  --api-key 'My API Key' \\\n  --name x",
       },
     },
   },
@@ -5751,7 +5741,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'directories list',
-        example: "llamacloud-prod beta:directories list \\\n  --api-key 'My API Key'",
+        example: "llp beta:directories list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -5795,8 +5785,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'directories get',
-        example:
-          "llamacloud-prod beta:directories get \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
+        example: "llp beta:directories get \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
     },
   },
@@ -5846,8 +5835,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'directories update',
-        example:
-          "llamacloud-prod beta:directories update \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
+        example: "llp beta:directories update \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
     },
   },
@@ -5889,8 +5877,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'directories delete',
-        example:
-          "llamacloud-prod beta:directories delete \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
+        example: "llp beta:directories delete \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
     },
   },
@@ -5944,7 +5931,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files add',
         example:
-          "llamacloud-prod beta:directories:files add \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --file-id file_id",
+          "llp beta:directories:files add \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --file-id file_id",
       },
     },
   },
@@ -6003,7 +5990,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files list',
         example:
-          "llamacloud-prod beta:directories:files list \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
+          "llp beta:directories:files list \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id",
       },
     },
   },
@@ -6055,7 +6042,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files get',
         example:
-          "llamacloud-prod beta:directories:files get \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
+          "llp beta:directories:files get \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
       },
     },
   },
@@ -6110,7 +6097,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files update',
         example:
-          "llamacloud-prod beta:directories:files update \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
+          "llp beta:directories:files update \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
       },
     },
   },
@@ -6159,7 +6146,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files delete',
         example:
-          "llamacloud-prod beta:directories:files delete \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
+          "llp beta:directories:files delete \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --directory-file-id directory_file_id",
       },
     },
   },
@@ -6214,7 +6201,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'files upload',
         example:
-          "llamacloud-prod beta:directories:files upload \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --upload-file 'Example data'",
+          "llp beta:directories:files upload \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --upload-file 'Example data'",
       },
     },
   },
@@ -6268,7 +6255,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'batch create',
-        example: "llamacloud-prod beta:batch create \\\n  --api-key 'My API Key' \\\n  --job-config '{}'",
+        example: "llp beta:batch create \\\n  --api-key 'My API Key' \\\n  --job-config '{}'",
       },
     },
   },
@@ -6321,7 +6308,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'batch list',
-        example: "llamacloud-prod beta:batch list \\\n  --api-key 'My API Key'",
+        example: "llp beta:batch list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -6366,7 +6353,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'batch get_status',
-        example: "llamacloud-prod beta:batch get-status \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+        example: "llp beta:batch get-status \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
     },
   },
@@ -6417,7 +6404,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'batch cancel',
-        example: "llamacloud-prod beta:batch cancel \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+        example: "llp beta:batch cancel \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
     },
   },
@@ -6469,8 +6456,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'job_items list',
-        example:
-          "llamacloud-prod beta:batch:job-items list \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+        example: "llp beta:batch:job-items list \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
     },
   },
@@ -6521,7 +6507,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'job_items get_processing_results',
         example:
-          "llamacloud-prod beta:batch:job-items get-processing-results \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
+          "llp beta:batch:job-items get-processing-results \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
     },
   },
@@ -6572,7 +6558,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'split create',
         example:
-          "llamacloud-prod beta:split create \\\n  --api-key 'My API Key' \\\n  --document-input '{type: type, value: value}'",
+          "llp beta:split create \\\n  --api-key 'My API Key' \\\n  --document-input '{type: type, value: value}'",
       },
     },
   },
@@ -6625,7 +6611,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'split list',
-        example: "llamacloud-prod beta:split list \\\n  --api-key 'My API Key'",
+        example: "llp beta:split list \\\n  --api-key 'My API Key'",
       },
     },
   },
@@ -6669,8 +6655,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       cli: {
         method: 'split get',
-        example:
-          "llamacloud-prod beta:split get \\\n  --api-key 'My API Key' \\\n  --split-job-id split_job_id",
+        example: "llp beta:split get \\\n  --api-key 'My API Key' \\\n  --split-job-id split_job_id",
       },
     },
   },
@@ -6771,7 +6756,7 @@ const EMBEDDED_READMES: { language: string; content: string }[] = [
   {
     language: 'cli',
     content:
-      "# Llama Cloud CLI\n\nThe official CLI for the [Llama Cloud REST API](https://developers.llamaindex.ai/).\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n<!-- x-release-please-start-version -->\n\n## Installation\n\n### Installing with Go\n\nTo test or install the CLI locally, you need [Go](https://go.dev/doc/install) version 1.22 or later installed.\n\n~~~sh\ngo install 'github.com/run-llama/llama-parse-cli/cmd/llamacloud-prod@latest'\n~~~\n\nOnce you have run `go install`, the binary is placed in your Go bin directory:\n\n- **Default location**: `$HOME/go/bin` (or `$GOPATH/bin` if GOPATH is set)\n- **Check your path**: Run `go env GOPATH` to see the base directory\n\nIf commands aren't found after installation, add the Go bin directory to your PATH:\n\n~~~sh\n# Add to your shell profile (.zshrc, .bashrc, etc.)\nexport PATH=\"$PATH:$(go env GOPATH)/bin\"\n~~~\n\n<!-- x-release-please-end -->\n\n### Running Locally\n\nAfter cloning the git repository for this project, you can use the\n`scripts/run` script to run the tool locally:\n\n~~~sh\n./scripts/run args...\n~~~\n\n## Usage\n\nThe CLI follows a resource-based command structure:\n\n~~~sh\nllamacloud-prod [resource] <command> [flags...]\n~~~\n\n~~~sh\nllamacloud-prod parsing create \\\n  --api-key 'My API Key' \\\n  --tier agentic \\\n  --version latest \\\n  --file-id abc1234\n~~~\n\nFor details about specific commands, use the `--help` flag.\n\n### Environment variables\n\n| Environment variable  | Required |\n| --------------------- | -------- |\n| `LLAMA_CLOUD_API_KEY` | yes      |\n\n### Global flags\n\n- `--api-key` (can also be set with `LLAMA_CLOUD_API_KEY` env var)\n- `--help` - Show command line usage\n- `--debug` - Enable debug logging (includes HTTP request/response details)\n- `--version`, `-v` - Show the CLI version\n- `--base-url` - Use a custom API backend URL\n- `--format` - Change the output format (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--format-error` - Change the output format for errors (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--transform` - Transform the data output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n- `--transform-error` - Transform the error output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n\n### Passing files as arguments\n\nTo pass files to your API, you can use the `@myfile.ext` syntax:\n\n~~~bash\nllamacloud-prod <command> --arg @abe.jpg\n~~~\n\nFiles can also be passed inside JSON or YAML blobs:\n\n~~~bash\nllamacloud-prod <command> --arg '{image: \"@abe.jpg\"}'\n# Equivalent:\nllamacloud-prod <command> <<YAML\narg:\n  image: \"@abe.jpg\"\nYAML\n~~~\n\nIf you need to pass a string literal that begins with an `@` sign, you can\nescape the `@` sign to avoid accidentally passing a file.\n\n~~~bash\nllamacloud-prod <command> --username '\\@abe'\n~~~\n\n#### Explicit encoding\n\nFor JSON endpoints, the CLI tool does filetype sniffing to determine whether the\nfile contents should be sent as a string literal (for plain text files) or as a\nbase64-encoded string literal (for binary files). If you need to explicitly send\nthe file as either plain text or base64-encoded data, you can use\n`@file://myfile.txt` (for string encoding) or `@data://myfile.dat` (for\nbase64-encoding). Note that absolute paths will begin with `@file://` or\n`@data://`, followed by a third `/` (for example, `@file:///tmp/file.txt`).\n\n~~~bash\nllamacloud-prod <command> --arg @data://file.txt\n~~~\n\n## Linking different Go SDK versions\n\nYou can link the CLI against a different version of the Llama Cloud Go SDK\nfor development purposes using the `./scripts/link` script.\n\nTo link to a specific version from a repository (version can be a branch,\ngit tag, or commit hash):\n\n~~~bash\n./scripts/link github.com/org/repo@version\n~~~\n\nTo link to a local copy of the SDK:\n\n~~~bash\n./scripts/link ../path/to/llamacloudprod-go\n~~~\n\nIf you run the link script without any arguments, it will default to `../llamacloudprod-go`.\n",
+      "# Llama Cloud CLI\n\nThe official CLI for the [Llama Cloud REST API](https://developers.llamaindex.ai/).\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n<!-- x-release-please-start-version -->\n\n## Installation\n\n### Installing with Go\n\nTo test or install the CLI locally, you need [Go](https://go.dev/doc/install) version 1.22 or later installed.\n\n~~~sh\ngo install 'github.com/run-llama/llama-parse-cli/cmd/llp@latest'\n~~~\n\nOnce you have run `go install`, the binary is placed in your Go bin directory:\n\n- **Default location**: `$HOME/go/bin` (or `$GOPATH/bin` if GOPATH is set)\n- **Check your path**: Run `go env GOPATH` to see the base directory\n\nIf commands aren't found after installation, add the Go bin directory to your PATH:\n\n~~~sh\n# Add to your shell profile (.zshrc, .bashrc, etc.)\nexport PATH=\"$PATH:$(go env GOPATH)/bin\"\n~~~\n\n<!-- x-release-please-end -->\n\n### Running Locally\n\nAfter cloning the git repository for this project, you can use the\n`scripts/run` script to run the tool locally:\n\n~~~sh\n./scripts/run args...\n~~~\n\n## Usage\n\nThe CLI follows a resource-based command structure:\n\n~~~sh\nllp [resource] <command> [flags...]\n~~~\n\n~~~sh\nllp parsing create \\\n  --api-key 'My API Key' \\\n  --tier agentic \\\n  --version latest \\\n  --file-id abc1234\n~~~\n\nFor details about specific commands, use the `--help` flag.\n\n### Environment variables\n\n| Environment variable  | Required |\n| --------------------- | -------- |\n| `LLAMA_CLOUD_API_KEY` | yes      |\n\n### Global flags\n\n- `--api-key` (can also be set with `LLAMA_CLOUD_API_KEY` env var)\n- `--help` - Show command line usage\n- `--debug` - Enable debug logging (includes HTTP request/response details)\n- `--version`, `-v` - Show the CLI version\n- `--base-url` - Use a custom API backend URL\n- `--format` - Change the output format (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--format-error` - Change the output format for errors (`auto`, `explore`, `json`, `jsonl`, `pretty`, `raw`, `yaml`)\n- `--transform` - Transform the data output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n- `--transform-error` - Transform the error output using [GJSON syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)\n\n### Passing files as arguments\n\nTo pass files to your API, you can use the `@myfile.ext` syntax:\n\n~~~bash\nllp <command> --arg @abe.jpg\n~~~\n\nFiles can also be passed inside JSON or YAML blobs:\n\n~~~bash\nllp <command> --arg '{image: \"@abe.jpg\"}'\n# Equivalent:\nllp <command> <<YAML\narg:\n  image: \"@abe.jpg\"\nYAML\n~~~\n\nIf you need to pass a string literal that begins with an `@` sign, you can\nescape the `@` sign to avoid accidentally passing a file.\n\n~~~bash\nllp <command> --username '\\@abe'\n~~~\n\n#### Explicit encoding\n\nFor JSON endpoints, the CLI tool does filetype sniffing to determine whether the\nfile contents should be sent as a string literal (for plain text files) or as a\nbase64-encoded string literal (for binary files). If you need to explicitly send\nthe file as either plain text or base64-encoded data, you can use\n`@file://myfile.txt` (for string encoding) or `@data://myfile.dat` (for\nbase64-encoding). Note that absolute paths will begin with `@file://` or\n`@data://`, followed by a third `/` (for example, `@file:///tmp/file.txt`).\n\n~~~bash\nllp <command> --arg @data://file.txt\n~~~\n\n## Linking different Go SDK versions\n\nYou can link the CLI against a different version of the Llama Cloud Go SDK\nfor development purposes using the `./scripts/link` script.\n\nTo link to a specific version from a repository (version can be a branch,\ngit tag, or commit hash):\n\n~~~bash\n./scripts/link github.com/org/repo@version\n~~~\n\nTo link to a local copy of the SDK:\n\n~~~bash\n./scripts/link ../path/to/llamacloudprod-go\n~~~\n\nIf you run the link script without any arguments, it will default to `../llamacloudprod-go`.\n",
   },
 ];
 
