@@ -176,9 +176,9 @@ export interface DirectoryCreateResponse {
   system_metadata?: { [key: string]: unknown } | null;
 
   /**
-   * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
+   * Directory type: 'user', 'index', or 'ephemeral'.
    */
-  type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user' | null;
+  type?: 'ephemeral' | 'index' | 'user' | null;
 
   /**
    * Update datetime
@@ -231,9 +231,9 @@ export interface DirectoryUpdateResponse {
   system_metadata?: { [key: string]: unknown } | null;
 
   /**
-   * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
+   * Directory type: 'user', 'index', or 'ephemeral'.
    */
-  type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user' | null;
+  type?: 'ephemeral' | 'index' | 'user' | null;
 
   /**
    * Update datetime
@@ -286,9 +286,9 @@ export interface DirectoryListResponse {
   system_metadata?: { [key: string]: unknown } | null;
 
   /**
-   * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
+   * Directory type: 'user', 'index', or 'ephemeral'.
    */
-  type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user' | null;
+  type?: 'ephemeral' | 'index' | 'user' | null;
 
   /**
    * Update datetime
@@ -341,9 +341,9 @@ export interface DirectoryGetResponse {
   system_metadata?: { [key: string]: unknown } | null;
 
   /**
-   * Directory type: 'user', 'index', 'ephemeral', or 'system_ephemeral'.
+   * Directory type: 'user', 'index', or 'ephemeral'.
    */
-  type?: 'ephemeral' | 'index' | 'system_ephemeral' | 'user' | null;
+  type?: 'ephemeral' | 'index' | 'user' | null;
 
   /**
    * Update datetime

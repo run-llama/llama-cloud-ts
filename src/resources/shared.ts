@@ -214,6 +214,11 @@ export interface CloudGoogleDriveDataSource {
   class_name?: string;
 
   /**
+   * Human-readable name of the selected folder, for display.
+   */
+  folder_name?: string | null;
+
+  /**
    * A dictionary containing secret values
    */
   service_account_key?: { [key: string]: string } | null;
