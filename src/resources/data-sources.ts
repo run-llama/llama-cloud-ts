@@ -107,11 +107,6 @@ export interface DataSource {
     | 'SLACK';
 
   /**
-   * Reference to a brokered managed-OAuth connection backing this source.
-   */
-  brokered_connection_id?: string | null;
-
-  /**
    * Creation datetime
    */
   created_at?: string | null;
@@ -199,12 +194,6 @@ export interface DataSourceCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Reference to a brokered managed-OAuth connection backing this
-   * source.
-   */
-  brokered_connection_id?: string | null;
-
-  /**
    * Body param: Custom metadata that will be present on all data loaded from the
    * data source
    */
@@ -226,11 +215,6 @@ export interface DataSourceUpdateParams {
     | 'NOTION_PAGE'
     | 'S3'
     | 'SLACK';
-
-  /**
-   * Reference to a brokered managed-OAuth connection backing this source.
-   */
-  brokered_connection_id?: string | null;
 
   /**
    * Component that implements the data source

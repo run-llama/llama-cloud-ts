@@ -58,7 +58,6 @@ describe('resource dataSources', () => {
       source_type: 'AZURE_STORAGE_BLOB',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      brokered_connection_id: 'brokered_connection_id',
       custom_metadata: { foo: { foo: 'bar' } },
     });
   });
@@ -93,7 +92,6 @@ describe('resource dataSources', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.dataSources.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       source_type: 'AZURE_STORAGE_BLOB',
-      brokered_connection_id: 'brokered_connection_id',
       component: { foo: 'bar' },
       custom_metadata: { foo: { foo: 'bar' } },
       name: 'name',
