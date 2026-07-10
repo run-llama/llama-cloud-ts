@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.11.0](https://github.com/run-llama/llama-parse-ts/compare/v2.10.0...v2.11.0) (2026-07-09)
+
+
+### Features
+
+* **agentic-plus:** dated version 2026-07-08 — graduate decomposed-gemini (flash-lite), fallback to 2026-06-18 ([#21738](https://github.com/run-llama/llama-parse-ts/issues/21738)) ([9bdc8b6](https://github.com/run-llama/llama-parse-ts/commit/9bdc8b61cae2d541d89ddfd6085b943f5000b7e0))
+* update fast tier latest version to use liteparse + markdown ([#21669](https://github.com/run-llama/llama-parse-ts/issues/21669)) ([c64e5fd](https://github.com/run-llama/llama-parse-ts/commit/c64e5fd636e98dd62828ab4be8c5266487d0520f))
+
 ## 2.9.0 (2026-06-09)
 
 Full Changelog: [v2.8.0...v2.9.0](https://github.com/run-llama/llama-parse-ts/compare/v2.8.0...v2.9.0)
