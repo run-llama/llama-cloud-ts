@@ -147,6 +147,11 @@ export interface PipelineDataSource {
     | 'SLACK';
 
   /**
+   * Reference to a brokered managed-OAuth connection backing this source.
+   */
+  brokered_connection_id?: string | null;
+
+  /**
    * Creation datetime
    */
   created_at?: string | null;
