@@ -954,6 +954,15 @@ export namespace ParseV2Parameters {
     disable_heuristics?: boolean | null;
 
     /**
+     * Beta: set to 'enrich' to run an additional AI form-analysis pass on pages
+     * detected as forms, producing a structured tree of the form's sections, fields,
+     * and fillable grids. Retrieve the result with expand=forms. 'default' (the
+     * default) applies standard parsing with no extra pass. Not available on the fast
+     * tier
+     */
+    forms?: 'default' | 'enrich' | null;
+
+    /**
      * Options for ignoring specific text types (diagonal, hidden, text in images)
      */
     ignore?: ProcessingOptions.Ignore;

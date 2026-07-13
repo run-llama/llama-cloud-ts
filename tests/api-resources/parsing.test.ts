@@ -156,6 +156,7 @@ describe('resource parsing', () => {
         ],
         cost_optimizer: { enable: true },
         disable_heuristics: true,
+        forms: 'enrich',
         ignore: {
           ignore_diagonal_text: true,
           ignore_hidden_text: true,

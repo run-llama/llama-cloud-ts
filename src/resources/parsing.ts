@@ -987,6 +987,11 @@ export interface ParsingGetResponse {
   job: ParsingGetResponse.Job;
 
   /**
+   * Per-page form analysis results (one entry per page).
+   */
+  forms?: ParsingGetResponse.Forms | null;
+
+  /**
    * Metadata for all extracted images.
    */
   images_content_metadata?: ParsingGetResponse.ImagesContentMetadata | null;
@@ -1083,6 +1088,224 @@ export namespace ParsingGetResponse {
      * Key/value tags associated with this job.
      */
     user_metadata?: { [key: string]: string } | null;
+  }
+
+  /**
+   * Per-page form analysis results (one entry per page).
+   */
+  export interface Forms {
+    /**
+     * List of form pages or failed page entries
+     */
+    pages: Array<Forms.FormsResultPage | Forms.FailedFormsPage>;
+  }
+
+  export namespace Forms {
+    /**
+     * Forms found on one page. Pages without form content have an empty forms list.
+     */
+    export interface FormsResultPage {
+      /**
+       * Forms detected on the page
+       */
+      forms: Array<FormsResultPage.Form>;
+
+      /**
+       * Page number of the document
+       */
+      page_number: number;
+
+      /**
+       * Success indicator
+       */
+      success: true;
+    }
+
+    export namespace FormsResultPage {
+      /**
+       * One form detected on a page, in two representations of the same content.
+       */
+      export interface Form {
+        /**
+         * Structured representation: an ordered tree of sections, fields, and tables
+         */
+        json: Array<Form.FormField | Form.FormSection | Form.FormTable>;
+
+        /**
+         * Flattened list representation of the same content
+         */
+        list: Form.List;
+      }
+
+      export namespace Form {
+        /**
+         * One labeled form entry: a text input, checkbox, select group, or signature line.
+         */
+        export interface FormField {
+          /**
+           * Kind of entry: text (any free-text input), checkbox, single_select,
+           * multi_select, or signature
+           */
+          field: 'checkbox' | 'multi_select' | 'signature' | 'single_select' | 'text';
+
+          /**
+           * Field number/letter printed on the form (e.g. '1a'), if any
+           */
+          id?: string | null;
+
+          /**
+           * True for a printed-but-blank text field (mutually exclusive with value)
+           */
+          isEmpty?: boolean | null;
+
+          /**
+           * Printed field caption, if any
+           */
+          label?: string | null;
+
+          /**
+           * Form field node
+           */
+          type?: 'field';
+
+          /**
+           * Entered content: verbatim text for text fields, or a boolean for checkbox
+           * (checked) and signature (signed). Absent on blank text fields and on select
+           * groups
+           */
+          value?: string | boolean | null;
+
+          /**
+           * Options of a single_select/multi_select group (only on select fields)
+           */
+          valueItems?: Array<unknown> | null;
+        }
+
+        /**
+         * A grouping of form content, in the form's reading order.
+         */
+        export interface FormSection {
+          /**
+           * Child form nodes in reading order
+           */
+          items: Array<unknown>;
+
+          /**
+           * Identifier printed on the form (e.g. 'Part III'), if any
+           */
+          id?: string | null;
+
+          /**
+           * Printed section heading, if any
+           */
+          label?: string | null;
+
+          /**
+           * Form section node
+           */
+          type?: 'section';
+        }
+
+        /**
+         * A fillable grid printed on the form: repeating records or a row-by-column
+         * matrix.
+         */
+        export interface FormTable {
+          /**
+           * Table cells: a verbatim string, null for a printed-but-blank cell, or an object
+           * holding the cell's own form nodes
+           */
+          rows: Array<Array<string | unknown | null>>;
+
+          /**
+           * Identifier printed on the form, if any
+           */
+          id?: string | null;
+
+          /**
+           * Printed column headers in order, if any
+           */
+          columns?: Array<string> | null;
+
+          /**
+           * Printed table caption, if any
+           */
+          label?: string | null;
+
+          /**
+           * Form table node
+           */
+          type?: 'table';
+        }
+
+        /**
+         * Flattened list representation of the same content
+         */
+        export interface List {
+          /**
+           * Nested lines and sub-lists, in the form's reading order
+           */
+          items: Array<List.FormListTextItem | unknown>;
+
+          /**
+           * Markdown representation of this list
+           */
+          md: string;
+
+          /**
+           * Whether the list is ordered
+           */
+          ordered: boolean;
+
+          /**
+           * List node
+           */
+          type?: 'list';
+        }
+
+        export namespace List {
+          /**
+           * One line of a form's list representation.
+           */
+          export interface FormListTextItem {
+            /**
+             * Markdown representation of the line
+             */
+            md: string;
+
+            /**
+             * Line content (e.g. '[1a] Wages: 29,513')
+             */
+            value: string;
+
+            /**
+             * Text line
+             */
+            type?: 'text';
+          }
+        }
+      }
+    }
+
+    /**
+     * A page whose processing failed.
+     */
+    export interface FailedFormsPage {
+      /**
+       * Error message describing the failure
+       */
+      error: string;
+
+      /**
+       * Page number of the document
+       */
+      page_number: number;
+
+      /**
+       * Failure indicator
+       */
+      success: false;
+    }
   }
 
   /**
@@ -1971,6 +2194,15 @@ export namespace ParsingCreateParams {
     disable_heuristics?: boolean | null;
 
     /**
+     * Beta: set to 'enrich' to run an additional AI form-analysis pass on pages
+     * detected as forms, producing a structured tree of the form's sections, fields,
+     * and fillable grids. Retrieve the result with expand=forms. 'default' (the
+     * default) applies standard parsing with no extra pass. Not available on the fast
+     * tier
+     */
+    forms?: 'default' | 'enrich' | null;
+
+    /**
      * Options for ignoring specific text types (diagonal, hidden, text in images)
      */
     ignore?: ProcessingOptions.Ignore;
@@ -2439,11 +2671,11 @@ export namespace ParsingCreateParams {
 
 export interface ParsingGetParams {
   /**
-   * Fields to include: text, markdown, items, metadata, job_metadata,
+   * Fields to include: text, markdown, items, metadata, forms, job_metadata,
    * text_content_metadata, markdown_content_metadata, items_content_metadata,
-   * metadata_content_metadata, raw_words_content_metadata, xlsx_content_metadata,
-   * output_pdf_content_metadata, images_content_metadata. Metadata fields include
-   * presigned URLs.
+   * metadata_content_metadata, forms_content_metadata, raw_words_content_metadata,
+   * xlsx_content_metadata, output_pdf_content_metadata, images_content_metadata.
+   * Metadata fields include presigned URLs.
    */
   expand?: Array<string>;
 
