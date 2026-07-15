@@ -154,6 +154,7 @@ describe('resource parsing', () => {
             trigger_mode: 'trigger_mode',
           },
         ],
+        confidence_scores: 'verified',
         cost_optimizer: { enable: true },
         disable_heuristics: true,
         forms: 'enrich',

@@ -939,6 +939,13 @@ export namespace ParseV2Parameters {
     auto_mode_configuration?: Array<ProcessingOptions.AutoModeConfiguration> | null;
 
     /**
+     * Confidence scoring mode. 'default': standard scoring. 'verified': more accurate
+     * assessment of the parsing quality of every page, plus a document-level score in
+     * the result metadata; costs an additional 5 credits per page
+     */
+    confidence_scores?: 'default' | 'verified' | null;
+
+    /**
      * Cost optimizer configuration for reducing parsing costs on simpler pages.
      *
      * When enabled, the parser analyzes each page and routes simpler pages to faster,

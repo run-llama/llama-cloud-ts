@@ -310,6 +310,8 @@ export namespace JobItemGetProcessingResultsResponse {
 
         complemental_formatting_instruction?: string | null;
 
+        confidence_scores?: string | null;
+
         content_guideline_instruction?: string | null;
 
         continuous_mode?: boolean | null;
