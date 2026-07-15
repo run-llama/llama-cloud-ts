@@ -63,6 +63,13 @@ Types:
 - <code><a href="./src/resources/parsing.ts">CodeItem</a></code>
 - <code><a href="./src/resources/parsing.ts">FailPageMode</a></code>
 - <code><a href="./src/resources/parsing.ts">FooterItem</a></code>
+- <code><a href="./src/resources/parsing.ts">Form</a></code>
+- <code><a href="./src/resources/parsing.ts">FormField</a></code>
+- <code><a href="./src/resources/parsing.ts">FormListItem</a></code>
+- <code><a href="./src/resources/parsing.ts">FormListTextItem</a></code>
+- <code><a href="./src/resources/parsing.ts">FormSection</a></code>
+- <code><a href="./src/resources/parsing.ts">FormTable</a></code>
+- <code><a href="./src/resources/parsing.ts">FormTableCellItems</a></code>
 - <code><a href="./src/resources/parsing.ts">HeaderItem</a></code>
 - <code><a href="./src/resources/parsing.ts">HeadingItem</a></code>
 - <code><a href="./src/resources/parsing.ts">ImageItem</a></code>

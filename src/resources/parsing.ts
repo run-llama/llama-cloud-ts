@@ -371,6 +371,176 @@ export interface FooterItem {
   type?: 'footer';
 }
 
+/**
+ * One form detected on a page, in two representations of the same content.
+ */
+export interface Form {
+  /**
+   * Structured representation: an ordered tree of sections, fields, and tables
+   */
+  json: Array<FormField | FormSection | FormTable>;
+
+  /**
+   * Flattened list representation of the same content
+   */
+  list: FormListItem;
+}
+
+/**
+ * One labeled form entry: a text input, checkbox, select group, or signature line.
+ */
+export interface FormField {
+  /**
+   * Kind of entry: text (any free-text input), checkbox, single_select,
+   * multi_select, or signature
+   */
+  field: 'checkbox' | 'multi_select' | 'signature' | 'single_select' | 'text';
+
+  /**
+   * Field number/letter printed on the form (e.g. '1a'), if any
+   */
+  id?: string | null;
+
+  /**
+   * True for a printed-but-blank text field (mutually exclusive with value)
+   */
+  isEmpty?: boolean | null;
+
+  /**
+   * Printed field caption, if any
+   */
+  label?: string | null;
+
+  /**
+   * Form field node
+   */
+  type?: 'field';
+
+  /**
+   * Entered content: verbatim text for text fields, or a boolean for checkbox
+   * (checked) and signature (signed). Absent on blank text fields and on select
+   * groups
+   */
+  value?: string | boolean | null;
+
+  /**
+   * Options of a single_select/multi_select group (only on select fields)
+   */
+  valueItems?: Array<FormField | FormSection | FormTable> | null;
+}
+
+/**
+ * The list representation of form content: nested lists of rendered field lines.
+ */
+export interface FormListItem {
+  /**
+   * Nested lines and sub-lists, in the form's reading order
+   */
+  items: Array<FormListTextItem | FormListItem>;
+
+  /**
+   * Markdown representation of this list
+   */
+  md: string;
+
+  /**
+   * Whether the list is ordered
+   */
+  ordered: boolean;
+
+  /**
+   * List node
+   */
+  type?: 'list';
+}
+
+/**
+ * One line of a form's list representation.
+ */
+export interface FormListTextItem {
+  /**
+   * Markdown representation of the line
+   */
+  md: string;
+
+  /**
+   * Line content (e.g. '[1a] Wages: 29,513')
+   */
+  value: string;
+
+  /**
+   * Text line
+   */
+  type?: 'text';
+}
+
+/**
+ * A grouping of form content, in the form's reading order.
+ */
+export interface FormSection {
+  /**
+   * Child form nodes in reading order
+   */
+  items: Array<FormField | FormSection | FormTable>;
+
+  /**
+   * Identifier printed on the form (e.g. 'Part III'), if any
+   */
+  id?: string | null;
+
+  /**
+   * Printed section heading, if any
+   */
+  label?: string | null;
+
+  /**
+   * Form section node
+   */
+  type?: 'section';
+}
+
+/**
+ * A fillable grid printed on the form: repeating records or a row-by-column
+ * matrix.
+ */
+export interface FormTable {
+  /**
+   * Table cells: a verbatim string, null for a printed-but-blank cell, or an object
+   * holding the cell's own form nodes
+   */
+  rows: Array<Array<string | FormTableCellItems | null>>;
+
+  /**
+   * Identifier printed on the form, if any
+   */
+  id?: string | null;
+
+  /**
+   * Printed column headers in order, if any
+   */
+  columns?: Array<string> | null;
+
+  /**
+   * Printed table caption, if any
+   */
+  label?: string | null;
+
+  /**
+   * Form table node
+   */
+  type?: 'table';
+}
+
+/**
+ * A table cell holding its own form nodes (e.g. a checkbox column).
+ */
+export interface FormTableCellItems {
+  /**
+   * Form nodes inside the cell
+   */
+  items: Array<FormField | FormSection | FormTable>;
+}
+
 export interface HeaderItem {
   /**
    * List of items within the header
@@ -1108,7 +1278,7 @@ export namespace ParsingGetResponse {
       /**
        * Forms detected on the page
        */
-      forms: Array<FormsResultPage.Form>;
+      forms: Array<ParsingAPI.Form>;
 
       /**
        * Page number of the document
@@ -1119,172 +1289,6 @@ export namespace ParsingGetResponse {
        * Success indicator
        */
       success: true;
-    }
-
-    export namespace FormsResultPage {
-      /**
-       * One form detected on a page, in two representations of the same content.
-       */
-      export interface Form {
-        /**
-         * Structured representation: an ordered tree of sections, fields, and tables
-         */
-        json: Array<Form.FormField | Form.FormSection | Form.FormTable>;
-
-        /**
-         * Flattened list representation of the same content
-         */
-        list: Form.List;
-      }
-
-      export namespace Form {
-        /**
-         * One labeled form entry: a text input, checkbox, select group, or signature line.
-         */
-        export interface FormField {
-          /**
-           * Kind of entry: text (any free-text input), checkbox, single_select,
-           * multi_select, or signature
-           */
-          field: 'checkbox' | 'multi_select' | 'signature' | 'single_select' | 'text';
-
-          /**
-           * Field number/letter printed on the form (e.g. '1a'), if any
-           */
-          id?: string | null;
-
-          /**
-           * True for a printed-but-blank text field (mutually exclusive with value)
-           */
-          isEmpty?: boolean | null;
-
-          /**
-           * Printed field caption, if any
-           */
-          label?: string | null;
-
-          /**
-           * Form field node
-           */
-          type?: 'field';
-
-          /**
-           * Entered content: verbatim text for text fields, or a boolean for checkbox
-           * (checked) and signature (signed). Absent on blank text fields and on select
-           * groups
-           */
-          value?: string | boolean | null;
-
-          /**
-           * Options of a single_select/multi_select group (only on select fields)
-           */
-          valueItems?: Array<unknown> | null;
-        }
-
-        /**
-         * A grouping of form content, in the form's reading order.
-         */
-        export interface FormSection {
-          /**
-           * Child form nodes in reading order
-           */
-          items: Array<unknown>;
-
-          /**
-           * Identifier printed on the form (e.g. 'Part III'), if any
-           */
-          id?: string | null;
-
-          /**
-           * Printed section heading, if any
-           */
-          label?: string | null;
-
-          /**
-           * Form section node
-           */
-          type?: 'section';
-        }
-
-        /**
-         * A fillable grid printed on the form: repeating records or a row-by-column
-         * matrix.
-         */
-        export interface FormTable {
-          /**
-           * Table cells: a verbatim string, null for a printed-but-blank cell, or an object
-           * holding the cell's own form nodes
-           */
-          rows: Array<Array<string | unknown | null>>;
-
-          /**
-           * Identifier printed on the form, if any
-           */
-          id?: string | null;
-
-          /**
-           * Printed column headers in order, if any
-           */
-          columns?: Array<string> | null;
-
-          /**
-           * Printed table caption, if any
-           */
-          label?: string | null;
-
-          /**
-           * Form table node
-           */
-          type?: 'table';
-        }
-
-        /**
-         * Flattened list representation of the same content
-         */
-        export interface List {
-          /**
-           * Nested lines and sub-lists, in the form's reading order
-           */
-          items: Array<List.FormListTextItem | unknown>;
-
-          /**
-           * Markdown representation of this list
-           */
-          md: string;
-
-          /**
-           * Whether the list is ordered
-           */
-          ordered: boolean;
-
-          /**
-           * List node
-           */
-          type?: 'list';
-        }
-
-        export namespace List {
-          /**
-           * One line of a form's list representation.
-           */
-          export interface FormListTextItem {
-            /**
-             * Markdown representation of the line
-             */
-            md: string;
-
-            /**
-             * Line content (e.g. '[1a] Wages: 29,513')
-             */
-            value: string;
-
-            /**
-             * Text line
-             */
-            type?: 'text';
-          }
-        }
-      }
     }
 
     /**
@@ -2728,6 +2732,13 @@ export declare namespace Parsing {
     type CodeItem as CodeItem,
     type FailPageMode as FailPageMode,
     type FooterItem as FooterItem,
+    type Form as Form,
+    type FormField as FormField,
+    type FormListItem as FormListItem,
+    type FormListTextItem as FormListTextItem,
+    type FormSection as FormSection,
+    type FormTable as FormTable,
+    type FormTableCellItems as FormTableCellItems,
     type HeaderItem as HeaderItem,
     type HeadingItem as HeadingItem,
     type ImageItem as ImageItem,
