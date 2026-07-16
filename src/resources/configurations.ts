@@ -435,12 +435,12 @@ export interface ParseV2Parameters {
    *
    * - `fast`: `2026-06-15`
    * - `cost_effective`: `2026-06-26`
-   * - `agentic`: `2026-06-18`
+   * - `agentic`: `2026-07-15`
    * - `agentic_plus`: `2026-07-08`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-07-08' | '2026-06-26' | '2026-06-18' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-07-15' | '2026-07-08' | '2026-06-26' | '2026-06-15' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -1256,12 +1256,12 @@ export namespace ParseV2Parameters {
          *
          * - `fast`: `2026-06-15`
          * - `cost_effective`: `2026-06-26`
-         * - `agentic`: `2026-06-18`
+         * - `agentic`: `2026-07-15`
          * - `agentic_plus`: `2026-07-08`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-07-08' | '2026-06-26' | '2026-06-18' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-07-15' | '2026-07-08' | '2026-06-26' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
