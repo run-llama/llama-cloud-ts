@@ -2183,11 +2183,11 @@ export namespace ParsingCreateParams {
     auto_mode_configuration?: Array<ProcessingOptions.AutoModeConfiguration> | null;
 
     /**
-     * Confidence scoring mode. 'default': standard scoring. 'verified': more accurate
+     * Confidence scoring effort. Omit for standard scoring. 'high': more accurate
      * assessment of the parsing quality of every page, plus a document-level score in
      * the result metadata; costs an additional 5 credits per page
      */
-    confidence_scores?: 'default' | 'verified' | null;
+    confidence_score_effort?: 'high' | null;
 
     /**
      * Cost optimizer configuration for reducing parsing costs on simpler pages.
