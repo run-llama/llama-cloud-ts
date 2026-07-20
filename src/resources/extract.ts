@@ -324,9 +324,10 @@ export interface ExtractConfiguration {
   target_pages?: string | null;
 
   /**
-   * Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)
+   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page), or
+   * agentic_plus (50 credits/page)
    */
-  tier?: 'agentic' | 'cost_effective';
+  tier?: 'agentic' | 'agentic_plus' | 'cost_effective';
 
   /**
    * Use 'latest' for the latest release for the selected tier or a date string
