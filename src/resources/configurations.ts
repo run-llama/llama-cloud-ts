@@ -394,9 +394,10 @@ export interface ExtractV2Parameters {
   target_pages?: string | null;
 
   /**
-   * Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)
+   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page), or
+   * agentic_plus (50 credits/page)
    */
-  tier?: 'agentic' | 'cost_effective';
+  tier?: 'agentic' | 'agentic_plus' | 'cost_effective';
 
   /**
    * Use 'latest' for the latest release for the selected tier or a date string
@@ -435,12 +436,12 @@ export interface ParseV2Parameters {
    *
    * - `fast`: `2026-06-15`
    * - `cost_effective`: `2026-06-26`
-   * - `agentic`: `2026-06-18`
+   * - `agentic`: `2026-07-15`
    * - `agentic_plus`: `2026-07-08`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-07-08' | '2026-06-26' | '2026-06-18' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-07-15' | '2026-07-08' | '2026-06-26' | '2026-06-15' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -939,6 +940,13 @@ export namespace ParseV2Parameters {
     auto_mode_configuration?: Array<ProcessingOptions.AutoModeConfiguration> | null;
 
     /**
+     * Confidence scoring effort. Omit for standard scoring. 'high': more accurate
+     * assessment of the parsing quality of every page, plus a document-level score in
+     * the result metadata; costs an additional 5 credits per page
+     */
+    confidence_score_effort?: 'high' | null;
+
+    /**
      * Cost optimizer configuration for reducing parsing costs on simpler pages.
      *
      * When enabled, the parser analyzes each page and routes simpler pages to faster,
@@ -952,6 +960,15 @@ export namespace ParseV2Parameters {
      * long table handling. Use when heuristics produce incorrect results
      */
     disable_heuristics?: boolean | null;
+
+    /**
+     * Beta: set to 'enrich' to run an additional AI form-analysis pass on pages
+     * detected as forms, producing a structured tree of the form's sections, fields,
+     * and fillable grids. Retrieve the result with expand=forms. 'default' (the
+     * default) applies standard parsing with no extra pass. Not available on the fast
+     * tier
+     */
+    forms?: 'default' | 'enrich' | null;
 
     /**
      * Options for ignoring specific text types (diagonal, hidden, text in images)
@@ -1240,12 +1257,12 @@ export namespace ParseV2Parameters {
          *
          * - `fast`: `2026-06-15`
          * - `cost_effective`: `2026-06-26`
-         * - `agentic`: `2026-06-18`
+         * - `agentic`: `2026-07-15`
          * - `agentic_plus`: `2026-07-08`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-07-08' | '2026-06-26' | '2026-06-18' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-07-15' | '2026-07-08' | '2026-06-26' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {

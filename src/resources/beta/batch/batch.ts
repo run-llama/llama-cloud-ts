@@ -597,6 +597,8 @@ export namespace BatchCreateParams {
 
       complemental_formatting_instruction?: string | null;
 
+      confidence_score_effort?: string | null;
+
       content_guideline_instruction?: string | null;
 
       continuous_mode?: boolean | null;

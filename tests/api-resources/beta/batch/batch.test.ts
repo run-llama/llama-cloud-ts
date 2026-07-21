@@ -47,6 +47,7 @@ describe('resource batch', () => {
           bounding_box: 'bounding_box',
           compact_markdown_table: true,
           complemental_formatting_instruction: 'complemental_formatting_instruction',
+          confidence_score_effort: 'confidence_score_effort',
           content_guideline_instruction: 'content_guideline_instruction',
           continuous_mode: true,
           custom_metadata: { foo: 'bar' },
