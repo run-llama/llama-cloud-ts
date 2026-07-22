@@ -363,6 +363,11 @@ export interface ExtractJobMetadata {
  */
 export interface ExtractJobUsage {
   /**
+   * Number of effective pages billed
+   */
+  num_pages_billed?: number | null;
+
+  /**
    * Number of pages extracted
    */
   num_pages_extracted?: number | null;
