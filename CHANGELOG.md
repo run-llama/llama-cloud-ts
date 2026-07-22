@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.12.0](https://github.com/run-llama/llama-parse-ts/compare/v2.11.0...v2.12.0) (2026-07-21)
+
+
+### Features
+
+* **brokered-connection:** wire data-source create/read to brokered_connection_id ([#21699](https://github.com/run-llama/llama-parse-ts/issues/21699)) ([92df958](https://github.com/run-llama/llama-parse-ts/commit/92df958ca0da48ddbdabae3a3dd18fd463f387a7))
+* **gdrive:** reuse-first connection picker in the data-source connect modal ([#21725](https://github.com/run-llama/llama-parse-ts/issues/21725)) ([4139205](https://github.com/run-llama/llama-parse-ts/commit/413920500f852e5252999b6decb63972562baa3c))
+* **llamaparse:** agentic 2026-07-15 — Markdown-pipe table body for Gemini 3.1 Flash-Lite (EU primary) ([#22208](https://github.com/run-llama/llama-parse-ts/issues/22208)) ([19c059a](https://github.com/run-llama/llama-parse-ts/commit/19c059ae67c1bf8439c253a16ef93c0e1bdd437f))
+* **parse:** adding forms pass to api layer (forms=`enrich` param + output types) ([#22012](https://github.com/run-llama/llama-parse-ts/issues/22012)) ([4a52e97](https://github.com/run-llama/llama-parse-ts/commit/4a52e97054de66538a985ed1ef4cefd52824318b))
+* **parse:** confidence_scores="verified" — per-page AI-verified confidence + document-level score ([#22083](https://github.com/run-llama/llama-parse-ts/issues/22083)) ([239f9f3](https://github.com/run-llama/llama-parse-ts/commit/239f9f31c8d3cf76178bc587bbaa56609636556a))
+* **parse:** rename confidence scoring option + billing event (confidence_score_effort / confidence_score_high) ([#22290](https://github.com/run-llama/llama-parse-ts/issues/22290)) ([49059bf](https://github.com/run-llama/llama-parse-ts/commit/49059bf875260943ef7ea4bfe33cecab894b8487))
+* **sdk:** drop the `prod` project suffix from Go and Java namespaces ([3fb3bed](https://github.com/run-llama/llama-parse-ts/commit/3fb3bed3a700af0a540695fa04db4dabff3da536))
+
+
+### Bug Fixes
+
+* **parse:** declare the recursive form node schemas as models ([fe0a9a4](https://github.com/run-llama/llama-parse-ts/commit/fe0a9a45719fd04d59fd3ca0b459c83a34056165))
+
 ## [2.11.0](https://github.com/run-llama/llama-parse-ts/compare/v2.10.0...v2.11.0) (2026-07-09)
 
 
