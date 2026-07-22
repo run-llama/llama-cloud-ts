@@ -456,8 +456,8 @@ export interface SheetsParsingConfig {
   flatten_hierarchical_tables?: boolean;
 
   /**
-   * Whether to generate additional metadata (title, description) for each extracted
-   * region.
+   * Deprecated: controlled by `tier`. Whether to generate additional metadata
+   * (title, description) for each extracted region. Honored only on `agentic`.
    */
   generate_additional_metadata?: boolean;
 
@@ -473,21 +473,28 @@ export interface SheetsParsingConfig {
   sheet_names?: Array<string> | null;
 
   /**
-   * Optional specialization mode for domain-specific extraction. Supported values:
-   * 'financial-standard', 'financial-enhanced', 'financial-precise'. Default None
-   * uses the general-purpose pipeline.
+   * Deprecated: controlled by `tier`. Optional specialization mode for
+   * domain-specific extraction. Supported values: 'financial-standard',
+   * 'financial-enhanced', 'financial-precise'. Default None uses the general-purpose
+   * pipeline. Honored only on `agentic`.
    */
   specialization?: string | null;
 
   /**
-   * Influences how likely similar-looking regions are merged into a single table.
-   * Useful for spreadsheets that either have sparse tables (strong merging) or many
-   * distinct tables close together (weak merging).
+   * Deprecated: controlled by `tier`. Influences how likely similar-looking regions
+   * are merged into a single table. Honored only on `agentic`.
    */
   table_merge_sensitivity?: 'strong' | 'weak';
 
   /**
-   * Enables experimental processing. Accuracy may be impacted.
+   * Spreadsheet extraction tier. `cost_effective` uses the rule-based/ML-only
+   * pipeline; `agentic` uses the full pipeline.
+   */
+  tier?: 'agentic' | 'cost_effective';
+
+  /**
+   * Deprecated: controlled by `tier`. Enables experimental processing. Honored only
+   * on `agentic`.
    */
   use_experimental_processing?: boolean;
 }

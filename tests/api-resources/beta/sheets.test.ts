@@ -34,6 +34,7 @@ describe('resource sheets', () => {
         sheet_names: ['string'],
         specialization: 'specialization',
         table_merge_sensitivity: 'strong',
+        tier: 'agentic',
         use_experimental_processing: true,
       },
       configuration: {
@@ -44,6 +45,7 @@ describe('resource sheets', () => {
         sheet_names: ['string'],
         specialization: 'specialization',
         table_merge_sensitivity: 'strong',
+        tier: 'agentic',
         use_experimental_processing: true,
       },
       configuration_id: 'cfg-11111111-2222-3333-4444-555555555555',
