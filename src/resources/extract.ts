@@ -483,6 +483,11 @@ export interface ExtractV2JobCreate {
   configuration_id?: string | null;
 
   /**
+   * IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
+
+  /**
    * Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<ExtractV2JobCreate.WebhookConfiguration> | null;
@@ -684,6 +689,11 @@ export interface ExtractCreateParams {
    * Body param: Saved configuration ID
    */
   configuration_id?: string | null;
+
+  /**
+   * Body param: IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
 
   /**
    * Body param: Outbound webhook endpoints to notify on job status changes
