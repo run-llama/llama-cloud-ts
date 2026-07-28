@@ -287,6 +287,11 @@ export interface ClassifyCreateRequest {
   transaction_id?: string | null;
 
   /**
+   * IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
+
+  /**
    * Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<ClassifyCreateRequest.WebhookConfiguration> | null;
@@ -643,6 +648,11 @@ export interface ClassifyCreateParams {
    * original job; the new request body is ignored.
    */
   transaction_id?: string | null;
+
+  /**
+   * Body param: IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
 
   /**
    * Body param: Outbound webhook endpoints to notify on job status changes
