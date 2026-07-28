@@ -302,13 +302,15 @@ export interface ExtractConfiguration {
 
   /**
    * Saved parse configuration ID to control how the document is parsed before
-   * extraction
+   * extraction. Turbo extract does not support parse configuration or produce a
+   * parse output; use another tier if your workflow requires parsed text.
    */
   parse_config_id?: string | null;
 
   /**
    * Parse tier to use before extraction. Defaults to the extract tier if not
-   * specified.
+   * specified. Turbo extract does not support parse configuration or produce a parse
+   * output; use another tier if your workflow requires parsed text.
    */
   parse_tier?: string | null;
 
