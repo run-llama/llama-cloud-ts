@@ -364,12 +364,14 @@ export interface ExtractV2Parameters {
   product_type: 'extract_v2';
 
   /**
-   * Include citations in results
+   * Include citations in results. Returned under `extract_metadata` (auto-included
+   * when set). Text-level on `turbo` (no bounding boxes).
    */
   cite_sources?: boolean;
 
   /**
-   * Include confidence scores in results
+   * Include confidence scores in results. Returned under `extract_metadata`
+   * (auto-included when set).
    */
   confidence_scores?: boolean;
 
