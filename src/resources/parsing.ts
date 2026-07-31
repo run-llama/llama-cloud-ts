@@ -1409,6 +1409,9 @@ export namespace ParsingGetResponse {
   }
 
   export namespace Items {
+    /**
+     * Successfully parsed page in structured items output.
+     */
     export interface StructuredResultPage {
       /**
        * List of structured items on the page
@@ -1444,6 +1447,167 @@ export namespace ParsingGetResponse {
        * Success indicator
        */
       success: true;
+
+      /**
+       * Extracted revisions and comments on the page
+       */
+      revisions?: Array<StructuredResultPage.Revision> | null;
+    }
+
+    export namespace StructuredResultPage {
+      /**
+       * One extracted document revision linked to page content.
+       */
+      export interface Revision {
+        /**
+         * Revision or comment content
+         */
+        content: string;
+
+        /**
+         * Bounding box of the printed revision balloon
+         */
+        revision_bbox: Revision.RevisionBbox;
+
+        /**
+         * Best available target text in the page content
+         */
+        target: string;
+
+        /**
+         * Union bounding box of the target spans
+         */
+        target_bbox: Revision.TargetBbox;
+
+        /**
+         * Type of revision
+         */
+        type: 'comment' | 'deleted' | 'formatted' | 'inserted' | 'moved_from' | 'moved_to';
+
+        /**
+         * Revision author, when available
+         */
+        author?: string | null;
+
+        /**
+         * Exclusive end offset in final page markdown
+         */
+        end_index?: number | null;
+
+        /**
+         * Inclusive start offset in final page markdown
+         */
+        start_index?: number | null;
+
+        /**
+         * Disconnected target spans, when present
+         */
+        target_spans?: Array<Revision.TargetSpan> | null;
+      }
+
+      export namespace Revision {
+        /**
+         * Bounding box of the printed revision balloon
+         */
+        export interface RevisionBbox {
+          /**
+           * Height of the bounding box
+           */
+          h: number;
+
+          /**
+           * Width of the bounding box
+           */
+          w: number;
+
+          /**
+           * X coordinate of the bounding box
+           */
+          x: number;
+
+          /**
+           * Y coordinate of the bounding box
+           */
+          y: number;
+        }
+
+        /**
+         * Union bounding box of the target spans
+         */
+        export interface TargetBbox {
+          /**
+           * Height of the bounding box
+           */
+          h: number;
+
+          /**
+           * Width of the bounding box
+           */
+          w: number;
+
+          /**
+           * X coordinate of the bounding box
+           */
+          x: number;
+
+          /**
+           * Y coordinate of the bounding box
+           */
+          y: number;
+        }
+
+        /**
+         * One contiguous target span linked to a document revision.
+         */
+        export interface TargetSpan {
+          /**
+           * Text covered by this target span
+           */
+          target: string;
+
+          /**
+           * Bounding box of this target span
+           */
+          target_bbox: TargetSpan.TargetBbox;
+
+          /**
+           * Exclusive end offset in final page markdown
+           */
+          end_index?: number | null;
+
+          /**
+           * Inclusive start offset in final page markdown
+           */
+          start_index?: number | null;
+        }
+
+        export namespace TargetSpan {
+          /**
+           * Bounding box of this target span
+           */
+          export interface TargetBbox {
+            /**
+             * Height of the bounding box
+             */
+            h: number;
+
+            /**
+             * Width of the bounding box
+             */
+            w: number;
+
+            /**
+             * X coordinate of the bounding box
+             */
+            x: number;
+
+            /**
+             * Y coordinate of the bounding box
+             */
+            y: number;
+          }
+        }
+      }
     }
 
     export interface FailedStructuredPage {
@@ -1990,6 +2154,11 @@ export namespace ParsingCreateParams {
        * only the link text is included
        */
       annotate_links?: boolean | null;
+
+      /**
+       * Extract Word-style revisions and comments into structured page output
+       */
+      annotate_revisions?: boolean | null;
 
       /**
        * Embed images directly in markdown as base64 data URIs instead of extracting them

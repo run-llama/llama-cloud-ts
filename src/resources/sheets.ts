@@ -178,6 +178,11 @@ export namespace SheetCreateParams {
      * events are delivered.
      */
     webhook_events?: Array<
+      | 'batch.cancelled'
+      | 'batch.error'
+      | 'batch.pending'
+      | 'batch.running'
+      | 'batch.success'
       | 'classify.cancelled'
       | 'classify.error'
       | 'classify.partial_success'

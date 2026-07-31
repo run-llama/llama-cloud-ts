@@ -38,6 +38,8 @@ describe('resource extract', () => {
         max_pages: 10,
         parse_config_id: 'cfg-11111111-2222-3333-4444-555555555555',
         parse_tier: 'fast',
+        sheet_names: ['Sheet 1', 'Q4 Summary'],
+        spreadsheet_mode: true,
         system_prompt: 'Extract all monetary values in USD. If a currency is not specified, assume USD.',
         target_pages: '1,3,5-7',
         tier: 'cost_effective',

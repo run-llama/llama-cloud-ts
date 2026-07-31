@@ -30,6 +30,7 @@ describe('resource batch', () => {
           adaptive_long_table: true,
           aggressive_table_extraction: true,
           annotate_links: true,
+          annotate_revisions: true,
           auto_mode: true,
           auto_mode_configuration_json: 'auto_mode_configuration_json',
           auto_mode_trigger_on_image_in_page: true,

@@ -288,10 +288,7 @@ export interface RetrievalRetrieveParams {
    * Body param: Filters on user-defined metadata fields.
    */
   custom_filters?: {
-    [key: string]:
-      | RetrievalRetrieveParams.FilterTypeUnionStrIntBoolFloat
-      | Array<RetrievalRetrieveParams.UnionMember1>
-      | null;
+    [key: string]: RetrievalRetrieveParams.ValueFilter | Array<RetrievalRetrieveParams.UnionMember1> | null;
   } | null;
 
   /**
@@ -332,12 +329,18 @@ export interface RetrievalRetrieveParams {
 }
 
 export namespace RetrievalRetrieveParams {
-  export interface FilterTypeUnionStrIntBoolFloat {
+  /**
+   * Filter on a single metadata field value.
+   */
+  export interface ValueFilter {
     operator: 'eq' | 'gt' | 'gte' | 'in' | 'lt' | 'lte' | 'ne' | 'nin';
 
     value: string | boolean | number | Array<string | boolean | number>;
   }
 
+  /**
+   * One bound of a numeric range filter on a metadata field.
+   */
   export interface UnionMember1 {
     operator: 'eq' | 'gt' | 'gte' | 'in' | 'lt' | 'lte' | 'ne' | 'nin';
 
@@ -363,10 +366,16 @@ export namespace RetrievalRetrieveParams {
    * Filters on built-in document fields (page range, chunk index, etc.).
    */
   export interface StaticFilters {
+    /**
+     * Filter on a string field.
+     */
     parsed_directory_file_id?: StaticFilters.ParsedDirectoryFileID | null;
   }
 
   export namespace StaticFilters {
+    /**
+     * Filter on a string field.
+     */
     export interface ParsedDirectoryFileID {
       operator: 'eq' | 'gt' | 'gte' | 'in' | 'lt' | 'lte' | 'ne' | 'nin';
 

@@ -563,6 +563,8 @@ export namespace BatchCreateParams {
 
       annotate_links?: boolean | null;
 
+      annotate_revisions?: boolean | null;
+
       auto_mode?: boolean | null;
 
       auto_mode_configuration_json?: string | null;
@@ -858,6 +860,11 @@ export namespace BatchCreateParams {
          * events are delivered.
          */
         webhook_events?: Array<
+          | 'batch.cancelled'
+          | 'batch.error'
+          | 'batch.pending'
+          | 'batch.running'
+          | 'batch.success'
           | 'classify.cancelled'
           | 'classify.error'
           | 'classify.partial_success'

@@ -401,6 +401,23 @@ export interface ExtractV2Parameters {
   parse_tier?: string | null;
 
   /**
+   * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
+   * target_pages for spreadsheets; omit to extract every sheet. Names are matched
+   * exactly (case-sensitive) — pass them as a list, e.g. ["Sheet 1", "My Sheet"].
+   */
+  sheet_names?: Array<string> | null;
+
+  /**
+   * Beta. When true, extract structured data directly from a spreadsheet workbook
+   * (.xlsx/.xls/.csv) — the agent reads cells straight from the workbook instead of
+   * the standard document path. Off by default (spreadsheets keep the standard
+   * path). Requires the agentic_plus tier. Billed on the standard per-page extract
+   * rate, against a page count derived from workbook size. Citations and confidence
+   * scores are not available in this mode.
+   */
+  spreadsheet_mode?: boolean;
+
+  /**
    * Custom system prompt to guide extraction behavior
    */
   system_prompt?: string | null;
@@ -765,6 +782,11 @@ export namespace ParseV2Parameters {
        * only the link text is included
        */
       annotate_links?: boolean | null;
+
+      /**
+       * Extract Word-style revisions and comments into structured page output
+       */
+      annotate_revisions?: boolean | null;
 
       /**
        * Embed images directly in markdown as base64 data URIs instead of extracting them

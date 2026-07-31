@@ -10,6 +10,18 @@ export class Batches extends APIResource {
   /**
    * Create a batch over a source directory and start processing asynchronously.
    *
+   * To be notified as the batch progresses, pass `webhook_configurations` with
+   * inline endpoints and/or `webhook_configuration_ids` referencing saved
+   * configurations. Batches emit `batch.pending` on create, `batch.running` once
+   * processing starts, and a terminal `batch.success` or `batch.error`.
+   *
+   * `batch.success` means the batch finished mapping every source file to a job —
+   * individual files may still have failed, so read `results` (with
+   * `expand=results`) for per-file outcomes.
+   *
+   * Delivery order across events is not guaranteed; key on the `status` field in the
+   * payload rather than arrival order.
+   *
    * @example
    * ```ts
    * const batch = await client.batches.create({
@@ -518,6 +530,16 @@ export interface BatchCreateParams {
    * Query param
    */
   project_id?: string | null;
+
+  /**
+   * Body param: IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
+
+  /**
+   * Body param: Outbound webhook endpoints to notify on job status changes
+   */
+  webhook_configurations?: Array<BatchCreateParams.WebhookConfiguration> | null;
 }
 
 export namespace BatchCreateParams {
@@ -546,6 +568,74 @@ export namespace BatchCreateParams {
        */
       type: 'parse_v2' | 'extract_v2';
     }
+  }
+
+  /**
+   * Configuration for a single outbound webhook endpoint.
+   */
+  export interface WebhookConfiguration {
+    /**
+     * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
+     * events are delivered.
+     */
+    webhook_events?: Array<
+      | 'batch.cancelled'
+      | 'batch.error'
+      | 'batch.pending'
+      | 'batch.running'
+      | 'batch.success'
+      | 'classify.cancelled'
+      | 'classify.error'
+      | 'classify.partial_success'
+      | 'classify.pending'
+      | 'classify.running'
+      | 'classify.success'
+      | 'extract.cancelled'
+      | 'extract.error'
+      | 'extract.partial_success'
+      | 'extract.pending'
+      | 'extract.success'
+      | 'parse.cancelled'
+      | 'parse.error'
+      | 'parse.partial_success'
+      | 'parse.pending'
+      | 'parse.running'
+      | 'parse.success'
+      | 'sheets.cancelled'
+      | 'sheets.error'
+      | 'sheets.partial_success'
+      | 'sheets.pending'
+      | 'sheets.success'
+      | 'split.cancelled'
+      | 'split.error'
+      | 'split.pending'
+      | 'split.processing'
+      | 'split.success'
+      | 'unmapped_event'
+    > | null;
+
+    /**
+     * Custom HTTP headers sent with each webhook request (e.g. auth tokens)
+     */
+    webhook_headers?: { [key: string]: string } | null;
+
+    /**
+     * Response format sent to the webhook: 'string' (default) or 'json'
+     */
+    webhook_output_format?: string | null;
+
+    /**
+     * Shared signing secret used to sign webhook deliveries. When set, each request
+     * includes an HMAC-SHA256 signature of the request body in the 'LC-Signature'
+     * header (value 'sha256=<hex>'). Recompute the HMAC over the raw request body with
+     * this secret to verify the delivery is authentic.
+     */
+    webhook_signing_secret?: string | null;
+
+    /**
+     * URL to receive webhook POST notifications
+     */
+    webhook_url?: string | null;
   }
 }
 

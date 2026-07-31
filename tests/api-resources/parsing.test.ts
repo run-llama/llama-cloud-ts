@@ -62,6 +62,7 @@ describe('resource parsing', () => {
         images_to_save: ['embedded'],
         markdown: {
           annotate_links: true,
+          annotate_revisions: true,
           inline_images: true,
           tables: {
             compact_markdown_tables: true,
