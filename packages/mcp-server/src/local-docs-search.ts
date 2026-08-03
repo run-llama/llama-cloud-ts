@@ -729,6 +729,51 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'cancel',
+    endpoint: '/api/v2/parse/{job_id}/cancel',
+    httpMethod: 'post',
+    summary: 'Cancel Parse Job',
+    description:
+      'Cancel a running parse job.\n\nStops processing and marks the job as CANCELLED. Returns the updated job. Jobs already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.',
+    stainlessPath: '(resource) parsing > (method) cancel',
+    qualified: 'client.parsing.cancel',
+    params: ['job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ id: string; project_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING'; created_at?: string; error_message?: string; name?: string; tier?: string; updated_at?: string; user_metadata?: object; }",
+    markdown:
+      "## cancel\n\n`client.parsing.cancel(job_id: string, organization_id?: string, project_id?: string): { id: string; project_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING'; created_at?: string; error_message?: string; name?: string; tier?: string; updated_at?: string; user_metadata?: object; }`\n\n**post** `/api/v2/parse/{job_id}/cancel`\n\nCancel a running parse job.\n\nStops processing and marks the job as CANCELLED. Returns the updated job. Jobs already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.\n\n### Parameters\n\n- `job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; project_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING'; created_at?: string; error_message?: string; name?: string; tier?: string; updated_at?: string; user_metadata?: object; }`\n  A parse job.\n\n  - `id: string`\n  - `project_id: string`\n  - `status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING'`\n  - `created_at?: string`\n  - `error_message?: string`\n  - `name?: string`\n  - `tier?: string`\n  - `updated_at?: string`\n  - `user_metadata?: object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.parsing.cancel('job_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Parsing.Cancel',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Parsing.Cancel(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ParsingCancelParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      python: {
+        method: 'parsing.cancel',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.parsing.cancel(\n    job_id="job_id",\n)\nprint(response.id)',
+      },
+      java: {
+        method: 'parsing().cancel',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCancelParams;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingCancelResponse response = client.parsing().cancel("job_id");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.parsing.cancel',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.parsing.cancel('job_id');\n\nconsole.log(response.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/parse/$JOB_ID/cancel \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'parsing cancel',
+        example: "llp parsing cancel \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
+    },
+  },
+  {
     name: 'create',
     endpoint: '/api/v2/extract',
     httpMethod: 'post',
@@ -1214,156 +1259,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'jobs get_results',
         example:
           "llp classifier:jobs get-results \\\n  --api-key 'My API Key' \\\n  --classify-job-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-      },
-    },
-  },
-  {
-    name: 'create',
-    endpoint: '/api/v2/batches',
-    httpMethod: 'post',
-    summary: 'Create Batch',
-    description:
-      'Create a batch over a source directory and start processing asynchronously.\n\nTo be notified as the batch progresses, pass `webhook_configurations` with\ninline endpoints and/or `webhook_configuration_ids` referencing saved\nconfigurations. Batches emit `batch.pending` on create, `batch.running`\nonce processing starts, and a terminal `batch.success` or `batch.error`.\n\n`batch.success` means the batch finished mapping every source file to a\njob — individual files may still have failed, so read `results` (with\n`expand=results`) for per-file outcomes.\n\nDelivery order across events is not guaranteed; key on the `status` field\nin the payload rather than arrival order.',
-    stainlessPath: '(resource) batches > (method) create',
-    qualified: 'client.batches.create',
-    params: [
-      "config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; };",
-      'source_directory_id: string;',
-      'organization_id?: string;',
-      'project_id?: string;',
-      'webhook_configuration_ids?: string[];',
-      'webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: string; webhook_signing_secret?: string; webhook_url?: string; }[];',
-    ],
-    response:
-      "{ id: string; config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]; updated_at?: string; }",
-    markdown:
-      "## create\n\n`client.batches.create(config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }, source_directory_id: string, organization_id?: string, project_id?: string, webhook_configuration_ids?: string[], webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: string; webhook_signing_secret?: string; webhook_url?: string; }[]): { id: string; config: object; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: object[]; updated_at?: string; }`\n\n**post** `/api/v2/batches`\n\nCreate a batch over a source directory and start processing asynchronously.\n\nTo be notified as the batch progresses, pass `webhook_configurations` with\ninline endpoints and/or `webhook_configuration_ids` referencing saved\nconfigurations. Batches emit `batch.pending` on create, `batch.running`\nonce processing starts, and a terminal `batch.success` or `batch.error`.\n\n`batch.success` means the batch finished mapping every source file to a\njob — individual files may still have failed, so read `results` (with\n`expand=results`) for per-file outcomes.\n\nDelivery order across events is not guaranteed; key on the `status` field\nin the payload rather than arrival order.\n\n### Parameters\n\n- `config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }`\n  Batch configuration snapshot to apply to this source directory.\n  - `job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }`\n    Job to create for each file in the source directory.\n\n- `source_directory_id: string`\n  Directory whose files should be processed.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `webhook_configuration_ids?: string[]`\n  IDs of saved webhook configurations to notify for this job.\n\n- `webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: string; webhook_signing_secret?: string; webhook_url?: string; }[]`\n  Outbound webhook endpoints to notify on job status changes\n\n### Returns\n\n- `{ id: string; config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]; updated_at?: string; }`\n  A top-level batch.\n\nExample:\n    {\n        \"id\": \"bat-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"project_id\": \"prj-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"source_directory_id\": \"dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"config\": {\n            \"job\": {\n                \"type\": \"parse_v2\",\n                \"configuration_id\": \"cfg-PARSE_AGENTIC\"\n            }\n        },\n        \"status\": \"COMPLETED\",\n        \"results\": [\n            {\n                \"source_directory_file_id\": \"dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n                \"job_reference\": {\n                    \"type\": \"parse_v2\",\n                    \"id\": \"pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\"\n                },\n                \"error_message\": null\n            }\n        ]\n    }\n\nBatch-level ``FAILED`` means the orchestration failed and cannot provide a\nreliable per-file result set. ``results`` is only populated when explicitly\nrequested with ``expand=results`` and may be ``null`` while a batch is still\nrunning.\n\n  - `id: string`\n  - `config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }`\n  - `project_id: string`\n  - `source_directory_id: string`\n  - `status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'`\n  - `created_at?: string`\n  - `results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst batch = await client.batches.create({\n  config: { job: { configuration_id: 'cfg-PARSE_AGENTIC', type: 'parse_v2' } },\n  source_directory_id: 'dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',\n});\n\nconsole.log(batch);\n```",
-    perLanguage: {
-      go: {
-        method: 'client.Batches.New',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tbatch, err := client.Batches.New(context.TODO(), llamacloud.BatchNewParams{\n\t\tConfig: llamacloud.BatchNewParamsConfig{\n\t\t\tJob: llamacloud.BatchNewParamsConfigJob{\n\t\t\t\tConfigurationID: "cfg-PARSE_AGENTIC",\n\t\t\t\tType:            llamacloud.BatchNewParamsConfigJobTypeParseV2,\n\t\t\t},\n\t\t},\n\t\tSourceDirectoryID: "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", batch.ID)\n}\n',
-      },
-      python: {
-        method: 'batches.create',
-        example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nbatch = client.batches.create(\n    config={\n        "job": {\n            "configuration_id": "cfg-PARSE_AGENTIC",\n            "type": "parse_v2",\n        }\n    },\n    source_directory_id="dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n)\nprint(batch.id)',
-      },
-      java: {
-        method: 'batches().create',
-        example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.batches.BatchCreateParams;\nimport ai.llamaindex.llamacloud.models.batches.BatchCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCreateParams params = BatchCreateParams.builder()\n            .config(BatchCreateParams.Config.builder()\n                .job(BatchCreateParams.Config.Job.builder()\n                    .configurationId("cfg-PARSE_AGENTIC")\n                    .type(BatchCreateParams.Config.Job.Type.PARSE_V2)\n                    .build())\n                .build())\n            .sourceDirectoryId("dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")\n            .build();\n        BatchCreateResponse batch = client.batches().create(params);\n    }\n}',
-      },
-      typescript: {
-        method: 'client.batches.create',
-        example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst batch = await client.batches.create({\n  config: { job: { configuration_id: 'cfg-PARSE_AGENTIC', type: 'parse_v2' } },\n  source_directory_id: 'dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',\n});\n\nconsole.log(batch.id);",
-      },
-      http: {
-        example:
-          'curl https://api.cloud.llamaindex.ai/api/v2/batches \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "config": {\n            "job": {\n              "configuration_id": "cfg-PARSE_AGENTIC",\n              "type": "parse_v2"\n            }\n          },\n          "source_directory_id": "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "webhook_configuration_ids": [\n            "whc-...",\n            "whc-..."\n          ]\n        }\'',
-      },
-      cli: {
-        method: 'batches create',
-        example:
-          "llp batches create \\\n  --api-key 'My API Key' \\\n  --config '{job: {configuration_id: cfg-PARSE_AGENTIC, type: parse_v2}}' \\\n  --source-directory-id dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-      },
-    },
-  },
-  {
-    name: 'list',
-    endpoint: '/api/v2/batches',
-    httpMethod: 'get',
-    summary: 'List Batches',
-    description: 'List batches for the current project.',
-    stainlessPath: '(resource) batches > (method) list',
-    qualified: 'client.batches.list',
-    params: [
-      'created_at_on_or_after?: string;',
-      'created_at_on_or_before?: string;',
-      'organization_id?: string;',
-      'page_size?: number;',
-      'page_token?: string;',
-      'project_id?: string;',
-      'source_directory_id?: string;',
-      "status?: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED';",
-    ],
-    response:
-      "{ id: string; config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]; updated_at?: string; }",
-    markdown:
-      "## list\n\n`client.batches.list(created_at_on_or_after?: string, created_at_on_or_before?: string, organization_id?: string, page_size?: number, page_token?: string, project_id?: string, source_directory_id?: string, status?: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'): { id: string; config: object; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: object[]; updated_at?: string; }`\n\n**get** `/api/v2/batches`\n\nList batches for the current project.\n\n### Parameters\n\n- `created_at_on_or_after?: string`\n\n- `created_at_on_or_before?: string`\n\n- `organization_id?: string`\n\n- `page_size?: number`\n\n- `page_token?: string`\n\n- `project_id?: string`\n\n- `source_directory_id?: string`\n\n- `status?: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'`\n\n### Returns\n\n- `{ id: string; config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]; updated_at?: string; }`\n  A top-level batch.\n\nExample:\n    {\n        \"id\": \"bat-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"project_id\": \"prj-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"source_directory_id\": \"dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"config\": {\n            \"job\": {\n                \"type\": \"parse_v2\",\n                \"configuration_id\": \"cfg-PARSE_AGENTIC\"\n            }\n        },\n        \"status\": \"COMPLETED\",\n        \"results\": [\n            {\n                \"source_directory_file_id\": \"dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n                \"job_reference\": {\n                    \"type\": \"parse_v2\",\n                    \"id\": \"pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\"\n                },\n                \"error_message\": null\n            }\n        ]\n    }\n\nBatch-level ``FAILED`` means the orchestration failed and cannot provide a\nreliable per-file result set. ``results`` is only populated when explicitly\nrequested with ``expand=results`` and may be ``null`` while a batch is still\nrunning.\n\n  - `id: string`\n  - `config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }`\n  - `project_id: string`\n  - `source_directory_id: string`\n  - `status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'`\n  - `created_at?: string`\n  - `results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const batchListResponse of client.batches.list()) {\n  console.log(batchListResponse);\n}\n```",
-    perLanguage: {
-      go: {
-        method: 'client.Batches.List',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Batches.List(context.TODO(), llamacloud.BatchListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
-      },
-      python: {
-        method: 'batches.list',
-        example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.batches.list()\npage = page.items[0]\nprint(page.id)',
-      },
-      java: {
-        method: 'batches().list',
-        example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.batches.BatchListPage;\nimport ai.llamaindex.llamacloud.models.batches.BatchListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchListPage page = client.batches().list();\n    }\n}',
-      },
-      typescript: {
-        method: 'client.batches.list',
-        example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const batchListResponse of client.batches.list()) {\n  console.log(batchListResponse.id);\n}",
-      },
-      http: {
-        example:
-          'curl https://api.cloud.llamaindex.ai/api/v2/batches \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      cli: {
-        method: 'batches list',
-        example: "llp batches list \\\n  --api-key 'My API Key'",
-      },
-    },
-  },
-  {
-    name: 'get',
-    endpoint: '/api/v2/batches/{batch_id}',
-    httpMethod: 'get',
-    summary: 'Get Batch',
-    description: 'Get a batch by ID.',
-    stainlessPath: '(resource) batches > (method) get',
-    qualified: 'client.batches.get',
-    params: ['batch_id: string;', 'expand?: string[];', 'organization_id?: string;', 'project_id?: string;'],
-    response:
-      "{ id: string; config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]; updated_at?: string; }",
-    markdown:
-      "## get\n\n`client.batches.get(batch_id: string, expand?: string[], organization_id?: string, project_id?: string): { id: string; config: object; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: object[]; updated_at?: string; }`\n\n**get** `/api/v2/batches/{batch_id}`\n\nGet a batch by ID.\n\n### Parameters\n\n- `batch_id: string`\n\n- `expand?: string[]`\n  Fields to expand. Supported value: results.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]; updated_at?: string; }`\n  A top-level batch.\n\nExample:\n    {\n        \"id\": \"bat-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"project_id\": \"prj-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"source_directory_id\": \"dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"config\": {\n            \"job\": {\n                \"type\": \"parse_v2\",\n                \"configuration_id\": \"cfg-PARSE_AGENTIC\"\n            }\n        },\n        \"status\": \"COMPLETED\",\n        \"results\": [\n            {\n                \"source_directory_file_id\": \"dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n                \"job_reference\": {\n                    \"type\": \"parse_v2\",\n                    \"id\": \"pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\"\n                },\n                \"error_message\": null\n            }\n        ]\n    }\n\nBatch-level ``FAILED`` means the orchestration failed and cannot provide a\nreliable per-file result set. ``results`` is only populated when explicitly\nrequested with ``expand=results`` and may be ``null`` while a batch is still\nrunning.\n\n  - `id: string`\n  - `config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }`\n  - `project_id: string`\n  - `source_directory_id: string`\n  - `status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'`\n  - `created_at?: string`\n  - `results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst batch = await client.batches.get('batch_id');\n\nconsole.log(batch);\n```",
-    perLanguage: {
-      go: {
-        method: 'client.Batches.Get',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tbatch, err := client.Batches.Get(\n\t\tcontext.TODO(),\n\t\t"batch_id",\n\t\tllamacloud.BatchGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", batch.ID)\n}\n',
-      },
-      python: {
-        method: 'batches.get',
-        example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nbatch = client.batches.get(\n    batch_id="batch_id",\n)\nprint(batch.id)',
-      },
-      java: {
-        method: 'batches().get',
-        example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.batches.BatchGetParams;\nimport ai.llamaindex.llamacloud.models.batches.BatchGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchGetResponse batch = client.batches().get("batch_id");\n    }\n}',
-      },
-      typescript: {
-        method: 'client.batches.get',
-        example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst batch = await client.batches.get('batch_id');\n\nconsole.log(batch.id);",
-      },
-      http: {
-        example:
-          'curl https://api.cloud.llamaindex.ai/api/v2/batches/$BATCH_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      cli: {
-        method: 'batches get',
-        example: "llp batches get \\\n  --api-key 'My API Key' \\\n  --batch-id batch_id",
       },
     },
   },
@@ -6209,312 +6104,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files upload',
         example:
           "llp beta:directories:files upload \\\n  --api-key 'My API Key' \\\n  --directory-id directory_id \\\n  --upload-file 'Example data'",
-      },
-    },
-  },
-  {
-    name: 'create',
-    endpoint: '/api/v1/beta/batch-processing',
-    httpMethod: 'post',
-    summary: 'Create Batch Job',
-    description:
-      'Create a batch processing job.\n\nProcesses files from a directory or a specific list of item IDs.\nSupports batch parsing and classification operations.\n\nProvide either `directory_id` to process all files in a directory,\nor `item_ids` for specific items. The job runs asynchronously —\npoll `GET /batch/{job_id}` for progress.',
-    stainlessPath: '(resource) beta.batch > (method) create',
-    qualified: 'client.beta.batch.create',
-    params: [
-      "job_config: { correlation_id?: string; job_name?: 'parse_raw_file_job'; parameters?: { adaptive_long_table?: boolean; aggressive_table_extraction?: boolean; annotate_links?: boolean; annotate_revisions?: boolean; auto_mode?: boolean; auto_mode_configuration_json?: string; auto_mode_trigger_on_image_in_page?: boolean; auto_mode_trigger_on_regexp_in_page?: string; auto_mode_trigger_on_table_in_page?: boolean; auto_mode_trigger_on_text_in_page?: string; azure_openai_api_version?: string; azure_openai_deployment_name?: string; azure_openai_endpoint?: string; azure_openai_key?: string; bbox_bottom?: number; bbox_left?: number; bbox_right?: number; bbox_top?: number; bounding_box?: string; compact_markdown_table?: boolean; complemental_formatting_instruction?: string; confidence_score_effort?: string; content_guideline_instruction?: string; continuous_mode?: boolean; custom_metadata?: object; disable_image_extraction?: boolean; disable_ocr?: boolean; disable_reconstruction?: boolean; do_not_cache?: boolean; do_not_unroll_columns?: boolean; enable_cost_optimizer?: boolean; extract_charts?: boolean; extract_layout?: boolean; extract_printed_page_number?: boolean; fast_mode?: boolean; formatting_instruction?: string; gpt4o_api_key?: string; gpt4o_mode?: boolean; guess_xlsx_sheet_name?: boolean; hide_footers?: boolean; hide_headers?: boolean; high_res_ocr?: boolean; html_make_all_elements_visible?: boolean; html_remove_fixed_elements?: boolean; html_remove_navigation_elements?: boolean; http_proxy?: string; ignore_document_elements_for_layout_detection?: boolean; images_to_save?: 'embedded' | 'layout' | 'screenshot'[]; inline_images_in_markdown?: boolean; input_s3_path?: string; input_s3_region?: string; input_url?: string; internal_is_screenshot_job?: boolean; invalidate_cache?: boolean; is_formatting_instruction?: boolean; job_timeout_extra_time_per_page_in_seconds?: number; job_timeout_in_seconds?: number; keep_page_separator_when_merging_tables?: boolean; lang?: string; languages?: string[]; layout_aware?: boolean; line_level_bounding_box?: boolean; markdown_table_multiline_header_separator?: string; max_pages?: number; max_pages_enforced?: number; merge_tables_across_pages_in_markdown?: boolean; model?: string; outlined_table_extraction?: boolean; output_pdf_of_document?: boolean; output_s3_path_prefix?: string; output_s3_region?: string; output_tables_as_HTML?: boolean; outputBucket?: string; page_error_tolerance?: number; page_footer_prefix?: string; page_footer_suffix?: string; page_header_prefix?: string; page_header_suffix?: string; page_prefix?: string; page_separator?: string; page_suffix?: string; parse_mode?: string; parsing_instruction?: string; pipeline_id?: string; precise_bounding_box?: boolean; premium_mode?: boolean; presentation_out_of_bounds_content?: boolean; presentation_skip_embedded_data?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; preset?: string; priority?: 'critical' | 'high' | 'low' | 'medium'; project_id?: string; remove_hidden_text?: boolean; replace_failed_page_mode?: 'blank_page' | 'error_message' | 'raw_text'; replace_failed_page_with_error_message_prefix?: string; replace_failed_page_with_error_message_suffix?: string; resource_info?: object; save_images?: boolean; skip_diagonal_text?: boolean; specialized_chart_parsing_agentic?: boolean; specialized_chart_parsing_efficient?: boolean; specialized_chart_parsing_plus?: boolean; specialized_image_parsing?: boolean; spreadsheet_extract_sub_tables?: boolean; spreadsheet_force_formula_computation?: boolean; spreadsheet_include_hidden_sheets?: boolean; strict_mode_buggy_font?: boolean; strict_mode_image_extraction?: boolean; strict_mode_image_ocr?: boolean; strict_mode_reconstruction?: boolean; structured_output?: boolean; structured_output_json_schema?: string; structured_output_json_schema_name?: string; system_prompt?: string; system_prompt_append?: string; take_screenshot?: boolean; target_pages?: string; tier?: string; type?: 'parse'; use_vendor_multimodal_model?: boolean; user_prompt?: string; vendor_multimodal_api_key?: string; vendor_multimodal_model_name?: string; version?: string; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: string; webhook_signing_secret?: string; webhook_url?: string; }[]; webhook_url?: string; }; parent_job_execution_id?: string; partitions?: object; project_id?: string; session_id?: string; user_id?: string; webhook_url?: string; } | { id: string; project_id: string; rules: { description: string; type: string; }[]; status: 'CANCELLED' | 'ERROR' | 'PARTIAL_SUCCESS' | 'PENDING' | 'SUCCESS'; user_id: string; created_at?: string; effective_at?: string; error_message?: string; job_record_id?: string; mode?: 'FAST' | 'MULTIMODAL'; parsing_configuration?: { lang?: parsing_languages; max_pages?: number; target_pages?: number[]; }; updated_at?: string; };",
-      'organization_id?: string;',
-      'project_id?: string;',
-      'continue_as_new_threshold?: number;',
-      'directory_id?: string;',
-      'item_ids?: string[];',
-      'page_size?: number;',
-      'temporal-namespace?: string;',
-    ],
-    response:
-      "{ id: string; job_type: 'classify' | 'extract' | 'parse'; project_id: string; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; total_items: number; completed_at?: string; created_at?: string; directory_id?: string; effective_at?: string; error_message?: string; failed_items?: number; job_record_id?: string; processed_items?: number; skipped_items?: number; started_at?: string; updated_at?: string; workflow_id?: string; }",
-    markdown:
-      "## create\n\n`client.beta.batch.create(job_config: { correlation_id?: string; job_name?: 'parse_raw_file_job'; parameters?: { adaptive_long_table?: boolean; aggressive_table_extraction?: boolean; annotate_links?: boolean; annotate_revisions?: boolean; auto_mode?: boolean; auto_mode_configuration_json?: string; auto_mode_trigger_on_image_in_page?: boolean; auto_mode_trigger_on_regexp_in_page?: string; auto_mode_trigger_on_table_in_page?: boolean; auto_mode_trigger_on_text_in_page?: string; azure_openai_api_version?: string; azure_openai_deployment_name?: string; azure_openai_endpoint?: string; azure_openai_key?: string; bbox_bottom?: number; bbox_left?: number; bbox_right?: number; bbox_top?: number; bounding_box?: string; compact_markdown_table?: boolean; complemental_formatting_instruction?: string; confidence_score_effort?: string; content_guideline_instruction?: string; continuous_mode?: boolean; custom_metadata?: object; disable_image_extraction?: boolean; disable_ocr?: boolean; disable_reconstruction?: boolean; do_not_cache?: boolean; do_not_unroll_columns?: boolean; enable_cost_optimizer?: boolean; extract_charts?: boolean; extract_layout?: boolean; extract_printed_page_number?: boolean; fast_mode?: boolean; formatting_instruction?: string; gpt4o_api_key?: string; gpt4o_mode?: boolean; guess_xlsx_sheet_name?: boolean; hide_footers?: boolean; hide_headers?: boolean; high_res_ocr?: boolean; html_make_all_elements_visible?: boolean; html_remove_fixed_elements?: boolean; html_remove_navigation_elements?: boolean; http_proxy?: string; ignore_document_elements_for_layout_detection?: boolean; images_to_save?: 'embedded' | 'layout' | 'screenshot'[]; inline_images_in_markdown?: boolean; input_s3_path?: string; input_s3_region?: string; input_url?: string; internal_is_screenshot_job?: boolean; invalidate_cache?: boolean; is_formatting_instruction?: boolean; job_timeout_extra_time_per_page_in_seconds?: number; job_timeout_in_seconds?: number; keep_page_separator_when_merging_tables?: boolean; lang?: string; languages?: parsing_languages[]; layout_aware?: boolean; line_level_bounding_box?: boolean; markdown_table_multiline_header_separator?: string; max_pages?: number; max_pages_enforced?: number; merge_tables_across_pages_in_markdown?: boolean; model?: string; outlined_table_extraction?: boolean; output_pdf_of_document?: boolean; output_s3_path_prefix?: string; output_s3_region?: string; output_tables_as_HTML?: boolean; outputBucket?: string; page_error_tolerance?: number; page_footer_prefix?: string; page_footer_suffix?: string; page_header_prefix?: string; page_header_suffix?: string; page_prefix?: string; page_separator?: string; page_suffix?: string; parse_mode?: parsing_mode; parsing_instruction?: string; pipeline_id?: string; precise_bounding_box?: boolean; premium_mode?: boolean; presentation_out_of_bounds_content?: boolean; presentation_skip_embedded_data?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; preset?: string; priority?: 'critical' | 'high' | 'low' | 'medium'; project_id?: string; remove_hidden_text?: boolean; replace_failed_page_mode?: fail_page_mode; replace_failed_page_with_error_message_prefix?: string; replace_failed_page_with_error_message_suffix?: string; resource_info?: object; save_images?: boolean; skip_diagonal_text?: boolean; specialized_chart_parsing_agentic?: boolean; specialized_chart_parsing_efficient?: boolean; specialized_chart_parsing_plus?: boolean; specialized_image_parsing?: boolean; spreadsheet_extract_sub_tables?: boolean; spreadsheet_force_formula_computation?: boolean; spreadsheet_include_hidden_sheets?: boolean; strict_mode_buggy_font?: boolean; strict_mode_image_extraction?: boolean; strict_mode_image_ocr?: boolean; strict_mode_reconstruction?: boolean; structured_output?: boolean; structured_output_json_schema?: string; structured_output_json_schema_name?: string; system_prompt?: string; system_prompt_append?: string; take_screenshot?: boolean; target_pages?: string; tier?: string; type?: 'parse'; use_vendor_multimodal_model?: boolean; user_prompt?: string; vendor_multimodal_api_key?: string; vendor_multimodal_model_name?: string; version?: string; webhook_configurations?: object[]; webhook_url?: string; }; parent_job_execution_id?: string; partitions?: object; project_id?: string; session_id?: string; user_id?: string; webhook_url?: string; } | { id: string; project_id: string; rules: classifier_rule[]; status: status_enum; user_id: string; created_at?: string; effective_at?: string; error_message?: string; job_record_id?: string; mode?: 'FAST' | 'MULTIMODAL'; parsing_configuration?: classify_parsing_configuration; updated_at?: string; }, organization_id?: string, project_id?: string, continue_as_new_threshold?: number, directory_id?: string, item_ids?: string[], page_size?: number, temporal-namespace?: string): { id: string; job_type: 'classify' | 'extract' | 'parse'; project_id: string; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; total_items: number; completed_at?: string; created_at?: string; directory_id?: string; effective_at?: string; error_message?: string; failed_items?: number; job_record_id?: string; processed_items?: number; skipped_items?: number; started_at?: string; updated_at?: string; workflow_id?: string; }`\n\n**post** `/api/v1/beta/batch-processing`\n\nCreate a batch processing job.\n\nProcesses files from a directory or a specific list of item IDs.\nSupports batch parsing and classification operations.\n\nProvide either `directory_id` to process all files in a directory,\nor `item_ids` for specific items. The job runs asynchronously —\npoll `GET /batch/{job_id}` for progress.\n\n### Parameters\n\n- `job_config: { correlation_id?: string; job_name?: 'parse_raw_file_job'; parameters?: { adaptive_long_table?: boolean; aggressive_table_extraction?: boolean; annotate_links?: boolean; annotate_revisions?: boolean; auto_mode?: boolean; auto_mode_configuration_json?: string; auto_mode_trigger_on_image_in_page?: boolean; auto_mode_trigger_on_regexp_in_page?: string; auto_mode_trigger_on_table_in_page?: boolean; auto_mode_trigger_on_text_in_page?: string; azure_openai_api_version?: string; azure_openai_deployment_name?: string; azure_openai_endpoint?: string; azure_openai_key?: string; bbox_bottom?: number; bbox_left?: number; bbox_right?: number; bbox_top?: number; bounding_box?: string; compact_markdown_table?: boolean; complemental_formatting_instruction?: string; confidence_score_effort?: string; content_guideline_instruction?: string; continuous_mode?: boolean; custom_metadata?: object; disable_image_extraction?: boolean; disable_ocr?: boolean; disable_reconstruction?: boolean; do_not_cache?: boolean; do_not_unroll_columns?: boolean; enable_cost_optimizer?: boolean; extract_charts?: boolean; extract_layout?: boolean; extract_printed_page_number?: boolean; fast_mode?: boolean; formatting_instruction?: string; gpt4o_api_key?: string; gpt4o_mode?: boolean; guess_xlsx_sheet_name?: boolean; hide_footers?: boolean; hide_headers?: boolean; high_res_ocr?: boolean; html_make_all_elements_visible?: boolean; html_remove_fixed_elements?: boolean; html_remove_navigation_elements?: boolean; http_proxy?: string; ignore_document_elements_for_layout_detection?: boolean; images_to_save?: 'embedded' | 'layout' | 'screenshot'[]; inline_images_in_markdown?: boolean; input_s3_path?: string; input_s3_region?: string; input_url?: string; internal_is_screenshot_job?: boolean; invalidate_cache?: boolean; is_formatting_instruction?: boolean; job_timeout_extra_time_per_page_in_seconds?: number; job_timeout_in_seconds?: number; keep_page_separator_when_merging_tables?: boolean; lang?: string; languages?: string[]; layout_aware?: boolean; line_level_bounding_box?: boolean; markdown_table_multiline_header_separator?: string; max_pages?: number; max_pages_enforced?: number; merge_tables_across_pages_in_markdown?: boolean; model?: string; outlined_table_extraction?: boolean; output_pdf_of_document?: boolean; output_s3_path_prefix?: string; output_s3_region?: string; output_tables_as_HTML?: boolean; outputBucket?: string; page_error_tolerance?: number; page_footer_prefix?: string; page_footer_suffix?: string; page_header_prefix?: string; page_header_suffix?: string; page_prefix?: string; page_separator?: string; page_suffix?: string; parse_mode?: string; parsing_instruction?: string; pipeline_id?: string; precise_bounding_box?: boolean; premium_mode?: boolean; presentation_out_of_bounds_content?: boolean; presentation_skip_embedded_data?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; preset?: string; priority?: 'critical' | 'high' | 'low' | 'medium'; project_id?: string; remove_hidden_text?: boolean; replace_failed_page_mode?: 'blank_page' | 'error_message' | 'raw_text'; replace_failed_page_with_error_message_prefix?: string; replace_failed_page_with_error_message_suffix?: string; resource_info?: object; save_images?: boolean; skip_diagonal_text?: boolean; specialized_chart_parsing_agentic?: boolean; specialized_chart_parsing_efficient?: boolean; specialized_chart_parsing_plus?: boolean; specialized_image_parsing?: boolean; spreadsheet_extract_sub_tables?: boolean; spreadsheet_force_formula_computation?: boolean; spreadsheet_include_hidden_sheets?: boolean; strict_mode_buggy_font?: boolean; strict_mode_image_extraction?: boolean; strict_mode_image_ocr?: boolean; strict_mode_reconstruction?: boolean; structured_output?: boolean; structured_output_json_schema?: string; structured_output_json_schema_name?: string; system_prompt?: string; system_prompt_append?: string; take_screenshot?: boolean; target_pages?: string; tier?: string; type?: 'parse'; use_vendor_multimodal_model?: boolean; user_prompt?: string; vendor_multimodal_api_key?: string; vendor_multimodal_model_name?: string; version?: string; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: string; webhook_signing_secret?: string; webhook_url?: string; }[]; webhook_url?: string; }; parent_job_execution_id?: string; partitions?: object; project_id?: string; session_id?: string; user_id?: string; webhook_url?: string; } | { id: string; project_id: string; rules: { description: string; type: string; }[]; status: 'CANCELLED' | 'ERROR' | 'PARTIAL_SUCCESS' | 'PENDING' | 'SUCCESS'; user_id: string; created_at?: string; effective_at?: string; error_message?: string; job_record_id?: string; mode?: 'FAST' | 'MULTIMODAL'; parsing_configuration?: { lang?: parsing_languages; max_pages?: number; target_pages?: number[]; }; updated_at?: string; }`\n  Job configuration — either a parse or classify config\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `continue_as_new_threshold?: number`\n  Maximum files to process per execution cycle in directory mode. Defaults to page_size.\n\n- `directory_id?: string`\n  ID of the directory containing files to process\n\n- `item_ids?: string[]`\n  List of specific item IDs to process. Either this or directory_id must be provided.\n\n- `page_size?: number`\n  Number of files to process per batch when using directory mode\n\n- `temporal-namespace?: string`\n\n### Returns\n\n- `{ id: string; job_type: 'classify' | 'extract' | 'parse'; project_id: string; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; total_items: number; completed_at?: string; created_at?: string; directory_id?: string; effective_at?: string; error_message?: string; failed_items?: number; job_record_id?: string; processed_items?: number; skipped_items?: number; started_at?: string; updated_at?: string; workflow_id?: string; }`\n  Response schema for a batch processing job.\n\n  - `id: string`\n  - `job_type: 'classify' | 'extract' | 'parse'`\n  - `project_id: string`\n  - `status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'`\n  - `total_items: number`\n  - `completed_at?: string`\n  - `created_at?: string`\n  - `directory_id?: string`\n  - `effective_at?: string`\n  - `error_message?: string`\n  - `failed_items?: number`\n  - `job_record_id?: string`\n  - `processed_items?: number`\n  - `skipped_items?: number`\n  - `started_at?: string`\n  - `updated_at?: string`\n  - `workflow_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst batch = await client.beta.batch.create({ job_config: {} });\n\nconsole.log(batch);\n```",
-    perLanguage: {
-      go: {
-        method: 'client.Beta.Batch.New',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tbatch, err := client.Beta.Batch.New(context.TODO(), llamacloud.BetaBatchNewParams{\n\t\tJobConfig: llamacloud.BetaBatchNewParamsJobConfigUnion{\n\t\t\tOfBatchParseJobRecordCreate: &llamacloud.BetaBatchNewParamsJobConfigBatchParseJobRecordCreate{},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", batch.ID)\n}\n',
-      },
-      python: {
-        method: 'beta.batch.create',
-        example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nbatch = client.beta.batch.create(\n    job_config={},\n)\nprint(batch.id)',
-      },
-      java: {
-        method: 'beta().batch().create',
-        example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.batch.BatchCreateParams;\nimport ai.llamaindex.llamacloud.models.beta.batch.BatchCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCreateParams params = BatchCreateParams.builder()\n            .jobConfig(BatchCreateParams.JobConfig.BatchParseJobRecordCreate.builder().build())\n            .build();\n        BatchCreateResponse batch = client.beta().batch().create(params);\n    }\n}',
-      },
-      typescript: {
-        method: 'client.beta.batch.create',
-        example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst batch = await client.beta.batch.create({ job_config: {} });\n\nconsole.log(batch.id);",
-      },
-      http: {
-        example:
-          'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "job_config": {},\n          "directory_id": "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "item_ids": [\n            "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n            "dfl-11111111-2222-3333-4444-555555555555"\n          ]\n        }\'',
-      },
-      cli: {
-        method: 'batch create',
-        example: "llp beta:batch create \\\n  --api-key 'My API Key' \\\n  --job-config '{}'",
-      },
-    },
-  },
-  {
-    name: 'list',
-    endpoint: '/api/v1/beta/batch-processing',
-    httpMethod: 'get',
-    summary: 'List Batch Jobs',
-    description:
-      'List batch processing jobs with optional filtering.\n\nFilter by `directory_id`, `job_type`, or `status`. Results\nare paginated with configurable `limit` and `offset`.',
-    stainlessPath: '(resource) beta.batch > (method) list',
-    qualified: 'client.beta.batch.list',
-    params: [
-      'directory_id?: string;',
-      "job_type?: 'classify' | 'extract' | 'parse';",
-      'limit?: number;',
-      'offset?: number;',
-      'organization_id?: string;',
-      'project_id?: string;',
-      "status?: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running';",
-    ],
-    response:
-      "{ id: string; job_type: 'classify' | 'extract' | 'parse'; project_id: string; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; total_items: number; completed_at?: string; created_at?: string; directory_id?: string; effective_at?: string; error_message?: string; failed_items?: number; job_record_id?: string; processed_items?: number; skipped_items?: number; started_at?: string; updated_at?: string; workflow_id?: string; }",
-    markdown:
-      "## list\n\n`client.beta.batch.list(directory_id?: string, job_type?: 'classify' | 'extract' | 'parse', limit?: number, offset?: number, organization_id?: string, project_id?: string, status?: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'): { id: string; job_type: 'classify' | 'extract' | 'parse'; project_id: string; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; total_items: number; completed_at?: string; created_at?: string; directory_id?: string; effective_at?: string; error_message?: string; failed_items?: number; job_record_id?: string; processed_items?: number; skipped_items?: number; started_at?: string; updated_at?: string; workflow_id?: string; }`\n\n**get** `/api/v1/beta/batch-processing`\n\nList batch processing jobs with optional filtering.\n\nFilter by `directory_id`, `job_type`, or `status`. Results\nare paginated with configurable `limit` and `offset`.\n\n### Parameters\n\n- `directory_id?: string`\n  Filter by directory ID\n\n- `job_type?: 'classify' | 'extract' | 'parse'`\n  Filter by job type (PARSE, EXTRACT, CLASSIFY)\n\n- `limit?: number`\n  Maximum number of jobs to return\n\n- `offset?: number`\n  Number of jobs to skip for pagination\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `status?: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'`\n  Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)\n\n### Returns\n\n- `{ id: string; job_type: 'classify' | 'extract' | 'parse'; project_id: string; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; total_items: number; completed_at?: string; created_at?: string; directory_id?: string; effective_at?: string; error_message?: string; failed_items?: number; job_record_id?: string; processed_items?: number; skipped_items?: number; started_at?: string; updated_at?: string; workflow_id?: string; }`\n  Response schema for a batch processing job.\n\n  - `id: string`\n  - `job_type: 'classify' | 'extract' | 'parse'`\n  - `project_id: string`\n  - `status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'`\n  - `total_items: number`\n  - `completed_at?: string`\n  - `created_at?: string`\n  - `directory_id?: string`\n  - `effective_at?: string`\n  - `error_message?: string`\n  - `failed_items?: number`\n  - `job_record_id?: string`\n  - `processed_items?: number`\n  - `skipped_items?: number`\n  - `started_at?: string`\n  - `updated_at?: string`\n  - `workflow_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const batchListResponse of client.beta.batch.list()) {\n  console.log(batchListResponse);\n}\n```",
-    perLanguage: {
-      go: {
-        method: 'client.Beta.Batch.List',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Batch.List(context.TODO(), llamacloud.BetaBatchListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
-      },
-      python: {
-        method: 'beta.batch.list',
-        example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.batch.list()\npage = page.items[0]\nprint(page.id)',
-      },
-      java: {
-        method: 'beta().batch().list',
-        example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.batch.BatchListPage;\nimport ai.llamaindex.llamacloud.models.beta.batch.BatchListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchListPage page = client.beta().batch().list();\n    }\n}',
-      },
-      typescript: {
-        method: 'client.beta.batch.list',
-        example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const batchListResponse of client.beta.batch.list()) {\n  console.log(batchListResponse.id);\n}",
-      },
-      http: {
-        example:
-          'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      cli: {
-        method: 'batch list',
-        example: "llp beta:batch list \\\n  --api-key 'My API Key'",
-      },
-    },
-  },
-  {
-    name: 'get_status',
-    endpoint: '/api/v1/beta/batch-processing/{job_id}',
-    httpMethod: 'get',
-    summary: 'Get Batch Job Status',
-    description:
-      'Get detailed status of a batch processing job.\n\nReturns current progress percentage, file counts (total,\nprocessed, failed, skipped), and timestamps.',
-    stainlessPath: '(resource) beta.batch > (method) get_status',
-    qualified: 'client.beta.batch.getStatus',
-    params: ['job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
-    response:
-      "{ job: { id: string; job_type: 'classify' | 'extract' | 'parse'; project_id: string; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; total_items: number; completed_at?: string; created_at?: string; directory_id?: string; effective_at?: string; error_message?: string; failed_items?: number; job_record_id?: string; processed_items?: number; skipped_items?: number; started_at?: string; updated_at?: string; workflow_id?: string; }; progress_percentage: number; }",
-    markdown:
-      "## get_status\n\n`client.beta.batch.getStatus(job_id: string, organization_id?: string, project_id?: string): { job: object; progress_percentage: number; }`\n\n**get** `/api/v1/beta/batch-processing/{job_id}`\n\nGet detailed status of a batch processing job.\n\nReturns current progress percentage, file counts (total,\nprocessed, failed, skipped), and timestamps.\n\n### Parameters\n\n- `job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ job: { id: string; job_type: 'classify' | 'extract' | 'parse'; project_id: string; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; total_items: number; completed_at?: string; created_at?: string; directory_id?: string; effective_at?: string; error_message?: string; failed_items?: number; job_record_id?: string; processed_items?: number; skipped_items?: number; started_at?: string; updated_at?: string; workflow_id?: string; }; progress_percentage: number; }`\n  Detailed status response for a batch processing job.\n\n  - `job: { id: string; job_type: 'classify' | 'extract' | 'parse'; project_id: string; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; total_items: number; completed_at?: string; created_at?: string; directory_id?: string; effective_at?: string; error_message?: string; failed_items?: number; job_record_id?: string; processed_items?: number; skipped_items?: number; started_at?: string; updated_at?: string; workflow_id?: string; }`\n  - `progress_percentage: number`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.batch.getStatus('job_id');\n\nconsole.log(response);\n```",
-    perLanguage: {
-      go: {
-        method: 'client.Beta.Batch.GetStatus',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Batch.GetStatus(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.BetaBatchGetStatusParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Job)\n}\n',
-      },
-      python: {
-        method: 'beta.batch.get_status',
-        example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.batch.get_status(\n    job_id="job_id",\n)\nprint(response.job)',
-      },
-      java: {
-        method: 'beta().batch().getStatus',
-        example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.batch.BatchGetStatusParams;\nimport ai.llamaindex.llamacloud.models.beta.batch.BatchGetStatusResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchGetStatusResponse response = client.beta().batch().getStatus("job_id");\n    }\n}',
-      },
-      typescript: {
-        method: 'client.beta.batch.getStatus',
-        example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.batch.getStatus('job_id');\n\nconsole.log(response.job);",
-      },
-      http: {
-        example:
-          'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/$JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      cli: {
-        method: 'batch get_status',
-        example: "llp beta:batch get-status \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
-      },
-    },
-  },
-  {
-    name: 'cancel',
-    endpoint: '/api/v1/beta/batch-processing/{job_id}/cancel',
-    httpMethod: 'post',
-    summary: 'Cancel Batch Job',
-    description:
-      'Cancel a running batch processing job.\n\nStops processing and marks pending items as cancelled.\nItems currently being processed may still complete.',
-    stainlessPath: '(resource) beta.batch > (method) cancel',
-    qualified: 'client.beta.batch.cancel',
-    params: [
-      'job_id: string;',
-      'organization_id?: string;',
-      'project_id?: string;',
-      'reason?: string;',
-      'temporal-namespace?: string;',
-    ],
-    response:
-      "{ job_id: string; message: string; processed_items: number; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; }",
-    markdown:
-      "## cancel\n\n`client.beta.batch.cancel(job_id: string, organization_id?: string, project_id?: string, reason?: string, temporal-namespace?: string): { job_id: string; message: string; processed_items: number; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; }`\n\n**post** `/api/v1/beta/batch-processing/{job_id}/cancel`\n\nCancel a running batch processing job.\n\nStops processing and marks pending items as cancelled.\nItems currently being processed may still complete.\n\n### Parameters\n\n- `job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `reason?: string`\n  Optional reason for cancelling the job\n\n- `temporal-namespace?: string`\n\n### Returns\n\n- `{ job_id: string; message: string; processed_items: number; status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'; }`\n  Response after cancelling a batch job.\n\n  - `job_id: string`\n  - `message: string`\n  - `processed_items: number`\n  - `status: 'cancelled' | 'completed' | 'dispatched' | 'failed' | 'pending' | 'running'`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.batch.cancel('job_id');\n\nconsole.log(response);\n```",
-    perLanguage: {
-      go: {
-        method: 'client.Beta.Batch.Cancel',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Batch.Cancel(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.BetaBatchCancelParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.JobID)\n}\n',
-      },
-      python: {
-        method: 'beta.batch.cancel',
-        example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.batch.cancel(\n    job_id="job_id",\n)\nprint(response.job_id)',
-      },
-      java: {
-        method: 'beta().batch().cancel',
-        example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.batch.BatchCancelParams;\nimport ai.llamaindex.llamacloud.models.beta.batch.BatchCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCancelResponse response = client.beta().batch().cancel("job_id");\n    }\n}',
-      },
-      typescript: {
-        method: 'client.beta.batch.cancel',
-        example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.batch.cancel('job_id');\n\nconsole.log(response.job_id);",
-      },
-      http: {
-        example:
-          "curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/$JOB_ID/cancel \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
-      },
-      cli: {
-        method: 'batch cancel',
-        example: "llp beta:batch cancel \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
-      },
-    },
-  },
-  {
-    name: 'list',
-    endpoint: '/api/v1/beta/batch-processing/{job_id}/items',
-    httpMethod: 'get',
-    summary: 'List Batch Job Items',
-    description:
-      'List items in a batch job with optional status filtering.\n\nUseful for finding failed items, viewing completed items,\nor debugging processing issues.',
-    stainlessPath: '(resource) beta.batch.job_items > (method) list',
-    qualified: 'client.beta.batch.jobItems.list',
-    params: [
-      'job_id: string;',
-      'limit?: number;',
-      'offset?: number;',
-      'organization_id?: string;',
-      'project_id?: string;',
-      "status?: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing' | 'skipped';",
-    ],
-    response:
-      "{ item_id: string; item_name: string; status: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing' | 'skipped'; completed_at?: string; effective_at?: string; error_message?: string; job_id?: string; job_record_id?: string; skip_reason?: string; started_at?: string; }",
-    markdown:
-      "## list\n\n`client.beta.batch.jobItems.list(job_id: string, limit?: number, offset?: number, organization_id?: string, project_id?: string, status?: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing' | 'skipped'): { item_id: string; item_name: string; status: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing' | 'skipped'; completed_at?: string; effective_at?: string; error_message?: string; job_id?: string; job_record_id?: string; skip_reason?: string; started_at?: string; }`\n\n**get** `/api/v1/beta/batch-processing/{job_id}/items`\n\nList items in a batch job with optional status filtering.\n\nUseful for finding failed items, viewing completed items,\nor debugging processing issues.\n\n### Parameters\n\n- `job_id: string`\n\n- `limit?: number`\n  Maximum number of items to return\n\n- `offset?: number`\n  Number of items to skip\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `status?: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing' | 'skipped'`\n  Filter items by status\n\n### Returns\n\n- `{ item_id: string; item_name: string; status: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing' | 'skipped'; completed_at?: string; effective_at?: string; error_message?: string; job_id?: string; job_record_id?: string; skip_reason?: string; started_at?: string; }`\n  Detailed information about an item in a batch job.\n\n  - `item_id: string`\n  - `item_name: string`\n  - `status: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing' | 'skipped'`\n  - `completed_at?: string`\n  - `effective_at?: string`\n  - `error_message?: string`\n  - `job_id?: string`\n  - `job_record_id?: string`\n  - `skip_reason?: string`\n  - `started_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const jobItemListResponse of client.beta.batch.jobItems.list('job_id')) {\n  console.log(jobItemListResponse);\n}\n```",
-    perLanguage: {
-      go: {
-        method: 'client.Beta.Batch.JobItems.List',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Beta.Batch.JobItems.List(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.BetaBatchJobItemListParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
-      },
-      python: {
-        method: 'beta.batch.job_items.list',
-        example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.beta.batch.job_items.list(\n    job_id="job_id",\n)\npage = page.items[0]\nprint(page.item_id)',
-      },
-      java: {
-        method: 'beta().batch().jobItems().list',
-        example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.batch.jobitems.JobItemListPage;\nimport ai.llamaindex.llamacloud.models.beta.batch.jobitems.JobItemListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobItemListPage page = client.beta().batch().jobItems().list("job_id");\n    }\n}',
-      },
-      typescript: {
-        method: 'client.beta.batch.jobItems.list',
-        example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const jobItemListResponse of client.beta.batch.jobItems.list('job_id')) {\n  console.log(jobItemListResponse.item_id);\n}",
-      },
-      http: {
-        example:
-          'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/$JOB_ID/items \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      cli: {
-        method: 'job_items list',
-        example: "llp beta:batch:job-items list \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
-      },
-    },
-  },
-  {
-    name: 'get_processing_results',
-    endpoint: '/api/v1/beta/batch-processing/items/{item_id}/processing-results',
-    httpMethod: 'get',
-    summary: 'Get Item Processing Results',
-    description:
-      'Get all processing results for a specific item.\n\nReturns the complete processing history for an item including\nwhat operations were performed, parameters used, and where\noutputs are stored. Optionally filter by `job_type`.',
-    stainlessPath: '(resource) beta.batch.job_items > (method) get_processing_results',
-    qualified: 'client.beta.batch.jobItems.getProcessingResults',
-    params: [
-      'item_id: string;',
-      "job_type?: 'classify' | 'extract' | 'parse';",
-      'organization_id?: string;',
-      'project_id?: string;',
-    ],
-    response:
-      "{ item_id: string; item_name: string; processing_results?: { item_id: string; job_config: { correlation_id?: string; job_name?: 'parse_raw_file_job'; parameters?: object; parent_job_execution_id?: string; partitions?: object; project_id?: string; session_id?: string; user_id?: string; webhook_url?: string; } | object; job_type: 'classify' | 'extract' | 'parse'; output_s3_path: string; parameters_hash: string; processed_at: string; result_id: string; output_metadata?: object; }[]; }",
-    markdown:
-      "## get_processing_results\n\n`client.beta.batch.jobItems.getProcessingResults(item_id: string, job_type?: 'classify' | 'extract' | 'parse', organization_id?: string, project_id?: string): { item_id: string; item_name: string; processing_results?: object[]; }`\n\n**get** `/api/v1/beta/batch-processing/items/{item_id}/processing-results`\n\nGet all processing results for a specific item.\n\nReturns the complete processing history for an item including\nwhat operations were performed, parameters used, and where\noutputs are stored. Optionally filter by `job_type`.\n\n### Parameters\n\n- `item_id: string`\n\n- `job_type?: 'classify' | 'extract' | 'parse'`\n  Filter results by job type\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ item_id: string; item_name: string; processing_results?: { item_id: string; job_config: { correlation_id?: string; job_name?: 'parse_raw_file_job'; parameters?: object; parent_job_execution_id?: string; partitions?: object; project_id?: string; session_id?: string; user_id?: string; webhook_url?: string; } | object; job_type: 'classify' | 'extract' | 'parse'; output_s3_path: string; parameters_hash: string; processed_at: string; result_id: string; output_metadata?: object; }[]; }`\n  Response containing all processing results for an item.\n\n  - `item_id: string`\n  - `item_name: string`\n  - `processing_results?: { item_id: string; job_config: { correlation_id?: string; job_name?: 'parse_raw_file_job'; parameters?: { adaptive_long_table?: boolean; aggressive_table_extraction?: boolean; annotate_links?: boolean; annotate_revisions?: boolean; auto_mode?: boolean; auto_mode_configuration_json?: string; auto_mode_trigger_on_image_in_page?: boolean; auto_mode_trigger_on_regexp_in_page?: string; auto_mode_trigger_on_table_in_page?: boolean; auto_mode_trigger_on_text_in_page?: string; azure_openai_api_version?: string; azure_openai_deployment_name?: string; azure_openai_endpoint?: string; azure_openai_key?: string; bbox_bottom?: number; bbox_left?: number; bbox_right?: number; bbox_top?: number; bounding_box?: string; compact_markdown_table?: boolean; complemental_formatting_instruction?: string; confidence_score_effort?: string; content_guideline_instruction?: string; continuous_mode?: boolean; custom_metadata?: object; disable_image_extraction?: boolean; disable_ocr?: boolean; disable_reconstruction?: boolean; do_not_cache?: boolean; do_not_unroll_columns?: boolean; enable_cost_optimizer?: boolean; extract_charts?: boolean; extract_layout?: boolean; extract_printed_page_number?: boolean; fast_mode?: boolean; formatting_instruction?: string; gpt4o_api_key?: string; gpt4o_mode?: boolean; guess_xlsx_sheet_name?: boolean; hide_footers?: boolean; hide_headers?: boolean; high_res_ocr?: boolean; html_make_all_elements_visible?: boolean; html_remove_fixed_elements?: boolean; html_remove_navigation_elements?: boolean; http_proxy?: string; ignore_document_elements_for_layout_detection?: boolean; images_to_save?: 'embedded' | 'layout' | 'screenshot'[]; inline_images_in_markdown?: boolean; input_s3_path?: string; input_s3_region?: string; input_url?: string; internal_is_screenshot_job?: boolean; invalidate_cache?: boolean; is_formatting_instruction?: boolean; job_timeout_extra_time_per_page_in_seconds?: number; job_timeout_in_seconds?: number; keep_page_separator_when_merging_tables?: boolean; lang?: string; languages?: string[]; layout_aware?: boolean; line_level_bounding_box?: boolean; markdown_table_multiline_header_separator?: string; max_pages?: number; max_pages_enforced?: number; merge_tables_across_pages_in_markdown?: boolean; model?: string; outlined_table_extraction?: boolean; output_pdf_of_document?: boolean; output_s3_path_prefix?: string; output_s3_region?: string; output_tables_as_HTML?: boolean; outputBucket?: string; page_error_tolerance?: number; page_footer_prefix?: string; page_footer_suffix?: string; page_header_prefix?: string; page_header_suffix?: string; page_prefix?: string; page_separator?: string; page_suffix?: string; parse_mode?: string; parsing_instruction?: string; pipeline_id?: string; precise_bounding_box?: boolean; premium_mode?: boolean; presentation_out_of_bounds_content?: boolean; presentation_skip_embedded_data?: boolean; preserve_layout_alignment_across_pages?: boolean; preserve_very_small_text?: boolean; preset?: string; priority?: 'critical' | 'high' | 'low' | 'medium'; project_id?: string; remove_hidden_text?: boolean; replace_failed_page_mode?: 'blank_page' | 'error_message' | 'raw_text'; replace_failed_page_with_error_message_prefix?: string; replace_failed_page_with_error_message_suffix?: string; resource_info?: object; save_images?: boolean; skip_diagonal_text?: boolean; specialized_chart_parsing_agentic?: boolean; specialized_chart_parsing_efficient?: boolean; specialized_chart_parsing_plus?: boolean; specialized_image_parsing?: boolean; spreadsheet_extract_sub_tables?: boolean; spreadsheet_force_formula_computation?: boolean; spreadsheet_include_hidden_sheets?: boolean; strict_mode_buggy_font?: boolean; strict_mode_image_extraction?: boolean; strict_mode_image_ocr?: boolean; strict_mode_reconstruction?: boolean; structured_output?: boolean; structured_output_json_schema?: string; structured_output_json_schema_name?: string; system_prompt?: string; system_prompt_append?: string; take_screenshot?: boolean; target_pages?: string; tier?: string; type?: 'parse'; use_vendor_multimodal_model?: boolean; user_prompt?: string; vendor_multimodal_api_key?: string; vendor_multimodal_model_name?: string; version?: string; webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: string; webhook_signing_secret?: string; webhook_url?: string; }[]; webhook_url?: string; }; parent_job_execution_id?: string; partitions?: object; project_id?: string; session_id?: string; user_id?: string; webhook_url?: string; } | { id: string; project_id: string; rules: object[]; status: 'CANCELLED' | 'ERROR' | 'PARTIAL_SUCCESS' | 'PENDING' | 'SUCCESS'; user_id: string; created_at?: string; effective_at?: string; error_message?: string; job_record_id?: string; mode?: 'FAST' | 'MULTIMODAL'; parsing_configuration?: object; updated_at?: string; }; job_type: 'classify' | 'extract' | 'parse'; output_s3_path: string; parameters_hash: string; processed_at: string; result_id: string; output_metadata?: object; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.beta.batch.jobItems.getProcessingResults('item_id');\n\nconsole.log(response);\n```",
-    perLanguage: {
-      go: {
-        method: 'client.Beta.Batch.JobItems.GetProcessingResults',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Beta.Batch.JobItems.GetProcessingResults(\n\t\tcontext.TODO(),\n\t\t"item_id",\n\t\tllamacloud.BetaBatchJobItemGetProcessingResultsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ItemID)\n}\n',
-      },
-      python: {
-        method: 'beta.batch.job_items.get_processing_results',
-        example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.beta.batch.job_items.get_processing_results(\n    item_id="item_id",\n)\nprint(response.item_id)',
-      },
-      java: {
-        method: 'beta().batch().jobItems().getProcessingResults',
-        example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.batch.jobitems.JobItemGetProcessingResultsParams;\nimport ai.llamaindex.llamacloud.models.beta.batch.jobitems.JobItemGetProcessingResultsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobItemGetProcessingResultsResponse response = client.beta().batch().jobItems().getProcessingResults("item_id");\n    }\n}',
-      },
-      typescript: {
-        method: 'client.beta.batch.jobItems.getProcessingResults',
-        example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.beta.batch.jobItems.getProcessingResults('item_id');\n\nconsole.log(response.item_id);",
-      },
-      http: {
-        example:
-          'curl https://api.cloud.llamaindex.ai/api/v1/beta/batch-processing/items/$ITEM_ID/processing-results \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      cli: {
-        method: 'job_items get_processing_results',
-        example:
-          "llp beta:batch:job-items get-processing-results \\\n  --api-key 'My API Key' \\\n  --item-id item_id",
       },
     },
   },

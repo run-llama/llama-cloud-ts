@@ -89,6 +89,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/parse',
   },
   {
+    clientCallName: 'client.parsing.cancel',
+    fullyQualifiedName: 'parsing.cancel',
+    httpMethod: 'post',
+    httpPath: '/api/v2/parse/{job_id}/cancel',
+  },
+  {
     clientCallName: 'client.extract.create',
     fullyQualifiedName: 'extract.create',
     httpMethod: 'post',
@@ -147,24 +153,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'classifier.jobs.getResults',
     httpMethod: 'get',
     httpPath: '/api/v1/classifier/jobs/{classify_job_id}/results',
-  },
-  {
-    clientCallName: 'client.batches.create',
-    fullyQualifiedName: 'batches.create',
-    httpMethod: 'post',
-    httpPath: '/api/v2/batches',
-  },
-  {
-    clientCallName: 'client.batches.list',
-    fullyQualifiedName: 'batches.list',
-    httpMethod: 'get',
-    httpPath: '/api/v2/batches',
-  },
-  {
-    clientCallName: 'client.batches.get',
-    fullyQualifiedName: 'batches.get',
-    httpMethod: 'get',
-    httpPath: '/api/v2/batches/{batch_id}',
   },
   {
     clientCallName: 'client.classify.create',
@@ -771,42 +759,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'beta.directories.files.upload',
     httpMethod: 'post',
     httpPath: '/api/v1/beta/directories/{directory_id}/files/upload',
-  },
-  {
-    clientCallName: 'client.beta.batch.create',
-    fullyQualifiedName: 'beta.batch.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/beta/batch-processing',
-  },
-  {
-    clientCallName: 'client.beta.batch.list',
-    fullyQualifiedName: 'beta.batch.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/batch-processing',
-  },
-  {
-    clientCallName: 'client.beta.batch.getStatus',
-    fullyQualifiedName: 'beta.batch.getStatus',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/batch-processing/{job_id}',
-  },
-  {
-    clientCallName: 'client.beta.batch.cancel',
-    fullyQualifiedName: 'beta.batch.cancel',
-    httpMethod: 'post',
-    httpPath: '/api/v1/beta/batch-processing/{job_id}/cancel',
-  },
-  {
-    clientCallName: 'client.beta.batch.jobItems.list',
-    fullyQualifiedName: 'beta.batch.jobItems.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/batch-processing/{job_id}/items',
-  },
-  {
-    clientCallName: 'client.beta.batch.jobItems.getProcessingResults',
-    fullyQualifiedName: 'beta.batch.jobItems.getProcessingResults',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/batch-processing/items/{item_id}/processing-results',
   },
   {
     clientCallName: 'client.beta.split.create',

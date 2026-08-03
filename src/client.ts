@@ -17,8 +17,6 @@ import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
 import {
   AbstractPage,
-  type PaginatedBatchItemsParams,
-  PaginatedBatchItemsResponse,
   type PaginatedCloudDocumentsParams,
   PaginatedCloudDocumentsResponse,
   type PaginatedCursorParams,
@@ -35,16 +33,6 @@ import {
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  BatchCreateParams,
-  BatchCreateResponse,
-  BatchGetParams,
-  BatchGetResponse,
-  BatchListParams,
-  BatchListResponse,
-  BatchListResponsesPaginatedCursor,
-  Batches,
-} from './resources/batches';
 import {
   Classify,
   ClassifyConfiguration,
@@ -145,6 +133,8 @@ import {
   ListItem,
   LlamaParseSupportedFileExtensions,
   Parsing,
+  ParsingCancelParams,
+  ParsingCancelResponse,
   ParsingCreateParams,
   ParsingCreateResponse,
   ParsingGetParams,
@@ -981,7 +971,6 @@ export class LlamaCloud {
   parsing: API.Parsing = new API.Parsing(this);
   extract: API.Extract = new API.Extract(this);
   classifier: API.Classifier = new API.Classifier(this);
-  batches: API.Batches = new API.Batches(this);
   classify: API.Classify = new API.Classify(this);
   configurations: API.Configurations = new API.Configurations(this);
   projects: API.Projects = new API.Projects(this);
@@ -997,7 +986,6 @@ LlamaCloud.Sheets = Sheets;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Extract = Extract;
 LlamaCloud.Classifier = Classifier;
-LlamaCloud.Batches = Batches;
 LlamaCloud.Classify = Classify;
 LlamaCloud.Configurations = Configurations;
 LlamaCloud.Projects = Projects;
@@ -1020,12 +1008,6 @@ export declare namespace LlamaCloud {
   export {
     type PaginatedPipelineFilesParams as PaginatedPipelineFilesParams,
     type PaginatedPipelineFilesResponse as PaginatedPipelineFilesResponse,
-  };
-
-  export import PaginatedBatchItems = Pagination.PaginatedBatchItems;
-  export {
-    type PaginatedBatchItemsParams as PaginatedBatchItemsParams,
-    type PaginatedBatchItemsResponse as PaginatedBatchItemsResponse,
   };
 
   export import PaginatedCloudDocuments = Pagination.PaginatedCloudDocuments;
@@ -1104,11 +1086,13 @@ export declare namespace LlamaCloud {
     type TextItem as TextItem,
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
+    type ParsingCancelResponse as ParsingCancelResponse,
     type ParsingGetResponse as ParsingGetResponse,
     type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingGetParams as ParsingGetParams,
     type ParsingListParams as ParsingListParams,
+    type ParsingCancelParams as ParsingCancelParams,
   };
 
   export {
@@ -1134,17 +1118,6 @@ export declare namespace LlamaCloud {
   };
 
   export { Classifier as Classifier };
-
-  export {
-    Batches as Batches,
-    type BatchCreateResponse as BatchCreateResponse,
-    type BatchListResponse as BatchListResponse,
-    type BatchGetResponse as BatchGetResponse,
-    type BatchListResponsesPaginatedCursor as BatchListResponsesPaginatedCursor,
-    type BatchCreateParams as BatchCreateParams,
-    type BatchListParams as BatchListParams,
-    type BatchGetParams as BatchGetParams,
-  };
 
   export {
     Classify as Classify,

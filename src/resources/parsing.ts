@@ -115,6 +115,29 @@ export class Parsing extends APIResource {
   }
 
   /**
+   * Cancel a running parse job.
+   *
+   * Stops processing and marks the job as CANCELLED. Returns the updated job. Jobs
+   * already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.
+   *
+   * @example
+   * ```ts
+   * const response = await client.parsing.cancel('job_id');
+   * ```
+   */
+  cancel(
+    jobID: string,
+    params: ParsingCancelParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ParsingCancelResponse> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.post(path`/api/v2/parse/${jobID}/cancel`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
    * Wait for a parse job to complete by polling until it reaches a terminal state.
    *
    * This method polls the job status at regular intervals until the job completes
@@ -1098,6 +1121,56 @@ export interface ParsingCreateResponse {
  * A parse job.
  */
 export interface ParsingListResponse {
+  /**
+   * Unique parse job identifier
+   */
+  id: string;
+
+  /**
+   * Project this job belongs to
+   */
+  project_id: string;
+
+  /**
+   * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
+   */
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Error details when status is FAILED
+   */
+  error_message?: string | null;
+
+  /**
+   * Optional display name for this parse job
+   */
+  name?: string | null;
+
+  /**
+   * Parsing tier used for this job
+   */
+  tier?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+
+  /**
+   * Key/value tags associated with this job.
+   */
+  user_metadata?: { [key: string]: string } | null;
+}
+
+/**
+ * A parse job.
+ */
+export interface ParsingCancelResponse {
   /**
    * Unique parse job identifier
    */
@@ -2895,6 +2968,12 @@ export interface ParsingListParams extends PaginatedCursorParams {
   status?: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | null;
 }
 
+export interface ParsingCancelParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export declare namespace Parsing {
   export {
     type BBox as BBox,
@@ -2922,10 +3001,12 @@ export declare namespace Parsing {
     type TextItem as TextItem,
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
+    type ParsingCancelResponse as ParsingCancelResponse,
     type ParsingGetResponse as ParsingGetResponse,
     type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingGetParams as ParsingGetParams,
     type ParsingListParams as ParsingListParams,
+    type ParsingCancelParams as ParsingCancelParams,
   };
 }

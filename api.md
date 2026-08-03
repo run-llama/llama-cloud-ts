@@ -84,6 +84,7 @@ Types:
 - <code><a href="./src/resources/parsing.ts">TextItem</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingCreateResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingListResponse</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingCancelResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingGetResponse</a></code>
 
 Methods:
@@ -91,6 +92,7 @@ Methods:
 - <code title="post /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">create</a>({ ...params }) -> ParsingCreateResponse</code>
 - <code title="get /api/v2/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
 - <code title="get /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedCursor</code>
+- <code title="post /api/v2/parse/{job_id}/cancel">client.parsing.<a href="./src/resources/parsing.ts">cancel</a>(jobID, { ...params }) -> ParsingCancelResponse</code>
 
 # Extract
 
@@ -134,20 +136,6 @@ Methods:
 - <code title="get /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">list</a>({ ...params }) -> ClassifyJobsPaginatedCursor</code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">get</a>(classifyJobID, { ...params }) -> ClassifyJob</code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}/results">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">getResults</a>(classifyJobID, { ...params }) -> JobGetResultsResponse</code>
-
-# Batches
-
-Types:
-
-- <code><a href="./src/resources/batches.ts">BatchCreateResponse</a></code>
-- <code><a href="./src/resources/batches.ts">BatchListResponse</a></code>
-- <code><a href="./src/resources/batches.ts">BatchGetResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v2/batches">client.batches.<a href="./src/resources/batches.ts">create</a>({ ...params }) -> BatchCreateResponse</code>
-- <code title="get /api/v2/batches">client.batches.<a href="./src/resources/batches.ts">list</a>({ ...params }) -> BatchListResponsesPaginatedCursor</code>
-- <code title="get /api/v2/batches/{batch_id}">client.batches.<a href="./src/resources/batches.ts">get</a>(batchID, { ...params }) -> BatchGetResponse</code>
 
 # Classify
 
@@ -520,34 +508,6 @@ Methods:
 - <code title="patch /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">update</a>(directoryFileID, { ...params }) -> FileUpdateResponse</code>
 - <code title="delete /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">delete</a>(directoryFileID, { ...params }) -> void</code>
 - <code title="post /api/v1/beta/directories/{directory_id}/files/upload">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">upload</a>(directoryID, { ...params }) -> FileUploadResponse</code>
-
-## Batch
-
-Types:
-
-- <code><a href="./src/resources/beta/batch/batch.ts">BatchCreateResponse</a></code>
-- <code><a href="./src/resources/beta/batch/batch.ts">BatchListResponse</a></code>
-- <code><a href="./src/resources/beta/batch/batch.ts">BatchCancelResponse</a></code>
-- <code><a href="./src/resources/beta/batch/batch.ts">BatchGetStatusResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/beta/batch-processing">client.beta.batch.<a href="./src/resources/beta/batch/batch.ts">create</a>({ ...params }) -> BatchCreateResponse</code>
-- <code title="get /api/v1/beta/batch-processing">client.beta.batch.<a href="./src/resources/beta/batch/batch.ts">list</a>({ ...params }) -> BatchListResponsesPaginatedBatchItems</code>
-- <code title="get /api/v1/beta/batch-processing/{job_id}">client.beta.batch.<a href="./src/resources/beta/batch/batch.ts">getStatus</a>(jobID, { ...params }) -> BatchGetStatusResponse</code>
-- <code title="post /api/v1/beta/batch-processing/{job_id}/cancel">client.beta.batch.<a href="./src/resources/beta/batch/batch.ts">cancel</a>(jobID, { ...params }) -> BatchCancelResponse</code>
-
-### JobItems
-
-Types:
-
-- <code><a href="./src/resources/beta/batch/job-items.ts">JobItemListResponse</a></code>
-- <code><a href="./src/resources/beta/batch/job-items.ts">JobItemGetProcessingResultsResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/beta/batch-processing/{job_id}/items">client.beta.batch.jobItems.<a href="./src/resources/beta/batch/job-items.ts">list</a>(jobID, { ...params }) -> JobItemListResponsesPaginatedBatchItems</code>
-- <code title="get /api/v1/beta/batch-processing/items/{item_id}/processing-results">client.beta.batch.jobItems.<a href="./src/resources/beta/batch/job-items.ts">getProcessingResults</a>(itemID, { ...params }) -> JobItemGetProcessingResultsResponse</code>
 
 ## Split
 
