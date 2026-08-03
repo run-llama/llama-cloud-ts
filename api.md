@@ -137,6 +137,20 @@ Methods:
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">get</a>(classifyJobID, { ...params }) -> ClassifyJob</code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}/results">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">getResults</a>(classifyJobID, { ...params }) -> JobGetResultsResponse</code>
 
+# Batches
+
+Types:
+
+- <code><a href="./src/resources/batches.ts">BatchCreateResponse</a></code>
+- <code><a href="./src/resources/batches.ts">BatchListResponse</a></code>
+- <code><a href="./src/resources/batches.ts">BatchGetResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v2/batches">client.batches.<a href="./src/resources/batches.ts">create</a>({ ...params }) -> BatchCreateResponse</code>
+- <code title="get /api/v2/batches">client.batches.<a href="./src/resources/batches.ts">list</a>({ ...params }) -> BatchListResponsesPaginatedCursor</code>
+- <code title="get /api/v2/batches/{batch_id}">client.batches.<a href="./src/resources/batches.ts">get</a>(batchID, { ...params }) -> BatchGetResponse</code>
+
 # Classify
 
 Types:

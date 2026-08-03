@@ -1,6 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
+export {
+  Batches,
+  type BatchCreateResponse,
+  type BatchListResponse,
+  type BatchGetResponse,
+  type BatchCreateParams,
+  type BatchListParams,
+  type BatchGetParams,
+  type BatchListResponsesPaginatedCursor,
+} from './batches';
 export { Beta } from './beta/beta';
 export { Classifier } from './classifier/classifier';
 export {
