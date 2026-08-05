@@ -71,6 +71,7 @@ describe('resource parsing', () => {
             output_tables_as_markdown: true,
           },
         },
+        save_output_pdf: true,
         spatial_text: {
           do_not_unroll_columns: true,
           preserve_layout_alignment_across_pages: true,
