@@ -26,6 +26,7 @@ describe('resource directories', () => {
       name: 'x',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      connector_subscription_id: 'csub-abc123',
       description: 'description',
       system_metadata: { foo: 'bar' },
       type: 'user',

@@ -368,6 +368,12 @@ export interface DirectoryCreateParams {
   project_id?: string | null;
 
   /**
+   * Body param: Connector Subscription whose files sync into this directory. Omit
+   * for manual uploads.
+   */
+  connector_subscription_id?: string | null;
+
+  /**
    * Body param: Optional description shown to users.
    */
   description?: string | null;
