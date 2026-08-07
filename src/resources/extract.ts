@@ -69,8 +69,8 @@ export class Extract extends APIResource {
    * Get a single extraction job by ID.
    *
    * Returns the job status and results when complete. Use `expand=configuration` to
-   * include the full configuration used, and `expand=extract_metadata` for per-field
-   * metadata.
+   * include the full configuration used, `expand=extract_metadata` for per-field
+   * metadata, and `expand=usage` for credits billed against the job.
    *
    * @example
    * ```ts
@@ -467,6 +467,14 @@ export interface ExtractV2Job {
    * Job-level metadata.
    */
   metadata?: ExtractV2Job.Metadata | null;
+
+  /**
+   * Usage recorded against an extract job.
+   *
+   * A parse job can back several extract jobs, so each of them reports that same
+   * parse cost in its total.
+   */
+  usage?: ExtractV2Job.Usage | null;
 }
 
 export namespace ExtractV2Job {
@@ -480,6 +488,29 @@ export namespace ExtractV2Job {
     usage?: ExtractAPI.ExtractJobUsage | null;
 
     [k: string]: unknown;
+  }
+
+  /**
+   * Usage recorded against an extract job.
+   *
+   * A parse job can back several extract jobs, so each of them reports that same
+   * parse cost in its total.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+
+    /**
+     * Credits billed for the extraction itself
+     */
+    extract_credits?: number | null;
+
+    /**
+     * Credits billed against the parse job backing this extract job
+     */
+    parse_credits?: number | null;
   }
 }
 
@@ -850,7 +881,7 @@ export interface ExtractListParams extends PaginatedCursorParams {
 
 export interface ExtractGetParams {
   /**
-   * Additional fields to include: configuration, extract_metadata
+   * Additional fields to include: configuration, extract_metadata, usage
    */
   expand?: Array<string>;
 

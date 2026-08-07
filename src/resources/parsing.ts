@@ -72,7 +72,8 @@ export class Parsing extends APIResource {
    * - `text` — plain text output
    * - `markdown` — markdown output
    * - `items` — structured page-by-page output
-   * - `job_metadata` — usage and processing details
+   * - `job_metadata` — processing details
+   * - `usage` — credits billed against the job
    *
    * Content metadata fields (e.g. `text_content_metadata`) return presigned URLs for
    * downloading large results.
@@ -1112,9 +1113,26 @@ export interface ParsingCreateResponse {
   updated_at?: string | null;
 
   /**
+   * Usage recorded against a job.
+   */
+  usage?: ParsingCreateResponse.Usage | null;
+
+  /**
    * Key/value tags associated with this job.
    */
   user_metadata?: { [key: string]: string } | null;
+}
+
+export namespace ParsingCreateResponse {
+  /**
+   * Usage recorded against a job.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+  }
 }
 
 /**
@@ -1162,9 +1180,26 @@ export interface ParsingListResponse {
   updated_at?: string | null;
 
   /**
+   * Usage recorded against a job.
+   */
+  usage?: ParsingListResponse.Usage | null;
+
+  /**
    * Key/value tags associated with this job.
    */
   user_metadata?: { [key: string]: string } | null;
+}
+
+export namespace ParsingListResponse {
+  /**
+   * Usage recorded against a job.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+  }
 }
 
 /**
@@ -1212,9 +1247,26 @@ export interface ParsingCancelResponse {
   updated_at?: string | null;
 
   /**
+   * Usage recorded against a job.
+   */
+  usage?: ParsingCancelResponse.Usage | null;
+
+  /**
    * Key/value tags associated with this job.
    */
   user_metadata?: { [key: string]: string } | null;
+}
+
+export namespace ParsingCancelResponse {
+  /**
+   * Usage recorded against a job.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+  }
 }
 
 /**
@@ -1328,9 +1380,26 @@ export namespace ParsingGetResponse {
     updated_at?: string | null;
 
     /**
+     * Usage recorded against a job.
+     */
+    usage?: Job.Usage | null;
+
+    /**
      * Key/value tags associated with this job.
      */
     user_metadata?: { [key: string]: string } | null;
+  }
+
+  export namespace Job {
+    /**
+     * Usage recorded against a job.
+     */
+    export interface Usage {
+      /**
+       * Total credits billed against this job. Null until billing has recorded it.
+       */
+      credits?: number | null;
+    }
   }
 
   /**
@@ -2931,7 +3000,7 @@ export namespace ParsingCreateParams {
 
 export interface ParsingGetParams {
   /**
-   * Fields to include: text, markdown, items, metadata, forms, job_metadata,
+   * Fields to include: text, markdown, items, metadata, forms, job_metadata, usage,
    * text_content_metadata, markdown_content_metadata, items_content_metadata,
    * metadata_content_metadata, forms_content_metadata, raw_words_content_metadata,
    * xlsx_content_metadata, output_pdf_content_metadata, images_content_metadata.
