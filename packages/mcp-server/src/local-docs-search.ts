@@ -558,6 +558,245 @@ const EMBEDDED_METHODS: MethodEntry[] = [
   },
   {
     name: 'create',
+    endpoint: '/api/v1/split/jobs',
+    httpMethod: 'post',
+    summary: 'Create Split Job',
+    description: 'Create a document split job.',
+    stainlessPath: '(resource) split > (method) create',
+    qualified: 'client.split.create',
+    params: [
+      'file_input: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      "configuration?: { categories: { name: string; description?: string; }[]; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; };",
+      'configuration_id?: string;',
+      'transaction_id?: string;',
+      'webhook_configuration_ids?: string[];',
+      'webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: string; webhook_signing_secret?: string; webhook_url?: string; }[];',
+    ],
+    response:
+      "{ id: string; categories: { name: string; description?: string; }[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: { segments: split_segment_response[]; }; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; transaction_id?: string; updated_at?: string; }",
+    markdown:
+      "## create\n\n`client.split.create(file_input: string, organization_id?: string, project_id?: string, configuration?: { categories: object[]; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; }, configuration_id?: string, transaction_id?: string, webhook_configuration_ids?: string[], webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: string; webhook_signing_secret?: string; webhook_url?: string; }[]): { id: string; categories: split_category[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: split_result_response; splitting_strategy?: object; transaction_id?: string; updated_at?: string; }`\n\n**post** `/api/v1/split/jobs`\n\nCreate a document split job.\n\n### Parameters\n\n- `file_input: string`\n  File ID or parse job ID\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `configuration?: { categories: { name: string; description?: string; }[]; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; }`\n  Split configuration with categories and splitting strategy.\n  - `categories: { name: string; description?: string; }[]`\n    Categories to split documents into.\n  - `splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }`\n    Strategy for splitting documents.\n\n- `configuration_id?: string`\n  Saved configuration ID\n\n- `transaction_id?: string`\n  Idempotency key scoped to the project. Reusing a key returns the original job; the new request body is ignored.\n\n- `webhook_configuration_ids?: string[]`\n  IDs of saved webhook configurations to notify for this job.\n\n- `webhook_configurations?: { webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: string; webhook_signing_secret?: string; webhook_url?: string; }[]`\n  Outbound webhook endpoints to notify on job status changes\n\n### Returns\n\n- `{ id: string; categories: { name: string; description?: string; }[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: { segments: split_segment_response[]; }; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; transaction_id?: string; updated_at?: string; }`\n  A split job.\n\n  - `id: string`\n  - `categories: { name: string; description?: string; }[]`\n  - `document_input_type: 'file_id' | 'parse_job_id' | 'url'`\n  - `file_input: string`\n  - `project_id: string`\n  - `status: string`\n  - `user_id: string`\n  - `configuration_id?: string`\n  - `created_at?: string`\n  - `error_message?: string`\n  - `result?: { segments: { category: string; confidence_category: string; pages: number[]; }[]; }`\n  - `splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }`\n  - `transaction_id?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst split = await client.split.create({ file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee' });\n\nconsole.log(split);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Split.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsplit, err := client.Split.New(context.TODO(), llamacloud.SplitNewParams{\n\t\tFileInput: "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", split.ID)\n}\n',
+      },
+      python: {
+        method: 'split.create',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsplit = client.split.create(\n    file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n)\nprint(split.id)',
+      },
+      java: {
+        method: 'split().create',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.split.SplitCreateParams;\nimport ai.llamaindex.llamacloud.models.split.SplitCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitCreateParams params = SplitCreateParams.builder()\n            .fileInput("dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")\n            .build();\n        SplitCreateResponse split = client.split().create(params);\n    }\n}',
+      },
+      typescript: {
+        method: 'client.split.create',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst split = await client.split.create({ file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee' });\n\nconsole.log(split.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/split/jobs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "file_input": "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n          "configuration_id": "cfg-11111111-2222-3333-4444-555555555555",\n          "transaction_id": "tx-unique-idempotency-key",\n          "webhook_configuration_ids": [\n            "whc-...",\n            "whc-..."\n          ]\n        }\'',
+      },
+      cli: {
+        method: 'split create',
+        example:
+          "llp split create \\\n  --api-key 'My API Key' \\\n  --file-input dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/api/v1/split/jobs',
+    httpMethod: 'get',
+    summary: 'List Split Jobs',
+    description: 'List document split jobs.',
+    stainlessPath: '(resource) split > (method) list',
+    qualified: 'client.split.list',
+    params: [
+      'created_at_on_or_after?: string;',
+      'created_at_on_or_before?: string;',
+      'job_ids?: string[];',
+      'organization_id?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+      'project_id?: string;',
+      "status?: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing';",
+    ],
+    response:
+      "{ id: string; categories: { name: string; description?: string; }[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: { segments: split_segment_response[]; }; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; transaction_id?: string; updated_at?: string; }",
+    markdown:
+      "## list\n\n`client.split.list(created_at_on_or_after?: string, created_at_on_or_before?: string, job_ids?: string[], organization_id?: string, page_size?: number, page_token?: string, project_id?: string, status?: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing'): { id: string; categories: split_category[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: split_result_response; splitting_strategy?: object; transaction_id?: string; updated_at?: string; }`\n\n**get** `/api/v1/split/jobs`\n\nList document split jobs.\n\n### Parameters\n\n- `created_at_on_or_after?: string`\n  Include items created at or after this timestamp (inclusive)\n\n- `created_at_on_or_before?: string`\n  Include items created at or before this timestamp (inclusive)\n\n- `job_ids?: string[]`\n  Filter by specific job IDs\n\n- `organization_id?: string`\n\n- `page_size?: number`\n\n- `page_token?: string`\n\n- `project_id?: string`\n\n- `status?: 'cancelled' | 'completed' | 'failed' | 'pending' | 'processing'`\n  Filter by job status (pending, processing, completed, failed, cancelled)\n\n### Returns\n\n- `{ id: string; categories: { name: string; description?: string; }[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: { segments: split_segment_response[]; }; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; transaction_id?: string; updated_at?: string; }`\n  A split job.\n\n  - `id: string`\n  - `categories: { name: string; description?: string; }[]`\n  - `document_input_type: 'file_id' | 'parse_job_id' | 'url'`\n  - `file_input: string`\n  - `project_id: string`\n  - `status: string`\n  - `user_id: string`\n  - `configuration_id?: string`\n  - `created_at?: string`\n  - `error_message?: string`\n  - `result?: { segments: { category: string; confidence_category: string; pages: number[]; }[]; }`\n  - `splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }`\n  - `transaction_id?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const splitListResponse of client.split.list()) {\n  console.log(splitListResponse);\n}\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Split.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Split.List(context.TODO(), llamacloud.SplitListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      python: {
+        method: 'split.list',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.split.list()\npage = page.items[0]\nprint(page.id)',
+      },
+      java: {
+        method: 'split().list',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.split.SplitListPage;\nimport ai.llamaindex.llamacloud.models.split.SplitListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitListPage page = client.split().list();\n    }\n}',
+      },
+      typescript: {
+        method: 'client.split.list',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const splitListResponse of client.split.list()) {\n  console.log(splitListResponse.id);\n}",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/split/jobs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'split list',
+        example: "llp split list \\\n  --api-key 'My API Key'",
+      },
+    },
+  },
+  {
+    name: 'get',
+    endpoint: '/api/v1/split/jobs/{split_job_id}',
+    httpMethod: 'get',
+    summary: 'Get Split Job',
+    description: 'Get a document split job.',
+    stainlessPath: '(resource) split > (method) get',
+    qualified: 'client.split.get',
+    params: ['split_job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ id: string; categories: { name: string; description?: string; }[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: { segments: split_segment_response[]; }; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; transaction_id?: string; updated_at?: string; }",
+    markdown:
+      "## get\n\n`client.split.get(split_job_id: string, organization_id?: string, project_id?: string): { id: string; categories: split_category[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: split_result_response; splitting_strategy?: object; transaction_id?: string; updated_at?: string; }`\n\n**get** `/api/v1/split/jobs/{split_job_id}`\n\nGet a document split job.\n\n### Parameters\n\n- `split_job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; categories: { name: string; description?: string; }[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: { segments: split_segment_response[]; }; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; transaction_id?: string; updated_at?: string; }`\n  A split job.\n\n  - `id: string`\n  - `categories: { name: string; description?: string; }[]`\n  - `document_input_type: 'file_id' | 'parse_job_id' | 'url'`\n  - `file_input: string`\n  - `project_id: string`\n  - `status: string`\n  - `user_id: string`\n  - `configuration_id?: string`\n  - `created_at?: string`\n  - `error_message?: string`\n  - `result?: { segments: { category: string; confidence_category: string; pages: number[]; }[]; }`\n  - `splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }`\n  - `transaction_id?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst split = await client.split.get('split_job_id');\n\nconsole.log(split);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Split.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsplit, err := client.Split.Get(\n\t\tcontext.TODO(),\n\t\t"split_job_id",\n\t\tllamacloud.SplitGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", split.ID)\n}\n',
+      },
+      python: {
+        method: 'split.get',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsplit = client.split.get(\n    split_job_id="split_job_id",\n)\nprint(split.id)',
+      },
+      java: {
+        method: 'split().get',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.split.SplitGetParams;\nimport ai.llamaindex.llamacloud.models.split.SplitGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitGetResponse split = client.split().get("split_job_id");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.split.get',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst split = await client.split.get('split_job_id');\n\nconsole.log(split.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/split/jobs/$SPLIT_JOB_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'split get',
+        example: "llp split get \\\n  --api-key 'My API Key' \\\n  --split-job-id split_job_id",
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/api/v1/split/jobs/{split_job_id}',
+    httpMethod: 'delete',
+    summary: 'Delete Split Job',
+    description: 'Delete a split job and its results.',
+    stainlessPath: '(resource) split > (method) delete',
+    qualified: 'client.split.delete',
+    params: ['split_job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response: 'object',
+    markdown:
+      "## delete\n\n`client.split.delete(split_job_id: string, organization_id?: string, project_id?: string): object`\n\n**delete** `/api/v1/split/jobs/{split_job_id}`\n\nDelete a split job and its results.\n\n### Parameters\n\n- `split_job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst split = await client.split.delete('split_job_id');\n\nconsole.log(split);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Split.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tsplit, err := client.Split.Delete(\n\t\tcontext.TODO(),\n\t\t"split_job_id",\n\t\tllamacloud.SplitDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", split)\n}\n',
+      },
+      python: {
+        method: 'split.delete',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nsplit = client.split.delete(\n    split_job_id="split_job_id",\n)\nprint(split)',
+      },
+      java: {
+        method: 'split().delete',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.split.SplitDeleteParams;\nimport ai.llamaindex.llamacloud.models.split.SplitDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitDeleteResponse split = client.split().delete("split_job_id");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.split.delete',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst split = await client.split.delete('split_job_id');\n\nconsole.log(split);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/split/jobs/$SPLIT_JOB_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'split delete',
+        example: "llp split delete \\\n  --api-key 'My API Key' \\\n  --split-job-id split_job_id",
+      },
+    },
+  },
+  {
+    name: 'cancel',
+    endpoint: '/api/v1/split/jobs/{split_job_id}/cancel',
+    httpMethod: 'post',
+    summary: 'Cancel Split Job',
+    description:
+      'Cancel a running split job.\n\nRequests cancellation; the job transitions to CANCELLED asynchronously once processing stops. Returns the job, which may still be in its current non-terminal state. Jobs already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.',
+    stainlessPath: '(resource) split > (method) cancel',
+    qualified: 'client.split.cancel',
+    params: ['split_job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ id: string; categories: { name: string; description?: string; }[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: { segments: split_segment_response[]; }; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; transaction_id?: string; updated_at?: string; }",
+    markdown:
+      "## cancel\n\n`client.split.cancel(split_job_id: string, organization_id?: string, project_id?: string): { id: string; categories: split_category[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: split_result_response; splitting_strategy?: object; transaction_id?: string; updated_at?: string; }`\n\n**post** `/api/v1/split/jobs/{split_job_id}/cancel`\n\nCancel a running split job.\n\nRequests cancellation; the job transitions to CANCELLED asynchronously once processing stops. Returns the job, which may still be in its current non-terminal state. Jobs already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.\n\n### Parameters\n\n- `split_job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; categories: { name: string; description?: string; }[]; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: string; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; result?: { segments: split_segment_response[]; }; splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }; transaction_id?: string; updated_at?: string; }`\n  A split job.\n\n  - `id: string`\n  - `categories: { name: string; description?: string; }[]`\n  - `document_input_type: 'file_id' | 'parse_job_id' | 'url'`\n  - `file_input: string`\n  - `project_id: string`\n  - `status: string`\n  - `user_id: string`\n  - `configuration_id?: string`\n  - `created_at?: string`\n  - `error_message?: string`\n  - `result?: { segments: { category: string; confidence_category: string; pages: number[]; }[]; }`\n  - `splitting_strategy?: { allow_uncategorized?: 'forbid' | 'include' | 'omit'; }`\n  - `transaction_id?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.split.cancel('split_job_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Split.Cancel',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Split.Cancel(\n\t\tcontext.TODO(),\n\t\t"split_job_id",\n\t\tllamacloud.SplitCancelParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      python: {
+        method: 'split.cancel',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.split.cancel(\n    split_job_id="split_job_id",\n)\nprint(response.id)',
+      },
+      java: {
+        method: 'split().cancel',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.split.SplitCancelParams;\nimport ai.llamaindex.llamacloud.models.split.SplitCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitCancelResponse response = client.split().cancel("split_job_id");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.split.cancel',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.split.cancel('split_job_id');\n\nconsole.log(response.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/split/jobs/$SPLIT_JOB_ID/cancel \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'split cancel',
+        example: "llp split cancel \\\n  --api-key 'My API Key' \\\n  --split-job-id split_job_id",
+      },
+    },
+  },
+  {
+    name: 'create',
     endpoint: '/api/v2/parse',
     httpMethod: 'post',
     summary: 'Parse File',
@@ -774,6 +1013,49 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'list_versions',
+    endpoint: '/api/v2/parse/versions',
+    httpMethod: 'get',
+    summary: 'List Parse Versions',
+    description: 'List the parse versions accepted by each tier.',
+    stainlessPath: '(resource) parsing > (method) list_versions',
+    qualified: 'client.parsing.listVersions',
+    response:
+      "{ agentic: string[]; agentic_plus: string[]; cost_effective: string[]; fast: '2026-06-15' | '2025-12-11'[]; }",
+    markdown:
+      "## list_versions\n\n`client.parsing.listVersions(): { agentic: string[]; agentic_plus: string[]; cost_effective: string[]; fast: '2026-06-15' | '2025-12-11'[]; }`\n\n**get** `/api/v2/parse/versions`\n\nList the parse versions accepted by each tier.\n\n### Returns\n\n- `{ agentic: string[]; agentic_plus: string[]; cost_effective: string[]; fast: '2026-06-15' | '2025-12-11'[]; }`\n  Versions accepted by the parse API, grouped by tier.\n\n  - `agentic: string[]`\n  - `agentic_plus: string[]`\n  - `cost_effective: string[]`\n  - `fast: '2026-06-15' | '2025-12-11'[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.parsing.listVersions();\n\nconsole.log(response);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Parsing.ListVersions',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Parsing.ListVersions(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Agentic)\n}\n',
+      },
+      python: {
+        method: 'parsing.list_versions',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.parsing.list_versions()\nprint(response.agentic)',
+      },
+      java: {
+        method: 'parsing().listVersions',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingListVersionsParams;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingListVersionsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingListVersionsResponse response = client.parsing().listVersions();\n    }\n}',
+      },
+      typescript: {
+        method: 'client.parsing.listVersions',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.parsing.listVersions();\n\nconsole.log(response.agentic);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/parse/versions \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'parsing list_versions',
+        example: "llp parsing list-versions \\\n  --api-key 'My API Key'",
+      },
+    },
+  },
+  {
     name: 'create',
     endpoint: '/api/v2/extract',
     httpMethod: 'post',
@@ -971,6 +1253,51 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'extract delete',
         example: "llp extract delete \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
+    },
+  },
+  {
+    name: 'cancel',
+    endpoint: '/api/v2/extract/{job_id}/cancel',
+    httpMethod: 'post',
+    summary: 'Cancel Extract Job',
+    description:
+      'Cancel a running extraction job.\n\nStops processing and marks the job as CANCELLED. Returns the updated job. Jobs already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.',
+    stainlessPath: '(resource) extract > (method) cancel',
+    qualified: 'client.extract.cancel',
+    params: ['job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ id: string; created_at: string; file_input: string; project_id: string; status: string; updated_at: string; configuration?: { data_schema: object; cite_sources?: boolean; confidence_scores?: boolean; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; sheet_names?: string[]; spreadsheet_mode?: boolean; system_prompt?: string; target_pages?: string; tier?: 'agentic' | 'agentic_plus' | 'cost_effective'; version?: string; }; configuration_id?: string; error_message?: string; extract_metadata?: { field_metadata?: extracted_field_metadata; parse_job_id?: string; parse_tier?: string; }; extract_result?: object | object[]; metadata?: { usage?: object; }; usage?: { credits?: number; extract_credits?: number; parse_credits?: number; }; }",
+    markdown:
+      "## cancel\n\n`client.extract.cancel(job_id: string, organization_id?: string, project_id?: string): { id: string; created_at: string; file_input: string; project_id: string; status: string; updated_at: string; configuration?: extract_configuration; configuration_id?: string; error_message?: string; extract_metadata?: extract_job_metadata; extract_result?: object | object[]; metadata?: object; usage?: object; }`\n\n**post** `/api/v2/extract/{job_id}/cancel`\n\nCancel a running extraction job.\n\nStops processing and marks the job as CANCELLED. Returns the updated job. Jobs already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.\n\n### Parameters\n\n- `job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; created_at: string; file_input: string; project_id: string; status: string; updated_at: string; configuration?: { data_schema: object; cite_sources?: boolean; confidence_scores?: boolean; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; sheet_names?: string[]; spreadsheet_mode?: boolean; system_prompt?: string; target_pages?: string; tier?: 'agentic' | 'agentic_plus' | 'cost_effective'; version?: string; }; configuration_id?: string; error_message?: string; extract_metadata?: { field_metadata?: extracted_field_metadata; parse_job_id?: string; parse_tier?: string; }; extract_result?: object | object[]; metadata?: { usage?: object; }; usage?: { credits?: number; extract_credits?: number; parse_credits?: number; }; }`\n  An extraction job.\n\n  - `id: string`\n  - `created_at: string`\n  - `file_input: string`\n  - `project_id: string`\n  - `status: string`\n  - `updated_at: string`\n  - `configuration?: { data_schema: object; cite_sources?: boolean; confidence_scores?: boolean; extraction_target?: 'per_doc' | 'per_page' | 'per_table_row'; max_pages?: number; parse_config_id?: string; parse_tier?: string; sheet_names?: string[]; spreadsheet_mode?: boolean; system_prompt?: string; target_pages?: string; tier?: 'agentic' | 'agentic_plus' | 'cost_effective'; version?: string; }`\n  - `configuration_id?: string`\n  - `error_message?: string`\n  - `extract_metadata?: { field_metadata?: { document_metadata?: object; page_metadata?: object[]; row_metadata?: object[]; }; parse_job_id?: string; parse_tier?: string; }`\n  - `extract_result?: object | object[]`\n  - `metadata?: { usage?: { num_pages_billed?: number; num_pages_extracted?: number; }; }`\n  - `usage?: { credits?: number; extract_credits?: number; parse_credits?: number; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extractV2Job = await client.extract.cancel('job_id');\n\nconsole.log(extractV2Job);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Extract.Cancel',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractV2Job, err := client.Extract.Cancel(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ExtractCancelParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractV2Job.ID)\n}\n',
+      },
+      python: {
+        method: 'extract.cancel',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_v2_job = client.extract.cancel(\n    job_id="job_id",\n)\nprint(extract_v2_job.id)',
+      },
+      java: {
+        method: 'extract().cancel',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.ExtractCancelParams;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2Job;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2Job extractV2Job = client.extract().cancel("job_id");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.extract.cancel',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst extractV2Job = await client.extract.cancel('job_id');\n\nconsole.log(extractV2Job.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID/cancel \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'extract cancel',
+        example: "llp extract cancel \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
     },
   },
@@ -1413,6 +1740,51 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'cancel',
+    endpoint: '/api/v2/batches/{batch_id}/cancel',
+    httpMethod: 'post',
+    summary: 'Cancel Batch',
+    description:
+      'Cancel a running batch.\n\nReturns immediately; the batch reaches `CANCELLED` once processing stops.\nFiles that already finished keep their results. A batch in a terminal\nstatus cannot be cancelled.',
+    stainlessPath: '(resource) batches > (method) cancel',
+    qualified: 'client.batches.cancel',
+    params: ['batch_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ id: string; config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]; updated_at?: string; }",
+    markdown:
+      "## cancel\n\n`client.batches.cancel(batch_id: string, organization_id?: string, project_id?: string): { id: string; config: object; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: object[]; updated_at?: string; }`\n\n**post** `/api/v2/batches/{batch_id}/cancel`\n\nCancel a running batch.\n\nReturns immediately; the batch reaches `CANCELLED` once processing stops.\nFiles that already finished keep their results. A batch in a terminal\nstatus cannot be cancelled.\n\n### Parameters\n\n- `batch_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }; project_id: string; source_directory_id: string; status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'; created_at?: string; results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]; updated_at?: string; }`\n  A top-level batch.\n\nExample:\n    {\n        \"id\": \"bat-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"project_id\": \"prj-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"source_directory_id\": \"dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n        \"config\": {\n            \"job\": {\n                \"type\": \"parse_v2\",\n                \"configuration_id\": \"cfg-PARSE_AGENTIC\"\n            }\n        },\n        \"status\": \"COMPLETED\",\n        \"results\": [\n            {\n                \"source_directory_file_id\": \"dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\n                \"job_reference\": {\n                    \"type\": \"parse_v2\",\n                    \"id\": \"pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\"\n                },\n                \"error_message\": null\n            }\n        ]\n    }\n\nBatch-level ``FAILED`` means the orchestration failed and cannot provide a\nreliable per-file result set. ``results`` is only populated when explicitly\nrequested with ``expand=results`` and may be ``null`` while a batch is still\nrunning.\n\n  - `id: string`\n  - `config: { job: { configuration_id: string; type: 'parse_v2' | 'extract_v2'; }; }`\n  - `project_id: string`\n  - `source_directory_id: string`\n  - `status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED'`\n  - `created_at?: string`\n  - `results?: { source_directory_file_id: string; error_message?: string; job_reference?: { id: string; type: 'parse_v2' | 'extract_v2'; }; }[]`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.batches.cancel('batch_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Batches.Cancel',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Batches.Cancel(\n\t\tcontext.TODO(),\n\t\t"batch_id",\n\t\tllamacloud.BatchCancelParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      python: {
+        method: 'batches.cancel',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.batches.cancel(\n    batch_id="batch_id",\n)\nprint(response.id)',
+      },
+      java: {
+        method: 'batches().cancel',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.batches.BatchCancelParams;\nimport ai.llamaindex.llamacloud.models.batches.BatchCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCancelResponse response = client.batches().cancel("batch_id");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.batches.cancel',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.batches.cancel('batch_id');\n\nconsole.log(response.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/batches/$BATCH_ID/cancel \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'batches cancel',
+        example: "llp batches cancel \\\n  --api-key 'My API Key' \\\n  --batch-id batch_id",
+      },
+    },
+  },
+  {
     name: 'create',
     endpoint: '/api/v2/classify',
     httpMethod: 'post',
@@ -1565,6 +1937,51 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'classify get',
         example: "llp classify get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
+    },
+  },
+  {
+    name: 'cancel',
+    endpoint: '/api/v2/classify/{job_id}/cancel',
+    httpMethod: 'post',
+    summary: 'Cancel Classify Job',
+    description:
+      'Cancel a running classify job.\n\nStops processing and marks the job as CANCELLED. Returns the updated job. Jobs already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.',
+    stainlessPath: '(resource) classify > (method) cancel',
+    qualified: 'client.classify.cancel',
+    params: ['job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ id: string; configuration: { rules: object[]; mode?: 'FAST'; parsing_configuration?: object; }; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING'; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; parse_job_id?: string; result?: { confidence: number; reasoning: string; type: string; }; transaction_id?: string; updated_at?: string; }",
+    markdown:
+      "## cancel\n\n`client.classify.cancel(job_id: string, organization_id?: string, project_id?: string): { id: string; configuration: classify_configuration; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING'; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; parse_job_id?: string; result?: classify_result; transaction_id?: string; updated_at?: string; }`\n\n**post** `/api/v2/classify/{job_id}/cancel`\n\nCancel a running classify job.\n\nStops processing and marks the job as CANCELLED. Returns the updated job. Jobs already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.\n\n### Parameters\n\n- `job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; configuration: { rules: object[]; mode?: 'FAST'; parsing_configuration?: object; }; document_input_type: 'file_id' | 'parse_job_id' | 'url'; file_input: string; project_id: string; status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING'; user_id: string; configuration_id?: string; created_at?: string; error_message?: string; parse_job_id?: string; result?: { confidence: number; reasoning: string; type: string; }; transaction_id?: string; updated_at?: string; }`\n  Response for a classify job.\n\n  - `id: string`\n  - `configuration: { rules: { description: string; type: string; }[]; mode?: 'FAST'; parsing_configuration?: { lang?: string; max_pages?: number; target_pages?: string; }; }`\n  - `document_input_type: 'file_id' | 'parse_job_id' | 'url'`\n  - `file_input: string`\n  - `project_id: string`\n  - `status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING'`\n  - `user_id: string`\n  - `configuration_id?: string`\n  - `created_at?: string`\n  - `error_message?: string`\n  - `parse_job_id?: string`\n  - `result?: { confidence: number; reasoning: string; type: string; }`\n  - `transaction_id?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.classify.cancel('job_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Classify.Cancel',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Classify.Cancel(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ClassifyCancelParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      python: {
+        method: 'classify.cancel',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.classify.cancel(\n    job_id="job_id",\n)\nprint(response.id)',
+      },
+      java: {
+        method: 'classify().cancel',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyCancelParams;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyCancelResponse response = client.classify().cancel("job_id");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.classify.cancel',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.classify.cancel('job_id');\n\nconsole.log(response.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/classify/$JOB_ID/cancel \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'classify cancel',
+        example: "llp classify cancel \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
       },
     },
   },
@@ -1804,6 +2221,242 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'configurations delete',
         example: "llp configurations delete \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/api/v1/beta/webhook-configs',
+    httpMethod: 'post',
+    summary: 'Create Webhook Config',
+    description: 'Create a reusable webhook configuration for the current project.',
+    stainlessPath: '(resource) webhook_configs > (method) create',
+    qualified: 'client.webhookConfigs.create',
+    params: [
+      'webhook_url: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'webhook_events?: string[];',
+      'webhook_headers?: object;',
+      "webhook_output_format?: 'json' | 'string';",
+      'webhook_signing_secret?: string;',
+    ],
+    response:
+      "{ id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }",
+    markdown:
+      "## create\n\n`client.webhookConfigs.create(webhook_url: string, organization_id?: string, project_id?: string, webhook_events?: string[], webhook_headers?: object, webhook_output_format?: 'json' | 'string', webhook_signing_secret?: string): { id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }`\n\n**post** `/api/v1/beta/webhook-configs`\n\nCreate a reusable webhook configuration for the current project.\n\n### Parameters\n\n- `webhook_url: string`\n  URL to receive webhook POST notifications.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `webhook_events?: string[]`\n  Events to subscribe to. If null, all events are delivered.\n\n- `webhook_headers?: object`\n  Custom HTTP headers sent with each webhook request.\n\n- `webhook_output_format?: 'json' | 'string'`\n  Response format sent to the webhook: 'string' (default) or 'json'.\n\n- `webhook_signing_secret?: string`\n  Shared secret used to sign deliveries to this endpoint. Write-only: it is never returned in responses.\n\n### Returns\n\n- `{ id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }`\n  A stored webhook configuration. The signing secret is never included.\n\n  - `id: string`\n  - `has_secret: boolean`\n  - `tenant_id: string`\n  - `tenant_type: 'project'`\n  - `webhook_url: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n  - `webhook_events?: string[]`\n  - `webhook_headers?: object`\n  - `webhook_output_format?: 'json' | 'string'`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst webhookConfigResponse = await client.webhookConfigs.create({ webhook_url: 'https://example.com/webhooks/llamacloud' });\n\nconsole.log(webhookConfigResponse);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.WebhookConfigs.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\twebhookConfigResponse, err := client.WebhookConfigs.New(context.TODO(), llamacloud.WebhookConfigNewParams{\n\t\tWebhookConfigCreate: llamacloud.WebhookConfigCreateParam{\n\t\t\tWebhookURL: "https://example.com/webhooks/llamacloud",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", webhookConfigResponse.ID)\n}\n',
+      },
+      python: {
+        method: 'webhook_configs.create',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nwebhook_config_response = client.webhook_configs.create(\n    webhook_url="https://example.com/webhooks/llamacloud",\n)\nprint(webhook_config_response.id)',
+      },
+      java: {
+        method: 'webhookConfigs().create',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigCreate;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        WebhookConfigCreate params = WebhookConfigCreate.builder()\n            .webhookUrl("https://example.com/webhooks/llamacloud")\n            .build();\n        WebhookConfigResponse webhookConfigResponse = client.webhookConfigs().create(params);\n    }\n}',
+      },
+      typescript: {
+        method: 'client.webhookConfigs.create',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookConfigResponse = await client.webhookConfigs.create({\n  webhook_url: 'https://example.com/webhooks/llamacloud',\n});\n\nconsole.log(webhookConfigResponse.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/webhook-configs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "webhook_url": "https://example.com/webhooks/llamacloud",\n          "webhook_events": [\n            "parse.success",\n            "parse.error"\n          ],\n          "webhook_headers": {\n            "Authorization": "Bearer sk-..."\n          },\n          "webhook_output_format": "json",\n          "webhook_signing_secret": "whsec_..."\n        }\'',
+      },
+      cli: {
+        method: 'webhook_configs create',
+        example:
+          "llp webhook-configs create \\\n  --api-key 'My API Key' \\\n  --webhook-url https://example.com/webhooks/llamacloud",
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/api/v1/beta/webhook-configs',
+    httpMethod: 'get',
+    summary: 'List Webhook Configs',
+    description: 'List the webhook configurations for the current project, newest first.',
+    stainlessPath: '(resource) webhook_configs > (method) list',
+    qualified: 'client.webhookConfigs.list',
+    params: ['organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }[]",
+    markdown:
+      "## list\n\n`client.webhookConfigs.list(organization_id?: string, project_id?: string): object[]`\n\n**get** `/api/v1/beta/webhook-configs`\n\nList the webhook configurations for the current project, newest first.\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst webhookConfigResponses = await client.webhookConfigs.list();\n\nconsole.log(webhookConfigResponses);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.WebhookConfigs.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\twebhookConfigResponses, err := client.WebhookConfigs.List(context.TODO(), llamacloud.WebhookConfigListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", webhookConfigResponses)\n}\n',
+      },
+      python: {
+        method: 'webhook_configs.list',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nwebhook_config_responses = client.webhook_configs.list()\nprint(webhook_config_responses)',
+      },
+      java: {
+        method: 'webhookConfigs().list',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigListParams;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<WebhookConfigResponse> webhookConfigResponses = client.webhookConfigs().list();\n    }\n}',
+      },
+      typescript: {
+        method: 'client.webhookConfigs.list',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookConfigResponses = await client.webhookConfigs.list();\n\nconsole.log(webhookConfigResponses);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/webhook-configs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'webhook_configs list',
+        example: "llp webhook-configs list \\\n  --api-key 'My API Key'",
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/api/v1/beta/webhook-configs/{config_id}',
+    httpMethod: 'get',
+    summary: 'Get Webhook Config',
+    description: 'Get a single webhook configuration by ID.',
+    stainlessPath: '(resource) webhook_configs > (method) retrieve',
+    qualified: 'client.webhookConfigs.retrieve',
+    params: ['config_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }",
+    markdown:
+      "## retrieve\n\n`client.webhookConfigs.retrieve(config_id: string, organization_id?: string, project_id?: string): { id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }`\n\n**get** `/api/v1/beta/webhook-configs/{config_id}`\n\nGet a single webhook configuration by ID.\n\n### Parameters\n\n- `config_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }`\n  A stored webhook configuration. The signing secret is never included.\n\n  - `id: string`\n  - `has_secret: boolean`\n  - `tenant_id: string`\n  - `tenant_type: 'project'`\n  - `webhook_url: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n  - `webhook_events?: string[]`\n  - `webhook_headers?: object`\n  - `webhook_output_format?: 'json' | 'string'`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst webhookConfigResponse = await client.webhookConfigs.retrieve('config_id');\n\nconsole.log(webhookConfigResponse);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.WebhookConfigs.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\twebhookConfigResponse, err := client.WebhookConfigs.Get(\n\t\tcontext.TODO(),\n\t\t"config_id",\n\t\tllamacloud.WebhookConfigGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", webhookConfigResponse.ID)\n}\n',
+      },
+      python: {
+        method: 'webhook_configs.retrieve',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nwebhook_config_response = client.webhook_configs.retrieve(\n    config_id="config_id",\n)\nprint(webhook_config_response.id)',
+      },
+      java: {
+        method: 'webhookConfigs().retrieve',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigResponse;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        WebhookConfigResponse webhookConfigResponse = client.webhookConfigs().retrieve("config_id");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.webhookConfigs.retrieve',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookConfigResponse = await client.webhookConfigs.retrieve('config_id');\n\nconsole.log(webhookConfigResponse.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/webhook-configs/$CONFIG_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'webhook_configs retrieve',
+        example: "llp webhook-configs retrieve \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
+      },
+    },
+  },
+  {
+    name: 'update',
+    endpoint: '/api/v1/beta/webhook-configs/{config_id}',
+    httpMethod: 'put',
+    summary: 'Update Webhook Config',
+    description: 'Update a webhook configuration. Only fields present in the request change.',
+    stainlessPath: '(resource) webhook_configs > (method) update',
+    qualified: 'client.webhookConfigs.update',
+    params: [
+      'config_id: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'webhook_events?: string[];',
+      'webhook_headers?: object;',
+      "webhook_output_format?: 'json' | 'string';",
+      'webhook_signing_secret?: string;',
+      'webhook_url?: string;',
+    ],
+    response:
+      "{ id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }",
+    markdown:
+      "## update\n\n`client.webhookConfigs.update(config_id: string, organization_id?: string, project_id?: string, webhook_events?: string[], webhook_headers?: object, webhook_output_format?: 'json' | 'string', webhook_signing_secret?: string, webhook_url?: string): { id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }`\n\n**put** `/api/v1/beta/webhook-configs/{config_id}`\n\nUpdate a webhook configuration. Only fields present in the request change.\n\n### Parameters\n\n- `config_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `webhook_events?: string[]`\n  Updated event subscriptions.\n\n- `webhook_headers?: object`\n  Updated headers.\n\n- `webhook_output_format?: 'json' | 'string'`\n  Updated output format.\n\n- `webhook_signing_secret?: string`\n  Updated signing secret (write-only). Send to rotate the secret.\n\n- `webhook_url?: string`\n  Updated webhook URL.\n\n### Returns\n\n- `{ id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }`\n  A stored webhook configuration. The signing secret is never included.\n\n  - `id: string`\n  - `has_secret: boolean`\n  - `tenant_id: string`\n  - `tenant_type: 'project'`\n  - `webhook_url: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n  - `webhook_events?: string[]`\n  - `webhook_headers?: object`\n  - `webhook_output_format?: 'json' | 'string'`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst webhookConfigResponse = await client.webhookConfigs.update('config_id');\n\nconsole.log(webhookConfigResponse);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.WebhookConfigs.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\twebhookConfigResponse, err := client.WebhookConfigs.Update(\n\t\tcontext.TODO(),\n\t\t"config_id",\n\t\tllamacloud.WebhookConfigUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", webhookConfigResponse.ID)\n}\n',
+      },
+      python: {
+        method: 'webhook_configs.update',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nwebhook_config_response = client.webhook_configs.update(\n    config_id="config_id",\n)\nprint(webhook_config_response.id)',
+      },
+      java: {
+        method: 'webhookConfigs().update',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigResponse;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        WebhookConfigResponse webhookConfigResponse = client.webhookConfigs().update("config_id");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.webhookConfigs.update',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookConfigResponse = await client.webhookConfigs.update('config_id');\n\nconsole.log(webhookConfigResponse.id);",
+      },
+      http: {
+        example:
+          "curl https://api.cloud.llamaindex.ai/api/v1/beta/webhook-configs/$CONFIG_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $LLAMA_CLOUD_API_KEY\" \\\n    -d '{}'",
+      },
+      cli: {
+        method: 'webhook_configs update',
+        example: "llp webhook-configs update \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/api/v1/beta/webhook-configs/{config_id}',
+    httpMethod: 'delete',
+    summary: 'Delete Webhook Config',
+    description: 'Delete a webhook configuration.',
+    stainlessPath: '(resource) webhook_configs > (method) delete',
+    qualified: 'client.webhookConfigs.delete',
+    params: ['config_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    markdown:
+      "## delete\n\n`client.webhookConfigs.delete(config_id: string, organization_id?: string, project_id?: string): void`\n\n**delete** `/api/v1/beta/webhook-configs/{config_id}`\n\nDelete a webhook configuration.\n\n### Parameters\n\n- `config_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nawait client.webhookConfigs.delete('config_id')\n```",
+    perLanguage: {
+      go: {
+        method: 'client.WebhookConfigs.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.WebhookConfigs.Delete(\n\t\tcontext.TODO(),\n\t\t"config_id",\n\t\tllamacloud.WebhookConfigDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      python: {
+        method: 'webhook_configs.delete',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclient.webhook_configs.delete(\n    config_id="config_id",\n)',
+      },
+      java: {
+        method: 'webhookConfigs().delete',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.webhookConfigs().delete("config_id");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.webhookConfigs.delete',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.webhookConfigs.delete('config_id');",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/webhook-configs/$CONFIG_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'webhook_configs delete',
+        example: "llp webhook-configs delete \\\n  --api-key 'My API Key' \\\n  --config-id config_id",
       },
     },
   },
@@ -3714,6 +4367,57 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'documents list',
         example:
           "llp pipelines:documents list \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
+    },
+  },
+  {
+    name: 'get_status_counts',
+    endpoint: '/api/v1/pipelines/{pipeline_id}/documents/status-counts',
+    httpMethod: 'get',
+    summary: 'Get Pipeline Document Status Counts',
+    description:
+      "Count the documents in a pipeline, grouped by ingestion status.\n\nCounts reflect each document's last recorded status rather than a freshly computed one, so a document that changed status in the last few moments may still be counted under its previous one. Use `GET /pipelines/{pipeline_id}/documents/{document_id}/status` when a single document's status has to be up to the moment.",
+    stainlessPath: '(resource) pipelines.documents > (method) get_status_counts',
+    qualified: 'client.pipelines.documents.getStatusCounts',
+    params: [
+      'pipeline_id: string;',
+      'data_source_id?: string;',
+      'file_id?: string;',
+      'only_direct_upload?: boolean;',
+    ],
+    response:
+      '{ counts: object; pipeline_id: string; total_count: number; data_source_id?: string; file_id?: string; only_direct_upload?: boolean; }',
+    markdown:
+      "## get_status_counts\n\n`client.pipelines.documents.getStatusCounts(pipeline_id: string, data_source_id?: string, file_id?: string, only_direct_upload?: boolean): { counts: object; pipeline_id: string; total_count: number; data_source_id?: string; file_id?: string; only_direct_upload?: boolean; }`\n\n**get** `/api/v1/pipelines/{pipeline_id}/documents/status-counts`\n\nCount the documents in a pipeline, grouped by ingestion status.\n\nCounts reflect each document's last recorded status rather than a freshly computed one, so a document that changed status in the last few moments may still be counted under its previous one. Use `GET /pipelines/{pipeline_id}/documents/{document_id}/status` when a single document's status has to be up to the moment.\n\n### Parameters\n\n- `pipeline_id: string`\n\n- `data_source_id?: string`\n\n- `file_id?: string`\n\n- `only_direct_upload?: boolean`\n\n### Returns\n\n- `{ counts: object; pipeline_id: string; total_count: number; data_source_id?: string; file_id?: string; only_direct_upload?: boolean; }`\n  Counts of the documents in a pipeline, grouped by ingestion status.\n\n  - `counts: object`\n  - `pipeline_id: string`\n  - `total_count: number`\n  - `data_source_id?: string`\n  - `file_id?: string`\n  - `only_direct_upload?: boolean`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.pipelines.documents.getStatusCounts('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Pipelines.Documents.GetStatusCounts',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Pipelines.Documents.GetStatusCounts(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloud.PipelineDocumentGetStatusCountsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.PipelineID)\n}\n',
+      },
+      python: {
+        method: 'pipelines.documents.get_status_counts',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.pipelines.documents.get_status_counts(\n    pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response.pipeline_id)',
+      },
+      java: {
+        method: 'pipelines().documents().getStatusCounts',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentGetStatusCountsParams;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentGetStatusCountsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetStatusCountsResponse response = client.pipelines().documents().getStatusCounts("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.pipelines.documents.getStatusCounts',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.pipelines.documents.getStatusCounts(\n  '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',\n);\n\nconsole.log(response.pipeline_id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/pipelines/$PIPELINE_ID/documents/status-counts \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'documents get_status_counts',
+        example:
+          "llp pipelines:documents get-status-counts \\\n  --api-key 'My API Key' \\\n  --pipeline-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },

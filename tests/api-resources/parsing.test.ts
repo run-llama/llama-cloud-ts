@@ -270,4 +270,16 @@ describe('resource parsing', () => {
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
+
+  // Mock server tests are disabled
+  test.skip('listVersions', async () => {
+    const responsePromise = client.parsing.listVersions();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
 });

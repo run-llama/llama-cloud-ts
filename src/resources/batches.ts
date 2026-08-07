@@ -77,6 +77,30 @@ export class Batches extends APIResource {
   ): APIPromise<BatchGetResponse> {
     return this._client.get(path`/api/v2/batches/${batchID}`, { query, ...options });
   }
+
+  /**
+   * Cancel a running batch.
+   *
+   * Returns immediately; the batch reaches `CANCELLED` once processing stops. Files
+   * that already finished keep their results. A batch in a terminal status cannot be
+   * cancelled.
+   *
+   * @example
+   * ```ts
+   * const response = await client.batches.cancel('batch_id');
+   * ```
+   */
+  cancel(
+    batchID: string,
+    params: BatchCancelParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BatchCancelResponse> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.post(path`/api/v2/batches/${batchID}/cancel`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
+  }
 }
 
 export type BatchListResponsesPaginatedCursor = PaginatedCursor<BatchListResponse>;
@@ -285,6 +309,149 @@ export interface BatchListResponse {
 }
 
 export namespace BatchListResponse {
+  /**
+   * Batch configuration snapshot.
+   */
+  export interface Config {
+    /**
+     * Job to create for each file in the source directory.
+     */
+    job: Config.Job;
+  }
+
+  export namespace Config {
+    /**
+     * Job to create for each file in the source directory.
+     */
+    export interface Job {
+      /**
+       * Product configuration ID or built-in preset ID matching the job type.
+       */
+      configuration_id: string;
+
+      /**
+       * Product job type to run for each source directory file.
+       */
+      type: 'parse_v2' | 'extract_v2';
+    }
+  }
+
+  /**
+   * Result projection for one source directory file in a batch.
+   *
+   * Example: { "source_directory_file_id":
+   * "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "job_reference": { "type":
+   * "parse_v2", "id": "pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee" }, "error_message":
+   * null }
+   *
+   * This is a projection of directory-sync state, not a separate child resource that
+   * callers need to create. The source directory file ID is the stable correlation
+   * key. Underlying job progress and failures should be resolved through the
+   * referenced product job endpoint.
+   */
+  export interface Result {
+    /**
+     * Source directory file processed by this batch.
+     */
+    source_directory_file_id: string;
+
+    /**
+     * Batch-level mapping error if the system could not create or associate a job for
+     * this source file.
+     */
+    error_message?: string | null;
+
+    /**
+     * Reference to a job produced by a batch.
+     *
+     * Example: { "type": "parse_v2", "id": "pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+     * }
+     */
+    job_reference?: Result.JobReference | null;
+  }
+
+  export namespace Result {
+    /**
+     * Reference to a job produced by a batch.
+     *
+     * Example: { "type": "parse_v2", "id": "pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+     * }
+     */
+    export interface JobReference {
+      /**
+       * Job ID, such as a parse job ID.
+       */
+      id: string;
+
+      /**
+       * Type of job produced for the file.
+       */
+      type: 'parse_v2' | 'extract_v2';
+    }
+  }
+}
+
+/**
+ * A top-level batch.
+ *
+ * Example: { "id": "bat-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "project_id":
+ * "prj-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "source_directory_id":
+ * "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "config": { "job": { "type":
+ * "parse_v2", "configuration_id": "cfg-PARSE_AGENTIC" } }, "status": "COMPLETED",
+ * "results": [ { "source_directory_file_id":
+ * "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "job_reference": { "type":
+ * "parse_v2", "id": "pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee" }, "error_message":
+ * null } ] }
+ *
+ * Batch-level `FAILED` means the orchestration failed and cannot provide a
+ * reliable per-file result set. `results` is only populated when explicitly
+ * requested with `expand=results` and may be `null` while a batch is still
+ * running.
+ */
+export interface BatchCancelResponse {
+  /**
+   * Unique identifier
+   */
+  id: string;
+
+  /**
+   * Batch configuration snapshot.
+   */
+  config: BatchCancelResponse.Config;
+
+  /**
+   * Project this batch belongs to.
+   */
+  project_id: string;
+
+  /**
+   * Directory being processed.
+   */
+  source_directory_id: string;
+
+  /**
+   * Current batch status.
+   */
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | 'THROTTLED';
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Expanded per-file result mappings. Null unless requested with expand=results, or
+   * while the batch is still running.
+   */
+  results?: Array<BatchCancelResponse.Result> | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
+export namespace BatchCancelResponse {
   /**
    * Batch configuration snapshot.
    */
@@ -664,14 +831,22 @@ export interface BatchGetParams {
   project_id?: string | null;
 }
 
+export interface BatchCancelParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export declare namespace Batches {
   export {
     type BatchCreateResponse as BatchCreateResponse,
     type BatchListResponse as BatchListResponse,
+    type BatchCancelResponse as BatchCancelResponse,
     type BatchGetResponse as BatchGetResponse,
     type BatchListResponsesPaginatedCursor as BatchListResponsesPaginatedCursor,
     type BatchCreateParams as BatchCreateParams,
     type BatchListParams as BatchListParams,
     type BatchGetParams as BatchGetParams,
+    type BatchCancelParams as BatchCancelParams,
   };
 }

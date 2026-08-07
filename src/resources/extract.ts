@@ -106,6 +106,29 @@ export class Extract extends APIResource {
   }
 
   /**
+   * Cancel a running extraction job.
+   *
+   * Stops processing and marks the job as CANCELLED. Returns the updated job. Jobs
+   * already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.
+   *
+   * @example
+   * ```ts
+   * const extractV2Job = await client.extract.cancel('job_id');
+   * ```
+   */
+  cancel(
+    jobID: string,
+    params: ExtractCancelParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExtractV2Job> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.post(path`/api/v2/extract/${jobID}/cancel`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
    * Validate a JSON schema for extraction.
    *
    * @example
@@ -896,6 +919,12 @@ export interface ExtractDeleteParams {
   project_id?: string | null;
 }
 
+export interface ExtractCancelParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface ExtractValidateSchemaParams {
   /**
    * JSON Schema to validate for use with extract jobs
@@ -957,6 +986,7 @@ export declare namespace Extract {
     type ExtractListParams as ExtractListParams,
     type ExtractGetParams as ExtractGetParams,
     type ExtractDeleteParams as ExtractDeleteParams,
+    type ExtractCancelParams as ExtractCancelParams,
     type ExtractValidateSchemaParams as ExtractValidateSchemaParams,
     type ExtractGenerateSchemaParams as ExtractGenerateSchemaParams,
   };

@@ -139,6 +139,18 @@ export class Parsing extends APIResource {
   }
 
   /**
+   * List the parse versions accepted by each tier.
+   *
+   * @example
+   * ```ts
+   * const response = await client.parsing.listVersions();
+   * ```
+   */
+  listVersions(options?: RequestOptions): APIPromise<ParsingListVersionsResponse> {
+    return this._client.get('/api/v2/parse/versions', options);
+  }
+
+  /**
    * Wait for a parse job to complete by polling until it reaches a terminal state.
    *
    * This method polls the job status at regular intervals until the job completes
@@ -1928,6 +1940,127 @@ export namespace ParsingGetResponse {
   }
 }
 
+/**
+ * Versions accepted by the parse API, grouped by tier.
+ */
+export interface ParsingListVersionsResponse {
+  /**
+   * Versions for the agentic tier
+   */
+  agentic: Array<
+    | '2026-07-24'
+    | '2026-07-23'
+    | '2026-07-15'
+    | '2026-06-18'
+    | '2026-06-11'
+    | '2026-06-04'
+    | '2026-06-01'
+    | '2026-05-26'
+    | '2026-05-21'
+    | '2026-05-20'
+    | '2026-05-19'
+    | '2026-05-13'
+    | '2026-05-11'
+    | '2026-05-06'
+    | '2026-05-04'
+    | '2026-04-27'
+    | '2026-04-22'
+    | '2026-04-09'
+    | '2026-04-06'
+    | '2026-04-02'
+    | '2026-03-31'
+    | '2026-03-30'
+    | '2026-03-27'
+    | '2026-03-25'
+    | '2026-03-23'
+    | '2026-03-22'
+    | '2026-03-20'
+    | '2026-03-11'
+    | '2026-03-10'
+    | '2026-03-09'
+    | '2026-03-03'
+    | '2026-03-02'
+    | '2026-02-26'
+    | '2026-02-24'
+    | '2026-01-30'
+    | '2026-01-22'
+    | '2026-01-21'
+    | '2026-01-16'
+    | '2026-01-08'
+    | '2025-12-31'
+    | '2025-12-18'
+    | '2025-12-11'
+  >;
+
+  /**
+   * Versions for the agentic_plus tier
+   */
+  agentic_plus: Array<
+    | '2026-07-08'
+    | '2026-06-18'
+    | '2026-06-11'
+    | '2026-06-04'
+    | '2026-06-01'
+    | '2026-05-26'
+    | '2026-05-21'
+    | '2026-05-20'
+    | '2026-05-19'
+    | '2026-05-11'
+    | '2026-05-06'
+    | '2026-05-04'
+    | '2026-05-01'
+    | '2026-04-27'
+    | '2026-04-19'
+    | '2026-04-14'
+    | '2026-04-09'
+    | '2026-04-02'
+    | '2026-03-31'
+    | '2026-03-26'
+    | '2026-03-25'
+    | '2026-03-22'
+    | '2026-03-20'
+    | '2026-03-17'
+    | '2026-03-12'
+    | '2026-03-10'
+    | '2026-03-09'
+    | '2026-03-02'
+    | '2026-02-26'
+    | '2026-02-24'
+    | '2026-01-30'
+    | '2026-01-29'
+    | '2026-01-24'
+    | '2026-01-22'
+    | '2026-01-21'
+    | '2026-01-16'
+    | '2025-12-31'
+    | '2025-12-18'
+    | '2025-12-11'
+  >;
+
+  /**
+   * Versions for the cost_effective tier
+   */
+  cost_effective: Array<
+    | '2026-07-23'
+    | '2026-06-26'
+    | '2026-06-18'
+    | '2026-06-17'
+    | '2026-06-11'
+    | '2026-06-08'
+    | '2026-06-05'
+    | '2026-05-28'
+    | '2026-04-09'
+    | '2026-03-31'
+    | '2026-03-27'
+    | '2026-03-25'
+  >;
+
+  /**
+   * Versions for the fast tier
+   */
+  fast: Array<'2026-06-15' | '2025-12-11'>;
+}
+
 export interface ParsingCreateParams {
   /**
    * Body param: Parsing tier: 'fast' (rule-based, cheapest), 'cost_effective'
@@ -3078,6 +3211,7 @@ export declare namespace Parsing {
     type ParsingListResponse as ParsingListResponse,
     type ParsingCancelResponse as ParsingCancelResponse,
     type ParsingGetResponse as ParsingGetResponse,
+    type ParsingListVersionsResponse as ParsingListVersionsResponse,
     type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingGetParams as ParsingGetParams,
