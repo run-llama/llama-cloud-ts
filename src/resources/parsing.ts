@@ -2263,12 +2263,11 @@ export namespace ParsingCreateParams {
     granular_bboxes?: Array<'cell' | 'line' | 'word'>;
 
     /**
-     * Image categories to extract and save. Options: 'screenshot' (full page renders
-     * useful for visual QA), 'embedded' (images found within the document), 'layout'
-     * (cropped regions from layout detection like figures and diagrams). Empty list
-     * saves no images
+     * Image categories to save: 'screenshot' (full page renders), 'embedded' (images
+     * found within the document), 'layout' (cropped figures and diagrams). Defaults to
+     * saving 'layout' when the output links to cropped images; pass [] to save none
      */
-    images_to_save?: Array<'embedded' | 'layout' | 'screenshot'>;
+    images_to_save?: Array<'embedded' | 'layout' | 'screenshot'> | null;
 
     /**
      * Markdown formatting options including table styles and link annotations
