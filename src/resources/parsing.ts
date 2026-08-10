@@ -438,6 +438,11 @@ export interface FormField {
   id?: string | null;
 
   /**
+   * Bounding boxes of the field's fillable area on the page.
+   */
+  bbox?: Array<BBox> | null;
+
+  /**
    * True for a printed-but-blank text field (mutually exclusive with value)
    */
   isEmpty?: boolean | null;
@@ -550,6 +555,11 @@ export interface FormTable {
    * Identifier printed on the form, if any
    */
   id?: string | null;
+
+  /**
+   * Bounding boxes of the table's fillable regions on the page.
+   */
+  bbox?: Array<BBox> | null;
 
   /**
    * Printed column headers in order, if any
@@ -1443,6 +1453,16 @@ export namespace ParsingGetResponse {
        * Success indicator
        */
       success: true;
+
+      /**
+       * Height of the page in points
+       */
+      page_height?: number | null;
+
+      /**
+       * Width of the page in points
+       */
+      page_width?: number | null;
     }
 
     /**
