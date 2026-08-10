@@ -151,6 +151,12 @@ export interface DirectoryCreateResponse {
   project_id: string;
 
   /**
+   * Connector Subscription whose files sync into this directory. Null for a
+   * directory populated by manual uploads.
+   */
+  connector_subscription_id?: string | null;
+
+  /**
    * Creation datetime
    */
   created_at?: string | null;
@@ -204,6 +210,12 @@ export interface DirectoryUpdateResponse {
    * Project the directory belongs to.
    */
   project_id: string;
+
+  /**
+   * Connector Subscription whose files sync into this directory. Null for a
+   * directory populated by manual uploads.
+   */
+  connector_subscription_id?: string | null;
 
   /**
    * Creation datetime
@@ -261,6 +273,12 @@ export interface DirectoryListResponse {
   project_id: string;
 
   /**
+   * Connector Subscription whose files sync into this directory. Null for a
+   * directory populated by manual uploads.
+   */
+  connector_subscription_id?: string | null;
+
+  /**
    * Creation datetime
    */
   created_at?: string | null;
@@ -314,6 +332,12 @@ export interface DirectoryGetResponse {
    * Project the directory belongs to.
    */
   project_id: string;
+
+  /**
+   * Connector Subscription whose files sync into this directory. Null for a
+   * directory populated by manual uploads.
+   */
+  connector_subscription_id?: string | null;
 
   /**
    * Creation datetime
