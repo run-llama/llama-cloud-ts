@@ -376,6 +376,11 @@ export interface ExtractV2Parameters {
   confidence_scores?: boolean;
 
   /**
+   * Disable reuse and storage of Extract results
+   */
+  disable_cache?: boolean;
+
+  /**
    * Granularity of extraction: per_doc returns one object per document, per_page
    * returns one object per page, per_table_row returns one object per table row
    */
