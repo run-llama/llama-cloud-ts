@@ -30,6 +30,7 @@ Types:
 - <code><a href="./src/resources/files.ts">File</a></code>
 - <code><a href="./src/resources/files.ts">PresignedURL</a></code>
 - <code><a href="./src/resources/files.ts">FileCreateResponse</a></code>
+- <code><a href="./src/resources/files.ts">FileRetrieveResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileListResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileQueryResponse</a></code>
 
@@ -38,6 +39,7 @@ Methods:
 - <code title="post /api/v1/beta/files">client.files.<a href="./src/resources/files.ts">create</a>({ ...params }) -> FileCreateResponse</code>
 - <code title="post /api/v1/beta/files/query">client.files.<a href="./src/resources/files.ts">query</a>({ ...params }) -> FileQueryResponse</code>
 - <code title="get /api/v1/beta/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FileListResponsesPaginatedCursor</code>
+- <code title="get /api/v1/beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">retrieve</a>(fileID, { ...params }) -> FileRetrieveResponse</code>
 - <code title="delete /api/v1/beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID, { ...params }) -> void</code>
 - <code title="get /api/v1/beta/files/{file_id}/content">client.files.<a href="./src/resources/files.ts">get</a>(fileID, { ...params }) -> PresignedURL</code>
 
@@ -240,6 +242,28 @@ Methods:
 
 - <code title="get /api/v1/projects">client.projects.<a href="./src/resources/projects.ts">list</a>({ ...params }) -> ProjectListResponse</code>
 - <code title="get /api/v1/projects/{project_id}">client.projects.<a href="./src/resources/projects.ts">get</a>(projectID, { ...params }) -> Project</code>
+
+# V2Projects
+
+Types:
+
+- <code><a href="./src/resources/v2-projects.ts">V2ProjectListResponse</a></code>
+- <code><a href="./src/resources/v2-projects.ts">V2ProjectGetResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/projects">client.v2Projects.<a href="./src/resources/v2-projects.ts">list</a>({ ...params }) -> V2ProjectListResponsesPaginatedCursor</code>
+- <code title="get /api/v2/projects/{project_id}">client.v2Projects.<a href="./src/resources/v2-projects.ts">get</a>(projectID, { ...params }) -> V2ProjectGetResponse</code>
+
+# JobDataPoints
+
+Types:
+
+- <code><a href="./src/resources/job-data-points.ts">JobDataPoint</a></code>
+
+Methods:
+
+- <code title="get /api/v1/job-data-points">client.jobDataPoints.<a href="./src/resources/job-data-points.ts">list</a>({ ...params }) -> JobDataPointsPaginatedCursor</code>
 
 # DataSinks
 

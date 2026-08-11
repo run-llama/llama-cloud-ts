@@ -126,9 +126,17 @@ import {
   FileListResponsesPaginatedCursor,
   FileQueryParams,
   FileQueryResponse,
+  FileRetrieveParams,
+  FileRetrieveResponse,
   Files,
   PresignedURL,
 } from './resources/files';
+import {
+  JobDataPoint,
+  JobDataPointListParams,
+  JobDataPoints,
+  JobDataPointsPaginatedCursor,
+} from './resources/job-data-points';
 import {
   BBox,
   CodeItem,
@@ -195,6 +203,14 @@ import {
   SplitListResponse,
   SplitListResponsesPaginatedCursor,
 } from './resources/split';
+import {
+  V2ProjectGetParams,
+  V2ProjectGetResponse,
+  V2ProjectListParams,
+  V2ProjectListResponse,
+  V2ProjectListResponsesPaginatedCursor,
+  V2Projects,
+} from './resources/v2-projects';
 import {
   WebhookConfigCreate,
   WebhookConfigCreateParams,
@@ -1018,6 +1034,8 @@ export class LlamaCloud {
   configurations: API.Configurations = new API.Configurations(this);
   webhookConfigs: API.WebhookConfigs = new API.WebhookConfigs(this);
   projects: API.Projects = new API.Projects(this);
+  v2Projects: API.V2Projects = new API.V2Projects(this);
+  jobDataPoints: API.JobDataPoints = new API.JobDataPoints(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
@@ -1036,6 +1054,8 @@ LlamaCloud.Classify = Classify;
 LlamaCloud.Configurations = Configurations;
 LlamaCloud.WebhookConfigs = WebhookConfigs;
 LlamaCloud.Projects = Projects;
+LlamaCloud.V2Projects = V2Projects;
+LlamaCloud.JobDataPoints = JobDataPoints;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
 LlamaCloud.Pipelines = Pipelines;
@@ -1086,12 +1106,14 @@ export declare namespace LlamaCloud {
     type File as File,
     type PresignedURL as PresignedURL,
     type FileCreateResponse as FileCreateResponse,
+    type FileRetrieveResponse as FileRetrieveResponse,
     type FileListResponse as FileListResponse,
     type FileQueryResponse as FileQueryResponse,
     type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
     type FileCreateParams as FileCreateParams,
     type FileQueryParams as FileQueryParams,
     type FileListParams as FileListParams,
+    type FileRetrieveParams as FileRetrieveParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGetParams as FileGetParams,
   };
@@ -1247,6 +1269,22 @@ export declare namespace LlamaCloud {
     type ProjectListResponse as ProjectListResponse,
     type ProjectListParams as ProjectListParams,
     type ProjectGetParams as ProjectGetParams,
+  };
+
+  export {
+    V2Projects as V2Projects,
+    type V2ProjectListResponse as V2ProjectListResponse,
+    type V2ProjectGetResponse as V2ProjectGetResponse,
+    type V2ProjectListResponsesPaginatedCursor as V2ProjectListResponsesPaginatedCursor,
+    type V2ProjectListParams as V2ProjectListParams,
+    type V2ProjectGetParams as V2ProjectGetParams,
+  };
+
+  export {
+    JobDataPoints as JobDataPoints,
+    type JobDataPoint as JobDataPoint,
+    type JobDataPointsPaginatedCursor as JobDataPointsPaginatedCursor,
+    type JobDataPointListParams as JobDataPointListParams,
   };
 
   export {

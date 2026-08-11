@@ -59,6 +59,17 @@ export class Files extends APIResource {
   }
 
   /**
+   * Get file metadata by ID.
+   */
+  retrieve(
+    fileID: string,
+    query: FileRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<FileRetrieveResponse> {
+    return this._client.get(path`/api/v1/beta/files/${fileID}`, { query, ...options });
+  }
+
+  /**
    * Delete a file from the project.
    */
   delete(
@@ -189,6 +200,58 @@ export interface PresignedURL {
  * An uploaded file.
  */
 export interface FileCreateResponse {
+  /**
+   * Unique file identifier
+   */
+  id: string;
+
+  /**
+   * File name including extension
+   */
+  name: string;
+
+  /**
+   * Project this file belongs to
+   */
+  project_id: string;
+
+  /**
+   * Schema for a presigned URL.
+   */
+  download_url?: PresignedURL | null;
+
+  /**
+   * When the file expires and may be automatically removed. Null means no
+   * expiration.
+   */
+  expires_at?: string | null;
+
+  /**
+   * Optional ID for correlating with an external system
+   */
+  external_file_id?: string | null;
+
+  /**
+   * File extension (pdf, docx, png, etc.)
+   */
+  file_type?: string | null;
+
+  /**
+   * When the file was last modified (ISO 8601)
+   */
+  last_modified_at?: string | null;
+
+  /**
+   * How the file will be used: user_data, parse, extract, classify, split, sheet, or
+   * agent_app
+   */
+  purpose?: string | null;
+}
+
+/**
+ * An uploaded file.
+ */
+export interface FileRetrieveResponse {
   /**
    * Unique file identifier
    */
@@ -500,6 +563,17 @@ export interface FileListParams extends PaginatedCursorParams {
   project_id?: string | null;
 }
 
+export interface FileRetrieveParams {
+  /**
+   * Fields to expand.
+   */
+  expand?: Array<string> | null;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface FileDeleteParams {
   organization_id?: string | null;
 
@@ -519,12 +593,14 @@ export declare namespace Files {
     type File as File,
     type PresignedURL as PresignedURL,
     type FileCreateResponse as FileCreateResponse,
+    type FileRetrieveResponse as FileRetrieveResponse,
     type FileListResponse as FileListResponse,
     type FileQueryResponse as FileQueryResponse,
     type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
     type FileCreateParams as FileCreateParams,
     type FileQueryParams as FileQueryParams,
     type FileListParams as FileListParams,
+    type FileRetrieveParams as FileRetrieveParams,
     type FileDeleteParams as FileDeleteParams,
     type FileGetParams as FileGetParams,
   };

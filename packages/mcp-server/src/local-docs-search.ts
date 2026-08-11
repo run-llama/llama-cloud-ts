@@ -209,6 +209,51 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'retrieve',
+    endpoint: '/api/v1/beta/files/{file_id}',
+    httpMethod: 'get',
+    summary: 'Get File',
+    description: 'Get file metadata by ID.',
+    stainlessPath: '(resource) files > (method) retrieve',
+    qualified: 'client.files.retrieve',
+    params: ['file_id: string;', 'expand?: string[];', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      '{ id: string; name: string; project_id: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }',
+    markdown:
+      "## retrieve\n\n`client.files.retrieve(file_id: string, expand?: string[], organization_id?: string, project_id?: string): { id: string; name: string; project_id: string; download_url?: presigned_url; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }`\n\n**get** `/api/v1/beta/files/{file_id}`\n\nGet file metadata by ID.\n\n### Parameters\n\n- `file_id: string`\n\n- `expand?: string[]`\n  Fields to expand.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; download_url?: { expires_at: string; url: string; form_fields?: object; }; expires_at?: string; external_file_id?: string; file_type?: string; last_modified_at?: string; purpose?: string; }`\n  An uploaded file.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `download_url?: { expires_at: string; url: string; form_fields?: object; }`\n  - `expires_at?: string`\n  - `external_file_id?: string`\n  - `file_type?: string`\n  - `last_modified_at?: string`\n  - `purpose?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst file = await client.files.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(file);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Files.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfile, err := client.Files.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloud.FileGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", file.ID)\n}\n',
+      },
+      python: {
+        method: 'files.retrieve',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nfile = client.files.retrieve(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(file.id)',
+      },
+      java: {
+        method: 'files().retrieve',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.files.FileRetrieveParams;\nimport ai.llamaindex.llamacloud.models.files.FileRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileRetrieveResponse file = client.files().retrieve("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.files.retrieve',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst file = await client.files.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(file.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/files/$FILE_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'files retrieve',
+        example:
+          "llp files retrieve \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
+    },
+  },
+  {
     name: 'delete',
     endpoint: '/api/v1/beta/files/{file_id}',
     httpMethod: 'delete',
@@ -2546,6 +2591,149 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'projects get',
         example:
           "llp projects get \\\n  --api-key 'My API Key' \\\n  --project-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/api/v2/projects',
+    httpMethod: 'get',
+    summary: 'List Projects',
+    description: 'List projects in an organization. Requires `organization_id` or a project-scoped API key.',
+    stainlessPath: '(resource) v2_projects > (method) list',
+    qualified: 'client.v2Projects.list',
+    params: ['name?: string;', 'organization_id?: string;', 'page_size?: number;', 'page_token?: string;'],
+    response:
+      '{ id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }',
+    markdown:
+      "## list\n\n`client.v2Projects.list(name?: string, organization_id?: string, page_size?: number, page_token?: string): { id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }`\n\n**get** `/api/v2/projects`\n\nList projects in an organization. Requires `organization_id` or a project-scoped API key.\n\n### Parameters\n\n- `name?: string`\n\n- `organization_id?: string`\n\n- `page_size?: number`\n\n- `page_token?: string`\n\n### Returns\n\n- `{ id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }`\n  API response schema for a project.\n\n  - `id: string`\n  - `name: string`\n  - `organization_id: string`\n  - `created_at?: string`\n  - `is_default?: boolean`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const v2ProjectListResponse of client.v2Projects.list()) {\n  console.log(v2ProjectListResponse);\n}\n```",
+    perLanguage: {
+      go: {
+        method: 'client.V2Projects.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.V2Projects.List(context.TODO(), llamacloud.V2ProjectListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      python: {
+        method: 'v2_projects.list',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.v2_projects.list()\npage = page.items[0]\nprint(page.id)',
+      },
+      java: {
+        method: 'v2Projects().list',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.v2projects.V2ProjectListPage;\nimport ai.llamaindex.llamacloud.models.v2projects.V2ProjectListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        V2ProjectListPage page = client.v2Projects().list();\n    }\n}',
+      },
+      typescript: {
+        method: 'client.v2Projects.list',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const v2ProjectListResponse of client.v2Projects.list()) {\n  console.log(v2ProjectListResponse.id);\n}",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/projects \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'v2_projects list',
+        example: "llp v2-projects list \\\n  --api-key 'My API Key'",
+      },
+    },
+  },
+  {
+    name: 'get',
+    endpoint: '/api/v2/projects/{project_id}',
+    httpMethod: 'get',
+    summary: 'Get Project',
+    description: 'Get a project by ID.',
+    stainlessPath: '(resource) v2_projects > (method) get',
+    qualified: 'client.v2Projects.get',
+    params: ['project_id: string;', 'organization_id?: string;'],
+    response:
+      '{ id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }',
+    markdown:
+      "## get\n\n`client.v2Projects.get(project_id: string, organization_id?: string): { id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }`\n\n**get** `/api/v2/projects/{project_id}`\n\nGet a project by ID.\n\n### Parameters\n\n- `project_id: string`\n\n- `organization_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; organization_id: string; created_at?: string; is_default?: boolean; updated_at?: string; }`\n  API response schema for a project.\n\n  - `id: string`\n  - `name: string`\n  - `organization_id: string`\n  - `created_at?: string`\n  - `is_default?: boolean`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst v2Project = await client.v2Projects.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(v2Project);\n```",
+    perLanguage: {
+      go: {
+        method: 'client.V2Projects.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tv2Project, err := client.V2Projects.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloud.V2ProjectGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", v2Project.ID)\n}\n',
+      },
+      python: {
+        method: 'v2_projects.get',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nv2_project = client.v2_projects.get(\n    project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(v2_project.id)',
+      },
+      java: {
+        method: 'v2Projects().get',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.v2projects.V2ProjectGetParams;\nimport ai.llamaindex.llamacloud.models.v2projects.V2ProjectGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        V2ProjectGetResponse v2Project = client.v2Projects().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      typescript: {
+        method: 'client.v2Projects.get',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst v2Project = await client.v2Projects.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(v2Project.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/projects/$PROJECT_ID \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'v2_projects get',
+        example:
+          "llp v2-projects get \\\n  --api-key 'My API Key' \\\n  --project-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/api/v1/job-data-points',
+    httpMethod: 'get',
+    summary: 'Query project job data points',
+    description: 'Returns paginated job data points for the current project.',
+    stainlessPath: '(resource) job_data_points > (method) list',
+    qualified: 'client.jobDataPoints.list',
+    params: [
+      "job_type: 'classify' | 'extract' | 'parse';",
+      'created_at_on_or_after?: string;',
+      'created_at_on_or_before?: string;',
+      'hours?: number;',
+      'organization_id?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+      'project_id?: string;',
+      'status?: string[];',
+    ],
+    response:
+      '{ id: string; created_at: string; custom_tag: string; project_id: string; status: string; updated_at: string; error_message?: string; state_transitions?: { cancelled_at?: string; completed_at?: string; failed_at?: string; pending_at?: string; running_at?: string; throttled_at?: string; }; }',
+    markdown:
+      "## list\n\n`client.jobDataPoints.list(job_type: 'classify' | 'extract' | 'parse', created_at_on_or_after?: string, created_at_on_or_before?: string, hours?: number, organization_id?: string, page_size?: number, page_token?: string, project_id?: string, status?: string[]): { id: string; created_at: string; custom_tag: string; project_id: string; status: string; updated_at: string; error_message?: string; state_transitions?: object; }`\n\n**get** `/api/v1/job-data-points`\n\nReturns paginated job data points for the current project.\n\n### Parameters\n\n- `job_type: 'classify' | 'extract' | 'parse'`\n  Job type to query.\n\n- `created_at_on_or_after?: string`\n  Include items created at or after this timestamp (inclusive)\n\n- `created_at_on_or_before?: string`\n  Include items created at or before this timestamp (inclusive)\n\n- `hours?: number`\n  Hours of history to include.\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  Number of items per page.\n\n- `page_token?: string`\n  Cursor token for the next page.\n\n- `project_id?: string`\n\n- `status?: string[]`\n  Filter by status.\n\n### Returns\n\n- `{ id: string; created_at: string; custom_tag: string; project_id: string; status: string; updated_at: string; error_message?: string; state_transitions?: { cancelled_at?: string; completed_at?: string; failed_at?: string; pending_at?: string; running_at?: string; throttled_at?: string; }; }`\n  A job data point.\n\n  - `id: string`\n  - `created_at: string`\n  - `custom_tag: string`\n  - `project_id: string`\n  - `status: string`\n  - `updated_at: string`\n  - `error_message?: string`\n  - `state_transitions?: { cancelled_at?: string; completed_at?: string; failed_at?: string; pending_at?: string; running_at?: string; throttled_at?: string; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const jobDataPoint of client.jobDataPoints.list({ job_type: 'parse' })) {\n  console.log(jobDataPoint);\n}\n```",
+    perLanguage: {
+      go: {
+        method: 'client.JobDataPoints.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.JobDataPoints.List(context.TODO(), llamacloud.JobDataPointListParams{\n\t\tJobType: llamacloud.JobDataPointListParamsJobTypeParse,\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      python: {
+        method: 'job_data_points.list',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.job_data_points.list(\n    job_type="parse",\n)\npage = page.items[0]\nprint(page.id)',
+      },
+      java: {
+        method: 'jobDataPoints().list',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.jobdatapoints.JobDataPointListPage;\nimport ai.llamaindex.llamacloud.models.jobdatapoints.JobDataPointListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobDataPointListParams params = JobDataPointListParams.builder()\n            .jobType(JobDataPointListParams.JobType.PARSE)\n            .build();\n        JobDataPointListPage page = client.jobDataPoints().list(params);\n    }\n}',
+      },
+      typescript: {
+        method: 'client.jobDataPoints.list',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const jobDataPoint of client.jobDataPoints.list({ job_type: 'parse' })) {\n  console.log(jobDataPoint.id);\n}",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/job-data-points \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'job_data_points list',
+        example: "llp job-data-points list \\\n  --api-key 'My API Key' \\\n  --job-type parse",
       },
     },
   },

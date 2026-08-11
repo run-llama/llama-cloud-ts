@@ -90,15 +90,23 @@ export {
   type File,
   type PresignedURL,
   type FileCreateResponse,
+  type FileRetrieveResponse,
   type FileListResponse,
   type FileQueryResponse,
   type FileCreateParams,
   type FileQueryParams,
   type FileListParams,
+  type FileRetrieveParams,
   type FileDeleteParams,
   type FileGetParams,
   type FileListResponsesPaginatedCursor,
 } from './files';
+export {
+  JobDataPoints,
+  type JobDataPoint,
+  type JobDataPointListParams,
+  type JobDataPointsPaginatedCursor,
+} from './job-data-points';
 export {
   Parsing,
   type BBox,
@@ -224,6 +232,14 @@ export {
   type SplitCancelParams,
   type SplitListResponsesPaginatedCursor,
 } from './split';
+export {
+  V2Projects,
+  type V2ProjectListResponse,
+  type V2ProjectGetResponse,
+  type V2ProjectListParams,
+  type V2ProjectGetParams,
+  type V2ProjectListResponsesPaginatedCursor,
+} from './v2-projects';
 export {
   WebhookConfigs,
   type WebhookConfigCreate,

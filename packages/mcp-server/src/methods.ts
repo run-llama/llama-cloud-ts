@@ -29,6 +29,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/files',
   },
   {
+    clientCallName: 'client.files.retrieve',
+    fullyQualifiedName: 'files.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/files/{file_id}',
+  },
+  {
     clientCallName: 'client.files.delete',
     fullyQualifiedName: 'files.delete',
     httpMethod: 'delete',
@@ -315,6 +321,24 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'projects.get',
     httpMethod: 'get',
     httpPath: '/api/v1/projects/{project_id}',
+  },
+  {
+    clientCallName: 'client.v2Projects.list',
+    fullyQualifiedName: 'v2Projects.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/projects',
+  },
+  {
+    clientCallName: 'client.v2Projects.get',
+    fullyQualifiedName: 'v2Projects.get',
+    httpMethod: 'get',
+    httpPath: '/api/v2/projects/{project_id}',
+  },
+  {
+    clientCallName: 'client.jobDataPoints.list',
+    fullyQualifiedName: 'jobDataPoints.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/job-data-points',
   },
   {
     clientCallName: 'client.dataSinks.list',
