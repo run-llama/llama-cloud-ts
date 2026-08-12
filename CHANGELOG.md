@@ -2,6 +2,12 @@
 
 ## [2.14.0](https://github.com/run-llama/llama-parse-ts/compare/v2.13.0...v2.14.0) (2026-08-12)
 
+> [!WARNING]
+> **Breaking change:** `files.get()` is renamed to `files.content()`. It returns the presigned download URL, as before.
+> `client.files.get(fileID)` no longer exists — replace it with `client.files.content(fileID)`.
+> `client.files.retrieve(fileID)` returns the file resource itself.
+> Released as a minor, not a major, because a major would force the sibling Go SDK's module path to `/v2`.
+
 
 ### Features
 
