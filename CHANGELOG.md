@@ -1,5 +1,53 @@
 # Changelog
 
+## [2.14.0](https://github.com/run-llama/llama-parse-ts/compare/v2.13.0...v2.14.0) (2026-08-12)
+
+
+### Features
+
+* **classify:** accept webhook_configuration_ids on classify job create (LI-8138) ([#22943](https://github.com/run-llama/llama-parse-ts/issues/22943)) ([7b474a5](https://github.com/run-llama/llama-parse-ts/commit/7b474a5c2e458467ddd752607485c83e4a73a625))
+* **connector:** API + service layer for attaching a subscription to a directory ([#23502](https://github.com/run-llama/llama-parse-ts/issues/23502)) ([f51c4ce](https://github.com/run-llama/llama-parse-ts/commit/f51c4cebab03b707802dcb5a4097f5a03598cf80))
+* **connectors:** expose a directory's connector subscription, and resolve connected accounts ([#23831](https://github.com/run-llama/llama-parse-ts/issues/23831)) ([a193c21](https://github.com/run-llama/llama-parse-ts/commit/a193c21976b53bb1424eb7ed475725922be06d18))
+* **extract:** accept webhook_configuration_ids on extract job create (LI-8138) ([#22907](https://github.com/run-llama/llama-parse-ts/issues/22907)) ([1c38e86](https://github.com/run-llama/llama-parse-ts/commit/1c38e86f338254babd6020a7f10c878c82c7cabc))
+* **extract:** pin turbo to a stable dated version; accept citations+confidence, reject only granular bboxes ([#22965](https://github.com/run-llama/llama-parse-ts/issues/22965)) ([8eb70ee](https://github.com/run-llama/llama-parse-ts/commit/8eb70eede1357611f619a4b17e62862e2ad80a52))
+* **extract:** reject parse_tier for parse-free tiers + pin turbo fallback to fast ([#22919](https://github.com/run-llama/llama-parse-ts/issues/22919)) ([55eef35](https://github.com/run-llama/llama-parse-ts/commit/55eef355d00df585a7522e7fb1a29482bc44a149))
+* **files:** rename files.get to files.content and restore files.retrieve ([5844acb](https://github.com/run-llama/llama-parse-ts/commit/5844acb358ba60d6ce0d00a58d56f92b862c9199))
+* **forms:** emit bboxes in v2 forms output ([#23974](https://github.com/run-llama/llama-parse-ts/issues/23974)) ([04c2fb9](https://github.com/run-llama/llama-parse-ts/commit/04c2fb9f19a50d44b582ac12023fd74dc24f8c2f))
+* **parse,extract:** add expand=usage returning credits billed per job ([#23709](https://github.com/run-llama/llama-parse-ts/issues/23709)) ([b7db759](https://github.com/run-llama/llama-parse-ts/commit/b7db75915006d37f77a8403d1983f1ce6eec59e7))
+* **parse:** make the output.pdf artifact opt-in on Parse v2 (output_options.save_output_pdf) ([#23510](https://github.com/run-llama/llama-parse-ts/issues/23510)) ([ed01411](https://github.com/run-llama/llama-parse-ts/commit/ed0141190f50719518ca26b9f0cdc609deefb969))
+* **split:** accept webhook_configuration_ids on split job create (LI-8138) ([#22940](https://github.com/run-llama/llama-parse-ts/issues/22940)) ([ff899bf](https://github.com/run-llama/llama-parse-ts/commit/ff899bf24b59327b089bba667ddd69aa10568524))
+
+
+### Bug Fixes
+
+* **llamaparse:** retry qwen context-overflow 400s with a shrinking OCR anchor ([#23817](https://github.com/run-llama/llama-parse-ts/issues/23817)) ([5d49da5](https://github.com/run-llama/llama-parse-ts/commit/5d49da56c757d741a2004d79ae93a429f7e552a6))
+
+
+### Chores
+
+* **api:** regenerate OpenAPI specs for new agentic parse version ([#22763](https://github.com/run-llama/llama-parse-ts/issues/22763)) ([ddd8f4b](https://github.com/run-llama/llama-parse-ts/commit/ddd8f4b79c678b655ec8ac8a197b1eee0e4e771c))
+
+
+### Documentation
+
+* **parse:** shorten the images_to_save field description ([#23807](https://github.com/run-llama/llama-parse-ts/issues/23807)) ([7f7fbb0](https://github.com/run-llama/llama-parse-ts/commit/7f7fbb0b9b4d20f511e236761393efc228df69ef))
+
+
+### Refactors
+
+* remove Depends(get_db) from permissions endpoints ([#22635](https://github.com/run-llama/llama-parse-ts/issues/22635)) ([840a488](https://github.com/run-llama/llama-parse-ts/commit/840a48846d4124a583ecaa6a5fb91bc9f9dae7fe))
+
+
+### Build System
+
+* **deps:** sync yarn.lock to run-llama/tsc-multi mirror; drop jq-web ([44d5322](https://github.com/run-llama/llama-parse-ts/commit/44d53228b6401a0778917f3dead8902515055f74))
+* **deps:** sync yarn.lock to run-llama/tsc-multi mirror; drop jq-web ([a425fc4](https://github.com/run-llama/llama-parse-ts/commit/a425fc414a896a27006ef4202ba90045e114532a))
+* **deps:** use run-llama/tsc-multi mirror; remove unused jq-web ([757456f](https://github.com/run-llama/llama-parse-ts/commit/757456f24468ca3881038e903eba39b89c7e202f))
+* **deps:** use run-llama/tsc-multi mirror; remove unused jq-web ([2be1f64](https://github.com/run-llama/llama-parse-ts/commit/2be1f645071cd5a8be9e84c83d2d48dfba49d56f))
+* **deps:** use run-llama/tsc-multi mirror; remove unused jq-web ([5e689a7](https://github.com/run-llama/llama-parse-ts/commit/5e689a7b6548c4bbdf7174185e2fadcfcef570f6))
+* **deps:** use run-llama/tsc-multi mirror; remove unused jq-web ([e645ea7](https://github.com/run-llama/llama-parse-ts/commit/e645ea745f79a3ad83777446cfbcd6f993ade334))
+* **deps:** use run-llama/tsc-multi mirror; remove unused jq-web (sealed as custom code) ([e713f07](https://github.com/run-llama/llama-parse-ts/commit/e713f076cb3862c977fe0a3067ad8e821db4590a))
+
 ## [2.13.0](https://github.com/run-llama/llama-parse-ts/compare/v2.12.0...v2.13.0) (2026-07-22)
 
 
