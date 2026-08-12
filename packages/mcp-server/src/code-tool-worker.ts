@@ -108,9 +108,9 @@ function getTSDiagnostics(code: string): string[] {
 
 const fuse = new Fuse(
   [
+    'client.files.content',
     'client.files.create',
     'client.files.delete',
-    'client.files.get',
     'client.files.list',
     'client.files.query',
     'client.files.retrieve',

@@ -98,7 +98,7 @@ export {
   type FileListParams,
   type FileRetrieveParams,
   type FileDeleteParams,
-  type FileGetParams,
+  type FileContentParams,
   type FileListResponsesPaginatedCursor,
 } from './files';
 export {

@@ -41,8 +41,8 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/files/{file_id}',
   },
   {
-    clientCallName: 'client.files.get',
-    fullyQualifiedName: 'files.get',
+    clientCallName: 'client.files.content',
+    fullyQualifiedName: 'files.content',
     httpMethod: 'get',
     httpPath: '/api/v1/beta/files/{file_id}/content',
   },

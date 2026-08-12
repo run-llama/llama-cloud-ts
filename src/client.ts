@@ -117,10 +117,10 @@ import {
 } from './resources/extract';
 import {
   File,
+  FileContentParams,
   FileCreateParams,
   FileCreateResponse,
   FileDeleteParams,
-  FileGetParams,
   FileListParams,
   FileListResponse,
   FileListResponsesPaginatedCursor,
@@ -1115,7 +1115,7 @@ export declare namespace LlamaCloud {
     type FileListParams as FileListParams,
     type FileRetrieveParams as FileRetrieveParams,
     type FileDeleteParams as FileDeleteParams,
-    type FileGetParams as FileGetParams,
+    type FileContentParams as FileContentParams,
   };
 
   export {

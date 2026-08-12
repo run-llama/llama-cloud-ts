@@ -88,9 +88,9 @@ export class Files extends APIResource {
   /**
    * Get a presigned URL to download the file content.
    */
-  get(
+  content(
     fileID: string,
-    query: FileGetParams | null | undefined = {},
+    query: FileContentParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<PresignedURL> {
     return this._client.get(path`/api/v1/beta/files/${fileID}/content`, { query, ...options });
@@ -580,7 +580,7 @@ export interface FileDeleteParams {
   project_id?: string | null;
 }
 
-export interface FileGetParams {
+export interface FileContentParams {
   expires_at_seconds?: number | null;
 
   organization_id?: string | null;
@@ -602,6 +602,6 @@ export declare namespace Files {
     type FileListParams as FileListParams,
     type FileRetrieveParams as FileRetrieveParams,
     type FileDeleteParams as FileDeleteParams,
-    type FileGetParams as FileGetParams,
+    type FileContentParams as FileContentParams,
   };
 }

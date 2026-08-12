@@ -135,8 +135,8 @@ describe('resource files', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('get', async () => {
-    const responsePromise = client.files.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('content', async () => {
+    const responsePromise = client.files.content('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -147,10 +147,10 @@ describe('resource files', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('get: request options and params are passed correctly', async () => {
+  test.skip('content: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.files.get(
+      client.files.content(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         {
           expires_at_seconds: 0,

@@ -297,13 +297,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
-    name: 'get',
+    name: 'content',
     endpoint: '/api/v1/beta/files/{file_id}/content',
     httpMethod: 'get',
     summary: 'Read File Content',
     description: 'Get a presigned URL to download the file content.',
-    stainlessPath: '(resource) files > (method) get',
-    qualified: 'client.files.get',
+    stainlessPath: '(resource) files > (method) content',
+    qualified: 'client.files.content',
     params: [
       'file_id: string;',
       'expires_at_seconds?: number;',
@@ -312,36 +312,36 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     ],
     response: '{ expires_at: string; url: string; form_fields?: object; }',
     markdown:
-      "## get\n\n`client.files.get(file_id: string, expires_at_seconds?: number, organization_id?: string, project_id?: string): { expires_at: string; url: string; form_fields?: object; }`\n\n**get** `/api/v1/beta/files/{file_id}/content`\n\nGet a presigned URL to download the file content.\n\n### Parameters\n\n- `file_id: string`\n\n- `expires_at_seconds?: number`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ expires_at: string; url: string; form_fields?: object; }`\n  Schema for a presigned URL.\n\n  - `expires_at: string`\n  - `url: string`\n  - `form_fields?: object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst presignedURL = await client.files.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(presignedURL);\n```",
+      "## content\n\n`client.files.content(file_id: string, expires_at_seconds?: number, organization_id?: string, project_id?: string): { expires_at: string; url: string; form_fields?: object; }`\n\n**get** `/api/v1/beta/files/{file_id}/content`\n\nGet a presigned URL to download the file content.\n\n### Parameters\n\n- `file_id: string`\n\n- `expires_at_seconds?: number`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ expires_at: string; url: string; form_fields?: object; }`\n  Schema for a presigned URL.\n\n  - `expires_at: string`\n  - `url: string`\n  - `form_fields?: object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst presignedURL = await client.files.content('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(presignedURL);\n```",
     perLanguage: {
       go: {
-        method: 'client.Files.Get',
+        method: 'client.Files.Content',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpresignedURL, err := client.Files.Get(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloud.FileGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", presignedURL.ExpiresAt)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpresignedURL, err := client.Files.Content(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloud.FileContentParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", presignedURL.ExpiresAt)\n}\n',
       },
       python: {
-        method: 'files.get',
+        method: 'files.content',
         example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npresigned_url = client.files.get(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(presigned_url.expires_at)',
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npresigned_url = client.files.content(\n    file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(presigned_url.expires_at)',
       },
       java: {
-        method: 'files().get',
+        method: 'files().content',
         example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.files.FileGetParams;\nimport ai.llamaindex.llamacloud.models.files.PresignedUrl;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PresignedUrl presignedUrl = client.files().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.files.FileContentParams;\nimport ai.llamaindex.llamacloud.models.files.PresignedUrl;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PresignedUrl presignedUrl = client.files().content("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
       typescript: {
-        method: 'client.files.get',
+        method: 'client.files.content',
         example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst presignedURL = await client.files.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(presignedURL.expires_at);",
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst presignedURL = await client.files.content('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(presignedURL.expires_at);",
       },
       http: {
         example:
           'curl https://api.cloud.llamaindex.ai/api/v1/beta/files/$FILE_ID/content \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
       },
       cli: {
-        method: 'files get',
+        method: 'files content',
         example:
-          "llp files get \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "llp files content \\\n  --api-key 'My API Key' \\\n  --file-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
     },
   },
