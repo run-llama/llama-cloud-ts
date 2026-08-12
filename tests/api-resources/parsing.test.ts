@@ -80,6 +80,7 @@ describe('resource parsing', () => {
         tables_as_spreadsheet: { enable: true, guess_sheet_name: true },
       },
       page_ranges: { max_pages: 1, target_pages: 'target_pages' },
+      preset: 'preset',
       processing_control: {
         job_failure_conditions: {
           allowed_page_failure_ratio: 1,
