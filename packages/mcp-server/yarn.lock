@@ -2860,9 +2860,6 @@ joycon@^3.1.1:
   resolved "https://registry.yarnpkg.com/joycon/-/joycon-3.1.1.tgz#bce8596d6ae808f8b68168f5fc69280996894f03"
   integrity sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==
 
-"jq-web@https://github.com/stainless-api/jq-web/releases/download/v0.8.8/jq-web.tar.gz":
-  version "0.8.8"
-  resolved "https://github.com/stainless-api/jq-web/releases/download/v0.8.8/jq-web.tar.gz#7849ef64bdfc28f70cbfc9888f886860e96da10d"
 
 js-tokens@^4.0.0:
   version "4.0.0"
@@ -3930,9 +3927,9 @@ ts-node@^10.5.0:
     v8-compile-cache-lib "^3.0.1"
     yn "3.1.1"
 
-"tsc-multi@https://github.com/stainless-api/tsc-multi/releases/download/v1.1.11/tsc-multi.tgz":
+"tsc-multi@https://github.com/run-llama/tsc-multi/releases/download/v1.1.11/tsc-multi-1.1.11.tgz":
   version "1.1.11"
-  resolved "https://github.com/stainless-api/tsc-multi/releases/download/v1.1.11/tsc-multi.tgz#010247051be13b55abdc98f787c017285149f4f2"
+  resolved "https://github.com/run-llama/tsc-multi/releases/download/v1.1.11/tsc-multi-1.1.11.tgz#010247051be13b55abdc98f787c017285149f4f2"
   dependencies:
     debug "^4.3.7"
     fast-glob "^3.3.2"

@@ -5,10 +5,12 @@ export {
   Batches,
   type BatchCreateResponse,
   type BatchListResponse,
+  type BatchCancelResponse,
   type BatchGetResponse,
   type BatchCreateParams,
   type BatchListParams,
   type BatchGetParams,
+  type BatchCancelParams,
   type BatchListResponsesPaginatedCursor,
 } from './batches';
 export { Beta } from './beta/beta';
@@ -20,10 +22,12 @@ export {
   type ClassifyResult,
   type ClassifyCreateResponse,
   type ClassifyListResponse,
+  type ClassifyCancelResponse,
   type ClassifyGetResponse,
   type ClassifyCreateParams,
   type ClassifyListParams,
   type ClassifyGetParams,
+  type ClassifyCancelParams,
   type ClassifyListResponsesPaginatedCursor,
 } from './classify';
 export {
@@ -76,6 +80,7 @@ export {
   type ExtractListParams,
   type ExtractGetParams,
   type ExtractDeleteParams,
+  type ExtractCancelParams,
   type ExtractValidateSchemaParams,
   type ExtractGenerateSchemaParams,
   type ExtractV2JobsPaginatedCursor,
@@ -85,15 +90,23 @@ export {
   type File,
   type PresignedURL,
   type FileCreateResponse,
+  type FileRetrieveResponse,
   type FileListResponse,
   type FileQueryResponse,
   type FileCreateParams,
   type FileQueryParams,
   type FileListParams,
+  type FileRetrieveParams,
   type FileDeleteParams,
-  type FileGetParams,
+  type FileContentParams,
   type FileListResponsesPaginatedCursor,
 } from './files';
+export {
+  JobDataPoints,
+  type JobDataPoint,
+  type JobDataPointListParams,
+  type JobDataPointsPaginatedCursor,
+} from './job-data-points';
 export {
   Parsing,
   type BBox,
@@ -121,10 +134,13 @@ export {
   type TextItem,
   type ParsingCreateResponse,
   type ParsingListResponse,
+  type ParsingCancelResponse,
   type ParsingGetResponse,
+  type ParsingListVersionsResponse,
   type ParsingCreateParams,
   type ParsingGetParams,
   type ParsingListParams,
+  type ParsingCancelParams,
   type ParsingListResponsesPaginatedCursor,
 } from './parsing';
 export {
@@ -202,3 +218,36 @@ export {
   type SheetGetResultTableParams,
   type SheetDeleteJobParams,
 } from './sheets';
+export {
+  Split,
+  type SplitCreateResponse,
+  type SplitListResponse,
+  type SplitDeleteResponse,
+  type SplitCancelResponse,
+  type SplitGetResponse,
+  type SplitCreateParams,
+  type SplitListParams,
+  type SplitGetParams,
+  type SplitDeleteParams,
+  type SplitCancelParams,
+  type SplitListResponsesPaginatedCursor,
+} from './split';
+export {
+  V2Projects,
+  type V2ProjectListResponse,
+  type V2ProjectGetResponse,
+  type V2ProjectListParams,
+  type V2ProjectGetParams,
+  type V2ProjectListResponsesPaginatedCursor,
+} from './v2-projects';
+export {
+  WebhookConfigs,
+  type WebhookConfigCreate,
+  type WebhookConfigResponse,
+  type WebhookConfigListResponse,
+  type WebhookConfigCreateParams,
+  type WebhookConfigListParams,
+  type WebhookConfigRetrieveParams,
+  type WebhookConfigUpdateParams,
+  type WebhookConfigDeleteParams,
+} from './webhook-configs';

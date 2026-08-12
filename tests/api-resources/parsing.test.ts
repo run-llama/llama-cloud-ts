@@ -62,6 +62,7 @@ describe('resource parsing', () => {
         images_to_save: ['embedded'],
         markdown: {
           annotate_links: true,
+          annotate_revisions: true,
           inline_images: true,
           tables: {
             compact_markdown_tables: true,
@@ -70,6 +71,7 @@ describe('resource parsing', () => {
             output_tables_as_markdown: true,
           },
         },
+        save_output_pdf: true,
         spatial_text: {
           do_not_unroll_columns: true,
           preserve_layout_alignment_across_pages: true,
@@ -240,5 +242,44 @@ describe('resource parsing', () => {
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancel', async () => {
+    const responsePromise = client.parsing.cancel('job_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancel: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.parsing.cancel(
+        'job_id',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('listVersions', async () => {
+    const responsePromise = client.parsing.listVersions();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });

@@ -45,6 +45,28 @@ export class Documents extends APIResource {
   }
 
   /**
+   * Count the documents in a pipeline, grouped by ingestion status.
+   *
+   * Counts reflect each document's last recorded status rather than a freshly
+   * computed one, so a document that changed status in the last few moments may
+   * still be counted under its previous one. Use
+   * `GET /pipelines/{pipeline_id}/documents/{document_id}/status` when a single
+   * document's status has to be up to the moment.
+   *
+   * @deprecated
+   */
+  getStatusCounts(
+    pipelineID: string,
+    query: DocumentGetStatusCountsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<DocumentGetStatusCountsResponse> {
+    return this._client.get(path`/api/v1/pipelines/${pipelineID}/documents/status-counts`, {
+      query,
+      ...options,
+    });
+  }
+
+  /**
    * Return a single document for a pipeline.
    *
    * @deprecated
@@ -270,6 +292,41 @@ export type DocumentCreateResponse = Array<CloudDocument>;
 
 export type DocumentGetChunksResponse = Array<TextNode>;
 
+/**
+ * Counts of the documents in a pipeline, grouped by ingestion status.
+ */
+export interface DocumentGetStatusCountsResponse {
+  /**
+   * Number of documents per ingestion status; every status is present.
+   */
+  counts: { [key: string]: number };
+
+  /**
+   * ID of the pipeline the documents belong to.
+   */
+  pipeline_id: string;
+
+  /**
+   * Total number of documents counted.
+   */
+  total_count: number;
+
+  /**
+   * Data source the counts were restricted to.
+   */
+  data_source_id?: string | null;
+
+  /**
+   * File the counts were restricted to.
+   */
+  file_id?: string | null;
+
+  /**
+   * Whether only directly uploaded documents were counted.
+   */
+  only_direct_upload?: boolean;
+}
+
 export type DocumentSyncResponse = unknown;
 
 export type DocumentUpsertResponse = Array<CloudDocument>;
@@ -286,6 +343,14 @@ export interface DocumentListParams extends PaginatedCloudDocumentsParams {
   only_direct_upload?: boolean | null;
 
   status_refresh_policy?: 'cached' | 'ttl';
+}
+
+export interface DocumentGetStatusCountsParams {
+  data_source_id?: string | null;
+
+  file_id?: string | null;
+
+  only_direct_upload?: boolean;
 }
 
 export interface DocumentGetParams {
@@ -319,11 +384,13 @@ export declare namespace Documents {
     type TextNode as TextNode,
     type DocumentCreateResponse as DocumentCreateResponse,
     type DocumentGetChunksResponse as DocumentGetChunksResponse,
+    type DocumentGetStatusCountsResponse as DocumentGetStatusCountsResponse,
     type DocumentSyncResponse as DocumentSyncResponse,
     type DocumentUpsertResponse as DocumentUpsertResponse,
     type CloudDocumentsPaginatedCloudDocuments as CloudDocumentsPaginatedCloudDocuments,
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
+    type DocumentGetStatusCountsParams as DocumentGetStatusCountsParams,
     type DocumentGetParams as DocumentGetParams,
     type DocumentDeleteParams as DocumentDeleteParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,

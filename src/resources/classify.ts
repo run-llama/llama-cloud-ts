@@ -80,6 +80,29 @@ export class Classify extends APIResource {
   }
 
   /**
+   * Cancel a running classify job.
+   *
+   * Stops processing and marks the job as CANCELLED. Returns the updated job. Jobs
+   * already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.
+   *
+   * @example
+   * ```ts
+   * const response = await client.classify.cancel('job_id');
+   * ```
+   */
+  cancel(
+    jobID: string,
+    params: ClassifyCancelParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ClassifyCancelResponse> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.post(path`/api/v2/classify/${jobID}/cancel`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
    * Wait for a classify job to complete by polling until it reaches a terminal state.
    *
    * @param jobID - The ID of the classify job to wait for
@@ -287,6 +310,11 @@ export interface ClassifyCreateRequest {
   transaction_id?: string | null;
 
   /**
+   * IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
+
+  /**
    * Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<ClassifyCreateRequest.WebhookConfiguration> | null;
@@ -302,6 +330,11 @@ export namespace ClassifyCreateRequest {
      * events are delivered.
      */
     webhook_events?: Array<
+      | 'batch.cancelled'
+      | 'batch.error'
+      | 'batch.pending'
+      | 'batch.running'
+      | 'batch.success'
       | 'classify.cancelled'
       | 'classify.error'
       | 'classify.partial_success'
@@ -530,6 +563,81 @@ export interface ClassifyListResponse {
 /**
  * Response for a classify job.
  */
+export interface ClassifyCancelResponse {
+  /**
+   * Unique identifier
+   */
+  id: string;
+
+  /**
+   * Classify configuration used for this job
+   */
+  configuration: ClassifyConfiguration;
+
+  /**
+   * Whether the input was a file or parse job (FILE or PARSE_JOB)
+   */
+  document_input_type: 'file_id' | 'parse_job_id' | 'url';
+
+  /**
+   * ID of the input file or parse job
+   */
+  file_input: string;
+
+  /**
+   * Project this job belongs to
+   */
+  project_id: string;
+
+  /**
+   * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
+   */
+  status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
+
+  /**
+   * User who created this job
+   */
+  user_id: string;
+
+  /**
+   * Product configuration ID
+   */
+  configuration_id?: string | null;
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Error message if job failed
+   */
+  error_message?: string | null;
+
+  /**
+   * Associated parse job ID
+   */
+  parse_job_id?: string | null;
+
+  /**
+   * Result of classifying a document.
+   */
+  result?: ClassifyResult | null;
+
+  /**
+   * Idempotency key
+   */
+  transaction_id?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
+/**
+ * Response for a classify job.
+ */
 export interface ClassifyGetResponse {
   /**
    * Unique identifier
@@ -645,6 +753,11 @@ export interface ClassifyCreateParams {
   transaction_id?: string | null;
 
   /**
+   * Body param: IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
+
+  /**
    * Body param: Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<ClassifyCreateParams.WebhookConfiguration> | null;
@@ -660,6 +773,11 @@ export namespace ClassifyCreateParams {
      * events are delivered.
      */
     webhook_events?: Array<
+      | 'batch.cancelled'
+      | 'batch.error'
+      | 'batch.pending'
+      | 'batch.running'
+      | 'batch.success'
       | 'classify.cancelled'
       | 'classify.error'
       | 'classify.partial_success'
@@ -752,6 +870,12 @@ export interface ClassifyGetParams {
   project_id?: string | null;
 }
 
+export interface ClassifyCancelParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export declare namespace Classify {
   export {
     type ClassifyConfiguration as ClassifyConfiguration,
@@ -759,10 +883,12 @@ export declare namespace Classify {
     type ClassifyResult as ClassifyResult,
     type ClassifyCreateResponse as ClassifyCreateResponse,
     type ClassifyListResponse as ClassifyListResponse,
+    type ClassifyCancelResponse as ClassifyCancelResponse,
     type ClassifyGetResponse as ClassifyGetResponse,
     type ClassifyListResponsesPaginatedCursor as ClassifyListResponsesPaginatedCursor,
     type ClassifyCreateParams as ClassifyCreateParams,
     type ClassifyListParams as ClassifyListParams,
     type ClassifyGetParams as ClassifyGetParams,
+    type ClassifyCancelParams as ClassifyCancelParams,
   };
 }

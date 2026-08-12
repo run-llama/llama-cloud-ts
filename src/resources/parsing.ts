@@ -72,7 +72,8 @@ export class Parsing extends APIResource {
    * - `text` — plain text output
    * - `markdown` — markdown output
    * - `items` — structured page-by-page output
-   * - `job_metadata` — usage and processing details
+   * - `job_metadata` — processing details
+   * - `usage` — credits billed against the job
    *
    * Content metadata fields (e.g. `text_content_metadata`) return presigned URLs for
    * downloading large results.
@@ -112,6 +113,41 @@ export class Parsing extends APIResource {
       query,
       ...options,
     });
+  }
+
+  /**
+   * Cancel a running parse job.
+   *
+   * Stops processing and marks the job as CANCELLED. Returns the updated job. Jobs
+   * already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.
+   *
+   * @example
+   * ```ts
+   * const response = await client.parsing.cancel('job_id');
+   * ```
+   */
+  cancel(
+    jobID: string,
+    params: ParsingCancelParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ParsingCancelResponse> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.post(path`/api/v2/parse/${jobID}/cancel`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
+   * List the parse versions accepted by each tier.
+   *
+   * @example
+   * ```ts
+   * const response = await client.parsing.listVersions();
+   * ```
+   */
+  listVersions(options?: RequestOptions): APIPromise<ParsingListVersionsResponse> {
+    return this._client.get('/api/v2/parse/versions', options);
   }
 
   /**
@@ -402,6 +438,11 @@ export interface FormField {
   id?: string | null;
 
   /**
+   * Bounding boxes of the field's fillable area on the page.
+   */
+  bbox?: Array<BBox> | null;
+
+  /**
    * True for a printed-but-blank text field (mutually exclusive with value)
    */
   isEmpty?: boolean | null;
@@ -514,6 +555,11 @@ export interface FormTable {
    * Identifier printed on the form, if any
    */
   id?: string | null;
+
+  /**
+   * Bounding boxes of the table's fillable regions on the page.
+   */
+  bbox?: Array<BBox> | null;
 
   /**
    * Printed column headers in order, if any
@@ -1089,9 +1135,26 @@ export interface ParsingCreateResponse {
   updated_at?: string | null;
 
   /**
+   * Usage recorded against a job.
+   */
+  usage?: ParsingCreateResponse.Usage | null;
+
+  /**
    * Key/value tags associated with this job.
    */
   user_metadata?: { [key: string]: string } | null;
+}
+
+export namespace ParsingCreateResponse {
+  /**
+   * Usage recorded against a job.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+  }
 }
 
 /**
@@ -1139,9 +1202,93 @@ export interface ParsingListResponse {
   updated_at?: string | null;
 
   /**
+   * Usage recorded against a job.
+   */
+  usage?: ParsingListResponse.Usage | null;
+
+  /**
    * Key/value tags associated with this job.
    */
   user_metadata?: { [key: string]: string } | null;
+}
+
+export namespace ParsingListResponse {
+  /**
+   * Usage recorded against a job.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+  }
+}
+
+/**
+ * A parse job.
+ */
+export interface ParsingCancelResponse {
+  /**
+   * Unique parse job identifier
+   */
+  id: string;
+
+  /**
+   * Project this job belongs to
+   */
+  project_id: string;
+
+  /**
+   * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
+   */
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Error details when status is FAILED
+   */
+  error_message?: string | null;
+
+  /**
+   * Optional display name for this parse job
+   */
+  name?: string | null;
+
+  /**
+   * Parsing tier used for this job
+   */
+  tier?: string | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+
+  /**
+   * Usage recorded against a job.
+   */
+  usage?: ParsingCancelResponse.Usage | null;
+
+  /**
+   * Key/value tags associated with this job.
+   */
+  user_metadata?: { [key: string]: string } | null;
+}
+
+export namespace ParsingCancelResponse {
+  /**
+   * Usage recorded against a job.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+  }
 }
 
 /**
@@ -1255,9 +1402,26 @@ export namespace ParsingGetResponse {
     updated_at?: string | null;
 
     /**
+     * Usage recorded against a job.
+     */
+    usage?: Job.Usage | null;
+
+    /**
      * Key/value tags associated with this job.
      */
     user_metadata?: { [key: string]: string } | null;
+  }
+
+  export namespace Job {
+    /**
+     * Usage recorded against a job.
+     */
+    export interface Usage {
+      /**
+       * Total credits billed against this job. Null until billing has recorded it.
+       */
+      credits?: number | null;
+    }
   }
 
   /**
@@ -1289,6 +1453,16 @@ export namespace ParsingGetResponse {
        * Success indicator
        */
       success: true;
+
+      /**
+       * Height of the page in points
+       */
+      page_height?: number | null;
+
+      /**
+       * Width of the page in points
+       */
+      page_width?: number | null;
     }
 
     /**
@@ -1409,6 +1583,9 @@ export namespace ParsingGetResponse {
   }
 
   export namespace Items {
+    /**
+     * Successfully parsed page in structured items output.
+     */
     export interface StructuredResultPage {
       /**
        * List of structured items on the page
@@ -1444,6 +1621,167 @@ export namespace ParsingGetResponse {
        * Success indicator
        */
       success: true;
+
+      /**
+       * Extracted revisions and comments on the page
+       */
+      revisions?: Array<StructuredResultPage.Revision> | null;
+    }
+
+    export namespace StructuredResultPage {
+      /**
+       * One extracted document revision linked to page content.
+       */
+      export interface Revision {
+        /**
+         * Revision or comment content
+         */
+        content: string;
+
+        /**
+         * Bounding box of the printed revision balloon
+         */
+        revision_bbox: Revision.RevisionBbox;
+
+        /**
+         * Best available target text in the page content
+         */
+        target: string;
+
+        /**
+         * Union bounding box of the target spans
+         */
+        target_bbox: Revision.TargetBbox;
+
+        /**
+         * Type of revision
+         */
+        type: 'comment' | 'deleted' | 'formatted' | 'inserted' | 'moved_from' | 'moved_to';
+
+        /**
+         * Revision author, when available
+         */
+        author?: string | null;
+
+        /**
+         * Exclusive end offset in final page markdown
+         */
+        end_index?: number | null;
+
+        /**
+         * Inclusive start offset in final page markdown
+         */
+        start_index?: number | null;
+
+        /**
+         * Disconnected target spans, when present
+         */
+        target_spans?: Array<Revision.TargetSpan> | null;
+      }
+
+      export namespace Revision {
+        /**
+         * Bounding box of the printed revision balloon
+         */
+        export interface RevisionBbox {
+          /**
+           * Height of the bounding box
+           */
+          h: number;
+
+          /**
+           * Width of the bounding box
+           */
+          w: number;
+
+          /**
+           * X coordinate of the bounding box
+           */
+          x: number;
+
+          /**
+           * Y coordinate of the bounding box
+           */
+          y: number;
+        }
+
+        /**
+         * Union bounding box of the target spans
+         */
+        export interface TargetBbox {
+          /**
+           * Height of the bounding box
+           */
+          h: number;
+
+          /**
+           * Width of the bounding box
+           */
+          w: number;
+
+          /**
+           * X coordinate of the bounding box
+           */
+          x: number;
+
+          /**
+           * Y coordinate of the bounding box
+           */
+          y: number;
+        }
+
+        /**
+         * One contiguous target span linked to a document revision.
+         */
+        export interface TargetSpan {
+          /**
+           * Text covered by this target span
+           */
+          target: string;
+
+          /**
+           * Bounding box of this target span
+           */
+          target_bbox: TargetSpan.TargetBbox;
+
+          /**
+           * Exclusive end offset in final page markdown
+           */
+          end_index?: number | null;
+
+          /**
+           * Inclusive start offset in final page markdown
+           */
+          start_index?: number | null;
+        }
+
+        export namespace TargetSpan {
+          /**
+           * Bounding box of this target span
+           */
+          export interface TargetBbox {
+            /**
+             * Height of the bounding box
+             */
+            h: number;
+
+            /**
+             * Width of the bounding box
+             */
+            w: number;
+
+            /**
+             * X coordinate of the bounding box
+             */
+            x: number;
+
+            /**
+             * Y coordinate of the bounding box
+             */
+            y: number;
+          }
+        }
+      }
     }
 
     export interface FailedStructuredPage {
@@ -1622,6 +1960,128 @@ export namespace ParsingGetResponse {
   }
 }
 
+/**
+ * Versions accepted by the parse API, grouped by tier.
+ */
+export interface ParsingListVersionsResponse {
+  /**
+   * Versions for the agentic tier
+   */
+  agentic: Array<
+    | '2026-07-24'
+    | '2026-07-23'
+    | '2026-07-15'
+    | '2026-06-18'
+    | '2026-06-11'
+    | '2026-06-04'
+    | '2026-06-01'
+    | '2026-05-26'
+    | '2026-05-21'
+    | '2026-05-20'
+    | '2026-05-19'
+    | '2026-05-13'
+    | '2026-05-11'
+    | '2026-05-06'
+    | '2026-05-04'
+    | '2026-04-27'
+    | '2026-04-22'
+    | '2026-04-09'
+    | '2026-04-06'
+    | '2026-04-02'
+    | '2026-03-31'
+    | '2026-03-30'
+    | '2026-03-27'
+    | '2026-03-25'
+    | '2026-03-23'
+    | '2026-03-22'
+    | '2026-03-20'
+    | '2026-03-11'
+    | '2026-03-10'
+    | '2026-03-09'
+    | '2026-03-03'
+    | '2026-03-02'
+    | '2026-02-26'
+    | '2026-02-24'
+    | '2026-01-30'
+    | '2026-01-22'
+    | '2026-01-21'
+    | '2026-01-16'
+    | '2026-01-08'
+    | '2025-12-31'
+    | '2025-12-18'
+    | '2025-12-11'
+  >;
+
+  /**
+   * Versions for the agentic_plus tier
+   */
+  agentic_plus: Array<
+    | '2026-07-08'
+    | '2026-06-18'
+    | '2026-06-11'
+    | '2026-06-04'
+    | '2026-06-01'
+    | '2026-05-26'
+    | '2026-05-21'
+    | '2026-05-20'
+    | '2026-05-19'
+    | '2026-05-11'
+    | '2026-05-06'
+    | '2026-05-04'
+    | '2026-05-01'
+    | '2026-04-27'
+    | '2026-04-19'
+    | '2026-04-14'
+    | '2026-04-09'
+    | '2026-04-02'
+    | '2026-03-31'
+    | '2026-03-26'
+    | '2026-03-25'
+    | '2026-03-22'
+    | '2026-03-20'
+    | '2026-03-17'
+    | '2026-03-12'
+    | '2026-03-10'
+    | '2026-03-09'
+    | '2026-03-02'
+    | '2026-02-26'
+    | '2026-02-24'
+    | '2026-01-30'
+    | '2026-01-29'
+    | '2026-01-24'
+    | '2026-01-22'
+    | '2026-01-21'
+    | '2026-01-16'
+    | '2025-12-31'
+    | '2025-12-18'
+    | '2025-12-11'
+  >;
+
+  /**
+   * Versions for the cost_effective tier
+   */
+  cost_effective: Array<
+    | '2026-08-08'
+    | '2026-07-23'
+    | '2026-06-26'
+    | '2026-06-18'
+    | '2026-06-17'
+    | '2026-06-11'
+    | '2026-06-08'
+    | '2026-06-05'
+    | '2026-05-28'
+    | '2026-04-09'
+    | '2026-03-31'
+    | '2026-03-27'
+    | '2026-03-25'
+  >;
+
+  /**
+   * Versions for the fast tier
+   */
+  fast: Array<'2026-06-15' | '2025-12-11'>;
+}
+
 export interface ParsingCreateParams {
   /**
    * Body param: Parsing tier: 'fast' (rule-based, cheapest), 'cost_effective'
@@ -1637,13 +2097,13 @@ export interface ParsingCreateParams {
    * Current `latest` by tier:
    *
    * - `fast`: `2026-06-15`
-   * - `cost_effective`: `2026-06-26`
-   * - `agentic`: `2026-07-15`
+   * - `cost_effective`: `2026-08-08`
+   * - `agentic`: `2026-07-24`
    * - `agentic_plus`: `2026-07-08`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-07-15' | '2026-07-08' | '2026-06-26' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-08-08' | '2026-07-24' | '2026-07-08' | '2026-06-15' | (string & {});
 
   /**
    * Query param
@@ -1957,17 +2417,23 @@ export namespace ParsingCreateParams {
     granular_bboxes?: Array<'cell' | 'line' | 'word'>;
 
     /**
-     * Image categories to extract and save. Options: 'screenshot' (full page renders
-     * useful for visual QA), 'embedded' (images found within the document), 'layout'
-     * (cropped regions from layout detection like figures and diagrams). Empty list
-     * saves no images
+     * Image categories to save: 'screenshot' (full page renders), 'embedded' (images
+     * found within the document), 'layout' (cropped figures and diagrams). Defaults to
+     * saving 'layout' when the output links to cropped images; pass [] to save none
      */
-    images_to_save?: Array<'embedded' | 'layout' | 'screenshot'>;
+    images_to_save?: Array<'embedded' | 'layout' | 'screenshot'> | null;
 
     /**
      * Markdown formatting options including table styles and link annotations
      */
     markdown?: OutputOptions.Markdown;
+
+    /**
+     * Save a PDF copy of the parsed document, retrievable via
+     * `expand=output_pdf_content_metadata`. Not produced for spreadsheet, plain-text,
+     * or audio inputs
+     */
+    save_output_pdf?: boolean | null;
 
     /**
      * Spatial text output options for preserving document layout structure
@@ -1990,6 +2456,11 @@ export namespace ParsingCreateParams {
        * only the link text is included
        */
       annotate_links?: boolean | null;
+
+      /**
+       * Extract Word-style revisions and comments into structured page output
+       */
+      annotate_revisions?: boolean | null;
 
       /**
        * Embed images directly in markdown as base64 data URIs instead of extracting them
@@ -2499,13 +2970,13 @@ export namespace ParsingCreateParams {
          * Current `latest` by tier:
          *
          * - `fast`: `2026-06-15`
-         * - `cost_effective`: `2026-06-26`
-         * - `agentic`: `2026-07-15`
+         * - `cost_effective`: `2026-08-08`
+         * - `agentic`: `2026-07-24`
          * - `agentic_plus`: `2026-07-08`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-07-15' | '2026-07-08' | '2026-06-26' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-08-08' | '2026-07-24' | '2026-07-08' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -2682,7 +3153,7 @@ export namespace ParsingCreateParams {
 
 export interface ParsingGetParams {
   /**
-   * Fields to include: text, markdown, items, metadata, forms, job_metadata,
+   * Fields to include: text, markdown, items, metadata, forms, job_metadata, usage,
    * text_content_metadata, markdown_content_metadata, items_content_metadata,
    * metadata_content_metadata, forms_content_metadata, raw_words_content_metadata,
    * xlsx_content_metadata, output_pdf_content_metadata, images_content_metadata.
@@ -2726,6 +3197,12 @@ export interface ParsingListParams extends PaginatedCursorParams {
   status?: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | null;
 }
 
+export interface ParsingCancelParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export declare namespace Parsing {
   export {
     type BBox as BBox,
@@ -2753,10 +3230,13 @@ export declare namespace Parsing {
     type TextItem as TextItem,
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
+    type ParsingCancelResponse as ParsingCancelResponse,
     type ParsingGetResponse as ParsingGetResponse,
+    type ParsingListVersionsResponse as ParsingListVersionsResponse,
     type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingGetParams as ParsingGetParams,
     type ParsingListParams as ParsingListParams,
+    type ParsingCancelParams as ParsingCancelParams,
   };
 }

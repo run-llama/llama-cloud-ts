@@ -17,8 +17,6 @@ import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
 import {
   AbstractPage,
-  type PaginatedBatchItemsParams,
-  PaginatedBatchItemsResponse,
   type PaginatedCloudDocumentsParams,
   PaginatedCloudDocumentsResponse,
   type PaginatedCursorParams,
@@ -36,6 +34,8 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  BatchCancelParams,
+  BatchCancelResponse,
   BatchCreateParams,
   BatchCreateResponse,
   BatchGetParams,
@@ -47,6 +47,8 @@ import {
 } from './resources/batches';
 import {
   Classify,
+  ClassifyCancelParams,
+  ClassifyCancelResponse,
   ClassifyConfiguration,
   ClassifyCreateParams,
   ClassifyCreateRequest,
@@ -93,6 +95,7 @@ import {
 } from './resources/data-sources';
 import {
   Extract,
+  ExtractCancelParams,
   ExtractConfiguration,
   ExtractCreateParams,
   ExtractDeleteParams,
@@ -114,18 +117,26 @@ import {
 } from './resources/extract';
 import {
   File,
+  FileContentParams,
   FileCreateParams,
   FileCreateResponse,
   FileDeleteParams,
-  FileGetParams,
   FileListParams,
   FileListResponse,
   FileListResponsesPaginatedCursor,
   FileQueryParams,
   FileQueryResponse,
+  FileRetrieveParams,
+  FileRetrieveResponse,
   Files,
   PresignedURL,
 } from './resources/files';
+import {
+  JobDataPoint,
+  JobDataPointListParams,
+  JobDataPoints,
+  JobDataPointsPaginatedCursor,
+} from './resources/job-data-points';
 import {
   BBox,
   CodeItem,
@@ -145,6 +156,8 @@ import {
   ListItem,
   LlamaParseSupportedFileExtensions,
   Parsing,
+  ParsingCancelParams,
+  ParsingCancelResponse,
   ParsingCreateParams,
   ParsingCreateResponse,
   ParsingGetParams,
@@ -154,6 +167,7 @@ import {
   ParsingListParams,
   ParsingListResponse,
   ParsingListResponsesPaginatedCursor,
+  ParsingListVersionsResponse,
   ParsingMode,
   StatusEnum,
   TableItem,
@@ -175,6 +189,39 @@ import {
   SheetListParams,
   Sheets,
 } from './resources/sheets';
+import {
+  Split,
+  SplitCancelParams,
+  SplitCancelResponse,
+  SplitCreateParams,
+  SplitCreateResponse,
+  SplitDeleteParams,
+  SplitDeleteResponse,
+  SplitGetParams,
+  SplitGetResponse,
+  SplitListParams,
+  SplitListResponse,
+  SplitListResponsesPaginatedCursor,
+} from './resources/split';
+import {
+  V2ProjectGetParams,
+  V2ProjectGetResponse,
+  V2ProjectListParams,
+  V2ProjectListResponse,
+  V2ProjectListResponsesPaginatedCursor,
+  V2Projects,
+} from './resources/v2-projects';
+import {
+  WebhookConfigCreate,
+  WebhookConfigCreateParams,
+  WebhookConfigDeleteParams,
+  WebhookConfigListParams,
+  WebhookConfigListResponse,
+  WebhookConfigResponse,
+  WebhookConfigRetrieveParams,
+  WebhookConfigUpdateParams,
+  WebhookConfigs,
+} from './resources/webhook-configs';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
 import {
@@ -978,13 +1025,17 @@ export class LlamaCloud {
 
   files: API.Files = new API.Files(this);
   sheets: API.Sheets = new API.Sheets(this);
+  split: API.Split = new API.Split(this);
   parsing: API.Parsing = new API.Parsing(this);
   extract: API.Extract = new API.Extract(this);
   classifier: API.Classifier = new API.Classifier(this);
   batches: API.Batches = new API.Batches(this);
   classify: API.Classify = new API.Classify(this);
   configurations: API.Configurations = new API.Configurations(this);
+  webhookConfigs: API.WebhookConfigs = new API.WebhookConfigs(this);
   projects: API.Projects = new API.Projects(this);
+  v2Projects: API.V2Projects = new API.V2Projects(this);
+  jobDataPoints: API.JobDataPoints = new API.JobDataPoints(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
@@ -994,13 +1045,17 @@ export class LlamaCloud {
 
 LlamaCloud.Files = Files;
 LlamaCloud.Sheets = Sheets;
+LlamaCloud.Split = Split;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Extract = Extract;
 LlamaCloud.Classifier = Classifier;
 LlamaCloud.Batches = Batches;
 LlamaCloud.Classify = Classify;
 LlamaCloud.Configurations = Configurations;
+LlamaCloud.WebhookConfigs = WebhookConfigs;
 LlamaCloud.Projects = Projects;
+LlamaCloud.V2Projects = V2Projects;
+LlamaCloud.JobDataPoints = JobDataPoints;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
 LlamaCloud.Pipelines = Pipelines;
@@ -1020,12 +1075,6 @@ export declare namespace LlamaCloud {
   export {
     type PaginatedPipelineFilesParams as PaginatedPipelineFilesParams,
     type PaginatedPipelineFilesResponse as PaginatedPipelineFilesResponse,
-  };
-
-  export import PaginatedBatchItems = Pagination.PaginatedBatchItems;
-  export {
-    type PaginatedBatchItemsParams as PaginatedBatchItemsParams,
-    type PaginatedBatchItemsResponse as PaginatedBatchItemsResponse,
   };
 
   export import PaginatedCloudDocuments = Pagination.PaginatedCloudDocuments;
@@ -1057,14 +1106,16 @@ export declare namespace LlamaCloud {
     type File as File,
     type PresignedURL as PresignedURL,
     type FileCreateResponse as FileCreateResponse,
+    type FileRetrieveResponse as FileRetrieveResponse,
     type FileListResponse as FileListResponse,
     type FileQueryResponse as FileQueryResponse,
     type FileListResponsesPaginatedCursor as FileListResponsesPaginatedCursor,
     type FileCreateParams as FileCreateParams,
     type FileQueryParams as FileQueryParams,
     type FileListParams as FileListParams,
+    type FileRetrieveParams as FileRetrieveParams,
     type FileDeleteParams as FileDeleteParams,
-    type FileGetParams as FileGetParams,
+    type FileContentParams as FileContentParams,
   };
 
   export {
@@ -1075,6 +1126,21 @@ export declare namespace LlamaCloud {
     type SheetGetParams as SheetGetParams,
     type SheetGetResultTableParams as SheetGetResultTableParams,
     type SheetDeleteJobParams as SheetDeleteJobParams,
+  };
+
+  export {
+    Split as Split,
+    type SplitCreateResponse as SplitCreateResponse,
+    type SplitListResponse as SplitListResponse,
+    type SplitDeleteResponse as SplitDeleteResponse,
+    type SplitCancelResponse as SplitCancelResponse,
+    type SplitGetResponse as SplitGetResponse,
+    type SplitListResponsesPaginatedCursor as SplitListResponsesPaginatedCursor,
+    type SplitCreateParams as SplitCreateParams,
+    type SplitListParams as SplitListParams,
+    type SplitGetParams as SplitGetParams,
+    type SplitDeleteParams as SplitDeleteParams,
+    type SplitCancelParams as SplitCancelParams,
   };
 
   export {
@@ -1104,11 +1170,14 @@ export declare namespace LlamaCloud {
     type TextItem as TextItem,
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
+    type ParsingCancelResponse as ParsingCancelResponse,
     type ParsingGetResponse as ParsingGetResponse,
+    type ParsingListVersionsResponse as ParsingListVersionsResponse,
     type ParsingListResponsesPaginatedCursor as ParsingListResponsesPaginatedCursor,
     type ParsingCreateParams as ParsingCreateParams,
     type ParsingGetParams as ParsingGetParams,
     type ParsingListParams as ParsingListParams,
+    type ParsingCancelParams as ParsingCancelParams,
   };
 
   export {
@@ -1129,6 +1198,7 @@ export declare namespace LlamaCloud {
     type ExtractListParams as ExtractListParams,
     type ExtractGetParams as ExtractGetParams,
     type ExtractDeleteParams as ExtractDeleteParams,
+    type ExtractCancelParams as ExtractCancelParams,
     type ExtractValidateSchemaParams as ExtractValidateSchemaParams,
     type ExtractGenerateSchemaParams as ExtractGenerateSchemaParams,
   };
@@ -1139,11 +1209,13 @@ export declare namespace LlamaCloud {
     Batches as Batches,
     type BatchCreateResponse as BatchCreateResponse,
     type BatchListResponse as BatchListResponse,
+    type BatchCancelResponse as BatchCancelResponse,
     type BatchGetResponse as BatchGetResponse,
     type BatchListResponsesPaginatedCursor as BatchListResponsesPaginatedCursor,
     type BatchCreateParams as BatchCreateParams,
     type BatchListParams as BatchListParams,
     type BatchGetParams as BatchGetParams,
+    type BatchCancelParams as BatchCancelParams,
   };
 
   export {
@@ -1153,11 +1225,13 @@ export declare namespace LlamaCloud {
     type ClassifyResult as ClassifyResult,
     type ClassifyCreateResponse as ClassifyCreateResponse,
     type ClassifyListResponse as ClassifyListResponse,
+    type ClassifyCancelResponse as ClassifyCancelResponse,
     type ClassifyGetResponse as ClassifyGetResponse,
     type ClassifyListResponsesPaginatedCursor as ClassifyListResponsesPaginatedCursor,
     type ClassifyCreateParams as ClassifyCreateParams,
     type ClassifyListParams as ClassifyListParams,
     type ClassifyGetParams as ClassifyGetParams,
+    type ClassifyCancelParams as ClassifyCancelParams,
   };
 
   export {
@@ -1178,11 +1252,39 @@ export declare namespace LlamaCloud {
   };
 
   export {
+    WebhookConfigs as WebhookConfigs,
+    type WebhookConfigCreate as WebhookConfigCreate,
+    type WebhookConfigResponse as WebhookConfigResponse,
+    type WebhookConfigListResponse as WebhookConfigListResponse,
+    type WebhookConfigCreateParams as WebhookConfigCreateParams,
+    type WebhookConfigListParams as WebhookConfigListParams,
+    type WebhookConfigRetrieveParams as WebhookConfigRetrieveParams,
+    type WebhookConfigUpdateParams as WebhookConfigUpdateParams,
+    type WebhookConfigDeleteParams as WebhookConfigDeleteParams,
+  };
+
+  export {
     Projects as Projects,
     type Project as Project,
     type ProjectListResponse as ProjectListResponse,
     type ProjectListParams as ProjectListParams,
     type ProjectGetParams as ProjectGetParams,
+  };
+
+  export {
+    V2Projects as V2Projects,
+    type V2ProjectListResponse as V2ProjectListResponse,
+    type V2ProjectGetResponse as V2ProjectGetResponse,
+    type V2ProjectListResponsesPaginatedCursor as V2ProjectListResponsesPaginatedCursor,
+    type V2ProjectListParams as V2ProjectListParams,
+    type V2ProjectGetParams as V2ProjectGetParams,
+  };
+
+  export {
+    JobDataPoints as JobDataPoints,
+    type JobDataPoint as JobDataPoint,
+    type JobDataPointsPaginatedCursor as JobDataPointsPaginatedCursor,
+    type JobDataPointListParams as JobDataPointListParams,
   };
 
   export {

@@ -15,18 +15,6 @@ export {
   type AgentDataPaginatedCursorPost,
   type AgentDataAggregateResponsesPaginatedCursorPost,
 } from './agent-data';
-export {
-  Batch,
-  type BatchCreateResponse,
-  type BatchListResponse,
-  type BatchCancelResponse,
-  type BatchGetStatusResponse,
-  type BatchCreateParams,
-  type BatchListParams,
-  type BatchGetStatusParams,
-  type BatchCancelParams,
-  type BatchListResponsesPaginatedBatchItems,
-} from './batch/index';
 export { Beta } from './beta';
 export {
   Chat,

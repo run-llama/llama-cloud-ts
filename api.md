@@ -30,6 +30,7 @@ Types:
 - <code><a href="./src/resources/files.ts">File</a></code>
 - <code><a href="./src/resources/files.ts">PresignedURL</a></code>
 - <code><a href="./src/resources/files.ts">FileCreateResponse</a></code>
+- <code><a href="./src/resources/files.ts">FileRetrieveResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileListResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileQueryResponse</a></code>
 
@@ -38,8 +39,9 @@ Methods:
 - <code title="post /api/v1/beta/files">client.files.<a href="./src/resources/files.ts">create</a>({ ...params }) -> FileCreateResponse</code>
 - <code title="post /api/v1/beta/files/query">client.files.<a href="./src/resources/files.ts">query</a>({ ...params }) -> FileQueryResponse</code>
 - <code title="get /api/v1/beta/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FileListResponsesPaginatedCursor</code>
+- <code title="get /api/v1/beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">retrieve</a>(fileID, { ...params }) -> FileRetrieveResponse</code>
 - <code title="delete /api/v1/beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID, { ...params }) -> void</code>
-- <code title="get /api/v1/beta/files/{file_id}/content">client.files.<a href="./src/resources/files.ts">get</a>(fileID, { ...params }) -> PresignedURL</code>
+- <code title="get /api/v1/beta/files/{file_id}/content">client.files.<a href="./src/resources/files.ts">content</a>(fileID, { ...params }) -> PresignedURL</code>
 
 # Sheets
 
@@ -54,6 +56,24 @@ Methods:
 - <code title="get /api/v1/sheets/jobs/{spreadsheet_job_id}">client.sheets.<a href="./src/resources/sheets.ts">get</a>(spreadsheetJobID, { ...params }) -> SheetsJob</code>
 - <code title="get /api/v1/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}">client.sheets.<a href="./src/resources/sheets.ts">getResultTable</a>(regionType, { ...params }) -> PresignedURL</code>
 - <code title="delete /api/v1/sheets/jobs/{spreadsheet_job_id}">client.sheets.<a href="./src/resources/sheets.ts">deleteJob</a>(spreadsheetJobID, { ...params }) -> unknown</code>
+
+# Split
+
+Types:
+
+- <code><a href="./src/resources/split.ts">SplitCreateResponse</a></code>
+- <code><a href="./src/resources/split.ts">SplitListResponse</a></code>
+- <code><a href="./src/resources/split.ts">SplitDeleteResponse</a></code>
+- <code><a href="./src/resources/split.ts">SplitCancelResponse</a></code>
+- <code><a href="./src/resources/split.ts">SplitGetResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/split/jobs">client.split.<a href="./src/resources/split.ts">create</a>({ ...params }) -> SplitCreateResponse</code>
+- <code title="get /api/v1/split/jobs">client.split.<a href="./src/resources/split.ts">list</a>({ ...params }) -> SplitListResponsesPaginatedCursor</code>
+- <code title="get /api/v1/split/jobs/{split_job_id}">client.split.<a href="./src/resources/split.ts">get</a>(splitJobID, { ...params }) -> SplitGetResponse</code>
+- <code title="delete /api/v1/split/jobs/{split_job_id}">client.split.<a href="./src/resources/split.ts">delete</a>(splitJobID, { ...params }) -> unknown</code>
+- <code title="post /api/v1/split/jobs/{split_job_id}/cancel">client.split.<a href="./src/resources/split.ts">cancel</a>(splitJobID, { ...params }) -> SplitCancelResponse</code>
 
 # Parsing
 
@@ -84,13 +104,17 @@ Types:
 - <code><a href="./src/resources/parsing.ts">TextItem</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingCreateResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingListResponse</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingCancelResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingGetResponse</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingListVersionsResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">create</a>({ ...params }) -> ParsingCreateResponse</code>
 - <code title="get /api/v2/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
 - <code title="get /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedCursor</code>
+- <code title="post /api/v2/parse/{job_id}/cancel">client.parsing.<a href="./src/resources/parsing.ts">cancel</a>(jobID, { ...params }) -> ParsingCancelResponse</code>
+- <code title="get /api/v2/parse/versions">client.parsing.<a href="./src/resources/parsing.ts">listVersions</a>() -> ParsingListVersionsResponse</code>
 
 # Extract
 
@@ -114,6 +138,7 @@ Methods:
 - <code title="get /api/v2/extract">client.extract.<a href="./src/resources/extract.ts">list</a>({ ...params }) -> ExtractV2JobsPaginatedCursor</code>
 - <code title="get /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract.ts">get</a>(jobID, { ...params }) -> ExtractV2Job</code>
 - <code title="delete /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract.ts">delete</a>(jobID, { ...params }) -> unknown</code>
+- <code title="post /api/v2/extract/{job_id}/cancel">client.extract.<a href="./src/resources/extract.ts">cancel</a>(jobID, { ...params }) -> ExtractV2Job</code>
 - <code title="post /api/v2/extract/schema/validation">client.extract.<a href="./src/resources/extract.ts">validateSchema</a>({ ...params }) -> ExtractV2SchemaValidateResponse</code>
 - <code title="post /api/v2/extract/schema/generate">client.extract.<a href="./src/resources/extract.ts">generateSchema</a>({ ...params }) -> ConfigurationCreate</code>
 
@@ -141,6 +166,7 @@ Types:
 
 - <code><a href="./src/resources/batches.ts">BatchCreateResponse</a></code>
 - <code><a href="./src/resources/batches.ts">BatchListResponse</a></code>
+- <code><a href="./src/resources/batches.ts">BatchCancelResponse</a></code>
 - <code><a href="./src/resources/batches.ts">BatchGetResponse</a></code>
 
 Methods:
@@ -148,6 +174,7 @@ Methods:
 - <code title="post /api/v2/batches">client.batches.<a href="./src/resources/batches.ts">create</a>({ ...params }) -> BatchCreateResponse</code>
 - <code title="get /api/v2/batches">client.batches.<a href="./src/resources/batches.ts">list</a>({ ...params }) -> BatchListResponsesPaginatedCursor</code>
 - <code title="get /api/v2/batches/{batch_id}">client.batches.<a href="./src/resources/batches.ts">get</a>(batchID, { ...params }) -> BatchGetResponse</code>
+- <code title="post /api/v2/batches/{batch_id}/cancel">client.batches.<a href="./src/resources/batches.ts">cancel</a>(batchID, { ...params }) -> BatchCancelResponse</code>
 
 # Classify
 
@@ -158,6 +185,7 @@ Types:
 - <code><a href="./src/resources/classify.ts">ClassifyResult</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyCreateResponse</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyListResponse</a></code>
+- <code><a href="./src/resources/classify.ts">ClassifyCancelResponse</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyGetResponse</a></code>
 
 Methods:
@@ -165,6 +193,7 @@ Methods:
 - <code title="post /api/v2/classify">client.classify.<a href="./src/resources/classify.ts">create</a>({ ...params }) -> ClassifyCreateResponse</code>
 - <code title="get /api/v2/classify">client.classify.<a href="./src/resources/classify.ts">list</a>({ ...params }) -> ClassifyListResponsesPaginatedCursor</code>
 - <code title="get /api/v2/classify/{job_id}">client.classify.<a href="./src/resources/classify.ts">get</a>(jobID, { ...params }) -> ClassifyGetResponse</code>
+- <code title="post /api/v2/classify/{job_id}/cancel">client.classify.<a href="./src/resources/classify.ts">cancel</a>(jobID, { ...params }) -> ClassifyCancelResponse</code>
 
 # Configurations
 
@@ -186,6 +215,22 @@ Methods:
 - <code title="put /api/v1/beta/configurations/{config_id}">client.configurations.<a href="./src/resources/configurations.ts">update</a>(configID, { ...params }) -> ConfigurationResponse</code>
 - <code title="delete /api/v1/beta/configurations/{config_id}">client.configurations.<a href="./src/resources/configurations.ts">delete</a>(configID, { ...params }) -> void</code>
 
+# WebhookConfigs
+
+Types:
+
+- <code><a href="./src/resources/webhook-configs.ts">WebhookConfigCreate</a></code>
+- <code><a href="./src/resources/webhook-configs.ts">WebhookConfigResponse</a></code>
+- <code><a href="./src/resources/webhook-configs.ts">WebhookConfigListResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/beta/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">create</a>({ ...params }) -> WebhookConfigResponse</code>
+- <code title="get /api/v1/beta/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">list</a>({ ...params }) -> WebhookConfigListResponse</code>
+- <code title="get /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">retrieve</a>(configID, { ...params }) -> WebhookConfigResponse</code>
+- <code title="put /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">update</a>(configID, { ...params }) -> WebhookConfigResponse</code>
+- <code title="delete /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">delete</a>(configID, { ...params }) -> void</code>
+
 # Projects
 
 Types:
@@ -197,6 +242,28 @@ Methods:
 
 - <code title="get /api/v1/projects">client.projects.<a href="./src/resources/projects.ts">list</a>({ ...params }) -> ProjectListResponse</code>
 - <code title="get /api/v1/projects/{project_id}">client.projects.<a href="./src/resources/projects.ts">get</a>(projectID, { ...params }) -> Project</code>
+
+# V2Projects
+
+Types:
+
+- <code><a href="./src/resources/v2-projects.ts">V2ProjectListResponse</a></code>
+- <code><a href="./src/resources/v2-projects.ts">V2ProjectGetResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/projects">client.v2Projects.<a href="./src/resources/v2-projects.ts">list</a>({ ...params }) -> V2ProjectListResponsesPaginatedCursor</code>
+- <code title="get /api/v2/projects/{project_id}">client.v2Projects.<a href="./src/resources/v2-projects.ts">get</a>(projectID, { ...params }) -> V2ProjectGetResponse</code>
+
+# JobDataPoints
+
+Types:
+
+- <code><a href="./src/resources/job-data-points.ts">JobDataPoint</a></code>
+
+Methods:
+
+- <code title="get /api/v1/job-data-points">client.jobDataPoints.<a href="./src/resources/job-data-points.ts">list</a>({ ...params }) -> JobDataPointsPaginatedCursor</code>
 
 # DataSinks
 
@@ -354,6 +421,7 @@ Types:
 - <code><a href="./src/resources/pipelines/documents.ts">TextNode</a></code>
 - <code><a href="./src/resources/pipelines/documents.ts">DocumentCreateResponse</a></code>
 - <code><a href="./src/resources/pipelines/documents.ts">DocumentGetChunksResponse</a></code>
+- <code><a href="./src/resources/pipelines/documents.ts">DocumentGetStatusCountsResponse</a></code>
 - <code><a href="./src/resources/pipelines/documents.ts">DocumentSyncResponse</a></code>
 - <code><a href="./src/resources/pipelines/documents.ts">DocumentUpsertResponse</a></code>
 
@@ -361,6 +429,7 @@ Methods:
 
 - <code title="post /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">create</a>(pipelineID, [ ...body ]) -> DocumentCreateResponse</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/paginated">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">list</a>(pipelineID, { ...params }) -> CloudDocumentsPaginatedCloudDocuments</code>
+- <code title="get /api/v1/pipelines/{pipeline_id}/documents/status-counts">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">getStatusCounts</a>(pipelineID, { ...params }) -> DocumentGetStatusCountsResponse</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">get</a>(documentID, { ...params }) -> CloudDocument</code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}/documents/{document_id}">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">delete</a>(documentID, { ...params }) -> void</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/status">client.pipelines.documents.<a href="./src/resources/pipelines/documents.ts">getStatus</a>(documentID, { ...params }) -> ManagedIngestionStatusResponse</code>
@@ -520,34 +589,6 @@ Methods:
 - <code title="patch /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">update</a>(directoryFileID, { ...params }) -> FileUpdateResponse</code>
 - <code title="delete /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">delete</a>(directoryFileID, { ...params }) -> void</code>
 - <code title="post /api/v1/beta/directories/{directory_id}/files/upload">client.beta.directories.files.<a href="./src/resources/beta/directories/files.ts">upload</a>(directoryID, { ...params }) -> FileUploadResponse</code>
-
-## Batch
-
-Types:
-
-- <code><a href="./src/resources/beta/batch/batch.ts">BatchCreateResponse</a></code>
-- <code><a href="./src/resources/beta/batch/batch.ts">BatchListResponse</a></code>
-- <code><a href="./src/resources/beta/batch/batch.ts">BatchCancelResponse</a></code>
-- <code><a href="./src/resources/beta/batch/batch.ts">BatchGetStatusResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/beta/batch-processing">client.beta.batch.<a href="./src/resources/beta/batch/batch.ts">create</a>({ ...params }) -> BatchCreateResponse</code>
-- <code title="get /api/v1/beta/batch-processing">client.beta.batch.<a href="./src/resources/beta/batch/batch.ts">list</a>({ ...params }) -> BatchListResponsesPaginatedBatchItems</code>
-- <code title="get /api/v1/beta/batch-processing/{job_id}">client.beta.batch.<a href="./src/resources/beta/batch/batch.ts">getStatus</a>(jobID, { ...params }) -> BatchGetStatusResponse</code>
-- <code title="post /api/v1/beta/batch-processing/{job_id}/cancel">client.beta.batch.<a href="./src/resources/beta/batch/batch.ts">cancel</a>(jobID, { ...params }) -> BatchCancelResponse</code>
-
-### JobItems
-
-Types:
-
-- <code><a href="./src/resources/beta/batch/job-items.ts">JobItemListResponse</a></code>
-- <code><a href="./src/resources/beta/batch/job-items.ts">JobItemGetProcessingResultsResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/beta/batch-processing/{job_id}/items">client.beta.batch.jobItems.<a href="./src/resources/beta/batch/job-items.ts">list</a>(jobID, { ...params }) -> JobItemListResponsesPaginatedBatchItems</code>
-- <code title="get /api/v1/beta/batch-processing/items/{item_id}/processing-results">client.beta.batch.jobItems.<a href="./src/resources/beta/batch/job-items.ts">getProcessingResults</a>(itemID, { ...params }) -> JobItemGetProcessingResultsResponse</code>
 
 ## Split
 

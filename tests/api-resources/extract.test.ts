@@ -34,16 +34,20 @@ describe('resource extract', () => {
         },
         cite_sources: true,
         confidence_scores: true,
+        disable_cache: true,
         extraction_target: 'per_doc',
         max_pages: 10,
         parse_config_id: 'cfg-11111111-2222-3333-4444-555555555555',
         parse_tier: 'fast',
+        sheet_names: ['Sheet 1', 'Q4 Summary'],
+        spreadsheet_mode: true,
         system_prompt: 'Extract all monetary values in USD. If a currency is not specified, assume USD.',
         target_pages: '1,3,5-7',
         tier: 'cost_effective',
         version: 'latest',
       },
       configuration_id: 'cfg-11111111-2222-3333-4444-555555555555',
+      webhook_configuration_ids: ['whc-...', 'whc-...'],
       webhook_configurations: [
         {
           webhook_events: ['parse.success', 'parse.error'],
@@ -138,6 +142,33 @@ describe('resource extract', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.extract.delete(
+        'job_id',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancel', async () => {
+    const responsePromise = client.extract.cancel('job_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancel: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.extract.cancel(
         'job_id',
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',

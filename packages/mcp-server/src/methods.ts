@@ -29,14 +29,20 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/files',
   },
   {
+    clientCallName: 'client.files.retrieve',
+    fullyQualifiedName: 'files.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/files/{file_id}',
+  },
+  {
     clientCallName: 'client.files.delete',
     fullyQualifiedName: 'files.delete',
     httpMethod: 'delete',
     httpPath: '/api/v1/beta/files/{file_id}',
   },
   {
-    clientCallName: 'client.files.get',
-    fullyQualifiedName: 'files.get',
+    clientCallName: 'client.files.content',
+    fullyQualifiedName: 'files.content',
     httpMethod: 'get',
     httpPath: '/api/v1/beta/files/{file_id}/content',
   },
@@ -71,6 +77,36 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/sheets/jobs/{spreadsheet_job_id}',
   },
   {
+    clientCallName: 'client.split.create',
+    fullyQualifiedName: 'split.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/split/jobs',
+  },
+  {
+    clientCallName: 'client.split.list',
+    fullyQualifiedName: 'split.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/split/jobs',
+  },
+  {
+    clientCallName: 'client.split.get',
+    fullyQualifiedName: 'split.get',
+    httpMethod: 'get',
+    httpPath: '/api/v1/split/jobs/{split_job_id}',
+  },
+  {
+    clientCallName: 'client.split.delete',
+    fullyQualifiedName: 'split.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/split/jobs/{split_job_id}',
+  },
+  {
+    clientCallName: 'client.split.cancel',
+    fullyQualifiedName: 'split.cancel',
+    httpMethod: 'post',
+    httpPath: '/api/v1/split/jobs/{split_job_id}/cancel',
+  },
+  {
     clientCallName: 'client.parsing.create',
     fullyQualifiedName: 'parsing.create',
     httpMethod: 'post',
@@ -87,6 +123,18 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'parsing.list',
     httpMethod: 'get',
     httpPath: '/api/v2/parse',
+  },
+  {
+    clientCallName: 'client.parsing.cancel',
+    fullyQualifiedName: 'parsing.cancel',
+    httpMethod: 'post',
+    httpPath: '/api/v2/parse/{job_id}/cancel',
+  },
+  {
+    clientCallName: 'client.parsing.listVersions',
+    fullyQualifiedName: 'parsing.listVersions',
+    httpMethod: 'get',
+    httpPath: '/api/v2/parse/versions',
   },
   {
     clientCallName: 'client.extract.create',
@@ -111,6 +159,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'extract.delete',
     httpMethod: 'delete',
     httpPath: '/api/v2/extract/{job_id}',
+  },
+  {
+    clientCallName: 'client.extract.cancel',
+    fullyQualifiedName: 'extract.cancel',
+    httpMethod: 'post',
+    httpPath: '/api/v2/extract/{job_id}/cancel',
   },
   {
     clientCallName: 'client.extract.validateSchema',
@@ -167,6 +221,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/batches/{batch_id}',
   },
   {
+    clientCallName: 'client.batches.cancel',
+    fullyQualifiedName: 'batches.cancel',
+    httpMethod: 'post',
+    httpPath: '/api/v2/batches/{batch_id}/cancel',
+  },
+  {
     clientCallName: 'client.classify.create',
     fullyQualifiedName: 'classify.create',
     httpMethod: 'post',
@@ -183,6 +243,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'classify.get',
     httpMethod: 'get',
     httpPath: '/api/v2/classify/{job_id}',
+  },
+  {
+    clientCallName: 'client.classify.cancel',
+    fullyQualifiedName: 'classify.cancel',
+    httpMethod: 'post',
+    httpPath: '/api/v2/classify/{job_id}/cancel',
   },
   {
     clientCallName: 'client.configurations.create',
@@ -215,6 +281,36 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/configurations/{config_id}',
   },
   {
+    clientCallName: 'client.webhookConfigs.create',
+    fullyQualifiedName: 'webhookConfigs.create',
+    httpMethod: 'post',
+    httpPath: '/api/v1/beta/webhook-configs',
+  },
+  {
+    clientCallName: 'client.webhookConfigs.list',
+    fullyQualifiedName: 'webhookConfigs.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/webhook-configs',
+  },
+  {
+    clientCallName: 'client.webhookConfigs.retrieve',
+    fullyQualifiedName: 'webhookConfigs.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/webhook-configs/{config_id}',
+  },
+  {
+    clientCallName: 'client.webhookConfigs.update',
+    fullyQualifiedName: 'webhookConfigs.update',
+    httpMethod: 'put',
+    httpPath: '/api/v1/beta/webhook-configs/{config_id}',
+  },
+  {
+    clientCallName: 'client.webhookConfigs.delete',
+    fullyQualifiedName: 'webhookConfigs.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v1/beta/webhook-configs/{config_id}',
+  },
+  {
     clientCallName: 'client.projects.list',
     fullyQualifiedName: 'projects.list',
     httpMethod: 'get',
@@ -225,6 +321,24 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'projects.get',
     httpMethod: 'get',
     httpPath: '/api/v1/projects/{project_id}',
+  },
+  {
+    clientCallName: 'client.v2Projects.list',
+    fullyQualifiedName: 'v2Projects.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/projects',
+  },
+  {
+    clientCallName: 'client.v2Projects.get',
+    fullyQualifiedName: 'v2Projects.get',
+    httpMethod: 'get',
+    httpPath: '/api/v2/projects/{project_id}',
+  },
+  {
+    clientCallName: 'client.jobDataPoints.list',
+    fullyQualifiedName: 'jobDataPoints.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/job-data-points',
   },
   {
     clientCallName: 'client.dataSinks.list',
@@ -459,6 +573,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'pipelines.documents.list',
     httpMethod: 'get',
     httpPath: '/api/v1/pipelines/{pipeline_id}/documents/paginated',
+  },
+  {
+    clientCallName: 'client.pipelines.documents.getStatusCounts',
+    fullyQualifiedName: 'pipelines.documents.getStatusCounts',
+    httpMethod: 'get',
+    httpPath: '/api/v1/pipelines/{pipeline_id}/documents/status-counts',
   },
   {
     clientCallName: 'client.pipelines.documents.get',
@@ -771,42 +891,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'beta.directories.files.upload',
     httpMethod: 'post',
     httpPath: '/api/v1/beta/directories/{directory_id}/files/upload',
-  },
-  {
-    clientCallName: 'client.beta.batch.create',
-    fullyQualifiedName: 'beta.batch.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/beta/batch-processing',
-  },
-  {
-    clientCallName: 'client.beta.batch.list',
-    fullyQualifiedName: 'beta.batch.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/batch-processing',
-  },
-  {
-    clientCallName: 'client.beta.batch.getStatus',
-    fullyQualifiedName: 'beta.batch.getStatus',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/batch-processing/{job_id}',
-  },
-  {
-    clientCallName: 'client.beta.batch.cancel',
-    fullyQualifiedName: 'beta.batch.cancel',
-    httpMethod: 'post',
-    httpPath: '/api/v1/beta/batch-processing/{job_id}/cancel',
-  },
-  {
-    clientCallName: 'client.beta.batch.jobItems.list',
-    fullyQualifiedName: 'beta.batch.jobItems.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/batch-processing/{job_id}/items',
-  },
-  {
-    clientCallName: 'client.beta.batch.jobItems.getProcessingResults',
-    fullyQualifiedName: 'beta.batch.jobItems.getProcessingResults',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/batch-processing/items/{item_id}/processing-results',
   },
   {
     clientCallName: 'client.beta.split.create',

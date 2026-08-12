@@ -328,6 +328,11 @@ export namespace SheetsJob {
        * events are delivered.
        */
       webhook_events?: Array<
+        | 'batch.cancelled'
+        | 'batch.error'
+        | 'batch.pending'
+        | 'batch.running'
+        | 'batch.success'
         | 'classify.cancelled'
         | 'classify.error'
         | 'classify.partial_success'
@@ -533,6 +538,11 @@ export interface SheetCreateParams {
   configuration_id?: string | null;
 
   /**
+   * Body param: IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
+
+  /**
    * Body param: Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<SheetCreateParams.WebhookConfiguration> | null;
@@ -548,6 +558,11 @@ export namespace SheetCreateParams {
      * events are delivered.
      */
     webhook_events?: Array<
+      | 'batch.cancelled'
+      | 'batch.error'
+      | 'batch.pending'
+      | 'batch.running'
+      | 'batch.success'
       | 'classify.cancelled'
       | 'classify.error'
       | 'classify.partial_success'

@@ -89,19 +89,6 @@ import {
   SplitResultResponse,
   SplitSegmentResponse,
 } from './split';
-import * as BatchAPI from './batch/batch';
-import {
-  Batch,
-  BatchCancelParams,
-  BatchCancelResponse,
-  BatchCreateParams,
-  BatchCreateResponse,
-  BatchGetStatusParams,
-  BatchGetStatusResponse,
-  BatchListParams,
-  BatchListResponse,
-  BatchListResponsesPaginatedBatchItems,
-} from './batch/batch';
 import * as DirectoriesAPI from './directories/directories';
 import {
   Directories,
@@ -124,7 +111,6 @@ export class Beta extends APIResource {
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
   sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
   directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
-  batch: BatchAPI.Batch = new BatchAPI.Batch(this._client);
   split: SplitAPI.Split = new SplitAPI.Split(this._client);
 }
 
@@ -133,7 +119,6 @@ Beta.Retrieval = Retrieval;
 Beta.Chat = Chat;
 Beta.Sheets = Sheets;
 Beta.Directories = Directories;
-Beta.Batch = Batch;
 Beta.Split = Split;
 
 export declare namespace Beta {
@@ -222,19 +207,6 @@ export declare namespace Beta {
     type DirectoryGetParams as DirectoryGetParams,
     type DirectoryUpdateParams as DirectoryUpdateParams,
     type DirectoryDeleteParams as DirectoryDeleteParams,
-  };
-
-  export {
-    Batch as Batch,
-    type BatchCreateResponse as BatchCreateResponse,
-    type BatchListResponse as BatchListResponse,
-    type BatchCancelResponse as BatchCancelResponse,
-    type BatchGetStatusResponse as BatchGetStatusResponse,
-    type BatchListResponsesPaginatedBatchItems as BatchListResponsesPaginatedBatchItems,
-    type BatchCreateParams as BatchCreateParams,
-    type BatchListParams as BatchListParams,
-    type BatchGetStatusParams as BatchGetStatusParams,
-    type BatchCancelParams as BatchCancelParams,
   };
 
   export {

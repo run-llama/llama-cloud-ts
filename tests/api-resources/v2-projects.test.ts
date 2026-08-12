@@ -7,10 +7,10 @@ const client = new LlamaCloud({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource jobItems', () => {
+describe('resource v2Projects', () => {
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.beta.batch.jobItems.list('job_id');
+    const responsePromise = client.v2Projects.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,14 +24,12 @@ describe('resource jobItems', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.beta.batch.jobItems.list(
-        'job_id',
+      client.v2Projects.list(
         {
-          limit: 1,
-          offset: 0,
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          status: 'cancelled',
+          name: 'name',
+          organization_id: 'organization_id',
+          page_size: 0,
+          page_token: 'page_token',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -39,8 +37,8 @@ describe('resource jobItems', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getProcessingResults', async () => {
-    const responsePromise = client.beta.batch.jobItems.getProcessingResults('item_id');
+  test.skip('get', async () => {
+    const responsePromise = client.v2Projects.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -51,16 +49,12 @@ describe('resource jobItems', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getProcessingResults: request options and params are passed correctly', async () => {
+  test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.beta.batch.jobItems.getProcessingResults(
-        'item_id',
-        {
-          job_type: 'classify',
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
+      client.v2Projects.get(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        { organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);

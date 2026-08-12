@@ -69,8 +69,8 @@ export class Extract extends APIResource {
    * Get a single extraction job by ID.
    *
    * Returns the job status and results when complete. Use `expand=configuration` to
-   * include the full configuration used, and `expand=extract_metadata` for per-field
-   * metadata.
+   * include the full configuration used, `expand=extract_metadata` for per-field
+   * metadata, and `expand=usage` for credits billed against the job.
    *
    * @example
    * ```ts
@@ -100,6 +100,29 @@ export class Extract extends APIResource {
   ): APIPromise<unknown> {
     const { organization_id, project_id } = params ?? {};
     return this._client.delete(path`/api/v2/extract/${jobID}`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
+   * Cancel a running extraction job.
+   *
+   * Stops processing and marks the job as CANCELLED. Returns the updated job. Jobs
+   * already in a terminal state (COMPLETED, FAILED, CANCELLED) cannot be cancelled.
+   *
+   * @example
+   * ```ts
+   * const extractV2Job = await client.extract.cancel('job_id');
+   * ```
+   */
+  cancel(
+    jobID: string,
+    params: ExtractCancelParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExtractV2Job> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.post(path`/api/v2/extract/${jobID}/cancel`, {
       query: { organization_id, project_id },
       ...options,
     });
@@ -280,14 +303,21 @@ export interface ExtractConfiguration {
   };
 
   /**
-   * Include citations in results
+   * Include citations in results. Returned under `extract_metadata` (auto-included
+   * when set). Text-level on `turbo` (no bounding boxes).
    */
   cite_sources?: boolean;
 
   /**
-   * Include confidence scores in results
+   * Include confidence scores in results. Returned under `extract_metadata`
+   * (auto-included when set).
    */
   confidence_scores?: boolean;
+
+  /**
+   * Disable reuse and storage of Extract results
+   */
+  disable_cache?: boolean;
 
   /**
    * Granularity of extraction: per_doc returns one object per document, per_page
@@ -302,15 +332,34 @@ export interface ExtractConfiguration {
 
   /**
    * Saved parse configuration ID to control how the document is parsed before
-   * extraction
+   * extraction. Turbo extract does not support parse configuration or produce a
+   * parse output; use another tier if your workflow requires parsed text.
    */
   parse_config_id?: string | null;
 
   /**
    * Parse tier to use before extraction. Defaults to the extract tier if not
-   * specified.
+   * specified. Turbo extract does not support parse configuration or produce a parse
+   * output; use another tier if your workflow requires parsed text.
    */
   parse_tier?: string | null;
+
+  /**
+   * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
+   * target_pages for spreadsheets; omit to extract every sheet. Names are matched
+   * exactly (case-sensitive) — pass them as a list, e.g. ["Sheet 1", "My Sheet"].
+   */
+  sheet_names?: Array<string> | null;
+
+  /**
+   * Beta. When true, extract structured data directly from a spreadsheet workbook
+   * (.xlsx/.xls/.csv) — the agent reads cells straight from the workbook instead of
+   * the standard document path. Off by default (spreadsheets keep the standard
+   * path). Requires the agentic_plus tier. Billed on the standard per-page extract
+   * rate, against a page count derived from workbook size. Citations and confidence
+   * scores are not available in this mode.
+   */
+  spreadsheet_mode?: boolean;
 
   /**
    * Custom system prompt to guide extraction behavior
@@ -446,6 +495,14 @@ export interface ExtractV2Job {
    * Job-level metadata.
    */
   metadata?: ExtractV2Job.Metadata | null;
+
+  /**
+   * Usage recorded against an extract job.
+   *
+   * A parse job can back several extract jobs, so each of them reports that same
+   * parse cost in its total.
+   */
+  usage?: ExtractV2Job.Usage | null;
 }
 
 export namespace ExtractV2Job {
@@ -459,6 +516,29 @@ export namespace ExtractV2Job {
     usage?: ExtractAPI.ExtractJobUsage | null;
 
     [k: string]: unknown;
+  }
+
+  /**
+   * Usage recorded against an extract job.
+   *
+   * A parse job can back several extract jobs, so each of them reports that same
+   * parse cost in its total.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+
+    /**
+     * Credits billed for the extraction itself
+     */
+    extract_credits?: number | null;
+
+    /**
+     * Credits billed against the parse job backing this extract job
+     */
+    parse_credits?: number | null;
   }
 }
 
@@ -483,6 +563,11 @@ export interface ExtractV2JobCreate {
   configuration_id?: string | null;
 
   /**
+   * IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
+
+  /**
    * Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<ExtractV2JobCreate.WebhookConfiguration> | null;
@@ -498,6 +583,11 @@ export namespace ExtractV2JobCreate {
      * events are delivered.
      */
     webhook_events?: Array<
+      | 'batch.cancelled'
+      | 'batch.error'
+      | 'batch.pending'
+      | 'batch.running'
+      | 'batch.success'
       | 'classify.cancelled'
       | 'classify.error'
       | 'classify.partial_success'
@@ -686,6 +776,11 @@ export interface ExtractCreateParams {
   configuration_id?: string | null;
 
   /**
+   * Body param: IDs of saved webhook configurations to notify for this job.
+   */
+  webhook_configuration_ids?: Array<string> | null;
+
+  /**
    * Body param: Outbound webhook endpoints to notify on job status changes
    */
   webhook_configurations?: Array<ExtractCreateParams.WebhookConfiguration> | null;
@@ -701,6 +796,11 @@ export namespace ExtractCreateParams {
      * events are delivered.
      */
     webhook_events?: Array<
+      | 'batch.cancelled'
+      | 'batch.error'
+      | 'batch.pending'
+      | 'batch.running'
+      | 'batch.success'
       | 'classify.cancelled'
       | 'classify.error'
       | 'classify.partial_success'
@@ -809,7 +909,7 @@ export interface ExtractListParams extends PaginatedCursorParams {
 
 export interface ExtractGetParams {
   /**
-   * Additional fields to include: configuration, extract_metadata
+   * Additional fields to include: configuration, extract_metadata, usage
    */
   expand?: Array<string>;
 
@@ -819,6 +919,12 @@ export interface ExtractGetParams {
 }
 
 export interface ExtractDeleteParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface ExtractCancelParams {
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -885,6 +991,7 @@ export declare namespace Extract {
     type ExtractListParams as ExtractListParams,
     type ExtractGetParams as ExtractGetParams,
     type ExtractDeleteParams as ExtractDeleteParams,
+    type ExtractCancelParams as ExtractCancelParams,
     type ExtractValidateSchemaParams as ExtractValidateSchemaParams,
     type ExtractGenerateSchemaParams as ExtractGenerateSchemaParams,
   };

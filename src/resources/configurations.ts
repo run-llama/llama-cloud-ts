@@ -364,14 +364,21 @@ export interface ExtractV2Parameters {
   product_type: 'extract_v2';
 
   /**
-   * Include citations in results
+   * Include citations in results. Returned under `extract_metadata` (auto-included
+   * when set). Text-level on `turbo` (no bounding boxes).
    */
   cite_sources?: boolean;
 
   /**
-   * Include confidence scores in results
+   * Include confidence scores in results. Returned under `extract_metadata`
+   * (auto-included when set).
    */
   confidence_scores?: boolean;
+
+  /**
+   * Disable reuse and storage of Extract results
+   */
+  disable_cache?: boolean;
 
   /**
    * Granularity of extraction: per_doc returns one object per document, per_page
@@ -386,15 +393,34 @@ export interface ExtractV2Parameters {
 
   /**
    * Saved parse configuration ID to control how the document is parsed before
-   * extraction
+   * extraction. Turbo extract does not support parse configuration or produce a
+   * parse output; use another tier if your workflow requires parsed text.
    */
   parse_config_id?: string | null;
 
   /**
    * Parse tier to use before extraction. Defaults to the extract tier if not
-   * specified.
+   * specified. Turbo extract does not support parse configuration or produce a parse
+   * output; use another tier if your workflow requires parsed text.
    */
   parse_tier?: string | null;
+
+  /**
+   * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
+   * target_pages for spreadsheets; omit to extract every sheet. Names are matched
+   * exactly (case-sensitive) — pass them as a list, e.g. ["Sheet 1", "My Sheet"].
+   */
+  sheet_names?: Array<string> | null;
+
+  /**
+   * Beta. When true, extract structured data directly from a spreadsheet workbook
+   * (.xlsx/.xls/.csv) — the agent reads cells straight from the workbook instead of
+   * the standard document path. Off by default (spreadsheets keep the standard
+   * path). Requires the agentic_plus tier. Billed on the standard per-page extract
+   * rate, against a page count derived from workbook size. Citations and confidence
+   * scores are not available in this mode.
+   */
+  spreadsheet_mode?: boolean;
 
   /**
    * Custom system prompt to guide extraction behavior
@@ -449,13 +475,13 @@ export interface ParseV2Parameters {
    * Current `latest` by tier:
    *
    * - `fast`: `2026-06-15`
-   * - `cost_effective`: `2026-06-26`
-   * - `agentic`: `2026-07-15`
+   * - `cost_effective`: `2026-08-08`
+   * - `agentic`: `2026-07-24`
    * - `agentic_plus`: `2026-07-08`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-07-15' | '2026-07-08' | '2026-06-26' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-08-08' | '2026-07-24' | '2026-07-08' | '2026-06-15' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -728,17 +754,23 @@ export namespace ParseV2Parameters {
     granular_bboxes?: Array<'cell' | 'line' | 'word'>;
 
     /**
-     * Image categories to extract and save. Options: 'screenshot' (full page renders
-     * useful for visual QA), 'embedded' (images found within the document), 'layout'
-     * (cropped regions from layout detection like figures and diagrams). Empty list
-     * saves no images
+     * Image categories to save: 'screenshot' (full page renders), 'embedded' (images
+     * found within the document), 'layout' (cropped figures and diagrams). Defaults to
+     * saving 'layout' when the output links to cropped images; pass [] to save none
      */
-    images_to_save?: Array<'embedded' | 'layout' | 'screenshot'>;
+    images_to_save?: Array<'embedded' | 'layout' | 'screenshot'> | null;
 
     /**
      * Markdown formatting options including table styles and link annotations
      */
     markdown?: OutputOptions.Markdown;
+
+    /**
+     * Save a PDF copy of the parsed document, retrievable via
+     * `expand=output_pdf_content_metadata`. Not produced for spreadsheet, plain-text,
+     * or audio inputs
+     */
+    save_output_pdf?: boolean | null;
 
     /**
      * Spatial text output options for preserving document layout structure
@@ -761,6 +793,11 @@ export namespace ParseV2Parameters {
        * only the link text is included
        */
       annotate_links?: boolean | null;
+
+      /**
+       * Extract Word-style revisions and comments into structured page output
+       */
+      annotate_revisions?: boolean | null;
 
       /**
        * Embed images directly in markdown as base64 data URIs instead of extracting them
@@ -1270,13 +1307,13 @@ export namespace ParseV2Parameters {
          * Current `latest` by tier:
          *
          * - `fast`: `2026-06-15`
-         * - `cost_effective`: `2026-06-26`
-         * - `agentic`: `2026-07-15`
+         * - `cost_effective`: `2026-08-08`
+         * - `agentic`: `2026-07-24`
          * - `agentic_plus`: `2026-07-08`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-07-15' | '2026-07-08' | '2026-06-26' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-08-08' | '2026-07-24' | '2026-07-08' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {

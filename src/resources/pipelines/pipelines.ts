@@ -27,6 +27,8 @@ import {
   DocumentGetChunksParams,
   DocumentGetChunksResponse,
   DocumentGetParams,
+  DocumentGetStatusCountsParams,
+  DocumentGetStatusCountsResponse,
   DocumentGetStatusParams,
   DocumentListParams,
   DocumentSyncParams,
@@ -676,6 +678,8 @@ export interface LlamaParseParameters {
 
   annotate_links?: boolean | null;
 
+  annotate_revisions?: boolean | null;
+
   auto_mode?: boolean | null;
 
   auto_mode_configuration_json?: string | null;
@@ -934,6 +938,11 @@ export namespace LlamaParseParameters {
      * events are delivered.
      */
     webhook_events?: Array<
+      | 'batch.cancelled'
+      | 'batch.error'
+      | 'batch.pending'
+      | 'batch.running'
+      | 'batch.success'
       | 'classify.cancelled'
       | 'classify.error'
       | 'classify.partial_success'
@@ -2299,11 +2308,13 @@ export declare namespace Pipelines {
     type TextNode as TextNode,
     type DocumentCreateResponse as DocumentCreateResponse,
     type DocumentGetChunksResponse as DocumentGetChunksResponse,
+    type DocumentGetStatusCountsResponse as DocumentGetStatusCountsResponse,
     type DocumentSyncResponse as DocumentSyncResponse,
     type DocumentUpsertResponse as DocumentUpsertResponse,
     type CloudDocumentsPaginatedCloudDocuments as CloudDocumentsPaginatedCloudDocuments,
     type DocumentCreateParams as DocumentCreateParams,
     type DocumentListParams as DocumentListParams,
+    type DocumentGetStatusCountsParams as DocumentGetStatusCountsParams,
     type DocumentGetParams as DocumentGetParams,
     type DocumentDeleteParams as DocumentDeleteParams,
     type DocumentGetStatusParams as DocumentGetStatusParams,
