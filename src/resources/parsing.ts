@@ -2186,6 +2186,11 @@ export interface ParsingCreateParams {
   page_ranges?: ParsingCreateParams.PageRanges;
 
   /**
+   * Body param: Named preset for specialized document parsing
+   */
+  preset?: string | null;
+
+  /**
    * Body param: Job execution controls including timeouts and failure thresholds
    */
   processing_control?: ParsingCreateParams.ProcessingControl;

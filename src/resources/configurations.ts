@@ -536,6 +536,11 @@ export interface ParseV2Parameters {
   page_ranges?: ParseV2Parameters.PageRanges;
 
   /**
+   * Named preset for specialized document parsing
+   */
+  preset?: string | null;
+
+  /**
    * Job execution controls including timeouts and failure thresholds
    */
   processing_control?: ParseV2Parameters.ProcessingControl;
