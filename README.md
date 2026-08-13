@@ -9,7 +9,7 @@ With this SDK, create powerful workflows across many features:
 - **Parse** - Agentic OCR and parsing for 130+ formats
 - **Extract** - Structured data extraction with custom schemas
 - **Classify** - Document categorization with natural-language rules
-- **Agents** - Deploy document agents as APIs
+- **Agent Data** - Store, search, and aggregate structured data produced by document agents
 - **Index** - Document ingestion and embedding for RAG
 
 ## Documentation
@@ -79,7 +79,7 @@ When the API returns a non-success status code, an `APIError` subclass is thrown
 await client.pipelines.list({ project_id: 'my-project-id' }).catch((err) => {
   if (err instanceof LlamaCloud.APIError) {
     console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
+    console.log(err instanceof LlamaCloud.BadRequestError); // true
   }
 });
 ```
@@ -90,6 +90,7 @@ await client.pipelines.list({ project_id: 'my-project-id' }).catch((err) => {
 | 401         | `AuthenticationError`      |
 | 403         | `PermissionDeniedError`    |
 | 404         | `NotFoundError`            |
+| 409         | `ConflictError`            |
 | 422         | `UnprocessableEntityError` |
 | 429         | `RateLimitError`           |
 | >=500       | `InternalServerError`      |
@@ -97,21 +98,21 @@ await client.pipelines.list({ project_id: 'my-project-id' }).catch((err) => {
 
 ## Retries and Timeouts
 
-The SDK automatically retries requests 2 times on connection errors, timeouts, rate limits, and 5xx errors. Requests timeout after 1 minute by default. Functions that combine multiple API calls (e.g. `client.parsing.parse()`) will have larger timeouts by default to account for the multiple requests and polling.
+The SDK automatically retries requests 5 times on connection errors, timeouts, request-timeout (408) and conflict (409) responses, rate limits, and 5xx errors. Requests timeout after 1 minute by default. Functions that combine multiple API calls (e.g. `client.parsing.parse()`) will have larger timeouts by default to account for the multiple requests and polling.
 
 ```ts
 const client = new LlamaCloud({
-  maxRetries: 0, // Disable retries (default: 2)
+  maxRetries: 0, // Disable retries (default: 5)
   timeout: 30 * 1000, // 30 second timeout (default: 1 minute)
 });
 ```
 
 ## Pagination
 
-List methods support auto-pagination with `for await...of`:
+Some list methods return an `APIPromise<Array<...>>`; those are not paginated and must be awaited directly. List methods that return a `PagePromise` support auto-pagination with `for await...of`:
 
 ```ts
-async function fetchAllExtractV2Jobs(params) {
+async function fetchAllExtractV2Jobs() {
   const allExtractV2Jobs = [];
   // Automatically fetches more pages as needed.
   for await (const extractV2Job of client.extract.list({ page_size: 20 })) {
