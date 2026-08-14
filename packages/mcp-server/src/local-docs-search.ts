@@ -86,6 +86,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.files.FileCreateParams;\nimport ai.llamaindex.llamacloud.models.files.FileCreateResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileCreateParams params = FileCreateParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .purpose("purpose")\n            .build();\n        FileCreateResponse file = client.files().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Files.Create',
+        example:
+          'FileCreateParams parameters = new()\n{\n    File = Encoding.UTF8.GetBytes("Example data"),\n    Purpose = "purpose",\n};\n\nvar file = await client.Files.Create(parameters);\n\nConsole.WriteLine(file);',
+      },
       typescript: {
         method: 'client.files.create',
         example:
@@ -137,6 +142,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().query',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.files.FileQueryParams;\nimport ai.llamaindex.llamacloud.models.files.FileQueryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileQueryResponse response = client.files().query();\n    }\n}',
+      },
+      csharp: {
+        method: 'Files.Query',
+        example:
+          'FileQueryParams parameters = new();\n\nvar response = await client.Files.Query(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.files.query',
@@ -193,6 +203,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.files.FileListPage;\nimport ai.llamaindex.llamacloud.models.files.FileListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileListPage page = client.files().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Files.List',
+        example:
+          'FileListParams parameters = new();\n\nvar page = await client.Files.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.files.list',
         example:
@@ -237,6 +252,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.files.FileRetrieveParams;\nimport ai.llamaindex.llamacloud.models.files.FileRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileRetrieveResponse file = client.files().retrieve("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
+      csharp: {
+        method: 'Files.Retrieve',
+        example:
+          'FileRetrieveParams parameters = new()\n{\n    FileID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar file = await client.Files.Retrieve(parameters);\n\nConsole.WriteLine(file);',
+      },
       typescript: {
         method: 'client.files.retrieve',
         example:
@@ -279,6 +299,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.files.FileDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.files().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Files.Delete',
+        example:
+          'FileDeleteParams parameters = new()\n{\n    FileID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nawait client.Files.Delete(parameters);',
       },
       typescript: {
         method: 'client.files.delete',
@@ -328,6 +353,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'files().content',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.files.FileContentParams;\nimport ai.llamaindex.llamacloud.models.files.PresignedUrl;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PresignedUrl presignedUrl = client.files().content("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Files.Content',
+        example:
+          'FileContentParams parameters = new()\n{\n    FileID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar presignedUrl = await client.Files.Content(parameters);\n\nConsole.WriteLine(presignedUrl);',
       },
       typescript: {
         method: 'client.files.content',
@@ -383,6 +413,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'sheets().create',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetsJob;\nimport ai.llamaindex.llamacloud.models.sheets.SheetCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetCreateParams params = SheetCreateParams.builder()\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        SheetsJob sheetsJob = client.sheets().create(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Sheets.Create',
+        example:
+          'SheetCreateParams parameters = new()\n{\n    FileID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar sheetsJob = await client.Sheets.Create(parameters);\n\nConsole.WriteLine(sheetsJob);',
       },
       typescript: {
         method: 'client.sheets.create',
@@ -440,6 +475,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.sheets.SheetListPage;\nimport ai.llamaindex.llamacloud.models.sheets.SheetListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetListPage page = client.sheets().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Sheets.List',
+        example:
+          'SheetListParams parameters = new();\n\nvar page = await client.Sheets.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.sheets.list',
         example:
@@ -491,6 +531,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetsJob;\nimport ai.llamaindex.llamacloud.models.sheets.SheetGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetsJob sheetsJob = client.sheets().get("spreadsheet_job_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Sheets.Get',
+        example:
+          'SheetGetParams parameters = new() { SpreadsheetJobID = "spreadsheet_job_id" };\n\nvar sheetsJob = await client.Sheets.Get(parameters);\n\nConsole.WriteLine(sheetsJob);',
+      },
       typescript: {
         method: 'client.sheets.get',
         example:
@@ -541,6 +586,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.files.PresignedUrl;\nimport ai.llamaindex.llamacloud.models.sheets.SheetGetResultTableParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetGetResultTableParams params = SheetGetResultTableParams.builder()\n            .spreadsheetJobId("spreadsheet_job_id")\n            .regionId("region_id")\n            .regionType(SheetGetResultTableParams.RegionType.CELL_METADATA)\n            .build();\n        PresignedUrl presignedUrl = client.sheets().getResultTable(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Sheets.GetResultTable',
+        example:
+          'SheetGetResultTableParams parameters = new()\n{\n    SpreadsheetJobID = "spreadsheet_job_id",\n    RegionID = "region_id",\n    RegionType = RegionType.CellMetadata,\n};\n\nvar presignedUrl = await client.Sheets.GetResultTable(parameters);\n\nConsole.WriteLine(presignedUrl);',
+      },
       typescript: {
         method: 'client.sheets.getResultTable',
         example:
@@ -584,6 +634,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'sheets().deleteJob',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.sheets.SheetDeleteJobParams;\nimport ai.llamaindex.llamacloud.models.sheets.SheetDeleteJobResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetDeleteJobResponse response = client.sheets().deleteJob("spreadsheet_job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Sheets.DeleteJob',
+        example:
+          'SheetDeleteJobParams parameters = new()\n{\n    SpreadsheetJobID = "spreadsheet_job_id"\n};\n\nvar response = await client.Sheets.DeleteJob(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.sheets.deleteJob',
@@ -639,6 +694,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.split.SplitCreateParams;\nimport ai.llamaindex.llamacloud.models.split.SplitCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitCreateParams params = SplitCreateParams.builder()\n            .fileInput("dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")\n            .build();\n        SplitCreateResponse split = client.split().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Split.Create',
+        example:
+          'SplitCreateParams parameters = new()\n{\n    FileInput = "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"\n};\n\nvar split = await client.Split.Create(parameters);\n\nConsole.WriteLine(split);',
+      },
       typescript: {
         method: 'client.split.create',
         example:
@@ -693,6 +753,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.split.SplitListPage;\nimport ai.llamaindex.llamacloud.models.split.SplitListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitListPage page = client.split().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Split.List',
+        example:
+          'SplitListParams parameters = new();\n\nvar page = await client.Split.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.split.list',
         example:
@@ -737,6 +802,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.split.SplitGetParams;\nimport ai.llamaindex.llamacloud.models.split.SplitGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitGetResponse split = client.split().get("split_job_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Split.Get',
+        example:
+          'SplitGetParams parameters = new() { SplitJobID = "split_job_id" };\n\nvar split = await client.Split.Get(parameters);\n\nConsole.WriteLine(split);',
+      },
       typescript: {
         method: 'client.split.get',
         example:
@@ -779,6 +849,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'split().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.split.SplitDeleteParams;\nimport ai.llamaindex.llamacloud.models.split.SplitDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitDeleteResponse split = client.split().delete("split_job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Split.Delete',
+        example:
+          'SplitDeleteParams parameters = new() { SplitJobID = "split_job_id" };\n\nvar split = await client.Split.Delete(parameters);\n\nConsole.WriteLine(split);',
       },
       typescript: {
         method: 'client.split.delete',
@@ -824,6 +899,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'split().cancel',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.split.SplitCancelParams;\nimport ai.llamaindex.llamacloud.models.split.SplitCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitCancelResponse response = client.split().cancel("split_job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Split.Cancel',
+        example:
+          'SplitCancelParams parameters = new() { SplitJobID = "split_job_id" };\n\nvar response = await client.Split.Cancel(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.split.cancel',
@@ -892,6 +972,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateParams;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingCreateParams params = ParsingCreateParams.builder()\n            .tier(ParsingCreateParams.Tier.FAST)\n            .version(ParsingCreateParams.Version.LATEST)\n            .build();\n        ParsingCreateResponse parsing = client.parsing().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Parsing.Create',
+        example:
+          'ParsingCreateParams parameters = new()\n{\n    Tier = Tier.Fast,\n    Version = Version.Latest,\n};\n\nvar parsing = await client.Parsing.Create(parameters);\n\nConsole.WriteLine(parsing);',
+      },
       typescript: {
         method: 'client.parsing.create',
         example:
@@ -942,6 +1027,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'parsing().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingGetParams;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingGetResponse parsing = client.parsing().get("job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Parsing.Get',
+        example:
+          'ParsingGetParams parameters = new() { JobID = "job_id" };\n\nvar parsing = await client.Parsing.Get(parameters);\n\nConsole.WriteLine(parsing);',
       },
       typescript: {
         method: 'client.parsing.get',
@@ -997,6 +1087,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingListPage;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingListPage page = client.parsing().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Parsing.List',
+        example:
+          'ParsingListParams parameters = new();\n\nvar page = await client.Parsing.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.parsing.list',
         example:
@@ -1042,6 +1137,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCancelParams;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingCancelResponse response = client.parsing().cancel("job_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Parsing.Cancel',
+        example:
+          'ParsingCancelParams parameters = new() { JobID = "job_id" };\n\nvar response = await client.Parsing.Cancel(parameters);\n\nConsole.WriteLine(response);',
+      },
       typescript: {
         method: 'client.parsing.cancel',
         example:
@@ -1084,6 +1184,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'parsing().listVersions',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingListVersionsParams;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingListVersionsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ParsingListVersionsResponse response = client.parsing().listVersions();\n    }\n}',
+      },
+      csharp: {
+        method: 'Parsing.ListVersions',
+        example:
+          'ParsingListVersionsParams parameters = new();\n\nvar response = await client.Parsing.ListVersions(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.parsing.listVersions',
@@ -1137,6 +1242,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract().create',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2Job;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2JobCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2JobCreate params = ExtractV2JobCreate.builder()\n            .fileInput("dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")\n            .build();\n        ExtractV2Job extractV2Job = client.extract().create(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Extract.Create',
+        example:
+          'ExtractCreateParams parameters = new()\n{\n    FileInput = "dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"\n};\n\nvar extractV2Job = await client.Extract.Create(parameters);\n\nConsole.WriteLine(extractV2Job);',
       },
       typescript: {
         method: 'client.extract.create',
@@ -1198,6 +1308,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.ExtractListPage;\nimport ai.llamaindex.llamacloud.models.extract.ExtractListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractListPage page = client.extract().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Extract.List',
+        example:
+          'ExtractListParams parameters = new();\n\nvar page = await client.Extract.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.extract.list',
         example:
@@ -1243,6 +1358,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.ExtractGetParams;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2Job;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2Job extractV2Job = client.extract().get("job_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Extract.Get',
+        example:
+          'ExtractGetParams parameters = new() { JobID = "job_id" };\n\nvar extractV2Job = await client.Extract.Get(parameters);\n\nConsole.WriteLine(extractV2Job);',
+      },
       typescript: {
         method: 'client.extract.get',
         example:
@@ -1285,6 +1405,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.ExtractDeleteParams;\nimport ai.llamaindex.llamacloud.models.extract.ExtractDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractDeleteResponse extract = client.extract().delete("job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Extract.Delete',
+        example:
+          'ExtractDeleteParams parameters = new() { JobID = "job_id" };\n\nvar extract = await client.Extract.Delete(parameters);\n\nConsole.WriteLine(extract);',
       },
       typescript: {
         method: 'client.extract.delete',
@@ -1331,6 +1456,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.ExtractCancelParams;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2Job;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2Job extractV2Job = client.extract().cancel("job_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Extract.Cancel',
+        example:
+          'ExtractCancelParams parameters = new() { JobID = "job_id" };\n\nvar extractV2Job = await client.Extract.Cancel(parameters);\n\nConsole.WriteLine(extractV2Job);',
+      },
       typescript: {
         method: 'client.extract.cancel',
         example:
@@ -1373,6 +1503,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'extract().validateSchema',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2SchemaValidateRequest;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2SchemaValidateResponse;\nimport java.util.List;\nimport java.util.Map;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2SchemaValidateRequest params = ExtractV2SchemaValidateRequest.builder()\n            .dataSchema(ExtractV2SchemaValidateRequest.DataSchema.builder()\n                .putAdditionalProperty("properties", JsonValue.from(Map.of(\n                  "invoice_number",\n                  "bar",\n                  "line_items",\n                  "bar",\n                  "total_amount",\n                  "bar",\n                  "vendor_name",\n                  "bar"\n                )))\n                .putAdditionalProperty("required", JsonValue.from(List.of(\n                  "invoice_number",\n                  "total_amount",\n                  "vendor_name"\n                )))\n                .putAdditionalProperty("type", JsonValue.from("object"))\n                .build())\n            .build();\n        ExtractV2SchemaValidateResponse extractV2SchemaValidateResponse = client.extract().validateSchema(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Extract.ValidateSchema',
+        example:
+          'ExtractValidateSchemaParams parameters = new()\n{\n    DataSchema = new Dictionary<string, DataSchema?>()\n    {\n        { "properties", new(\n            new Dictionary<string, JsonElement>()\n            {\n                { "invoice_number", JsonSerializer.SerializeToElement("bar") },\n                { "line_items", JsonSerializer.SerializeToElement("bar") },\n                { "total_amount", JsonSerializer.SerializeToElement("bar") },\n                { "vendor_name", JsonSerializer.SerializeToElement("bar") },\n            }\n        ) },\n        { "required", new(\n\n            [\n                JsonSerializer.SerializeToElement("invoice_number"),\n                JsonSerializer.SerializeToElement("total_amount"),\n                JsonSerializer.SerializeToElement("vendor_name"),\n            ]\n        ) },\n        { "type", "object" },\n    },\n};\n\nvar extractV2SchemaValidateResponse = await client.Extract.ValidateSchema(parameters);\n\nConsole.WriteLine(extractV2SchemaValidateResponse);',
       },
       typescript: {
         method: 'client.extract.validateSchema',
@@ -1426,6 +1561,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.configurations.ConfigurationCreate;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2SchemaGenerateRequest;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractV2SchemaGenerateRequest params = ExtractV2SchemaGenerateRequest.builder().build();\n        ConfigurationCreate configurationCreate = client.extract().generateSchema(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Extract.GenerateSchema',
+        example:
+          'ExtractGenerateSchemaParams parameters = new();\n\nvar configurationCreate = await client.Extract.GenerateSchema(parameters);\n\nConsole.WriteLine(configurationCreate);',
+      },
       typescript: {
         method: 'client.extract.generateSchema',
         example:
@@ -1478,6 +1618,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.classifier.jobs.ClassifierRule;\nimport ai.llamaindex.llamacloud.models.classifier.jobs.ClassifyJob;\nimport ai.llamaindex.llamacloud.models.classifier.jobs.JobCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobCreateParams params = JobCreateParams.builder()\n            .addFileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addRule(ClassifierRule.builder()\n                .description("contains invoice number, line items, and total amount")\n                .type("invoice")\n                .build())\n            .build();\n        ClassifyJob classifyJob = client.classifier().jobs().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Classifier.Jobs.Create',
+        example:
+          'JobCreateParams parameters = new()\n{\n    FileIds =\n    [\n        "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n    ],\n    Rules =\n    [\n        new()\n        {\n            Description = "contains invoice number, line items, and total amount",\n            Type = "invoice",\n        },\n    ],\n};\n\nvar classifyJob = await client.Classifier.Jobs.Create(parameters);\n\nConsole.WriteLine(classifyJob);',
+      },
       typescript: {
         method: 'client.classifier.jobs.create',
         example:
@@ -1528,6 +1673,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.classifier.jobs.JobListPage;\nimport ai.llamaindex.llamacloud.models.classifier.jobs.JobListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobListPage page = client.classifier().jobs().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Classifier.Jobs.List',
+        example:
+          'JobListParams parameters = new();\n\nvar page = await client.Classifier.Jobs.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.classifier.jobs.list',
         example:
@@ -1571,6 +1721,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classifier().jobs().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.classifier.jobs.ClassifyJob;\nimport ai.llamaindex.llamacloud.models.classifier.jobs.JobGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyJob classifyJob = client.classifier().jobs().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Classifier.Jobs.Get',
+        example:
+          'JobGetParams parameters = new()\n{\n    ClassifyJobID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar classifyJob = await client.Classifier.Jobs.Get(parameters);\n\nConsole.WriteLine(classifyJob);',
       },
       typescript: {
         method: 'client.classifier.jobs.get',
@@ -1617,6 +1772,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classifier().jobs().getResults',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.classifier.jobs.JobGetResultsParams;\nimport ai.llamaindex.llamacloud.models.classifier.jobs.JobGetResultsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobGetResultsResponse response = client.classifier().jobs().getResults("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Classifier.Jobs.GetResults',
+        example:
+          'JobGetResultsParams parameters = new()\n{\n    ClassifyJobID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar response = await client.Classifier.Jobs.GetResults(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.classifier.jobs.getResults',
@@ -1670,6 +1830,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'batches().create',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.batches.BatchCreateParams;\nimport ai.llamaindex.llamacloud.models.batches.BatchCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCreateParams params = BatchCreateParams.builder()\n            .config(BatchCreateParams.Config.builder()\n                .job(BatchCreateParams.Config.Job.builder()\n                    .configurationId("cfg-PARSE_AGENTIC")\n                    .type(BatchCreateParams.Config.Job.Type.PARSE_V2)\n                    .build())\n                .build())\n            .sourceDirectoryId("dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")\n            .build();\n        BatchCreateResponse batch = client.batches().create(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Batches.Create',
+        example:
+          'BatchCreateParams parameters = new()\n{\n    Config = new(\n        new Job()\n        {\n            ConfigurationID = "cfg-PARSE_AGENTIC",\n            Type = Type.ParseV2,\n        }\n    ),\n    SourceDirectoryID = "dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",\n};\n\nvar batch = await client.Batches.Create(parameters);\n\nConsole.WriteLine(batch);',
       },
       typescript: {
         method: 'client.batches.create',
@@ -1725,6 +1890,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.batches.BatchListPage;\nimport ai.llamaindex.llamacloud.models.batches.BatchListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchListPage page = client.batches().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Batches.List',
+        example:
+          'BatchListParams parameters = new();\n\nvar page = await client.Batches.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.batches.list',
         example:
@@ -1768,6 +1938,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'batches().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.batches.BatchGetParams;\nimport ai.llamaindex.llamacloud.models.batches.BatchGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchGetResponse batch = client.batches().get("batch_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Batches.Get',
+        example:
+          'BatchGetParams parameters = new() { BatchID = "batch_id" };\n\nvar batch = await client.Batches.Get(parameters);\n\nConsole.WriteLine(batch);',
       },
       typescript: {
         method: 'client.batches.get',
@@ -1813,6 +1988,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'batches().cancel',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.batches.BatchCancelParams;\nimport ai.llamaindex.llamacloud.models.batches.BatchCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        BatchCancelResponse response = client.batches().cancel("batch_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Batches.Cancel',
+        example:
+          'BatchCancelParams parameters = new() { BatchID = "batch_id" };\n\nvar response = await client.Batches.Cancel(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.batches.cancel',
@@ -1870,6 +2050,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyCreateRequest;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyCreateRequest params = ClassifyCreateRequest.builder().build();\n        ClassifyCreateResponse classify = client.classify().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Classify.Create',
+        example:
+          'ClassifyCreateParams parameters = new();\n\nvar classify = await client.Classify.Create(parameters);\n\nConsole.WriteLine(classify);',
+      },
       typescript: {
         method: 'client.classify.create',
         example:
@@ -1925,6 +2110,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyListPage;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyListPage page = client.classify().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Classify.List',
+        example:
+          'ClassifyListParams parameters = new();\n\nvar page = await client.Classify.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.classify.list',
         example:
@@ -1970,6 +2160,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyGetParams;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyGetResponse classify = client.classify().get("job_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Classify.Get',
+        example:
+          'ClassifyGetParams parameters = new() { JobID = "job_id" };\n\nvar classify = await client.Classify.Get(parameters);\n\nConsole.WriteLine(classify);',
+      },
       typescript: {
         method: 'client.classify.get',
         example:
@@ -2014,6 +2209,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'classify().cancel',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyCancelParams;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyCancelResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyCancelResponse response = client.classify().cancel("job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Classify.Cancel',
+        example:
+          'ClassifyCancelParams parameters = new() { JobID = "job_id" };\n\nvar response = await client.Classify.Cancel(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.classify.cancel',
@@ -2064,6 +2264,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations().create',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.configurations.ClassifyV2Parameters;\nimport ai.llamaindex.llamacloud.models.configurations.ConfigurationCreate;\nimport ai.llamaindex.llamacloud.models.configurations.ConfigurationResponse;\nimport java.util.List;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationCreate params = ConfigurationCreate.builder()\n            .name("x")\n            .classifyV2Parameters(List.of(ClassifyV2Parameters.Rule.builder()\n                .description("contains invoice number, line items, and total amount")\n                .type("invoice")\n                .build()))\n            .build();\n        ConfigurationResponse configurationResponse = client.configurations().create(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Configurations.Create',
+        example:
+          'ConfigurationCreateParams parameters = new()\n{\n    Name = "x",\n    Parameters = new ClassifyV2Parameters()\n    {\n        Rules =\n        [\n            new()\n            {\n                Description = "contains invoice number, line items, and total amount",\n                Type = "invoice",\n            },\n        ],\n        Mode = Mode.Fast,\n        ParsingConfiguration = new()\n        {\n            Lang = "en",\n            MaxPages = 10,\n            TargetPages = "1,3,5-7",\n        },\n    },\n};\n\nvar configurationResponse = await client.Configurations.Create(parameters);\n\nConsole.WriteLine(configurationResponse);',
       },
       typescript: {
         method: 'client.configurations.create',
@@ -2118,6 +2323,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.configurations.ConfigurationListPage;\nimport ai.llamaindex.llamacloud.models.configurations.ConfigurationListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationListPage page = client.configurations().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Configurations.List',
+        example:
+          'ConfigurationListParams parameters = new();\n\nvar page = await client.Configurations.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.configurations.list',
         example:
@@ -2161,6 +2371,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations().retrieve',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.configurations.ConfigurationResponse;\nimport ai.llamaindex.llamacloud.models.configurations.ConfigurationRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationResponse configurationResponse = client.configurations().retrieve("config_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Configurations.Retrieve',
+        example:
+          'ConfigurationRetrieveParams parameters = new() { ConfigID = "config_id" };\n\nvar configurationResponse = await client.Configurations.Retrieve(parameters);\n\nConsole.WriteLine(configurationResponse);',
       },
       typescript: {
         method: 'client.configurations.retrieve',
@@ -2212,6 +2427,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.configurations.ConfigurationResponse;\nimport ai.llamaindex.llamacloud.models.configurations.ConfigurationUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ConfigurationResponse configurationResponse = client.configurations().update("config_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Configurations.Update',
+        example:
+          'ConfigurationUpdateParams parameters = new() { ConfigID = "config_id" };\n\nvar configurationResponse = await client.Configurations.Update(parameters);\n\nConsole.WriteLine(configurationResponse);',
+      },
       typescript: {
         method: 'client.configurations.update',
         example:
@@ -2253,6 +2473,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'configurations().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.configurations.ConfigurationDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.configurations().delete("config_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Configurations.Delete',
+        example:
+          'ConfigurationDeleteParams parameters = new() { ConfigID = "config_id" };\n\nawait client.Configurations.Delete(parameters);',
       },
       typescript: {
         method: 'client.configurations.delete',
@@ -2306,6 +2531,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigCreate;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        WebhookConfigCreate params = WebhookConfigCreate.builder()\n            .webhookUrl("https://example.com/webhooks/llamacloud")\n            .build();\n        WebhookConfigResponse webhookConfigResponse = client.webhookConfigs().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'WebhookConfigs.Create',
+        example:
+          'WebhookConfigCreateParams parameters = new()\n{\n    WebhookUrl = "https://example.com/webhooks/llamacloud"\n};\n\nvar webhookConfigResponse = await client.WebhookConfigs.Create(parameters);\n\nConsole.WriteLine(webhookConfigResponse);',
+      },
       typescript: {
         method: 'client.webhookConfigs.create',
         example:
@@ -2351,6 +2581,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigListParams;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<WebhookConfigResponse> webhookConfigResponses = client.webhookConfigs().list();\n    }\n}',
       },
+      csharp: {
+        method: 'WebhookConfigs.List',
+        example:
+          'WebhookConfigListParams parameters = new();\n\nvar webhookConfigResponses = await client.WebhookConfigs.List(parameters);\n\nConsole.WriteLine(webhookConfigResponses);',
+      },
       typescript: {
         method: 'client.webhookConfigs.list',
         example:
@@ -2394,6 +2629,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'webhookConfigs().retrieve',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigResponse;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        WebhookConfigResponse webhookConfigResponse = client.webhookConfigs().retrieve("config_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'WebhookConfigs.Retrieve',
+        example:
+          'WebhookConfigRetrieveParams parameters = new() { ConfigID = "config_id" };\n\nvar webhookConfigResponse = await client.WebhookConfigs.Retrieve(parameters);\n\nConsole.WriteLine(webhookConfigResponse);',
       },
       typescript: {
         method: 'client.webhookConfigs.retrieve',
@@ -2448,6 +2688,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigResponse;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        WebhookConfigResponse webhookConfigResponse = client.webhookConfigs().update("config_id");\n    }\n}',
       },
+      csharp: {
+        method: 'WebhookConfigs.Update',
+        example:
+          'WebhookConfigUpdateParams parameters = new() { ConfigID = "config_id" };\n\nvar webhookConfigResponse = await client.WebhookConfigs.Update(parameters);\n\nConsole.WriteLine(webhookConfigResponse);',
+      },
       typescript: {
         method: 'client.webhookConfigs.update',
         example:
@@ -2489,6 +2734,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'webhookConfigs().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.webhookConfigs().delete("config_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'WebhookConfigs.Delete',
+        example:
+          'WebhookConfigDeleteParams parameters = new() { ConfigID = "config_id" };\n\nawait client.WebhookConfigs.Delete(parameters);',
       },
       typescript: {
         method: 'client.webhookConfigs.delete',
@@ -2534,6 +2784,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.projects.Project;\nimport ai.llamaindex.llamacloud.models.projects.ProjectListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<Project> projects = client.projects().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Projects.List',
+        example:
+          'ProjectListParams parameters = new();\n\nvar projects = await client.Projects.List(parameters);\n\nConsole.WriteLine(projects);',
+      },
       typescript: {
         method: 'client.projects.list',
         example:
@@ -2577,6 +2832,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'projects().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.projects.Project;\nimport ai.llamaindex.llamacloud.models.projects.ProjectGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Project project = client.projects().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Projects.Get',
+        example:
+          'ProjectGetParams parameters = new()\n{\n    ProjectID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar project = await client.Projects.Get(parameters);\n\nConsole.WriteLine(project);',
       },
       typescript: {
         method: 'client.projects.get',
@@ -2623,6 +2883,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.v2projects.V2ProjectListPage;\nimport ai.llamaindex.llamacloud.models.v2projects.V2ProjectListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        V2ProjectListPage page = client.v2Projects().list();\n    }\n}',
       },
+      csharp: {
+        method: 'V2Projects.List',
+        example:
+          'V2ProjectListParams parameters = new();\n\nvar page = await client.V2Projects.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.v2Projects.list',
         example:
@@ -2666,6 +2931,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'v2Projects().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.v2projects.V2ProjectGetParams;\nimport ai.llamaindex.llamacloud.models.v2projects.V2ProjectGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        V2ProjectGetResponse v2Project = client.v2Projects().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'V2Projects.Get',
+        example:
+          'V2ProjectGetParams parameters = new()\n{\n    ProjectID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar v2Project = await client.V2Projects.Get(parameters);\n\nConsole.WriteLine(v2Project);',
       },
       typescript: {
         method: 'client.v2Projects.get',
@@ -2722,6 +2992,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.jobdatapoints.JobDataPointListPage;\nimport ai.llamaindex.llamacloud.models.jobdatapoints.JobDataPointListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobDataPointListParams params = JobDataPointListParams.builder()\n            .jobType(JobDataPointListParams.JobType.PARSE)\n            .build();\n        JobDataPointListPage page = client.jobDataPoints().list(params);\n    }\n}',
       },
+      csharp: {
+        method: 'JobDataPoints.List',
+        example:
+          'JobDataPointListParams parameters = new() { JobType = JobType.Parse };\n\nvar page = await client.JobDataPoints.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.jobDataPoints.list',
         example:
@@ -2765,6 +3040,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'dataSinks().list',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.datasinks.DataSink;\nimport ai.llamaindex.llamacloud.models.datasinks.DataSinkListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<DataSink> dataSinks = client.dataSinks().list();\n    }\n}',
+      },
+      csharp: {
+        method: 'DataSinks.List',
+        example:
+          'DataSinkListParams parameters = new();\n\nvar dataSinks = await client.DataSinks.List(parameters);\n\nConsole.WriteLine(dataSinks);',
       },
       typescript: {
         method: 'client.dataSinks.list',
@@ -2816,6 +3096,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport ai.llamaindex.llamacloud.models.datasinks.DataSink;\nimport ai.llamaindex.llamacloud.models.pipelines.DataSinkCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSinkCreate params = DataSinkCreate.builder()\n            .component(DataSinkCreate.Component.UnionMember0.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .name("name")\n            .sinkType(DataSinkCreate.SinkType.ASTRA_DB)\n            .build();\n        DataSink dataSink = client.dataSinks().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'DataSinks.Create',
+        example:
+          'DataSinkCreateParams parameters = new()\n{\n    Component = new(\n        new Dictionary<string, JsonElement>()\n        {\n            { "foo", JsonSerializer.SerializeToElement("bar") }\n        }\n    ),\n    Name = "name",\n    SinkType = SinkType.AstraDB,\n};\n\nvar dataSink = await client.DataSinks.Create(parameters);\n\nConsole.WriteLine(dataSink);',
+      },
       typescript: {
         method: 'client.dataSinks.create',
         example:
@@ -2860,6 +3145,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'dataSinks().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.datasinks.DataSink;\nimport ai.llamaindex.llamacloud.models.datasinks.DataSinkGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSink dataSink = client.dataSinks().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'DataSinks.Get',
+        example:
+          'DataSinkGetParams parameters = new()\n{\n    DataSinkID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar dataSink = await client.DataSinks.Get(parameters);\n\nConsole.WriteLine(dataSink);',
       },
       typescript: {
         method: 'client.dataSinks.get',
@@ -2911,6 +3201,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.datasinks.DataSink;\nimport ai.llamaindex.llamacloud.models.datasinks.DataSinkUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSinkUpdateParams params = DataSinkUpdateParams.builder()\n            .dataSinkId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .sinkType(DataSinkUpdateParams.SinkType.ASTRA_DB)\n            .build();\n        DataSink dataSink = client.dataSinks().update(params);\n    }\n}',
       },
+      csharp: {
+        method: 'DataSinks.Update',
+        example:
+          'DataSinkUpdateParams parameters = new()\n{\n    DataSinkID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    SinkType = SinkType.AstraDB,\n};\n\nvar dataSink = await client.DataSinks.Update(parameters);\n\nConsole.WriteLine(dataSink);',
+      },
       typescript: {
         method: 'client.dataSinks.update',
         example:
@@ -2953,6 +3248,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'dataSinks().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.datasinks.DataSinkDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.dataSinks().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'DataSinks.Delete',
+        example:
+          'DataSinkDeleteParams parameters = new()\n{\n    DataSinkID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nawait client.DataSinks.Delete(parameters);',
       },
       typescript: {
         method: 'client.dataSinks.delete',
@@ -2999,6 +3299,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'dataSources().list',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.datasources.DataSource;\nimport ai.llamaindex.llamacloud.models.datasources.DataSourceListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<DataSource> dataSources = client.dataSources().list();\n    }\n}',
+      },
+      csharp: {
+        method: 'DataSources.List',
+        example:
+          'DataSourceListParams parameters = new();\n\nvar dataSources = await client.DataSources.List(parameters);\n\nConsole.WriteLine(dataSources);',
       },
       typescript: {
         method: 'client.dataSources.list',
@@ -3051,6 +3356,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport ai.llamaindex.llamacloud.models.datasources.DataSource;\nimport ai.llamaindex.llamacloud.models.datasources.DataSourceCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceCreateParams params = DataSourceCreateParams.builder()\n            .component(DataSourceCreateParams.Component.UnionMember0.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .name("name")\n            .sourceType(DataSourceCreateParams.SourceType.AZURE_STORAGE_BLOB)\n            .build();\n        DataSource dataSource = client.dataSources().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'DataSources.Create',
+        example:
+          'DataSourceCreateParams parameters = new()\n{\n    Component = new(\n        new Dictionary<string, JsonElement>()\n        {\n            { "foo", JsonSerializer.SerializeToElement("bar") }\n        }\n    ),\n    Name = "name",\n    SourceType = SourceType.AzureStorageBlob,\n};\n\nvar dataSource = await client.DataSources.Create(parameters);\n\nConsole.WriteLine(dataSource);',
+      },
       typescript: {
         method: 'client.dataSources.create',
         example:
@@ -3095,6 +3405,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'dataSources().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.datasources.DataSource;\nimport ai.llamaindex.llamacloud.models.datasources.DataSourceGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSource dataSource = client.dataSources().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'DataSources.Get',
+        example:
+          'DataSourceGetParams parameters = new()\n{\n    DataSourceID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar dataSource = await client.DataSources.Get(parameters);\n\nConsole.WriteLine(dataSource);',
       },
       typescript: {
         method: 'client.dataSources.get',
@@ -3147,6 +3462,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.datasources.DataSource;\nimport ai.llamaindex.llamacloud.models.datasources.DataSourceUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceUpdateParams params = DataSourceUpdateParams.builder()\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .sourceType(DataSourceUpdateParams.SourceType.AZURE_STORAGE_BLOB)\n            .build();\n        DataSource dataSource = client.dataSources().update(params);\n    }\n}',
       },
+      csharp: {
+        method: 'DataSources.Update',
+        example:
+          'DataSourceUpdateParams parameters = new()\n{\n    DataSourceID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    SourceType = SourceType.AzureStorageBlob,\n};\n\nvar dataSource = await client.DataSources.Update(parameters);\n\nConsole.WriteLine(dataSource);',
+      },
       typescript: {
         method: 'client.dataSources.update',
         example:
@@ -3189,6 +3509,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'dataSources().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.datasources.DataSourceDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.dataSources().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'DataSources.Delete',
+        example:
+          'DataSourceDeleteParams parameters = new()\n{\n    DataSourceID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nawait client.DataSources.Delete(parameters);',
       },
       typescript: {
         method: 'client.dataSources.delete',
@@ -3240,6 +3565,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().list',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.Pipeline;\nimport ai.llamaindex.llamacloud.models.pipelines.PipelineListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<Pipeline> pipelines = client.pipelines().list();\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.List',
+        example:
+          'PipelineListParams parameters = new();\n\nvar pipelines = await client.Pipelines.List(parameters);\n\nConsole.WriteLine(pipelines);',
       },
       typescript: {
         method: 'client.pipelines.list',
@@ -3302,6 +3632,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.Pipeline;\nimport ai.llamaindex.llamacloud.models.pipelines.PipelineCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PipelineCreate params = PipelineCreate.builder()\n            .name("x")\n            .build();\n        Pipeline pipeline = client.pipelines().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Create',
+        example:
+          'PipelineCreateParams parameters = new() { Name = "x" };\n\nvar pipeline = await client.Pipelines.Create(parameters);\n\nConsole.WriteLine(pipeline);',
+      },
       typescript: {
         method: 'client.pipelines.create',
         example:
@@ -3345,6 +3680,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.Pipeline;\nimport ai.llamaindex.llamacloud.models.pipelines.PipelineGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Get',
+        example:
+          'PipelineGetParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar pipeline = await client.Pipelines.Get(parameters);\n\nConsole.WriteLine(pipeline);',
       },
       typescript: {
         method: 'client.pipelines.get',
@@ -3405,6 +3745,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.Pipeline;\nimport ai.llamaindex.llamacloud.models.pipelines.PipelineUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().update("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Update',
+        example:
+          'PipelineUpdateParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar pipeline = await client.Pipelines.Update(parameters);\n\nConsole.WriteLine(pipeline);',
+      },
       typescript: {
         method: 'client.pipelines.update',
         example:
@@ -3448,6 +3793,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.PipelineDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.pipelines().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Delete',
+        example:
+          'PipelineDeleteParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nawait client.Pipelines.Delete(parameters);',
       },
       typescript: {
         method: 'client.pipelines.delete',
@@ -3494,6 +3844,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().getStatus',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.ManagedIngestionStatusResponse;\nimport ai.llamaindex.llamacloud.models.pipelines.PipelineGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().getStatus("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.GetStatus',
+        example:
+          'PipelineGetStatusParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar managedIngestionStatusResponse = await client.Pipelines.GetStatus(parameters);\n\nConsole.WriteLine(managedIngestionStatusResponse);',
       },
       typescript: {
         method: 'client.pipelines.getStatus',
@@ -3557,6 +3912,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.Pipeline;\nimport ai.llamaindex.llamacloud.models.pipelines.PipelineCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PipelineCreate params = PipelineCreate.builder()\n            .name("x")\n            .build();\n        Pipeline pipeline = client.pipelines().upsert(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Upsert',
+        example:
+          'PipelineUpsertParams parameters = new() { Name = "x" };\n\nvar pipeline = await client.Pipelines.Upsert(parameters);\n\nConsole.WriteLine(pipeline);',
+      },
       typescript: {
         method: 'client.pipelines.upsert',
         example:
@@ -3616,6 +3976,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.PipelineRetrieveParams;\nimport ai.llamaindex.llamacloud.models.pipelines.PipelineRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        PipelineRetrieveParams params = PipelineRetrieveParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .query("x")\n            .build();\n        PipelineRetrieveResponse pipeline = client.pipelines().retrieve(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Retrieve',
+        example:
+          'PipelineRetrieveParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    Query = "x",\n};\n\nvar pipeline = await client.Pipelines.Retrieve(parameters);\n\nConsole.WriteLine(pipeline);',
+      },
       typescript: {
         method: 'client.pipelines.retrieve',
         example:
@@ -3656,6 +4021,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().sync().create',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.Pipeline;\nimport ai.llamaindex.llamacloud.models.pipelines.sync.SyncCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().sync().create("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Sync.Create',
+        example:
+          'SyncCreateParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar pipeline = await client.Pipelines.Sync.Create(parameters);\n\nConsole.WriteLine(pipeline);',
       },
       typescript: {
         method: 'client.pipelines.sync.create',
@@ -3702,6 +4072,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.Pipeline;\nimport ai.llamaindex.llamacloud.models.pipelines.sync.SyncCancelParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Pipeline pipeline = client.pipelines().sync().cancel("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Sync.Cancel',
+        example:
+          'SyncCancelParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar pipeline = await client.Pipelines.Sync.Cancel(parameters);\n\nConsole.WriteLine(pipeline);',
+      },
       typescript: {
         method: 'client.pipelines.sync.cancel',
         example:
@@ -3746,6 +4121,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().dataSources().getDataSources',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.datasources.DataSourceGetDataSourcesParams;\nimport ai.llamaindex.llamacloud.models.pipelines.datasources.PipelineDataSource;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<PipelineDataSource> pipelineDataSources = client.pipelines().dataSources().getDataSources("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.DataSources.GetDataSources',
+        example:
+          'DataSourceGetDataSourcesParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar pipelineDataSources = await client.Pipelines.DataSources.GetDataSources(parameters);\n\nConsole.WriteLine(pipelineDataSources);',
       },
       typescript: {
         method: 'client.pipelines.dataSources.getDataSources',
@@ -3792,6 +4172,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.datasources.DataSourceUpdateDataSourcesParams;\nimport ai.llamaindex.llamacloud.models.pipelines.datasources.PipelineDataSource;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceUpdateDataSourcesParams params = DataSourceUpdateDataSourcesParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(DataSourceUpdateDataSourcesParams.Body.builder()\n                .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n                .build())\n            .build();\n        List<PipelineDataSource> pipelineDataSources = client.pipelines().dataSources().updateDataSources(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.DataSources.UpdateDataSources',
+        example:
+          'DataSourceUpdateDataSourcesParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    Body =\n    [\n        new()\n        {\n            DataSourceID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n            SyncInterval = 0,\n        },\n    ],\n};\n\nvar pipelineDataSources = await client.Pipelines.DataSources.UpdateDataSources(parameters);\n\nConsole.WriteLine(pipelineDataSources);',
+      },
       typescript: {
         method: 'client.pipelines.dataSources.updateDataSources',
         example:
@@ -3836,6 +4221,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().dataSources().update',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.datasources.DataSourceUpdateParams;\nimport ai.llamaindex.llamacloud.models.pipelines.datasources.PipelineDataSource;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceUpdateParams params = DataSourceUpdateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        PipelineDataSource pipelineDataSource = client.pipelines().dataSources().update(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.DataSources.Update',
+        example:
+          'DataSourceUpdateParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    DataSourceID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n};\n\nvar pipelineDataSource = await client.Pipelines.DataSources.Update(parameters);\n\nConsole.WriteLine(pipelineDataSource);',
       },
       typescript: {
         method: 'client.pipelines.dataSources.update',
@@ -3882,6 +4272,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.ManagedIngestionStatusResponse;\nimport ai.llamaindex.llamacloud.models.pipelines.datasources.DataSourceGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceGetStatusParams params = DataSourceGetStatusParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().dataSources().getStatus(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.DataSources.GetStatus',
+        example:
+          'DataSourceGetStatusParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    DataSourceID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n};\n\nvar managedIngestionStatusResponse = await client.Pipelines.DataSources.GetStatus(parameters);\n\nConsole.WriteLine(managedIngestionStatusResponse);',
+      },
       typescript: {
         method: 'client.pipelines.dataSources.getStatus',
         example:
@@ -3927,6 +4322,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.Pipeline;\nimport ai.llamaindex.llamacloud.models.pipelines.datasources.DataSourceSyncParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSourceSyncParams params = DataSourceSyncParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .dataSourceId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        Pipeline pipeline = client.pipelines().dataSources().sync(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.DataSources.Sync',
+        example:
+          'DataSourceSyncParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    DataSourceID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n};\n\nvar pipeline = await client.Pipelines.DataSources.Sync(parameters);\n\nConsole.WriteLine(pipeline);',
+      },
       typescript: {
         method: 'client.pipelines.dataSources.sync',
         example:
@@ -3971,6 +4371,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.images.ImageListPageScreenshotsParams;\nimport ai.llamaindex.llamacloud.models.pipelines.images.ImageListPageScreenshotsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<ImageListPageScreenshotsResponse> response = client.pipelines().images().listPageScreenshots("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Images.ListPageScreenshots',
+        example:
+          'ImageListPageScreenshotsParams parameters = new()\n{\n    ID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar response = await client.Pipelines.Images.ListPageScreenshots(parameters);\n\nConsole.WriteLine(response);',
+      },
       typescript: {
         method: 'client.pipelines.images.listPageScreenshots',
         example:
@@ -4014,6 +4419,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().images().getPageScreenshot',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.images.ImageGetPageScreenshotParams;\nimport ai.llamaindex.llamacloud.models.pipelines.images.ImageGetPageScreenshotResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ImageGetPageScreenshotParams params = ImageGetPageScreenshotParams.builder()\n            .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .pageIndex(0L)\n            .build();\n        ImageGetPageScreenshotResponse response = client.pipelines().images().getPageScreenshot(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Images.GetPageScreenshot',
+        example:
+          'ImageGetPageScreenshotParams parameters = new()\n{\n    ID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    PageIndex = 0,\n};\n\nvar response = await client.Pipelines.Images.GetPageScreenshot(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.pipelines.images.getPageScreenshot',
@@ -4065,6 +4475,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.images.ImageGetPageFigureParams;\nimport ai.llamaindex.llamacloud.models.pipelines.images.ImageGetPageFigureResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ImageGetPageFigureParams params = ImageGetPageFigureParams.builder()\n            .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .pageIndex(0L)\n            .figureName("figure_name")\n            .build();\n        ImageGetPageFigureResponse response = client.pipelines().images().getPageFigure(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Images.GetPageFigure',
+        example:
+          'ImageGetPageFigureParams parameters = new()\n{\n    ID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    PageIndex = 0,\n    FigureName = "figure_name",\n};\n\nvar response = await client.Pipelines.Images.GetPageFigure(parameters);\n\nConsole.WriteLine(response);',
+      },
       typescript: {
         method: 'client.pipelines.images.getPageFigure',
         example:
@@ -4109,6 +4524,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().images().listPageFigures',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.images.ImageListPageFiguresParams;\nimport ai.llamaindex.llamacloud.models.pipelines.images.ImageListPageFiguresResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<ImageListPageFiguresResponse> response = client.pipelines().images().listPageFigures("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Images.ListPageFigures',
+        example:
+          'ImageListPageFiguresParams parameters = new()\n{\n    ID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar response = await client.Pipelines.Images.ListPageFigures(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.pipelines.images.listPageFigures',
@@ -4155,6 +4575,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.files.FileGetStatusCountsParams;\nimport ai.llamaindex.llamacloud.models.pipelines.files.FileGetStatusCountsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileGetStatusCountsResponse response = client.pipelines().files().getStatusCounts("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Files.GetStatusCounts',
+        example:
+          'FileGetStatusCountsParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar response = await client.Pipelines.Files.GetStatusCounts(parameters);\n\nConsole.WriteLine(response);',
+      },
       typescript: {
         method: 'client.pipelines.files.getStatusCounts',
         example:
@@ -4199,6 +4624,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().files().getStatus',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.ManagedIngestionStatusResponse;\nimport ai.llamaindex.llamacloud.models.pipelines.files.FileGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileGetStatusParams params = FileGetStatusParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().files().getStatus(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Files.GetStatus',
+        example:
+          'FileGetStatusParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    FileID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n};\n\nvar managedIngestionStatusResponse = await client.Pipelines.Files.GetStatus(parameters);\n\nConsole.WriteLine(managedIngestionStatusResponse);',
       },
       typescript: {
         method: 'client.pipelines.files.getStatus',
@@ -4245,6 +4675,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.files.FileCreateParams;\nimport ai.llamaindex.llamacloud.models.pipelines.files.PipelineFile;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileCreateParams params = FileCreateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(FileCreateParams.Body.builder()\n                .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n                .build())\n            .build();\n        List<PipelineFile> pipelineFiles = client.pipelines().files().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Files.Create',
+        example:
+          'FileCreateParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    Body =\n    [\n        new()\n        {\n            FileID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n            CustomMetadata = new Dictionary<string, CustomMetadata?>()\n            {\n                { "foo", new(\n                    new Dictionary<string, JsonElement>()\n                    {\n                        { "foo", JsonSerializer.SerializeToElement("bar") }\n                    }\n                ) },\n            },\n        },\n    ],\n};\n\nvar pipelineFiles = await client.Pipelines.Files.Create(parameters);\n\nConsole.WriteLine(pipelineFiles);',
+      },
       typescript: {
         method: 'client.pipelines.files.create',
         example:
@@ -4290,6 +4725,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.files.FileUpdateParams;\nimport ai.llamaindex.llamacloud.models.pipelines.files.PipelineFile;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileUpdateParams params = FileUpdateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        PipelineFile pipelineFile = client.pipelines().files().update(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Files.Update',
+        example:
+          'FileUpdateParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    FileID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n};\n\nvar pipelineFile = await client.Pipelines.Files.Update(parameters);\n\nConsole.WriteLine(pipelineFile);',
+      },
       typescript: {
         method: 'client.pipelines.files.update',
         example:
@@ -4332,6 +4772,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().files().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.files.FileDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileDeleteParams params = FileDeleteParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        client.pipelines().files().delete(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Files.Delete',
+        example:
+          'FileDeleteParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    FileID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n};\n\nawait client.Pipelines.Files.Delete(parameters);',
       },
       typescript: {
         method: 'client.pipelines.files.delete',
@@ -4387,6 +4832,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.files.FileListPage;\nimport ai.llamaindex.llamacloud.models.pipelines.files.FileListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileListPage page = client.pipelines().files().list("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Files.List',
+        example:
+          'FileListParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar page = await client.Pipelines.Files.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.pipelines.files.list',
         example:
@@ -4431,6 +4881,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.metadata.MetadataCreateParams;\nimport ai.llamaindex.llamacloud.models.pipelines.metadata.MetadataCreateResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        MetadataCreateParams params = MetadataCreateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .uploadFile(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        MetadataCreateResponse metadata = client.pipelines().metadata().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Metadata.Create',
+        example:
+          'MetadataCreateParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    UploadFile = Encoding.UTF8.GetBytes("Example data"),\n};\n\nvar metadata = await client.Pipelines.Metadata.Create(parameters);\n\nConsole.WriteLine(metadata);',
+      },
       typescript: {
         method: 'client.pipelines.metadata.create',
         example:
@@ -4473,6 +4928,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().metadata().deleteAll',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.metadata.MetadataDeleteAllParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.pipelines().metadata().deleteAll("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Metadata.DeleteAll',
+        example:
+          'MetadataDeleteAllParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nawait client.Pipelines.Metadata.DeleteAll(parameters);',
       },
       typescript: {
         method: 'client.pipelines.metadata.deleteAll',
@@ -4521,6 +4981,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().documents().create',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.CloudDocument;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.CloudDocumentCreate;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentCreateParams params = DocumentCreateParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(CloudDocumentCreate.builder()\n                .metadata(CloudDocumentCreate.Metadata.builder()\n                    .putAdditionalProperty("foo", JsonValue.from("bar"))\n                    .build())\n                .text("text")\n                .build())\n            .build();\n        List<CloudDocument> cloudDocuments = client.pipelines().documents().create(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Documents.Create',
+        example:
+          'DocumentCreateParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    Body =\n    [\n        new()\n        {\n            Metadata = new Dictionary<string, JsonElement>()\n            {\n                { "foo", JsonSerializer.SerializeToElement("bar") }\n            },\n            Text = "text",\n            ID = "id",\n            ExcludedEmbedMetadataKeys =\n            [\n                "string"\n            ],\n            ExcludedLlmMetadataKeys =\n            [\n                "string"\n            ],\n            PagePositions =\n            [\n                0\n            ],\n        },\n    ],\n};\n\nvar cloudDocuments = await client.Pipelines.Documents.Create(parameters);\n\nConsole.WriteLine(cloudDocuments);',
       },
       typescript: {
         method: 'client.pipelines.documents.create',
@@ -4575,6 +5040,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentListPage;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentListPage page = client.pipelines().documents().list("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Documents.List',
+        example:
+          'DocumentListParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar page = await client.Pipelines.Documents.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.pipelines.documents.list',
         example:
@@ -4626,6 +5096,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentGetStatusCountsParams;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentGetStatusCountsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetStatusCountsResponse response = client.pipelines().documents().getStatusCounts("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Documents.GetStatusCounts',
+        example:
+          'DocumentGetStatusCountsParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar response = await client.Pipelines.Documents.GetStatusCounts(parameters);\n\nConsole.WriteLine(response);',
+      },
       typescript: {
         method: 'client.pipelines.documents.getStatusCounts',
         example:
@@ -4671,6 +5146,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.CloudDocument;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetParams params = DocumentGetParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        CloudDocument cloudDocument = client.pipelines().documents().get(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Documents.Get',
+        example:
+          'DocumentGetParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    DocumentID = "document_id",\n};\n\nvar cloudDocument = await client.Pipelines.Documents.Get(parameters);\n\nConsole.WriteLine(cloudDocument);',
+      },
       typescript: {
         method: 'client.pipelines.documents.get',
         example:
@@ -4713,6 +5193,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().documents().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentDeleteParams params = DocumentDeleteParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        client.pipelines().documents().delete(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Documents.Delete',
+        example:
+          'DocumentDeleteParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    DocumentID = "document_id",\n};\n\nawait client.Pipelines.Documents.Delete(parameters);',
       },
       typescript: {
         method: 'client.pipelines.documents.delete',
@@ -4759,6 +5244,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.ManagedIngestionStatusResponse;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentGetStatusParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetStatusParams params = DocumentGetStatusParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        ManagedIngestionStatusResponse managedIngestionStatusResponse = client.pipelines().documents().getStatus(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Pipelines.Documents.GetStatus',
+        example:
+          'DocumentGetStatusParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    DocumentID = "document_id",\n};\n\nvar managedIngestionStatusResponse = await client.Pipelines.Documents.GetStatus(parameters);\n\nConsole.WriteLine(managedIngestionStatusResponse);',
+      },
       typescript: {
         method: 'client.pipelines.documents.getStatus',
         example:
@@ -4802,6 +5292,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().documents().sync',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentSyncParams;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentSyncResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentSyncParams params = DocumentSyncParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        DocumentSyncResponse response = client.pipelines().documents().sync(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Documents.Sync',
+        example:
+          'DocumentSyncParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    DocumentID = "document_id",\n};\n\nvar response = await client.Pipelines.Documents.Sync(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.pipelines.documents.sync',
@@ -4847,6 +5342,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().documents().getChunks',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentGetChunksParams;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.TextNode;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentGetChunksParams params = DocumentGetChunksParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .documentId("document_id")\n            .build();\n        List<TextNode> textNodes = client.pipelines().documents().getChunks(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Documents.GetChunks',
+        example:
+          'DocumentGetChunksParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    DocumentID = "document_id",\n};\n\nvar textNodes = await client.Pipelines.Documents.GetChunks(parameters);\n\nConsole.WriteLine(textNodes);',
       },
       typescript: {
         method: 'client.pipelines.documents.getChunks',
@@ -4895,6 +5395,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'pipelines().documents().upsert',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.CloudDocument;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.CloudDocumentCreate;\nimport ai.llamaindex.llamacloud.models.pipelines.documents.DocumentUpsertParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DocumentUpsertParams params = DocumentUpsertParams.builder()\n            .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addBody(CloudDocumentCreate.builder()\n                .metadata(CloudDocumentCreate.Metadata.builder()\n                    .putAdditionalProperty("foo", JsonValue.from("bar"))\n                    .build())\n                .text("text")\n                .build())\n            .build();\n        List<CloudDocument> cloudDocuments = client.pipelines().documents().upsert(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Pipelines.Documents.Upsert',
+        example:
+          'DocumentUpsertParams parameters = new()\n{\n    PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    Body =\n    [\n        new()\n        {\n            Metadata = new Dictionary<string, JsonElement>()\n            {\n                { "foo", JsonSerializer.SerializeToElement("bar") }\n            },\n            Text = "text",\n            ID = "id",\n            ExcludedEmbedMetadataKeys =\n            [\n                "string"\n            ],\n            ExcludedLlmMetadataKeys =\n            [\n                "string"\n            ],\n            PagePositions =\n            [\n                0\n            ],\n        },\n    ],\n};\n\nvar cloudDocuments = await client.Pipelines.Documents.Upsert(parameters);\n\nConsole.WriteLine(cloudDocuments);',
       },
       typescript: {
         method: 'client.pipelines.documents.upsert',
@@ -4946,6 +5451,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.retrievers.Retriever;\nimport ai.llamaindex.llamacloud.models.retrievers.RetrieverCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverCreate params = RetrieverCreate.builder()\n            .name("x")\n            .build();\n        Retriever retriever = client.retrievers().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Retrievers.Create',
+        example:
+          'RetrieverCreateParams parameters = new() { Name = "x" };\n\nvar retriever = await client.Retrievers.Create(parameters);\n\nConsole.WriteLine(retriever);',
+      },
       typescript: {
         method: 'client.retrievers.create',
         example:
@@ -4995,6 +5505,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.retrievers.Retriever;\nimport ai.llamaindex.llamacloud.models.retrievers.RetrieverCreate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverCreate params = RetrieverCreate.builder()\n            .name("x")\n            .build();\n        Retriever retriever = client.retrievers().upsert(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Retrievers.Upsert',
+        example:
+          'RetrieverUpsertParams parameters = new() { Name = "x" };\n\nvar retriever = await client.Retrievers.Upsert(parameters);\n\nConsole.WriteLine(retriever);',
+      },
       typescript: {
         method: 'client.retrievers.upsert',
         example:
@@ -5039,6 +5554,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.retrievers.Retriever;\nimport ai.llamaindex.llamacloud.models.retrievers.RetrieverListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        List<Retriever> retrievers = client.retrievers().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Retrievers.List',
+        example:
+          'RetrieverListParams parameters = new();\n\nvar retrievers = await client.Retrievers.List(parameters);\n\nConsole.WriteLine(retrievers);',
+      },
       typescript: {
         method: 'client.retrievers.list',
         example:
@@ -5082,6 +5602,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'retrievers().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.retrievers.Retriever;\nimport ai.llamaindex.llamacloud.models.retrievers.RetrieverGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        Retriever retriever = client.retrievers().get("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Retrievers.Get',
+        example:
+          'RetrieverGetParams parameters = new()\n{\n    RetrieverID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar retriever = await client.Retrievers.Get(parameters);\n\nConsole.WriteLine(retriever);',
       },
       typescript: {
         method: 'client.retrievers.get',
@@ -5134,6 +5659,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.retrievers.Retriever;\nimport ai.llamaindex.llamacloud.models.retrievers.RetrieverPipeline;\nimport ai.llamaindex.llamacloud.models.retrievers.RetrieverUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverUpdateParams params = RetrieverUpdateParams.builder()\n            .retrieverId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .addPipeline(RetrieverPipeline.builder()\n                .description("description")\n                .name("x")\n                .pipelineId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n                .build())\n            .build();\n        Retriever retriever = client.retrievers().update(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Retrievers.Update',
+        example:
+          'RetrieverUpdateParams parameters = new()\n{\n    RetrieverID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    Pipelines =\n    [\n        new()\n        {\n            Description = "description",\n            Name = "x",\n            PipelineID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n            PresetRetrievalParameters = new()\n            {\n                Alpha = 0,\n                ClassName = "class_name",\n                DenseSimilarityCutoff = 0,\n                DenseSimilarityTopK = 1,\n                EnableReranking = true,\n                FilesTopK = 1,\n                RerankTopN = 1,\n                RetrievalMode = RetrievalMode.AutoRouted,\n                RetrieveImageNodes = true,\n                RetrievePageFigureNodes = true,\n                RetrievePageScreenshotNodes = true,\n                SearchFilters = new()\n                {\n                    Filters =\n                    [\n                        new MetadataFilter()\n                        {\n                            Key = "key",\n                            Value = 0,\n                            Operator = Operator.,\n                        },\n                    ],\n                    Condition = Condition.And,\n                },\n                SearchFiltersInferenceSchema = new Dictionary<string, SearchFiltersInferenceSchema?>(\n\n                )\n                {\n                    { "foo", new(\n                        new Dictionary<string, JsonElement>()\n                        {\n                            { "foo", JsonSerializer.SerializeToElement("bar") }\n                        }\n                    ) },\n                },\n                SparseSimilarityTopK = 1,\n            },\n        },\n    ],\n};\n\nvar retriever = await client.Retrievers.Update(parameters);\n\nConsole.WriteLine(retriever);',
+      },
       typescript: {
         method: 'client.retrievers.update',
         example:
@@ -5176,6 +5706,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'retrievers().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.retrievers.RetrieverDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.retrievers().delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      csharp: {
+        method: 'Retrievers.Delete',
+        example:
+          'RetrieverDeleteParams parameters = new()\n{\n    RetrieverID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nawait client.Retrievers.Delete(parameters);',
       },
       typescript: {
         method: 'client.retrievers.delete',
@@ -5230,6 +5765,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.retrievers.CompositeRetrievalResult;\nimport ai.llamaindex.llamacloud.models.retrievers.RetrieverSearchParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverSearchParams params = RetrieverSearchParams.builder()\n            .query("x")\n            .build();\n        CompositeRetrievalResult compositeRetrievalResult = client.retrievers().search(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Retrievers.Search',
+        example:
+          'RetrieverSearchParams parameters = new() { Query = "x" };\n\nvar compositeRetrievalResult = await client.Retrievers.Search(parameters);\n\nConsole.WriteLine(compositeRetrievalResult);',
+      },
       typescript: {
         method: 'client.retrievers.search',
         example:
@@ -5277,6 +5817,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcompositeRetrievalResult, err := client.Retrievers.Retriever.Search(\n\t\tcontext.TODO(),\n\t\t"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n\t\tllamacloud.RetrieverRetrieverSearchParams{\n\t\t\tQuery: "x",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", compositeRetrievalResult.ImageNodes)\n}\n',
       },
+      csharp: {
+        method: 'Retrievers.Retriever.Search',
+        example:
+          'RetrieverSearchParams parameters = new()\n{\n    RetrieverID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n    Query = "x",\n};\n\nvar compositeRetrievalResult = await client.Retrievers.Retriever.Search(parameters);\n\nConsole.WriteLine(compositeRetrievalResult);',
+      },
       typescript: {
         method: 'client.retrievers.retriever.search',
         example:
@@ -5322,6 +5867,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexGetParams;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexGetResponse index = client.beta().indexes().get("index_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Indexes.Get',
+        example:
+          'IndexGetParams parameters = new() { IndexID = "index_id" };\n\nvar index = await client.Beta.Indexes.Get(parameters);\n\nConsole.WriteLine(index);',
+      },
       typescript: {
         method: 'client.beta.indexes.get',
         example:
@@ -5363,6 +5913,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().indexes().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.beta().indexes().delete("index_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Indexes.Delete',
+        example:
+          'IndexDeleteParams parameters = new() { IndexID = "index_id" };\n\nawait client.Beta.Indexes.Delete(parameters);',
       },
       typescript: {
         method: 'client.beta.indexes.delete',
@@ -5418,6 +5973,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexCreateParams;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexCreateParams params = IndexCreateParams.builder()\n            .sourceDirectoryId("dir-abc123")\n            .build();\n        IndexCreateResponse index = client.beta().indexes().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Indexes.Create',
+        example:
+          'IndexCreateParams parameters = new() { SourceDirectoryID = "dir-abc123" };\n\nvar index = await client.Beta.Indexes.Create(parameters);\n\nConsole.WriteLine(index);',
+      },
       typescript: {
         method: 'client.beta.indexes.create',
         example:
@@ -5462,6 +6022,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().indexes().sync',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexSyncParams;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexSyncResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexSyncResponse response = client.beta().indexes().sync("index_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Indexes.Sync',
+        example:
+          'IndexSyncParams parameters = new() { IndexID = "index_id" };\n\nvar response = await client.Beta.Indexes.Sync(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.beta.indexes.sync',
@@ -5512,6 +6077,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().indexes().list',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexListPage;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        IndexListPage page = client.beta().indexes().list();\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Indexes.List',
+        example:
+          'IndexListParams parameters = new();\n\nvar page = await client.Beta.Indexes.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
       },
       typescript: {
         method: 'client.beta.indexes.list',
@@ -5571,6 +6141,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.retrieval.RetrievalRetrieveParams;\nimport ai.llamaindex.llamacloud.models.beta.retrieval.RetrievalRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalRetrieveParams params = RetrievalRetrieveParams.builder()\n            .indexId("idx-abc123")\n            .query("What are the key findings?")\n            .build();\n        RetrievalRetrieveResponse retrieval = client.beta().retrieval().retrieve(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Retrieval.Retrieve',
+        example:
+          'RetrievalRetrieveParams parameters = new()\n{\n    IndexID = "idx-abc123",\n    Query = "What are the key findings?",\n};\n\nvar retrieval = await client.Beta.Retrieval.Retrieve(parameters);\n\nConsole.WriteLine(retrieval);',
+      },
       typescript: {
         method: 'client.beta.retrieval.retrieve',
         example:
@@ -5622,6 +6197,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().retrieval().find',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.retrieval.RetrievalFindPage;\nimport ai.llamaindex.llamacloud.models.beta.retrieval.RetrievalFindParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalFindParams params = RetrievalFindParams.builder()\n            .indexId("idx-abc123")\n            .build();\n        RetrievalFindPage page = client.beta().retrieval().find(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Retrieval.Find',
+        example:
+          'RetrievalFindParams parameters = new() { IndexID = "idx-abc123" };\n\nvar page = await client.Beta.Retrieval.Find(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
       },
       typescript: {
         method: 'client.beta.retrieval.find',
@@ -5675,6 +6255,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.retrieval.RetrievalGrepPage;\nimport ai.llamaindex.llamacloud.models.beta.retrieval.RetrievalGrepParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalGrepParams params = RetrievalGrepParams.builder()\n            .fileId("file_id")\n            .indexId("idx-abc123")\n            .pattern("revenue|profit")\n            .build();\n        RetrievalGrepPage page = client.beta().retrieval().grep(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Retrieval.Grep',
+        example:
+          'RetrievalGrepParams parameters = new()\n{\n    FileID = "file_id",\n    IndexID = "idx-abc123",\n    Pattern = "revenue|profit",\n};\n\nvar page = await client.Beta.Retrieval.Grep(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.beta.retrieval.grep',
         example:
@@ -5726,6 +6311,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.retrieval.RetrievalReadParams;\nimport ai.llamaindex.llamacloud.models.beta.retrieval.RetrievalReadResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrievalReadParams params = RetrievalReadParams.builder()\n            .fileId("file_id")\n            .indexId("idx-abc123")\n            .build();\n        RetrievalReadResponse response = client.beta().retrieval().read(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Retrieval.Read',
+        example:
+          'RetrievalReadParams parameters = new()\n{\n    FileID = "file_id",\n    IndexID = "idx-abc123",\n};\n\nvar response = await client.Beta.Retrieval.Read(parameters);\n\nConsole.WriteLine(response);',
+      },
       typescript: {
         method: 'client.beta.retrieval.read',
         example:
@@ -5776,6 +6366,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatListPage;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatListPage page = client.beta().chat().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Chat.List',
+        example:
+          'ChatListParams parameters = new();\n\nvar page = await client.Beta.Chat.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.beta.chat.list',
         example:
@@ -5819,6 +6414,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().chat().create',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatCreateParams;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatCreateResponse chat = client.beta().chat().create();\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Chat.Create',
+        example:
+          'ChatCreateParams parameters = new();\n\nvar chat = await client.Beta.Chat.Create(parameters);\n\nConsole.WriteLine(chat);',
       },
       typescript: {
         method: 'client.beta.chat.create',
@@ -5864,6 +6464,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatRetrieveParams;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatRetrieveResponse chat = client.beta().chat().retrieve("session_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Chat.Retrieve',
+        example:
+          'ChatRetrieveParams parameters = new() { SessionID = "session_id" };\n\nvar chat = await client.Beta.Chat.Retrieve(parameters);\n\nConsole.WriteLine(chat);',
+      },
       typescript: {
         method: 'client.beta.chat.retrieve',
         example:
@@ -5905,6 +6510,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().chat().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.beta().chat().delete("session_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Chat.Delete',
+        example:
+          'ChatDeleteParams parameters = new() { SessionID = "session_id" };\n\nawait client.Beta.Chat.Delete(parameters);',
       },
       typescript: {
         method: 'client.beta.chat.delete',
@@ -5949,6 +6559,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().chat().getSummary',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatGetSummaryParams;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatGetSummaryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatGetSummaryResponse response = client.beta().chat().getSummary("session_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Chat.GetSummary',
+        example:
+          'ChatGetSummaryParams parameters = new() { SessionID = "session_id" };\n\nvar response = await client.Beta.Chat.GetSummary(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.beta.chat.getSummary',
@@ -5999,6 +6614,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatStreamParams;\nimport ai.llamaindex.llamacloud.models.beta.chat.ChatStreamResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ChatStreamParams params = ChatStreamParams.builder()\n            .sessionId("session_id")\n            .addIndexId("idx-abc123")\n            .addIndexId("idx-def456")\n            .prompt("What were the main findings in Q3?")\n            .build();\n        ChatStreamResponse response = client.beta().chat().stream(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Chat.Stream',
+        example:
+          'ChatStreamParams parameters = new()\n{\n    SessionID = "session_id",\n    IndexIds =\n    [\n        "idx-abc123", "idx-def456"\n    ],\n    Prompt = "What were the main findings in Q3?",\n};\n\nvar response = await client.Beta.Chat.Stream(parameters);\n\nConsole.WriteLine(response);',
+      },
       typescript: {
         method: 'client.beta.chat.stream',
         example:
@@ -6044,6 +6664,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentData;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentData agentData = client.beta().agentData().get("item_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.AgentData.Get',
+        example:
+          'AgentDataGetParams parameters = new() { ItemID = "item_id" };\n\nvar agentData = await client.Beta.AgentData.Get(parameters);\n\nConsole.WriteLine(agentData);',
+      },
       typescript: {
         method: 'client.beta.agentData.get',
         example:
@@ -6088,6 +6713,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentData;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataUpdateParams params = AgentDataUpdateParams.builder()\n            .itemId("item_id")\n            .data(AgentDataUpdateParams.Data.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .build();\n        AgentData agentData = client.beta().agentData().update(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.AgentData.Update',
+        example:
+          'AgentDataUpdateParams parameters = new()\n{\n    ItemID = "item_id",\n    Data = new Dictionary<string, JsonElement>()\n    {\n        { "foo", JsonSerializer.SerializeToElement("bar") }\n    },\n};\n\nvar agentData = await client.Beta.AgentData.Update(parameters);\n\nConsole.WriteLine(agentData);',
+      },
       typescript: {
         method: 'client.beta.agentData.update',
         example:
@@ -6131,6 +6761,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().agentData().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataDeleteParams;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataDeleteResponse agentData = client.beta().agentData().delete("item_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.AgentData.Delete',
+        example:
+          'AgentDataDeleteParams parameters = new() { ItemID = "item_id" };\n\nvar agentData = await client.Beta.AgentData.Delete(parameters);\n\nConsole.WriteLine(agentData);',
       },
       typescript: {
         method: 'client.beta.agentData.delete',
@@ -6181,6 +6816,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().agentData().create',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentData;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataCreateParams params = AgentDataCreateParams.builder()\n            .data(AgentDataCreateParams.Data.builder()\n                .putAdditionalProperty("foo", JsonValue.from("bar"))\n                .build())\n            .deploymentName("deployment_name")\n            .build();\n        AgentData agentData = client.beta().agentData().create(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.AgentData.Create',
+        example:
+          'AgentDataCreateParams parameters = new()\n{\n    Data = new Dictionary<string, JsonElement>()\n    {\n        { "foo", JsonSerializer.SerializeToElement("bar") }\n    },\n    DeploymentName = "deployment_name",\n};\n\nvar agentData = await client.Beta.AgentData.Create(parameters);\n\nConsole.WriteLine(agentData);',
       },
       typescript: {
         method: 'client.beta.agentData.create',
@@ -6237,6 +6877,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().agentData().search',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataSearchPage;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataSearchParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataSearchParams params = AgentDataSearchParams.builder()\n            .deploymentName("deployment_name")\n            .build();\n        AgentDataSearchPage page = client.beta().agentData().search(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.AgentData.Search',
+        example:
+          'AgentDataSearchParams parameters = new() { DeploymentName = "deployment_name" };\n\nvar page = await client.Beta.AgentData.Search(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
       },
       typescript: {
         method: 'client.beta.agentData.search',
@@ -6295,6 +6940,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataAggregatePage;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataAggregateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataAggregateParams params = AgentDataAggregateParams.builder()\n            .deploymentName("deployment_name")\n            .build();\n        AgentDataAggregatePage page = client.beta().agentData().aggregate(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.AgentData.Aggregate',
+        example:
+          'AgentDataAggregateParams parameters = new()\n{\n    DeploymentName = "deployment_name"\n};\n\nvar page = await client.Beta.AgentData.Aggregate(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.beta.agentData.aggregate',
         example:
@@ -6344,6 +6994,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().agentData().deleteByQuery',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataDeleteByQueryParams;\nimport ai.llamaindex.llamacloud.models.beta.agentdata.AgentDataDeleteByQueryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        AgentDataDeleteByQueryParams params = AgentDataDeleteByQueryParams.builder()\n            .deploymentName("deployment_name")\n            .build();\n        AgentDataDeleteByQueryResponse response = client.beta().agentData().deleteByQuery(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.AgentData.DeleteByQuery',
+        example:
+          'AgentDataDeleteByQueryParams parameters = new()\n{\n    DeploymentName = "deployment_name"\n};\n\nvar response = await client.Beta.AgentData.DeleteByQuery(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.beta.agentData.deleteByQuery',
@@ -6399,6 +7054,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().sheets().create',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetCreateParams;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetsJob;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetCreateParams params = SheetCreateParams.builder()\n            .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n            .build();\n        SheetsJob sheetsJob = client.beta().sheets().create(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Sheets.Create',
+        example:
+          'SheetCreateParams parameters = new()\n{\n    FileID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"\n};\n\nvar sheetsJob = await client.Beta.Sheets.Create(parameters);\n\nConsole.WriteLine(sheetsJob);',
       },
       typescript: {
         method: 'client.beta.sheets.create',
@@ -6456,6 +7116,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetListPage;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetListPage page = client.beta().sheets().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Sheets.List',
+        example:
+          'SheetListParams parameters = new();\n\nvar page = await client.Beta.Sheets.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.beta.sheets.list',
         example:
@@ -6506,6 +7171,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().sheets().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetGetParams;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetsJob;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetsJob sheetsJob = client.beta().sheets().get("spreadsheet_job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Sheets.Get',
+        example:
+          'SheetGetParams parameters = new() { SpreadsheetJobID = "spreadsheet_job_id" };\n\nvar sheetsJob = await client.Beta.Sheets.Get(parameters);\n\nConsole.WriteLine(sheetsJob);',
       },
       typescript: {
         method: 'client.beta.sheets.get',
@@ -6558,6 +7228,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetGetResultTableParams;\nimport ai.llamaindex.llamacloud.models.files.PresignedUrl;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetGetResultTableParams params = SheetGetResultTableParams.builder()\n            .spreadsheetJobId("spreadsheet_job_id")\n            .regionId("region_id")\n            .regionType(SheetGetResultTableParams.RegionType.CELL_METADATA)\n            .build();\n        PresignedUrl presignedUrl = client.beta().sheets().getResultTable(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Sheets.GetResultTable',
+        example:
+          'SheetGetResultTableParams parameters = new()\n{\n    SpreadsheetJobID = "spreadsheet_job_id",\n    RegionID = "region_id",\n    RegionType = RegionType.CellMetadata,\n};\n\nvar presignedUrl = await client.Beta.Sheets.GetResultTable(parameters);\n\nConsole.WriteLine(presignedUrl);',
+      },
       typescript: {
         method: 'client.beta.sheets.getResultTable',
         example:
@@ -6601,6 +7276,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().sheets().deleteJob',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetDeleteJobParams;\nimport ai.llamaindex.llamacloud.models.beta.sheets.SheetDeleteJobResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SheetDeleteJobResponse response = client.beta().sheets().deleteJob("spreadsheet_job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Sheets.DeleteJob',
+        example:
+          'SheetDeleteJobParams parameters = new()\n{\n    SpreadsheetJobID = "spreadsheet_job_id"\n};\n\nvar response = await client.Beta.Sheets.DeleteJob(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.beta.sheets.deleteJob',
@@ -6655,6 +7335,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.DirectoryCreateParams;\nimport ai.llamaindex.llamacloud.models.beta.directories.DirectoryCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryCreateParams params = DirectoryCreateParams.builder()\n            .name("x")\n            .build();\n        DirectoryCreateResponse directory = client.beta().directories().create(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Directories.Create',
+        example:
+          'DirectoryCreateParams parameters = new() { Name = "x" };\n\nvar directory = await client.Beta.Directories.Create(parameters);\n\nConsole.WriteLine(directory);',
+      },
       typescript: {
         method: 'client.beta.directories.create',
         example:
@@ -6708,6 +7393,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.DirectoryListPage;\nimport ai.llamaindex.llamacloud.models.beta.directories.DirectoryListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryListPage page = client.beta().directories().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Directories.List',
+        example:
+          'DirectoryListParams parameters = new();\n\nvar page = await client.Beta.Directories.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.beta.directories.list',
         example:
@@ -6751,6 +7441,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().directories().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.DirectoryGetParams;\nimport ai.llamaindex.llamacloud.models.beta.directories.DirectoryGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryGetResponse directory = client.beta().directories().get("directory_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Directories.Get',
+        example:
+          'DirectoryGetParams parameters = new() { DirectoryID = "directory_id" };\n\nvar directory = await client.Beta.Directories.Get(parameters);\n\nConsole.WriteLine(directory);',
       },
       typescript: {
         method: 'client.beta.directories.get',
@@ -6802,6 +7497,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.DirectoryUpdateParams;\nimport ai.llamaindex.llamacloud.models.beta.directories.DirectoryUpdateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DirectoryUpdateResponse directory = client.beta().directories().update("directory_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Directories.Update',
+        example:
+          'DirectoryUpdateParams parameters = new() { DirectoryID = "directory_id" };\n\nvar directory = await client.Beta.Directories.Update(parameters);\n\nConsole.WriteLine(directory);',
+      },
       typescript: {
         method: 'client.beta.directories.update',
         example:
@@ -6843,6 +7543,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().directories().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.DirectoryDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        client.beta().directories().delete("directory_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Directories.Delete',
+        example:
+          'DirectoryDeleteParams parameters = new() { DirectoryID = "directory_id" };\n\nawait client.Beta.Directories.Delete(parameters);',
       },
       typescript: {
         method: 'client.beta.directories.delete',
@@ -6896,6 +7601,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().directories().files().add',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileAddParams;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileAddResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileAddParams params = FileAddParams.builder()\n            .directoryId("directory_id")\n            .fileId("file_id")\n            .build();\n        FileAddResponse response = client.beta().directories().files().add(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Directories.Files.Add',
+        example:
+          'FileAddParams parameters = new()\n{\n    DirectoryID = "directory_id",\n    FileID = "file_id",\n};\n\nvar response = await client.Beta.Directories.Files.Add(parameters);\n\nConsole.WriteLine(response);',
       },
       typescript: {
         method: 'client.beta.directories.files.add',
@@ -6956,6 +7666,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileListPage;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileListPage page = client.beta().directories().files().list("directory_id");\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Directories.Files.List',
+        example:
+          'FileListParams parameters = new() { DirectoryID = "directory_id" };\n\nvar page = await client.Beta.Directories.Files.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.beta.directories.files.list',
         example:
@@ -7007,6 +7722,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().directories().files().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileGetParams;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileGetParams params = FileGetParams.builder()\n            .directoryId("directory_id")\n            .directoryFileId("directory_file_id")\n            .build();\n        FileGetResponse file = client.beta().directories().files().get(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Directories.Files.Get',
+        example:
+          'FileGetParams parameters = new()\n{\n    DirectoryID = "directory_id",\n    DirectoryFileID = "directory_file_id",\n};\n\nvar file = await client.Beta.Directories.Files.Get(parameters);\n\nConsole.WriteLine(file);',
       },
       typescript: {
         method: 'client.beta.directories.files.get',
@@ -7063,6 +7783,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileUpdateParams;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileUpdateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileUpdateParams params = FileUpdateParams.builder()\n            .directoryId("directory_id")\n            .directoryFileId("directory_file_id")\n            .build();\n        FileUpdateResponse file = client.beta().directories().files().update(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Directories.Files.Update',
+        example:
+          'FileUpdateParams parameters = new()\n{\n    DirectoryID = "directory_id",\n    DirectoryFileID = "directory_file_id",\n};\n\nvar file = await client.Beta.Directories.Files.Update(parameters);\n\nConsole.WriteLine(file);',
+      },
       typescript: {
         method: 'client.beta.directories.files.update',
         example:
@@ -7111,6 +7836,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().directories().files().delete',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileDeleteParams params = FileDeleteParams.builder()\n            .directoryId("directory_id")\n            .directoryFileId("directory_file_id")\n            .build();\n        client.beta().directories().files().delete(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Directories.Files.Delete',
+        example:
+          'FileDeleteParams parameters = new()\n{\n    DirectoryID = "directory_id",\n    DirectoryFileID = "directory_file_id",\n};\n\nawait client.Beta.Directories.Files.Delete(parameters);',
       },
       typescript: {
         method: 'client.beta.directories.files.delete',
@@ -7167,6 +7897,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileUploadParams;\nimport ai.llamaindex.llamacloud.models.beta.directories.files.FileUploadResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        FileUploadParams params = FileUploadParams.builder()\n            .directoryId("directory_id")\n            .uploadFile(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        FileUploadResponse response = client.beta().directories().files().upload(params);\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Directories.Files.Upload',
+        example:
+          'FileUploadParams parameters = new()\n{\n    DirectoryID = "directory_id",\n    UploadFile = Encoding.UTF8.GetBytes("Example data"),\n};\n\nvar response = await client.Beta.Directories.Files.Upload(parameters);\n\nConsole.WriteLine(response);',
+      },
       typescript: {
         method: 'client.beta.directories.files.upload',
         example:
@@ -7217,6 +7952,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().split().create',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.split.SplitCreateParams;\nimport ai.llamaindex.llamacloud.models.beta.split.SplitCreateResponse;\nimport ai.llamaindex.llamacloud.models.beta.split.SplitDocumentInput;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitCreateParams params = SplitCreateParams.builder()\n            .documentInput(SplitDocumentInput.builder()\n                .type("type")\n                .value("value")\n                .build())\n            .build();\n        SplitCreateResponse split = client.beta().split().create(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Split.Create',
+        example:
+          'SplitCreateParams parameters = new()\n{\n    DocumentInput = new()\n    {\n        Type = "type",\n        Value = "value",\n    },\n};\n\nvar split = await client.Beta.Split.Create(parameters);\n\nConsole.WriteLine(split);',
       },
       typescript: {
         method: 'client.beta.split.create',
@@ -7272,6 +8012,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.split.SplitListPage;\nimport ai.llamaindex.llamacloud.models.beta.split.SplitListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitListPage page = client.beta().split().list();\n    }\n}',
       },
+      csharp: {
+        method: 'Beta.Split.List',
+        example:
+          'SplitListParams parameters = new();\n\nvar page = await client.Beta.Split.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
       typescript: {
         method: 'client.beta.split.list',
         example:
@@ -7315,6 +8060,11 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'beta().split().get',
         example:
           'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.beta.split.SplitGetParams;\nimport ai.llamaindex.llamacloud.models.beta.split.SplitGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        SplitGetResponse split = client.beta().split().get("split_job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Beta.Split.Get',
+        example:
+          'SplitGetParams parameters = new() { SplitJobID = "split_job_id" };\n\nvar split = await client.Beta.Split.Get(parameters);\n\nConsole.WriteLine(split);',
       },
       typescript: {
         method: 'client.beta.split.get',
@@ -7386,6 +8136,11 @@ const EMBEDDED_READMES: { language: string; content: string }[] = [
     language: 'java',
     content:
       '# Llama Cloud Java API Library\n\n<!-- x-release-please-start-version -->\n[![Maven Central](https://img.shields.io/maven-central/v/ai.llamaindex.llamacloud/llama-cloud)](https://central.sonatype.com/artifact/ai.llamaindex.llamacloud/llama-cloud/1.5.0)\n[![javadoc](https://javadoc.io/badge2/ai.llamaindex.llamacloud/llama-cloud/1.5.0/javadoc.svg)](https://javadoc.io/doc/ai.llamaindex.llamacloud/llama-cloud/1.5.0)\n<!-- x-release-please-end -->\n\nThe Llama Cloud Java SDK provides convenient access to the [Llama Cloud REST API](https://developers.llamaindex.ai/)   from applications written in Java.\n\n\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## MCP Server\n\nUse the Llama Cloud MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40llamaindex%2Fllama-cloud-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBsbGFtYWluZGV4L2xsYW1hLWNsb3VkLW1jcCJdLCJlbnYiOnsiTExBTUFfQ0xPVURfQVBJX0tFWSI6Ik15IEFQSSBLZXkifX0)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40llamaindex%2Fllama-cloud-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40llamaindex%2Fllama-cloud-mcp%22%5D%2C%22env%22%3A%7B%22LLAMA_CLOUD_API_KEY%22%3A%22My%20API%20Key%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n<!-- x-release-please-start-version -->\n\nThe REST API documentation can be found on [developers.llamaindex.ai](https://developers.llamaindex.ai/). Javadocs are available on [javadoc.io](https://javadoc.io/doc/ai.llamaindex.llamacloud/llama-cloud/1.5.0).\n\n<!-- x-release-please-end -->\n\n## Installation\n\n<!-- x-release-please-start-version -->\n\n### Gradle\n\n~~~kotlin\nimplementation("ai.llamaindex:llama-cloud:1.5.0")\n~~~\n\n### Maven\n\n~~~xml\n<dependency>\n  <groupId>ai.llamaindex</groupId>\n  <artifactId>llama-cloud</artifactId>\n  <version>1.5.0</version>\n</dependency>\n~~~\n\n<!-- x-release-please-end -->\n\n## Requirements\n\nThis library requires Java 8 or later.\n\n## Usage\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateParams;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateResponse;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(ParsingCreateParams.Tier.AGENTIC)\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\nParsingCreateResponse parsing = client.parsing().create(params);\n```\n\n## Client configuration\n\nConfigure the client using system properties or environment variables:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n```\n\nOr manually:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .apiKey("My API Key")\n    .build();\n```\n\nOr using a combination of the two approaches:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    // Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n    // Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\n    .fromEnv()\n    .apiKey("My API Key")\n    .build();\n```\n\nSee this table for the available options:\n\n| Setter    | System property      | Environment variable   | Required | Default value                       |\n| --------- | -------------------- | ---------------------- | -------- | ----------------------------------- |\n| `apiKey`  | `llamacloud.apiKey`  | `LLAMA_CLOUD_API_KEY`  | true     | -                                   |\n| `baseUrl` | `llamacloud.baseUrl` | `LLAMA_CLOUD_BASE_URL` | true     | `"https://api.cloud.llamaindex.ai"` |\n\nSystem properties take precedence over environment variables.\n\n> [!TIP]\n> Don\'t create more than one client in the same application. Each client has a connection pool and\n> thread pools, which are more efficient to share between requests.\n\n### Modifying configuration\n\nTo temporarily use a modified client configuration, while reusing the same connection and thread       pools, call `withOptions()` on any client or service:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\n\nLlamaCloudClient clientWithOptions = client.withOptions(optionsBuilder -> {\n    optionsBuilder.baseUrl("https://example.com");\n    optionsBuilder.maxRetries(42);\n});\n```\n\nThe `withOptions()` method does not affect the original client or service.\n\n## Requests and responses\n\nTo send a request to the Llama Cloud API, build an instance of some `Params` class and pass it to the     corresponding client method. When the response is received, it will be deserialized into an instance of     a Java class.\n\nFor example, `client.parsing().create(...)` should be called with an instance of `ParsingCreateParams`, and it     will return an instance of `ParsingCreateResponse`.\n\n## Immutability\n\nEach class in the SDK has an associated   [builder](https://blogs.oracle.com/javamagazine/post/exploring-joshua-blochs-builder-design-pattern-in-java)   or factory method for constructing it.\n\nEach class is [immutable](https://docs.oracle.com/javase/tutorial/essential/concurrency/immutable.html)   once constructed. If the class has an associated builder, then it has a `toBuilder()` method, which can   be used to convert it back to a builder for making a modified copy.\n\nBecause each class is immutable, builder modification will _never_ affect already built class instances.\n\n## Asynchronous execution\n\nThe default client is synchronous. To switch to asynchronous execution, call the `async()` method:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateParams;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateResponse;\nimport java.util.concurrent.CompletableFuture;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(ParsingCreateParams.Tier.AGENTIC)\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\nCompletableFuture<ParsingCreateResponse> parsing = client.async().parsing().create(params);\n```\n\nOr create an asynchronous client from the beginning:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClientAsync;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClientAsync;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateParams;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateResponse;\nimport java.util.concurrent.CompletableFuture;\n\n// Configures using the `llamacloud.apiKey` and `llamacloud.baseUrl` system properties\n// Or configures using the `LLAMA_CLOUD_API_KEY` and `LLAMA_CLOUD_BASE_URL` environment variables\nLlamaCloudClientAsync client = LlamaCloudOkHttpClientAsync.fromEnv();\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(ParsingCreateParams.Tier.AGENTIC)\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\nCompletableFuture<ParsingCreateResponse> parsing = client.parsing().create(params);\n```\n\nThe asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.\n\n\n\n## File uploads\n\nThe SDK defines methods that accept files.\n\nTo upload a file, pass a [`Path`](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html):\n\n```java\nimport ai.llamaindex.llamacloud.models.files.FileCreateParams;\nimport ai.llamaindex.llamacloud.models.files.FileCreateResponse;\nimport java.nio.file.Paths;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file(Paths.get("/path/to/file"))\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\nOr an arbitrary [`InputStream`](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html):\n\n```java\nimport ai.llamaindex.llamacloud.models.files.FileCreateParams;\nimport ai.llamaindex.llamacloud.models.files.FileCreateResponse;\nimport java.net.URL;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file(new URL("https://example.com//path/to/file").openStream())\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\nOr a `byte[]` array:\n\n```java\nimport ai.llamaindex.llamacloud.models.files.FileCreateParams;\nimport ai.llamaindex.llamacloud.models.files.FileCreateResponse;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file("content".getBytes())\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\nNote that when passing a non-`Path` its filename is unknown so it will not be included in the request.     To manually set a filename, pass a [`MultipartField`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/core/Values.kt):\n\n```java\nimport ai.llamaindex.llamacloud.core.MultipartField;\nimport ai.llamaindex.llamacloud.models.files.FileCreateParams;\nimport ai.llamaindex.llamacloud.models.files.FileCreateResponse;\nimport java.io.InputStream;\nimport java.net.URL;\n\nFileCreateParams params = FileCreateParams.builder()\n    .purpose("purpose")\n    .file(MultipartField.<InputStream>builder()\n        .value(new URL("https://example.com//path/to/file").openStream())\n        .filename("/path/to/file")\n        .build())\n    .build();\nFileCreateResponse file = client.files().create(params);\n```\n\n\n\n## Raw responses\n\nThe SDK defines methods that deserialize responses into instances of Java classes.       However, these methods don\'t provide access to the response headers, status code, or the raw response       body.\n\nTo access this data, prefix any HTTP method call on a client or service with `withRawResponse()`:\n\n```java\nimport ai.llamaindex.llamacloud.core.http.Headers;\nimport ai.llamaindex.llamacloud.core.http.HttpResponseFor;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexListPage;\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexListParams;\n\nIndexListParams params = IndexListParams.builder()\n    .projectId("my-project-id")\n    .build();\nHttpResponseFor<IndexListPage> page = client.beta().indexes().withRawResponse().list(params);\n\nint statusCode = page.statusCode();\nHeaders headers = page.headers();\n```\n\nYou can still deserialize the response into an instance of a Java class if needed:\n\n```java\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexListPage;\n\nIndexListPage parsedPage = page.parse();\n```\n\n## Error handling\n\nThe SDK throws custom unchecked exception types:\n\n- [`LlamaCloudServiceException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/LlamaCloudServiceException.kt): Base class for HTTP errors. See this table for which exception       subclass is thrown for each HTTP status code:\n\n  | Status | Exception                                          |\n  | ------ | -------------------------------------------------- |\n  | 400    | [`BadRequestException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/BadRequestException.kt)           |\n  | 401    | [`UnauthorizedException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/UnauthorizedException.kt)         |\n  | 403    | [`PermissionDeniedException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/PermissionDeniedException.kt)     |\n  | 404    | [`NotFoundException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/NotFoundException.kt)             |\n  | 422    | [`UnprocessableEntityException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/UnprocessableEntityException.kt)  |\n  | 429    | [`RateLimitException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/RateLimitException.kt)            |\n  | 5xx    | [`InternalServerException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/InternalServerException.kt)       |\n  | others | [`UnexpectedStatusCodeException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/UnexpectedStatusCodeException.kt) |\n\n- [`LlamaCloudIoException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/LlamaCloudIoException.kt): I/O networking errors.\n\n- [`LlamaCloudRetryableException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/LlamaCloudRetryableException.kt): Generic error indicating a failure that could be retried by the client.\n\n- [`LlamaCloudInvalidDataException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/LlamaCloudInvalidDataException.kt): Failure to interpret successfully parsed data. For example,       when accessing a property that\'s supposed to be required, but the API unexpectedly omitted it from the       response.\n\n- [`LlamaCloudException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/LlamaCloudException.kt): Base class for all exceptions. Most errors will result in one of the       previously mentioned ones, but completely generic errors may be thrown using the base class.\n\n## Pagination\n\nThe SDK defines methods that return a paginated lists of results. It provides convenient ways to access     the results either one page at a time or item-by-item across all pages.\n\n### Auto-pagination\n\nTo iterate through all results across all pages, use the `autoPager()` method, which automatically     fetches more pages as needed.\n\nWhen using the synchronous client, the method returns an [`Iterable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)\n\n```java\nimport ai.llamaindex.llamacloud.models.extract.ExtractListPage;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2Job;\n\nExtractListPage page = client.extract().list();\n\n// Process as an Iterable\nfor (ExtractV2Job extract : page.autoPager()) {\n    System.out.println(extract);\n}\n\n// Process as a Stream\npage.autoPager()\n    .stream()\n    .limit(50)\n    .forEach(extract -> System.out.println(extract));\n```\n\nWhen using the asynchronous client, the method returns an [`AsyncStreamResponse`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/core/http/AsyncStreamResponse.kt):\n\n```java\nimport ai.llamaindex.llamacloud.core.http.AsyncStreamResponse;\nimport ai.llamaindex.llamacloud.models.extract.ExtractListPageAsync;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2Job;\nimport java.util.Optional;\nimport java.util.concurrent.CompletableFuture;\n\nCompletableFuture<ExtractListPageAsync> pageFuture = client.async().extract().list();\n\npageFuture.thenRun(page -> page.autoPager().subscribe(extract -> {\n    System.out.println(extract);\n}));\n\n// If you need to handle errors or completion of the stream\npageFuture.thenRun(page -> page.autoPager().subscribe(new AsyncStreamResponse.Handler<>() {\n    @Override\n    public void onNext(ExtractV2Job extract) {\n        System.out.println(extract);\n    }\n\n    @Override\n    public void onComplete(Optional<Throwable> error) {\n        if (error.isPresent()) {\n            System.out.println("Something went wrong!");\n            throw new RuntimeException(error.get());\n        } else {\n            System.out.println("No more!");\n        }\n    }\n}));\n\n// Or use futures\npageFuture.thenRun(page -> page.autoPager()\n    .subscribe(extract -> {\n        System.out.println(extract);\n    })\n    .onCompleteFuture()\n    .whenComplete((unused, error) -> {\n        if (error != null) {\n            System.out.println("Something went wrong!");\n            throw new RuntimeException(error);\n        } else {\n            System.out.println("No more!");\n        }\n    }));\n```\n\n### Manual pagination\n\nTo access individual page items and manually request the next page, use the `items()`,\n`hasNextPage()`, and `nextPage()` methods:\n\n```java\nimport ai.llamaindex.llamacloud.models.extract.ExtractListPage;\nimport ai.llamaindex.llamacloud.models.extract.ExtractV2Job;\n\nExtractListPage page = client.extract().list();\nwhile (true) {\n    for (ExtractV2Job extract : page.items()) {\n        System.out.println(extract);\n    }\n\n    if (!page.hasNextPage()) {\n        break;\n    }\n\n    page = page.nextPage();\n}\n```\n\n## Logging\n\nEnable logging by setting the `LLAMA_CLOUD_LOG` environment variable to   `info`:\n\n```sh\nexport LLAMA_CLOUD_LOG=info\n```\n\nOr to `debug` for more verbose logging:\n\n```sh\nexport LLAMA_CLOUD_LOG=debug\n```\n\nOr configure the client manually using the `logLevel` method:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.core.LogLevel;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .logLevel(LogLevel.INFO)\n    .build();\n```\n\n## ProGuard and R8\n\nAlthough the SDK uses reflection, it is still usable with     [ProGuard](https://github.com/Guardsquare/proguard) and     [R8](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization) because     `llama-cloud-core` is published with a     [configuration file](llama-cloud-core/src/main/resources/META-INF/proguard/llama-cloud-core.pro) containing     [keep rules](https://www.guardsquare.com/manual/configuration/usage).\n\nProGuard and R8 should automatically detect and use the published rules, but you can also manually copy     the keep rules if necessary.\n\n\n\n\n\n## Jackson\n\nThe SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON     serialization/deserialization. It is compatible with version 2.13.4 or higher,     but depends on version 2.18.2 by default.\n\nThe SDK throws an exception if it detects an incompatible Jackson version at runtime (e.g. if the     default version was overridden in your Maven or Gradle config).\n\nIf the SDK threw an exception, but you\'re _certain_ the version is compatible, then disable the version     check using the `checkJacksonVersionCompatibility` on [`LlamaCloudOkHttpClient`](llama-cloud-client-okhttp/src/main/kotlin/ai/llamaindex/llamacloud/client/okhttp/LlamaCloudOkHttpClient.kt) or     [`LlamaCloudOkHttpClientAsync`](llama-cloud-client-okhttp/src/main/kotlin/ai/llamaindex/llamacloud/client/okhttp/LlamaCloudOkHttpClientAsync.kt).\n\n> [!CAUTION]\n> We make no guarantee that the SDK works correctly when the Jackson version check is disabled.\n\nAlso note that there are bugs in older Jackson versions that can affect the SDK. We don\'t work around all     Jackson bugs ([example](https://github.com/FasterXML/jackson-databind/issues/3240)) and expect users to     upgrade Jackson for those instead.\n\n## Network options\n\n### Retries\n\nThe SDK automatically retries 2 times by default, with a short exponential backoff between requests.\n\nOnly the following error types are retried:\n- Connection errors (for example, due to a network connectivity problem)\n- 408 Request Timeout\n- 409 Conflict\n- 429 Rate Limit\n- 5xx Internal\n\nThe API may also explicitly instruct the SDK to retry or not retry a request.\n\nTo set a custom number of retries, configure the client using the `maxRetries` method:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .maxRetries(4)\n    .build();\n```\n\n### Timeouts\n\nRequests time out after 1 minute by default.\n\nTo set a custom timeout, configure the method call using the `timeout` method:\n\n```java\nimport ai.llamaindex.llamacloud.models.beta.indexes.IndexListPage;\n\nIndexListPage page = client.beta().indexes().list(RequestOptions.builder().timeout(Duration.ofSeconds(30)).build());\n```\n\nOr configure the default for all method calls at the client level:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport java.time.Duration;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .timeout(Duration.ofSeconds(30))\n    .build();\n```\n\n### Proxies\n\nTo route requests through a proxy, configure the client using the `proxy` method:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport java.net.InetSocketAddress;\nimport java.net.Proxy;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .proxy(new Proxy(\n      Proxy.Type.HTTP, new InetSocketAddress(\n        "https://example.com", 8080\n      )\n    ))\n    .build();\n```\n\nIf the proxy responds with `407 Proxy Authentication Required`, supply credentials by also   configuring `proxyAuthenticator`:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.core.http.ProxyAuthenticator;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .proxy(...)\n    // Or a custom implementation of `ProxyAuthenticator`.\n    .proxyAuthenticator(ProxyAuthenticator.basic("username", "password"))\n    .build();\n```\n\n### Connection pooling\n\nTo customize the underlying OkHttp connection pool, configure the client using the   `maxIdleConnections` and `keepAliveDuration` methods:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport java.time.Duration;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    // If `maxIdleConnections` is set, then `keepAliveDuration` must be set, and vice versa.\n    .maxIdleConnections(10)\n    .keepAliveDuration(Duration.ofMinutes(2))\n    .build();\n```\n\nIf both options are unset, OkHttp\'s default connection pool settings are used.\n\n### HTTPS\n\n> [!NOTE]\n> Most applications should not call these methods, and instead use the system defaults. The defaults include\n> special optimizations that can be lost if the implementations are modified.\n\nTo configure how HTTPS connections are secured, configure the client using the `sslSocketFactory`,   `trustManager`, and `hostnameVerifier` methods:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    // If `sslSocketFactory` is set, then `trustManager` must be set, and vice versa.\n    .sslSocketFactory(yourSSLSocketFactory)\n    .trustManager(yourTrustManager)\n    .hostnameVerifier(yourHostnameVerifier)\n    .build();\n```\n\n\n\n### Custom HTTP client\n\nThe SDK consists of three artifacts:\n- `llama-cloud-core`\n  - Contains core SDK logic\n  - Does not depend on [OkHttp](https://square.github.io/okhttp)\n  - Exposes [`LlamaCloudClient`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/client/LlamaCloudClient.kt), [`LlamaCloudClientAsync`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/client/LlamaCloudClientAsync.kt),             [`LlamaCloudClientImpl`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/client/LlamaCloudClientImpl.kt), and [`LlamaCloudClientAsyncImpl`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/client/LlamaCloudClientAsyncImpl.kt), all of which can             work with any HTTP client\n- `llama-cloud-client-okhttp`\n  - Depends on [OkHttp](https://square.github.io/okhttp)\n  - Exposes [`LlamaCloudOkHttpClient`](llama-cloud-client-okhttp/src/main/kotlin/ai/llamaindex/llamacloud/client/okhttp/LlamaCloudOkHttpClient.kt) and [`LlamaCloudOkHttpClientAsync`](llama-cloud-client-okhttp/src/main/kotlin/ai/llamaindex/llamacloud/client/okhttp/LlamaCloudOkHttpClientAsync.kt), which             provide a way to construct [`LlamaCloudClientImpl`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/client/LlamaCloudClientImpl.kt) and             [`LlamaCloudClientAsyncImpl`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/client/LlamaCloudClientAsyncImpl.kt), respectively, using OkHttp\n- `llama-cloud`\n  - Depends on and exposes the APIs of both `llama-cloud-core` and `llama-cloud-client-okhttp`\n  - Does not have its own logic\n\nThis structure allows replacing the SDK\'s default HTTP client without pulling in unnecessary dependencies.\n\n#### Customized [`OkHttpClient`](https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.html)\n\n> [!TIP]\n> Try the available [network options](#network-options) before replacing the default client.\n\nTo use a customized `OkHttpClient`:\n\n1. Replace your [`llama-cloud` dependency](#installation) with `llama-cloud-core`\n2. Copy `llama-cloud-client-okhttp`\'s [`OkHttpClient`](llama-cloud-client-okhttp/src/main/kotlin/ai/llamaindex/llamacloud/client/okhttp/OkHttpClient.kt) class into your code and        customize it\n3. Construct [`LlamaCloudClientImpl`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/client/LlamaCloudClientImpl.kt) or [`LlamaCloudClientAsyncImpl`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/client/LlamaCloudClientAsyncImpl.kt), similarly to        [`LlamaCloudOkHttpClient`](llama-cloud-client-okhttp/src/main/kotlin/ai/llamaindex/llamacloud/client/okhttp/LlamaCloudOkHttpClient.kt) or [`LlamaCloudOkHttpClientAsync`](llama-cloud-client-okhttp/src/main/kotlin/ai/llamaindex/llamacloud/client/okhttp/LlamaCloudOkHttpClientAsync.kt), using your        customized client\n\n### Completely custom HTTP client\n\nTo use a completely custom HTTP client:\n\n1. Replace your [`llama-cloud` dependency](#installation) with `llama-cloud-core`\n2. Write a class that implements the [`HttpClient`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/core/http/HttpClient.kt) interface\n3. Construct [`LlamaCloudClientImpl`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/client/LlamaCloudClientImpl.kt) or [`LlamaCloudClientAsyncImpl`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/client/LlamaCloudClientAsyncImpl.kt), similarly to        [`LlamaCloudOkHttpClient`](llama-cloud-client-okhttp/src/main/kotlin/ai/llamaindex/llamacloud/client/okhttp/LlamaCloudOkHttpClient.kt) or [`LlamaCloudOkHttpClientAsync`](llama-cloud-client-okhttp/src/main/kotlin/ai/llamaindex/llamacloud/client/okhttp/LlamaCloudOkHttpClientAsync.kt), using your new        client class\n\n## Undocumented API functionality\n\nThe SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.\n\n### Parameters\n\nTo set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQueryParam`, or       `putAdditionalBodyProperty` methods on any `Params` class:\n\n```java\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .putAdditionalHeader("Secret-Header", "42")\n    .putAdditionalQueryParam("secret_query_param", "42")\n    .putAdditionalBodyProperty("secretProperty", JsonValue.from("42"))\n    .build();\n```\n\nThese can be accessed on the built object later using the `_additionalHeaders()`,       `_additionalQueryParams()`, and `_additionalBodyProperties()` methods.\n\nTo set undocumented parameters on _nested_ headers, query params, or body classes, call the         `putAdditionalProperty` method on the nested class:\n\n```java\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .agenticOptions(ParsingCreateParams.AgenticOptions.builder()\n        .putAdditionalProperty("secretProperty", JsonValue.from("42"))\n        .build())\n    .build();\n```\n\nThese properties can be accessed on the nested built object later using the         `_additionalProperties()` method.\n\nTo set a documented parameter or property to an undocumented or not yet supported _value_, pass a       [`JsonValue`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/core/Values.kt) object to its setter:\n\n```java\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .tier(JsonValue.from(42))\n    .version(ParsingCreateParams.Version.LATEST)\n    .fileId("abc1234")\n    .build();\n```\n\nThe most straightforward way to create a [`JsonValue`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/core/Values.kt) is using its       `from(...)` method:\n\n```java\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport java.util.List;\nimport java.util.Map;\n\n// Create primitive JSON values\nJsonValue nullValue = JsonValue.from(null);\nJsonValue booleanValue = JsonValue.from(true);\nJsonValue numberValue = JsonValue.from(42);\nJsonValue stringValue = JsonValue.from("Hello World!");\n\n// Create a JSON array value equivalent to `["Hello", "World"]`\nJsonValue arrayValue = JsonValue.from(List.of(\n  "Hello", "World"\n));\n\n// Create a JSON object value equivalent to `{ "a": 1, "b": 2 }`\nJsonValue objectValue = JsonValue.from(Map.of(\n  "a", 1,\n  "b", 2\n));\n\n// Create an arbitrarily nested JSON equivalent to:\n// {\n//   "a": [1, 2],\n//   "b": [3, 4]\n// }\nJsonValue complexValue = JsonValue.from(Map.of(\n  "a", List.of(\n    1, 2\n  ),\n  "b", List.of(\n    3, 4\n  )\n));\n```\n\nNormally a `Builder` class\'s `build` method will throw         [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html)         if any required parameter or property is unset.\n\nTo forcibly omit a required parameter or property, pass [`JsonMissing`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/core/Values.kt):\n\n```java\nimport ai.llamaindex.llamacloud.core.JsonMissing;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateParams;\n\nParsingCreateParams params = ParsingCreateParams.builder()\n    .version(ParsingCreateParams.Version.LATEST)\n    .tier(JsonMissing.of())\n    .build();\n```\n\n### Response properties\n\nTo access undocumented response properties, call the `_additionalProperties()` method:\n\n```java\nimport ai.llamaindex.llamacloud.core.JsonValue;\nimport java.util.Map;\n\nMap<String, JsonValue> additionalProperties = client.parsing().create(params)._additionalProperties();\nJsonValue secretPropertyValue = additionalProperties.get("secretProperty");\n\nString result = secretPropertyValue.accept(new JsonValue.Visitor<>() {\n    @Override\n    public String visitNull() {\n        return "It\'s null!";\n    }\n\n    @Override\n    public String visitBoolean(boolean value) {\n        return "It\'s a boolean!";\n    }\n\n    @Override\n    public String visitNumber(Number value) {\n        return "It\'s a number!";\n    }\n\n    // Other methods include `visitMissing`, `visitString`, `visitArray`, and `visitObject`\n    // The default implementation of each unimplemented method delegates to `visitDefault`, which throws by default, but can also be overridden\n});\n```\n\nTo access a property\'s raw JSON value, which may be undocumented, call its `_` prefixed method:\n\n```java\nimport ai.llamaindex.llamacloud.core.JsonField;\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateParams;\nimport java.util.Optional;\n\nJsonField<ParsingCreateParams.Tier> tier = client.parsing().create(params)._tier();\n\nif (tier.isMissing()) {\n  // The property is absent from the JSON response\n} else if (tier.isNull()) {\n  // The property was set to literal null\n} else {\n  // Check if value was provided as a string\n  // Other methods include `asNumber()`, `asBoolean()`, etc.\n  Optional<String> jsonString = tier.asString();\n\n  // Try to deserialize into a custom type\n  MyClass myObject = tier.asUnknown().orElseThrow().convert(MyClass.class);\n}\n```\n\n### Response validation\n\nIn rare cases, the API may return a response that doesn\'t match the expected type. For example, the SDK     may expect a property to contain a `String`, but the API could return something else.\n\nBy default, the SDK will not throw an exception in this case. It will throw     [`LlamaCloudInvalidDataException`](llama-cloud-core/src/main/kotlin/ai/llamaindex/llamacloud/errors/LlamaCloudInvalidDataException.kt) only if you directly access the property.\n\nValidating the response is _not_ forwards compatible with new types from the API for existing fields.\n\nIf you would still prefer to check that the response is completely well-typed upfront, then either call     `validate()`:\n\n```java\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateResponse;\n\nParsingCreateResponse parsing = client.parsing().create(params).validate();\n```\n\nOr configure the method call to validate the response using the `responseValidation` method:\n\n```java\nimport ai.llamaindex.llamacloud.models.parsing.ParsingCreateResponse;\n\nParsingCreateResponse parsing = client.parsing().create(\n  params, RequestOptions.builder().responseValidation(true).build()\n);\n```\n\nOr configure the default for all method calls at the client level:\n\n```java\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\n\nLlamaCloudClient client = LlamaCloudOkHttpClient.builder()\n    .fromEnv()\n    .responseValidation(true)\n    .build();\n```\n\n## FAQ\n\n### Why don\'t you use plain `enum` classes?\n\nJava `enum` classes are not trivially   [forwards compatible](https://www.stainless.com/blog/making-java-enums-forwards-compatible). Using them in   the SDK could cause runtime exceptions if the API is updated to respond with a new enum value.\n\n### Why do you represent fields using `JsonField<T>` instead of just plain `T`?\n\nUsing `JsonField<T>` enables a few features:\n\n- Allowing usage of [undocumented API functionality](#undocumented-api-functionality)\n- Lazily [validating the API response against the expected shape](#response-validation)\n- Representing absent vs explicitly null values\n\n### Why don\'t you use [`data` classes](https://kotlinlang.org/docs/data-classes.html)?\n\nIt is not [backwards compatible to add new fields to a data class](https://kotlinlang.org/docs/api-guidelines-backward-compatibility.html#avoid-using-data-classes-in-your-api)   and we don\'t want to introduce a breaking change every time we add a field to a class.\n\n### Why don\'t you use checked exceptions?\n\nChecked exceptions are widely considered a mistake in the Java programming language. In fact, they were   omitted from Kotlin for this reason.\n\nChecked exceptions:\n\n- Are verbose to handle\n- Encourage error handling at the wrong level of abstraction, where nothing can be done about the error\n- Are tedious to propagate due to the [function coloring problem](https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function)\n- Don\'t play well with lambdas (also due to the function coloring problem)\n\n## Semantic versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n2. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/run-llama/llama-parse-java/issues) with questions, bugs, or suggestions.\n',
+  },
+  {
+    language: 'csharp',
+    content:
+      '# Llama Cloud C# API Library\n\nThe Llama Cloud C# SDK provides convenient access to the [Llama Cloud REST API](https://developers.llamaindex.ai/) from applications written in   C#.\n\n## Installation\n\n```bash\ngit clone git@github.com:run-llama/llamacloud-prod-csharp.git\ndotnet add reference llamacloud-prod-csharp/src/LlamaIndex.LlamaCloud\n```\n\n## Requirements\n\nThis library requires .NET Standard 2.0 or later.\n\n## Usage\n\nSee the [`examples`](examples) directory for complete and runnable examples.\n\n```csharp\nLlamaCloudClient client = new();\n\nParsingCreateParams parameters = new()\n{\n    Tier = Tier.Agentic,\n    Version = Version.Latest,\n    FileID = "abc1234",\n};\n\nvar parsing = await client.Parsing.Create(parameters);\n\nConsole.WriteLine(parsing);\n```',
   },
   {
     language: 'typescript',
