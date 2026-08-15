@@ -8140,7 +8140,7 @@ const EMBEDDED_READMES: { language: string; content: string }[] = [
   {
     language: 'csharp',
     content:
-      '# Llama Cloud C# API Library\n\nThe Llama Cloud C# SDK provides convenient access to the [Llama Cloud REST API](https://developers.llamaindex.ai/) from applications written in   C#.\n\n## Installation\n\nInstall the package from [NuGet](https://www.nuget.org/packages/LlamaIndex.LlamaCloud):\n\n```bash\ndotnet add package LlamaIndex.LlamaCloud\n```\n\n## Requirements\n\nThis library requires .NET Standard 2.0 or later.\n\n## Usage\n\nSee the [`examples`](examples) directory for complete and runnable examples.\n\n```csharp\nLlamaCloudClient client = new();\n\nParsingCreateParams parameters = new()\n{\n    Tier = Tier.Agentic,\n    Version = Version.Latest,\n    FileID = "abc1234",\n};\n\nvar parsing = await client.Parsing.Create(parameters);\n\nConsole.WriteLine(parsing);\n```',
+      '# Llama Cloud C# API Library\n\nThe Llama Cloud C# SDK provides convenient access to the [Llama Cloud REST API](https://developers.llamaindex.ai/) from applications written in   C#.\n\n## Installation\n\nInstall the package from [NuGet](https://www.nuget.org/packages/LlamaCloud):\n\n```bash\ndotnet add package LlamaCloud\n```\n\n## Requirements\n\nThis library requires .NET Standard 2.0 or later.\n\n## Usage\n\nSee the [`examples`](examples) directory for complete and runnable examples.\n\n```csharp\nLlamaCloudClient client = new();\n\nParsingCreateParams parameters = new()\n{\n    Tier = Tier.Agentic,\n    Version = Version.Latest,\n    FileID = "abc1234",\n};\n\nvar parsing = await client.Parsing.Create(parameters);\n\nConsole.WriteLine(parsing);\n```',
   },
   {
     language: 'typescript',
