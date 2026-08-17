@@ -440,9 +440,9 @@ export interface ClassifyCreateResponse {
   project_id: string;
 
   /**
-   * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
+   * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
    */
-  status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
 
   /**
    * User who created this job
@@ -515,9 +515,9 @@ export interface ClassifyListResponse {
   project_id: string;
 
   /**
-   * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
+   * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
    */
-  status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
 
   /**
    * User who created this job
@@ -590,9 +590,9 @@ export interface ClassifyCancelResponse {
   project_id: string;
 
   /**
-   * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
+   * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
    */
-  status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
 
   /**
    * User who created this job
@@ -665,9 +665,9 @@ export interface ClassifyGetResponse {
   project_id: string;
 
   /**
-   * Current job status: PENDING, RUNNING, COMPLETED, or FAILED
+   * Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED
    */
-  status: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
+  status: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING';
 
   /**
    * User who created this job
@@ -861,7 +861,7 @@ export interface ClassifyListParams extends PaginatedCursorParams {
   /**
    * Filter by job status
    */
-  status?: 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | null;
+  status?: 'CANCELLED' | 'COMPLETED' | 'FAILED' | 'PENDING' | 'RUNNING' | null;
 }
 
 export interface ClassifyGetParams {
