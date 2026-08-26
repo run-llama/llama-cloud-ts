@@ -47,36 +47,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/files/{file_id}/content',
   },
   {
-    clientCallName: 'client.sheets.create',
-    fullyQualifiedName: 'sheets.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/sheets/jobs',
-  },
-  {
-    clientCallName: 'client.sheets.list',
-    fullyQualifiedName: 'sheets.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/sheets/jobs',
-  },
-  {
-    clientCallName: 'client.sheets.get',
-    fullyQualifiedName: 'sheets.get',
-    httpMethod: 'get',
-    httpPath: '/api/v1/sheets/jobs/{spreadsheet_job_id}',
-  },
-  {
-    clientCallName: 'client.sheets.getResultTable',
-    fullyQualifiedName: 'sheets.getResultTable',
-    httpMethod: 'get',
-    httpPath: '/api/v1/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}',
-  },
-  {
-    clientCallName: 'client.sheets.deleteJob',
-    fullyQualifiedName: 'sheets.deleteJob',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/sheets/jobs/{spreadsheet_job_id}',
-  },
-  {
     clientCallName: 'client.split.create',
     fullyQualifiedName: 'split.create',
     httpMethod: 'post',
@@ -795,36 +765,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'beta.agentData.deleteByQuery',
     httpMethod: 'post',
     httpPath: '/api/v1/beta/agent-data/:delete',
-  },
-  {
-    clientCallName: 'client.beta.sheets.create',
-    fullyQualifiedName: 'beta.sheets.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/beta/sheets/jobs',
-  },
-  {
-    clientCallName: 'client.beta.sheets.list',
-    fullyQualifiedName: 'beta.sheets.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/sheets/jobs',
-  },
-  {
-    clientCallName: 'client.beta.sheets.get',
-    fullyQualifiedName: 'beta.sheets.get',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/sheets/jobs/{spreadsheet_job_id}',
-  },
-  {
-    clientCallName: 'client.beta.sheets.getResultTable',
-    fullyQualifiedName: 'beta.sheets.getResultTable',
-    httpMethod: 'get',
-    httpPath: '/api/v1/beta/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}',
-  },
-  {
-    clientCallName: 'client.beta.sheets.deleteJob',
-    fullyQualifiedName: 'beta.sheets.deleteJob',
-    httpMethod: 'delete',
-    httpPath: '/api/v1/beta/sheets/jobs/{spreadsheet_job_id}',
   },
   {
     clientCallName: 'client.beta.directories.create',

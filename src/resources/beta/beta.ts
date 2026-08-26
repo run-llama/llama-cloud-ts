@@ -62,18 +62,7 @@ import {
   RetrievalRetrieveResponse,
 } from './retrieval';
 import * as SheetsAPI from './sheets';
-import {
-  SheetCreateParams,
-  SheetDeleteJobParams,
-  SheetDeleteJobResponse,
-  SheetGetParams,
-  SheetGetResultTableParams,
-  SheetListParams,
-  Sheets,
-  SheetsJob,
-  SheetsJobsPaginatedCursor,
-  SheetsParsingConfig,
-} from './sheets';
+import { Sheets } from './sheets';
 import * as SplitAPI from './split';
 import {
   Split,
@@ -182,18 +171,7 @@ export declare namespace Beta {
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
   };
 
-  export {
-    Sheets as Sheets,
-    type SheetsJob as SheetsJob,
-    type SheetsParsingConfig as SheetsParsingConfig,
-    type SheetDeleteJobResponse as SheetDeleteJobResponse,
-    type SheetsJobsPaginatedCursor as SheetsJobsPaginatedCursor,
-    type SheetCreateParams as SheetCreateParams,
-    type SheetListParams as SheetListParams,
-    type SheetGetParams as SheetGetParams,
-    type SheetGetResultTableParams as SheetGetResultTableParams,
-    type SheetDeleteJobParams as SheetDeleteJobParams,
-  };
+  export { Sheets as Sheets };
 
   export {
     Directories as Directories,
