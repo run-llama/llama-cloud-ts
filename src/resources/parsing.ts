@@ -1838,6 +1838,33 @@ export namespace ParsingGetResponse {
        * Header of the page in markdown
        */
       header?: string | null;
+
+      /**
+       * Printed line numbers linked to final page markdown
+       */
+      line_numbers?: Array<MarkdownResultPage.LineNumber> | null;
+    }
+
+    export namespace MarkdownResultPage {
+      /**
+       * Source line number linked to final page markdown.
+       */
+      export interface LineNumber {
+        /**
+         * Zero-based exclusive UTF-16 code-unit offset in final page markdown
+         */
+        end_index: number;
+
+        /**
+         * Printed source line number
+         */
+        line_number: string;
+
+        /**
+         * Zero-based inclusive UTF-16 code-unit offset in final page markdown
+         */
+        start_index: number;
+      }
     }
 
     export interface FailedMarkdownPage {
@@ -1866,6 +1893,11 @@ export namespace ParsingGetResponse {
      * List of page metadata entries
      */
     pages: Array<Metadata.Page>;
+
+    /**
+     * Document-level metadata information.
+     */
+    document?: Metadata.Document | null;
   }
 
   export namespace Metadata {
@@ -1912,6 +1944,44 @@ export namespace ParsingGetResponse {
        * Whether auto mode was triggered for the page
        */
       triggered_auto_mode?: boolean | null;
+    }
+
+    /**
+     * Document-level metadata information.
+     */
+    export interface Document {
+      /**
+       * Mean confidence score across pages scored by the high-effort confidence judge
+       * (0-1)
+       */
+      confidence?: number | null;
+
+      /**
+       * Coverage and worst-page details for document confidence.
+       */
+      confidence_breakdown?: Document.ConfidenceBreakdown | null;
+    }
+
+    export namespace Document {
+      /**
+       * Coverage and worst-page details for document confidence.
+       */
+      export interface ConfidenceBreakdown {
+        /**
+         * Lowest confidence score among pages scored by the high-effort confidence judge
+         */
+        min_page_score: number;
+
+        /**
+         * Number of pages successfully scored by the high-effort confidence judge
+         */
+        scored_pages: number;
+
+        /**
+         * Total number of pages in the parsed document
+         */
+        total_pages: number;
+      }
     }
   }
 
@@ -2455,6 +2525,11 @@ export namespace ParsingCreateParams {
      * Markdown formatting options including table styles and link annotations
      */
     export interface Markdown {
+      /**
+       * Detect printed gutter line numbers and return their Markdown offsets
+       */
+      annotate_line_numbers?: boolean | null;
+
       /**
        * Add link annotations to markdown output in the format [text](url). When false,
        * only the link text is included
