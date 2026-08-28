@@ -374,7 +374,7 @@ export interface ExtractConfiguration {
 
   /**
    * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page),
-   * agentic_plus (50 credits/page), or turbo (35 credits/page, experimental)
+   * agentic_plus (50 credits/page), or turbo (35 credits/page)
    */
   tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'turbo';
 
