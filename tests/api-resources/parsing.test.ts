@@ -61,6 +61,7 @@ describe('resource parsing', () => {
         granular_bboxes: ['word', 'line', 'cell'],
         images_to_save: ['embedded'],
         markdown: {
+          annotate_line_numbers: true,
           annotate_links: true,
           annotate_revisions: true,
           inline_images: true,

@@ -45,18 +45,6 @@ Methods:
 
 # Sheets
 
-Types:
-
-- <code><a href="./src/resources/sheets.ts">SheetDeleteJobResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/sheets/jobs">client.sheets.<a href="./src/resources/sheets.ts">create</a>({ ...params }) -> SheetsJob</code>
-- <code title="get /api/v1/sheets/jobs">client.sheets.<a href="./src/resources/sheets.ts">list</a>({ ...params }) -> SheetsJobsPaginatedCursor</code>
-- <code title="get /api/v1/sheets/jobs/{spreadsheet_job_id}">client.sheets.<a href="./src/resources/sheets.ts">get</a>(spreadsheetJobID, { ...params }) -> SheetsJob</code>
-- <code title="get /api/v1/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}">client.sheets.<a href="./src/resources/sheets.ts">getResultTable</a>(regionType, { ...params }) -> PresignedURL</code>
-- <code title="delete /api/v1/sheets/jobs/{spreadsheet_job_id}">client.sheets.<a href="./src/resources/sheets.ts">deleteJob</a>(spreadsheetJobID, { ...params }) -> unknown</code>
-
 # Split
 
 Types:
@@ -539,20 +527,6 @@ Methods:
 - <code title="post /api/v1/beta/agent-data/:delete">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">deleteByQuery</a>({ ...params }) -> AgentDataDeleteByQueryResponse</code>
 
 ## Sheets
-
-Types:
-
-- <code><a href="./src/resources/beta/sheets.ts">SheetsJob</a></code>
-- <code><a href="./src/resources/beta/sheets.ts">SheetsParsingConfig</a></code>
-- <code><a href="./src/resources/beta/sheets.ts">SheetDeleteJobResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/beta/sheets/jobs">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">create</a>({ ...params }) -> SheetsJob</code>
-- <code title="get /api/v1/beta/sheets/jobs">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">list</a>({ ...params }) -> SheetsJobsPaginatedCursor</code>
-- <code title="get /api/v1/beta/sheets/jobs/{spreadsheet_job_id}">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">get</a>(spreadsheetJobID, { ...params }) -> SheetsJob</code>
-- <code title="get /api/v1/beta/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">getResultTable</a>(regionType, { ...params }) -> PresignedURL</code>
-- <code title="delete /api/v1/beta/sheets/jobs/{spreadsheet_job_id}">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">deleteJob</a>(spreadsheetJobID, { ...params }) -> unknown</code>
 
 ## Directories
 

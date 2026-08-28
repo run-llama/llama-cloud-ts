@@ -180,15 +180,7 @@ import {
   ProjectListResponse,
   Projects,
 } from './resources/projects';
-import {
-  SheetCreateParams,
-  SheetDeleteJobParams,
-  SheetDeleteJobResponse,
-  SheetGetParams,
-  SheetGetResultTableParams,
-  SheetListParams,
-  Sheets,
-} from './resources/sheets';
+import { Sheets } from './resources/sheets';
 import {
   Split,
   SplitCancelParams,
@@ -1118,15 +1110,7 @@ export declare namespace LlamaCloud {
     type FileContentParams as FileContentParams,
   };
 
-  export {
-    Sheets as Sheets,
-    type SheetDeleteJobResponse as SheetDeleteJobResponse,
-    type SheetCreateParams as SheetCreateParams,
-    type SheetListParams as SheetListParams,
-    type SheetGetParams as SheetGetParams,
-    type SheetGetResultTableParams as SheetGetResultTableParams,
-    type SheetDeleteJobParams as SheetDeleteJobParams,
-  };
+  export { Sheets as Sheets };
 
   export {
     Split as Split,

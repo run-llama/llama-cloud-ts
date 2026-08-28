@@ -85,6 +85,7 @@ describe('resource pipelines', () => {
       llama_parse_parameters: {
         adaptive_long_table: true,
         aggressive_table_extraction: true,
+        annotate_line_numbers: true,
         annotate_links: true,
         annotate_revisions: true,
         auto_mode: true,
@@ -359,6 +360,7 @@ describe('resource pipelines', () => {
       llama_parse_parameters: {
         adaptive_long_table: true,
         aggressive_table_extraction: true,
+        annotate_line_numbers: true,
         annotate_links: true,
         annotate_revisions: true,
         auto_mode: true,

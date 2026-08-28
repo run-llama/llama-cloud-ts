@@ -434,10 +434,10 @@ export interface ExtractV2Parameters {
   target_pages?: string | null;
 
   /**
-   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page), or
-   * agentic_plus (50 credits/page)
+   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page),
+   * agentic_plus (50 credits/page), or turbo (35 credits/page, experimental)
    */
-  tier?: 'agentic' | 'agentic_plus' | 'cost_effective';
+  tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'turbo';
 
   /**
    * Use 'latest' for the latest release for the selected tier or a date string
@@ -788,6 +788,11 @@ export namespace ParseV2Parameters {
      * Markdown formatting options including table styles and link annotations
      */
     export interface Markdown {
+      /**
+       * Detect printed gutter line numbers and return their Markdown offsets
+       */
+      annotate_line_numbers?: boolean | null;
+
       /**
        * Add link annotations to markdown output in the format [text](url). When false,
        * only the link text is included

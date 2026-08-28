@@ -676,6 +676,8 @@ export interface LlamaParseParameters {
 
   aggressive_table_extraction?: boolean | null;
 
+  annotate_line_numbers?: boolean | null;
+
   annotate_links?: boolean | null;
 
   annotate_revisions?: boolean | null;
