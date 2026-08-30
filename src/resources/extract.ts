@@ -342,7 +342,7 @@ export interface ExtractConfiguration {
    * specified. Turbo extract does not support parse configuration or produce a parse
    * output; use another tier if your workflow requires parsed text.
    */
-  parse_tier?: string | null;
+  parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
 
   /**
    * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
