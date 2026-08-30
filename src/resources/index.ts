@@ -52,7 +52,9 @@ export {
   type DataSinkListResponse,
   type DataSinkListParams,
   type DataSinkCreateParams,
+  type DataSinkGetParams,
   type DataSinkUpdateParams,
+  type DataSinkDeleteParams,
 } from './data-sinks';
 export {
   DataSources,
@@ -61,7 +63,9 @@ export {
   type DataSourceListResponse,
   type DataSourceListParams,
   type DataSourceCreateParams,
+  type DataSourceGetParams,
   type DataSourceUpdateParams,
+  type DataSourceDeleteParams,
 } from './data-sources';
 export {
   Extract,
@@ -180,7 +184,9 @@ export {
   type PipelineListResponse,
   type PipelineListParams,
   type PipelineCreateParams,
+  type PipelineGetParams,
   type PipelineUpdateParams,
+  type PipelineDeleteParams,
   type PipelineGetStatusParams,
   type PipelineUpsertParams,
   type PipelineRetrieveParams,

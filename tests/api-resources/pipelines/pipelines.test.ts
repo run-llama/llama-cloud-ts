@@ -265,6 +265,18 @@ describe('resource pipelines', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('get: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.pipelines.get(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        { project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.pipelines.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {});
     const rawResponse = await responsePromise.asResponse();
@@ -289,6 +301,18 @@ describe('resource pipelines', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('delete: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.pipelines.delete(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        { project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('getStatus', async () => {
     const responsePromise = client.pipelines.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -306,7 +330,7 @@ describe('resource pipelines', () => {
     await expect(
       client.pipelines.getStatus(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        { full_details: true },
+        { full_details: true, project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);

@@ -79,6 +79,8 @@ import {
 import {
   DataSink,
   DataSinkCreateParams,
+  DataSinkDeleteParams,
+  DataSinkGetParams,
   DataSinkListParams,
   DataSinkListResponse,
   DataSinkUpdateParams,
@@ -87,6 +89,8 @@ import {
 import {
   DataSource,
   DataSourceCreateParams,
+  DataSourceDeleteParams,
+  DataSourceGetParams,
   DataSourceListParams,
   DataSourceListResponse,
   DataSourceReaderVersionMetadata,
@@ -242,6 +246,8 @@ import {
   Pipeline,
   PipelineCreate,
   PipelineCreateParams,
+  PipelineDeleteParams,
+  PipelineGetParams,
   PipelineGetStatusParams,
   PipelineListParams,
   PipelineListResponse,
@@ -1277,7 +1283,9 @@ export declare namespace LlamaCloud {
     type DataSinkListResponse as DataSinkListResponse,
     type DataSinkListParams as DataSinkListParams,
     type DataSinkCreateParams as DataSinkCreateParams,
+    type DataSinkGetParams as DataSinkGetParams,
     type DataSinkUpdateParams as DataSinkUpdateParams,
+    type DataSinkDeleteParams as DataSinkDeleteParams,
   };
 
   export {
@@ -1287,7 +1295,9 @@ export declare namespace LlamaCloud {
     type DataSourceListResponse as DataSourceListResponse,
     type DataSourceListParams as DataSourceListParams,
     type DataSourceCreateParams as DataSourceCreateParams,
+    type DataSourceGetParams as DataSourceGetParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
+    type DataSourceDeleteParams as DataSourceDeleteParams,
   };
 
   export {
@@ -1327,7 +1337,9 @@ export declare namespace LlamaCloud {
     type PipelineListResponse as PipelineListResponse,
     type PipelineListParams as PipelineListParams,
     type PipelineCreateParams as PipelineCreateParams,
+    type PipelineGetParams as PipelineGetParams,
     type PipelineUpdateParams as PipelineUpdateParams,
+    type PipelineDeleteParams as PipelineDeleteParams,
     type PipelineGetStatusParams as PipelineGetStatusParams,
     type PipelineUpsertParams as PipelineUpsertParams,
     type PipelineRetrieveParams as PipelineRetrieveParams,
