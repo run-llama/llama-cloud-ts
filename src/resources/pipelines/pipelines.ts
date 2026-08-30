@@ -84,6 +84,8 @@ export class Pipelines extends APIResource {
   /**
    * Search for pipelines by name, type, or project.
    *
+   * Deprecated: use `GET /api/v2/pipelines`, which is paginated.
+   *
    * @deprecated
    */
   list(
