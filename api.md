@@ -139,14 +139,6 @@ Types:
 - <code><a href="./src/resources/classifier/jobs.ts">ClassifierRule</a></code>
 - <code><a href="./src/resources/classifier/jobs.ts">ClassifyJob</a></code>
 - <code><a href="./src/resources/classifier/jobs.ts">ClassifyParsingConfiguration</a></code>
-- <code><a href="./src/resources/classifier/jobs.ts">JobGetResultsResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">create</a>({ ...params }) -> ClassifyJob</code>
-- <code title="get /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">list</a>({ ...params }) -> ClassifyJobsPaginatedCursor</code>
-- <code title="get /api/v1/classifier/jobs/{classify_job_id}">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">get</a>(classifyJobID, { ...params }) -> ClassifyJob</code>
-- <code title="get /api/v1/classifier/jobs/{classify_job_id}/results">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">getResults</a>(classifyJobID, { ...params }) -> JobGetResultsResponse</code>
 
 # Batches
 

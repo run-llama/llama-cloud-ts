@@ -149,30 +149,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/extract/schema/generate',
   },
   {
-    clientCallName: 'client.classifier.jobs.create',
-    fullyQualifiedName: 'classifier.jobs.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/classifier/jobs',
-  },
-  {
-    clientCallName: 'client.classifier.jobs.list',
-    fullyQualifiedName: 'classifier.jobs.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/classifier/jobs',
-  },
-  {
-    clientCallName: 'client.classifier.jobs.get',
-    fullyQualifiedName: 'classifier.jobs.get',
-    httpMethod: 'get',
-    httpPath: '/api/v1/classifier/jobs/{classify_job_id}',
-  },
-  {
-    clientCallName: 'client.classifier.jobs.getResults',
-    fullyQualifiedName: 'classifier.jobs.getResults',
-    httpMethod: 'get',
-    httpPath: '/api/v1/classifier/jobs/{classify_job_id}/results',
-  },
-  {
     clientCallName: 'client.batches.create',
     fullyQualifiedName: 'batches.create',
     httpMethod: 'post',
