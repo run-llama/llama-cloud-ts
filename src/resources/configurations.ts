@@ -1525,6 +1525,12 @@ export namespace SplitV1Parameters {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+    /**
+     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
+     * 1 disables merging.
+     */
+    min_pages_per_split?: number;
   }
 }
 
