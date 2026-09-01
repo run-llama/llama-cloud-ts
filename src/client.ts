@@ -184,7 +184,6 @@ import {
   ProjectListResponse,
   Projects,
 } from './resources/projects';
-import { Sheets } from './resources/sheets';
 import {
   Split,
   SplitCancelParams,
@@ -1022,7 +1021,6 @@ export class LlamaCloud {
   static toFile = Uploads.toFile;
 
   files: API.Files = new API.Files(this);
-  sheets: API.Sheets = new API.Sheets(this);
   split: API.Split = new API.Split(this);
   parsing: API.Parsing = new API.Parsing(this);
   extract: API.Extract = new API.Extract(this);
@@ -1042,7 +1040,6 @@ export class LlamaCloud {
 }
 
 LlamaCloud.Files = Files;
-LlamaCloud.Sheets = Sheets;
 LlamaCloud.Split = Split;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Extract = Extract;
@@ -1115,8 +1112,6 @@ export declare namespace LlamaCloud {
     type FileDeleteParams as FileDeleteParams,
     type FileContentParams as FileContentParams,
   };
-
-  export { Sheets as Sheets };
 
   export {
     Split as Split,

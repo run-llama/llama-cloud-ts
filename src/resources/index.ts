@@ -215,7 +215,6 @@ export {
   type RetrieverDeleteParams,
   type RetrieverSearchParams,
 } from './retrievers/retrievers';
-export { Sheets } from './sheets';
 export {
   Split,
   type SplitCreateResponse,

@@ -43,8 +43,6 @@ Methods:
 - <code title="delete /api/v1/beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID, { ...params }) -> void</code>
 - <code title="get /api/v1/beta/files/{file_id}/content">client.files.<a href="./src/resources/files.ts">content</a>(fileID, { ...params }) -> PresignedURL</code>
 
-# Sheets
-
 # Split
 
 Types:
@@ -517,8 +515,6 @@ Methods:
 - <code title="post /api/v1/beta/agent-data/:search">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">search</a>({ ...params }) -> AgentDataPaginatedCursorPost</code>
 - <code title="post /api/v1/beta/agent-data/:aggregate">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">aggregate</a>({ ...params }) -> AgentDataAggregateResponsesPaginatedCursorPost</code>
 - <code title="post /api/v1/beta/agent-data/:delete">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">deleteByQuery</a>({ ...params }) -> AgentDataDeleteByQueryResponse</code>
-
-## Sheets
 
 ## Directories
 
