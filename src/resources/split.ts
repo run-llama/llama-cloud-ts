@@ -202,6 +202,11 @@ export namespace SplitCreateResponse {
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
 
     /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
+
+    /**
      * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
      * 1 disables merging.
      */
@@ -297,6 +302,11 @@ export namespace SplitListResponse {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+    /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
 
     /**
      * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
@@ -398,6 +408,11 @@ export namespace SplitCancelResponse {
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
 
     /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
+
+    /**
      * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
      * 1 disables merging.
      */
@@ -495,6 +510,11 @@ export namespace SplitGetResponse {
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
 
     /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
+
+    /**
      * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
      * 1 disables merging.
      */
@@ -573,6 +593,11 @@ export namespace SplitCreateParams {
        * 'uncategorized' but are excluded from results.
        */
       allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+      /**
+       * Free-form guidance for where segment boundaries are placed.
+       */
+      custom_instructions?: string | null;
 
       /**
        * Minimum pages per segment. Shorter segments are merged into an adjacent segment;

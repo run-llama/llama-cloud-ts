@@ -509,6 +509,11 @@ export namespace SplitCreateParams {
       allow_uncategorized?: 'forbid' | 'include' | 'omit';
 
       /**
+       * Free-form guidance for where segment boundaries are placed.
+       */
+      custom_instructions?: string | null;
+
+      /**
        * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
        * 1 disables merging.
        */
