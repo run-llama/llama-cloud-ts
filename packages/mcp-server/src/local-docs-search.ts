@@ -881,13 +881,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/v2/parse/versions',
     httpMethod: 'get',
     summary: 'List Parse Versions',
-    description: 'List the parse versions accepted by each tier.',
+    description: 'List the parse versions accepted by each tier and what `latest` resolves to.',
     stainlessPath: '(resource) parsing > (method) list_versions',
     qualified: 'client.parsing.listVersions',
     response:
-      "{ agentic: string[]; agentic_plus: string[]; cost_effective: string[]; fast: '2026-06-15' | '2025-12-11'[]; }",
+      "{ agentic: string[]; agentic_plus: string[]; cost_effective: string[]; fast: '2026-06-15' | '2025-12-11'[]; latest: { agentic: string; agentic_plus: string; cost_effective: string; fast: string; }; }",
     markdown:
-      "## list_versions\n\n`client.parsing.listVersions(): { agentic: string[]; agentic_plus: string[]; cost_effective: string[]; fast: '2026-06-15' | '2025-12-11'[]; }`\n\n**get** `/api/v2/parse/versions`\n\nList the parse versions accepted by each tier.\n\n### Returns\n\n- `{ agentic: string[]; agentic_plus: string[]; cost_effective: string[]; fast: '2026-06-15' | '2025-12-11'[]; }`\n  Versions accepted by the parse API, grouped by tier.\n\n  - `agentic: string[]`\n  - `agentic_plus: string[]`\n  - `cost_effective: string[]`\n  - `fast: '2026-06-15' | '2025-12-11'[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.parsing.listVersions();\n\nconsole.log(response);\n```",
+      "## list_versions\n\n`client.parsing.listVersions(): { agentic: string[]; agentic_plus: string[]; cost_effective: string[]; fast: '2026-06-15' | '2025-12-11'[]; latest: object; }`\n\n**get** `/api/v2/parse/versions`\n\nList the parse versions accepted by each tier and what `latest` resolves to.\n\n### Returns\n\n- `{ agentic: string[]; agentic_plus: string[]; cost_effective: string[]; fast: '2026-06-15' | '2025-12-11'[]; latest: { agentic: string; agentic_plus: string; cost_effective: string; fast: string; }; }`\n  Versions accepted by the parse API, grouped by tier.\n\n  - `agentic: string[]`\n  - `agentic_plus: string[]`\n  - `cost_effective: string[]`\n  - `fast: '2026-06-15' | '2025-12-11'[]`\n  - `latest: { agentic: string; agentic_plus: string; cost_effective: string; fast: string; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst response = await client.parsing.listVersions();\n\nconsole.log(response);\n```",
     perLanguage: {
       go: {
         method: 'client.Parsing.ListVersions',

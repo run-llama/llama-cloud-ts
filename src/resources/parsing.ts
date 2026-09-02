@@ -139,7 +139,7 @@ export class Parsing extends APIResource {
   }
 
   /**
-   * List the parse versions accepted by each tier.
+   * List the parse versions accepted by each tier and what `latest` resolves to.
    *
    * @example
    * ```ts
@@ -2154,6 +2154,38 @@ export interface ParsingListVersionsResponse {
    * Versions for the fast tier
    */
   fast: Array<'2026-06-15' | '2025-12-11'>;
+
+  /**
+   * Version `latest` currently resolves to, per tier
+   */
+  latest: ParsingListVersionsResponse.Latest;
+}
+
+export namespace ParsingListVersionsResponse {
+  /**
+   * Version `latest` currently resolves to, per tier
+   */
+  export interface Latest {
+    /**
+     * Version `latest` resolves to for the agentic tier
+     */
+    agentic: string;
+
+    /**
+     * Version `latest` resolves to for the agentic_plus tier
+     */
+    agentic_plus: string;
+
+    /**
+     * Version `latest` resolves to for the cost_effective tier
+     */
+    cost_effective: string;
+
+    /**
+     * Version `latest` resolves to for the fast tier
+     */
+    fast: string;
+  }
 }
 
 export interface ParsingCreateParams {
